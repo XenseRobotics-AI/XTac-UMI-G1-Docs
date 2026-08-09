@@ -232,8 +232,7 @@ git submodule update --init --recursive --progress
 ```
 
 !!! danger "拉完子模块必须重新编译 `xense.taccap`"
-    `git submodule update` 只更新文件,不会重新编译。见
-    [2.2 克隆仓库与子模块](02-environment.md)。
+    `git submodule update` 只更新文件,不会重新编译。见 [2.2 克隆仓库与子模块](02-environment.md)。
 
 ### 固件 OTA 升级 {#ota}
 

@@ -83,8 +83,7 @@
     头显双目画面与头显位姿一起预览/录制(见 [5.6 头显相机](#56)),需要 **PC Service ≥ v0.2.0**。
 
 !!! tip "想让它自己停,并打印每帧耗时"
-    加 `--teleop_time_s=10` 跑满 10 秒自动退出,加 `--debug_timing=true` 打印采样耗时与
-    相机路数——不想守着 `Ctrl+C` 时好用。
+    `--teleop_time_s=10` 跑满 10 秒自动退出,`--debug_timing=true` 打印采样耗时与相机路数。
 
 ### Rerun 里的 `/world` 3D 视图 {#world-view}
 

@@ -86,8 +86,7 @@ git submodule update --init --recursive --progress
 | [`third_party/XenseVR-PC-Service`](https://github.com/Vertax42/XenseVR-PC-Service) | `xensevr_pc_service_sdk`(Pico4 Ultra 企业版追踪器 / 头显相机) |
 
 !!! note "xensesdk 不是子模块"
-    `xensesdk` 是视触觉传感器 SDK,由 `setup_env.sh --install` 自动安装,
-    无需单独拉取子模块。
+    `xensesdk` 是视触觉传感器 SDK,由 `setup_env.sh --install` 自动安装,无需单独拉取子模块。
 
 !!! danger "更新子模块后必须重新编译 `xense.taccap`"
     `taccap-gripper` 的 Python 包里带一份**编译产物**。`git submodule update` 只更新文件,
@@ -120,8 +119,7 @@ mamba activate xense-taccap
 ```
 
 !!! tip "环境名"
-    `--mamba` 默认创建 `xense-taccap` 环境;
-    如需自定义环境名,可在 `--mamba` 后追加名称。
+    `--mamba` 默认创建 `xense-taccap` 环境;要自定义环境名,在 `--mamba` 后追加名称。
 
 ## 2.4 一键安装
 
@@ -173,8 +171,7 @@ python -c 'import av; print("PyAV OK ->", av.__version__)'
 ```
 
 !!! tip "需要系统 ffmpeg?"
-    若你需要带 `libsvtav1` 的系统 ffmpeg,请单独安装(apt 或官方静态构建);
-    当前 0.5.1 定制分支的默认编码路径不依赖它。
+    需要带 `libsvtav1` 的系统 ffmpeg 请单独装(apt 或官方静态构建),默认编码路径不依赖它。
 
 ---
 

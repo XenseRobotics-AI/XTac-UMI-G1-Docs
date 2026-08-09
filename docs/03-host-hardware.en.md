@@ -142,7 +142,7 @@ install the app → network → bind the tracker → tracking mode and UI → st
     headset"** does not apply to you.
 
     **Start at [Connect the network](#pico-network)**: plug the USB in, short-press the tracker
-    until the LED is solid blue, then work through the [UI checklist](#pico-toolkit-ui) and
+    until the LED is solid blue, [open the app and tap Reconnect](#pico-toolkit-ui), then
     [align the frame](#pico-frame). Those three are needed **before every session** either way.
 
 ### Unboxing and the system update {#pico-unbox}

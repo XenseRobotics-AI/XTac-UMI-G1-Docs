@@ -3,8 +3,7 @@
 按**症状**分类。每条:症状 → 原因 → 解决。多数问题集中在**串口权限**与 **ModemManager 抢占**——先看这两类。
 
 !!! tip "定位思路"
-    先跑自检 `python -c "from xense.taccap import scan_grippers; ..."`(见 [一页速通 §2](quickstart.md)),
-    再对照下面的症状。
+    先跑[一页速通 §2](quickstart.md) 的自检命令,再对照下面的症状。
 
 ## 环境与安装
 
