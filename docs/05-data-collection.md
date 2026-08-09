@@ -106,7 +106,7 @@
 !!! note "标量面板里的 `tracker pose`"
     `tcp pose` 旁边的 `tracker pose` 是追踪器原始位姿,**仅供查看、不会落盘**(落盘的是 `tcp.*`)。
 
-## 5.2 录制
+## 5.2 录制 {#52}
 
 设备**按序列号规则自动发现**——不列举夹爪/触觉/相机序列号。触觉、腕相机、追踪器都按同一套
 规则各自匹配左右。
@@ -182,6 +182,17 @@
     确认完就关掉再开录。录制途中确实要盯画面的话,见
     [`--display_image_every_n`](#params)。
 
+!!! note "录到一半设备掉了会怎样"
+    某路相机或夹爪编码器**中途掉线**(线松了、hub 掉电)时,采集会**主动停下来,并把已经
+    录到的部分存盘**,终端上打印一条 `Device lost mid-recording`。**不会**继续往数据集里
+    写编造的值。
+
+    短暂的读取失败不算掉线——会沿用上一帧的好值撑过去(相机约 2 秒、夹爪编码器约 1 秒),
+    超过才判定为掉线。所以掉线那一集的**最后一两秒可能是重复的旧值**,这一集建议弃用。
+
+    处理:检查线缆与 USB 口(见 [某一路相机打不开](troubleshooting.md#usb-bandwidth)),
+    然后用 `--resume` 在同一数据集上续录。
+
 ### 参数详解 {#params}
 
 `lerobot-record` 参数分三类:**数据集**(`--dataset.*`)、**录制控制**(顶层)、
@@ -242,6 +253,7 @@
 | `robot.tracker_serial` | 未设 | 钉住追踪器 SN,绕过侧别自动匹配 |
 | `robot.enable_wrist_camera` | `true` | 关闭腕相机 |
 | `robot.wrist_camera_width/_height/_fps` | — | 腕相机分辨率 / 帧率 |
+| `robot.wrist_camera_fourcc` | `MJPG` | 腕相机像素格式。默认 MJPG 是为了给同 hub 的两路触觉让出 USB 带宽;`YUYV` 为无压缩,只在带宽够时用 |
 | `robot.enable_head_camera` | `false` | 录制 Pico4 Ultra 企业版**头显相机**,见 [§5.6](#56) |
 | `robot.head_camera_eyes` | `both` | `both` 录左右两只眼(两个键),`left` / `right` 只录一只 |
 | `robot.head_camera_width/_height` | `1024` / `768` | **每只眼**的尺寸,只接受 `1024x768` 或 `1280x960` |

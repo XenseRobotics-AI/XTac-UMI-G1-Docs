@@ -210,6 +210,24 @@ cd xense-taccap-lerobot-<版本>-linux-amd64
     XENSE_PROXY_URL=http://127.0.0.1:7897 ./install_customer.sh
     ```
 
+### 从镜像仓库在线拉取(可选) {#ghcr}
+
+镜像同时发布在 GitHub Container Registry,**公开、不需要登录**:
+
+```text
+ghcr.io/vertax42/xense-taccap-lerobot
+```
+
+在交付目录的 `.env` 里指向它,再照常 `docker compose run`:
+
+```dotenv
+LEROBOT_IMAGE=ghcr.io/vertax42/xense-taccap-lerobot
+LEROBOT_IMAGE_TAG=0.0.3
+```
+
+**首次交付仍建议用上面的离线包**(完全离线的机器只能走这条)。在线拉取的价值在**后续升级**:
+镜像二十多 GB,绝大部分是不常变的依赖层,升级时只需拉变动的几层,不用重新搬一整包。
+
 ### 安装后的主机设置
 
 让当前用户立刻拿到 Docker 权限:

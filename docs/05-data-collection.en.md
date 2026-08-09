@@ -120,7 +120,7 @@ been.
 !!! note "The `tracker pose` tab in the scalar panel"
     `tracker pose` beside `tcp pose` is the tracker's raw pose — **view only, never recorded**.
 
-## 5.2 Recording
+## 5.2 Recording {#52}
 
 Devices are **auto-discovered by the serial rules** — you never list gripper, tactile or camera
 serials. Tactile sensors, wrist cameras and trackers each match left/right by the same rules.
@@ -201,6 +201,19 @@ connected it is picked automatically. **With both connected and only one being r
     turn it off once you have checked. If you really must watch during a recording, see
     [`--display_image_every_n`](#params).
 
+!!! note "What happens if a device drops mid-recording"
+    If a camera or a jaw encoder **is lost mid-episode** (a cable works loose, a hub browns out),
+    collection **stops on its own and saves what it already recorded**, printing
+    `Device lost mid-recording`. It does **not** keep writing invented values into the dataset.
+
+    A brief read failure is not a loss — the last good value carries it (about 2 s for a camera,
+    about 1 s for the jaw encoder) before loss is declared. So the **last second or two of that
+    episode may be repeated stale values**; discard that episode.
+
+    Then check the cabling and the USB ports (see
+    [a camera that will not open](troubleshooting.md#usb-bandwidth)) and continue into the same
+    dataset with `--resume`.
+
 ### Parameter reference {#params}
 
 `lerobot-record` parameters fall into three groups: **dataset** (`--dataset.*`), **recording
@@ -265,6 +278,7 @@ official [recording guide](https://huggingface.co/docs/lerobot/v0.5.1/en/il_robo
 | `robot.tracker_serial` | unset | Pin the tracker SN, bypassing automatic side matching |
 | `robot.enable_wrist_camera` | `true` | Turn the wrist camera off |
 | `robot.wrist_camera_width/_height/_fps` | — | Wrist camera resolution / frame rate |
+| `robot.wrist_camera_fourcc` | `MJPG` | Wrist pixel format. MJPG by default so the two tactile sensors on the same hub get the USB bandwidth; `YUYV` is uncompressed and only fits when there is room |
 | `robot.enable_head_camera` | `false` | Record the Pico4 Ultra Enterprise **headset camera** — see [§5.6](#56) |
 | `robot.head_camera_eyes` | `both` | `both` records each eye as its own key; `left` / `right` records one |
 | `robot.head_camera_width/_height` | `1024` / `768` | **Per-eye** size; only `1024x768` or `1280x960` are accepted |

@@ -235,6 +235,25 @@ smoke test.
     XENSE_PROXY_URL=http://127.0.0.1:7897 ./install_customer.sh
     ```
 
+### Pulling from the registry instead (optional) {#ghcr}
+
+The image is also published to the GitHub Container Registry, **public and with no login**:
+
+```text
+ghcr.io/vertax42/xense-taccap-lerobot
+```
+
+Point the delivery directory's `.env` at it and run `docker compose run` as usual:
+
+```dotenv
+LEROBOT_IMAGE=ghcr.io/vertax42/xense-taccap-lerobot
+LEROBOT_IMAGE_TAG=0.0.3
+```
+
+**First delivery is still better done from the offline bundle above** — a fully offline machine
+has no other option. Pulling earns its place on **upgrades**: the image is tens of GB, most of it
+dependency layers that rarely change, so an upgrade fetches only the layers that moved.
+
 ### Host setup after installing
 
 Give the current user Docker access right away:
