@@ -21,8 +21,13 @@ RuntimeError: No leader gripper discovered for the left side.
 
 ```bash
 sudo usermod -aG dialout "$USER"
-# 注销重登(或当前 shell 执行 newgrp dialout),然后重新插拔夹爪
 ```
+
+!!! danger "改完组**必须重登**,否则这一步等于没做"
+    组权限只对**新建的登录会话**生效——当前终端、已经开着的窗口全都还是旧权限,
+    直接跑采集程序仍会报 `role=Unknown` / `firmware_sn` 为空,看着像是命令没生效。
+
+    **注销重登**(或在当前 shell 执行 `newgrp dialout`),**再重新插拔夹爪**,然后往下验证。
 
 验证——`role` 必须是 `Leader`/`Follower`(不是 `Unknown`),`firmware_sn` 非空:
 

@@ -29,9 +29,10 @@
     **解决**:
     ```bash
     sudo usermod -aG dialout "$USER"
-    # 注销重登(或 newgrp dialout),然后重插夹爪
     ```
-    详见 [3.1 串口权限](03-host-hardware.md#31)。
+    **加完组必须注销重登**(或 `newgrp dialout`)**再重插夹爪**——不重登的话当前终端还是
+    旧权限,报错一模一样,很容易误以为命令没生效。详见
+    [3.1 串口权限](03-host-hardware.md#31)。
 
 ??? failure "`Device or resource busy`(热插拔后立即启动)"
     **原因**:**ModemManager** 每次热插拔都用 AT 指令探测 CH343 串口并占用几秒。典型:

@@ -22,8 +22,15 @@ Join the group once, then **log back in** for it to take effect:
 
 ```bash
 sudo usermod -aG dialout "$USER"
-# log out and back in (or run newgrp dialout in this shell), then re-plug the gripper
 ```
+
+!!! danger "You **must** log back in, or this step did nothing"
+    Group membership only applies to **newly created login sessions** — this terminal and every
+    window already open still hold the old permissions, so collection keeps reporting
+    `role=Unknown` with an empty `firmware_sn` and it looks as if the command failed.
+
+    **Log out and back in** (or run `newgrp dialout` in this shell), **re-plug the gripper**, then
+    verify below.
 
 Verify — `role` must be `Leader`/`Follower` (not `Unknown`) and `firmware_sn` non-empty:
 
