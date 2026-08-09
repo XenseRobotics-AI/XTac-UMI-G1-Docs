@@ -37,7 +37,6 @@ flowchart LR
 !!! danger "走有线时关闭电脑 WiFi"
     **有线共享网络**会与电脑 WiFi 冲突,导致追踪不稳 / 连不上。采集期间关闭数采电脑 WiFi。
     头显也支持 WiFi 接入,但**正式采集建议走有线**,见 [3.4 网络连接](03-host-hardware.md#pico-network)。
-    见 [3.4 网络连接](03-host-hardware.md#pico-network)。
 
 !!! warning "采集全程不要重启 XTac-UMI XR"
     重启会重设世界原点,导致同一数据集内位姿参考系不一致。
