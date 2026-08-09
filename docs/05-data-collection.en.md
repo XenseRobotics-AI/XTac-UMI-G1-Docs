@@ -274,7 +274,8 @@ official [recording guide](https://huggingface.co/docs/lerobot/v0.5.1/en/il_robo
 | `robot.tactile_output_types` | `["rectify"]` | Tactile stream **written to disk**, **exactly one** |
 | `robot.tactile_display_output_types` | `["difference"]` | Extra tactile streams that are **display-only**, never recorded |
 | `robot.tactile_diff_gain` | `1.0` | Gain of the `difference` image (display only) |
-| `robot.expected_tactiles_per_side` | — | Assert the tactile count per side |
+| `robot.enable_tactile` | `true` | Off takes the tactile sensors out of the run entirely — no discovery, no keys. **A diagnostic, not a way to record** |
+| `robot.expected_tactiles_per_side` | `2` | How many sensors each side carries; a different count is an error, which is how a mis-installed sensor is caught |
 
 Once the Pico4 Ultra Enterprise tracker is powered on, the 6-DoF pose is **recorded
 automatically** — the tracker matches this unit's side from the digit before its serial's trailing `G`
@@ -350,8 +351,22 @@ automatically** — the tracker matches this unit's side from the digit before i
 
 - **Tactile** → `tactile_left` / `tactile_right`; the rectified image is landscape `(400,700,3)`
   (width and height are derived automatically — **do not hard-code them**). Tune with
-  `--robot.tactile_fps` / `--robot.tactile_output_types`; assert the per-side count with
-  `--robot.expected_tactiles_per_side`.
+  `--robot.tactile_fps` / `--robot.tactile_output_types`; `--robot.enable_tactile=false` takes
+  the tactile path out of the run entirely (see below).
+
+!!! warning "`--robot.enable_tactile=false` is for diagnosis — do not record with it"
+    Off, the sensors are not discovered and nothing reaches the dataset, not even the keys. Tactile
+    data is the reason this gripper exists, so a recording made this way is missing its main
+    stream.
+
+    Its use is **halving a USB bandwidth problem**: one bus only has so much to give, and a
+    bimanual rig's four tactile streams plus two wrist cameras can exceed it. The symptom is **one
+    camera failing to open** — and not the same one every time. Running each half on its own tells
+    you whether the budget is the problem rather than flaky hardware; see
+    [Troubleshooting · a camera that will not open](troubleshooting.md#usb-bandwidth).
+
+    To record **one stream fewer**, use the switch meant for it:
+    `--robot.enable_wrist_camera=false` for the wrist, `--robot.enable_tracker=false` for the pose.
 
 !!! danger "What lands on disk is `rectify`, not the image you see in Rerun"
     The two tactile streams are **deliberately different**:

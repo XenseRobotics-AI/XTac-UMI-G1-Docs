@@ -200,6 +200,32 @@
     **解决**:确认相机服务状态;把用户加入 `video` 组
     (`sudo usermod -aG video "$USER"`,重登生效)。
 
+### USB 带宽不够 {#usb-bandwidth}
+
+??? failure "某一路相机打不开(`Cannot open camera N`),而且每次挂的不是同一路"
+    **原因**:**USB 带宽不够**,不是硬件坏了。一条 USB 总线能同时供给的相机带宽是有限的,
+    一只夹爪的 hub 上就挂着**三个** UVC 设备(两路触觉 + 腕相机),双夹爪再翻倍。
+    超出预算时,**最后打开的那一路失败**——而谁最后打开每次都可能不同,所以故障看着会"飘"。
+    设备节点存在、`lerobot-find-cameras` 也列得出来,只是打不开。
+
+    **判断**:分两半各跑一次,看是不是各自都能开——
+
+    ```bash
+    # 只开触觉(关掉腕相机)
+    lerobot-teleoperate --robot.type=bi_taccap_gripper --robot.enable_wrist_camera=false \
+        --robot.enable_tracker=false --fps=30 --display_data=true
+
+    # 只开腕相机(关掉触觉)
+    lerobot-teleoperate --robot.type=bi_taccap_gripper --robot.enable_tactile=false \
+        --robot.enable_tracker=false --fps=30 --display_data=true
+    ```
+
+    两半分别都正常、合起来就失败,就是带宽问题。
+
+    **解决**:把相机分到**不同的 USB 控制器**上(换根不同的物理 USB 口,尤其别都插在同一个
+    扩展坞或 hub 上);或降低触觉的 `--robot.tactile_fps`。**`enable_tactile=false` 只用于
+    这一步判断,不要拿它录数据**——那样录出来的数据集没有触觉。
+
 ## 数据与磁盘
 
 ??? failure "采集变慢 / 磁盘写满"

@@ -251,7 +251,8 @@
 | `robot.tactile_output_types` | `["rectify"]` | **落盘**的触觉流,**只能填一个** |
 | `robot.tactile_display_output_types` | `["difference"]` | **仅显示**、不落盘的额外触觉流 |
 | `robot.tactile_diff_gain` | `1.0` | `difference` 图的增益(只影响显示) |
-| `robot.expected_tactiles_per_side` | — | 校验每侧触觉数量 |
+| `robot.enable_tactile` | `true` | 关闭则整条触觉链路都不接入(不发现、不落盘)。**排查用,不是录制模式** |
+| `robot.expected_tactiles_per_side` | `2` | 每侧应有几枚触觉;数量对不上会直接报错,用于抓装配/烧录错误 |
 
 Pico4 Ultra 企业版追踪器上电后,6-DoF 位姿**自动录制**——追踪器按序列号末尾字母 `G` 前一个数字(单左双右)
 自动匹配本单元侧别。
@@ -319,7 +320,19 @@ Pico4 Ultra 企业版追踪器上电后,6-DoF 位姿**自动录制**——追踪
 
 - **触觉** → `tactile_left` / `tactile_right`;校正图为横向 `(400,700,3)`(宽高自动推导,
   **别写死**)。用 `--robot.tactile_fps` / `--robot.tactile_output_types` 调;
-  `--robot.expected_tactiles_per_side` 校验每侧数量。
+  `--robot.enable_tactile=false` 可把触觉整条拿掉(见下方提示)。
+
+!!! warning "`--robot.enable_tactile=false` 是排查开关,不要用它录数据"
+    关掉后触觉**不发现、不落盘**,连观测键都没有——而触觉正是这只夹爪存在的理由,
+    这样录出来的数据集缺了最主要的一路。
+
+    它的用途是**把 USB 带宽问题拆成两半**:一条 USB 总线的带宽是有限的,双夹爪的
+    四路触觉 + 两路腕相机可能超出预算,表现为**某一路相机打不开**、且每次挂的还不是同一路。
+    这时分别关掉触觉、关掉腕相机各跑一次,就知道是不是带宽不够,而不是硬件时好时坏——
+    见 [故障排查 · 某一路相机打不开](troubleshooting.md#usb-bandwidth)。
+
+    要**少录一路**用别的开关:`--robot.enable_wrist_camera=false` 关腕相机、
+    `--robot.enable_tracker=false` 关位姿。
 
 !!! danger "落盘的是 `rectify`,不是你在 Rerun 里看到的那张图"
     两路触觉流**故意不同**:
