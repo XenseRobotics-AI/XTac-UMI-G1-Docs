@@ -595,26 +595,28 @@ full-body mocap / **standalone Tracker**). Collection uses two of them:
     The standard order is below (app screens follow whichever version you have):
 
 1. Plug the XTac-UMI G1 into the host (USB).
-2. Connect the headset's **wired shared network** and **turn the collection PC's WiFi off**
+2. **Bimanual rigs: check the USB bandwidth budget** (below) before going any further.
+3. Connect the headset's **wired shared network** and **turn the collection PC's WiFi off**
    (see [3.4 Network connection](#pico-network)).
-3. Power on the headset, and **short-press** the tracker's power button until the **blue light comes on**
+4. Power on the headset, and **short-press** the tracker's power button until the **blue light comes on**
    (first use needs [binding](#pico-tracker-bind) first).
-4. Start the host's XenseVR PC Service (`runService.sh`).
-5. **Facing straight towards the robot**, launch the XTac-UMI XR app (this **freezes the world
+5. Start the host's XenseVR PC Service (`runService.sh`).
+6. **Facing straight towards the robot**, launch the XTac-UMI XR app (this **freezes the world
    origin and orientation** — see [frames](#pico-frame)), and check that its
    tap "**Reconnect**" so the [status reads "Connected"](#pico-toolkit-ui).
-6. Run the calibration / self-check / recording scripts.
+7. Run the calibration / self-check / recording scripts.
 
 ```mermaid
 flowchart LR
-    A[Plug in gripper USB] --> N[Connect Pico4 Ultra Enterprise<br/>wired network, WiFi off]
+    A[Plug in gripper USB] --> U[Bimanual: check USB budget]
+    U --> N[Connect Pico4 Ultra Enterprise<br/>wired network, WiFi off]
     N --> B[Power on Pico4 Ultra Enterprise<br/>pair the tracker]
     B --> D[Start XenseVR PC Service]
     D --> C[Launch XTac-UMI XR<br/>freeze origin, shows Connected]
     C --> E[Run calibration / recording]
 ```
 
-!!! warning "Step 4 has to come before step 5"
+!!! warning "Step 5 has to come before step 6"
     The app connects to that service. **With it down, the app sits on "Not connected"** — and
     restarting the app to retry resets the world origin all over again.
 
@@ -638,5 +640,38 @@ flowchart LR
 
     Full procedure, how to confirm it took effect, and scope →
     [4.1 Gripper calibration (zero + travel span)](04-calibration.md#41)
+
+### Step 2 — check the USB bandwidth budget {#usb-budget}
+
+**It belongs here because it is decided the moment you plug the cables in** — and what it decides
+is whether a camera can be opened at all. When one cannot, working backwards through serials,
+cables, drivers and our code is wasted effort. Measure this first.
+
+Every UVC camera **reserves** isochronous bandwidth for as long as it is open, and that budget is
+**per USB 2.0 bus**: 480 Mbit/s, of which ~384 is available to periodic transfers. A bimanual rig
+puts **six** cameras on it (four tactile + two wrist), plus the laptop's built-in webcam.
+
+```bash
+lsusb -t
+```
+
+**Each `480M` `root_hub` line is one budget** — count the cameras under each. Two `480M` root hubs
+with three cameras each is comfortable. Six on one bus has to be measured: different sensor batches
+request different amounts, so some hosts carry it and some do not.
+
+!!! warning "A blue USB 3 port does not help"
+    The tactile sensors and wrist cameras are **USB 2.0 devices**; a USB 3 port still puts them on
+    that controller's USB 2.0 bus. Splitting them means a **second host controller** — a
+    Thunderbolt/USB4 dock brings its own, a plain hub does not.
+
+Watch the kernel while you start, in a second terminal:
+
+```bash
+sudo dmesg -w | grep --line-buffered -iE "uvcvideo|bandwidth|disconnect"
+```
+
+`Not enough bandwidth for altsetting N` is the diagnosis. The full bisect, the measured numbers, and
+three fixes that look promising and are not → [Troubleshooting · USB
+bandwidth](troubleshooting.md#usb-bandwidth) (Chinese).
 
 Next → [4. Calibration & self-check](04-calibration.md)

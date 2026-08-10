@@ -522,23 +522,25 @@ XenseVR PC Service——但**要点一下「重连」才会连上**,打开 APP �
     标准启动顺序如下(APP 界面以实际版本为准):
 
 1. 将 XTac-UMI G1 插入主机(USB)。
-2. 接好 Pico4 Ultra 企业版的**有线共享网络**,并**关闭数采电脑的 WiFi**(见 [3.4 网络连接](#pico-network))。
-3. 开启 Pico4 Ultra 企业版,**短按**追踪器电源键至**蓝灯亮起**(首次使用需先[绑定](#pico-tracker-bind))。
-4. 启动主机的 XenseVR PC Service(`runService.sh`)。
-5. **面朝机器人正前方**,启动 XTac-UMI XR APP(**冻结世界系原点与方向**,见 [坐标系](#pico-frame)),
+2. **双夹爪:先查一下 USB 带宽预算**(见下),再往后走。
+3. 接好 Pico4 Ultra 企业版的**有线共享网络**,并**关闭数采电脑的 WiFi**(见 [3.4 网络连接](#pico-network))。
+4. 开启 Pico4 Ultra 企业版,**短按**追踪器电源键至**蓝灯亮起**(首次使用需先[绑定](#pico-tracker-bind))。
+5. 启动主机的 XenseVR PC Service(`runService.sh`)。
+6. **面朝机器人正前方**,启动 XTac-UMI XR APP(**冻结世界系原点与方向**,见 [坐标系](#pico-frame)),
    点「**重连**」使[状态变为「已连接」](#pico-toolkit-ui)。
-6. 运行标定 / 自检 / 录制脚本。
+7. 运行标定 / 自检 / 录制脚本。
 
 ```mermaid
 flowchart LR
-    A[插入夹爪 USB] --> N[接 Pico4 Ultra 企业版<br/>有线网络并关闭 WiFi]
+    A[插入夹爪 USB] --> U[双夹爪:查 USB 带宽预算]
+    U --> N[接 Pico4 Ultra 企业版<br/>有线网络并关闭 WiFi]
     N --> B[开启 Pico4 Ultra 企业版<br/>配对追踪器]
     B --> D[启动 XenseVR PC Service]
     D --> C[启动 XTac-UMI XR<br/>冻结原点、显示已连接]
     C --> E[跑标定/录制]
 ```
 
-!!! warning "第 4 步必须在第 5 步之前"
+!!! warning "第 5 步必须在第 6 步之前"
     **服务没起来,APP 只会停在「未连接」**——重启 APP 重连还会把世界系原点重设一次。
 
 !!! warning "主夹爪没标定的话,采集程序会拒绝连接"
@@ -557,5 +559,35 @@ flowchart LR
     ```
 
     完整步骤、如何确认生效、适用范围 → [4.1 夹爪标定(零点 + 行程)](04-calibration.md#41)
+
+### 第 2 步:查 USB 带宽预算 {#usb-budget}
+
+**放在这里,是因为它在插线那一刻就已经决定了**,而它决定的是"某一路相机能不能打开"。
+相机打不开时,从序列号、线缆、驱动、采集程序一路往回找都是白找——先量这一步。
+
+每个 UVC 相机在打开期间都要**独占预留**一份等时带宽,这份预算**按 USB 2.0 总线算**:
+一条总线 480 Mbit/s,其中约 384 Mbit/s 给等时传输。双夹爪一共 **六个**相机
+(四路触觉 + 两路腕相机),再加笔记本自带的摄像头。
+
+```bash
+lsusb -t
+```
+
+输出里**每一行 `480M` 的 `root_hub` 就是一份预算**——数一数每份上挂了几个相机。
+**两条 `480M` 总线各挂三个**是宽裕的;六个挤在一条上就得实测,不同批次的传感器申请量不同,
+有的机器扛得住、有的扛不住。
+
+!!! warning "插蓝色 USB 3 口不解决问题"
+    触觉和腕相机都是 **USB 2.0 设备**,插进 USB 3 口仍然落在该控制器的 USB 2.0 总线上。
+    要分开就得插到**另一个主控制器**上(Thunderbolt / USB4 扩展坞自带一个,普通 hub 不带)。
+
+启动采集时在另一个终端盯着内核日志,一眼看出是不是带宽:
+
+```bash
+sudo dmesg -w | grep --line-buffered -iE "uvcvideo|bandwidth|disconnect"
+```
+
+出现 `Not enough bandwidth for altsetting N` 就是它。完整的判定、实测数字,以及三条**看着像
+解法其实没用**的办法 → [故障排查 · USB 带宽不够](troubleshooting.md#usb-bandwidth)。
 
 下一步 → [4. 标定与自检](04-calibration.md)
