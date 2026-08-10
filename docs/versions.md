@@ -12,7 +12,7 @@
 
 | 组件 | 最低要求版本 | 怎么查 |
 |---|---|---|
-| `xense-taccap-lerobot` | `0.5.1+xtac.0.0.3` | `pip show lerobot` 或看 `pyproject.toml` |
+| `xense-taccap-lerobot` | `0.5.1+xtac.0.0.4` | `pip show lerobot` 或看 `pyproject.toml` |
 | `xense.taccap` SDK | **0.1.7** | `python -c "import xense.taccap as t; print(t.__version__)"` |
 | 夹爪固件 | **命令集 V2.1**,即构建 leader **≥ 1.2.0** / follower **≥ 1.1.0**([区别](#v21)) | 跑 [`calibrate.py`](04-calibration.md#41),版本不够会打印当前版本并退出;想直接读版本见[下面这条命令](#v21) |
 | 每台 leader 的编码器标定 | 零点 + 行程上限已写入 flash | [4.1 夹爪标定](04-calibration.md#41) |
@@ -97,7 +97,7 @@ flowchart LR
 | `rerun-sdk` | `>=0.24.0,<0.27.0`(`--display_data` 用) | 0.26.2 |
 | `opencv-python` | 固定 `==4.12.0.88`(XenseRobotics 各 SDK 统一) | 4.12.0.88 |
 | NumPy | `>=1.26.4` | 2.2.6 |
-| `xense-taccap-lerobot` | 基于 lerobot 0.5.1 定制;版本号 `0.5.1+xtac.0.0.3`(与文档版本同步) | `main@28c871b3` |
+| `xense-taccap-lerobot` | 基于 lerobot 0.5.1 定制;版本号 `0.5.1+xtac.0.0.4`(与文档版本同步) | `main@36b9c61f` |
 | `xense.taccap`(`taccap-gripper` SDK) | 与主仓库子模块版本配套 | 0.1.7(子模块 `83314c8`) |
 | 夹爪固件命令集 | **V2.1**(帧格式另计,为 V1.8;区别见[三套编号](#v21)) | 命令集 V2.1 |
 | 夹爪固件构建 | leader **≥ 1.2.0** / follower **≥ 1.1.0** 即支持命令集 V2.1 | 当前基线附带 leader **1.2.1** / follower **1.1.1**(固件源码分支 `hw_v1.1.0`);镜像版本随 SDK 走,以 `firmware/manifest.json` 为准,见 [固件 OTA 升级](#ota) |
@@ -116,11 +116,11 @@ flowchart LR
     脚本会跳过"版本已经一致"的包,所以停在 **v0.2.0** 的机器会拿旧 SDK 去编绑定——
     v0.2.1 是同一个守护进程配**重新编译过的 SDK**,装机请直接用它。
 
-!!! note "`pip show xensevr-pc-service-sdk` 现在跟着 `.deb` 走"
+!!! note "`pip show xensevr-pc-service-sdk` 跟着 `.deb` 走"
     这个包在构建时向 `dpkg` 问 `xensevr-pc-service` 的版本,所以显示的就是 `.deb` 的版本
-    (如 `0.2.1`);更早的版本里它恒为 `0.1.0`,和服务对不上。
+    (如 `0.2.1`)。
 
-    不论哪一版,**判断有没有头显相机支持都应该看接口在不在**——它反映的是实际加载的那个模块:
+    **判断有没有头显相机支持,请看接口在不在**——它反映的是实际加载的那个模块:
 
     ```bash
     python -c "import xensevr_pc_service_sdk as xrt; print(hasattr(xrt, 'has_pico_camera_frame'))"
@@ -166,9 +166,9 @@ flowchart LR
     ```
 
 !!! note "主夹爪拒绝连接的行为需要 `4fb5b79b` 之后的版本"
-    更早的版本遇到未标定的主夹爪是**告警后退回** `gripper_open_rad` 常量,会话照常跑完——
-    也就是说**能采出刻度错的数据而不报错**。停在旧版本时,务必按 [4.1.3](04-calibration.md#41)
-    自己确认 `gripper.pos` 张到底能到 `1.0`。
+    从这一版起,**未标定的主夹爪会被直接拒绝连接**,不用你自己判断标没标过。
+    停在更早的版本时没有这道拦截,**务必自己按 [4.1.3](04-calibration.md#41) 确认
+    `gripper.pos` 张到底能到 `1.0`** 再开录。
 
 !!! note "头显位姿进 action、显示默认不压缩,需要 `f491cae5` 之后的版本"
     两项变化都在这之后:`head_camera.*` 从"仅观测"变成**同时也是动作**
@@ -197,13 +197,11 @@ flowchart LR
     停在更早的版本时,前缀要自己写全:`--robot.id=taccap_0`。
     **两个版本都接受写全的形式**,所以本手册里的 `--robot.id=0` 在旧版本上要改写,反之不必。
 
-!!! note "无 GPU 主机上 `--dataset.vcodec=auto` 能正确回落,需要 `3b9d2deb` 之后的版本"
-    从这一版起,`auto` 通过**真开一次编码会话**来判断有没有硬件编码器,所以没有 NVIDIA 驱动的
-    机器上会回落到 `libsvtav1`。
-
-    停在更早的版本时,`auto` 会在完全没有 GPU 的机器上选中 `h264_nvenc`,并在**第一帧**报
-    `avcodec_open2(h264_nvenc)` 失败——手动指定 `--dataset.vcodec=libsvtav1` 即可。
-    见 [没有 NVIDIA GPU 的主机怎么录](05-data-collection.md#no-gpu)。
+!!! note "无 GPU 主机上的编码器选择,建议用 `3b9d2deb` 之后的版本"
+    从这一版起,`--dataset.vcodec=auto` 通过**真开一次编码会话**来判断有没有硬件编码器,
+    所以没有 NVIDIA 驱动的机器上会自动落到 `libsvtav1`,不需要指定。更早的版本上,
+    这类主机请显式写 `--dataset.vcodec=libsvtav1`。见
+    [没有 NVIDIA GPU 的主机怎么录](05-data-collection.md#no-gpu)。
 
 !!! note "Pico4 的 C SDK 改由 `.deb` 提供,需要 `42b44066` 之后的版本"
     `third_party/XenseVR-PC-Service` 子模块在这一版删除,`libPXREARobotSDK.so` 改从
@@ -215,9 +213,8 @@ flowchart LR
 !!! note "`setup_env.sh` 的 apt 预检查需要 `2892929a` 之后的版本"
     从这一版起,`--install` 会先查 `build-essential` / `cmake` / `pkg-config` / `git` / `curl`
     在不在,缺了直接停下并打印该敲的 apt 命令(见
-    [前置:系统依赖包](02-environment.md#apt))。`d50e49b4` 又去掉了其中对
-    `libudev-dev` / `libusb-1.0-0-dev` 的要求(这两个包本就不需要)。停在这两版之间的
-    checkout,若被这一项挡住,把两个 `-dev` 包装上即可绕过。
+    [前置:系统依赖包](02-environment.md#apt))。停在更早的版本时没有这道检查,缺包要到
+    编译阶段才报出来——照那一节先把包装齐即可。
 
 !!! note "Docker 交付镜像需要 `9387ef05` 之后的版本"
     [2. 环境部署](02-environment.md#docker) 里那条 Docker 路径——交付目录、
@@ -330,8 +327,7 @@ SDK 自 0.1.7 起**随仓库附带已发布的固件镜像**,直接刷即可:
     只要不低于 leader `1.2.0` / follower `1.1.0`,就已经支持命令集 V2.1。
 
 !!! warning "顺序:**先升级 SDK,再刷固件**"
-    0.1.7 之前的 SDK 有两个升级相关的缺陷:固件拒绝写入时它识别不出来,**失败的升级会报成功**;
-    重试的方式也可能把一次本来正常的升级弄坏。两者都在 0.1.7 修好了。
+    **刷写与刷后校验请用 0.1.7 及以上的 SDK**,更低版本不要用来刷固件。
 
     新 SDK 与旧固件通信不变,所以**先升 SDK 总是安全的**。
 
@@ -407,7 +403,7 @@ for ep in scan_grippers():
 
 ## 兼容性与发布维护
 
-- 当前站点文档版本为 `v0.0.3`;内容变更可通过文档仓库 Git 提交历史追踪。
-- 主仓库版本号与本页文档版本对齐:`xense-taccap-lerobot` 的 `pyproject.toml` 记 `0.5.1+xtac.0.0.3`,其中 `0.5.1` 是 lerobot 官方基线,`xtac.0.0.3` 是与本文档同步的产品版本。
+- 当前站点文档版本为 `v0.0.4`;内容变更可通过文档仓库 Git 提交历史追踪。
+- 主仓库版本号与本页文档版本对齐:`xense-taccap-lerobot` 的 `pyproject.toml` 记 `0.5.1+xtac.0.0.4`,其中 `0.5.1` 是 lerobot 官方基线,`xtac.0.0.4` 是与本文档同步的产品版本。
 - 精确兼容关系以主仓库依赖锁定文件、子模块 commit 和本页“已验证基线”为准,不要仅按包名猜测兼容性。
 - 升级主仓库、SDK、固件或 XenseVR PC Service 后,应重新执行环境验证、设备自检和一条短 episode 校验。

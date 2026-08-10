@@ -17,12 +17,6 @@
     另有一条只**告警**不阻断的:缺 `v4l-utils` / `usbutils`。**别跳过**——
     `v4l2-ctl` 和 `lsusb -t` 是相机打不开时唯一能用的工具。
 
-??? failure "旧版本要求 `libudev-dev` / `libusb-1.0-0-dev`,装了却仍报缺失"
-    **原因**:旧版本的检查项,在装好的机器上也可能误报。
-    **解决**:升级到最新版主仓库——这两个包本就**不需要**(编译期没有任何东西 include 它们的
-    头文件,运行期用的是 Ubuntu 自带的 `libudev1` / `libusb-1.0-0`),检查项已删除。
-    必须停在旧版本时,把两个 `-dev` 包装上绕过即可。
-
 ??? failure "`import xensesdk` / `import xensevr_pc_service_sdk` / `import xense.taccap` 失败"
     **原因**:环境未装全,或未激活 `xense-taccap` 环境。
     **解决**:
@@ -214,11 +208,9 @@
     (反复出现且换口无效时见 [USB 带宽不够](#usb-bandwidth)),然后用 `--resume`
     在同一数据集上续录。见 [5.2 录制](05-data-collection.md#52)。
 
-??? failure "没有独显的机器上,一开录就报 `avcodec_open2(h264_nvenc)`"
-    **原因**:选中了 NVIDIA 的硬件编码器,而这台机器没有 NVIDIA 驱动,所以在**第一帧**打开
-    编码器时就失败。新版本的 `--dataset.vcodec=auto` 会真开一次编码会话来探测,不会再选错;
-    这是**旧版本**上会遇到的。
-    **解决**:手动指定 CPU 编码器,并把流式编码关掉——
+??? failure "没有独显的机器上,录制一开始就报编码器打不开"
+    **原因**:这台机器没有 NVIDIA 驱动,却在用 GPU 硬件编码器。
+    **解决**:改用 CPU 编码器,并把流式编码关掉——
 
     ```bash
     lerobot-record ... --dataset.vcodec=libsvtav1 --dataset.streaming_encoding=false
@@ -249,15 +241,16 @@
     python third_party/taccap-gripper/python/examples/ota_update.py \
         tc-gu-01-master.bin --side left
     ```
-    **先升 SDK 再刷固件**(顺序反了会踩到"失败却报成功"的旧 bug),镜像**按角色选**——
+    **先升 SDK 再刷固件**(刷写要用 0.1.7 及以上的 SDK),镜像**按角色选**——
     看固件 SN 末位 `m`/`s`,不是看左右手。完整步骤与风险见
     [固件 OTA 升级](versions.md#ota)。刷完回来重跑 `calibrate.py`。
 
-??? failure "旧版本提示到 `third_party/firmware/…` 下找 .bin,但该目录不存在"
-    **原因**:旧版本脚本里的一处过时路径,指向的目录不随 SDK 分发。
-    **解决**:改用随 SDK 附带的镜像,镜像名直接写 `tc-gu-01-master.bin` /
-    `tc-gu-01-slave.bin` 即可(脚本会去 SDK 的 `firmware/` 里找),见
-    [固件 OTA 升级](versions.md#ota)。SDK 0.1.7 之后已修正,按本页升级后不会再出现。
+??? failure "刷固件时提示到某个目录下找 `.bin`,但该目录不存在"
+    **原因**:镜像路径写法不对。镜像随 SDK 附带在
+    `third_party/taccap-gripper/firmware/`,不需要自己拼目录。
+    **解决**:**镜像名直接写文件名**——`tc-gu-01-master.bin` / `tc-gu-01-slave.bin`,
+    脚本会自己去 SDK 的 `firmware/` 里找,在哪个目录运行都一样。见
+    [固件 OTA 升级](versions.md#ota)。
 
 ??? failure "腕相机/视触觉打不开、`video ... busy`"
     **原因**:相机由外部相机服务占用,或用户不在 `video` 组。

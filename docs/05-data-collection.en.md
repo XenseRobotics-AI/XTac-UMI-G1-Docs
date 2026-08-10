@@ -555,12 +555,6 @@ falls back to `libsvtav1` — AV1 on the CPU, which is what the offline dataset 
 to. Passing `--dataset.vcodec=libsvtav1` explicitly is fine too, and worth doing if you want the
 command to be self-documenting about where it can run.
 
-!!! warning "Older builds pick wrong here"
-    Earlier versions only checked which encoders FFmpeg was **built** with, and the PyAV we install
-    ships nvenc compiled in — so `auto` selected `h264_nvenc` even on a machine with no GPU at all,
-    and recording died on the **first frame** with `avcodec_open2(h264_nvenc)`. On a build from
-    before that fix, pass `--dataset.vcodec=libsvtav1` by hand.
-
 **Why streaming encoding goes off.** Streaming encoding runs the encoder inline with capture, which
 pays off when the encoder is a dedicated chip on the GPU and the CPU only feeds it frames. With
 `libsvtav1` the encoder **is** the CPU, competing with the capture loop for the same cores — on a
