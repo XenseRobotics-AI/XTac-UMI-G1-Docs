@@ -68,7 +68,9 @@ follows are only the constraints that decide whether, and how, this installs:
   and `conda_environment.yaml` pins `python=3.12`; 3.10 and 3.11 will not install —
   this is a hard floor, not a recommendation.
 - **GPU optional, but an NVIDIA one needs driver ≥ 570.144.** Hardware encoding is
-  recommended for multi-stream video and capture works without a GPU at all; if you
+  recommended for multi-stream video and capture works without a GPU at all — with one
+  flag changed, see
+  [Recording on a machine with no NVIDIA GPU](05-data-collection.md#no-gpu). If you
   do have an NVIDIA card, the driver must be **570.144 or newer**.
 - **Mamba / Miniforge strongly recommended** — roughly 10× faster dependency solving
   than conda.

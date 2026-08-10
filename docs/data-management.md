@@ -17,10 +17,12 @@
 <repo_id>/
 ├── data/     # parquet(观测/动作等表格数据)
 ├── videos/   # mp4(触觉 + 腕相机)
-└── meta/     # json/jsonl:info · episodes · stats · tasks
+└── meta/     # json/jsonl:info · episodes · stats · tasks · hardware
 ```
 
 字段与格式详见 [6.1 LeRobotDataset 格式速览](06-dataset.md#61)。
+`meta/hardware.json` 是 XTac-UMI G1 额外写的一份硬件清单(工位名 + 夹爪与触觉的序列号),
+见 [`--robot.id` 与硬件清单](05-data-collection.md#robot-id)。
 
 ## 命名规范(`repo_id`)
 
@@ -72,10 +74,16 @@ mv -- ~/.cache/huggingface/lerobot/<你的org>/<旧数据集名> /data/lerobot-t
 
 为可追溯,建议为每份数据集记录:
 
+!!! tip "夹爪与触觉的序列号不用自己抄"
+    这两项录制时已经自动写进 `meta/hardware.json`(见
+    [`--robot.id` 与硬件清单](05-data-collection.md#robot-id)),台账里照抄一份只是为了离线可查;
+    **两边不一致时以数据集里的那份为准**。追踪器 SN 不在清单里,要记就得手写。
+
 | 记录项 | 示例 |
 |---|---|
 | `repo_id` | `Xense/pick_object_20260703` |
 | 任务描述 | `Pick up the object` |
+| 工位号 `--robot.id` | `0`(数据集里记为 `bi_taccap_0`) |
 | 用的夹爪 / 追踪器 SN | `TCGU01A24Z0001m` / `PC2310MLL...` |
 | 标定时间 | 2026-07-03 |
 | 软件版本 / commit | 采集当时的 `xense-taccap-lerobot main@<SHA>` 与 `xense.taccap <版本>` |

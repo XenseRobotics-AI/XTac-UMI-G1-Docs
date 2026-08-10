@@ -15,6 +15,7 @@
       不必回刷;[两者的区别](versions.md#v21))。
     - 已完成 [环境安装](02-environment.md)——Mamba 或 Docker 任选一条,三个 SDK 包都能 import。
     - 已做 [串口权限 + ModemManager](03-host-hardware.md#31) 一次性主机配置。
+    - **双夹爪**:已查过 [USB 带宽预算](03-host-hardware.md#usb-budget)(六个相机挤在一条总线上会打不开)。
     - 每台主夹爪已做过[夹爪标定](04-calibration.md#41)(零点 + 行程上限,一台一次)。
       **没标定的主夹爪会被拒绝连接**;双夹爪两侧都要标,只标一侧会让左右刻度不一致。
     - 已进入采集环境:Mamba 路径执行 `mamba activate xense-taccap`;Docker 路径执行
@@ -66,6 +67,7 @@ for g in scan_grippers(): print(g.side.name, g.role.name, repr(g.firmware_sn))"
     ```bash
     lerobot-teleoperate \
         --robot.type=bi_taccap_gripper \
+        --robot.id=0 \
         --robot.enable_tracker=false \
         --robot.enable_head_camera=false \
         --fps=30 \
@@ -85,6 +87,7 @@ for g in scan_grippers(): print(g.side.name, g.role.name, repr(g.firmware_sn))"
     ```bash
     lerobot-teleoperate \
         --robot.type=bi_taccap_gripper \
+        --robot.id=0 \
         --robot.enable_tracker=true \
         --robot.enable_head_camera=false \
         --fps=30 \
@@ -99,6 +102,7 @@ for g in scan_grippers(): print(g.side.name, g.role.name, repr(g.firmware_sn))"
     ```bash
     lerobot-teleoperate \
         --robot.type=bi_taccap_gripper \
+        --robot.id=0 \
         --robot.enable_tracker=true \
         --robot.enable_head_camera=true \
         --fps=30 \
@@ -120,6 +124,7 @@ for g in scan_grippers(): print(g.side.name, g.role.name, repr(g.firmware_sn))"
     ```bash
     lerobot-record \
         --robot.type=bi_taccap_gripper \
+        --robot.id=0 \
         --robot.enable_tracker=false \
         --robot.enable_head_camera=false \
         --display_data=false \
@@ -139,6 +144,7 @@ for g in scan_grippers(): print(g.side.name, g.role.name, repr(g.firmware_sn))"
     ```bash
     lerobot-record \
         --robot.type=bi_taccap_gripper \
+        --robot.id=0 \
         --robot.enable_tracker=true \
         --robot.enable_head_camera=false \
         --display_data=false \
@@ -159,6 +165,7 @@ for g in scan_grippers(): print(g.side.name, g.role.name, repr(g.firmware_sn))"
     ```bash
     lerobot-record \
         --robot.type=bi_taccap_gripper \
+        --robot.id=0 \
         --robot.enable_tracker=true \
         --robot.enable_head_camera=true \
         --display_data=false \
@@ -173,8 +180,11 @@ for g in scan_grippers(): print(g.side.name, g.role.name, repr(g.firmware_sn))"
 
 **单夹爪**:`--robot.type=taccap_gripper` 并加 `--robot.side=left|right`,其余相同。
 
-三个容易搞错的:
+几个容易搞错的:
 
+- `--robot.id` 是**必填**的工位号,**直接填数字**(`0` / `1`…,一套设备一个,双夹爪算一套);
+  漏了会在解析命令行时就报错退出。前缀由 `--robot.type` 自动补:单夹爪存成 `taccap_0`,
+  双夹爪存成 `bi_taccap_0` → [`--robot.id` 与硬件清单](05-data-collection.md#robot-id)。
 - `--robot.side` 只在单夹爪模式、且**两只夹爪都接着**时才需要;单只会自动选中。
 - `--fps` 是主循环帧率,`--dataset.fps` 是落盘采样率——**两个参数**,通常设成一样。
 - `--robot.enable_tracker` 和 `--robot.enable_head_camera` 显式写出,和预览时用的那一档保持一致——预览到哪一档就录哪一档。

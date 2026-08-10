@@ -40,6 +40,14 @@ sample = ds[0]          # 单帧:观测 + 动作,均为 torch tensor
 `info` 里的关键元数据:`fps`、`features`、`total_episodes`、`total_frames`、
 `robot_type`、`data_path`、`video_path`。
 
+!!! info "XTac-UMI G1 多一个 `meta/hardware.json`"
+    标准 LeRobotDataset 只在 `info` 里记 `robot_type`,说不出这批数据是**哪套硬件**采的。
+    所以录制时会额外写一个 `meta/hardware.json`:工位号 `robot_id`、每只夹爪的**固件 SN**、
+    以及它上面两枚触觉传感器的 SN(每枚带着自己对应的观测键)。
+
+    它是**独立文件**,不动上游的 `info` 结构,所以不影响任何按标准格式读这份数据集的工具。
+    字段含义与续录时的行为 → [`--robot.id` 与硬件清单](05-data-collection.md#robot-id)。
+
 ## 6.2 数据校验 {#62}
 
 用 `lerobot_check_dataset.py` 检查数据集完整性(帧数、视频、字段一致性等):

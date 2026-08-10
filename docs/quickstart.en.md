@@ -19,6 +19,8 @@ then come back.
       ([the difference](versions.md#v21)).
     - [Installation](02-environment.md) done — either path, with all three SDK packages importing.
     - [Serial permissions + ModemManager](03-host-hardware.md#31) one-off host setup done.
+    - **Bimanual rigs**: the [USB bandwidth budget](03-host-hardware.md#usb-budget) has been checked
+      — six cameras on one bus is how a camera ends up refusing to open.
     - Every leader gripper has been through [gripper calibration](04-calibration.md#41) (zero +
       travel span, once per unit). **An uncalibrated leader is refused at connect.** Calibrate
       both sides of a bimanual rig — doing one leaves the two channels on different scales.
@@ -75,6 +77,7 @@ each adding a layer of hardware — **preview at whichever stage you intend to r
     ```bash
     lerobot-teleoperate \
         --robot.type=bi_taccap_gripper \
+        --robot.id=0 \
         --robot.enable_tracker=false \
         --robot.enable_head_camera=false \
         --fps=30 \
@@ -96,6 +99,7 @@ each adding a layer of hardware — **preview at whichever stage you intend to r
     ```bash
     lerobot-teleoperate \
         --robot.type=bi_taccap_gripper \
+        --robot.id=0 \
         --robot.enable_tracker=true \
         --robot.enable_head_camera=false \
         --fps=30 \
@@ -110,6 +114,7 @@ each adding a layer of hardware — **preview at whichever stage you intend to r
     ```bash
     lerobot-teleoperate \
         --robot.type=bi_taccap_gripper \
+        --robot.id=0 \
         --robot.enable_tracker=true \
         --robot.enable_head_camera=true \
         --fps=30 \
@@ -137,17 +142,18 @@ whichever stage matches the recording you are about to make.
     has no `tcp.*` at all.
 
     ```bash
-    lerobot-record \\
-        --robot.type=bi_taccap_gripper \\
-        --robot.enable_tracker=false \\
-        --robot.enable_head_camera=false \\
-        --display_data=false \\
-        --dataset.repo_id=<your_org>/<dataset_name> \\
-        --dataset.num_episodes=1 \\
-        --dataset.fps=30 \\
-        --dataset.push_to_hub=false \\
-        --dataset.episode_time_s=120 \\
-        --dataset.reset_time_s=60 \\
+    lerobot-record \
+        --robot.type=bi_taccap_gripper \
+        --robot.id=0 \
+        --robot.enable_tracker=false \
+        --robot.enable_head_camera=false \
+        --display_data=false \
+        --dataset.repo_id=<your_org>/<dataset_name> \
+        --dataset.num_episodes=1 \
+        --dataset.fps=30 \
+        --dataset.push_to_hub=false \
+        --dataset.episode_time_s=120 \
+        --dataset.reset_time_s=60 \
         --dataset.single_task='Pick up the object'
     ```
 
@@ -156,17 +162,18 @@ whichever stage matches the recording you are about to make.
     Adds the EEF pose `tcp.*`. **This is the standard collection setup** — what you want almost every time.
 
     ```bash
-    lerobot-record \\
-        --robot.type=bi_taccap_gripper \\
-        --robot.enable_tracker=true \\
-        --robot.enable_head_camera=false \\
-        --display_data=false \\
-        --dataset.repo_id=<your_org>/<dataset_name> \\
-        --dataset.num_episodes=1 \\
-        --dataset.fps=30 \\
-        --dataset.push_to_hub=false \\
-        --dataset.episode_time_s=120 \\
-        --dataset.reset_time_s=60 \\
+    lerobot-record \
+        --robot.type=bi_taccap_gripper \
+        --robot.id=0 \
+        --robot.enable_tracker=true \
+        --robot.enable_head_camera=false \
+        --display_data=false \
+        --dataset.repo_id=<your_org>/<dataset_name> \
+        --dataset.num_episodes=1 \
+        --dataset.fps=30 \
+        --dataset.push_to_hub=false \
+        --dataset.episode_time_s=120 \
+        --dataset.reset_time_s=60 \
         --dataset.single_task='Pick up the object'
     ```
 
@@ -176,25 +183,31 @@ whichever stage matches the recording you are about to make.
     `head_camera.*` (see [§5.6](05-data-collection.md#56)). Expect noticeably more video.
 
     ```bash
-    lerobot-record \\
-        --robot.type=bi_taccap_gripper \\
-        --robot.enable_tracker=true \\
-        --robot.enable_head_camera=true \\
-        --display_data=false \\
-        --dataset.repo_id=<your_org>/<dataset_name> \\
-        --dataset.num_episodes=1 \\
-        --dataset.fps=30 \\
-        --dataset.push_to_hub=false \\
-        --dataset.episode_time_s=120 \\
-        --dataset.reset_time_s=60 \\
+    lerobot-record \
+        --robot.type=bi_taccap_gripper \
+        --robot.id=0 \
+        --robot.enable_tracker=true \
+        --robot.enable_head_camera=true \
+        --display_data=false \
+        --dataset.repo_id=<your_org>/<dataset_name> \
+        --dataset.num_episodes=1 \
+        --dataset.fps=30 \
+        --dataset.push_to_hub=false \
+        --dataset.episode_time_s=120 \
+        --dataset.reset_time_s=60 \
         --dataset.single_task='Pick up the object'
     ```
 
 **Single gripper**: `--robot.type=taccap_gripper` plus `--robot.side=left|right`;
 everything else is the same.
 
-Three that are easy to get wrong:
+A few that are easy to get wrong:
 
+- `--robot.id` is **required** — the station number for this rig, and **a bare number is what you
+  pass** (`0`, `1`, …; one per rig, and a bimanual rig is one rig). Leaving it out fails at
+  CLI-parse time. The prefix comes from `--robot.type`: `0` is stored as `taccap_0` on a single rig
+  and `bi_taccap_0` on a bimanual one →
+  [`--robot.id` and the hardware manifest](05-data-collection.md#robot-id).
 - `--robot.side` is only needed in single-gripper mode with **both grippers plugged in**; a lone unit auto-resolves.
 - `--fps` is the main loop rate, `--dataset.fps` is the recording sample rate — **two parameters**,
   usually set to the same value.

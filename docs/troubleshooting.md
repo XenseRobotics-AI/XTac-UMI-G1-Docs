@@ -7,6 +7,22 @@
 
 ## 环境与安装
 
+??? failure "`setup_env.sh --install` 一开始就报 `needs system packages that are not installed`"
+    **原因**:硬件 SDK 要现编译,而机器上缺 `build-essential` / `cmake` / `pkg-config` /
+    `git` / `curl` 里的某几个。脚本是**故意在开跑前就停**的——不然错误要等到 CMake 或链接阶段
+    才冒出来,看着像 SDK 坏了。
+    **解决**:照它打印的那一行敲即可,完整清单见
+    [前置:系统依赖包](02-environment.md#apt)。
+
+    另有一条只**告警**不阻断的:缺 `v4l-utils` / `usbutils`。**别跳过**——
+    `v4l2-ctl` 和 `lsusb -t` 是相机打不开时唯一能用的工具。
+
+??? failure "旧版本要求 `libudev-dev` / `libusb-1.0-0-dev`,装了却仍报缺失"
+    **原因**:旧版本的检查项,在装好的机器上也可能误报。
+    **解决**:升级到最新版主仓库——这两个包本就**不需要**(编译期没有任何东西 include 它们的
+    头文件,运行期用的是 Ubuntu 自带的 `libudev1` / `libusb-1.0-0`),检查项已删除。
+    必须停在旧版本时,把两个 `-dev` 包装上绕过即可。
+
 ??? failure "`import xensesdk` / `import xensevr_pc_service_sdk` / `import xense.taccap` 失败"
     **原因**:环境未装全,或未激活 `xense-taccap` 环境。
     **解决**:
@@ -123,9 +139,17 @@
     见 [5.6 头显相机 · 前置条件](05-data-collection.md#56)。
 
 ??? failure "`AttributeError: module 'xensevr_pc_service_sdk' has no attribute 'has_pico_camera_frame'`"
-    **原因**:环境里加载的是**旧版接口**(相机接口是随 v0.2.0 一起加的)。
-    **解决**:拉最新主仓库与子模块后重跑 `./setup_env.sh --install`;仍然为 `False` 时
-    用 `python -c "import xensevr_pc_service_sdk as x; print(x.__file__)"` 确认加载的是哪一份。
+    **原因**:环境里加载的是**旧版接口**(相机接口是随 v0.2.0 一起加的)。这个模块链接的 C SDK
+    取自已安装的 `.deb`,所以**先看装的是哪一版 `.deb`**:
+
+    ```bash
+    dpkg -s xensevr-pc-service | grep -E '^(Status|Version):'
+    ```
+
+    **解决**:拉最新主仓库后重跑 `./setup_env.sh --install`(它会把 `.deb` 一并升到基线版本);
+    仍然为 `False` 时用 `python -c "import xensevr_pc_service_sdk as x; print(x.__file__)"`
+    确认加载的是哪一份。`Status` 不是 `install ok installed`(例如用 `dpkg -r` 删过,残留为
+    `deinstall ok config-files`)时,同样按上面重装一次。
 
 ??? failure "日志反复出现左右眼偏差(skew)告警"
     **原因**:两只眼是两条独立消息,帧序号不同且时间戳差超过
@@ -150,6 +174,25 @@
 
 ## 采集与录制
 
+??? failure "命令刚敲下去就退出:`--robot.id is required`"
+    **原因**:`--robot.id` 是**必填**的工位号,而且是在**解析命令行时**就检查的——所以什么设备
+    都还没碰到就退出了,这是好事:不会有一台设备匿名录完一批数据。
+    **解决**:补上工位号,**填数字即可**(`0` / `1`…,一套设备一个,双夹爪算一套;
+    前缀按 `--robot.type` 自动补成 `taccap_0` / `bi_taccap_0`):
+
+    ```bash
+    lerobot-record --robot.type=bi_taccap_gripper --robot.id=0 ...
+    ```
+
+    它标的是工位、不是硬件,换夹爪不用改;设备的身份记在数据集的 `meta/hardware.json` 里,
+    见 [`--robot.id` 与硬件清单](05-data-collection.md#robot-id)。
+
+??? failure "续录时告警:数据集里已有的 `meta/hardware.json` 和当前硬件对不上"
+    **原因**:用 `--resume` 往一个数据集里续录,但**换了硬件**(换了夹爪或触觉传感器)。
+    程序**保留原文件**并打告警——已经录好的那些集确实来自原来那批设备,覆盖掉就等于把它们记错了。
+    **解决**:告警本身不阻断录制。确认是有意换硬件就继续,这条告警就是"这个数据集跨了两套硬件"
+    的记录;不是有意的(比如插错了一只夹爪),先停下来把设备换回去。
+
 ??? failure "开了 `--display_data=true` 后日志频繁出现 `[slow_frame]`"
     **原因**:Rerun 显示本身占掉了帧预算。实测双夹爪 + 头显(四路触觉、两路腕相机、两只眼),
     JPEG 压缩后每帧 13.2 ms,不压缩 3.1 ms——30 fps 的预算只有 33.3 ms,压缩就占了 40%,
@@ -170,6 +213,19 @@
     **解决**:掉线那一集的最后一两秒是重复的旧值,**建议弃用这一集**。检查线缆与 USB 口
     (反复出现且换口无效时见 [USB 带宽不够](#usb-bandwidth)),然后用 `--resume`
     在同一数据集上续录。见 [5.2 录制](05-data-collection.md#52)。
+
+??? failure "没有独显的机器上,一开录就报 `avcodec_open2(h264_nvenc)`"
+    **原因**:选中了 NVIDIA 的硬件编码器,而这台机器没有 NVIDIA 驱动,所以在**第一帧**打开
+    编码器时就失败。新版本的 `--dataset.vcodec=auto` 会真开一次编码会话来探测,不会再选错;
+    这是**旧版本**上会遇到的。
+    **解决**:手动指定 CPU 编码器,并把流式编码关掉——
+
+    ```bash
+    lerobot-record ... --dataset.vcodec=libsvtav1 --dataset.streaming_encoding=false
+    ```
+
+    没有 GPU 的主机为什么要关流式编码,见
+    [没有 NVIDIA GPU 的主机怎么录](05-data-collection.md#no-gpu)。
 
 ??? failure "编码器跟不上、日志出现丢帧告警"
     **原因**:实时编码队列满时会丢最旧帧(不阻塞采集循环)。
@@ -210,30 +266,103 @@
 
 ### USB 带宽不够 {#usb-bandwidth}
 
-??? failure "某一路相机打不开(`Cannot open camera N`),而且每次挂的不是同一路"
-    **原因**:**USB 带宽不够**,不是硬件坏了。一条 USB 总线能同时供给的相机带宽是有限的,
-    一只夹爪的 hub 上就挂着**三个** UVC 设备(两路触觉 + 腕相机),双夹爪再翻倍。
-    超出预算时,**最后打开的那一路失败**——而谁最后打开每次都可能不同,所以故障看着会"飘"。
-    设备节点存在、`lerobot-find-cameras` 也列得出来,只是打不开。
+!!! danger "双夹爪装机第一天就该量一次,别等到相机打不开"
+    这是双夹爪现场**最常见**的一类故障,而且它在插线的那一刻就已经决定了——决定它的是
+    **两只夹爪插在了哪几个物理口上**。量法见下面这条的「先确认是不是带宽」,
+    装机时顺手跑一遍 `lsusb -t`,比出问题后从序列号、线缆、驱动一路找回来快得多。
 
-    **判断**:分两半各跑一次,看是不是各自都能开——
+??? failure "某一路相机打不开(`Cannot open camera N`),而且每次挂的不是同一路"
+    **原因**:**USB 带宽不够**,不是硬件坏了。每个 UVC 相机在打开期间都要**独占预留**一份
+    等时(isochronous)带宽,而这份预算是**按 USB 2.0 总线算的**:一条总线 480 Mbit/s,
+    其中约 **384 Mbit/s** 能给等时传输。超出预算时,**最后打开的那一路失败**——而谁最后打开
+    每次都可能不同,所以故障看着会"飘"。设备节点存在、`lerobot-find-cameras` 也列得出来,
+    只是打不开。
+
+    !!! warning "插蓝色 USB 3 口没有用"
+        触觉与腕相机都是 **USB 2.0 设备**,插进 USB 3 口也还是落在那个控制器的 USB 2.0 总线上,
+        用的是同一份预算。
+
+    **先确认是不是带宽**——数一数每条总线上挂了几个相机:
+
+    ```bash
+    lsusb -t
+    ```
+
+    输出里**每一行 `480M` 的 `root_hub` 就是一份预算**。双夹爪一共 **六个**相机
+    (四路触觉 + 两路腕相机),再加上笔记本自带的摄像头;六个挤在一条总线上**很可能超**
+    (实测见下)。**两条 `480M` 总线各挂三个**则很宽裕。
+
+    启动时在另一个终端盯着内核日志:
+
+    ```bash
+    sudo dmesg -w | grep --line-buffered -iE "uvcvideo|bandwidth|disconnect"
+    ```
+
+    `--line-buffered` **不能省**,否则 `grep` 会一直缓冲、看着像卡住。相机打不开的那一刻打出
+    `Not enough bandwidth for altsetting N`,诊断到此结束——这一条不是软件能绕过去的。
+
+    **也可以把两半拆开各跑一次**,把"某个相机坏了"变成算术:
 
     ```bash
     # 只开触觉(关掉腕相机)
-    lerobot-teleoperate --robot.type=bi_taccap_gripper --robot.enable_wrist_camera=false \
+    lerobot-teleoperate --robot.type=bi_taccap_gripper --robot.id=0 \
+        --robot.left_enable_wrist_camera=false --robot.right_enable_wrist_camera=false \
         --robot.enable_tracker=false --fps=30 --display_data=true
 
     # 只开腕相机(关掉触觉)
-    lerobot-teleoperate --robot.type=bi_taccap_gripper --robot.enable_tactile=false \
+    lerobot-teleoperate --robot.type=bi_taccap_gripper --robot.id=0 \
+        --robot.enable_tactile=false \
         --robot.enable_tracker=false --fps=30 --display_data=true
     ```
 
     两半分别都正常、合起来就失败,就是带宽问题。
-
-    **解决**:腕相机默认已用 `MJPG`(压缩格式)让出带宽,所以先确认没被改成 `YUYV`
-    (`--robot.wrist_camera_fourcc`)。仍然超的话,把相机分到**不同的 USB 控制器**上
-    (换根不同的物理 USB 口,尤其别都插在同一个扩展坞或 hub 上);或降低 `--robot.tactile_fps`。
     **`enable_tactile=false` 只用于这一步判断,不要拿它录数据**——那样录出来的数据集没有触觉。
+
+    **解决**:先确认腕相机没被从默认的 `MJPG` 改成 `YUYV`(`--robot.wrist_camera_fourcc`)
+    ——`MJPG` 正是为让出带宽才设为默认的。仍然超的话,**唯一有效的办法是加一个 USB 主控制器**,
+    不是加 hub:Thunderbolt / USB4 扩展坞自带 xHCI 控制器,普通 hub 不带。接上之后把一只夹爪
+    插过去,再跑 `lsusb -t` 确认多出来的是**一行新的 `480M` root_hub**,而不是又一层嵌套 hub。
+
+    在装上第二个控制器之前,可以先**关掉腕相机**录:触觉、位姿、夹爪开度都还在,但数据集里
+    就没有 `{side}_wrist` 这个键了——**开录前就要定下来**,不要一半有一半没有,那是两套不兼容
+    的观测结构。
+
+??? failure "想知道到底超了多少"
+    **六个相机能不能挤在一条总线上,没有一个放之四海的答案**——每个设备申请多少,不同批次
+    可能不同,所以**以这台机器实测为准**,别照搬别处的结论。这也正是它容易被当成
+    "硬件时好时坏"的原因。
+
+    一台实测超预算的双夹爪主机(只有一条 `480M` 总线)量到的是:
+
+    | 开哪些相机 | 预留 | 结果 |
+    |---|---|---|
+    | 只开四路触觉(两侧 `_enable_wrist_camera=false`) | 242 Mbit/s | 正常 |
+    | 只开两路腕相机(`--robot.enable_tactile=false`) | 够用 | 正常 |
+    | 六个全开(默认) | 6 × 60.4 = 362 Mbit/s | **失败** |
+
+    `altsetting 6` 是每微帧 944 字节,即**每枚触觉 60.4 Mbit/s**;而 320x240 YUYV@30 的实际
+    数据量只有约 37 Mbit/s——设备申请的比实际用的多,腕相机更多。362 对 ~384,**就差在边上**,
+    所以每次挂的不是同一路、看着像偶发。
+
+    自己读这些数字:
+
+    ```bash
+    # I:* 是当前生效的 altsetting;类名在这个文件里是小写的 (video)
+    sudo grep -E "^(T:|I:\*.*video|E:.*Isoc)" /sys/kernel/debug/usb/devices
+    ```
+
+    每个 video 接口的 `Alt=` 与它 `E:` 行的 `MxPS=` 给出预留量(`MxPS × 8000 × 8` bit/s),
+    **按总线求和**再和 ~384 Mbit/s 比。设备申请多少写在**固件的 UVC 描述符**里,
+    采集程序改不了——所以结论只能是"这条总线放不下这几个相机",而不是某个参数没调对。
+
+??? failure "以下三条看着像解法,实际没用"
+    - **换一个物理 USB 口**。相机是 USB 2.0 设备,**同一个控制器上的所有口共用一条总线**。
+      要换就得换到**另一个控制器**上(见上面那条)。
+    - **调低 `--robot.tactile_fps`**。它只节流 Python 侧的读取循环;传感器 SDK 的取流接口
+      不接受 fps 参数,**USB 上的流没有变**。
+    - **`uvcvideo quirks=128`**(`UVC_QUIRK_FIX_BANDWIDTH`)。实测无效:它按
+      `宽 × 高 × bpp` 重算预留量,而压缩格式没有有意义的 bpp——对超得最多的 MJPEG 腕相机
+      无从下手。
 
 ## 数据与磁盘
 

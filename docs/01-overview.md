@@ -94,7 +94,8 @@ flowchart TB
 - **只支持 Linux amd64。**采集路径是 V4L2 + UVC,macOS / Windows 用不了。已验证 Ubuntu 22.04 / 24.04。
 - **Python 至少 3.12。**主仓库 `requires-python = ">=3.12"`,`conda_environment.yaml` 也固定
   `python=3.12`;3.10/3.11 装不上,不是"能跑但不推荐"。
-- **GPU 可选,但用 NVIDIA 就得 ≥ 570.144。**多路视频建议用 NVIDIA 硬件编码,没有 GPU 也能采;
+- **GPU 可选,但用 NVIDIA 就得 ≥ 570.144。**多路视频建议用 NVIDIA 硬件编码,没有 GPU 也能采
+  ——只是要多加一个参数,见 [没有 NVIDIA GPU 的主机怎么录](05-data-collection.md#no-gpu);
   装了 NVIDIA GPU 的话驱动**不低于 570.144**。
 - **强烈推荐 Mamba / Miniforge** 管理环境,依赖求解比 conda 快约 10×。
 - **夹爪 SDK 从源码本地构建**(`third_party/taccap-gripper`),不是从 PyPI 装的。

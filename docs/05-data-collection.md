@@ -29,6 +29,7 @@
     ```bash
     lerobot-teleoperate \
         --robot.type=bi_taccap_gripper \
+        --robot.id=0 \
         --robot.enable_tracker=false \
         --robot.enable_head_camera=false \
         --fps=30 \
@@ -43,6 +44,7 @@
     ```bash
     lerobot-teleoperate \
         --robot.type=bi_taccap_gripper \
+        --robot.id=0 \
         --robot.enable_tracker=true \
         --robot.enable_head_camera=false \
         --fps=30 \
@@ -57,6 +59,7 @@
     ```bash
     lerobot-teleoperate \
         --robot.type=bi_taccap_gripper \
+        --robot.id=0 \
         --robot.enable_tracker=true \
         --robot.enable_head_camera=true \
         --fps=30 \
@@ -120,6 +123,7 @@
     ```bash
     lerobot-record \
         --robot.type=bi_taccap_gripper \
+        --robot.id=0 \
         --robot.enable_tracker=false \
         --robot.enable_head_camera=false \
         --display_data=false \
@@ -139,6 +143,7 @@
     ```bash
     lerobot-record \
         --robot.type=bi_taccap_gripper \
+        --robot.id=0 \
         --robot.enable_tracker=true \
         --robot.enable_head_camera=false \
         --display_data=false \
@@ -158,6 +163,7 @@
     ```bash
     lerobot-record \
         --robot.type=bi_taccap_gripper \
+        --robot.id=0 \
         --robot.enable_tracker=true \
         --robot.enable_head_camera=true \
         --display_data=false \
@@ -235,6 +241,7 @@
 | 参数 | 默认 | 含义 |
 |---|---|---|
 | `robot.type` | **必填** | `taccap_gripper`(单夹爪)/ `bi_taccap_gripper`(双夹爪) |
+| `robot.id` | **必填** | 这套设备的**工位号**,填数字即可(`0` / `1`…),前缀按 `robot.type` 自动补;漏填直接报错退出,见 [`--robot.id` 与硬件清单](#robot-id) |
 | `fps` | `30` | **主循环**帧率(设备读取与预览)。与 `--dataset.fps`(落盘采样率)是两个参数,通常设成相同值 |
 | `display_data` | `false` | 在 Rerun 中显示相机画面与 3D 视图 |
 | `show_trajectory` | `true` | Rerun 中叠加 3D 位姿 + 轨迹(需 `display_data` 且有 `tcp.*`) |
@@ -266,6 +273,21 @@
 | `robot.enable_tactile` | `true` | 关闭则整条触觉链路都不接入(不发现、不落盘)。**排查用,不是录制模式** |
 | `robot.expected_tactiles_per_side` | `2` | 每侧应有几枚触觉;数量对不上会直接报错,用于抓装配/烧录错误 |
 
+!!! warning "双夹爪上,**按单元**的那几项要带 `left_` / `right_` 前缀"
+    上表按单夹爪写。`bi_taccap_gripper` 有两个单元,所以下面这几项在它上面是**每侧一个**——
+    写成不带前缀的形式会因为没有这个字段而报错:
+
+    | 单夹爪 | 双夹爪 |
+    |---|---|
+    | `--robot.enable_wrist_camera` | `--robot.left_enable_wrist_camera` / `--robot.right_enable_wrist_camera` |
+    | `--robot.tracker_serial` | `--robot.left_tracker_serial` / `--robot.right_tracker_serial` |
+    | `--robot.enable_gripper` / `--robot.enable_imu` | 同样加 `left_` / `right_` 前缀 |
+    | `--robot.gripper_open_rad`、`--robot.tracker_to_ee_pos/_quat` | 同上 |
+
+    其余的都是**两侧共用**一个开关:`--robot.enable_tactile`、`--robot.enable_tracker`、
+    `--robot.tactile_*`、`--robot.wrist_camera_width/_height/_fps/_fourcc`、
+    `--robot.head_camera_*`。
+
 Pico4 Ultra 企业版追踪器上电后,6-DoF 位姿**自动录制**——追踪器按序列号末尾字母 `G` 前一个数字(单左双右)
 自动匹配本单元侧别。
 
@@ -275,6 +297,71 @@ Pico4 Ultra 企业版追踪器上电后,6-DoF 位姿**自动录制**——追踪
 !!! tip "追踪器序列号不合规 / PC 服务枚举不稳"
     用 `--robot.tracker_serial=<SN>` 直接钉住序列号——**逐字使用**,不枚举、不校验
     (打错会在 connect 时报设备找不到)。留空(默认)则走自动发现。
+
+### `--robot.id` 与硬件清单 {#robot-id}
+
+两件事,回答的是两个不同的问题。
+
+**`--robot.id` 是工位号**,**一套设备一个**——双夹爪算一套,不是两个。它标的是**工位**、
+不是工位上装的硬件,所以换了夹爪也不用改。它会出现在日志前缀、标定文件名和下面的硬件清单里,
+但**不是数据集里的一列**。
+
+**填数字就行**,前缀按 `--robot.type` 自动补:
+
+| 命令里写 | `--robot.type` | 实际存成 |
+|---|---|---|
+| `--robot.id=0` | `taccap_gripper`(单夹爪) | `taccap_0` |
+| `--robot.id=0` | `bi_taccap_gripper`(双夹爪) | `bi_taccap_0` |
+
+前缀是 `--robot.type` 已经说过的事,再手敲一遍只会敲错——双夹爪上写成 `--robot.id=taccap_0`,
+标签就和实际设备类型对不上了,而这在数据里看不出来。**不是纯数字的一律原样保留**,
+所以老命令里的 `--robot.id=taccap_0` 照样能用,对应的标定文件名也不会变。
+
+**它是必填的**:漏填或填空会在**解析命令行时**就退出,还没碰到任何设备:
+
+```text
+ValueError: --robot.id is required: the station label for this rig, e.g. --robot.id=0 …
+```
+
+这样做是为了不让一台设备**匿名**录完一批数据。编号本身不校验——**真正的身份是下面的序列号**,
+所以按房间号之类命名也允许。
+
+**硬件清单才是身份。**`lerobot-record` 在 `connect()` 之后立刻把
+`meta/hardware.json` 写进数据集:每只夹爪的**固件 SN**,加上它上面两枚触觉传感器的 SN,
+每枚都带着自己对应的观测键。
+
+```json
+{
+  "robot_type": "bi_taccap_gripper",
+  "robot_id": "bi_taccap_0",
+  "role": "leader",
+  "units": [
+    {
+      "side": "left",
+      "gripper_sn": "TCGU01A24Z0001m",
+      "tactile_sensors": [
+        { "finger": "left",  "observation_key": "left_tactile_left",  "serial": "GSPS01A25Z0011" },
+        { "finger": "right", "observation_key": "left_tactile_right", "serial": "GSPS01A25Z0012" }
+      ]
+    }
+  ]
+}
+```
+
+- `side` 是**哪只夹爪**,`finger` 是**这只夹爪上的哪一枚触觉**——两者都叫左右,而且是**互相独立**的
+  ([单左双右](03-host-hardware.md#33)对夹爪 SN 和触觉 SN 各判一次)。所以每枚触觉还带上
+  `observation_key`,数据集里的一列能直接回溯到具体哪一枚传感器,不必再自己套一遍命名规则。
+- `gripper_sn` 是**固件 SN**(连接时向固件问的),不是 CH343 的 `mcu_serial`——后者标的是
+  USB 串口芯片,换根转接就变了。
+- 单夹爪写的是**同样的结构**,只是 `units` 里只有一项;读数据集的程序只需要一套代码。
+- 某一侧夹爪没开时该项记 `"gripper_sn": null`(不是省略);`--robot.enable_tactile=false` 时
+  `tactile_sensors` 为空列表。
+- 它是**独立的一个文件**,不是 `meta/info.json` 里的一个键——后者的结构属于上游 lerobot。
+- 用 `--resume` 在**换了硬件**的情况下续录时,原文件会被保留并打一条告警。已经录好的那些集
+  确实来自原来那批设备,覆盖掉就等于把它们记错了;这条告警就是"这个数据集跨了两套硬件"的信号。
+
+!!! note "追踪器和腕相机不在清单里"
+    它们是**装上去的配件**;夹爪 + 它的两枚触觉才是这份数据讲的那个单元。
 
 ## 5.3 每帧记录内容 {#53}
 
@@ -375,7 +462,7 @@ Pico4 Ultra 企业版追踪器上电后,6-DoF 位姿**自动录制**——追踪
 
 ```bash
 lerobot-record \
-    --robot.type=taccap_gripper --robot.side=right \
+    --robot.type=taccap_gripper --robot.id=0 --robot.side=right \
     --dataset.repo_id=<your_org>/<your_dataset> \
     --dataset.num_episodes=20 \
     --dataset.fps=30 \
@@ -392,11 +479,52 @@ lerobot-record \
   (`--dataset.encoder_queue_maxsize`,约 1 秒帧量);编码器跟不上时**丢弃最旧帧并告警**,
   不阻塞采集循环。
 - `--dataset.vcodec=auto` 会优先启用可用的硬件编码。推荐采集主机配 NVIDIA GPU,
-  这样可使用 GPU H.264 硬件编码器,降低多路视频实时编码时的 CPU 压力;无 NVIDIA GPU 时仍可录制,
-  但高分辨率或多相机场景更容易出现编码跟不上。
+  这样可使用 GPU H.264 硬件编码器,降低多路视频实时编码时的 CPU 压力。
+  **没有 NVIDIA GPU 的主机照样能录**,但要改一个参数,见下。
 
 !!! note "编码器预热"
     每集开录前会先把编码器准备好,不占用第一帧的时间预算。这是自动的,不需要设置。
+
+### 没有 NVIDIA GPU 的主机怎么录 {#no-gpu}
+
+上面两个默认值(`--dataset.vcodec=auto` + `--dataset.streaming_encoding=true`)是按**装了
+NVIDIA 显卡**来配的。纯 CPU 的服务器、虚拟机、没有独显的笔记本上,**把流式编码关掉**:
+
+```bash
+lerobot-record \
+    ... \
+    --dataset.streaming_encoding=false
+```
+
+**编码器不用管。**`--dataset.vcodec=auto`(默认)是**真的去开一次编码会话**来探测的,
+所以没有 NVIDIA 驱动的机器上它会报告"没有硬件编码器"并回落到 `libsvtav1`
+(CPU 上的 AV1,也是离线数据工具的默认编码器)。想让命令自带说明的话,显式写
+`--dataset.vcodec=libsvtav1` 也完全可以。
+
+!!! warning "旧版本会在这里选错"
+    更早的版本只查"FFmpeg 编译时带没带这个编码器",而我们装的 PyAV 本身就编进了 nvenc——
+    所以在**完全没有 GPU** 的机器上 `auto` 也会选中 `h264_nvenc`,然后在**第一帧**报
+    `avcodec_open2(h264_nvenc)` 失败。停在旧版本时,手动写 `--dataset.vcodec=libsvtav1`。
+
+**为什么要关流式编码。**流式编码是把编码放在采集主循环上跑——显卡上有专门的编码芯片,
+CPU 只负责喂帧,所以划算;换成 `libsvtav1` 之后,**编码器就是 CPU 本身**,和采集循环抢同样的
+核心。双夹爪一帧要处理六到八张图,而 30 fps 的预算只有 33.3 ms,于是先看到的就是
+`[slow_frame] ... overrun=`。
+
+关掉之后,帧在采集期间先写出来,到 `save_episode()` 再批量编码:**存盘慢且看得见,
+采集准时**。这个取舍是对的——**存盘慢只是多等一会儿,采集掉帧丢的是补不回来的数据**。
+
+!!! tip "确实想在多核服务器上继续开流式编码"
+    两个旋钮值得知道:
+
+    | 参数 | 默认 | 什么时候动它 |
+    |---|---|---|
+    | `--dataset.encoder_threads` | 自动 | 默认让编码器自己挑,在大机器上意味着 `libsvtav1` 会拿走采集需要的核。**每个编码器给 `2`** 是个稳妥上限 |
+    | `--dataset.encoder_queue_maxsize` | `30` | 30 fps 下约 1 秒缓冲。它是反压阀:编码跟不上时在这里挡住,而不是让内存一直涨 |
+
+!!! note "终端提示「建议把流式编码开回来」时"
+    `--dataset.streaming_encoding=false` 时 `lerobot-record` 会打印一条提示,建议在硬件跟得上
+    的机器上开回来。**没有 GPU 的主机就是跟不上的那一种**,这条提示不适用——关着是有意为之。
 
 ## 5.5 分集与复位 {#55}
 
@@ -417,6 +545,7 @@ lerobot-record \
 ```bash
 lerobot-record \
     --robot.type=bi_taccap_gripper \
+    --robot.id=0 \
     --robot.enable_tracker=true \
     --robot.enable_head_camera=true \
     --display_data=false \

@@ -34,6 +34,7 @@ so they show different things.
     ```bash
     lerobot-teleoperate \
         --robot.type=bi_taccap_gripper \
+        --robot.id=0 \
         --robot.enable_tracker=false \
         --robot.enable_head_camera=false \
         --fps=30 \
@@ -49,6 +50,7 @@ so they show different things.
     ```bash
     lerobot-teleoperate \
         --robot.type=bi_taccap_gripper \
+        --robot.id=0 \
         --robot.enable_tracker=true \
         --robot.enable_head_camera=false \
         --fps=30 \
@@ -64,6 +66,7 @@ so they show different things.
     ```bash
     lerobot-teleoperate \
         --robot.type=bi_taccap_gripper \
+        --robot.id=0 \
         --robot.enable_tracker=true \
         --robot.enable_head_camera=true \
         --fps=30 \
@@ -135,6 +138,7 @@ serials. Tactile sensors, wrist cameras and trackers each match left/right by th
     ```bash
     lerobot-record \
         --robot.type=bi_taccap_gripper \
+        --robot.id=0 \
         --robot.enable_tracker=false \
         --robot.enable_head_camera=false \
         --display_data=false \
@@ -155,6 +159,7 @@ serials. Tactile sensors, wrist cameras and trackers each match left/right by th
     ```bash
     lerobot-record \
         --robot.type=bi_taccap_gripper \
+        --robot.id=0 \
         --robot.enable_tracker=true \
         --robot.enable_head_camera=false \
         --display_data=false \
@@ -175,6 +180,7 @@ serials. Tactile sensors, wrist cameras and trackers each match left/right by th
     ```bash
     lerobot-record \
         --robot.type=bi_taccap_gripper \
+        --robot.id=0 \
         --robot.enable_tracker=true \
         --robot.enable_head_camera=true \
         --display_data=false \
@@ -260,6 +266,7 @@ official [recording guide](https://huggingface.co/docs/lerobot/v0.5.1/en/il_robo
 | Parameter | Default | Meaning |
 |---|---|---|
 | `robot.type` | **required** | `taccap_gripper` (single) / `bi_taccap_gripper` (bimanual) |
+| `robot.id` | **required** | The **station number** for this rig — pass a bare number (`0`, `1`, …); the prefix is filled in from `robot.type`. Omitting it fails at CLI-parse time. See [`--robot.id` and the hardware manifest](#robot-id) |
 | `fps` | `30` | **Main loop** rate (device reads and preview). Separate from `--dataset.fps` (the recording sample rate) — two parameters, usually set the same |
 | `display_data` | `false` | Show camera streams and the 3D view in Rerun |
 | `show_trajectory` | `true` | Overlay the 3D pose + trajectory in Rerun (needs `display_data` and a `tcp.*`) |
@@ -291,6 +298,22 @@ official [recording guide](https://huggingface.co/docs/lerobot/v0.5.1/en/il_robo
 | `robot.enable_tactile` | `true` | Off takes the tactile sensors out of the run entirely — no discovery, no keys. **A diagnostic, not a way to record** |
 | `robot.expected_tactiles_per_side` | `2` | How many sensors each side carries; a different count is an error, which is how a mis-installed sensor is caught |
 
+!!! warning "On a bimanual rig, the **per-unit** flags take a `left_` / `right_` prefix"
+    The table above is written for the single gripper. `bi_taccap_gripper` drives two units, so
+    these exist once per side — spelled without the prefix, the field does not exist and the run
+    fails:
+
+    | Single | Bimanual |
+    |---|---|
+    | `--robot.enable_wrist_camera` | `--robot.left_enable_wrist_camera` / `--robot.right_enable_wrist_camera` |
+    | `--robot.tracker_serial` | `--robot.left_tracker_serial` / `--robot.right_tracker_serial` |
+    | `--robot.enable_gripper` / `--robot.enable_imu` | same, with the `left_` / `right_` prefix |
+    | `--robot.gripper_open_rad`, `--robot.tracker_to_ee_pos/_quat` | same |
+
+    Everything else is one switch for both sides: `--robot.enable_tactile`,
+    `--robot.enable_tracker`, `--robot.tactile_*`,
+    `--robot.wrist_camera_width/_height/_fps/_fourcc`, `--robot.head_camera_*`.
+
 Once the Pico4 Ultra Enterprise tracker is powered on, the 6-DoF pose is **recorded
 automatically** — the tracker matches this unit's side from the digit before its serial's trailing `G`
 (odd-left / even-right).
@@ -302,6 +325,78 @@ automatically** — the tracker matches this unit's side from the digit before i
     Pin the serial directly with `--robot.tracker_serial=<SN>` — it is used **verbatim**, with no
     enumeration and no validation (a typo surfaces as a device-not-found error at connect time).
     Leave it unset (the default) for auto-discovery.
+
+### `--robot.id` and the hardware manifest {#robot-id}
+
+Two different things, answering two different questions.
+
+**`--robot.id` is the station number** — **one per rig**, and a bimanual rig is one rig, not two. It
+names the *seat*, not the hardware in it, so it stays put when a gripper is swapped. It reaches the
+log prefix, the calibration filename and the manifest below, but it is **not a dataset column**.
+
+**Pass a bare number.** The prefix is filled in from `--robot.type`:
+
+| You type | `--robot.type` | Stored as |
+|---|---|---|
+| `--robot.id=0` | `taccap_gripper` (single) | `taccap_0` |
+| `--robot.id=0` | `bi_taccap_gripper` (bimanual) | `bi_taccap_0` |
+
+The prefix only repeats what `--robot.type` already said, and typing it by hand is how it goes
+wrong: `--robot.type=bi_taccap_gripper --robot.id=taccap_0` gives a label that disagrees with the
+rig it names, and nothing in the data shows it. **Anything that is not all digits is taken
+verbatim**, so an existing `--robot.id=taccap_0` keeps working — and so does the calibration file
+named after it.
+
+**It is required.** A missing or blank id fails at **CLI-parse time**, before any device is touched:
+
+```text
+ValueError: --robot.id is required: the station label for this rig, e.g. --robot.id=0 …
+```
+
+That is so a rig cannot spin up and record a batch **anonymously**. The number itself is not
+policed — **identity lives in the serials below**, so a rig named after a room is allowed too.
+
+**The hardware manifest is the identity.** `lerobot-record` writes `meta/hardware.json` into the
+dataset right after `connect()`: each gripper's **firmware SN** plus the two tactile serials on that
+gripper, each carrying the observation key it feeds.
+
+```json
+{
+  "robot_type": "bi_taccap_gripper",
+  "robot_id": "bi_taccap_0",
+  "role": "leader",
+  "units": [
+    {
+      "side": "left",
+      "gripper_sn": "TCGU01A24Z0001m",
+      "tactile_sensors": [
+        { "finger": "left",  "observation_key": "left_tactile_left",  "serial": "GSPS01A25Z0011" },
+        { "finger": "right", "observation_key": "left_tactile_right", "serial": "GSPS01A25Z0012" }
+      ]
+    }
+  ]
+}
+```
+
+- `side` is **which gripper**, `finger` is **which sensor on it** — both are called left/right and
+  they are **independent** ([odd-left / even-right](03-host-hardware.md#33) is applied once to the
+  gripper's serial and again to each tactile's). Each sensor therefore also carries its
+  `observation_key`, so a dataset column traces back to a physical sensor without re-deriving the
+  naming rule.
+- `gripper_sn` is the **firmware** SN, read over the wire at connect — never the CH343
+  `mcu_serial`, which identifies the USB-serial adapter and changes when the adapter does.
+- The single-arm robot writes the **same shape** with one entry in `units`, so anything reading
+  these datasets needs one code path, not two.
+- A side whose gripper is off records `"gripper_sn": null` rather than being omitted;
+  `--robot.enable_tactile=false` leaves `tactile_sensors` empty.
+- It is a **file of its own**, not a key in `meta/info.json` — that schema belongs to upstream.
+- Resuming a dataset on *different* hardware keeps the original file and warns. The episodes already
+  recorded came from the devices named there, so overwriting would misattribute every one of them;
+  the warning is the signal that this dataset now spans two rigs.
+
+!!! note "Trackers and wrist cameras are deliberately left out"
+    They are mounted accessories; the gripper plus its two tactile sensors is the unit the data is
+    about.
 
 ## 5.3 What each frame records {#53}
 
@@ -417,7 +512,7 @@ ends**. On by default (`--dataset.streaming_encoding=true`):
 
 ```bash
 lerobot-record \
-    --robot.type=taccap_gripper --robot.side=right \
+    --robot.type=taccap_gripper --robot.id=0 --robot.side=right \
     --dataset.repo_id=<your_org>/<your_dataset> \
     --dataset.num_episodes=20 \
     --dataset.fps=30 \
@@ -435,12 +530,57 @@ lerobot-record \
   it **drops the oldest frame and warns** rather than blocking the collection loop.
 - `--dataset.vcodec=auto` prefers hardware encoding where available. An NVIDIA GPU on the
   collection host is recommended so the GPU H.264 encoder can take the CPU load off encoding
-  several live video streams. Recording still works without one, but high resolutions or many
-  cameras make it likelier that encoding falls behind.
+  several live video streams. **A host without an NVIDIA GPU records fine too**, with one flag
+  changed — see below.
 
 !!! note "Encoder warm-up"
     Encoders are made ready before each episode starts, so the first frame does not pay for it.
     This is automatic — nothing to set.
+
+### Recording on a machine with no NVIDIA GPU {#no-gpu}
+
+The two defaults above (`--dataset.vcodec=auto` + `--dataset.streaming_encoding=true`) assume an
+NVIDIA card. On a CPU-only server, a VM, or a laptop with no discrete GPU, **turn streaming encoding
+off**:
+
+```bash
+lerobot-record \
+    ... \
+    --dataset.streaming_encoding=false
+```
+
+**The codec you can leave alone.** `--dataset.vcodec=auto` (the default) probes by **actually
+opening an encode session**, so on a host with no NVIDIA driver it reports no hardware encoder and
+falls back to `libsvtav1` — AV1 on the CPU, which is what the offline dataset tools already default
+to. Passing `--dataset.vcodec=libsvtav1` explicitly is fine too, and worth doing if you want the
+command to be self-documenting about where it can run.
+
+!!! warning "Older builds pick wrong here"
+    Earlier versions only checked which encoders FFmpeg was **built** with, and the PyAV we install
+    ships nvenc compiled in — so `auto` selected `h264_nvenc` even on a machine with no GPU at all,
+    and recording died on the **first frame** with `avcodec_open2(h264_nvenc)`. On a build from
+    before that fix, pass `--dataset.vcodec=libsvtav1` by hand.
+
+**Why streaming encoding goes off.** Streaming encoding runs the encoder inline with capture, which
+pays off when the encoder is a dedicated chip on the GPU and the CPU only feeds it frames. With
+`libsvtav1` the encoder **is** the CPU, competing with the capture loop for the same cores — on a
+bimanual rig that is six to eight images per frame inside a 33.3 ms budget at 30 fps, so the first
+thing you see is `[slow_frame] ... overrun=`.
+
+With it off, frames are written out during capture and encoded in a batch at `save_episode()`:
+**episode saves become slow and visible, capture stays on time.** That is the right trade — a late
+save costs you patience, a starved capture loop costs you data you cannot re-record.
+
+!!! tip "If you want to keep streaming encoding on anyway, e.g. on a many-core server"
+    | Flag | Default | Why you would touch it |
+    |---|---|---|
+    | `--dataset.encoder_threads` | auto | The default lets the codec pick, which on a big machine means `libsvtav1` helping itself to cores the capture loop needs. **`2` per encoder** is a sane cap |
+    | `--dataset.encoder_queue_maxsize` | `30` | ~1 s of buffer at 30 fps. It is the backpressure valve: when the encoder falls behind, capture blocks here instead of memory growing |
+
+!!! note "About the reminder to turn streaming encoding back on"
+    With `--dataset.streaming_encoding=false`, `lerobot-record` prints a reminder suggesting you
+    re-enable it if the hardware is capable. **A GPU-less host is not**, so the suggestion does not
+    apply — leaving it off is deliberate.
 
 ## 5.5 Episodes and resets {#55}
 
@@ -464,6 +604,7 @@ Both `taccap_gripper` (single) and `bi_taccap_gripper` support it, with the same
 ```bash
 lerobot-record \
     --robot.type=bi_taccap_gripper \
+    --robot.id=0 \
     --robot.enable_tracker=true \
     --robot.enable_head_camera=true \
     --display_data=false \

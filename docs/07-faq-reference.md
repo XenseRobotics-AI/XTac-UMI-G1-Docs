@@ -9,6 +9,7 @@
 
 | 配置项 | 默认 | 作用 |
 |---|---|---|
+| `robot.id` | **必填** | 这套设备的工位号,填数字即可(`0` / `1`…),前缀按 `robot.type` 自动补成 `taccap_0` / `bi_taccap_0`;漏填在解析命令行时即报错 → [`--robot.id` 与硬件清单](05-data-collection.md#robot-id) |
 | `robot.side` | 自动 | `left`/`right`,**单夹爪模式**下两只都接着时必填;只接一只则自动选中 |
 | `robot.role` | `leader` | 填 `follower` 绑定从夹爪 |
 | `robot.enable_tracker` | `true` | 关闭则只录触觉 + 夹爪 |
@@ -37,6 +38,13 @@
 
 !!! note "完整字段"
     上表是常用项;完整字段以主仓库附带的设备说明为准。
+
+!!! warning "双夹爪:按单元的那几项要带 `left_` / `right_` 前缀"
+    上表按单夹爪写。`bi_taccap_gripper` 上 `enable_wrist_camera`、`tracker_serial`、
+    `enable_gripper`、`enable_imu`、`gripper_open_rad`、`tracker_to_ee_pos/_quat`
+    都是**每侧一个**(`--robot.left_enable_wrist_camera` 之类);触觉、追踪器总开关、
+    腕相机分辨率、头显相机则两侧共用。见
+    [5.2 参数详解](05-data-collection.md#params)。
 
 ## 7.3 术语表
 
@@ -67,5 +75,5 @@
 
 - 数采主仓库 [`xense-taccap-lerobot`](https://github.com/Vertax42/xense-taccap-lerobot) 附带的设备说明
 - 夹爪 SDK [`TacCap-Gripper`](https://github.com/Vertax42/TacCap-Gripper)(子模块 `third_party/taccap-gripper/`)
-- 追踪器 PC 服务 [`XenseVR-PC-Service`](https://github.com/Vertax42/XenseVR-PC-Service)(子模块 `third_party/XenseVR-PC-Service/`)
+- 追踪器 PC 服务 [`XenseVR-PC-Service`](https://github.com/Vertax42/XenseVR-PC-Service)(**不是子模块**,以 `.deb` 形式安装到 `/opt/apps/roboticsservice`,见 [2.4 一键安装](02-environment.md#24))
 - 视触觉传感器 SDK [`xensesdk`](https://github.com/XenseRobotics/xensesdk) · [文档站](https://xensedoc.readthedocs.io/en/latest/)
