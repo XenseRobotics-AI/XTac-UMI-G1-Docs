@@ -89,7 +89,7 @@ flowchart LR
 |---|---|---|
 | 操作系统 / 架构 | Ubuntu 22.04 / 24.04,**amd64** | Ubuntu 22.04.5 LTS / 24.04.4 LTS,x86_64 |
 | Linux 内核 | 不构成约束 | 6.8 / 6.14 / 7.0 系列均已验证 |
-| NVIDIA GPU / 驱动 | GPU 可选;**装了 NVIDIA GPU 则驱动需 ≥ 570.144**。多路视频建议使用 NVIDIA H.264 硬件编码 | 驱动 570.144 / 580.126.09 |
+| NVIDIA GPU / 驱动 | GPU 可选(无 GPU 的录制方式见 [5.4](05-data-collection.md#no-gpu));**装了 NVIDIA GPU 则驱动需 ≥ 570.144**。多路视频建议使用 NVIDIA H.264 硬件编码 | 驱动 570.144 / 580.126.09 |
 | Python | **≥ 3.12**(`pyproject.toml` 的 `requires-python`;`conda_environment.yaml` 固定 `python=3.12`) | 3.12.13 |
 | PyTorch | `torch>=2.2.1,<2.11.0`;`torchvision>=0.21.0,<0.26.0` | 2.10.0 / torchvision 0.25.0 |
 | `torchcodec` | `>=0.2.1,<0.11.0`,由 `setup_env.sh` **按当前 torch 版本自动对齐**(不匹配会强制重装) | 0.10.0 |
@@ -97,17 +97,30 @@ flowchart LR
 | `rerun-sdk` | `>=0.24.0,<0.27.0`(`--display_data` 用) | 0.26.2 |
 | `opencv-python` | 固定 `==4.12.0.88`(XenseRobotics 各 SDK 统一) | 4.12.0.88 |
 | NumPy | `>=1.26.4` | 2.2.6 |
-| `xense-taccap-lerobot` | 基于 lerobot 0.5.1 定制;版本号 `0.5.1+xtac.0.0.3`(与文档版本同步) | `main@e68d7e05` |
+| `xense-taccap-lerobot` | 基于 lerobot 0.5.1 定制;版本号 `0.5.1+xtac.0.0.3`(与文档版本同步) | `main@28c871b3` |
 | `xense.taccap`(`taccap-gripper` SDK) | 与主仓库子模块版本配套 | 0.1.7(子模块 `83314c8`) |
 | 夹爪固件命令集 | **V2.1**(帧格式另计,为 V1.8;区别见[三套编号](#v21)) | 命令集 V2.1 |
 | 夹爪固件构建 | leader **≥ 1.2.0** / follower **≥ 1.1.0** 即支持命令集 V2.1 | 当前基线附带 leader **1.2.1** / follower **1.1.1**(固件源码分支 `hw_v1.1.0`);镜像版本随 SDK 走,以 `firmware/manifest.json` 为准,见 [固件 OTA 升级](#ota) |
 | `xensesdk` | 由安装脚本提供 | 2.1.1 |
-| XenseVR PC Service(`.deb` 守护进程) | ≥ **v0.2.0** | v0.2.0(子模块 `6c5ff61d`)|
-| `xensevr_pc_service_sdk`(Python 接口) | 随主仓库子模块一起编译安装 | 0.1.0 —— **包版本号没跟着服务走**,见下 |
+| XenseVR PC Service(`.deb` 守护进程) | ≥ **v0.2.0**;**装机请直接用 v0.2.1**,理由见下 | v0.2.1 |
+| `xensevr_pc_service_sdk`(Python 接口) | 绑定在主仓库内(不再是子模块),链接 `.deb` 里的 C SDK | 0.2.1 —— **版本号取自 `.deb`**,见下 |
 
-!!! warning "`pip show xensevr-pc-service-sdk` 会显示 0.1.0,这是正常的"
-    这个包的版本号一直是 `0.1.0`,**没有随 PC Service 的 v0.2.0 提升**。所以
-    **不要用它判断有没有头显相机支持**——要看的是有没有相机接口:
+!!! note "`.deb` 现在是 Pico4 C SDK 的唯一来源"
+    以前为了编译 `libPXREARobotSDK.so` 要克隆 `third_party/XenseVR-PC-Service` 子模块;
+    现在这个库直接从已安装的 `.deb`(`/opt/apps/roboticsservice/SDK`)里取,**子模块已删除**。
+    带来两件事:
+
+    - **递归克隆从约 33 MiB 降到约 1.6 MiB**,安装时也不再链接 gRPC 静态库。
+    - **这个 C SDK 的更新随新版 `.deb` 分发**,重跑 `--install` 不会重新编译它。
+
+    脚本会跳过"版本已经一致"的包,所以停在 **v0.2.0** 的机器会拿旧 SDK 去编绑定——
+    v0.2.1 是同一个守护进程配**重新编译过的 SDK**,装机请直接用它。
+
+!!! note "`pip show xensevr-pc-service-sdk` 现在跟着 `.deb` 走"
+    这个包在构建时向 `dpkg` 问 `xensevr-pc-service` 的版本,所以显示的就是 `.deb` 的版本
+    (如 `0.2.1`);更早的版本里它恒为 `0.1.0`,和服务对不上。
+
+    不论哪一版,**判断有没有头显相机支持都应该看接口在不在**——它反映的是实际加载的那个模块:
 
     ```bash
     python -c "import xensevr_pc_service_sdk as xrt; print(hasattr(xrt, 'has_pico_camera_frame'))"
@@ -169,6 +182,42 @@ flowchart LR
     子模块升到 SDK `83314c8` 后,`firmware/` 里附带的镜像是 leader **1.2.1** / follower
     **1.1.1**;更早的基线附带 1.2.0 / 1.1.0。**两者都支持命令集 V2.1,不需要为此重刷**
     ——1.2.1 只改了 LED 的颜色与闪烁周期。要求门槛仍是 leader ≥ 1.2.0 / follower ≥ 1.1.0。
+
+!!! danger "`--robot.id` 变成必填,需要 `e8146c4e` 之后的版本"
+    从这一版起,`lerobot-record` / `lerobot-teleoperate` **必须**带 `--robot.id`,
+    漏了在解析命令行时就退出;录制时还会往数据集里写一份
+    [`meta/hardware.json`](05-data-collection.md#robot-id)(夹爪固件 SN + 触觉 SN)。
+
+    停在更早的版本时:`--robot.id` 可以不填,数据集里也**没有 `meta/hardware.json`**——
+    那批数据说不出自己是哪套硬件采的,只能靠[采集台账](data-management.md)人工记。
+    **本手册的命令一律按新版书写。**
+
+!!! note "`--robot.id` 可以只填数字,需要 `04812536` 之后的版本"
+    `--robot.id=0` 会按 `--robot.type` 自动补前缀(`taccap_0` / `bi_taccap_0`)。
+    停在更早的版本时,前缀要自己写全:`--robot.id=taccap_0`。
+    **两个版本都接受写全的形式**,所以本手册里的 `--robot.id=0` 在旧版本上要改写,反之不必。
+
+!!! note "无 GPU 主机上 `--dataset.vcodec=auto` 能正确回落,需要 `3b9d2deb` 之后的版本"
+    从这一版起,`auto` 通过**真开一次编码会话**来判断有没有硬件编码器,所以没有 NVIDIA 驱动的
+    机器上会回落到 `libsvtav1`。
+
+    停在更早的版本时,`auto` 会在完全没有 GPU 的机器上选中 `h264_nvenc`,并在**第一帧**报
+    `avcodec_open2(h264_nvenc)` 失败——手动指定 `--dataset.vcodec=libsvtav1` 即可。
+    见 [没有 NVIDIA GPU 的主机怎么录](05-data-collection.md#no-gpu)。
+
+!!! note "Pico4 的 C SDK 改由 `.deb` 提供,需要 `42b44066` 之后的版本"
+    `third_party/XenseVR-PC-Service` 子模块在这一版删除,`libPXREARobotSDK.so` 改从
+    `.deb` 里取,同时 `.deb` 基线提到 **v0.2.1**(见上面的基线表)。
+
+    停在更早的版本时:克隆仍需拉这个子模块,`--install` 仍会现编译这个库;
+    [2.2 克隆仓库与子模块](02-environment.md#22) 里"只有一个子模块"的说法对不上你的 checkout。
+
+!!! note "`setup_env.sh` 的 apt 预检查需要 `2892929a` 之后的版本"
+    从这一版起,`--install` 会先查 `build-essential` / `cmake` / `pkg-config` / `git` / `curl`
+    在不在,缺了直接停下并打印该敲的 apt 命令(见
+    [前置:系统依赖包](02-environment.md#apt))。`d50e49b4` 又去掉了其中对
+    `libudev-dev` / `libusb-1.0-0-dev` 的要求(这两个包本就不需要)。停在这两版之间的
+    checkout,若被这一项挡住,把两个 `-dev` 包装上即可绕过。
 
 !!! note "Docker 交付镜像需要 `9387ef05` 之后的版本"
     [2. 环境部署](02-environment.md#docker) 里那条 Docker 路径——交付目录、
