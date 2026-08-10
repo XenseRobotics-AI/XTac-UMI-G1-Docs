@@ -251,7 +251,7 @@ container also starts the XenseVR PC Service on launch.
 
 !!! warning "The container runs privileged"
     So that tactile sensors, the wrist camera, the gripper serial port and the Pico4 can be
-    hot-plugged mid-session, the container runs privileged and shares the host network.
+    hot-plugged mid-session, the container runs privileged and shares the host's network and IPC.
     **Only run it on a collection host you trust.**
 
 ### Host requirements
@@ -270,7 +270,7 @@ Copy the whole delivery directory to the collection host and run it as a **norma
 root:
 
 ```bash
-cd xense-taccap-lerobot-<version>-linux-amd64
+cd xense-taccap-lerobot-0.0.4-linux-amd64     # the version in the directory name is whatever you were given
 ./install_customer.sh
 ```
 
@@ -292,12 +292,23 @@ The image is also published to the GitHub Container Registry, **public and with 
 ghcr.io/vertax42/xense-taccap-lerobot
 ```
 
-Point the delivery directory's `.env` at it and run `docker compose run` as usual:
+Point the delivery directory's (or the repo root's) `.env` at it:
 
 ```dotenv
 LEROBOT_IMAGE=ghcr.io/vertax42/xense-taccap-lerobot
 LEROBOT_IMAGE_TAG=0.0.4
 ```
+
+Then pull and enter the container as usual:
+
+```bash
+docker compose pull
+docker compose run --rm xense-taccap
+```
+
+!!! warning "Setting `LEROBOT_IMAGE_TAG` alone does nothing"
+    `compose.yaml` defaults to the **locally built** `xense-taccap-lerobot`, and **only
+    `LEROBOT_IMAGE`** switches it to pulling from GHCR. Both lines are needed.
 
 **First delivery is still better done from the offline bundle above** — a fully offline machine
 has no other option. Pulling earns its place on **upgrades**: the image is tens of GB, most of it
@@ -354,11 +365,54 @@ You can also run a single command without an interactive shell:
 docker compose run --rm xense-taccap lerobot-info
 ```
 
-!!! note "Data survives the container"
-    The dataset root inside the container is `/data/lerobot`. It lives in a Docker volume, as do
-    the XenseSDK sensor-config cache and the Hugging Face and Torch caches, so `--rm` removing the
-    temporary container does not touch them. Inspect with
-    `docker compose run --rm xense-taccap bash -lc 'ls -la /data'`.
+### Where the data lives, and why `--rm` does not lose it {#docker-data}
+
+Four paths inside the container are **Docker volumes**, so removing the temporary container leaves
+them untouched:
+
+| Path in container | Volume | What it holds |
+|---|---|---|
+| `/data` | `lerobot-data` | **Datasets** (`HF_LEROBOT_HOME=/data/lerobot`) |
+| `/root/.xensesdk` | `xensesdk-cache` | Per-serial tactile sensor configuration cache |
+| `/root/.cache/huggingface` | `huggingface-cache` | Hugging Face cache |
+| `/root/.cache/torch` | `torch-cache` | Torch cache |
+
+Inspect the data with:
+
+```bash
+docker compose run --rm xense-taccap bash -lc 'ls -la /data'
+```
+
+!!! note "Keep the sensor-config cache"
+    The second volume holds each sensor's configuration. Keeping it means a restart does not have
+    to re-read sensor flash, which would also re-enumerate the USB devices — **faster to start and
+    steadier with it than without.**
+
+!!! note "Device discovery works the same inside the container"
+    Compose passes the host's `/dev` and `/run/udev` through, so `/dev/v4l/by-id`,
+    `/dev/v4l/by-path` and `/dev/serial/by-path` are all readable inside — which is what
+    [the auto-discovery in 3.3](03-host-hardware.md#33) is built on.
+
+!!! tip "Pushing to the Hub from inside the container"
+    Put the token in the delivery directory's `.env` and it reaches the container as `HF_TOKEN`:
+
+    ```dotenv
+    HF_TOKEN=hf_xxxxxxxxxxxxxxxx
+    ```
+
+    Without it you have to `hf auth login` every time — the container is `--rm`, so a login does
+    not persist.
+
+### Graphics from inside the container {#docker-gui}
+
+The image ships the XKB, Vulkan and XDG runtime libraries Rerun needs and sets
+`WGPU_BACKEND=vulkan`; Compose passes `DISPLAY` and the X11 socket through. If no window appears,
+do the [`xhost` authorisation](#docker) above, then confirm the GPU is visible inside the
+container:
+
+```bash
+vulkaninfo --summary
+```
 
 !!! tip "Working on data only, with no Pico4 attached"
     The container starts the XenseVR PC Service by default. Turn it off when you do not need the
@@ -367,6 +421,8 @@ docker compose run --rm xense-taccap lerobot-info
     ```bash
     START_XENSEVR_SERVICE=0 docker compose run --rm xense-taccap
     ```
+
+    Its log is at `/tmp/xensevr-service.log` inside the container.
 
 ---
 

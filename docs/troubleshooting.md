@@ -30,6 +30,55 @@
     **原因**:`torchcodec` 与当前 PyTorch 的兼容版本不匹配,或 PyAV 不是要求的 `15.1.0`。
     **解决**:重跑 `setup_env.sh --install` 自动校正版本;需要带 `libsvtav1` 的系统 FFmpeg 时再单独安装。
 
+## Docker 交付镜像 {#docker}
+
+只在走 [Docker 那条路径](02-environment.md#docker)时会遇到。
+
+??? failure "`could not select device driver ... gpu` / 容器里看不到显卡"
+    **原因**:NVIDIA Container Toolkit 没装好,或装完没重启 Docker daemon。
+    **解决**:`install_customer.sh` 会自动装,手工确认用——
+
+    ```bash
+    docker run --rm --gpus all ubuntu:22.04 nvidia-smi
+    ```
+
+    这条能看到显卡,容器才能用 GPU。看不到就重装 Toolkit 并
+    `sudo systemctl restart docker`。宿主机驱动本身要 **≥ 570.144**。
+
+??? failure "改了 `.env` 里的 `LEROBOT_IMAGE_TAG`,拉到的还是老镜像"
+    **原因**:`compose.yaml` 默认用**本机构建**的镜像,只改 tag 不会切到镜像仓库。
+    **解决**:`LEROBOT_IMAGE` 和 `LEROBOT_IMAGE_TAG` **两行都要写**,然后
+    `docker compose pull`。见 [从镜像仓库在线拉取](02-environment.md#ghcr)。
+
+??? failure "容器里看得到 `/dev/ttyACM*`,却报 busy"
+    **原因**:ModemManager 抢占,这是**宿主机**的事——容器管不了宿主机的热插拔规则。
+    **解决**:在宿主机装那条 udev 规则(见 [3.2](03-host-hardware.md#32)),
+    再重新插拔夹爪。`install_customer.sh` 已经帮你装过一次,手工验证同 3.2。
+
+??? failure "宿主机能看到触觉传感器,容器里找不到"
+    **原因**:容器不是通过 Compose 启动的(`/dev`、`/run/udev` 没透传),或 USB 重新枚举后
+    设备节点还没稳定。
+    **解决**:用 `docker compose run --rm xense-taccap` 进容器;在容器里确认节点在——
+
+    ```bash
+    ls /dev/v4l/by-id/*GSPS*
+    ```
+
+    空的话回宿主机重新插拔 USB hub,再 `sudo udevadm settle --timeout=20`。
+
+??? failure "容器里 Rerun 窗口出不来 / 报 Vulkan adapter 错误"
+    **原因**:X11 没授权,或容器里看不到 NVIDIA GPU。
+    **解决**:先在宿主机的图形桌面用户下执行 `xhost +si:localuser:root`,并确认
+    `echo "$DISPLAY"` 非空、`/tmp/.X11-unix` 存在;再在容器里确认
+    `nvidia-smi` 和 `vulkaninfo --summary` 都能识别到显卡。
+    见 [容器里的图形界面](02-environment.md#docker-gui)。
+
+??? failure "容器重启后传感器要重新读一遍、启动变慢"
+    **原因**:`xensesdk-cache` 这个 volume 被删了,配置缓存没了。
+    **解决**:让它留着就行——它按传感器序列号缓存配置,避免每次启动重读传感器 flash
+    并触发 USB 重新枚举。各 volume 的用途见
+    [数据放在哪](02-environment.md#docker-data)。
+
 ## 串口权限与设备发现
 
 ??? failure "`connect()` 报 `No leader gripper discovered for the <side> side.`"

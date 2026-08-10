@@ -225,8 +225,8 @@ python -c 'import av; print("PyAV OK ->", av.__version__)'
 (XenseSDK、TacCap-Gripper、Pico4 绑定),容器启动时还会自动拉起 XenseVR PC Service。
 
 !!! warning "容器以特权模式运行"
-    为了支持采集过程中热插拔触觉传感器、腕相机、夹爪串口和 Pico4,容器使用特权模式
-    并共享主机网络。**只在你信任的采集主机上运行。**
+    为了支持采集过程中热插拔触觉传感器、腕相机、夹爪串口和 Pico4,容器使用特权模式,
+    并共享主机的网络与 IPC。**只在你信任的采集主机上运行。**
 
 ### 主机要求
 
@@ -241,7 +241,7 @@ python -c 'import av; print("PyAV OK ->", av.__version__)'
 把交付目录整个拷到采集主机,用**普通用户**(不要用 root)执行:
 
 ```bash
-cd xense-taccap-lerobot-<版本>-linux-amd64
+cd xense-taccap-lerobot-0.0.4-linux-amd64     # 目录名里的版本以你拿到的交付包为准
 ./install_customer.sh
 ```
 
@@ -262,12 +262,23 @@ cd xense-taccap-lerobot-<版本>-linux-amd64
 ghcr.io/vertax42/xense-taccap-lerobot
 ```
 
-在交付目录的 `.env` 里指向它,再照常 `docker compose run`:
+在交付目录(或仓库根目录)的 `.env` 里指向它:
 
 ```dotenv
 LEROBOT_IMAGE=ghcr.io/vertax42/xense-taccap-lerobot
 LEROBOT_IMAGE_TAG=0.0.4
 ```
+
+再拉取并照常进容器:
+
+```bash
+docker compose pull
+docker compose run --rm xense-taccap
+```
+
+!!! warning "只改 `LEROBOT_IMAGE_TAG` 是不起作用的"
+    `compose.yaml` 默认用的是**本机构建**的 `xense-taccap-lerobot`,**只有设置了
+    `LEROBOT_IMAGE`** 才会转去 GHCR 拉取。两行要一起写。
 
 **首次交付仍建议用上面的离线包**(完全离线的机器只能走这条)。在线拉取的价值在**后续升级**:
 镜像二十多 GB,绝大部分是不常变的依赖层,升级时只需拉变动的几层,不用重新搬一整包。
@@ -322,10 +333,50 @@ lerobot-info
 docker compose run --rm xense-taccap lerobot-info
 ```
 
-!!! note "数据不会随容器删除而丢失"
-    数据集根目录在容器里是 `/data/lerobot`,连同 XenseSDK 的传感器配置缓存、
-    Hugging Face 与 Torch 缓存都存在 Docker volume 里,`--rm` 删掉临时容器不影响它们。
-    查看数据:`docker compose run --rm xense-taccap bash -lc 'ls -la /data'`。
+### 数据放在哪、为什么删容器不丢 {#docker-data}
+
+容器里的这四个目录都挂在 **Docker volume** 上,`--rm` 删掉临时容器不影响它们:
+
+| 容器内路径 | volume | 放什么 |
+|---|---|---|
+| `/data` | `lerobot-data` | **数据集**(`HF_LEROBOT_HOME=/data/lerobot`) |
+| `/root/.xensesdk` | `xensesdk-cache` | 视触觉传感器按序列号缓存的配置 |
+| `/root/.cache/huggingface` | `huggingface-cache` | Hugging Face 缓存 |
+| `/root/.cache/torch` | `torch-cache` | Torch 缓存 |
+
+查看数据:
+
+```bash
+docker compose run --rm xense-taccap bash -lc 'ls -la /data'
+```
+
+!!! note "传感器配置缓存别删"
+    第二个 volume 存的是每枚传感器的配置。留着它,容器重启时就不必重新读传感器 flash、
+    也不会因此触发 USB 重新枚举——**启动更快,也更稳**。
+
+!!! note "设备发现在容器里同样成立"
+    Compose 会把宿主机的 `/dev` 和 `/run/udev` 透传进来,所以容器里也能读到
+    `/dev/v4l/by-id`、`/dev/v4l/by-path` 和 `/dev/serial/by-path`——
+    [3.3 的自动发现](03-host-hardware.md#33)靠的就是这些路径。
+
+!!! tip "要在容器里[上传 Hub](06-dataset.md#64)"
+    把 token 写进交付目录的 `.env`,它会作为 `HF_TOKEN` 带进容器:
+
+    ```dotenv
+    HF_TOKEN=hf_xxxxxxxxxxxxxxxx
+    ```
+
+    不写的话,每次进容器都得重新 `hf auth login`——容器是 `--rm` 的,登录状态不留存。
+
+### 容器里的图形界面 {#docker-gui}
+
+镜像已带齐 Rerun 需要的 XKB / Vulkan / XDG 运行库,并默认 `WGPU_BACKEND=vulkan`;
+Compose 也透传了 `DISPLAY` 和 X11 socket。窗口出不来时,先做上面那次
+[`xhost` 授权](#docker),再在容器里确认显卡可见:
+
+```bash
+vulkaninfo --summary
+```
 
 !!! tip "只处理数据、不接 Pico4 时"
     容器默认会启动 XenseVR PC Service。用不到追踪器时可以关掉:
@@ -333,6 +384,8 @@ docker compose run --rm xense-taccap lerobot-info
     ```bash
     START_XENSEVR_SERVICE=0 docker compose run --rm xense-taccap
     ```
+
+    服务日志在容器内 `/tmp/xensevr-service.log`。
 
 ---
 
