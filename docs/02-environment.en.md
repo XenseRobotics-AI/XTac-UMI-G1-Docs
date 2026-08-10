@@ -32,7 +32,7 @@ through.
 |---|---|---|
 | What you get | The source repo; you build the environment | A packaged delivery directory and one script to run |
 | Time | Longer — three hardware SDKs are compiled | Ten-odd minutes, mostly importing the image |
-| NVIDIA GPU | Optional (collection works without one) | **Required**, driver ≥ 570.144 |
+| NVIDIA GPU | Optional ([collection works without one](05-data-collection.md#no-gpu)) | **Required**, driver ≥ 570.144 |
 | Isolation | Installed into a Mamba env on the host | Lives in a container, host stays clean |
 | Editing the code | Easy | Awkward |
 | Steps | 2.1 – 2.5 below | [Docker delivery image](#docker) |
@@ -60,8 +60,33 @@ Sections 2.1 – 2.5 below are the **Mamba install-from-source** path.
     [Docker delivery image](#docker) below.
 
 !!! info "Overview"
-    Four steps: install Mamba → clone the repo (with submodules) → create the environment →
-    `setup_env.sh --install` → verify.
+    Install the system packages → install Mamba → clone the repo (with submodules) → create the
+    environment → `setup_env.sh --install` → verify.
+
+## Prerequisite: system packages (apt) {#apt}
+
+The hardware SDKs are **compiled** during `setup_env.sh --install`, and a fresh Ubuntu install does
+not even have a compiler:
+
+```bash
+sudo apt install -y build-essential cmake pkg-config git curl
+sudo apt install -y v4l-utils usbutils   # not needed to record, but this is how you debug a camera
+```
+
+`setup_env.sh` checks for these before it starts and **stops with the exact apt line** if any are
+missing — otherwise the failure surfaces much later, inside CMake or the linker, where it reads
+like a broken SDK and costs an afternoon.
+
+The second line only **warns**, but install it anyway: `v4l2-ctl --list-formats-ext` and `lsusb -t`
+are the only two instruments you have when [a camera will not open](03-host-hardware.md#usb-budget),
+which happens to be the most common bring-up problem on this hardware. A host without them is a
+host nobody can debug remotely.
+
+!!! note "Neither `ffmpeg` nor `libudev-dev` / `libusb-1.0-0-dev` is needed"
+    `torchcodec` loads the FFmpeg **shared libraries** the conda environment supplies, so the system
+    `ffmpeg` binary is irrelevant. `libudev` and `libusb` are reached at **runtime** by prebuilt
+    wheels, through the `libudev1` / `libusb-1.0-0` base packages that any Ubuntu already has —
+    nothing here compiles against their headers.
 
 ## 2.1 Prerequisite: install Mamba / Miniforge
 
@@ -73,7 +98,7 @@ curl -L -O "https://github.com/conda-forge/miniforge/releases/latest/download/Mi
 bash Miniforge3-$(uname)-$(uname -m).sh
 ```
 
-## 2.2 Clone the repo and its submodules
+## 2.2 Clone the repo and its submodules {#22}
 
 Hardware SDKs live in `third_party/` submodules, so the clone **must** be recursive:
 
@@ -90,16 +115,26 @@ Already cloned without submodules:
 git submodule update --init --recursive --progress
 ```
 
-Submodules and the packages they install:
+Submodules and the packages they install — there is **only one**:
 
 | Submodule | Package installed |
 |---|---|
 | [`third_party/taccap-gripper`](https://github.com/Vertax42/TacCap-Gripper) | `xense.taccap` (XTac-UMI G1 tactile gripper SDK) |
-| [`third_party/XenseVR-PC-Service`](https://github.com/Vertax42/XenseVR-PC-Service) | `xensevr_pc_service_sdk` (Pico4 Ultra Enterprise tracker / headset camera) |
 
 !!! note "xensesdk is not a submodule"
     `xensesdk` is the visuotactile sensor SDK. `setup_env.sh --install` installs it
     automatically — there is no submodule to pull.
+
+!!! info "`xensevr_pc_service_sdk` (Pico4 tracker / headset camera) has no submodule either"
+    Its Python bindings live in-repo under `src/lerobot/teleoperators/pico4/`, and the C SDK they
+    link against — `PXREARobotSDK.h` plus `libPXREARobotSDK.so` — is copied straight out of the
+    [XenseVR PC Service `.deb`](#24) installed in the next step, which ships it already — so there
+    is no longer a service-source checkout carried around just to rebuild that library.
+    **A recursive clone drops from ~33 MiB to ~1.6 MiB**, and installing no longer runs cmake or
+    links it.
+
+    One consequence worth knowing: an update to that C SDK now reaches you through a new `.deb`
+    release, not by re-running `--install`.
 
 !!! danger "Rebuild `xense.taccap` after updating the submodule"
     The `taccap-gripper` Python package ships a **compiled build artefact**. `git submodule
@@ -135,7 +170,7 @@ mamba activate xense-taccap
 !!! tip "Environment name"
     `--mamba` creates `xense-taccap` by default; append a name after `--mamba` to use your own.
 
-## 2.4 One-shot install
+## 2.4 One-shot install {#24}
 
 ```bash
 ./setup_env.sh --install
@@ -146,15 +181,29 @@ This step will:
 - update the mamba/conda environment from `conda_environment.yaml`
 - install the main package from `pyproject.toml`
 - install the `xensesdk` visuotactile sensor SDK
-- install the **XenseVR PC Service daemon** (a ~100 MB `.deb`, into `/opt/apps/roboticsservice`)
-- build the SDKs under `third_party`: `xensevr_pc_service_sdk` (Pico4 Ultra Enterprise) and
-  `xense.taccap` (gripper)
+- install the **XenseVR PC Service daemon** (a ~110 MB `.deb`, into `/opt/apps/roboticsservice`)
+- build the two hardware SDKs: `xensevr_pc_service_sdk` (Pico4, linked against the C SDK from that
+  `.deb`) and `xense.taccap` (gripper, from the submodule)
 
 !!! note "Where the XenseVR PC Service .deb comes from"
     `./setup_env.sh --install` downloads the `.deb` for your architecture straight from the
-    [v0.2.0 release](https://github.com/Vertax42/XenseVR-PC-Service/releases/tag/v0.2.0)
-    (override the URL with `$XENSEVR_DEB_URL`) and runs `sudo dpkg -i`. It is skipped when the
-    same version is already installed.
+    [v0.2.1 release](https://github.com/Vertax42/XenseVR-PC-Service/releases/tag/v0.2.1)
+    (override the URL with `$XENSEVR_DEB_URL`) and runs `sudo dpkg -i`.
+
+    **When that same version is already installed it skips without downloading a byte**, so
+    re-running `--install` no longer waits on 110 MB; a previous download, complete or partial, is
+    reused rather than started over.
+
+!!! danger "A failed download now stops the install"
+    The C SDK the Pico4 bindings link against comes out of this package (see
+    [2.2](#22)), so `--install` stops rather than build against a
+    library that is not there. Point `$XENSEVR_DEB` at a local file for an offline or patched
+    package.
+
+!!! note "Why the baseline is v0.2.1 rather than v0.2.0"
+    The script skips a package whose version already matches. v0.2.1 is the same daemon as v0.2.0;
+    what differs is the **rebuilt C SDK** — a host left on v0.2.0 would keep the older SDK and build
+    its Pico4 bindings against it. That is the reason to move, not a new daemon feature.
 
 !!! warning "Headset stereo and head pose need PC Service >= v0.2.0"
     Only v0.2.0 and later forward the headset camera's frames, and both the

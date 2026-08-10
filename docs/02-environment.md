@@ -25,7 +25,7 @@
 |---|---|---|
 | 拿到的东西 | 源码仓库,自己建环境 | 一个打包好的交付目录,跑一个脚本 |
 | 耗时 | 较长,要编译三个硬件 SDK | 十几分钟(主要在导入镜像) |
-| NVIDIA GPU | 可选(没有 GPU 也能采) | **必需**,驱动 ≥ 570.144 |
+| NVIDIA GPU | 可选([没有 GPU 也能采](05-data-collection.md#no-gpu)) | **必需**,驱动 ≥ 570.144 |
 | 环境隔离 | 装在主机的 Mamba 环境里 | 装在容器里,不污染主机 |
 | 改代码 | 方便 | 不方便 |
 | 步骤 | 下面 2.1 – 2.5 | [Docker 交付镜像](#docker) |
@@ -50,7 +50,29 @@
     `setup_env.sh`——直接看后面的 [Docker 交付镜像](#docker)。
 
 !!! info "总览"
-    四步:装 Mamba → 克隆仓库(含子模块)→ 建环境 → `setup_env.sh --install` → 验证。
+    装系统依赖包 → 装 Mamba → 克隆仓库(含子模块)→ 建环境 → `setup_env.sh --install` → 验证。
+
+## 前置:系统依赖包(apt) {#apt}
+
+硬件 SDK 是在 `setup_env.sh --install` 那一步**现编译**的,而刚装好的 Ubuntu 上连编译器都没有。
+先装上:
+
+```bash
+sudo apt install -y build-essential cmake pkg-config git curl
+sudo apt install -y v4l-utils usbutils   # 采集用不到,但排查相机全靠它俩
+```
+
+`setup_env.sh` 开跑前会先查这几个命令在不在,缺了**直接停下并打印该敲哪一行 apt**——
+否则错误要等到 CMake 或链接阶段才冒出来,看着像 SDK 坏了,能耗掉一下午。
+
+第二行只是**告警**,不阻断安装,但强烈建议装上:`v4l2-ctl --list-formats-ext` 和 `lsusb -t`
+正是[相机打不开](03-host-hardware.md#usb-budget)时唯一能用的两把尺子——这也恰好是这套硬件上
+最常见的装机问题。缺了它们的机器,**远程根本没法帮你查**。
+
+!!! note "不需要 `ffmpeg`,也不需要 `libudev-dev` / `libusb-1.0-0-dev`"
+    `torchcodec` 用的是 conda 环境里那份 FFmpeg **动态库**,系统装不装 `ffmpeg` 命令都不影响。
+    `libudev` / `libusb` 则是**运行期**由预编译 wheel 加载的,用的是 Ubuntu 本来就有的
+    `libudev1` / `libusb-1.0-0`,没有任何东西需要它们的 `-dev` 头文件。
 
 ## 2.1 前置:安装 Mamba / Miniforge
 
@@ -61,7 +83,7 @@ curl -L -O "https://github.com/conda-forge/miniforge/releases/latest/download/Mi
 bash Miniforge3-$(uname)-$(uname -m).sh
 ```
 
-## 2.2 克隆仓库与子模块
+## 2.2 克隆仓库与子模块 {#22}
 
 仓库用 `third_party/` 子模块管理硬件 SDK,**必须**递归克隆:
 
@@ -78,15 +100,23 @@ cd xense-taccap-lerobot
 git submodule update --init --recursive --progress
 ```
 
-子模块与对应安装包:
+子模块与对应安装包——**只有一个**:
 
 | 子模块 | 安装后的包 |
 |---|---|
 | [`third_party/taccap-gripper`](https://github.com/Vertax42/TacCap-Gripper) | `xense.taccap`(XTac-UMI G1 触觉夹爪 SDK) |
-| [`third_party/XenseVR-PC-Service`](https://github.com/Vertax42/XenseVR-PC-Service) | `xensevr_pc_service_sdk`(Pico4 Ultra 企业版追踪器 / 头显相机) |
 
 !!! note "xensesdk 不是子模块"
     `xensesdk` 是视触觉传感器 SDK,由 `setup_env.sh --install` 自动安装,无需单独拉取子模块。
+
+!!! info "`xensevr_pc_service_sdk`(Pico4 追踪器 / 头显相机)也不再是子模块"
+    它的 Python 绑定就在主仓库里(`src/lerobot/teleoperators/pico4/`),绑定要链接的 C SDK
+    (`PXREARobotSDK.h` + `libPXREARobotSDK.so`)**直接从下一步安装的
+    [XenseVR PC Service `.deb`](#24) 里取**——那个包本来就带着它,不必再为了重新编译它而克隆
+    一份服务源码。**递归克隆从约 33 MiB 降到约 1.6 MiB**,安装时也不再跑 cmake 链接。
+
+    对使用者的影响只有一条:**这个 C SDK 的更新,今后是通过新版 `.deb` 到你手上的**,
+    不是重跑一次 `--install`。
 
 !!! danger "更新子模块后必须重新编译 `xense.taccap`"
     `taccap-gripper` 的 Python 包里带一份**编译产物**。`git submodule update` 只更新文件,
@@ -121,7 +151,7 @@ mamba activate xense-taccap
 !!! tip "环境名"
     `--mamba` 默认创建 `xense-taccap` 环境;要自定义环境名,在 `--mamba` 后追加名称。
 
-## 2.4 一键安装
+## 2.4 一键安装 {#24}
 
 ```bash
 ./setup_env.sh --install
@@ -132,18 +162,32 @@ mamba activate xense-taccap
 - 用 `conda_environment.yaml` 更新 mamba/conda 环境
 - 从 `pyproject.toml` 安装主包
 - 安装 `xensesdk` 视触觉传感器 SDK
-- 安装 **XenseVR PC Service 守护进程**(约 100 MB 的 `.deb`,装到 `/opt/apps/roboticsservice`)
-- 构建 `third_party` 下的 SDK:`xensevr_pc_service_sdk`(Pico4 Ultra 企业版)与 `xense.taccap`(夹爪)
+- 安装 **XenseVR PC Service 守护进程**(约 110 MB 的 `.deb`,装到 `/opt/apps/roboticsservice`)
+- 编译两个硬件 SDK:`xensevr_pc_service_sdk`(Pico4,链接上一步 `.deb` 里的 C SDK)
+  与 `xense.taccap`(夹爪,来自子模块)
 
 !!! note "XenseVR PC Service 的 .deb 从哪来"
     `./setup_env.sh --install` 会直接从
-    [v0.2.0 release](https://github.com/Vertax42/XenseVR-PC-Service/releases/tag/v0.2.0)
+    [v0.2.1 release](https://github.com/Vertax42/XenseVR-PC-Service/releases/tag/v0.2.1)
     下载当前机器架构对应的 `.deb` 包(可用 `$XENSEVR_DEB_URL` 覆盖下载地址),
-    再执行 `sudo dpkg -i` 安装;已安装同版本时会跳过。
+    再执行 `sudo dpkg -i` 安装。
+
+    **已经装了同一版本时会直接跳过,一个字节都不下**,所以重跑 `--install` 不会再等这 110 MB;
+    上次下到一半或已下完的文件也会被复用,不会重来。
+
+!!! danger "这个包下不下来,安装会直接停"
+    Pico4 绑定要链接的 C SDK 现在就在这个包里(见 [2.2 克隆仓库与子模块](#22))。
+    所以下载失败时 `--install` 会**直接停下**,而不是拿一个不存在的库去编译。
+    离线或需要打补丁的包,用 `$XENSEVR_DEB` 指向本地文件。
 
 !!! warning "头显双目与头部位姿需要 PC Service ≥ v0.2.0"
     只有 v0.2.0 及以上的服务才转发头显相机的画面,[头显双目与头部位姿](05-data-collection.md#56)
     都靠这条通路。追踪器不受影响——不用头显相机的话,装哪个版本没区别。
+
+!!! note "为什么基线是 v0.2.1 而不是 v0.2.0"
+    脚本会跳过"版本已经一致"的包。v0.2.1 和 v0.2.0 是同一个守护进程,区别在于**重新编译过的
+    C SDK**——停在 v0.2.0 的机器会拿旧 SDK 去编 Pico4 绑定。所以这次要升一下,
+    并不是守护进程本身有什么新功能。
 
 ## 2.5 验证安装 {#25}
 
