@@ -31,7 +31,7 @@ through.
 | | **Mamba install from source** | **Docker delivery image** |
 |---|---|---|
 | What you get | The source repo; you build the environment | A packaged delivery directory and one script to run |
-| Time | Longer — three hardware SDKs are compiled | Ten-odd minutes, mostly importing the image |
+| Time | Longer — the gripper SDK and the Pico4 bindings are compiled here | Ten-odd minutes, mostly importing the image |
 | NVIDIA GPU | Optional ([collection works without one](05-data-collection.md#no-gpu)) | **Required**, driver ≥ 570.144 |
 | Isolation | Installed into a Mamba env on the host | Lives in a container, host stays clean |
 | Editing the code | Easy | Awkward |
@@ -296,7 +296,7 @@ Point the delivery directory's `.env` at it and run `docker compose run` as usua
 
 ```dotenv
 LEROBOT_IMAGE=ghcr.io/vertax42/xense-taccap-lerobot
-LEROBOT_IMAGE_TAG=0.0.3
+LEROBOT_IMAGE_TAG=0.0.4
 ```
 
 **First delivery is still better done from the offline bundle above** — a fully offline machine

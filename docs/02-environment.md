@@ -24,7 +24,7 @@
 | | **Mamba 源码安装** | **Docker 交付镜像** |
 |---|---|---|
 | 拿到的东西 | 源码仓库,自己建环境 | 一个打包好的交付目录,跑一个脚本 |
-| 耗时 | 较长,要编译三个硬件 SDK | 十几分钟(主要在导入镜像) |
+| 耗时 | 较长,夹爪 SDK 与 Pico4 绑定都要现编译 | 十几分钟(主要在导入镜像) |
 | NVIDIA GPU | 可选([没有 GPU 也能采](05-data-collection.md#no-gpu)) | **必需**,驱动 ≥ 570.144 |
 | 环境隔离 | 装在主机的 Mamba 环境里 | 装在容器里,不污染主机 |
 | 改代码 | 方便 | 不方便 |
@@ -266,7 +266,7 @@ ghcr.io/vertax42/xense-taccap-lerobot
 
 ```dotenv
 LEROBOT_IMAGE=ghcr.io/vertax42/xense-taccap-lerobot
-LEROBOT_IMAGE_TAG=0.0.3
+LEROBOT_IMAGE_TAG=0.0.4
 ```
 
 **首次交付仍建议用上面的离线包**(完全离线的机器只能走这条)。在线拉取的价值在**后续升级**:
