@@ -30,8 +30,8 @@ through.
 
 | | **Mamba install from source** | **Docker delivery image** |
 |---|---|---|
-| What you get | The source repo; you build the environment | A packaged delivery directory and one script to run |
-| Time | Longer — the gripper SDK and the Pico4 bindings are compiled here | Ten-odd minutes, mostly importing the image |
+| What you get | The source repo; you build the environment | A prebuilt image pulled from a public registry, and one script to run |
+| Time | Longer — the gripper SDK and the Pico4 bindings are compiled here | Minutes to tens of minutes, depending on how fast you can pull ~21 GB |
 | NVIDIA GPU | Optional ([collection works without one](05-data-collection.md#no-gpu)) | **Required**, driver ≥ 570.144 |
 | Isolation | Installed into a Mamba env on the host | Lives in a container, host stays clean |
 | Editing the code | Easy | Awkward |
@@ -126,7 +126,7 @@ Submodules and the packages they install — there is **only one**:
     automatically — there is no submodule to pull.
 
 !!! info "`xensevr_pc_service_sdk` (Pico4 tracker / headset camera) has no submodule either"
-    Its Python bindings live in-repo under `src/lerobot/teleoperators/pico4/`, and the C SDK they
+    Its Python bindings live in the main repo, and the C SDK they
     link against — `PXREARobotSDK.h` plus `libPXREARobotSDK.so` — is copied straight out of the
     [XenseVR PC Service `.deb`](#24) installed in the next step, which ships it already — so there
     is no longer a service-source checkout carried around just to rebuild that library.
@@ -264,78 +264,96 @@ The installer **will not install or upgrade the GPU driver** for you (that depen
 Secure Boot and a reboot); it stops and tells you if the driver is missing or too old. Docker
 Engine, the Compose plugin and the NVIDIA Container Toolkit are installed automatically if absent.
 
-### One-shot install
+### One-shot install {#ghcr}
 
-Copy the whole delivery directory to the collection host and run it as a **normal user**, not
-root:
-
-```bash
-cd xense-taccap-lerobot-0.0.4-linux-amd64     # the version in the directory name is whatever you were given
-./install_customer.sh
-```
-
-The script, in order: checks the system and GPU driver → installs Docker and the NVIDIA Container
-Toolkit as needed → installs the gripper's serial udev rule (the ModemManager rule from
-[3.2](03-host-hardware.md#32)) → verifies the image SHA256 and imports it → runs a PyTorch CUDA
-smoke test.
-
-!!! tip "Behind a proxy"
-    ```bash
-    XENSE_PROXY_URL=http://127.0.0.1:7897 ./install_customer.sh
-    ```
-
-### Pulling from the registry instead (optional) {#ghcr}
-
-The image is also published to the GitHub Container Registry, **public and with no login**:
+The image is published to the GitHub Container Registry. **The package is public — pulling needs
+no login:**
 
 ```text
 ghcr.io/vertax42/xense-taccap-lerobot
 ```
 
-Point the delivery directory's (or the repo root's) `.env` at it:
+Run it as a **normal user**, not root:
+
+```bash
+git clone https://github.com/Vertax42/xense-taccap-lerobot.git
+cd xense-taccap-lerobot
+./docker/install_customer.sh
+```
+
+The script, in order: checks the system and GPU driver → installs Docker and the NVIDIA Container
+Toolkit as needed (and registers the NVIDIA runtime with Docker) → installs the gripper's serial
+udev rule (the ModemManager rule from [3.2](03-host-hardware.md#32)) → pulls the image → runs a
+CUDA and graphics smoke test.
+
+Cloning the repo is only how you get `compose.yaml` and this script. **The collection program
+itself is in the image** — no submodules to fetch, nothing to build on the host.
+
+!!! tip "Behind a proxy"
+    ```bash
+    XENSE_PROXY_URL=http://127.0.0.1:7897 ./docker/install_customer.sh
+    ```
+
+!!! note "Fully offline machines: the `.tar` bundle still works"
+    Ask your delivery contact for the image tar, drop it in the repo root (or pass it as the first
+    argument) and the script verifies and imports it instead of going to the network:
+
+    ```bash
+    ./docker/install_customer.sh xense-taccap-lerobot-0.0.5-linux-amd64.tar
+    ```
+
+    Pulling is the default because **upgrades are much cheaper that way**: the image is tens of GB,
+    most of it dependency layers that rarely change, so an upgrade fetches only the layers that
+    moved instead of moving a whole bundle again.
+
+### Pin a version before you record {#docker-pin}
+
+The default tag is `latest`, and `latest` **floats** — the next release repoints it, and your
+collection environment changes without you asking. Before real collection, pin a version in the
+repo root's `.env`:
 
 ```dotenv
-LEROBOT_IMAGE=ghcr.io/vertax42/xense-taccap-lerobot
-LEROBOT_IMAGE_TAG=0.0.4
+LEROBOT_IMAGE_TAG=0.0.5
 ```
 
-Then pull and enter the container as usual:
+Confirm that is what resolves, then pull:
 
 ```bash
+docker compose config --images
 docker compose pull
-docker compose run --rm xense-taccap
 ```
 
-!!! warning "Setting `LEROBOT_IMAGE_TAG` alone does nothing"
-    `compose.yaml` defaults to the **locally built** `xense-taccap-lerobot`, and **only
-    `LEROBOT_IMAGE`** switches it to pulling from GHCR. Both lines are needed.
+!!! note "The tag line is all you need"
+    `compose.yaml` already defaults to `ghcr.io/vertax42/xense-taccap-lerobot`, so **do not set
+    `LEROBOT_IMAGE`** — it is only for running under a different image name, e.g. one you built
+    yourself.
 
-**First delivery is still better done from the offline bundle above** — a fully offline machine
-has no other option. Pulling earns its place on **upgrades**: the image is tens of GB, most of it
-dependency layers that rarely change, so an upgrade fetches only the layers that moved.
+### Host setup after installing {#docker-host}
 
-### Host setup after installing
-
-Give the current user Docker access right away:
+The installer already added you to the `docker` group, but **that does not take effect in your
+current terminal**. Run these two on the **host** — neither is skippable:
 
 ```bash
-sudo systemctl enable --now docker
-sudo usermod -aG docker "$USER"
-newgrp docker        # or log out and back in
-docker images
+newgrp docker                    # make docker group membership active in this terminal
+xhost +si:localuser:root         # needed to show Rerun and other windows
+```
+
+!!! warning "Type them one at a time — do not paste the block"
+    `newgrp` opens a **subshell**, so anything pasted after it gets swallowed by that subshell and
+    looks like it silently did nothing. Wait for `newgrp` to return, then type the `xhost` line.
+
+    Entering the container without `newgrp docker` gives you `permission denied`.
+    **Logging out and back in is the cleaner option**: after `newgrp`, files you create in that
+    terminal get group `docker`, which logging back in avoids.
+
+Revoke the `xhost` grant when you are done:
+
+```bash
+xhost -si:localuser:root
 ```
 
 !!! warning "`docker` group membership is close to root"
     Add only the users who need to collect — not every local account.
-
-To show Rerun windows from inside the container, the host's current **desktop user** also has to
-authorise it once:
-
-```bash
-xhost +si:localuser:root
-# revoke when you are done
-xhost -si:localuser:root
-```
 
 ### Entering the container and verifying
 
@@ -351,6 +369,23 @@ python -c 'import xensesdk; print("xensesdk ->", xensesdk.__file__)'
 python -c 'import xense.taccap; print("taccap ->", xense.taccap.__file__)'
 python -c 'import xensevr_pc_service_sdk; print("pico4 ->", xensevr_pc_service_sdk.__file__)'
 ```
+
+Then check that the Pico4 bindings and the daemon they depend on are **the same version**:
+
+```bash
+python -c 'import importlib.metadata as M; print("pico4 ->", M.version("xensevr_pc_service_sdk"))'
+dpkg-query -W -f='daemon -> ${Version}\n' xensevr-pc-service
+```
+
+```text
+pico4 -> 0.2.1
+daemon -> 0.2.1
+```
+
+!!! warning "These two must match — if they do not, do not record with this image"
+    The C SDK the Pico4 bindings link against comes from that `.deb`. A mismatch means the image is
+    a half-updated build and the tracker data may be wrong. Pull a different tag, or contact your
+    delivery contact.
 
 Then confirm the devices are discovered:
 
@@ -377,11 +412,42 @@ them untouched:
 | `/root/.cache/huggingface` | `huggingface-cache` | Hugging Face cache |
 | `/root/.cache/torch` | `torch-cache` | Torch cache |
 
-Inspect the data with:
+On the host these volumes actually live at
+`/var/lib/docker/volumes/xense-taccap-lerobot_<volume>/_data`, owned by root, so a plain `ls` needs
+sudo. **Going through the container is easier:**
 
 ```bash
-docker compose run --rm xense-taccap bash -lc 'ls -la /data'
+docker compose run --rm xense-taccap bash -lc 'ls -la /data/lerobot'
 ```
+
+!!! danger "Never run `docker volume prune`"
+    It removes volumes that **no container is currently using** — which is exactly the state your
+    data volume sits in most of the time, because the containers are `--rm`. That command will take
+    your recorded datasets with it, unrecoverably.
+
+    Use `docker image prune` to reclaim image space and `docker builder prune` for build cache;
+    neither touches volumes.
+
+To export data to the host, **create the directory first and pass `--user`** — otherwise the
+exported files are owned by root and you can neither delete nor edit them (the container runs as
+root, and a mount point Docker creates for you is root-owned too):
+
+```bash
+mkdir -p export
+docker compose run --rm --user "$(id -u):$(id -g)" -v "$PWD/export:/export" \
+    xense-taccap bash -lc 'cp -r /data/lerobot /export/'
+```
+
+Already exported as root? Fix it from the container (`chown` on the host would need sudo):
+
+```bash
+docker compose run --rm -v "$PWD:/host" xense-taccap \
+    bash -lc "chown -R $(id -u):$(id -g) /host/export"
+```
+
+!!! tip "Writing datasets straight to a host directory"
+    Useful if you have a large disk mounted elsewhere. Edit `compose.yaml` and replace
+    `lerobot-data:/data` with `/your/path:/data`.
 
 !!! note "Keep the sensor-config cache"
     The second volume holds each sensor's configuration. Keeping it means a restart does not have
@@ -394,7 +460,8 @@ docker compose run --rm xense-taccap bash -lc 'ls -la /data'
     [the auto-discovery in 3.3](03-host-hardware.md#33) is built on.
 
 !!! tip "Pushing to the Hub from inside the container"
-    Put the token in the delivery directory's `.env` and it reaches the container as `HF_TOKEN`:
+    Put the token in the repo root's `.env` — the same file you pinned the tag in — and it reaches
+    the container as `HF_TOKEN`:
 
     ```dotenv
     HF_TOKEN=hf_xxxxxxxxxxxxxxxx
@@ -407,12 +474,29 @@ docker compose run --rm xense-taccap bash -lc 'ls -la /data'
 
 The image ships the XKB, Vulkan and XDG runtime libraries Rerun needs and sets
 `WGPU_BACKEND=vulkan`; Compose passes `DISPLAY` and the X11 socket through. If no window appears,
-do the [`xhost` authorisation](#docker) above, then confirm the GPU is visible inside the
+do the [`xhost` authorisation](#docker-host) above, then confirm the GPU is visible inside the
 container:
 
 ```bash
 vulkaninfo --summary
 ```
+
+!!! warning "Do not change `runtime: nvidia` in `compose.yaml` to `gpus: all`"
+    They look equivalent and are not. `gpus: all` only requests **compute + utility**: CUDA runs,
+    `nvidia-smi` works, but **the graphics libraries are never injected** — NVIDIA's Vulkan ICD is
+    absent from the container and Rerun dies with
+
+    ```text
+    WGPU error: Failed to create surface for any enabled backend
+    ```
+
+    which is a confusing failure, because the GPU is plainly "visible" and only the window fails to
+    come up. `runtime: nvidia` is the part that brings graphics in.
+
+    The cost is that it requires the NVIDIA runtime to be registered with Docker (which
+    `install_customer.sh` does). If it is not, Compose fails immediately with
+    `Unknown runtime specified nvidia` — a far better failure than silently losing graphics. See
+    [Troubleshooting](troubleshooting.md#docker).
 
 !!! tip "Working on data only, with no Pico4 attached"
     The container starts the XenseVR PC Service by default. Turn it off when you do not need the

@@ -45,10 +45,71 @@
     这条能看到显卡,容器才能用 GPU。看不到就重装 Toolkit 并
     `sudo systemctl restart docker`。宿主机驱动本身要 **≥ 570.144**。
 
+    !!! note "这条过了不代表图形能力也在"
+        `--gpus all` 只申请 compute + utility。CUDA 正常、Rerun 却起不来是另一回事,
+        见下面 `Failed to create surface` 那条。
+
+??? failure "`Unknown runtime specified nvidia`,`docker compose` 起不来"
+    **原因**:NVIDIA runtime 没有注册进 Docker。`compose.yaml` 用的是 `runtime: nvidia`
+    (为了拿到图形能力,理由见 [容器里的图形界面](02-environment.md#docker-gui)),
+    没注册就直接失败。
+    **解决**:
+
+    ```bash
+    sudo nvidia-ctk runtime configure --runtime=docker
+    sudo systemctl restart docker
+    docker info --format '{{json .Runtimes}}'     # 输出里要能看到 nvidia
+    ```
+
+??? failure "Rerun 报 `Failed to create surface for any enabled backend`,但 `nvidia-smi` 正常"
+    **原因**:容器拿到了 CUDA,却没拿到 NVIDIA 的 Vulkan ICD——典型是有人把
+    `compose.yaml` 的 `runtime: nvidia` 改回了 `gpus: all`,后者只申请 compute + utility。
+    容器里 `vulkaninfo` 会报 `INCOMPATIBLE_DRIVER` 或列不出 NVIDIA 设备。
+    **解决**:
+
+    ```bash
+    docker info --format '{{json .Runtimes}}'     # 确认列出了 nvidia
+    ```
+
+    没有就按上一条注册 runtime;有的话把 `compose.yaml` 改回 `runtime: nvidia`,
+    **不要**换成 `gpus: all`。
+
+??? failure "`docker compose` 报 `pull access denied ... 'docker login'`"
+    **原因**:通常不是权限问题——镜像包是**公开的**,拉取不需要登录。多半是镜像名被解析错了。
+    **解决**:
+
+    ```bash
+    docker compose config --images
+    ```
+
+    看解析出来的镜像名对不对,再检查 `.env` 里有没有写错的 `LEROBOT_IMAGE`。
+    默认就是 `ghcr.io/vertax42/xense-taccap-lerobot`,**正常情况下 `.env` 里只需要写 tag 一行**,
+    见 [录数据前先把版本钉死](02-environment.md#docker-pin)。
+
 ??? failure "改了 `.env` 里的 `LEROBOT_IMAGE_TAG`,拉到的还是老镜像"
-    **原因**:`compose.yaml` 默认用**本机构建**的镜像,只改 tag 不会切到镜像仓库。
-    **解决**:`LEROBOT_IMAGE` 和 `LEROBOT_IMAGE_TAG` **两行都要写**,然后
-    `docker compose pull`。见 [从镜像仓库在线拉取](02-environment.md#ghcr)。
+    **原因**:改完没重新拉,或者 `.env` 不在执行 `docker compose` 的那个目录里。
+    **解决**:先确认解析结果,再拉:
+
+    ```bash
+    docker compose config --images
+    docker compose pull
+    ```
+
+    见 [录数据前先把版本钉死](02-environment.md#docker-pin)。
+
+??? failure "容器里 `mamba activate` 报 `Shell not initialized`"
+    **原因**:不用 activate——**进容器时环境本来就是激活的**,`lerobot-info` 一类命令直接可用。
+    **解决**:确实要手工切环境时,先初始化一次 shell hook:
+
+    ```bash
+    eval "$(mamba shell hook --shell bash)"
+    ```
+
+    0.0.5 之后的镜像已经内置了这个 hook,不会再出现这条提示。
+
+??? failure "进容器时打印 `groups: cannot find name for group ID <n>`"
+    **无害**,可以忽略。NVIDIA runtime 把宿主机的 `render` 组 GID 注入了进来,而容器里
+    没有同名的组,仅此而已。不影响 GPU、相机或采集。
 
 ??? failure "容器里看得到 `/dev/ttyACM*`,却报 busy"
     **原因**:ModemManager 抢占,这是**宿主机**的事——容器管不了宿主机的热插拔规则。
@@ -72,6 +133,9 @@
     `echo "$DISPLAY"` 非空、`/tmp/.X11-unix` 存在;再在容器里确认
     `nvidia-smi` 和 `vulkaninfo --summary` 都能识别到显卡。
     见 [容器里的图形界面](02-environment.md#docker-gui)。
+
+    `nvidia-smi` 正常、只有 `vulkaninfo` 认不到显卡时,是图形能力没注入,
+    见上面 `Failed to create surface` 那条。
 
 ??? failure "容器重启后传感器要重新读一遍、启动变慢"
     **原因**:`xensesdk-cache` 这个 volume 被删了,配置缓存没了。

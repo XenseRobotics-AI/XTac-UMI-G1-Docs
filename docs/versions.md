@@ -97,7 +97,7 @@ flowchart LR
 | `rerun-sdk` | `>=0.24.0,<0.27.0`(`--display_data` 用) | 0.26.2 |
 | `opencv-python` | 固定 `==4.12.0.88`(XenseRobotics 各 SDK 统一) | 4.12.0.88 |
 | NumPy | `>=1.26.4` | 2.2.6 |
-| `xense-taccap-lerobot` | 基于 lerobot 0.5.1 定制;版本号 `0.5.1+xtac.0.0.4`(与文档版本同步) | `main@36b9c61f` |
+| `xense-taccap-lerobot` | 基于 lerobot 0.5.1 定制;版本号 `0.5.1+xtac.0.0.5`(与文档版本同步) | `main@5301600c` |
 | `xense.taccap`(`taccap-gripper` SDK) | 与主仓库子模块版本配套 | 0.1.7(子模块 `83314c8`) |
 | 夹爪固件命令集 | **V2.1**(帧格式另计,为 V1.8;区别见[三套编号](#v21)) | 命令集 V2.1 |
 | 夹爪固件构建 | leader **≥ 1.2.0** / follower **≥ 1.1.0** 即支持命令集 V2.1 | 当前基线附带 leader **1.2.1** / follower **1.1.1**(固件源码分支 `hw_v1.1.0`);镜像版本随 SDK 走,以 `firmware/manifest.json` 为准,见 [固件 OTA 升级](#ota) |
@@ -219,6 +219,22 @@ flowchart LR
 !!! note "Docker 交付镜像需要 `9387ef05` 之后的版本"
     [2. 环境部署](02-environment.md#docker) 里那条 Docker 路径——交付目录、
     `install_customer.sh`、`compose.yaml`——来自这次提交,更早的版本里没有。
+
+!!! note "Docker 改为默认从 GHCR 拉取,需要 `854d4cdf` 之后的版本"
+    从这一版起 `compose.yaml` 的默认镜像就是 `ghcr.io/vertax42/xense-taccap-lerobot`,
+    `.env` 里**只需要写 tag 一行**;`.tar` 离线包仍然支持,但不再是默认路径。
+
+    停在更早的版本时:默认镜像是**本机构建**的名字,要拉 GHCR 就必须同时写
+    `LEROBOT_IMAGE` 和 `LEROBOT_IMAGE_TAG` 两行,只改 tag 不生效。
+
+!!! note "容器里的图形能力需要 `93beb2aa` 之后的版本"
+    `compose.yaml` 从 `gpus: all` 改成了 `runtime: nvidia`。停在更早的版本时,容器能跑 CUDA、
+    `nvidia-smi` 也正常,但 NVIDIA 的 Vulkan ICD 不会被注入,**Rerun 窗口起不来**
+    (`Failed to create surface`)。处理见
+    [容器里的图形界面](02-environment.md#docker-gui)。
+
+    改用 `runtime: nvidia` 后要求 NVIDIA runtime 已注册进 Docker;没注册会直接报
+    `Unknown runtime specified nvidia`,见[故障排查](troubleshooting.md#docker)。
 
 ## 如何查版本 {#check-versions}
 
@@ -403,7 +419,8 @@ for ep in scan_grippers():
 
 ## 兼容性与发布维护
 
-- 当前站点文档版本为 `v0.0.4`;内容变更可通过文档仓库 Git 提交历史追踪。
-- 主仓库版本号与本页文档版本对齐:`xense-taccap-lerobot` 的 `pyproject.toml` 记 `0.5.1+xtac.0.0.4`,其中 `0.5.1` 是 lerobot 官方基线,`xtac.0.0.4` 是与本文档同步的产品版本。
+- 当前站点文档版本为 `v0.0.5`;内容变更可通过文档仓库 Git 提交历史追踪。
+- 主仓库版本号与本页文档版本对齐:`xense-taccap-lerobot` 的 `pyproject.toml` 记 `0.5.1+xtac.0.0.5`,其中 `0.5.1` 是 lerobot 官方基线,`xtac.0.0.5` 是与本文档同步的产品版本。
+- **0.0.5 相对 0.0.4:只有安装方式变了**——Docker 改为默认从 GHCR 在线拉取,不再需要 tar 交付包;镜像里的采集程序和三个 SDK 与 0.0.4 相同。已经装好 0.0.4 的机器**没有必须升级的理由**,尤其是采集进行到一半时不要动。
 - 精确兼容关系以主仓库依赖锁定文件、子模块 commit 和本页“已验证基线”为准,不要仅按包名猜测兼容性。
 - 升级主仓库、SDK、固件或 XenseVR PC Service 后,应重新执行环境验证、设备自检和一条短 episode 校验。

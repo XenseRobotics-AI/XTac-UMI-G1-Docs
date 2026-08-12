@@ -198,8 +198,8 @@ whichever stage matches the recording you are about to make.
         --dataset.single_task='Pick up the object'
     ```
 
-**Single gripper**: `--robot.type=taccap_gripper` plus `--robot.side=left|right`;
-everything else is the same.
+**Single gripper**: `--robot.type=taccap_gripper`; everything else is the same. Add
+`--robot.side=left|right` only when both grippers are plugged in.
 
 A few that are easy to get wrong:
 

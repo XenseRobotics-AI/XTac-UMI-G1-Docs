@@ -50,15 +50,9 @@ sample = ds[0]          # 单帧:观测 + 动作,均为 torch tensor
 
 ## 6.2 数据校验 {#62}
 
-用 `lerobot_check_dataset.py` 检查数据集完整性(帧数、视频、字段一致性等):
+用 `lerobot-check-dataset` 检查数据集完整性(帧数、视频、字段一致性等):
 
 ```bash
-# 从仓库脚本运行
-python src/lerobot/scripts/lerobot_check_dataset.py \
-    --repo-id <your_org>/<your_dataset> \
-    --root ~/.cache/huggingface/lerobot
-
-# 或用已安装的控制台入口
 lerobot-check-dataset --repo-id <your_org>/<your_dataset> \
     --root ~/.cache/huggingface/lerobot
 
@@ -72,8 +66,9 @@ lerobot-check-dataset --repo-id <your_org>/<your_dataset> --episode-index 0 2 4
 | `root` | 本地根目录(默认 `~/.cache/huggingface/lerobot`) |
 | `episode-index` | 只检查指定集(可多值,如 `0 2 4`) |
 
-!!! note "脚本来源"
-    `lerobot_check_dataset.py` 随主仓库一起提供,以你本地这一版为准。
+!!! note "这条命令环境里就有"
+    `lerobot-check-dataset` 由采集程序一起装好,Mamba 和 Docker 两条路径下都能直接敲,
+    不需要去仓库里找脚本。
 
 ## 6.3 回放与可视化
 

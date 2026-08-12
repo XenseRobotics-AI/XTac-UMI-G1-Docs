@@ -67,7 +67,8 @@
         --show_trajectory=true
     ```
 
-**单夹爪**:换成 `--robot.type=taccap_gripper` 并加 `--robot.side=left|right`,其余相同。
+**单夹爪**:换成 `--robot.type=taccap_gripper`,其余相同。只接了一只时会自动选中;
+**两只都接着**时再加 `--robot.side=left|right` 指定用哪一只。
 
 在 Rerun 里逐项确认(②③ 档才有位姿相关的两行):
 

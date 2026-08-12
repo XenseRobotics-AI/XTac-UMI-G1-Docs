@@ -23,8 +23,8 @@
 
 | | **Mamba 源码安装** | **Docker 交付镜像** |
 |---|---|---|
-| 拿到的东西 | 源码仓库,自己建环境 | 一个打包好的交付目录,跑一个脚本 |
-| 耗时 | 较长,夹爪 SDK 与 Pico4 绑定都要现编译 | 十几分钟(主要在导入镜像) |
+| 拿到的东西 | 源码仓库,自己建环境 | 从公开镜像仓库拉一个现成镜像,跑一个脚本 |
+| 耗时 | 较长,夹爪 SDK 与 Pico4 绑定都要现编译 | 几分钟到几十分钟,取决于拉镜像的网速(约 21 GB) |
 | NVIDIA GPU | 可选([没有 GPU 也能采](05-data-collection.md#no-gpu)) | **必需**,驱动 ≥ 570.144 |
 | 环境隔离 | 装在主机的 Mamba 环境里 | 装在容器里,不污染主机 |
 | 改代码 | 方便 | 不方便 |
@@ -110,7 +110,7 @@ git submodule update --init --recursive --progress
     `xensesdk` 是视触觉传感器 SDK,由 `setup_env.sh --install` 自动安装,无需单独拉取子模块。
 
 !!! info "`xensevr_pc_service_sdk`(Pico4 追踪器 / 头显相机)也不再是子模块"
-    它的 Python 绑定就在主仓库里(`src/lerobot/teleoperators/pico4/`),绑定要链接的 C SDK
+    它的 Python 绑定就在主仓库里,绑定要链接的 C SDK
     (`PXREARobotSDK.h` + `libPXREARobotSDK.so`)**直接从下一步安装的
     [XenseVR PC Service `.deb`](#24) 里取**——那个包本来就带着它,不必再为了重新编译它而克隆
     一份服务源码。**递归克隆从约 33 MiB 降到约 1.6 MiB**,安装时也不再跑 cmake 链接。
@@ -236,74 +236,92 @@ python -c 'import av; print("PyAV OK ->", av.__version__)'
 安装脚本**不会替你装或升级显卡驱动**(涉及显卡型号、Secure Boot 和重启),驱动不满足
 会直接停下来提示。Docker Engine、Compose 插件和 NVIDIA Container Toolkit 缺了则由脚本自动装。
 
-### 一键安装
+### 一键安装 {#ghcr}
 
-把交付目录整个拷到采集主机,用**普通用户**(不要用 root)执行:
-
-```bash
-cd xense-taccap-lerobot-0.0.4-linux-amd64     # 目录名里的版本以你拿到的交付包为准
-./install_customer.sh
-```
-
-脚本依次完成:检查系统与显卡驱动 → 按需安装 Docker 与 NVIDIA Container Toolkit →
-安装夹爪串口的 udev 规则(即 [3.2](03-host-hardware.md#32) 的 ModemManager 屏蔽规则)→
-校验镜像 SHA256 并导入 → 跑一次 PyTorch CUDA 冒烟测试。
-
-!!! tip "需要走代理时"
-    ```bash
-    XENSE_PROXY_URL=http://127.0.0.1:7897 ./install_customer.sh
-    ```
-
-### 从镜像仓库在线拉取(可选) {#ghcr}
-
-镜像同时发布在 GitHub Container Registry,**公开、不需要登录**:
+镜像发布在 GitHub Container Registry,**包是公开的,拉取不需要登录**:
 
 ```text
 ghcr.io/vertax42/xense-taccap-lerobot
 ```
 
-在交付目录(或仓库根目录)的 `.env` 里指向它:
+用**普通用户**(不要用 root)执行:
+
+```bash
+git clone https://github.com/Vertax42/xense-taccap-lerobot.git
+cd xense-taccap-lerobot
+./docker/install_customer.sh
+```
+
+脚本依次完成:检查系统与显卡驱动 → 按需安装 Docker 与 NVIDIA Container Toolkit
+(并把 NVIDIA runtime 注册进 Docker)→ 安装夹爪串口的 udev 规则(即
+[3.2](03-host-hardware.md#32) 的 ModemManager 屏蔽规则)→ 拉取镜像 →
+跑一次 CUDA 与图形能力的冒烟测试。
+
+克隆仓库只是为了拿到 `compose.yaml` 和这个脚本,**采集程序本身在镜像里**,不需要拉子模块,
+也不用在主机上建环境。
+
+!!! tip "需要走代理时"
+    ```bash
+    XENSE_PROXY_URL=http://127.0.0.1:7897 ./docker/install_customer.sh
+    ```
+
+!!! note "完全离线的机器:仍然可以用 `.tar` 交付包"
+    向交付渠道要镜像 tar 包,放进仓库根目录(或作为第一个参数传给脚本),脚本会改为
+    校验并导入它,不走网络:
+
+    ```bash
+    ./docker/install_customer.sh xense-taccap-lerobot-0.0.5-linux-amd64.tar
+    ```
+
+    在线拉取是默认路径,原因是**后续升级更省事**——镜像二十多 GB,绝大部分是不常变的
+    依赖层,升级时只拉变动的那几层,不用重新搬一整包。
+
+### 录数据前先把版本钉死 {#docker-pin}
+
+默认拉的是 `latest`,它是**浮动**的——下次发布会把它指向新镜像,你的采集环境会在不知情的
+情况下变。正式采集前在仓库根目录的 `.env` 里钉死一个版本:
 
 ```dotenv
-LEROBOT_IMAGE=ghcr.io/vertax42/xense-taccap-lerobot
-LEROBOT_IMAGE_TAG=0.0.4
+LEROBOT_IMAGE_TAG=0.0.5
 ```
 
-再拉取并照常进容器:
+改完确认解析到的确实是这一版,再拉:
 
 ```bash
+docker compose config --images
 docker compose pull
-docker compose run --rm xense-taccap
 ```
 
-!!! warning "只改 `LEROBOT_IMAGE_TAG` 是不起作用的"
-    `compose.yaml` 默认用的是**本机构建**的 `xense-taccap-lerobot`,**只有设置了
-    `LEROBOT_IMAGE`** 才会转去 GHCR 拉取。两行要一起写。
+!!! note "只需要写 tag 这一行"
+    `compose.yaml` 的默认镜像已经是 `ghcr.io/vertax42/xense-taccap-lerobot`,
+    **不需要再写 `LEROBOT_IMAGE`**;它只在你要换一个镜像名(比如本机自建)时才用得上。
 
-**首次交付仍建议用上面的离线包**(完全离线的机器只能走这条)。在线拉取的价值在**后续升级**:
-镜像二十多 GB,绝大部分是不常变的依赖层,升级时只需拉变动的几层,不用重新搬一整包。
+### 安装后的主机设置 {#docker-host}
 
-### 安装后的主机设置
-
-让当前用户立刻拿到 Docker 权限:
+脚本已经把你加进 `docker` 组了,但**当前终端不会自动生效**。这两条在**宿主机**上敲,
+不能跳过:
 
 ```bash
-sudo systemctl enable --now docker
-sudo usermod -aG docker "$USER"
-newgrp docker        # 或者注销重登
-docker images
+newgrp docker                    # 让 docker 组权限在当前终端生效
+xhost +si:localuser:root         # 要在容器里显示 Rerun 等窗口
+```
+
+!!! warning "逐条敲,不要整块粘贴"
+    `newgrp` 会开一个**子 shell**,整块粘贴时它后面的命令会被这个子 shell 吃掉——看起来
+    像是敲了却没反应。`xhost` 那条也是同理,必须等 `newgrp` 之后再单独敲。
+
+    不执行 `newgrp docker` 就直接进容器,会得到 `permission denied`。
+    **注销后重新登录是更干净的做法**:`newgrp` 之后你在该终端新建的文件属组会变成
+    `docker`,重新登录则没有这个副作用。
+
+`xhost` 的授权用完可以撤销:
+
+```bash
+xhost -si:localuser:root
 ```
 
 !!! warning "`docker` 组成员权限接近 root"
     只把需要采集的用户加进去,不要图省事把所有本地用户都加上。
-
-要在容器里显示 Rerun 窗口,还需由主机当前**图形桌面用户**授权一次:
-
-```bash
-xhost +si:localuser:root
-# 采集结束后可撤销
-xhost -si:localuser:root
-```
 
 ### 进入容器与验证
 
@@ -319,6 +337,22 @@ python -c 'import xensesdk; print("xensesdk ->", xensesdk.__file__)'
 python -c 'import xense.taccap; print("taccap ->", xense.taccap.__file__)'
 python -c 'import xensevr_pc_service_sdk; print("pico4 ->", xensevr_pc_service_sdk.__file__)'
 ```
+
+再确认 Pico4 绑定和它依赖的守护进程是**同一个版本**:
+
+```bash
+python -c 'import importlib.metadata as M; print("pico4 ->", M.version("xensevr_pc_service_sdk"))'
+dpkg-query -W -f='daemon -> ${Version}\n' xensevr-pc-service
+```
+
+```text
+pico4 -> 0.2.1
+daemon -> 0.2.1
+```
+
+!!! warning "这两行必须一致,不一致就别拿这个镜像录数据"
+    Pico4 绑定链接的 C SDK 就取自那个 `.deb`。两者对不上说明镜像是半新不旧的构建,
+    追踪器数据可能不对。换一个 tag 重新 `docker compose pull`,或联系交付渠道。
 
 再确认设备能被发现:
 
@@ -344,11 +378,38 @@ docker compose run --rm xense-taccap lerobot-info
 | `/root/.cache/huggingface` | `huggingface-cache` | Hugging Face 缓存 |
 | `/root/.cache/torch` | `torch-cache` | Torch 缓存 |
 
-查看数据:
+查看数据。这些卷在宿主机上的实际位置是
+`/var/lib/docker/volumes/xense-taccap-lerobot_<卷名>/_data`,属 root,直接 `ls` 要 sudo;
+**走容器看更省事**:
 
 ```bash
-docker compose run --rm xense-taccap bash -lc 'ls -la /data'
+docker compose run --rm xense-taccap bash -lc 'ls -la /data/lerobot'
 ```
+
+!!! danger "不要用 `docker volume prune`"
+    它删的是"当前没有容器在用"的卷,而你的数据卷**平时正是这个状态**(容器是 `--rm` 的)
+    ——那条命令会把录好的数据一起删掉,且不可恢复。
+
+    清理镜像用 `docker image prune`,清理构建缓存用 `docker builder prune`,这两个都不碰卷。
+
+把数据导出到宿主机时,**先建目录、再加 `--user`**,否则导出的文件属主是 root,你自己既删不掉
+也改不了(容器里跑的是 root,Docker 自动创建的挂载点也归 root):
+
+```bash
+mkdir -p export
+docker compose run --rm --user "$(id -u):$(id -g)" -v "$PWD/export:/export" \
+    xense-taccap bash -lc 'cp -r /data/lerobot /export/'
+```
+
+已经导出成 root 属主了,用容器改回来(在宿主机上 `chown` 要 sudo):
+
+```bash
+docker compose run --rm -v "$PWD:/host" xense-taccap \
+    bash -lc "chown -R $(id -u):$(id -g) /host/export"
+```
+
+!!! tip "想让数据直接落在宿主机某个目录"
+    比如另挂了一块大盘。改 `compose.yaml`,把 `lerobot-data:/data` 换成 `/your/path:/data`。
 
 !!! note "传感器配置缓存别删"
     第二个 volume 存的是每枚传感器的配置。留着它,容器重启时就不必重新读传感器 flash、
@@ -360,7 +421,7 @@ docker compose run --rm xense-taccap bash -lc 'ls -la /data'
     [3.3 的自动发现](03-host-hardware.md#33)靠的就是这些路径。
 
 !!! tip "要在容器里[上传 Hub](06-dataset.md#64)"
-    把 token 写进交付目录的 `.env`,它会作为 `HF_TOKEN` 带进容器:
+    把 token 写进仓库根目录的 `.env`(就是钉版本号的那个文件),它会作为 `HF_TOKEN` 带进容器:
 
     ```dotenv
     HF_TOKEN=hf_xxxxxxxxxxxxxxxx
@@ -372,11 +433,26 @@ docker compose run --rm xense-taccap bash -lc 'ls -la /data'
 
 镜像已带齐 Rerun 需要的 XKB / Vulkan / XDG 运行库,并默认 `WGPU_BACKEND=vulkan`;
 Compose 也透传了 `DISPLAY` 和 X11 socket。窗口出不来时,先做上面那次
-[`xhost` 授权](#docker),再在容器里确认显卡可见:
+[`xhost` 授权](#docker-host),再在容器里确认显卡可见:
 
 ```bash
 vulkaninfo --summary
 ```
+
+!!! warning "别把 `compose.yaml` 里的 `runtime: nvidia` 改成 `gpus: all`"
+    这两种写法看着等价,实际不是:`gpus: all` 只申请到 **compute + utility**,容器能跑 CUDA、
+    `nvidia-smi` 也正常,但**图形库不会被注入**——NVIDIA 的 Vulkan ICD 不在容器里,Rerun 于是报
+
+    ```text
+    WGPU error: Failed to create surface for any enabled backend
+    ```
+
+    这个失败很有迷惑性:GPU 明明"看得见",偏偏只有窗口起不来。`runtime: nvidia` 才是把
+    图形能力带进来的那一项。
+
+    代价是它要求 NVIDIA runtime 已经注册进 Docker(`install_customer.sh` 会做)。
+    没注册时 Compose 会立刻报 `Unknown runtime specified nvidia` ——
+    这比悄悄丢掉图形能力好排查得多,处理办法见[故障排查](troubleshooting.md#docker)。
 
 !!! tip "只处理数据、不接 Pico4 时"
     容器默认会启动 XenseVR PC Service。用不到追踪器时可以关掉:

@@ -178,7 +178,8 @@ for g in scan_grippers(): print(g.side.name, g.role.name, repr(g.firmware_sn))"
         --dataset.single_task='Pick up the object'
     ```
 
-**单夹爪**:`--robot.type=taccap_gripper` 并加 `--robot.side=left|right`,其余相同。
+**单夹爪**:`--robot.type=taccap_gripper`,其余相同;两只夹爪都接着时再加
+`--robot.side=left|right`。
 
 几个容易搞错的:
 

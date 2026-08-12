@@ -74,8 +74,9 @@ so they show different things.
         --show_trajectory=true
     ```
 
-**Single gripper**: use `--robot.type=taccap_gripper` plus `--robot.side=left|right`;
-everything else is the same.
+**Single gripper**: use `--robot.type=taccap_gripper`; everything else is the same. With only one
+connected it is picked automatically; **with both connected**, add `--robot.side=left|right` to say
+which one to use.
 
 Check each of these in Rerun (the two pose rows only apply to ② and ③):
 
