@@ -97,7 +97,7 @@ flowchart LR
 | `rerun-sdk` | `>=0.24.0,<0.27.0`(`--display_data` 用) | 0.26.2 |
 | `opencv-python` | 固定 `==4.12.0.88`(XenseRobotics 各 SDK 统一) | 4.12.0.88 |
 | NumPy | `>=1.26.4` | 2.2.6 |
-| `xense-taccap-lerobot` | 基于 lerobot 0.5.1 定制;版本号 `0.5.1+xtac.0.0.5`(与文档版本同步) | `main@d46fcf66` |
+| `xense-taccap-lerobot` | 基于 lerobot 0.5.1 定制;版本号 `0.5.1+xtac.0.0.5`(与文档版本同步) | `main@89239c71` |
 | `xense.taccap`(`taccap-gripper` SDK) | 与主仓库子模块版本配套 | 0.1.7(子模块 `83314c8`) |
 | 夹爪固件命令集 | **V2.1**(帧格式另计,为 V1.8;区别见[三套编号](#v21)) | 命令集 V2.1 |
 | 夹爪固件构建 | leader **≥ 1.2.0** / follower **≥ 1.1.0** 即支持命令集 V2.1 | 当前基线附带 leader **1.2.1** / follower **1.1.1**(固件源码分支 `hw_v1.1.0`);镜像版本随 SDK 走,以 `firmware/manifest.json` 为准,见 [固件 OTA 升级](#ota) |
@@ -250,6 +250,14 @@ flowchart LR
 
     **这个修复也还没进已发布的镜像。**在那之前按
     [数据放在哪](02-environment.md#docker-data) 的写法**以 root 拷、拷完再 `chown`**。
+
+!!! note "`LEROBOT_DATA_DIR` 把数据落到宿主机目录,需要 `89239c71` 之后的版本"
+    在 `.env` 里设这一项,数据集就直接写进你指定的宿主机目录,不用再从容器里拷出来
+    (见 [让数据直接落在宿主机目录](02-environment.md#docker-data-dir))。不设时行为与之前
+    完全一致,仍是具名卷 `lerobot-data`。
+
+    停在更早的版本时:只能用具名卷,想落到宿主机目录得改 `compose.yaml`——**不建议**,
+    那是仓库跟踪的文件,写死绝对路径会在下次 `git pull` 冲突,换台机器还会挂到不存在的路径。
 
 !!! note "`--dryrun` 已删除,`d46fcf66` 之后的版本不再接受它"
     这个参数只打印一句"动作不会下发给机器人",实际从不生效——设备照常运行。已删掉,

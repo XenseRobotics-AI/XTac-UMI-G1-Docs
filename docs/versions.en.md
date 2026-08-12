@@ -112,7 +112,7 @@ and fields are still whatever your local checkout says.
 | `rerun-sdk` | `>=0.24.0,<0.27.0` (used by `--display_data`) | 0.26.2 |
 | `opencv-python` | Pinned `==4.12.0.88` (consistent across the XenseRobotics SDKs) | 4.12.0.88 |
 | NumPy | `>=1.26.4` | 2.2.6 |
-| `xense-taccap-lerobot` | A customisation of lerobot 0.5.1; version `0.5.1+xtac.0.0.5` (kept in step with the doc version) | `main@d46fcf66` |
+| `xense-taccap-lerobot` | A customisation of lerobot 0.5.1; version `0.5.1+xtac.0.0.5` (kept in step with the doc version) | `main@89239c71` |
 | `xense.taccap` (the `taccap-gripper` SDK) | Matched to the main repo's submodule version | 0.1.7 (submodule `83314c8`) |
 | Gripper firmware command set | **V2.1** (wire framing is counted separately, at V1.8; see [three numbering schemes](#v21)) | Command set V2.1 |
 | Gripper firmware build | leader **≥ 1.2.0** / follower **≥ 1.1.0** supports command set V2.1 | This baseline ships leader **1.2.1** / follower **1.1.1** (firmware source branch `hw_v1.1.0`); image versions follow the SDK — `firmware/manifest.json` is authoritative, see [Firmware OTA upgrade](#ota) |
@@ -294,6 +294,16 @@ and fields are still whatever your local checkout says.
 
     **This fix is not in a released image yet either.** Until it is, export by **copying as root and
     then `chown`**, as in [Where the data lives](02-environment.md#docker-data).
+
+!!! note "`LEROBOT_DATA_DIR` writes datasets to a host directory — needs a version after `89239c71`"
+    Setting it in `.env` puts datasets straight into a host directory you name, with nothing to copy
+    out of the container (see
+    [Writing datasets straight to a host directory](02-environment.md#docker-data-dir)). Left unset,
+    the behaviour is exactly as before: the named volume `lerobot-data`.
+
+    On an older checkout: named volumes only. Landing data in a host directory means editing
+    `compose.yaml` — **not advisable**, since it is a tracked file, a hard-coded absolute path
+    conflicts on the next `git pull`, and any other machine mounts a path that does not exist.
 
 !!! note "`--dryrun` was removed; versions after `d46fcf66` no longer accept it"
     The flag printed a line claiming actions would not be sent to the robot and was never actually

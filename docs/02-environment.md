@@ -438,8 +438,39 @@ docker compose run --rm --no-deps \
     && chmod -R u+rwX,go+rX /export
 ```
 
-!!! tip "想让数据直接落在宿主机某个目录"
-    比如另挂了一块大盘。改 `compose.yaml`,把 `lerobot-data:/data` 换成 `/your/path:/data`。
+### 让数据直接落在宿主机目录 {#docker-data-dir}
+
+要频繁看数据、删数据,或者另挂了一块大盘时,**这条比每次拷出来省事得多**。在 `.env` 里指定:
+
+```dotenv
+LEROBOT_DATA_DIR=/home/你的用户名/.cache/huggingface/docker_data
+```
+
+带 `/` 的值按 **bind mount** 处理,不带 `/` 的当具名卷;不设就还是默认的 `lerobot-data`,
+行为与之前完全一致。改完确认一下再录,数据会出现在 `<那个目录>/lerobot/`:
+
+```bash
+docker compose config
+```
+
+!!! warning "bind mount 解决了位置,但不解决属主"
+    录制仍以 root 运行,所以即使落在你自己的目录里,**文件属主还是 root**。录完交还给自己:
+
+    ```bash
+    docker compose run --rm --no-deps --entrypoint /bin/bash --user 0:0 \
+        xense-taccap -lc "chown -R $(id -u):$(id -g) /data"
+    ```
+
+    或者直接在宿主机 `sudo chown -R "$(id -u):$(id -g)" ~/.cache/huggingface/docker_data`。
+    用 `ls -ln` 检查——它显示**数字** uid/gid,一眼就能看出 chown 到底生效没有:
+
+    ```bash
+    ls -ln ~/.cache/huggingface/docker_data/lerobot
+    ```
+
+!!! note "不要改 `compose.yaml` 来做这件事"
+    `compose.yaml` 是仓库里被跟踪的文件,把某台机器的绝对路径写进去,下次 `git pull` 会冲突,
+    换台机器还会挂到一个不存在的路径上。`LEROBOT_DATA_DIR` 写在 `.env` 里,`.env` 不会被提交。
 
 !!! note "传感器配置缓存别删"
     第二个 volume 存的是每枚传感器的配置。留着它,容器重启时就不必重新读传感器 flash、

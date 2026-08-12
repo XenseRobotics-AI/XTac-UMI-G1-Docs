@@ -481,9 +481,45 @@ now). To make them readable by your group or by others, append one more step to 
     && chmod -R u+rwX,go+rX /export
 ```
 
-!!! tip "Writing datasets straight to a host directory"
-    Useful if you have a large disk mounted elsewhere. Edit `compose.yaml` and replace
-    `lerobot-data:/data` with `/your/path:/data`.
+### Writing datasets straight to a host directory {#docker-data-dir}
+
+If you look at or delete recordings regularly, or you have a large disk mounted elsewhere, **this
+saves far more effort than copying data out every time**. Set it in `.env`:
+
+```dotenv
+LEROBOT_DATA_DIR=/home/you/.cache/huggingface/docker_data
+```
+
+A value containing `/` is treated as a **bind mount**, anything else as a named volume; leaving it
+unset keeps the default `lerobot-data` and behaves exactly as before. Confirm what resolved, then
+record as usual — the data appears under `<that directory>/lerobot/`:
+
+```bash
+docker compose config
+```
+
+!!! warning "A bind mount fixes the location, not the ownership"
+    Recording still runs as root, so **the files are root-owned** even inside your own directory.
+    Hand them back when you are done:
+
+    ```bash
+    docker compose run --rm --no-deps --entrypoint /bin/bash --user 0:0 \
+        xense-taccap -lc "chown -R $(id -u):$(id -g) /data"
+    ```
+
+    Or on the host directly:
+    `sudo chown -R "$(id -u):$(id -g)" ~/.cache/huggingface/docker_data`.
+    Check with `ls -ln`, which prints **numeric** uid/gid and so makes it obvious whether the chown
+    actually took:
+
+    ```bash
+    ls -ln ~/.cache/huggingface/docker_data/lerobot
+    ```
+
+!!! note "Do not edit `compose.yaml` to do this"
+    `compose.yaml` is tracked in the repo. Hard-coding one machine's absolute path into it conflicts
+    on the next `git pull` and mounts a non-existent path on any other machine. `LEROBOT_DATA_DIR`
+    goes in `.env`, which is never committed.
 
 !!! note "Keep the sensor-config cache"
     The second volume holds each sensor's configuration. Keeping it means a restart does not have
