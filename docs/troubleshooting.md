@@ -111,6 +111,27 @@
     **无害**,可以忽略。NVIDIA runtime 把宿主机的 `render` 组 GID 注入了进来,而容器里
     没有同名的组,仅此而已。不影响 GPU、相机或采集。
 
+??? failure "容器里 `lerobot-record` 一开录就崩,报 `FileNotFoundError: 'spd-say'`"
+    **原因**:每集开始会语音播报一句,而播报用的 `spd-say` **不在 `0.0.5` 及更早的镜像里**,
+    偏偏 `--play_sounds` 默认是 `true`。第一集播报就抛异常,收尾时"Stop recording"那句又抛一次,
+    于是变成 `terminate called without an active exception` 直接崩掉。
+    **解决**:把播报关掉即可,**采集本身不受任何影响**:
+
+    ```bash
+    lerobot-record --play_sounds=false ... 
+    ```
+
+    源码里已经修好(缺播报工具只告警一次,不再中断录制),但要等下次发镜像才生效;
+    在那之前钉着 `0.0.5` 的机器都要带这个参数。Mamba 路径上装了 `speech-dispatcher` 的
+    主机不受影响。
+
+??? failure "导出数据时每个 `.mp4` 都报 `Permission denied`,元数据却拷得动"
+    **原因**:`0.0.5` 及更早的镜像录出来的视频是 `-rw------- root`(拼接用的临时文件是 `0600`,
+    移动时保留了权限),而元数据是正常的 `0644`。所以非 root 拷贝时**只有视频失败**,
+    看着像个别文件坏了——文件其实是好的。
+    **解决**:按 [数据放在哪](02-environment.md#docker-data) 那条**以 root 拷、拷完再 `chown`**
+    的写法导出,不要用 `--user`。源码已修(视频落盘后补 `chmod 0644`),下次发镜像生效。
+
 ??? failure "容器里看得到 `/dev/ttyACM*`,却报 busy"
     **原因**:ModemManager 抢占,这是**宿主机**的事——容器管不了宿主机的热插拔规则。
     **解决**:在宿主机装那条 udev 规则(见 [3.2](03-host-hardware.md#32)),

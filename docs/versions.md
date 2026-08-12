@@ -97,7 +97,7 @@ flowchart LR
 | `rerun-sdk` | `>=0.24.0,<0.27.0`(`--display_data` 用) | 0.26.2 |
 | `opencv-python` | 固定 `==4.12.0.88`(XenseRobotics 各 SDK 统一) | 4.12.0.88 |
 | NumPy | `>=1.26.4` | 2.2.6 |
-| `xense-taccap-lerobot` | 基于 lerobot 0.5.1 定制;版本号 `0.5.1+xtac.0.0.5`(与文档版本同步) | `main@5301600c` |
+| `xense-taccap-lerobot` | 基于 lerobot 0.5.1 定制;版本号 `0.5.1+xtac.0.0.5`(与文档版本同步) | `main@d46fcf66` |
 | `xense.taccap`(`taccap-gripper` SDK) | 与主仓库子模块版本配套 | 0.1.7(子模块 `83314c8`) |
 | 夹爪固件命令集 | **V2.1**(帧格式另计,为 V1.8;区别见[三套编号](#v21)) | 命令集 V2.1 |
 | 夹爪固件构建 | leader **≥ 1.2.0** / follower **≥ 1.1.0** 即支持命令集 V2.1 | 当前基线附带 leader **1.2.1** / follower **1.1.1**(固件源码分支 `hw_v1.1.0`);镜像版本随 SDK 走,以 `firmware/manifest.json` 为准,见 [固件 OTA 升级](#ota) |
@@ -235,6 +235,25 @@ flowchart LR
 
     改用 `runtime: nvidia` 后要求 NVIDIA runtime 已注册进 Docker;没注册会直接报
     `Unknown runtime specified nvidia`,见[故障排查](troubleshooting.md#docker)。
+
+!!! danger "语音播报不再中断录制,需要 `94597ba2` 之后的版本;`0.0.5` 镜像**早于**它"
+    每集开始会语音播报一句,而播报用的 `spd-say` 不在镜像里。修复前:第一集播报就抛异常,
+    收尾那句又抛一次,进程直接崩掉——**在容器里等于录不了**。修好后缺播报工具只告警一次。
+
+    **这个修复还没进已发布的镜像。**钉在 `0.0.5` 的机器请一律带 `--play_sounds=false`,
+    见[故障排查](troubleshooting.md#docker)。Mamba 路径上装了 `speech-dispatcher` 的主机不受影响。
+
+!!! note "录出来的视频对非 root 可读,需要 `dac15f74` 之后的版本;`0.0.5` 镜像**早于**它"
+    修复前视频落盘为 `-rw------- root`(拼接用的临时文件是 `0600`,移动时保留了权限),
+    而同目录的元数据是正常 `0644`。后果只在**导出**时显现:非 root 拷贝时只有 `.mp4` 报
+    `Permission denied`,看着像个别文件坏了。
+
+    **这个修复也还没进已发布的镜像。**在那之前按
+    [数据放在哪](02-environment.md#docker-data) 的写法**以 root 拷、拷完再 `chown`**。
+
+!!! note "`--dryrun` 已删除,`d46fcf66` 之后的版本不再接受它"
+    这个参数只打印一句"动作不会下发给机器人",实际从不生效——设备照常运行。已删掉,
+    脚本里带着它的话现在会报未知参数,直接去掉即可。本手册从未使用过它。
 
 ## 如何查版本 {#check-versions}
 

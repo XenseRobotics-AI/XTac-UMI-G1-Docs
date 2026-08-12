@@ -112,7 +112,7 @@ and fields are still whatever your local checkout says.
 | `rerun-sdk` | `>=0.24.0,<0.27.0` (used by `--display_data`) | 0.26.2 |
 | `opencv-python` | Pinned `==4.12.0.88` (consistent across the XenseRobotics SDKs) | 4.12.0.88 |
 | NumPy | `>=1.26.4` | 2.2.6 |
-| `xense-taccap-lerobot` | A customisation of lerobot 0.5.1; version `0.5.1+xtac.0.0.5` (kept in step with the doc version) | `main@5301600c` |
+| `xense-taccap-lerobot` | A customisation of lerobot 0.5.1; version `0.5.1+xtac.0.0.5` (kept in step with the doc version) | `main@d46fcf66` |
 | `xense.taccap` (the `taccap-gripper` SDK) | Matched to the main repo's submodule version | 0.1.7 (submodule `83314c8`) |
 | Gripper firmware command set | **V2.1** (wire framing is counted separately, at V1.8; see [three numbering schemes](#v21)) | Command set V2.1 |
 | Gripper firmware build | leader **≥ 1.2.0** / follower **≥ 1.1.0** supports command set V2.1 | This baseline ships leader **1.2.1** / follower **1.1.1** (firmware source branch `hw_v1.1.0`); image versions follow the SDK — `firmware/manifest.json` is authoritative, see [Firmware OTA upgrade](#ota) |
@@ -275,6 +275,30 @@ and fields are still whatever your local checkout says.
     Moving to `runtime: nvidia` requires the NVIDIA runtime to be registered with Docker; without
     it you get `Unknown runtime specified nvidia` straight away — see
     [Troubleshooting](troubleshooting.md#docker).
+
+!!! danger "Text-to-speech no longer aborts recording — needs a version after `94597ba2`; the `0.0.5` image **predates** it"
+    Each episode is announced by text-to-speech, and the `spd-say` binary it uses is not in the
+    image. Before the fix, the first episode's announcement raised, the teardown announcement raised
+    again, and the process died — **which means you cannot record in the container at all**. After
+    the fix, a missing binary warns once and recording continues.
+
+    **The fix is not in a released image yet.** Machines pinned to `0.0.5` should always pass
+    `--play_sounds=false` — see [Troubleshooting](troubleshooting.md#docker). Hosts on the Mamba path
+    with `speech-dispatcher` installed are unaffected.
+
+!!! note "Recorded videos readable by non-root — needs a version after `dac15f74`; the `0.0.5` image **predates** it"
+    Before the fix, videos landed as `-rw------- root` (the temporary file used for concatenation is
+    `0600` and the move preserved its mode), while the metadata beside them is a normal `0644`. The
+    consequence only shows up when **exporting**: a non-root copy fails on the `.mp4` files only,
+    which reads like a few damaged files.
+
+    **This fix is not in a released image yet either.** Until it is, export by **copying as root and
+    then `chown`**, as in [Where the data lives](02-environment.md#docker-data).
+
+!!! note "`--dryrun` was removed; versions after `d46fcf66` no longer accept it"
+    The flag printed a line claiming actions would not be sent to the robot and was never actually
+    honoured — the hardware ran as usual. It has been deleted, so a script still passing it now gets
+    an unknown-argument error; just drop it. This manual never used it.
 
 ## How to check versions {#check-versions}
 

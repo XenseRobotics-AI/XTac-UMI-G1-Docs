@@ -328,6 +328,17 @@ docker compose pull
     `LEROBOT_IMAGE`** — it is only for running under a different image name, e.g. one you built
     yourself.
 
+!!! warning "Two known issues to work around if you pin `0.0.5`"
+    Both are fixed in the source but **only take effect in a future image**, so pinning `0.0.5`
+    today means:
+
+    - **Record with `--play_sounds=false`**, or the first episode's spoken announcement kills the
+      process (the image has no `spd-say`) → [Troubleshooting](troubleshooting.md#docker).
+    - **Export by copying as root and then `chown`**, because videos recorded by this image are
+      `0600 root` → [Where the data lives](#docker-data).
+
+    Neither affects the recorded data itself.
+
 ### Host setup after installing {#docker-host}
 
 The installer already added you to the `docker` group, but **that does not take effect in your
@@ -428,21 +439,46 @@ docker compose run --rm xense-taccap bash -lc 'ls -la /data/lerobot'
     Use `docker image prune` to reclaim image space and `docker builder prune` for build cache;
     neither touches volumes.
 
-To export data to the host, **create the directory first and pass `--user`** — otherwise the
-exported files are owned by root and you can neither delete nor edit them (the container runs as
-root, and a mount point Docker creates for you is root-owned too):
+To export data to the host, **read as root and hand ownership back in the same command** — this is
+currently the only form that works on recorded data:
 
 ```bash
 mkdir -p export
-docker compose run --rm --user "$(id -u):$(id -g)" -v "$PWD/export:/export" \
-    xense-taccap bash -lc 'cp -r /data/lerobot /export/'
+docker compose run --rm --no-deps \
+    --entrypoint /bin/bash \
+    -v "$PWD/export:/export" \
+    xense-taccap \
+    -lc "cp -a /data/lerobot /export/ && chown -R $(id -u):$(id -g) /export"
 ```
 
-Already exported as root? Fix it from the container (`chown` on the host would need sudo):
+All three parts are load-bearing, not decoration:
+
+- **`--entrypoint /bin/bash`** — the container's default startup script does `chmod 0700` on its
+  runtime directory and also starts the XenseVR service. A file copy needs neither, and that chmod
+  is exactly what breaks the `--user` form below.
+- **`chown` inside the same command** — without it the exported files are owned by root and you can
+  neither delete nor edit them from the host.
+- **`mkdir -p export` first** — a mount point Docker creates for you is root-owned, so a non-root
+  write into it fails.
+
+!!! warning "Do not switch to `--user` to copy as yourself"
+    Two things break, and the second one looks like corrupt files:
+
+    - `docker compose run --user ...` **still runs the startup script**, and a non-root user cannot
+      change the runtime directory's permissions, so it fails with
+      `chmod: changing permissions of '/tmp/xdg-runtime': Operation not permitted`.
+    - **Videos recorded by the `0.0.5` and earlier images are `-rw------- root`**, so a non-root
+      copy fails on **every video** with
+      `cp: cannot open '.../file-000.mp4' for reading: Permission denied`. The sibling metadata is
+      a normal `0644` and copies fine, so **only the `.mp4` files fail** — which reads like a few
+      damaged files. This is fixed in the source (videos are `chmod 0644` after being written) but
+      only takes effect in a future image.
+
+`cp -a` carries the permissions across, so the exported videos are still `0600` (just owned by you
+now). To make them readable by your group or by others, append one more step to the command above:
 
 ```bash
-docker compose run --rm -v "$PWD:/host" xense-taccap \
-    bash -lc "chown -R $(id -u):$(id -g) /host/export"
+    && chmod -R u+rwX,go+rX /export
 ```
 
 !!! tip "Writing datasets straight to a host directory"

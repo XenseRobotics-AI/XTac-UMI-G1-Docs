@@ -296,6 +296,16 @@ docker compose pull
     `compose.yaml` 的默认镜像已经是 `ghcr.io/vertax42/xense-taccap-lerobot`,
     **不需要再写 `LEROBOT_IMAGE`**;它只在你要换一个镜像名(比如本机自建)时才用得上。
 
+!!! warning "钉在 `0.0.5` 的话,有两条已知问题要绕一下"
+    两个都已在源码里修好,但**要等下次发镜像才生效**,所以现在钉 `0.0.5` 就会遇到:
+
+    - **录制要加 `--play_sounds=false`**,否则第一集语音播报就会让程序崩掉
+      (镜像里没有 `spd-say`)→ [故障排查](troubleshooting.md#docker)。
+    - **导出数据要以 root 拷、拷完再 `chown`**,因为这版镜像录出来的视频是 `0600 root`
+      → [数据放在哪](#docker-data)。
+
+    两条都不影响录到的数据本身。
+
 ### 安装后的主机设置 {#docker-host}
 
 脚本已经把你加进 `docker` 组了,但**当前终端不会自动生效**。这两条在**宿主机**上敲,
@@ -392,20 +402,40 @@ docker compose run --rm xense-taccap bash -lc 'ls -la /data/lerobot'
 
     清理镜像用 `docker image prune`,清理构建缓存用 `docker builder prune`,这两个都不碰卷。
 
-把数据导出到宿主机时,**先建目录、再加 `--user`**,否则导出的文件属主是 root,你自己既删不掉
-也改不了(容器里跑的是 root,Docker 自动创建的挂载点也归 root):
+把数据导出到宿主机。**以 root 读、拷完在同一条命令里交还属主**——这是目前唯一对已录数据
+成立的写法:
 
 ```bash
 mkdir -p export
-docker compose run --rm --user "$(id -u):$(id -g)" -v "$PWD/export:/export" \
-    xense-taccap bash -lc 'cp -r /data/lerobot /export/'
+docker compose run --rm --no-deps \
+    --entrypoint /bin/bash \
+    -v "$PWD/export:/export" \
+    xense-taccap \
+    -lc "cp -a /data/lerobot /export/ && chown -R $(id -u):$(id -g) /export"
 ```
 
-已经导出成 root 属主了,用容器改回来(在宿主机上 `chown` 要 sudo):
+三个部分都是必需的,不是可省的装饰:
+
+- **`--entrypoint /bin/bash`** —— 容器默认的启动脚本会 `chmod 0700` 运行目录,还会顺带拉起
+  XenseVR 服务;拷个文件不需要这些,而且下面那条 `--user` 的坑正出在这里。
+- **`chown` 放在同一条命令里** —— 不放的话导出的文件属主是 root,你在宿主机上既删不掉也改不了。
+- **先 `mkdir -p export`** —— Docker 自动创建的挂载点归 root,非 root 写不进去。
+
+!!! warning "不要改成用 `--user` 以自己的身份拷"
+    两个地方会挂,而且第二个很像"文件坏了":
+
+    - `docker compose run --user ...` **仍然会跑启动脚本**,而非 root 改不动运行目录的权限,
+      于是报 `chmod: changing permissions of '/tmp/xdg-runtime': Operation not permitted`。
+    - **`0.0.5` 及更早的镜像录出来的视频是 `-rw------- root`**,非 root 拷贝会在**每个视频**上
+      报 `cp: cannot open '.../file-000.mp4' for reading: Permission denied`。元数据是正常的
+      `0644`、拷得动,所以**只有 `.mp4` 失败**,看着像个别文件损坏。这个已在源码里修掉
+      (视频落盘后补 `chmod 0644`),但要等下次发镜像才生效。
+
+`cp -a` 会把权限一起带过去,所以导出的视频仍是 `0600`(只是属主已经是你)。要让同组或其他用户
+也能读,在上面那条末尾再接一段:
 
 ```bash
-docker compose run --rm -v "$PWD:/host" xense-taccap \
-    bash -lc "chown -R $(id -u):$(id -g) /host/export"
+    && chmod -R u+rwX,go+rX /export
 ```
 
 !!! tip "想让数据直接落在宿主机某个目录"

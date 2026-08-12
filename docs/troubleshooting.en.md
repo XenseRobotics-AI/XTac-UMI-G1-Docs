@@ -124,6 +124,32 @@ Only relevant on [the Docker path](02-environment.md#docker).
     container has no group by that name — that is all. It affects neither the GPU, nor the
     cameras, nor collection.
 
+??? failure "`lerobot-record` in the container dies as recording starts, with `FileNotFoundError: 'spd-say'`"
+    **Cause**: each episode is announced by text-to-speech, and the `spd-say` binary it uses is
+    **not in the `0.0.5` or earlier images** — while `--play_sounds` defaults to `true`. The first
+    episode announcement raises, the "Stop recording" announcement in teardown raises again while
+    that is being handled, and the process dies with
+    `terminate called without an active exception`.
+    **Fix**: turn the announcements off. **Collection itself is unaffected:**
+
+    ```bash
+    lerobot-record --play_sounds=false ...
+    ```
+
+    This is fixed in the source (a missing text-to-speech binary now warns once and recording
+    continues) but only takes effect in a future image, so any machine pinned to `0.0.5` needs the
+    flag until then. Hosts on the Mamba path that have `speech-dispatcher` installed are
+    unaffected.
+
+??? failure "Exporting data fails with `Permission denied` on every `.mp4`, while the metadata copies fine"
+    **Cause**: videos recorded by the `0.0.5` and earlier images are `-rw------- root` (the
+    temporary file used for concatenation is `0600` and the move preserved its mode), while the
+    metadata is a normal `0644`. So a non-root copy fails on **the videos only**, which reads like a
+    few damaged files — the files are in fact fine.
+    **Fix**: export using the **copy as root, then `chown`** form in
+    [Where the data lives](02-environment.md#docker-data); do not use `--user`. Fixed in the source
+    (videos get `chmod 0644` after being written), effective in a future image.
+
 ??? failure "`/dev/ttyACM*` is visible in the container but reports busy"
     **Cause**: ModemManager took the port, which is a **host** matter — the container has no say
     over the host's hot-plug rules.
