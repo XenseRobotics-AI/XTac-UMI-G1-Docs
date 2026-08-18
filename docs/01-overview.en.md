@@ -67,11 +67,11 @@ follows are only the constraints that decide whether, and how, this installs:
 - **Python 3.12 or newer.** The main repository declares `requires-python = ">=3.12"`
   and `conda_environment.yaml` pins `python=3.12`; 3.10 and 3.11 will not install —
   this is a hard floor, not a recommendation.
-- **GPU optional, but an NVIDIA one needs driver ≥ 570.144.** Hardware encoding is
-  recommended for multi-stream video and capture works without a GPU at all — with one
-  flag changed, see
-  [Recording on a machine with no NVIDIA GPU](05-data-collection.md#no-gpu). If you
-  do have an NVIDIA card, the driver must be **570.144 or newer**.
+- **The collection host has a spec floor.** The minimum is a **12th-gen i7, 8 GB of
+  RAM and an NVIDIA RTX 3060 with 8 GB VRAM**, driver **≥ 570.144**; both tiers are in
+  [Collection host requirements](02-environment.md#host-spec). Anything below that will
+  install and record, but **noticeably less efficiently** — see
+  [Recording on a machine with no NVIDIA GPU](05-data-collection.md#no-gpu).
 - **Mamba / Miniforge strongly recommended** — roughly 10× faster dependency solving
   than conda.
 - **The gripper SDK is built from source** (`third_party/taccap-gripper`), not

@@ -18,10 +18,55 @@ every hardware SDK installed and verified.
     Ubuntu 22.04 LTS is also covered by this chapter. Other distributions or architectures need
     verifying separately against their actual driver, UVC, serial-permission and `.deb` support.
 
-    An NVIDIA GPU on the collection host is recommended: it lets `--dataset.vcodec=auto` pick the
-    GPU H.264 hardware encoder, easing CPU load when several video streams are encoded live.
-    **With an NVIDIA GPU the driver must be ≥ 570.144** (check with
-    `nvidia-smi --query-gpu=driver_version --format=csv,noheader`).
+    The **hardware** that machine needs is in the next section,
+    [Collection host requirements](#host-spec).
+
+## Collection host requirements {#host-spec}
+
+Collection is **real time**: on a bimanual rig six cameras are streamed and encoded at once, and a
+frame's entire budget is **33.3 ms** (30 fps). So the host is not a "anything that boots" affair —
+**an underspecified machine shows up as dropped frames and slow recording, not as an error**, and
+it is not easy to spot in the data afterwards.
+
+| | **Minimum** | **Recommended** |
+|---|---|---|
+| CPU | Intel **12th-gen i7** or better (or an AMD equivalent) | **13th / 14th-gen i7 / i9** or equivalent (≥ 8 performance cores) |
+| Memory | **8 GB** | **32 GB** |
+| GPU | NVIDIA **RTX 3060 / 8 GB VRAM** or better | NVIDIA **RTX 4070 / 12 GB VRAM** or better |
+| GPU driver | **≥ 570.144** | Same |
+| Disk | 512 GB SSD | **1 TB NVMe SSD** |
+| USB | **One gripper** (3 cameras) can share a single USB 2.0 bus | **Bimanual** (6 cameras) split across **two USB 2.0 buses**, i.e. two independent USB host controllers |
+| OS | Ubuntu 22.04 / 24.04 LTS, **amd64** | Same |
+
+!!! tip "What the NVIDIA card buys you is recording efficiency"
+    `--dataset.vcodec=auto` hands H.264 encoding to the **dedicated encoder chip** on the card,
+    leaving the CPU to feed it frames. Without an NVIDIA card that path does not exist: streaming
+    encoding has to go off and the CPU does the encoding — **it records, but noticeably less
+    efficiently** (slow episode saves, `[slow_frame]` far sooner). See
+    [Recording on a machine with no NVIDIA GPU](05-data-collection.md#no-gpu).
+
+    The Docker delivery image, for its part, requires an NVIDIA card and driver. Check the driver
+    with:
+
+    ```bash
+    nvidia-smi --query-gpu=driver_version,name --format=csv,noheader
+    ```
+
+!!! note "Where each number comes from"
+    - **CPU** — the capture loop, tactile image decoding and feeding the encoder all sit on the
+      CPU, and a bimanual frame is six to eight images. A 12th-gen i7 is the lowest part measured
+      to hold 30 fps.
+    - **Memory** — 8 GB covers collection itself. It gets tight once you watch the live streams in
+      Rerun (`--display_data`) or process data on the same machine, hence 32 GB.
+    - **Disk** — raw video off the cameras peaks around **280 MB/s** (bimanual); what lands on disk
+      is a separate figure, see [Disk planning](data-management.md#storage-planning).
+      **Do not record straight onto a spinning disk or a USB external drive.**
+    - **USB** — tactile sensors and wrist cameras are USB 2.0 devices, and each open camera
+      **reserves** isochronous bandwidth out of a fixed per-bus budget. That is **3 cameras per
+      gripper** (2 tactile + 1 wrist); put all 6 of a bimanual rig on one bus and some **will not
+      open** — regardless of how fast the CPU or GPU is, and plugging into a blue USB 3 port does
+      not fix it. Count what hangs off each `480M` bus with `lsusb -t` before wiring up, see
+      [USB bandwidth budget](03-host-hardware.md#usb-budget).
 
 ## Choosing an install path {#choose}
 
@@ -32,14 +77,14 @@ through.
 |---|---|---|
 | What you get | The source repo; you build the environment | A prebuilt image pulled from a public registry, and one script to run |
 | Time | Longer — the gripper SDK and the Pico4 bindings are compiled here | Minutes to tens of minutes, depending on how fast you can pull ~21 GB |
-| NVIDIA GPU | Optional ([collection works without one](05-data-collection.md#no-gpu)) | **Required**, driver ≥ 570.144 |
+| NVIDIA GPU | Installs without one, but the [minimum spec](#host-spec) starts at an RTX 3060 / 8 GB — with no NVIDIA card you are on the [degraded path](05-data-collection.md#no-gpu) | **Required**, driver ≥ 570.144 |
 | Isolation | Installed into a Mamba env on the host | Lives in a container, host stays clean |
 | Editing the code | Easy | Awkward |
 | Steps | 2.1 – 2.5 below | [Docker delivery image](#docker) |
 
-**Default to Mamba** — it works **with or without an NVIDIA GPU**, and it is the one to pick if
-you will be editing the collection program. The commands in the rest of this manual are written
-for this path.
+**Default to Mamba** — it puts no extra demand on the graphics driver (**it installs on a machine
+with no NVIDIA driver at all**), and it is the one to pick if you will be editing the collection
+program. The commands in the rest of this manual are written for this path.
 
 Docker is there for a machine that already has the **NVIDIA driver**, when you would rather not
 build an environment yourself.
