@@ -89,7 +89,8 @@ flowchart LR
 |---|---|---|
 | 操作系统 / 架构 | Ubuntu 22.04 / 24.04,**amd64** | Ubuntu 22.04.5 LTS / 24.04.4 LTS,x86_64 |
 | Linux 内核 | 不构成约束 | 6.8 / 6.14 / 7.0 系列均已验证 |
-| NVIDIA GPU / 驱动 | GPU 可选(无 GPU 的录制方式见 [5.4](05-data-collection.md#no-gpu));**装了 NVIDIA GPU 则驱动需 ≥ 570.144**。多路视频建议使用 NVIDIA H.264 硬件编码 | 驱动 570.144 / 580.126.09 |
+| 采集主机(CPU / 内存 / 硬盘) | **最低**:12 代 i7、8 GB 内存、512 GB SSD;**推荐**:13/14 代 i7/i9、32 GB 内存、1 TB NVMe SSD。两档明细见[采集主机配置要求](02-environment.md#host-spec) | — |
+| NVIDIA GPU / 驱动 | **最低 RTX 3060 / 8 GB 显存**(推荐 RTX 4070 / 12 GB 及以上),**驱动 ≥ 570.144**。没有 NVIDIA 显卡的机器只能[降级录制](05-data-collection.md#no-gpu),效率明显下降 | 驱动 570.144 / 580.126.09 |
 | Python | **≥ 3.12**(`pyproject.toml` 的 `requires-python`;`conda_environment.yaml` 固定 `python=3.12`) | 3.12.13 |
 | PyTorch | `torch>=2.2.1,<2.11.0`;`torchvision>=0.21.0,<0.26.0` | 2.10.0 / torchvision 0.25.0 |
 | `torchcodec` | `>=0.2.1,<0.11.0`,由 `setup_env.sh` **按当前 torch 版本自动对齐**(不匹配会强制重装) | 0.10.0 |

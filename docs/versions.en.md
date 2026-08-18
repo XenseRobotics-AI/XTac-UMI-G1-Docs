@@ -104,7 +104,8 @@ and fields are still whatever your local checkout says.
 |---|---|---|
 | OS / architecture | Ubuntu 22.04 / 24.04, **amd64** | Ubuntu 22.04.5 LTS / 24.04.4 LTS, x86_64 |
 | Linux kernel | Not a constraint | 6.8 / 6.14 / 7.0 series all verified |
-| NVIDIA GPU / driver | The GPU is optional (recording without one: [5.4](05-data-collection.md#no-gpu)); **if an NVIDIA GPU is fitted, the driver must be ≥ 570.144**. NVIDIA H.264 hardware encoding is recommended for multiple video streams | Driver 570.144 / 580.126.09 |
+| Collection host (CPU / memory / disk) | **Minimum**: 12th-gen i7, 8 GB RAM, 512 GB SSD. **Recommended**: 13th/14th-gen i7/i9, 32 GB RAM, 1 TB NVMe SSD. Both tiers in [Collection host requirements](02-environment.md#host-spec) | — |
+| NVIDIA GPU / driver | **Minimum RTX 3060 / 8 GB VRAM** (RTX 4070 / 12 GB or better recommended), **driver ≥ 570.144**. A machine with no NVIDIA card is on the [degraded path](05-data-collection.md#no-gpu), noticeably less efficient | Driver 570.144 / 580.126.09 |
 | Python | **≥ 3.12** (`requires-python` in `pyproject.toml`; `conda_environment.yaml` pins `python=3.12`) | 3.12.13 |
 | PyTorch | `torch>=2.2.1,<2.11.0`; `torchvision>=0.21.0,<0.26.0` | 2.10.0 / torchvision 0.25.0 |
 | `torchcodec` | `>=0.2.1,<0.11.0`, **aligned automatically to your torch version** by `setup_env.sh` (a mismatch forces a reinstall) | 0.10.0 |

@@ -540,6 +540,13 @@ lerobot-record \
 
 ### Recording on a machine with no NVIDIA GPU {#no-gpu}
 
+!!! warning "This is the workaround for an **underspecified machine**, not a recommendation"
+    The [collection host minimum](02-environment.md#host-spec) is an NVIDIA **RTX 3060 / 8 GB
+    VRAM** or better. If all you have is a CPU-only server, a VM or a laptop with no NVIDIA card,
+    what follows will get data recorded — but **noticeably less efficiently than on a machine that
+    meets the spec**: slow saves, frames dropped sooner. **For real collection, use a host that
+    meets the minimum.**
+
 The two defaults above (`--dataset.vcodec=auto` + `--dataset.streaming_encoding=true`) assume an
 NVIDIA card. On a CPU-only server, a VM, or a laptop with no discrete GPU, **turn streaming encoding
 off**:

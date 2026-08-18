@@ -488,6 +488,11 @@ lerobot-record \
 
 ### 没有 NVIDIA GPU 的主机怎么录 {#no-gpu}
 
+!!! warning "这是给**不达标机器**的临时办法,不是推荐做法"
+    [采集主机的最低要求](02-environment.md#host-spec)是 NVIDIA **RTX 3060 / 8 GB 显存**及以上。
+    手头只有纯 CPU 的服务器、虚拟机或没有 NVIDIA 显卡的笔记本时,下面这条能让你把数据录下来,
+    但**录制效率明显低于达标机器**——存盘慢、更容易掉帧。**正式采集请换达标主机。**
+
 上面两个默认值(`--dataset.vcodec=auto` + `--dataset.streaming_encoding=true`)是按**装了
 NVIDIA 显卡**来配的。纯 CPU 的服务器、虚拟机、没有独显的笔记本上,**把流式编码关掉**:
 
