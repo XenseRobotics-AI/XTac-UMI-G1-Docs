@@ -444,10 +444,13 @@ XenseVR PC Service——但**要点一下「重连」才会连上**,打开 APP �
     ![XTac-UMI XR:状态 已连接](assets/pico4/app-step4-connected.jpg){ width="420" }
 
 !!! tip "「分辨率」是头显双目相机的分辨率"
-    [头显相机](05-data-collection.md#56)的取流分辨率,默认 `1024`;不用头显相机时不起作用。
+    [头显相机](05-data-collection.md#56)的取流分辨率,三档 `640` / `1024` / `1280`,
+    **默认 `640`(每眼 640x480),推荐就用这一档**。不用头显相机时它不起作用。
 
-    **改了这里,采集命令也要跟着改**:改成 `1280` 后要加
-    `--robot.head_camera_width=1280 --robot.head_camera_height=960`,否则 connect 会报尺寸不符。
+    采集端的默认值也是 640x480,两边开箱即对得上。**在这里调高了档位,采集命令要跟着改**:
+    选 `1024` 加 `--robot.head_camera_width=1024 --robot.head_camera_height=768`,选 `1280` 加
+    `--robot.head_camera_width=1280 --robot.head_camera_height=960`,否则 connect 会报首帧尺寸
+    不符。见 [5.6 头显相机](05-data-collection.md#56)。
 
 !!! note "高精度追踪已默认常开"
     高精度追踪模式(位姿更稳、抖动更小)现在默认开启,界面上没有开关,不需要手动设置。

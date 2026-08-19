@@ -346,10 +346,11 @@ Only relevant on [the Docker path](02-environment.md#docker).
     consider relaxing the threshold.
 
 ??? failure "`head_camera_width/_height` errors saying the size is unsupported"
-    **Cause**: the headset camera **only accepts `1024x768` and `1280x960`** (both 4:3, matching
-    the sensor). Anything else is an error rather than a silent downgrade — resampling would
-    quietly change the recorded field of view.
-    **Fix**: go back to one of the two supported sizes. Note that **changing the size means a
+    **Cause**: the headset camera **only accepts `640x480` (default), `1024x768` and `1280x960`**
+    (all 4:3, matching the sensor), one per setting in the headset app's Resolution. Anything else
+    is an error rather than a silent downgrade — resampling would quietly change the recorded field
+    of view.
+    **Fix**: go back to one of the three supported sizes. Note that **changing the size means a
     different set of data**: episodes from before and after the change cannot be mixed. See
     [5.6 Headset camera](05-data-collection.md#56).
 
@@ -357,8 +358,10 @@ Only relevant on [the Docker path](02-environment.md#docker).
     **Cause**: the size on the command line does not match the **"Resolution" setting in the
     headset**. The headset is what produces the image; the parameter only declares what you expect
     to receive.
-    **Fix**: use the same value on both sides — if the headset is set to `1024`, use the defaults;
-    if it is set to `1280`, add
+    **The common case**: the headset was raised to `1024` or `1280` while the command line is
+    still on the default 640x480.
+    **Fix**: use the same value on both sides — at the headset's default `640` pass nothing; at
+    `1024` add `--robot.head_camera_width=1024 --robot.head_camera_height=768`; at `1280` add
     `--robot.head_camera_width=1280 --robot.head_camera_height=960`.
     The headset-side setting is in [The app's interface](03-host-hardware.md#pico-toolkit-ui).
 

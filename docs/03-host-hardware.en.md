@@ -497,13 +497,15 @@ connect. Opening the app does not connect it.
     ![XTac-UMI XR: status connected](assets/pico4/app-step4-connected.jpg){ width="420" }
 
 !!! tip "\"Resolution\" is the headset's stereo camera resolution"
-    It sets the capture resolution of the [headset camera](05-data-collection.md#56) and defaults
-    to `1024`; it does nothing if you are not using that camera. Leave it alone unless you have a
-    reason.
+    It sets the capture resolution of the [headset camera](05-data-collection.md#56). There are
+    three settings — `640` / `1024` / `1280` — and it defaults to `640` (640x480 per eye), which
+    is the one to use. It does nothing if you are not using that camera.
 
-    **Change it here and the collection command has to follow**: at `1280`, pass
-    `--robot.head_camera_width=1280 --robot.head_camera_height=960`, or connect fails on the
-    frame size.
+    The collection side defaults to 640x480 too, so the two agree out of the box. **Raise it here
+    and the collection command has to follow**: at `1024` pass
+    `--robot.head_camera_width=1024 --robot.head_camera_height=768`, at `1280`
+    `--robot.head_camera_width=1280 --robot.head_camera_height=960`, or connect fails on the first
+    frame's size. See [5.6 Headset camera](05-data-collection.md#56).
 
 !!! note "High-accuracy tracking is always on now"
     High-accuracy tracking — steadier pose, less jitter — is enabled by default. There is no
