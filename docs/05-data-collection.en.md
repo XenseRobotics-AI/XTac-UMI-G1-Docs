@@ -273,7 +273,7 @@ official [recording guide](https://huggingface.co/docs/lerobot/v0.5.1/en/il_robo
 | `show_trajectory` | `true` | Overlay the 3D pose + trajectory in Rerun (needs `display_data` and a `tcp.*`) |
 | `display_compressed_images` | `false` | Whether to JPEG-compress images before showing them in Rerun. **Off by default** — the encoding happens on the record loop and eats a large share of the frame budget; it only pays off when the Rerun viewer is on another machine (`--display_ip`) |
 | `display_image_every_n` | `1` | Refresh the camera tiles only every N frames (scalars always stay at full rate). **A last resort**, for a loop that still overruns — it is the only option here that changes what the operator sees |
-| `play_sounds` | `true` | Spoken announcements of recording events |
+| `play_sounds` | `true` | Spoken announcements of recording events. **The container has no speech synthesiser, so announcements are always silent there** (warned about once, recording unaffected); record on the host to hear them |
 | `resume` | `false` | **Continue recording** into an existing dataset |
 
 #### Device parameters `--robot.*` (XTac-UMI G1 specific)

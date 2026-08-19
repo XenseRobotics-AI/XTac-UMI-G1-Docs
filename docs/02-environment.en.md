@@ -344,7 +344,7 @@ itself is in the image** — no submodules to fetch, nothing to build on the hos
     argument) and the script verifies and imports it instead of going to the network:
 
     ```bash
-    ./docker/install_customer.sh xense-taccap-lerobot-0.0.5-linux-amd64.tar
+    ./docker/install_customer.sh xense-taccap-lerobot-0.0.6-linux-amd64.tar
     ```
 
     Pulling is the default because **upgrades are much cheaper that way**: the image is tens of GB,
@@ -358,7 +358,7 @@ collection environment changes without you asking. Before real collection, pin a
 repo root's `.env`:
 
 ```dotenv
-LEROBOT_IMAGE_TAG=0.0.5
+LEROBOT_IMAGE_TAG=0.0.6
 ```
 
 Confirm that is what resolves, then pull:
@@ -373,16 +373,17 @@ docker compose pull
     `LEROBOT_IMAGE`** — it is only for running under a different image name, e.g. one you built
     yourself.
 
-!!! warning "Two known issues to work around if you pin `0.0.5`"
-    Both are fixed in the source but **only take effect in a future image**, so pinning `0.0.5`
-    today means:
+!!! warning "Two known issues to work around if you pin `0.0.5` or earlier"
+    **`0.0.6` fixes both**, so pinning that version means neither applies. Machines still on
+    `0.0.5` or earlier:
 
     - **Record with `--play_sounds=false`**, or the first episode's spoken announcement kills the
       process (the image has no `spd-say`) → [Troubleshooting](troubleshooting.md#docker).
     - **Export by copying as root and then `chown`**, because videos recorded by this image are
       `0600 root` → [Where the data lives](#docker-data).
 
-    Neither affects the recorded data itself.
+    Neither affects the recorded data itself, so **there is no need to upgrade mid-collection** —
+    work around them as above.
 
 ### Host setup after installing {#docker-host}
 
@@ -516,11 +517,13 @@ All three parts are load-bearing, not decoration:
       copy fails on **every video** with
       `cp: cannot open '.../file-000.mp4' for reading: Permission denied`. The sibling metadata is
       a normal `0644` and copies fine, so **only the `.mp4` files fail** — which reads like a few
-      damaged files. This is fixed in the source (videos are `chmod 0644` after being written) but
-      only takes effect in a future image.
+      damaged files. From `0.0.6` on, videos land as `0644` and this stops happening — but that
+      depends on **the image that recorded the data**, and upgrading does not rewrite files that
+      were already written.
 
-`cp -a` carries the permissions across, so the exported videos are still `0600` (just owned by you
-now). To make them readable by your group or by others, append one more step to the command above:
+`cp -a` carries the permissions across, so data recorded by `0.0.5` and earlier still exports as
+`0600` (just owned by you now). To make it readable by your group or by others, append one more
+step to the command above:
 
 ```bash
     && chmod -R u+rwX,go+rX /export

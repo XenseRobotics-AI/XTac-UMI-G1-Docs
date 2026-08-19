@@ -311,7 +311,7 @@ cd xense-taccap-lerobot
     校验并导入它,不走网络:
 
     ```bash
-    ./docker/install_customer.sh xense-taccap-lerobot-0.0.5-linux-amd64.tar
+    ./docker/install_customer.sh xense-taccap-lerobot-0.0.6-linux-amd64.tar
     ```
 
     在线拉取是默认路径,原因是**后续升级更省事**——镜像二十多 GB,绝大部分是不常变的
@@ -323,7 +323,7 @@ cd xense-taccap-lerobot
 情况下变。正式采集前在仓库根目录的 `.env` 里钉死一个版本:
 
 ```dotenv
-LEROBOT_IMAGE_TAG=0.0.5
+LEROBOT_IMAGE_TAG=0.0.6
 ```
 
 改完确认解析到的确实是这一版,再拉:
@@ -337,15 +337,15 @@ docker compose pull
     `compose.yaml` 的默认镜像已经是 `ghcr.io/vertax42/xense-taccap-lerobot`,
     **不需要再写 `LEROBOT_IMAGE`**;它只在你要换一个镜像名(比如本机自建)时才用得上。
 
-!!! warning "钉在 `0.0.5` 的话,有两条已知问题要绕一下"
-    两个都已在源码里修好,但**要等下次发镜像才生效**,所以现在钉 `0.0.5` 就会遇到:
+!!! warning "钉在 `0.0.5` 及更早的话,有两条已知问题要绕一下"
+    **`0.0.6` 两条都已修好**,钉这一版就不必管;仍然停在 `0.0.5` 及更早的机器要注意:
 
     - **录制要加 `--play_sounds=false`**,否则第一集语音播报就会让程序崩掉
       (镜像里没有 `spd-say`)→ [故障排查](troubleshooting.md#docker)。
     - **导出数据要以 root 拷、拷完再 `chown`**,因为这版镜像录出来的视频是 `0600 root`
       → [数据放在哪](#docker-data)。
 
-    两条都不影响录到的数据本身。
+    两条都不影响录到的数据本身,所以**采集进行到一半时不必急着升级**,按上面绕开即可。
 
 ### 安装后的主机设置 {#docker-host}
 
@@ -469,11 +469,11 @@ docker compose run --rm --no-deps \
       于是报 `chmod: changing permissions of '/tmp/xdg-runtime': Operation not permitted`。
     - **`0.0.5` 及更早的镜像录出来的视频是 `-rw------- root`**,非 root 拷贝会在**每个视频**上
       报 `cp: cannot open '.../file-000.mp4' for reading: Permission denied`。元数据是正常的
-      `0644`、拷得动,所以**只有 `.mp4` 失败**,看着像个别文件损坏。这个已在源码里修掉
-      (视频落盘后补 `chmod 0644`),但要等下次发镜像才生效。
+      `0644`、拷得动,所以**只有 `.mp4` 失败**,看着像个别文件损坏。`0.0.6` 起视频落盘即为
+      `0644`,不会再有这个现象——但**这取决于当初录数据的那版镜像**,升级不会改写已经录好的文件。
 
-`cp -a` 会把权限一起带过去,所以导出的视频仍是 `0600`(只是属主已经是你)。要让同组或其他用户
-也能读,在上面那条末尾再接一段:
+`cp -a` 会把权限一起带过去。`0.0.5` 及更早录的数据因此导出后仍是 `0600`(只是属主已经是你);
+要让同组或其他用户也能读,在上面那条末尾再接一段:
 
 ```bash
     && chmod -R u+rwX,go+rX /export
