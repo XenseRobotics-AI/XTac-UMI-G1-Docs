@@ -248,7 +248,7 @@
 | `show_trajectory` | `true` | Rerun 中叠加 3D 位姿 + 轨迹(需 `display_data` 且有 `tcp.*`) |
 | `display_compressed_images` | `false` | Rerun 里是否 JPEG 压缩后再显示。**默认关**——压缩发生在录制主循环上,开着会吃掉大量帧预算;只有 Rerun 查看器在另一台机器上(`--display_ip`)时才划算 |
 | `display_image_every_n` | `1` | 每 N 帧才刷新一次相机画面(标量始终全速)。**最后手段**,只在仍然超时才动它——它是唯一会改变操作员所见内容的选项 |
-| `play_sounds` | `true` | 语音播报录制事件 |
+| `play_sounds` | `true` | 语音播报录制事件。**容器里没有语音合成器,播报一律是静音的**(只告警一次,不影响录制);要听到就在宿主机上跑 |
 | `resume` | `false` | 在已有数据集上**续录** |
 
 #### 设备参数 `--robot.*`(XTac-UMI G1 专属)

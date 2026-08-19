@@ -117,7 +117,7 @@ Only relevant on [the Docker path](02-environment.md#docker).
     eval "$(mamba shell hook --shell bash)"
     ```
 
-    Images after 0.0.5 ship this hook already, so the message no longer appears.
+    Images from `0.0.6` on ship this hook already, so the message no longer appears.
 
 ??? failure "Entering the container prints `groups: cannot find name for group ID <n>`"
     **Harmless**, ignore it. The NVIDIA runtime injected the host's `render` group GID and the
@@ -136,10 +136,16 @@ Only relevant on [the Docker path](02-environment.md#docker).
     lerobot-record --play_sounds=false ...
     ```
 
-    This is fixed in the source (a missing text-to-speech binary now warns once and recording
-    continues) but only takes effect in a future image, so any machine pinned to `0.0.5` needs the
-    flag until then. Hosts on the Mamba path that have `speech-dispatcher` installed are
-    unaffected.
+    **Fixed from `0.0.6` on** — a failed announcement warns once and recording continues, so the
+    flag is no longer needed after upgrading. Machines still pinned to `0.0.5` or earlier need it.
+    Hosts on the Mamba path that have `speech-dispatcher` installed are unaffected.
+
+    !!! note "Even after the fix, the container stays silent"
+        The `0.0.6` image installs `speech-dispatcher` but **no speech synthesiser module**, so the
+        announcement is skipped safely and warned about once. **That is deliberate**: there is no
+        working audio sink in the container, and adding a synthesiser turns `spd-say` from failing
+        immediately into hanging, which is worse. To actually hear the announcements, record on the
+        host.
 
 ??? failure "Exporting data fails with `Permission denied` on every `.mp4`, while the metadata copies fine"
     **Cause**: videos recorded by the `0.0.5` and earlier images are `-rw------- root` (the
@@ -147,8 +153,10 @@ Only relevant on [the Docker path](02-environment.md#docker).
     metadata is a normal `0644`. So a non-root copy fails on **the videos only**, which reads like a
     few damaged files — the files are in fact fine.
     **Fix**: export using the **copy as root, then `chown`** form in
-    [Where the data lives](02-environment.md#docker-data); do not use `--user`. Fixed in the source
-    (videos get `chmod 0644` after being written), effective in a future image.
+    [Where the data lives](02-environment.md#docker-data); do not use `--user`. **From `0.0.6` on,
+    recorded videos are `0644`** and this stops happening — but that depends on the image that
+    recorded the data, and upgrading does not rewrite files already written, so older data still
+    needs the form above.
 
 ??? failure "`/dev/ttyACM*` is visible in the container but reports busy"
     **Cause**: ModemManager took the port, which is a **host** matter — the container has no say

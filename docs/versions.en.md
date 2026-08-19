@@ -113,7 +113,7 @@ and fields are still whatever your local checkout says.
 | `rerun-sdk` | `>=0.24.0,<0.27.0` (used by `--display_data`) | 0.26.2 |
 | `opencv-python` | Pinned `==4.12.0.88` (consistent across the XenseRobotics SDKs) | 4.12.0.88 |
 | NumPy | `>=1.26.4` | 2.2.6 |
-| `xense-taccap-lerobot` | A customisation of lerobot 0.5.1; version `0.5.1+xtac.0.0.5` (kept in step with the doc version) | `main@89239c71` |
+| `xense-taccap-lerobot` | A customisation of lerobot 0.5.1; version `0.5.1+xtac.0.0.6` (kept in step with the doc version) | `main@a7b0d57b` |
 | `xense.taccap` (the `taccap-gripper` SDK) | Matched to the main repo's submodule version | 0.1.7 (submodule `83314c8`) |
 | Gripper firmware command set | **V2.1** (wire framing is counted separately, at V1.8; see [three numbering schemes](#v21)) | Command set V2.1 |
 | Gripper firmware build | leader **≥ 1.2.0** / follower **≥ 1.1.0** supports command set V2.1 | This baseline ships leader **1.2.1** / follower **1.1.1** (firmware source branch `hw_v1.1.0`); image versions follow the SDK — `firmware/manifest.json` is authoritative, see [Firmware OTA upgrade](#ota) |
@@ -283,9 +283,18 @@ and fields are still whatever your local checkout says.
     again, and the process died — **which means you cannot record in the container at all**. After
     the fix, a missing binary warns once and recording continues.
 
-    **The fix is not in a released image yet.** Machines pinned to `0.0.5` should always pass
-    `--play_sounds=false` — see [Troubleshooting](troubleshooting.md#docker). Hosts on the Mamba path
-    with `speech-dispatcher` installed are unaffected.
+    **The `0.0.6` image contains this fix**, so `--play_sounds=false` is no longer needed after
+    upgrading. Machines still pinned to `0.0.5` or earlier should always pass it — see
+    [Troubleshooting](troubleshooting.md#docker). Hosts on the Mamba path with `speech-dispatcher`
+    installed are unaffected.
+
+!!! note "Announcements are silent in the container, deliberately so"
+    The `0.0.6` image installs `speech-dispatcher` but **no speech synthesiser module**, so the
+    announcement is simply skipped. Adding a synthesiser would not get you audio either — there is
+    no working audio sink in the container, and `spd-say` goes from failing immediately to hanging,
+    wedging a recording at the teardown step. Versions after `d1ad7140` therefore bound that
+    blocking call at 10 seconds; the `0.0.6` image predates it, but you only meet the hang if you
+    install a synthesiser into the image yourself. **To hear the announcements, record on the host.**
 
 !!! note "Recorded videos readable by non-root — needs a version after `dac15f74`; the `0.0.5` image **predates** it"
     Before the fix, videos landed as `-rw------- root` (the temporary file used for concatenation is
@@ -293,8 +302,10 @@ and fields are still whatever your local checkout says.
     consequence only shows up when **exporting**: a non-root copy fails on the `.mp4` files only,
     which reads like a few damaged files.
 
-    **This fix is not in a released image yet either.** Until it is, export by **copying as root and
-    then `chown`**, as in [Where the data lives](02-environment.md#docker-data).
+    **The `0.0.6` image contains this fix too.** But the permissions depend on **the image that
+    recorded the data**, and upgrading does not rewrite files already written — so older data still
+    has to be exported by **copying as root and then `chown`**, as in
+    [Where the data lives](02-environment.md#docker-data).
 
 !!! note "`LEROBOT_DATA_DIR` writes datasets to a host directory — needs a version after `89239c71`"
     Setting it in `.env` puts datasets straight into a host directory you name, with nothing to copy
@@ -511,11 +522,17 @@ Please include:
 
 ## Compatibility and release maintenance
 
-- The current documentation version is `v0.0.5`; content changes are tracked in the docs
+- The current documentation version is `v0.0.6`; content changes are tracked in the docs
   repository's git history.
 - The main repo's version is kept in step with this page: `xense-taccap-lerobot`'s `pyproject.toml`
-  records `0.5.1+xtac.0.0.5`, where `0.5.1` is the upstream lerobot baseline and `xtac.0.0.5` is the
+  records `0.5.1+xtac.0.0.6`, where `0.5.1` is the upstream lerobot baseline and `xtac.0.0.6` is the
   product version that matches this manual.
+- **0.0.6 vs 0.0.5: three potholes on the Docker path, and every machine should upgrade** —
+  recording no longer dies on the spoken announcement (no more `--play_sounds=false`); recorded
+  videos land as `0644` instead of `0600 root`, so exporting no longer fails on the `.mp4` files
+  alone; and `mamba activate` in the container no longer answers `Shell not initialized`.
+  **The collection program's behaviour, the data format and the three SDKs are the same as 0.0.5** —
+  upgrading changes nothing about data already recorded and requires no re-calibration.
 - **0.0.5 vs 0.0.4: only the installation method changed** — Docker now pulls from GHCR by default
   and the tar delivery bundle is no longer needed; the collection program and the three SDKs inside
   the image are the same as 0.0.4. A machine already running 0.0.4 has **no obligation to upgrade**,
