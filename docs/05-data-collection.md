@@ -264,7 +264,7 @@
 | `robot.wrist_camera_fourcc` | `MJPG` | 腕相机像素格式。默认 MJPG 是为了给同 hub 的两路触觉让出 USB 带宽;`YUYV` 为无压缩,只在带宽够时用 |
 | `robot.enable_head_camera` | `false` | 录制 Pico4 Ultra 企业版**头显相机**,见 [§5.6](#56) |
 | `robot.head_camera_eyes` | `both` | `both` 录左右两只眼(两个键),`left` / `right` 只录一只 |
-| `robot.head_camera_width/_height` | `1024` / `768` | **每只眼**的尺寸,只接受 `1024x768` 或 `1280x960` |
+| `robot.head_camera_width/_height` | `640` / `480` | **每只眼**的尺寸,只接受 `640x480`、`1024x768` 或 `1280x960`;要与头显里的「分辨率」一致 |
 | `robot.head_camera_fps` | `30` | 头显相机录制帧率 |
 | `robot.head_camera_pair_max_skew_ms` | `20.0` | 左右眼帧序号不同时,判定为同一次曝光的最大时间差 |
 | `robot.tactile_fps` | `30` | 触觉录制帧率 |
@@ -373,7 +373,7 @@ ValueError: --robot.id is required: the station label for this rig, e.g. --robot
 | `gripper.pos` | 夹爪编码器 | `--robot.enable_gripper`(默认 `true`) | float ∈ [0, 1] |
 | `tactile_left` / `tactile_right` | 左右视触觉传感器 | **始终采集**,无开关 | uint8,约 `(400, 700, 3)` |
 | `wrist_cam` | 腕部相机 | `--robot.enable_wrist_camera`(默认 `true`) | uint8 `(H, W, 3)` |
-| `left_head` / `right_head` | 头显双目,**一只眼一个键** | `--robot.enable_head_camera`(默认 `false`) | uint8,默认 `(768, 1024, 3)` |
+| `left_head` / `right_head` | 头显双目,**一只眼一个键** | `--robot.enable_head_camera`(默认 `false`) | uint8,默认 `(480, 640, 3)` |
 | `head_camera.x/y/z` | 头显位置(同 `tcp.*` 世界系),**也是动作** | 同上 | float(m) |
 | `head_camera.r1..r6` | 头显姿态的 6-D 旋转,**也是动作** | 同上 | float |
 | `imu.accel.{x,y,z}` | 夹爪 IMU 加速度 | `--robot.enable_imu`(默认 `false`,**预留不录**) | float(m/s²) |
@@ -560,7 +560,7 @@ lerobot-record \
 
 | Key | 含义 |
 |---|---|
-| `left_head` / `right_head` | 头显相机画面,**一只眼一个视频键**,默认各 `(768, 1024, 3)` |
+| `left_head` / `right_head` | 头显相机画面,**一只眼一个视频键**,默认各 `(480, 640, 3)` |
 | `head_camera.x/y/z` | 头显位置(m);**同时进 action** |
 | `head_camera.r1..r6` | 头显姿态,6-D 旋转(约定同 `tcp.*`);**同时进 action** |
 
@@ -578,23 +578,28 @@ lerobot-record \
 
 ### 分辨率与录制单眼
 
-`--robot.head_camera_width/_height` **只接受 `1024x768`(默认)和 `1280x960`**,填别的直接报错,
-不会悄悄降级;首帧尺寸与配置不一致时同样报错——重采样会**悄悄改掉记录下来的视场角**。
-两个尺寸都是 4:3,与传感器一致(PICO 的相机访问接口单帧上限 2328x1748,也是 4:3;
-按 16:9 要画面,得到的是裁剪或拉伸,而不是更大的视场)。
+`--robot.head_camera_width/_height` **只接受 `640x480`(默认)、`1024x768` 和 `1280x960`**
+三档,和头显 APP 的「分辨率」一一对应;填别的直接报错,不会悄悄降级;首帧尺寸与配置不一致时
+同样报错——重采样会**悄悄改掉记录下来的视场角**。三个尺寸都是 4:3,与传感器一致(PICO 的相机
+访问接口单帧上限 2328x1748,也是 4:3;按 16:9 要画面,得到的是裁剪或拉伸,而不是更大的视场)。
 
 !!! warning "头显里的「分辨率」和这两个参数必须一致"
-    出画面的是头显,尺寸由 XTac-UMI XR 界面上的「**分辨率**」决定(默认 `1024`);命令行这两个
-    参数只是**声明你预期收到什么**。两边对不上,connect 时就会因首帧尺寸不符报错。
+    出画面的是头显,尺寸由 XTac-UMI XR 界面上的「**分辨率**」决定(默认 `640`,也是推荐档位);
+    命令行这两个参数只是**声明你预期收到什么**。两边对不上,connect 时就会因首帧尺寸不符报错。
 
-    **在头显里把分辨率改成 `1280` 后,命令行也要跟着改**:
+    默认对默认,两边都是 640x480,不用加参数。**在头显里把分辨率调高之后,命令行也要跟着改**:
 
     ```bash
+    # 头显选 1024
+    --robot.head_camera_width=1024 \
+    --robot.head_camera_height=768
+
+    # 头显选 1280
     --robot.head_camera_width=1280 \
     --robot.head_camera_height=960
     ```
 
-    改回 `1024` 同理。两处一起改,不要只改一边。
+    两处一起改,不要只改一边。
 
 只要一只眼时用 `--robot.head_camera_eyes=left`(或 `right`):JPEG 解码量和编码器压力都减半,
 数据集里也只有一个头部视频键。

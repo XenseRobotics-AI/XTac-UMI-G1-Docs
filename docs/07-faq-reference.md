@@ -19,7 +19,7 @@
 | `robot.wrist_camera_fourcc` | `MJPG` | 腕相机像素格式;默认 MJPG 是为同 hub 的触觉让出 USB 带宽 |
 | `robot.enable_head_camera` | `false` | 头显相机(第一视角 + 头显位姿),见 [5.6](05-data-collection.md#56) |
 | `robot.head_camera_eyes` | `both` | `both` = 左右眼各一个键;`left` / `right` 只录一只 |
-| `robot.head_camera_width/_height` | `1024` / `768` | **每只眼**尺寸,只接受 `1024x768` / `1280x960` |
+| `robot.head_camera_width/_height` | `640` / `480` | **每只眼**尺寸,只接受 `640x480` / `1024x768` / `1280x960`,要与头显里的「分辨率」一致 |
 | `robot.head_camera_fps` | `30` | 头显相机帧率 |
 | `robot.head_camera_pair_max_skew_ms` | `20.0` | 左右眼帧序号不同时,判为同一次曝光的最大时间差 |
 | `robot.head_camera_startup_timeout_s` | `5.0` | connect 时等待首帧的秒数 |

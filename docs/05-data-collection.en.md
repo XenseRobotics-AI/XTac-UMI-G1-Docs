@@ -289,7 +289,7 @@ official [recording guide](https://huggingface.co/docs/lerobot/v0.5.1/en/il_robo
 | `robot.wrist_camera_fourcc` | `MJPG` | Wrist pixel format. MJPG by default so the two tactile sensors on the same hub get the USB bandwidth; `YUYV` is uncompressed and only fits when there is room |
 | `robot.enable_head_camera` | `false` | Record the Pico4 Ultra Enterprise **headset camera** — see [§5.6](#56) |
 | `robot.head_camera_eyes` | `both` | `both` records each eye as its own key; `left` / `right` records one |
-| `robot.head_camera_width/_height` | `1024` / `768` | **Per-eye** size; only `1024x768` or `1280x960` are accepted |
+| `robot.head_camera_width/_height` | `640` / `480` | **Per-eye** size; only `640x480`, `1024x768` or `1280x960` are accepted, and it must match the headset's "Resolution" |
 | `robot.head_camera_fps` | `30` | Head camera recording frame rate |
 | `robot.head_camera_pair_max_skew_ms` | `20.0` | Max timestamp gap still counted as one stereo capture when the eyes' sequence numbers differ |
 | `robot.tactile_fps` | `30` | Tactile recording frame rate |
@@ -408,7 +408,7 @@ gripper, each carrying the observation key it feeds.
 | `gripper.pos` | Jaw encoder | `--robot.enable_gripper` (default `true`) | float ∈ [0, 1] |
 | `tactile_left` / `tactile_right` | The two visuotactile sensors | **always recorded**, no switch | uint8, about `(400, 700, 3)` |
 | `wrist_cam` | Wrist camera | `--robot.enable_wrist_camera` (default `true`) | uint8 `(H, W, 3)` |
-| `left_head` / `right_head` | Headset stereo, **one key per eye** | `--robot.enable_head_camera` (default `false`) | uint8, `(768, 1024, 3)` by default |
+| `left_head` / `right_head` | Headset stereo, **one key per eye** | `--robot.enable_head_camera` (default `false`) | uint8, `(480, 640, 3)` by default |
 | `head_camera.x/y/z` | Headset position (same frame as `tcp.*`), **also an action** | as above | float (m) |
 | `head_camera.r1..r6` | Headset orientation as a 6-D rotation, **also an action** | as above | float |
 | `imu.accel.{x,y,z}` | Gripper IMU acceleration | `--robot.enable_imu` (default `false`, **reserved, not recorded**) | float (m/s²) |
@@ -620,7 +620,7 @@ It produces three groups of keys:
 
 | Key | Meaning |
 |---|---|
-| `left_head` / `right_head` | Headset camera, **one video key per eye**, `(768, 1024, 3)` each by default |
+| `left_head` / `right_head` | Headset camera, **one video key per eye**, `(480, 640, 3)` each by default |
 | `head_camera.x/y/z` | Headset position (m); **also in the action** |
 | `head_camera.r1..r6` | Headset orientation, 6-D rotation (same convention as `tcp.*`); **also in the action** |
 
@@ -641,25 +641,32 @@ It produces three groups of keys:
 
 ### Resolution and recording a single eye
 
-`--robot.head_camera_width/_height` accept **only `1024x768` (default) and `1280x960`**. Anything
-else is an error rather than a silent downgrade, and so is a first frame whose size disagrees with
-the config — rescaling would quietly change the recorded field of view. Both modes are 4:3,
-matching the sensor (PICO's camera-access API caps a frame at 2328x1748, which is also 4:3, so a
-16:9 request would be a crop or a stretch rather than more field of view).
+`--robot.head_camera_width/_height` accept **only `640x480` (default), `1024x768` and
+`1280x960`** — one for each setting the headset app's Resolution offers. Anything else is an error
+rather than a silent downgrade, and so is a first frame whose size disagrees with the config —
+rescaling would quietly change the recorded field of view. All three modes are 4:3, matching the
+sensor (PICO's camera-access API caps a frame at 2328x1748, which is also 4:3, so a 16:9 request
+would be a crop or a stretch rather than more field of view).
 
 !!! warning "The headset's \"Resolution\" and these two must agree"
     The headset produces the frames, and their size comes from the **Resolution** setting in
-    XTac-UMI XR (default `1024`); these two flags only **declare what you expect to receive**. If
-    the two disagree, connect fails on the first frame's size.
+    XTac-UMI XR (default `640`, which is also the one to use); these two flags only **declare what
+    you expect to receive**. If the two disagree, connect fails on the first frame's size.
 
-    **After setting the headset to `1280`, change the command too**:
+    Default meets default at 640x480, so out of the box there is nothing to pass. **Raise the
+    headset's setting and the command has to follow**:
 
     ```bash
+    # headset set to 1024
+    --robot.head_camera_width=1024 \
+    --robot.head_camera_height=768
+
+    # headset set to 1280
     --robot.head_camera_width=1280 \
     --robot.head_camera_height=960
     ```
 
-    And back again for `1024`. Change both, never just one.
+    Change both, never just one.
 
 `--robot.head_camera_eyes=left` (or `right`) records one eye: half the JPEG decoding, half the
 encoder load, and one head video key in the dataset instead of two.

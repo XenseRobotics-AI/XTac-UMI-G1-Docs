@@ -317,6 +317,19 @@ and fields are still whatever your local checkout says.
     `compose.yaml` — **not advisable**, since it is a tracked file, a hard-coded absolute path
     conflicts on the next `git pull`, and any other machine mounts a path that does not exist.
 
+!!! note "The head camera's 640x480 default needs a version after `4b5f5cea`; the `0.0.6` image **predates** it"
+    The headset app's Resolution setting offers `640` / `1024` / `1280` and defaults to `640`
+    (640x480 per eye) — but the collection side used to accept only `1024x768` and `1280x960`, and
+    defaulted to `1024x768`. With the headset on its own default, `--robot.enable_head_camera=true`
+    therefore failed on the first frame's size, and `--robot.head_camera_width=640` was rejected
+    outright. `4b5f5cea` adds 640x480 to the whitelist and makes it the default, so the two defaults
+    finally agree.
+
+    On an older checkout (the `0.0.6` image included): the head camera runs at `1024` or `1280`
+    only — **raise the headset's Resolution first**; at `1024` the command-line defaults match, at
+    `1280` add `--robot.head_camera_width=1280 --robot.head_camera_height=960`. The rest of this
+    page and [5.6 Headset camera](05-data-collection.md#56) describe the new default (640x480).
+
 !!! note "`--dryrun` was removed; versions after `d46fcf66` no longer accept it"
     The flag printed a line claiming actions would not be sent to the robot and was never actually
     honoured — the hardware ran as usual. It has been deleted, so a script still passing it now gets

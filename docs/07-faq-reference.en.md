@@ -20,7 +20,7 @@ This page keeps the configuration options, the glossary and the appendix.
 | `robot.wrist_camera_fourcc` | `MJPG` | Wrist pixel format. MJPG by default so the tactile sensors on the same hub get the USB bandwidth |
 | `robot.enable_head_camera` | `false` | Headset camera (first-person view + headset pose), see [5.6](05-data-collection.md#56) |
 | `robot.head_camera_eyes` | `both` | `both` = one key per eye; `left` / `right` records only that one |
-| `robot.head_camera_width/_height` | `1024` / `768` | Size **per eye**; only `1024x768` and `1280x960` are accepted |
+| `robot.head_camera_width/_height` | `640` / `480` | Size **per eye**; only `640x480`, `1024x768` and `1280x960` are accepted, and it must match the headset's "Resolution" |
 | `robot.head_camera_fps` | `30` | Headset camera frame rate |
 | `robot.head_camera_pair_max_skew_ms` | `20.0` | When the two eyes carry different frame numbers, the largest time difference still treated as one exposure |
 | `robot.head_camera_startup_timeout_s` | `5.0` | Seconds to wait for the first frame at connect |
