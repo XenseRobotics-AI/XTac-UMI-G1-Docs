@@ -421,6 +421,26 @@ thing if it is too old, printing the version this unit reports:
 If none of them apply, **do not flash**. Firmware does not regress on its own, and once flashed it
 does not need flashing again unless the board is replaced or the firmware erased.
 
+!!! warning "But V2.1 is the floor for **working**, not a statement that there are **no known defects**"
+    The checks above answer "is the command set new enough". Separately, leader `1.2.2` /
+    follower `1.1.5` fixed three real defects that are present in everything older — including
+    firmware sitting at leader `1.2.0` / follower `1.1.0`, which satisfies V2.1 perfectly well:
+
+    | Defect | How it shows up |
+    |---|---|
+    | Command-channel livelock | After sustained high-rate commands the gripper **stops answering any command at all**, while the data stream looks entirely healthy — right rate, error counters clean. Only a power cycle recovers it |
+    | Logging stalling realtime tasks | The firmware emits ~35 KB/s of logging even when idle, and its log write is blocking, so it stalls whichever task produced the line |
+    | Out-of-bounds write at boot | Every power-on writes one byte past the end of an array |
+
+    The first is the one to note: **its failure mode is nearly indistinguishable from working**.
+    The device keeps streaming; it just stops accepting commands. If your collection flow has a
+    "send command → await response" step and you have seen it hang for no clear reason, this is
+    worth upgrading for.
+
+    All three apply to leader and follower alike — they live in code the two roles share. The test
+    is still the version in [`manifest.json`](#ota): if the bundled image is newer than what your
+    gripper reports, it is worth flashing.
+
 ### How to flash
 
 **Every gripper has to reach V2.1.** Firmware below V2.1 does not support travel calibration, so
@@ -494,6 +514,26 @@ uses `LeaderGripper` because this step flashed the master image; for a follower 
 The write takes about a second, and the gripper reboots and is re-detected in about 1–3 s. The new
 firmware is written to the **spare partition** and does not overwrite the running one until it
 verifies — so a failed transfer cannot brick the gripper.
+
+!!! danger "Power-cycle the gripper afterwards. This is a step of the upgrade, not troubleshooting"
+    The reboot above is a **soft reset**: the MCU restarts, but the USB-serial bridge on the gripper
+    never loses power. The device comes back in a **degraded state** that is indistinguishable from
+    a healthy one from anywhere you can look — right version, stream running, error counters at
+    zero. **The only symptom is that it quietly drops status frames.**
+
+    Measured on the same gripper, same firmware, same cable, 60-second runs:
+
+    | | status frames lost |
+    |---|---|
+    | after OTA alone | 35–39 per run, three runs |
+    | after unplug + replug | **0**, three runs |
+
+    So the order is: **flash → unplug and replug → then** do the step-3 version check and any
+    calibration. Anything measured before the replug is untrustworthy.
+
+    This does not contradict "do not cut power during the upgrade" below: cutting power **while the
+    upgrade is running** (blue blinking) corrupts the write; power-cycling **after it has finished
+    and the gripper has rebooted** is required.
 
 !!! danger "Flashing the wrong role leaves a gripper that will not start, and needs a factory repair"
     `ota_update.py` identifies the image by CRC32 against `manifest.json` and **refuses outright on
