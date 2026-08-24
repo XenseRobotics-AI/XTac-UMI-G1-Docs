@@ -130,7 +130,7 @@ and fields are still whatever your local checkout says.
 | `opencv-python` | Pinned `==4.12.0.88` (consistent across the XenseRobotics SDKs) | 4.12.0.88 |
 | NumPy | `>=1.26.4` | 2.2.6 |
 | `xense-taccap-lerobot` | A customisation of lerobot 0.5.1; version `0.5.1+xtac.0.0.6` (kept in step with the doc version) | `main@e1cebea0` |
-| `xense.taccap` (the `taccap-gripper` SDK) | Matched to the main repo's submodule version | 0.1.9 (submodule `3dac16a`) |
+| `xense.taccap` (the `taccap-gripper` SDK) | Matched to the main repo's submodule version | 0.1.9 (submodule `a3382db`) |
 | Gripper firmware command set | **V2.1** (wire framing is counted separately, at V1.8; see [three numbering schemes](#v21)) | Command set V2.1 |
 | Gripper firmware build | leader **≥ 1.2.0** / follower **≥ 1.1.0** supports command set V2.1 | This baseline ships leader **1.2.2** / follower **1.1.5** (firmware source branch `hw_v1.1.0`), both fixing the [three known defects](#ota-when) and both hardware-validated; image versions follow the SDK — `firmware/manifest.json` is authoritative, see [Firmware OTA upgrade](#ota) |
 | `xensesdk` | Provided by the install script | 2.1.1 |
@@ -418,6 +418,21 @@ and fields are still whatever your local checkout says.
     One bundle per capture session, ~841 KB per sensor. The timestamp in the filename is local wall
     clock in Beijing time — read it as a label; for anything you compute with, use `recorded_at` on
     the epoch (full ISO-8601 with offset).
+
+!!! note "Wrist fisheye undistortion — needs a version after `e5b4445a`"
+    Adds `--robot.wrist_undistort` (**off by default**). Turned on, the wrist fisheye is
+    rectified **before the frame is written to the dataset**, using the intrinsics in that
+    gripper's flash; a gripper that was never calibrated falls back to the SDK's reference
+    intrinsics with a warning. See
+    [5.7 Wrist fisheye undistortion](05-data-collection.md#57).
+
+    On an older checkout: the flag does not exist and `wrist_cam` is always raw fisheye.
+
+    **What matters is that this changes the recorded data** — a rectified `wrist_cam` and a
+    raw one have identical shape, and nothing flags the difference when the two are mixed.
+    So from this version each unit in the manifest carries a `wrist_undistort` entry saying
+    which was used, and changing the setting mid-dataset opens a new epoch. **An older
+    dataset without that entry is raw fisheye.**
 
 ## How to check versions {#check-versions}
 
