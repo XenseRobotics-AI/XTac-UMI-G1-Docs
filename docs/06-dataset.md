@@ -40,13 +40,22 @@ sample = ds[0]          # 单帧:观测 + 动作,均为 torch tensor
 `info` 里的关键元数据:`fps`、`features`、`total_episodes`、`total_frames`、
 `robot_type`、`data_path`、`video_path`。
 
-!!! info "XTac-UMI G1 多一个 `meta/hardware.json`"
-    标准 LeRobotDataset 只在 `info` 里记 `robot_type`,说不出这批数据是**哪套硬件**采的。
-    所以录制时会额外写一个 `meta/hardware.json`:工位号 `robot_id`、每只夹爪的**固件 SN**、
-    以及它上面两枚触觉传感器的 SN(每枚带着自己对应的观测键)。
+!!! info "XTac-UMI G1 多出来的两样:`meta/hardware.json` 和 `meta/runtimes/`"
+    标准 LeRobotDataset 只在 `info` 里记 `robot_type`,说不出这批数据是**哪套硬件**采的,
+    更说不出采的时候那枚传感器的标定长什么样。所以录制时会额外写两样东西:
 
-    它是**独立文件**,不动上游的 `info` 结构,所以不影响任何按标准格式读这份数据集的工具。
-    字段含义与续录时的行为 → [`--robot.id` 与硬件清单](05-data-collection.md#robot-id)。
+    **`meta/hardware.json` —— 谁采的。**工位号 `robot_id`、每只夹爪的**固件 SN**、
+    以及它上面两枚触觉传感器的 SN(每枚带着自己对应的观测键)。它是一个 **`epochs` 数组**:
+    数据集录到一半换了夹爪或传感器,旧段在当前集数处封口、新段接上,
+    每一集都仍然指向真正采它的那套设备。
+
+    **`meta/runtimes/` —— 采的时候标定长什么样。**每枚触觉传感器一份 runtime bundle
+    (`<SN>-<时间>.bin`,约 841 KB),`epochs` 里的传感器各自指向自己那一份。
+    从录下来的 `rectify` 流重建 depth / force / difference 要用它。
+
+    两者都是**独立文件**,不动上游的 `info` 结构,所以不影响任何按标准格式读这份数据集的工具。
+    字段含义、续录行为、以及重建时的注意事项 →
+    [`--robot.id` 与硬件清单](05-data-collection.md#robot-id)。
 
 ## 6.2 数据校验 {#62}
 

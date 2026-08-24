@@ -24,7 +24,9 @@ Collection writes by default to:
 Fields and format are covered in
 [6.1 The LeRobotDataset format at a glance](06-dataset.md#61).
 `meta/hardware.json` is the extra hardware manifest the XTac-UMI G1 writes (station label plus the
-gripper and tactile serials) — see
+gripper and tactile serials, split into `epochs` so a hardware swap part-way through a dataset is
+recorded too), and `meta/runtimes/` alongside it holds each tactile sensor's runtime bundle as it
+was at the time. Both are covered in
 [`--robot.id` and the hardware manifest](05-data-collection.md#robot-id).
 
 ## Naming convention (`repo_id`)

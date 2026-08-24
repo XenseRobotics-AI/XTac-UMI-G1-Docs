@@ -14,8 +14,12 @@
     **解决**:照它打印的那一行敲即可,完整清单见
     [前置:系统依赖包](02-environment.md#apt)。
 
-    另有一条只**告警**不阻断的:缺 `v4l-utils` / `usbutils`。**别跳过**——
-    `v4l2-ctl` 和 `lsusb -t` 是相机打不开时唯一能用的工具。
+    另有两条只**告警**不阻断的,**都别跳过**:
+
+    - 缺 `libusb-0.1.so.4`(`libusb-dev` 提供)。它是相机的**运行期**依赖,编译期用不到,
+      所以装得完、到 `connect()` 才失败——**相机连不上先查这条**,见
+      [`libusb-dev`](02-environment.md#apt)。
+    - 缺 `v4l-utils`。`v4l2-ctl` 是相机打不开时最趁手的工具。
 
 ??? failure "`import xensesdk` / `import xensevr_pc_service_sdk` / `import xense.taccap` 失败"
     **原因**:环境未装全,或未激活 `xense-taccap` 环境。

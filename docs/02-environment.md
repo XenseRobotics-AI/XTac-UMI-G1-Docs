@@ -100,20 +100,43 @@
 
 ```bash
 sudo apt install -y build-essential cmake pkg-config git curl
-sudo apt install -y v4l-utils usbutils   # 采集用不到,但排查相机全靠它俩
+sudo apt install -y libusb-dev    # ⚠️ libusb 不够新,相机就是连不上 —— 见下面这条
+sudo apt install -y v4l-utils     # 采集用不到,但排查相机全靠它
 ```
 
 `setup_env.sh` 开跑前会先查这几个命令在不在,缺了**直接停下并打印该敲哪一行 apt**——
 否则错误要等到 CMake 或链接阶段才冒出来,看着像 SDK 坏了,能耗掉一下午。
 
-第二行只是**告警**,不阻断安装,但强烈建议装上:`v4l2-ctl --list-formats-ext` 和 `lsusb -t`
-正是[相机打不开](03-host-hardware.md#usb-budget)时唯一能用的两把尺子——这也恰好是这套硬件上
-最常见的装机问题。缺了它们的机器,**远程根本没法帮你查**。
+!!! danger "`libusb-dev`:要装,而且要跟着内核一起保持更新"
+    **近期的 Linux 内核更新要求配套更新 libusb。libusb 落后(或缺失)时,相机就是连不上。**
+    这是"昨天还好好的机器今天突然不行"最常见的一种:主机做了一次带新内核的 `apt upgrade`,
+    libusb 没跟上,触觉和腕相机就打不开了。
 
-!!! note "不需要 `ffmpeg`,也不需要 `libudev-dev` / `libusb-1.0-0-dev`"
+    **报错里没有一个字提到 libusb**,所以排查通常先去翻 USB hub、线材和带宽——方向全错。
+    **先查这一条,再查别的。**
+
+    `sudo apt install -y libusb-dev` 会连带装上当前的 `libusb-0.1-4` 运行库
+    (`libusb-0.1.so.4`),预编译的相机栈加载的正是它。已经装过也一样:**内核升级之后再升一次**
+    (先 `apt update`,否则 apt 看不到新版本):
+
+    ```bash
+    sudo apt update && sudo apt install -y --only-upgrade libusb-dev libusb-1.0-0
+    ```
+
+    内核升级后**重启一次**同理:运行的内核和用户态 USB 栈应该来自同一次升级。
+
+    `setup_env.sh` 会检查 `libusb-0.1.so.4`,但**只告警不中断**——它是相机的**运行期**依赖,
+    编译期用不到,所以缺了照样装得完,等到 `connect()` 才失败。正因如此这里要单独点出来,
+    而不是留到设备上现踩。
+
+`v4l-utils` 那行只是**告警**,不阻断安装,但强烈建议装上:`v4l2-ctl --list-formats-ext`
+正是[相机打不开](03-host-hardware.md#usb-budget)时最趁手的那把尺子——这也恰好是这套硬件上
+最常见的装机问题。缺了它的机器,**远程根本没法帮你查**。
+
+!!! note "不需要 `ffmpeg`,也不需要 `libudev-dev`"
     `torchcodec` 用的是 conda 环境里那份 FFmpeg **动态库**,系统装不装 `ffmpeg` 命令都不影响。
-    `libudev` / `libusb` 则是**运行期**由预编译 wheel 加载的,用的是 Ubuntu 本来就有的
-    `libudev1` / `libusb-1.0-0`,没有任何东西需要它们的 `-dev` 头文件。
+    `libudev` 是**运行期**由预编译 wheel 加载的,用的是 Ubuntu 本来就有的 `libudev1`,
+    没有任何东西需要它的 `-dev` 头文件。libusb 是**例外**——见上面那条。
 
 ## 2.1 前置:安装 Mamba / Miniforge
 

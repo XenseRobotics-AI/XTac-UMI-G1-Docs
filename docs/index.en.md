@@ -74,3 +74,8 @@ This is the **xense-taccap-lerobot data-collection quickstart**. Three parts: **
 | [`xense.taccap`](https://github.com/Vertax42/TacCap-Gripper) | Gripper SDK (repo `TacCap-Gripper`, submodule `third_party/taccap-gripper`): IMU, encoder, keys, protocol, and follower-only motor control |
 | [`xensevr_pc_service_sdk`](https://github.com/Vertax42/XenseVR-PC-Service) | Pico4 Ultra tracker PC service (installed as a `.deb`, **not a submodule**); from v0.2.0 it also carries the [headset camera](05-data-collection.md#56) frames |
 | [`xensesdk`](https://github.com/XenseRobotics/xensesdk) | Visuotactile sensor SDK, provided by the install script ([docs](https://xensedoc.readthedocs.io/en/latest/)) |
+
+!!! note "Versions this manual is written against"
+    `xense.taccap 0.1.9`, and `xense-taccap-lerobot` customized from **lerobot 0.5.1**.
+    Go by the device notes shipped with your own checkout of the main repo for commands and
+    field names.

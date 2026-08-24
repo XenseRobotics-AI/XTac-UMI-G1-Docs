@@ -364,15 +364,24 @@ gripper, each carrying the observation key it feeds.
 ```json
 {
   "robot_type": "bi_taccap_gripper",
-  "robot_id": "bi_taccap_0",
-  "role": "leader",
-  "units": [
+  "epochs": [
     {
-      "side": "left",
-      "gripper_sn": "TCGU01A24Z0001m",
-      "tactile_sensors": [
-        { "finger": "left",  "observation_key": "left_tactile_left",  "serial": "GSPS01A25Z0011" },
-        { "finger": "right", "observation_key": "left_tactile_right", "serial": "GSPS01A25Z0012" }
+      "from_episode": 0,
+      "to_episode": null,
+      "recorded_at": "2026-08-22T16:03:09+08:00",
+      "robot_id": "bi_taccap_0",
+      "role": "leader",
+      "units": [
+        {
+          "side": "left",
+          "gripper_sn": "TCGU01A24Z0001m",
+          "tactile_sensors": [
+            { "finger": "left",  "observation_key": "left_tactile_left",  "serial": "GSPS01A25Z0011",
+              "runtime": "meta/runtimes/GSPS01A25Z0011-20260822T160309.bin" },
+            { "finger": "right", "observation_key": "left_tactile_right", "serial": "GSPS01A25Z0012",
+              "runtime": "meta/runtimes/GSPS01A25Z0012-20260822T160309.bin" }
+          ]
+        }
       ]
     }
   ]
@@ -391,9 +400,49 @@ gripper, each carrying the observation key it feeds.
 - A side whose gripper is off records `"gripper_sn": null` rather than being omitted;
   `--robot.enable_tactile=false` leaves `tactile_sensors` empty.
 - It is a **file of its own**, not a key in `meta/info.json` — that schema belongs to upstream.
-- Resuming a dataset on *different* hardware keeps the original file and warns. The episodes already
-  recorded came from the devices named there, so overwriting would misattribute every one of them;
-  the warning is the signal that this dataset now spans two rigs.
+- `runtime` points at that sensor's **runtime bundle** — see the danger box below.
+
+**`epochs`: one dataset can span several rigs.** Each epoch records `from_episode` / `to_episode`
+(**half-open**, matching `dataset_from_index` / `dataset_to_index`) and `recorded_at`. The epoch
+being recorded right now has `to_episode: null` — the count is only known once the run ends, and
+saying "still open" beats guessing.
+
+On `--resume`:
+
+| Situation | What happens |
+|---|---|
+| Same rig | Nothing is recorded; the open epoch already covers this run |
+| **A gripper or sensor was swapped** | The open epoch is **closed** at the current episode count and a new one starts. Both stay named |
+| Same devices, different PC (`--robot.id` changed) | Also opens a new epoch. The station label changed while the hardware did not — recorded anyway, because consumers key on `units`, and a boundary with identical `units` is simply the rig moving |
+| `--robot.type` disagrees (single ↔ bimanual) | **Not a swap — a different dataset**: the observation keys differ. The original file is kept and a warning is logged |
+
+Older datasets (recorded before epochs, with a flat `units`) need no special handling: they read
+back as **one open epoch** (`from_episode` 0, `to_episode` `null`). But note that a single open
+epoch says **"nothing here indicates the rig changed"**, not **"the rig did not change"** — the old
+format could not express it at all.
+
+!!! danger "`meta/runtimes/`: rebuilding the derived tactile channels needs **that** bundle"
+    What gets recorded is the `rectify` stream; depth / force / difference are **computed from it**,
+    and computing them needs that sensor's runtime config — which carries the reference image
+    captured when the sensor came up. So every capture session writes each sensor's bundle to
+    `meta/runtimes/<SN>-<timestamp>.bin` (~841 KB each) and the sensors in the epoch point at their
+    own. Reconstruction months later then works **from the dataset alone**, with no hunt for the
+    physical unit — which by then has quite possibly been recalibrated.
+
+    **Using the wrong bundle does not fail.** Solve against another sensor's bundle — or the same
+    sensor's after a recalibration — and an **untouched gel** still yields plausible-looking depth
+    and force, with nothing in the output saying otherwise. So for an older dataset (no
+    `meta/runtimes/`) the correct move is to **skip derivation**, not to grab whichever bundle is
+    at hand.
+
+    One bundle per session is not a naming accident: the reference image is re-captured every time
+    the sensor initialises, so each session genuinely has its own. A sensor pulled for maintenance
+    and refitted keeps its serial but comes back with a new reference image — that counts as a
+    change and opens its own epoch.
+
+    The timestamp in the filename is local wall clock in Beijing time with no offset marker; read
+    it as a label. For anything you compute with, use `recorded_at` on the epoch (full ISO-8601
+    with offset).
 
 !!! note "Trackers and wrist cameras are deliberately left out"
     They are mounted accessories; the gripper plus its two tactile sensors is the unit the data is

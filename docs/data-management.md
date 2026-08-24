@@ -21,8 +21,9 @@
 ```
 
 字段与格式详见 [6.1 LeRobotDataset 格式速览](06-dataset.md#61)。
-`meta/hardware.json` 是 XTac-UMI G1 额外写的一份硬件清单(工位名 + 夹爪与触觉的序列号),
-见 [`--robot.id` 与硬件清单](05-data-collection.md#robot-id)。
+`meta/hardware.json` 是 XTac-UMI G1 额外写的一份硬件清单(工位名 + 夹爪与触觉的序列号,
+按 `epochs` 分段,数据集中途换过硬件也记得下),同目录的 `meta/runtimes/` 放着每枚触觉传感器
+当时的 runtime bundle。两者都见 [`--robot.id` 与硬件清单](05-data-collection.md#robot-id)。
 
 ## 命名规范(`repo_id`)
 

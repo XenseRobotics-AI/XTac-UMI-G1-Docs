@@ -7,8 +7,10 @@ to report a problem.
 
 !!! danger "This is not optional — bring all four up to the versions below before collecting"
     The whole chain is a **matched set**: the firmware needs [command set V2.1](#v21) for travel
-    calibration, SDK 0.1.7 is what can safely flash that firmware, and the 0–1 normalisation of
-    `gripper.pos` only holds once firmware, SDK and calibration are all in place. A leader gripper
+    calibration, SDK ≥ 0.1.7 is what can safely flash that firmware, 0.1.9 is the release that
+    **carries the images with three known defects fixed** (see [known defects](#ota-when)), and the
+    0–1 normalisation of `gripper.pos` only holds once firmware, SDK and calibration are all in
+    place. A leader gripper
     that is uncalibrated or on too-old firmware is **refused a connection outright**, so it cannot
     record data on a wrong scale. But other mismatched combinations can still run to completion and
     write to disk "normally" — the data simply will not line up with anyone else's, and you cannot
@@ -16,8 +18,8 @@ to report a problem.
 
 | Component | Minimum version | How to check |
 |---|---|---|
-| `xense-taccap-lerobot` | `0.5.1+xtac.0.0.4` | `pip show lerobot`, or look at `pyproject.toml` |
-| `xense.taccap` SDK | **0.1.7** | `python -c "import xense.taccap as t; print(t.__version__)"` |
+| `xense-taccap-lerobot` | `0.5.1+xtac.0.0.6` | `pip show lerobot`, or look at `pyproject.toml` |
+| `xense.taccap` SDK | **0.1.9** | `python -c "import xense.taccap as t; print(t.__version__)"` |
 | Gripper firmware | **command set V2.1**, i.e. build leader **≥ 1.2.0** / follower **≥ 1.1.0** ([the difference](#v21)) | Run [`calibrate.py`](04-calibration.md#41) — if it is too old it prints the current version and exits; to read the version directly see [the command below](#v21) |
 | Encoder calibration on every leader | Zero + travel limit written to flash | [4.1 Gripper calibration](04-calibration.md#41) |
 
@@ -30,7 +32,7 @@ different things:
 |---|---|---|
 | Wire framing | `V1.8` | How bytes are packed into frames (byte stuffing, CRC). Changes very rarely; this manual barely mentions it |
 | **Command set** | **`V2.1`** | **Which commands the firmware implements.** Each command is tagged with the version that introduced it |
-| Firmware build | leader `≥ 1.2.0`<br>follower `≥ 1.1.0` | The specific image. **These are minimums, not values you have to match exactly** — 1.2.1 and similar higher builds support V2.1 just as well, and there is no reason to flash back down |
+| Firmware build | leader `≥ 1.2.0`<br>follower `≥ 1.1.0` | The specific image. **These are minimums, not values you have to match exactly** — 1.2.2 and similar higher builds support V2.1 just as well, and there is no reason to flash back down. A higher build may fix [known defects](#ota-when) though, which is a separate question |
 
 **Everywhere this manual says "V2.1" it means the command set**, because `EncoderMaxCal` — the
 command travel calibration uses — is exactly what V2.1 introduced (`V2.0` introduced fisheye
@@ -38,10 +40,15 @@ calibration, `V1.9` the LED and the private motor parameters). So "calibration r
 ≥ V2.1" is a statement about **the command set** being new enough.
 
 The correspondence is a **threshold, not an equality**: **command set V2.1 is supported from leader
-`1.2.0` / follower `1.1.0` onwards**, and higher builds (such as leader `1.2.1`) support it too. So
-if you see 1.2.1, there is nothing to puzzle over and nothing to roll back to 1.2.0 — **"the version
+`1.2.0` / follower `1.1.0` onwards**, and higher builds (such as leader `1.2.2`) support it too. So
+if you see 1.2.1 or 1.2.2, there is nothing to puzzle over and nothing to roll back to 1.2.0 — **"the version
 we run" and "the version we require" are two different things**. The leader and follower numbers
 differ simply because they are two different firmware images, not because one is newer.
+
+**"New enough" is not the same as "defect-free", though.** Whether the command set covers what you
+need is one question; whether that particular image has known problems is another. Leader `1.2.2` /
+follower `1.1.5` fix three defects present in everything older — see
+[V2.1 is only the floor](#ota-when).
 
 One command prints the SDK version and every gripper's firmware build. **The firmware version is not
 in the SN** — the SN only gives you the side and the role; the version has to be asked of the
@@ -51,7 +58,7 @@ firmware with `GetVersion`:
 python - <<'EOF'
 import xense.taccap as t
 from xense.taccap import scan_grippers, LeaderGripper, FollowerGripper, Cmd
-print("xense.taccap", t.__version__, "(needs >= 0.1.7)")
+print("xense.taccap", t.__version__, "(needs >= 0.1.9)")
 for ep in scan_grippers():
     cls = LeaderGripper if ep.firmware_sn.endswith("m") else FollowerGripper
     g = cls(mcu_device=ep.mcu_device)          # MCU only; the camera stays closed
@@ -114,9 +121,9 @@ and fields are still whatever your local checkout says.
 | `opencv-python` | Pinned `==4.12.0.88` (consistent across the XenseRobotics SDKs) | 4.12.0.88 |
 | NumPy | `>=1.26.4` | 2.2.6 |
 | `xense-taccap-lerobot` | A customisation of lerobot 0.5.1; version `0.5.1+xtac.0.0.6` (kept in step with the doc version) | `main@a7b0d57b` |
-| `xense.taccap` (the `taccap-gripper` SDK) | Matched to the main repo's submodule version | 0.1.7 (submodule `83314c8`) |
+| `xense.taccap` (the `taccap-gripper` SDK) | Matched to the main repo's submodule version | 0.1.9 (submodule `3dac16a`) |
 | Gripper firmware command set | **V2.1** (wire framing is counted separately, at V1.8; see [three numbering schemes](#v21)) | Command set V2.1 |
-| Gripper firmware build | leader **≥ 1.2.0** / follower **≥ 1.1.0** supports command set V2.1 | This baseline ships leader **1.2.1** / follower **1.1.1** (firmware source branch `hw_v1.1.0`); image versions follow the SDK — `firmware/manifest.json` is authoritative, see [Firmware OTA upgrade](#ota) |
+| Gripper firmware build | leader **≥ 1.2.0** / follower **≥ 1.1.0** supports command set V2.1 | This baseline ships leader **1.2.2** / follower **1.1.5** (firmware source branch `hw_v1.1.0`), both fixing the [three known defects](#ota-when) and both hardware-validated; image versions follow the SDK — `firmware/manifest.json` is authoritative, see [Firmware OTA upgrade](#ota) |
 | `xensesdk` | Provided by the install script | 2.1.1 |
 | XenseVR PC Service (`.deb` daemon) | ≥ **v0.2.0**; **install v0.2.1 on a new machine**, reason below | v0.2.1 |
 | `xensevr_pc_service_sdk` (the Python interface) | Bundled in the main repo (no longer a submodule); links the C SDK from the `.deb` | 0.2.1 — **the version comes from the `.deb`**, see below |
@@ -208,11 +215,24 @@ and fields are still whatever your local checkout says.
     to reproduce it; the Rerun display JPEG-compresses by default, which makes `[slow_frame]` more
     likely with `--display_data=true`.
 
-!!! note "Firmware images 1.2.1 / 1.1.1 need a version after `fc9e9b93`"
-    With the submodule at SDK `83314c8`, the images bundled under `firmware/` are leader **1.2.1** /
-    follower **1.1.1**; earlier baselines carried 1.2.0 / 1.1.0. **Both support command set V2.1 and
-    there is no need to reflash for this** — 1.2.1 only changed the LED colour and blink period. The
-    threshold is still leader ≥ 1.2.0 / follower ≥ 1.1.0.
+!!! warning "Firmware images 1.2.2 / 1.1.5: this one **is** worth flashing, unlike the last few"
+    With the submodule at SDK **0.1.9** (`3dac16a`), the images bundled under `firmware/` are leader
+    **1.2.2** / follower **1.1.5**. The previous baseline carried 1.2.1 / 1.1.1 (SDK `83314c8`), and
+    the one before that 1.2.0 / 1.1.0.
+
+    **Earlier bumps changed surface behaviour like the LED colour. This one does not.** 1.2.2 /
+    1.1.5 fix three real defects present in every older image, including ones that satisfy command
+    set V2.1 perfectly well — what they are and how they show up is in
+    [V2.1 is only the floor](#ota-when). The threshold is unchanged (leader ≥ 1.2.0 /
+    follower ≥ 1.1.0); what changed is the **recommended** version.
+
+    Two things come with it — read them before flashing:
+
+    - These images were **built with a local toolchain**, not the firmware team's release toolchain
+      (`manifest.json` records `build: local`). The trade is those three fixes against that release
+      provenance; both images were validated on two physical units.
+    - **A power cycle after flashing is mandatory** — a step of the procedure, not a
+      troubleshooting move. See the danger box under [OTA](#ota).
 
 !!! danger "`--robot.id` became required — needs a version after `e8146c4e`"
     From that version on, `lerobot-record` / `lerobot-teleoperate` **require** `--robot.id` and exit
@@ -335,6 +355,61 @@ and fields are still whatever your local checkout says.
     honoured — the hardware ran as usual. It has been deleted, so a script still passing it now gets
     an unknown-argument error; just drop it. This manual never used it.
 
+!!! note "Cameras will not connect without `libusb-dev` — needs a version after `9a4d696b`"
+    Recent Linux kernel updates require a matching libusb. If it is missing or stale, **the cameras
+    simply do not connect**, and nothing in the error names libusb — so the hunt usually starts with
+    hubs, cables and USB bandwidth, all of which are the wrong place. From this version on,
+    [2. Environment setup](02-environment.md#apt) lists `libusb-dev` as its own install line, and
+    `setup_env.sh` warns when `libusb-0.1.so.4` is absent (a warning, not a stop: nothing links
+    against it at build time, so the install succeeds and only `connect()` fails later).
+
+    After an `apt upgrade` that brings a new kernel, upgrade it too:
+
+    ```bash
+    sudo apt update && sudo apt install -y --only-upgrade libusb-dev libusb-1.0-0
+    ```
+
+    The same version drops `usbutils` from the recommended list (and with it the `lsusb -t` half of
+    the diagnostic prose).
+
+!!! note "A hardware swap mid-dataset is recorded as a new epoch — needs a version after `052eb354`"
+    `meta/hardware.json` changes from one flat `units` block to an **`epochs` array**. Each epoch
+    records `from_episode` / `to_episode` (half-open), `recorded_at`, and the `robot_id`, `role` and
+    `units` in force for that stretch. Resume with a different gripper or sensor and the open epoch
+    is **closed** at the current episode count while a new one starts, so every episode still points
+    at the devices that actually produced it.
+
+    On an older checkout: a resume against different hardware only **warned and kept the original
+    file**. The warning scrolled past, nothing on disk recorded that anything had changed, and the
+    manifest went on attributing every episode recorded after the swap to the old devices. So the
+    old behaviour was not "cannot record a swap" — it was **records it wrongly**.
+
+    Readers do not need to branch on version: a pre-epoch file (flat `units`) is reported as a
+    single open epoch (`from_episode` 0, `to_episode` `null`). Note though that a single open epoch
+    means **"nothing here says the rig changed"**, not **"the rig did not change"** — the old format
+    could not express a swap at all.
+
+!!! danger "Tactile runtime bundles are stored in the dataset — needs a version after `dbbdd08e`"
+    Recording the serial says which sensor produced a stream; it does not say what that sensor's
+    calibration was at the time. Rebuilding depth / force / difference from the recorded `rectify`
+    stream needs the **runtime config**, which carries the reference image captured when the sensor
+    came up.
+
+    From this version on, each sensor's bundle is written to `meta/runtimes/<SN>-<timestamp>.bin`
+    and every sensor in the epoch points at its own. Reconstruction then works **from the dataset
+    alone** — no tracking down the physical unit months later, and no risk that the unit has since
+    been recalibrated into a different reference.
+
+    **Why this gets a warning of its own**: using the wrong bundle does not fail. Solve a stream
+    against another sensor's bundle — or the same sensor's after a recalibration — and an
+    **untouched gel** comes back with plausible-looking depth and force, with nothing in the output
+    saying otherwise. So for an older dataset (no `meta/runtimes/`) the correct move is to **skip
+    derivation**, not to reach for whichever bundle is nearest.
+
+    One bundle per capture session, ~841 KB per sensor. The timestamp in the filename is local wall
+    clock in Beijing time — read it as a label; for anything you compute with, use `recorded_at` on
+    the epoch (full ISO-8601 with offset).
+
 ## How to check versions {#check-versions}
 
 One command prints everything from the table above that lives in the Python environment:
@@ -437,9 +512,12 @@ does not need flashing again unless the board is replaced or the firmware erased
     "send command → await response" step and you have seen it hang for no clear reason, this is
     worth upgrading for.
 
-    All three apply to leader and follower alike — they live in code the two roles share. The test
-    is still the version in [`manifest.json`](#ota): if the bundled image is newer than what your
-    gripper reports, it is worth flashing.
+    All three apply to leader and follower alike — they live in code the two roles share.
+
+    **From SDK 0.1.9 on, the images under `firmware/` are the fixed ones**, so there is nothing to
+    wait for — walk through [How to flash](#how-to-flash) below. The test for whether you need to:
+    compare the version in [`manifest.json`](#ota) against what `GetVersion` reports on your
+    gripper; if the bundled image is newer, it is worth flashing.
 
 ### How to flash
 
@@ -471,6 +549,10 @@ They live in `third_party/taccap-gripper/firmware/`, which only keeps the curren
 
     A new SDK talks to old firmware unchanged, so **upgrading the SDK first is always safe**.
 
+    There is a second layer to this: which image ships depends on the SDK version, so **reaching
+    1.2.2 / 1.1.5 — the ones with the three defects fixed — requires SDK 0.1.9 first**. On a machine
+    pinned to an earlier SDK, `firmware/` still holds the old images and flashing fixes nothing.
+
 **Pick the image by role, not by which hand it is.** The role is the **last character** of the
 firmware SN: `TCGU01A28Z0023m` → `m` → leader → `tc-gu-01-master.bin`. On one rig, both grippers are
 frequently **both leaders**.
@@ -496,8 +578,8 @@ for ep in scan_grippers():
 ```
 
 What step 3 reads back must be **not below** leader 1.2.0 / follower 1.1.0. When flashing the images
-that ship with the SDK it is usually higher (measured on two units, `TCGU01A28Z0023m` /
-`TCGU01A28Z0024m`, both `1.2.1`), which is normal — see [three numbering schemes](#v21). The snippet
+that ship with the SDK it is usually higher — SDK 0.1.9 ships leader `1.2.2` / follower `1.1.5`, so
+those are the numbers that come back. That is normal — see [three numbering schemes](#v21). The snippet
 uses `LeaderGripper` because this step flashed the master image; for a follower use
 `FollowerGripper` and change nothing else.
 
@@ -508,7 +590,7 @@ uses `LeaderGripper` because this step flashed the master image; for a follower 
 
     ```bash
     python third_party/taccap-gripper/python/examples/ota_update.py \
-        tc-gu-01-master.bin --side left --target-version 1.2.1
+        tc-gu-01-master.bin --side left --target-version 1.2.2
     ```
 
 The write takes about a second, and the gripper reboots and is re-detected in about 1–3 s. The new
@@ -586,6 +668,13 @@ Please include:
   alone; and `mamba activate` in the container no longer answers `Shell not initialized`.
   **The collection program's behaviour, the data format and the three SDKs are the same as 0.0.5** —
   upgrading changes nothing about data already recorded and requires no re-calibration.
+- **SDK 0.1.9 with firmware 1.2.2 / 1.1.5**: with the submodule at `3dac16a`, the bundled images
+  fix three defects in code both roles share (command-channel livelock, logging stalling realtime
+  tasks, an out-of-bounds write at boot). **Every device should be flashed up to these** — the
+  first firmware bump since 1.2.0 that is worth flashing for its own sake. A **power cycle after
+  flashing is mandatory**. The same baseline adds `meta/runtimes/` (tactile runtime bundles) to the
+  dataset and moves `meta/hardware.json` to an `epochs` structure; both are backward compatible and
+  older datasets still read.
 - **0.0.5 vs 0.0.4: only the installation method changed** — Docker now pulls from GHCR by default
   and the tar delivery bundle is no longer needed; the collection program and the three SDKs inside
   the image are the same as 0.0.4. A machine already running 0.0.4 has **no obligation to upgrade**,
