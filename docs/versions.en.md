@@ -72,6 +72,15 @@ EOF
   TCGU01A28Z0024m  Right  fw=1.2.1
 ```
 
+!!! note "Serial numbers and versions in this guide are **examples**"
+    Those two lines are real output from one particular rig, reproduced here so you know **what the
+    output looks like**. Your serials will differ and your version may be higher. Everywhere a
+    concrete SN appears later in this guide (such as `TCGU01A28Z0023m`) it means the same thing:
+    it is an example — go by what your own command prints.
+
+    The only part of the SN you need to read is the **last character**: `m` = leader, `s` =
+    follower. That decides which image to flash — see [Firmware OTA upgrade](#ota).
+
 !!! note "Why the gripper objects are constructed this way"
     Only `mcu_device` is passed: the wrist camera is not opened and `normalize_position` keeps its
     default of `False` — so **a gripper that has never had its travel calibrated still reports its
@@ -554,7 +563,8 @@ They live in `third_party/taccap-gripper/firmware/`, which only keeps the curren
     pinned to an earlier SDK, `firmware/` still holds the old images and flashing fixes nothing.
 
 **Pick the image by role, not by which hand it is.** The role is the **last character** of the
-firmware SN: `TCGU01A28Z0023m` → `m` → leader → `tc-gu-01-master.bin`. On one rig, both grippers are
+firmware SN: `TCGU01A28Z0023m` (an example SN) → last character `m` → leader →
+`tc-gu-01-master.bin`. On one rig, both grippers are
 frequently **both leaders**.
 
 ```bash
