@@ -17,9 +17,12 @@ buckets — **serial permissions** and **ModemManager stealing the port** — so
     **Fix**: type the line it prints. The full list is in
     [Prerequisite: system packages](02-environment.md#apt).
 
-    There is a second check that only **warns** and does not block: missing `v4l-utils` /
-    `usbutils`. **Do not skip it** — `v4l2-ctl` and `lsusb -t` are the only tools you have when a
-    camera will not open.
+    Two further checks only **warn** and do not block. **Skip neither**:
+
+    - Missing `libusb-0.1.so.4` (provided by `libusb-dev`). It is a **runtime** dependency of the
+      cameras, not a build one, so the install finishes and only `connect()` fails — **check this
+      first when a camera will not connect**, see [`libusb-dev`](02-environment.md#apt).
+    - Missing `v4l-utils`. `v4l2-ctl` is the instrument you reach for when a camera will not open.
 
 ??? failure "`import xensesdk` / `import xensevr_pc_service_sdk` / `import xense.taccap` fails"
     **Cause**: the environment is incomplete, or the `xense-taccap` environment is not active.

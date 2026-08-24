@@ -115,23 +115,50 @@ not even have a compiler:
 
 ```bash
 sudo apt install -y build-essential cmake pkg-config git curl
-sudo apt install -y v4l-utils usbutils   # not needed to record, but this is how you debug a camera
+sudo apt install -y libusb-dev    # ⚠️ cameras do not connect without a current libusb — read the box below
+sudo apt install -y v4l-utils     # not needed to record, but this is how you debug a camera
 ```
 
 `setup_env.sh` checks for these before it starts and **stops with the exact apt line** if any are
 missing — otherwise the failure surfaces much later, inside CMake or the linker, where it reads
 like a broken SDK and costs an afternoon.
 
-The second line only **warns**, but install it anyway: `v4l2-ctl --list-formats-ext` and `lsusb -t`
-are the only two instruments you have when [a camera will not open](03-host-hardware.md#usb-budget),
-which happens to be the most common bring-up problem on this hardware. A host without them is a
-host nobody can debug remotely.
+!!! danger "`libusb-dev` — install it, and keep it current"
+    **Recent Linux kernel updates require a matching libusb update. If libusb is stale (or
+    missing), the cameras will not connect.** This is the single most common way a rig that worked
+    yesterday stops working today: the host takes an `apt upgrade` that includes a new kernel,
+    libusb is left behind, and the tactile / wrist cameras stop opening.
 
-!!! note "Neither `ffmpeg` nor `libudev-dev` / `libusb-1.0-0-dev` is needed"
+    **Nothing in the error message points at libusb**, so people go hunting through hubs, cables
+    and USB bandwidth first — **check this before any of that.**
+
+    `sudo apt install -y libusb-dev` pulls in the current `libusb-0.1-4` runtime
+    (`libusb-0.1.so.4`) alongside the headers; that runtime is what the prebuilt camera stack
+    loads. If it is already installed, upgrade it anyway after a kernel bump — `apt update` first,
+    so apt sees the newer version:
+
+    ```bash
+    sudo apt update && sudo apt install -y --only-upgrade libusb-dev libusb-1.0-0
+    ```
+
+    A reboot after a kernel upgrade is worth doing for the same reason: the running kernel and the
+    userspace USB stack should come from the same upgrade.
+
+    `setup_env.sh` checks `libusb-0.1.so.4` too, but **only as a warning** — it is a **runtime**
+    dependency of the cameras, not a build one, so a missing libusb lets the install finish and
+    then fails at `connect()`. Which is exactly why it is called out here rather than left to be
+    discovered on the rig.
+
+The `v4l-utils` line only **warns**, but install it anyway: `v4l2-ctl --list-formats-ext` is the
+instrument you reach for when [a camera will not open](03-host-hardware.md#usb-budget), which
+happens to be the most common bring-up problem on this hardware. A host without it is a host nobody
+can debug remotely.
+
+!!! note "Neither `ffmpeg` nor `libudev-dev` is needed"
     `torchcodec` loads the FFmpeg **shared libraries** the conda environment supplies, so the system
-    `ffmpeg` binary is irrelevant. `libudev` and `libusb` are reached at **runtime** by prebuilt
-    wheels, through the `libudev1` / `libusb-1.0-0` base packages that any Ubuntu already has —
-    nothing here compiles against their headers.
+    `ffmpeg` binary is irrelevant. `libudev` is reached at **runtime** by prebuilt wheels, through
+    the `libudev1` base package that any Ubuntu already has — nothing here compiles against its
+    headers. libusb is the **exception** — see the box above.
 
 ## 2.1 Prerequisite: install Mamba / Miniforge
 

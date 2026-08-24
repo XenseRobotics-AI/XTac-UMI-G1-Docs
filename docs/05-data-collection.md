@@ -334,15 +334,24 @@ ValueError: --robot.id is required: the station label for this rig, e.g. --robot
 ```json
 {
   "robot_type": "bi_taccap_gripper",
-  "robot_id": "bi_taccap_0",
-  "role": "leader",
-  "units": [
+  "epochs": [
     {
-      "side": "left",
-      "gripper_sn": "TCGU01A24Z0001m",
-      "tactile_sensors": [
-        { "finger": "left",  "observation_key": "left_tactile_left",  "serial": "GSPS01A25Z0011" },
-        { "finger": "right", "observation_key": "left_tactile_right", "serial": "GSPS01A25Z0012" }
+      "from_episode": 0,
+      "to_episode": null,
+      "recorded_at": "2026-08-22T16:03:09+08:00",
+      "robot_id": "bi_taccap_0",
+      "role": "leader",
+      "units": [
+        {
+          "side": "left",
+          "gripper_sn": "TCGU01A24Z0001m",
+          "tactile_sensors": [
+            { "finger": "left",  "observation_key": "left_tactile_left",  "serial": "GSPS01A25Z0011",
+              "runtime": "meta/runtimes/GSPS01A25Z0011-20260822T160309.bin" },
+            { "finger": "right", "observation_key": "left_tactile_right", "serial": "GSPS01A25Z0012",
+              "runtime": "meta/runtimes/GSPS01A25Z0012-20260822T160309.bin" }
+          ]
+        }
       ]
     }
   ]
@@ -358,8 +367,42 @@ ValueError: --robot.id is required: the station label for this rig, e.g. --robot
 - 某一侧夹爪没开时该项记 `"gripper_sn": null`(不是省略);`--robot.enable_tactile=false` 时
   `tactile_sensors` 为空列表。
 - 它是**独立的一个文件**,不是 `meta/info.json` 里的一个键——后者的结构属于上游 lerobot。
-- 用 `--resume` 在**换了硬件**的情况下续录时,原文件会被保留并打一条告警。已经录好的那些集
-  确实来自原来那批设备,覆盖掉就等于把它们记错了;这条告警就是"这个数据集跨了两套硬件"的信号。
+- `runtime` 指向这枚传感器的 **runtime bundle**,见下面那条 danger。
+
+**`epochs`:一个数据集可以跨几套硬件。**每段记 `from_episode` / `to_episode`(**左闭右开**,
+和 `dataset_from_index` / `dataset_to_index` 一致)以及 `recorded_at`。正在录的那一段
+`to_episode` 是 `null`——录完之前集数还不知道,写个猜的数不如直说"还开着"。
+
+用 `--resume` 续录时:
+
+| 情况 | 行为 |
+|---|---|
+| 同一套设备 | 什么都不记,当前这段本来就覆盖得到 |
+| **换了夹爪或传感器** | 旧段在当前集数处**封口**,新段接上,两段都留着名字 |
+| 同一套设备换了台电脑(`--robot.id` 变了) | 也开新段。工位标签变了而硬件没变,照记不误——消费端认 `units`,`units` 一样的分段边界就只是"这套设备挪了个地方" |
+| `--robot.type` 对不上(单夹爪 ↔ 双夹爪) | **不是换硬件,是换数据集**:观测键都不一样。保留原文件并告警 |
+
+老数据集(换硬件之前录的,只有扁平的 `units`)不需要特殊处理:读出来是**一个开口的 epoch**
+(`from_episode` 0、`to_episode` `null`)。但**开口的单段只说明"这里没有任何东西表明换过硬件",
+不等于"确实没换过"**——老格式压根表达不了这件事。
+
+!!! danger "`meta/runtimes/`:重建触觉的衍生通道必须用**这一份** bundle"
+    录下来的是 `rectify` 流;depth / force / difference 是**从它算出来的**,而算的时候要用
+    那枚传感器的 runtime 配置——里面带着它上电时拍的那张参考图。所以每次采集会话都会把每枚
+    传感器的 bundle 写进 `meta/runtimes/<SN>-<时间>.bin`(每枚约 841 KB),epoch 里各自指向
+    自己那一份。这样几个月后重建**只靠数据集本身**就够,不用去找那台实物——何况它这期间很
+    可能已经重新标定过了。
+
+    **拿错 bundle 不会报错。**用另一枚传感器的、或者同一枚重新标定之后的 bundle 去解,一块
+    **没被碰过的胶体**照样解出看着挺合理的 depth 和 force,输出里没有任何迹象说明它是错的。
+    所以老数据集(没有 `meta/runtimes/`)的正确做法是**跳过重建**,而不是随手找一份顶上。
+
+    一次会话一份不是命名的巧合:参考图在每次传感器初始化时重拍,所以每次会话本来就该有自己
+    的一份。同一枚传感器拆下来维护再装回去,SN 不变但参考图变了——这会被算作一次变化,
+    单独开一个 epoch。
+
+    文件名里的时间是**北京时间的墙上钟点**,不带时区标记,当标签看就行;要参与计算请用
+    epoch 上的 `recorded_at`(带偏移的完整 ISO-8601)。
 
 !!! note "追踪器和腕相机不在清单里"
     它们是**装上去的配件**;夹爪 + 它的两枚触觉才是这份数据讲的那个单元。

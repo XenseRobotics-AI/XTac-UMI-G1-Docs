@@ -43,15 +43,25 @@ How it is serialised:
 The metadata that matters in `info`: `fps`, `features`, `total_episodes`, `total_frames`,
 `robot_type`, `data_path`, `video_path`.
 
-!!! info "The XTac-UMI G1 adds a `meta/hardware.json`"
+!!! info "Two things the XTac-UMI G1 adds: `meta/hardware.json` and `meta/runtimes/`"
     A standard LeRobotDataset records only `robot_type` in `info`, which cannot say **which
-    physical rig** produced the data. So recording also writes `meta/hardware.json`: the station
-    number `robot_id`, each gripper's **firmware SN**, and the SNs of the two tactile sensors on
-    it (each carrying the observation key it corresponds to).
+    physical rig** produced the data — let alone what that sensor's calibration was at the time.
+    So recording writes two extra things:
 
-    It is a **separate file** and does not touch the upstream `info` structure, so no tool that
-    reads this dataset as a standard one is affected. Field meanings and what happens when you
-    resume recording → [`--robot.id` and the hardware manifest](05-data-collection.md#robot-id).
+    **`meta/hardware.json` — who recorded it.** The station number `robot_id`, each gripper's
+    **firmware SN**, and the SNs of the two tactile sensors on it (each carrying the observation
+    key it corresponds to). It is an **`epochs` array**: swap a gripper or a sensor part-way
+    through a dataset and the open epoch is closed at the current episode count while a new one
+    starts, so every episode still points at the devices that actually produced it.
+
+    **`meta/runtimes/` — what the calibration was at the time.** One runtime bundle per tactile
+    sensor (`<SN>-<timestamp>.bin`, ~841 KB), with each sensor in `epochs` pointing at its own.
+    Rebuilding depth / force / difference from the recorded `rectify` stream needs it.
+
+    Both are **separate files** and do not touch the upstream `info` structure, so no tool that
+    reads this dataset as a standard one is affected. Field meanings, resume behaviour and what to
+    watch out for when reconstructing →
+    [`--robot.id` and the hardware manifest](05-data-collection.md#robot-id).
 
 ## 6.2 Checking the data {#62}
 

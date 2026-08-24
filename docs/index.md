@@ -76,5 +76,5 @@ flowchart LR
 | [`xensesdk`](https://github.com/XenseRobotics/xensesdk) | 视触觉传感器 SDK,由安装脚本提供([文档站](https://xensedoc.readthedocs.io/en/latest/)) |
 
 !!! note "适用版本"
-    本手册对应 `xense.taccap 0.1.7`、`xense-taccap-lerobot` 基于 **lerobot 0.5.1** 定制。
+    本手册对应 `xense.taccap 0.1.9`、`xense-taccap-lerobot` 基于 **lerobot 0.5.1** 定制。
     命令与字段以你本地这一版主仓库附带的设备说明为准。

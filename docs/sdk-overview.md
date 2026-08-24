@@ -5,7 +5,7 @@
 `third_party/taccap-gripper` 子模块消费它,不重复实现底层通信。
 
 !!! info "版本基线"
-    本附录按 `taccap-gripper 0.1.7` 源码核对(与[版本与支持](versions.md)里的已验证基线一致)。
+    本附录按 `taccap-gripper 0.1.9` 源码核对(与[版本与支持](versions.md)里的已验证基线一致)。
     SDK 升级后应同步复核接口、构建选项与示例命令。
 
 !!! note "能力边界"
