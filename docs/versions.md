@@ -111,8 +111,8 @@ flowchart LR
 | `rerun-sdk` | `>=0.24.0,<0.27.0`(`--display_data` 用) | 0.26.2 |
 | `opencv-python` | 固定 `==4.12.0.88`(XenseRobotics 各 SDK 统一) | 4.12.0.88 |
 | NumPy | `>=1.26.4` | 2.2.6 |
-| `xense-taccap-lerobot` | 基于 lerobot 0.5.1 定制;版本号 `0.5.1+xtac.0.0.6`(与文档版本同步) | `main@e1cebea0` |
-| `xense.taccap`(`taccap-gripper` SDK) | 与主仓库子模块版本配套 | 0.1.9(子模块 `3dac16a`) |
+| `xense-taccap-lerobot` | 基于 lerobot 0.5.1 定制;版本号 `0.5.1+xtac.0.0.6`(与文档版本同步) | `main@d1b9e79a` |
+| `xense.taccap`(`taccap-gripper` SDK) | 与主仓库子模块版本配套 | 0.1.9(子模块 `a3382db`) |
 | 夹爪固件命令集 | **V2.1**(帧格式另计,为 V1.8;区别见[三套编号](#v21)) | 命令集 V2.1 |
 | 夹爪固件构建 | leader **≥ 1.2.0** / follower **≥ 1.1.0** 即支持命令集 V2.1 | 当前基线附带 leader **1.2.2** / follower **1.1.5**(固件源码分支 `hw_v1.1.0`),两版都修掉了[三个已知缺陷](#ota-when)并已过硬件验证;镜像版本随 SDK 走,以 `firmware/manifest.json` 为准,见 [固件 OTA 升级](#ota) |
 | `xensesdk` | 由安装脚本提供 | 2.1.1 |
@@ -351,6 +351,18 @@ flowchart LR
 
     一次采集会话一份,每枚约 841 KB。文件名里的时间是**北京时间的墙上钟点**,当标签看即可;
     要参与计算请用 epoch 里的 `recorded_at`(带时区的完整 ISO-8601)。
+
+!!! note "腕相机鱼眼矫正,需要 `e5b4445a` 之后的版本"
+    新增 `--robot.wrist_undistort`(**默认关**),开启后腕相机的鱼眼会在**落盘前**被矫正,
+    内参取自这只夹爪 flash 里的那份;没标定过的夹爪回退到 SDK 参考内参并告警。
+    见 [5.7 腕相机鱼眼矫正](05-data-collection.md#57)。
+
+    停在更早的版本时:没有这个参数,`wrist_cam` 一律是原始鱼眼。
+
+    **要紧的是这会改变落盘的数据**——矫正过的和原始鱼眼的 `wrist_cam` 形状完全一样,
+    两批混用时没有任何提示。所以从这一版起,清单里每个 unit 多一项 `wrist_undistort`
+    记录用了哪一种;录到一半改设置会自动另起一个 epoch。**老数据集里没有这一项,
+    等同于原始鱼眼。**
 
 ## 如何查版本 {#check-versions}
 

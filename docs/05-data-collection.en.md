@@ -287,6 +287,8 @@ official [recording guide](https://huggingface.co/docs/lerobot/v0.5.1/en/il_robo
 | `robot.enable_wrist_camera` | `true` | Turn the wrist camera off |
 | `robot.wrist_camera_width/_height/_fps` | — | Wrist camera resolution / frame rate |
 | `robot.wrist_camera_fourcc` | `MJPG` | Wrist pixel format. MJPG by default so the two tactile sensors on the same hub get the USB bandwidth; `YUYV` is uncompressed and only fits when there is room |
+| `robot.wrist_undistort` | `false` | Rectify the wrist fisheye **before it is recorded**, see [§5.7](#57) |
+| `robot.wrist_undistort_balance` | `0.0` | Field of view after rectification: `0` keeps the calibrated focal length, `1` is widest but with more black border |
 | `robot.enable_head_camera` | `false` | Record the Pico4 Ultra Enterprise **headset camera** — see [§5.6](#56) |
 | `robot.head_camera_eyes` | `both` | `both` records each eye as its own key; `left` / `right` records one |
 | `robot.head_camera_width/_height` | `640` / `480` | **Per-eye** size; only `640x480`, `1024x768` or `1280x960` are accepted, and it must match the headset's "Resolution" |
@@ -380,7 +382,8 @@ gripper, each carrying the observation key it feeds.
               "runtime": "meta/runtimes/GSPS01A25Z0011-20260822T160309.bin" },
             { "finger": "right", "observation_key": "left_tactile_right", "serial": "GSPS01A25Z0012",
               "runtime": "meta/runtimes/GSPS01A25Z0012-20260822T160309.bin" }
-          ]
+          ],
+          "wrist_undistort": { "applied": false }
         }
       ]
     }
@@ -401,6 +404,10 @@ gripper, each carrying the observation key it feeds.
   `--robot.enable_tactile=false` leaves `tactile_sensors` empty.
 - It is a **file of its own**, not a key in `meta/info.json` — that schema belongs to upstream.
 - `runtime` points at that sensor's **runtime bundle** — see the danger box below.
+- `wrist_undistort` records whether this unit's wrist frames were **rectified**, and from
+  whose intrinsics (`"unit"` for this gripper's own, `"reference"` for the SDK's shared
+  ones). Present whenever the unit has a wrist camera, including as `{"applied": false}` —
+  absent and false would otherwise be indistinguishable. See [§5.7](#57).
 
 **`epochs`: one dataset can span several rigs.** Each epoch records `from_episode` / `to_episode`
 (**half-open**, matching `dataset_from_index` / `dataset_to_index`) and `recorded_at`. The epoch
@@ -742,5 +749,67 @@ an amber `HEAD` marker (see [the `/world` 3D view](#world-view)).
 !!! note "Dimension change"
     Enabling it adds 9 dimensions (the headset pose) to `observation.state`: 10 → 19 for a single
     gripper, 20 → 29 for bimanual. `--robot.enable_imu=true` adds on top of that as usual.
+
+## 5.7 Optional: wrist fisheye undistortion {#57}
+
+The wrist camera is a 190° fisheye and **what gets recorded is the raw fisheye frame by
+default**. `--robot.wrist_undistort=true` rectifies it to a rectilinear projection
+**before** it is written to the dataset, using the intrinsics stored in that gripper's
+own flash.
+
+!!! danger "On and off produce two kinds of data, and you cannot tell them apart"
+    A rectified `wrist_cam` and a raw fisheye one have **identical shape and dtype**, so
+    if the two are mixed for training **nothing will point out that they are not the same
+    thing**.
+
+    That is why recording writes which of the two was used into every unit of
+    [`meta/hardware.json`](#robot-id):
+
+    ```json
+    "wrist_undistort": { "applied": true, "calibration": "unit", "balance": 0.0 }
+    ```
+
+    `calibration` is `"unit"` (this gripper's own) or `"reference"` (the SDK's shared
+    values). Changing the setting part-way through a dataset **opens a new epoch on its
+    own**.
+
+    **Recommended: pick one and keep it for the whole dataset.**
+
+### An uncalibrated gripper still works, on reference values
+
+A gripper that has never had its wrist lens calibrated **does not fail** — the SDK's
+built-in reference intrinsics stand in and connect() warns:
+
+```text
+Wrist undistortion is using the SDK's REFERENCE intrinsics because the wrist lens
+has never been calibrated ... Rectification will be approximate
+```
+
+The manifest then records `"calibration": "reference"`. Good enough to look at; the
+principal point drifts though (measured 37.7 px off on one unit), so anything measuring
+in pixels off these frames wants a real calibration first:
+
+```bash
+python third_party/taccap-gripper/python/examples/fisheye_cal.py set-fisheye
+```
+
+### 640×480 only
+
+The fisheye record in firmware holds **only 8 floats and no image size**, so another
+resolution would mean guessing a scale factor. Combining
+`--robot.wrist_undistort=true` with a different `--robot.wrist_camera_width/_height`
+exits at **command-line parse time**, before any device is touched.
+
+!!! note "An off-centre picture does not mean the calibration is wrong"
+    A rectified frame can sit to one side, or look slightly tilted, **while the
+    calibration is correct**: the sensor is not always mounted at the lens's optical
+    centre, and undistortion is built around the **principal point**, not the middle of
+    the frame. Raw fisheye hides this by compressing the periphery; rectification only
+    reveals it. See
+    [SDK appendix → what happens when the fisheye calibration cannot be read](sdk-overview.md#fisheye-fallback)
+    (Chinese).
+
+    **Do not "correct" `cx` yourself.** Measured: forcing it to the frame centre pushed
+    the picture further off, not closer.
 
 Next → [Best Practices](best-practices.md) → [Dataset & Examples](06-dataset.md)

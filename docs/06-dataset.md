@@ -49,6 +49,10 @@ sample = ds[0]          # 单帧:观测 + 动作,均为 torch tensor
     数据集录到一半换了夹爪或传感器,旧段在当前集数处封口、新段接上,
     每一集都仍然指向真正采它的那套设备。
 
+    每个 unit 里还记着 `wrist_undistort` —— 这批腕相机帧**有没有被去畸变**、用的是本机
+    标定还是 SDK 参考值。矫正过的和原始鱼眼的 `wrist_cam` 形状完全一样,不记就分不出来,
+    见 [5.7 腕相机鱼眼矫正](05-data-collection.md#57)。
+
     **`meta/runtimes/` —— 采的时候标定长什么样。**每枚触觉传感器一份 runtime bundle
     (`<SN>-<时间>.bin`,约 841 KB),`epochs` 里的传感器各自指向自己那一份。
     从录下来的 `rectify` 流重建 depth / force / difference 要用它。

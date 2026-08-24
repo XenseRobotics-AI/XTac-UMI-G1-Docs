@@ -54,6 +54,11 @@ The metadata that matters in `info`: `fps`, `features`, `total_episodes`, `total
     through a dataset and the open epoch is closed at the current episode count while a new one
     starts, so every episode still points at the devices that actually produced it.
 
+    Each unit also carries `wrist_undistort` — whether that arm's wrist frames were
+    **rectified**, and from whose intrinsics. A rectified `wrist_cam` has exactly the
+    same shape as a raw fisheye one, so without this the two cannot be told apart; see
+    [5.7 Wrist fisheye undistortion](05-data-collection.md#57).
+
     **`meta/runtimes/` — what the calibration was at the time.** One runtime bundle per tactile
     sensor (`<SN>-<timestamp>.bin`, ~841 KB), with each sensor in `epochs` pointing at its own.
     Rebuilding depth / force / difference from the recorded `rectify` stream needs it.

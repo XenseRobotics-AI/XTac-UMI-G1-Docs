@@ -262,6 +262,8 @@
 | `robot.enable_wrist_camera` | `true` | 关闭腕相机 |
 | `robot.wrist_camera_width/_height/_fps` | — | 腕相机分辨率 / 帧率 |
 | `robot.wrist_camera_fourcc` | `MJPG` | 腕相机像素格式。默认 MJPG 是为了给同 hub 的两路触觉让出 USB 带宽;`YUYV` 为无压缩,只在带宽够时用 |
+| `robot.wrist_undistort` | `false` | **落盘前**把腕相机的鱼眼矫正掉,见 [§5.7](#57) |
+| `robot.wrist_undistort_balance` | `0.0` | 矫正后的视野档位,`0` 保持标定焦距,`1` 视野最大但黑边更多 |
 | `robot.enable_head_camera` | `false` | 录制 Pico4 Ultra 企业版**头显相机**,见 [§5.6](#56) |
 | `robot.head_camera_eyes` | `both` | `both` 录左右两只眼(两个键),`left` / `right` 只录一只 |
 | `robot.head_camera_width/_height` | `640` / `480` | **每只眼**的尺寸,只接受 `640x480`、`1024x768` 或 `1280x960`;要与头显里的「分辨率」一致 |
@@ -350,7 +352,8 @@ ValueError: --robot.id is required: the station label for this rig, e.g. --robot
               "runtime": "meta/runtimes/GSPS01A25Z0011-20260822T160309.bin" },
             { "finger": "right", "observation_key": "left_tactile_right", "serial": "GSPS01A25Z0012",
               "runtime": "meta/runtimes/GSPS01A25Z0012-20260822T160309.bin" }
-          ]
+          ],
+          "wrist_undistort": { "applied": false }
         }
       ]
     }
@@ -368,6 +371,9 @@ ValueError: --robot.id is required: the station label for this rig, e.g. --robot
   `tactile_sensors` 为空列表。
 - 它是**独立的一个文件**,不是 `meta/info.json` 里的一个键——后者的结构属于上游 lerobot。
 - `runtime` 指向这枚传感器的 **runtime bundle**,见下面那条 danger。
+- `wrist_undistort` 记这只夹爪的腕相机帧**有没有被矫正**、用的是哪一份内参
+  (`"unit"` 本机标定 / `"reference"` SDK 参考值)。只要这只夹爪有腕相机就一定有这一项,
+  没矫正时记 `{"applied": false}`——缺键和 `false` 若不可分,事后就说不清了。见 [§5.7](#57)。
 
 **`epochs`:一个数据集可以跨几套硬件。**每段记 `from_episode` / `to_episode`(**左闭右开**,
 和 `dataset_from_index` / `dataset_to_index` 一致)以及 `recorded_at`。正在录的那一段
@@ -667,5 +673,58 @@ lerobot-record \
 !!! note "维度变化"
     开启后 `observation.state` 增加 9 维(头显位姿)。单夹爪 10 → 19,双夹爪 20 → 29。
     再叠加 `--robot.enable_imu=true` 时按各自规则继续累加。
+
+## 5.7 可选:腕相机鱼眼矫正 {#57}
+
+腕相机是 190° 鱼眼,**默认落盘的是原始鱼眼帧**。加
+`--robot.wrist_undistort=true` 会在写入数据集**之前**把它矫正成直线投影,
+内参取自这只夹爪 flash 里存的那份。
+
+!!! danger "开与不开,录出来的是两种数据,而且看不出来"
+    矫正过的 `wrist_cam` 和原始鱼眼的 `wrist_cam` **形状和 dtype 完全一样**,
+    所以两批数据混在一起训练时,**没有任何东西会提示你它们不是同一种**。
+
+    正因如此,录制时会把用了哪一种写进
+    [`meta/hardware.json`](#robot-id) 的每个 unit:
+
+    ```json
+    "wrist_undistort": { "applied": true, "calibration": "unit", "balance": 0.0 }
+    ```
+
+    `calibration` 是 `"unit"`(这台自己的标定)或 `"reference"`(SDK 参考值)。
+    录到一半改了这个设置,会**自动另起一个 epoch**。
+
+    **建议:一个数据集从头到尾只用一种。**
+
+### 没标定的夹爪也能开,但用的是参考值
+
+这台从未存过鱼眼标定时,**不会报错**——SDK 会用一组内置的参考内参顶上,连接时打一条
+告警:
+
+```text
+Wrist undistortion is using the SDK's REFERENCE intrinsics because the wrist lens
+has never been calibrated ... Rectification will be approximate
+```
+
+清单里则记为 `"calibration": "reference"`。够用来看画面,但**主点会偏**(实测一台
+相差 37.7 像素),要在矫正图上按像素测量就得先标:
+
+```bash
+python third_party/taccap-gripper/python/examples/fisheye_cal.py set-fisheye
+```
+
+### 只支持 640×480
+
+固件里存的鱼眼记录**只有 8 个浮点数,不带图像尺寸**,所以换个分辨率就等于猜缩放系数。
+`--robot.wrist_undistort=true` 配上别的 `--robot.wrist_camera_width/_height` 会在
+**解析命令行时**直接退出,不会等到连上设备才报。
+
+!!! note "画面偏心不代表标定错了"
+    矫正后画面可能偏向一侧、甚至略微倾斜,**而标定是对的**:传感器未必装在镜头光心上,
+    而去畸变绕的是**主点**,不是画幅中心。原始鱼眼把这件事藏起来了(周边被压缩),
+    矫正只是把它显现出来。详见
+    [SDK 附录 → 鱼眼标定读不到时会怎样](sdk-overview.md#fisheye-fallback)。
+
+    **不要自己去改 `cx`。**实测把它改成画幅中心,画面反而偏得更远。
 
 下一步 → [采集规范与最佳实践](best-practices.md) → [数据集与示例](06-dataset.md)
