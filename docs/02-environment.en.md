@@ -177,7 +177,7 @@ Hardware SDKs live in `third_party/` submodules, so the clone **must** be recurs
 ```bash
 git clone \
   --recurse-submodules \
-  https://github.com/Vertax42/xense-taccap-lerobot.git
+  https://github.com/XenseRobotics-AI/xense-taccap-lerobot.git
 cd xense-taccap-lerobot
 ```
 
@@ -342,13 +342,13 @@ The image is published to the GitHub Container Registry. **The package is public
 no login:**
 
 ```text
-ghcr.io/vertax42/xense-taccap-lerobot
+ghcr.io/xenserobotics-ai/xense-taccap-lerobot
 ```
 
 Run it as a **normal user**, not root:
 
 ```bash
-git clone https://github.com/Vertax42/xense-taccap-lerobot.git
+git clone https://github.com/XenseRobotics-AI/xense-taccap-lerobot.git
 cd xense-taccap-lerobot
 ./docker/install_customer.sh
 ```
@@ -396,7 +396,7 @@ docker compose pull
 ```
 
 !!! note "The tag line is all you need"
-    `compose.yaml` already defaults to `ghcr.io/vertax42/xense-taccap-lerobot`, so **do not set
+    `compose.yaml` already defaults to `ghcr.io/xenserobotics-ai/xense-taccap-lerobot`, so **do not set
     `LEROBOT_IMAGE`** — it is only for running under a different image name, e.g. one you built
     yourself.
 

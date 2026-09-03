@@ -96,7 +96,7 @@ Only relevant on [the Docker path](02-environment.md#docker).
     ```
 
     Check the resolved image name, then look for a mistyped `LEROBOT_IMAGE` in `.env`. The default
-    is `ghcr.io/vertax42/xense-taccap-lerobot`, and **normally `.env` needs only the tag line** —
+    is `ghcr.io/xenserobotics-ai/xense-taccap-lerobot`, and **normally `.env` needs only the tag line** —
     see [Pin a version before you record](02-environment.md#docker-pin).
 
 ??? failure "Changed `LEROBOT_IMAGE_TAG` in `.env` but still get the old image"

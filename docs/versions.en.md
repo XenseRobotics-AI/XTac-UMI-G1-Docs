@@ -178,7 +178,7 @@ and fields are still whatever your local checkout says.
 !!! note "The headset camera needs a version after `ffc94d53`"
     The [headset camera](05-data-collection.md#56), the removal of the Insight path and the changes
     to the [`/world` 3D view](05-data-collection.md#world-view) described in this manual come from
-    [PR #9](https://github.com/Vertax42/xense-taccap-lerobot/pull/9), merged to `main` as
+    [PR #9](https://github.com/XenseRobotics-AI/xense-taccap-lerobot/pull/9), merged to `main` as
     `ffc94d53`.
 
     On an older checkout: `--robot.enable_head_camera` does not exist yet on a single gripper, on a
@@ -289,7 +289,7 @@ and fields are still whatever your local checkout says.
 
 !!! note "Docker defaulting to a GHCR pull needs a version after `854d4cdf`"
     From that version on, `compose.yaml`'s default image is
-    `ghcr.io/vertax42/xense-taccap-lerobot` and `.env` **only needs the tag line**. The `.tar`
+    `ghcr.io/xenserobotics-ai/xense-taccap-lerobot` and `.env` **only needs the tag line**. The `.tar`
     offline bundle is still supported but is no longer the default path.
 
     On an older checkout: the default image is the **locally built** name, and pulling from GHCR
