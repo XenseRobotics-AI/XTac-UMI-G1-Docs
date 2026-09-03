@@ -154,7 +154,7 @@ bash Miniforge3-$(uname)-$(uname -m).sh
 ```bash
 git clone \
   --recurse-submodules \
-  https://github.com/Vertax42/xense-taccap-lerobot.git
+  https://github.com/XenseRobotics-AI/xense-taccap-lerobot.git
 cd xense-taccap-lerobot
 ```
 
@@ -305,13 +305,13 @@ python -c 'import av; print("PyAV OK ->", av.__version__)'
 镜像发布在 GitHub Container Registry,**包是公开的,拉取不需要登录**:
 
 ```text
-ghcr.io/vertax42/xense-taccap-lerobot
+ghcr.io/xenserobotics-ai/xense-taccap-lerobot
 ```
 
 用**普通用户**(不要用 root)执行:
 
 ```bash
-git clone https://github.com/Vertax42/xense-taccap-lerobot.git
+git clone https://github.com/XenseRobotics-AI/xense-taccap-lerobot.git
 cd xense-taccap-lerobot
 ./docker/install_customer.sh
 ```
@@ -357,7 +357,7 @@ docker compose pull
 ```
 
 !!! note "只需要写 tag 这一行"
-    `compose.yaml` 的默认镜像已经是 `ghcr.io/vertax42/xense-taccap-lerobot`,
+    `compose.yaml` 的默认镜像已经是 `ghcr.io/xenserobotics-ai/xense-taccap-lerobot`,
     **不需要再写 `LEROBOT_IMAGE`**;它只在你要换一个镜像名(比如本机自建)时才用得上。
 
 !!! warning "钉在 `0.0.5` 及更早的话,有两条已知问题要绕一下"

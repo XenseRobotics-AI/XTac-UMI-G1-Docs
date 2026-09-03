@@ -73,7 +73,7 @@
 
 ## 参考资料
 
-- 数采主仓库 [`xense-taccap-lerobot`](https://github.com/Vertax42/xense-taccap-lerobot) 附带的设备说明
+- 数采主仓库 [`xense-taccap-lerobot`](https://github.com/XenseRobotics-AI/xense-taccap-lerobot) 附带的设备说明
 - 夹爪 SDK [`TacCap-Gripper`](https://github.com/XenseRobotics-AI/TacCap-Gripper)(子模块 `third_party/taccap-gripper/`)
 - 追踪器 PC 服务 [`XenseVR-PC-Service`](https://github.com/XenseRobotics-AI/XenseVR-PC-Service)(**不是子模块**,以 `.deb` 形式安装到 `/opt/apps/roboticsservice`,见 [2.4 一键安装](02-environment.md#24))
 - 视触觉传感器 SDK [`xensesdk`](https://github.com/XenseRobotics/xensesdk) · [文档站](https://xensedoc.readthedocs.io/en/latest/)

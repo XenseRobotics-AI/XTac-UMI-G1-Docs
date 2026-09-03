@@ -153,7 +153,7 @@ flowchart LR
 !!! note "头显相机需要 `ffc94d53` 之后的版本"
     本手册中的[头显相机](05-data-collection.md#56)、Insight 链路移除、以及
     [`/world` 3D 视图](05-data-collection.md#world-view)的改动,来自
-    [PR #9](https://github.com/Vertax42/xense-taccap-lerobot/pull/9),已合入 `main`(`ffc94d53`)。
+    [PR #9](https://github.com/XenseRobotics-AI/xense-taccap-lerobot/pull/9),已合入 `main`(`ffc94d53`)。
 
     checkout 停在更早的版本时:`--robot.enable_head_camera` 在单夹爪上还不存在,
     双夹爪上它指的是旧的 Insight 相机,Rerun 里也仍然画着 TRACKER 坐标系和虚线。
@@ -246,7 +246,7 @@ flowchart LR
     `install_customer.sh`、`compose.yaml`——来自这次提交,更早的版本里没有。
 
 !!! note "Docker 改为默认从 GHCR 拉取,需要 `854d4cdf` 之后的版本"
-    从这一版起 `compose.yaml` 的默认镜像就是 `ghcr.io/vertax42/xense-taccap-lerobot`,
+    从这一版起 `compose.yaml` 的默认镜像就是 `ghcr.io/xenserobotics-ai/xense-taccap-lerobot`,
     `.env` 里**只需要写 tag 一行**;`.tar` 离线包仍然支持,但不再是默认路径。
 
     停在更早的版本时:默认镜像是**本机构建**的名字,要拉 GHCR 就必须同时写

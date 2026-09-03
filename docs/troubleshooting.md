@@ -87,7 +87,7 @@
     ```
 
     看解析出来的镜像名对不对,再检查 `.env` 里有没有写错的 `LEROBOT_IMAGE`。
-    默认就是 `ghcr.io/vertax42/xense-taccap-lerobot`,**正常情况下 `.env` 里只需要写 tag 一行**,
+    默认就是 `ghcr.io/xenserobotics-ai/xense-taccap-lerobot`,**正常情况下 `.env` 里只需要写 tag 一行**,
     见 [录数据前先把版本钉死](02-environment.md#docker-pin)。
 
 ??? failure "改了 `.env` 里的 `LEROBOT_IMAGE_TAG`,拉到的还是老镜像"
