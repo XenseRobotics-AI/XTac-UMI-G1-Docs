@@ -168,7 +168,7 @@ git submodule update --init --recursive --progress
 
 | 子模块 | 安装后的包 |
 |---|---|
-| [`third_party/taccap-gripper`](https://github.com/Vertax42/TacCap-Gripper) | `xense.taccap`(XTac-UMI G1 触觉夹爪 SDK) |
+| [`third_party/taccap-gripper`](https://github.com/XenseRobotics-AI/TacCap-Gripper) | `xense.taccap`(XTac-UMI G1 触觉夹爪 SDK) |
 
 !!! note "xensesdk 不是子模块"
     `xensesdk` 是视触觉传感器 SDK,由 `setup_env.sh --install` 自动安装,无需单独拉取子模块。
@@ -232,7 +232,7 @@ mamba activate xense-taccap
 
 !!! note "XenseVR PC Service 的 .deb 从哪来"
     `./setup_env.sh --install` 会直接从
-    [v0.2.1 release](https://github.com/Vertax42/XenseVR-PC-Service/releases/tag/v0.2.1)
+    [v0.2.1 release](https://github.com/XenseRobotics-AI/XenseVR-PC-Service/releases/tag/v0.2.1)
     下载当前机器架构对应的 `.deb` 包(可用 `$XENSEVR_DEB_URL` 覆盖下载地址),
     再执行 `sudo dpkg -i` 安装。
 

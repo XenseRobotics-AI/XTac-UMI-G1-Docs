@@ -78,6 +78,6 @@ This page keeps the configuration options, the glossary and the appendix.
 ## References
 
 - The device notes shipped with the collection repo [`xense-taccap-lerobot`](https://github.com/Vertax42/xense-taccap-lerobot)
-- The gripper SDK [`TacCap-Gripper`](https://github.com/Vertax42/TacCap-Gripper) (submodule `third_party/taccap-gripper/`)
-- The tracker's PC service [`XenseVR-PC-Service`](https://github.com/Vertax42/XenseVR-PC-Service) (**not a submodule** — installed as a `.deb` into `/opt/apps/roboticsservice`, see [2.4 One-shot install](02-environment.md#24))
+- The gripper SDK [`TacCap-Gripper`](https://github.com/XenseRobotics-AI/TacCap-Gripper) (submodule `third_party/taccap-gripper/`)
+- The tracker's PC service [`XenseVR-PC-Service`](https://github.com/XenseRobotics-AI/XenseVR-PC-Service) (**not a submodule** — installed as a `.deb` into `/opt/apps/roboticsservice`, see [2.4 One-shot install](02-environment.md#24))
 - The visuotactile sensor SDK [`xensesdk`](https://github.com/XenseRobotics/xensesdk) · [docs site](https://xensedoc.readthedocs.io/en/latest/)
