@@ -191,7 +191,7 @@ Submodules and the packages they install — there is **only one**:
 
 | Submodule | Package installed |
 |---|---|
-| [`third_party/taccap-gripper`](https://github.com/Vertax42/TacCap-Gripper) | `xense.taccap` (XTac-UMI G1 tactile gripper SDK) |
+| [`third_party/taccap-gripper`](https://github.com/XenseRobotics-AI/TacCap-Gripper) | `xense.taccap` (XTac-UMI G1 tactile gripper SDK) |
 
 !!! note "xensesdk is not a submodule"
     `xensesdk` is the visuotactile sensor SDK. `setup_env.sh --install` installs it
@@ -259,7 +259,7 @@ This step will:
 
 !!! note "Where the XenseVR PC Service .deb comes from"
     `./setup_env.sh --install` downloads the `.deb` for your architecture straight from the
-    [v0.2.1 release](https://github.com/Vertax42/XenseVR-PC-Service/releases/tag/v0.2.1)
+    [v0.2.1 release](https://github.com/XenseRobotics-AI/XenseVR-PC-Service/releases/tag/v0.2.1)
     (override the URL with `$XENSEVR_DEB_URL`) and runs `sudo dpkg -i`.
 
     **When that same version is already installed it skips without downloading a byte**, so
