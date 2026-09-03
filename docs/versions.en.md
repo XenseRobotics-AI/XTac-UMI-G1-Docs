@@ -667,7 +667,7 @@ If you hit a problem:
 
 1. Check [Troubleshooting](troubleshooting.md) and the [FAQ](07-faq-reference.md) first.
 2. Problems with the documentation's content, links or examples can go to the
-   [docs repository issues](https://github.com/XenseRobotics/XTac-UMI-G1-Docs/issues).
+   [docs repository issues](https://github.com/XenseRobotics-AI/XTac-UMI-G1-Docs/issues).
 3. Hardware, firmware, calibration materials or repair matters go through the device delivery /
    after-sales channel, with the device SN.
 
