@@ -44,7 +44,7 @@ Commands and fields should be taken from your local checkout and from the device
 | `xense.taccap` SDK | Matched to the main repo's submodule | 0.1.9 (submodule `a3382db`) |
 | Gripper firmware | Command set V2.1 (wire framing V1.8), leader ≥ 1.2.0 / follower ≥ 1.1.0 | leader 1.2.2 / follower 1.1.5 (branch `hw_v1.1.0`), follows the SDK, see [OTA](#ota) |
 | `xensesdk` | Provided by the install script | 2.1.1 |
-| XTac-UMI XR PC Service (`.deb`) | ≥ v0.2.0; install v0.2.1 on a new machine | v0.2.1 |
+| XenseVR PC Service (`.deb`) | ≥ v0.2.0; install v0.2.1 on a new machine | v0.2.1 |
 | `xensevr_pc_service_sdk` | Bundled in the main repo; links the C SDK from the `.deb` | 0.2.1, the version comes from the `.deb` |
 
 The `.deb` (`/opt/apps/roboticsservice/SDK`) is the only source of the Pico4 C SDK, and re-running `--install` does not rebuild it. The script skips packages whose version already matches, so a machine still on v0.2.0 builds the bindings against the old SDK; install v0.2.1 on a new machine. v0.2.0 does exactly one thing more than v0.1.0, relaying [head camera](recording.md#56) frames; if you do not use it, nothing changes.

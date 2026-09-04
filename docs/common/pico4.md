@@ -5,7 +5,7 @@ Pico4 Ultra 企业版配套的独立运动追踪器装在夹爪顶部,提供 6-D
 | | 背包版 | PC 版 |
 |---|---|---|
 | 头显接到哪 | 数采背包的 `PICO` 口(USB 有线),或与背包接同一个 WiFi | 数采主机的 Type-C 口(USB 有线共享网络),或与主机接同一个 WiFi |
-| 位姿服务在哪跑 | XTac-UMI XR 运行时内置在 XTac-UMI Collector 里,背包开机即在,不用单独启动 | 数采主机上的 [XTac-UMI XR PC Service](../pc/host-setup.md#35),每次采集前手动启动 |
+| 位姿服务在哪跑 | XenseVR 运行时内置在 XTac-UMI Collector 里,背包开机即在,不用单独启动 | 数采主机上的 [XenseVR PC Service](../pc/host-setup.md#35),每次采集前手动启动 |
 | APP 里怎么连 | 勾选「USB 网络」→ 点「连接」;走 WiFi 时不勾,填背包 IP | 点「重连」,不用填 IP |
 
 出厂已配置的头显,开发者模式、电源策略、APP、追踪器绑定、追踪模式都已设好且断电不丢(恢复出厂或换头显才要重做),直接从[网络连接](#pico-network)开始;接线、短按追踪器电源键到蓝灯亮、在 APP 里[连上](#pico-toolkit-ui)、[启动对齐](#pico-frame)每次采集都要做。
@@ -65,7 +65,7 @@ adb install XTac-UMI-XR-0.2.5.apk    # 换成拿到的那份
 
 ## 网络连接 {#pico-network}
 
-追踪数据要送到采集单元的 XTac-UMI XR 位姿服务。**默认走有线**:Type-C 线直连,链路独占,延迟稳定可预期。
+追踪数据要送到采集单元的 XenseVR 位姿服务。**默认走有线**:Type-C 线直连,链路独占,延迟稳定可预期。
 
 !!! warning "无线只用于临时调试,不要用来正式采集"
     头显与采集单元走 WiFi 时要和现场其他设备抢信道,链路会出现网络波动,位姿数据随之延迟到达:轻则位姿卡顿、抖动,重则丢帧。这些问题在录制过程中看不出来,事后从数据里也难与别的原因区分,整批数据只能重采。正式采集一律用有线。
@@ -79,7 +79,7 @@ adb install XTac-UMI-XR-0.2.5.apk    # 换成拿到的那份
     有线连接步骤:
 
     1. Type-C 线一端接头显侧面的 Type-C 口,另一端接背包的 `PICO` 口。用充电宝供电时头显先接二合一线:充电口接充电宝,数据口接背包 `PICO` 口,接线见[充电宝供电](../backpack/unbox-connect.md#powerbank)。
-    2. 背包开机。XTac-UMI XR 运行时内置在 Collector 里,随背包一起启动,不需要单独开服务。
+    2. 背包开机。XenseVR 运行时内置在 Collector 里,随背包一起启动,不需要单独开服务。
     3. 打开 XTac-UMI XR,勾选「USB 网络」点「连接」,背包会自动在 USB 链路上建网(地址 `192.168.58.1`),不用手填。
 
     走 WiFi 时头显与背包接同一个网络(例如同一台路由器;背包只连 5 GHz WiFi),APP 里不勾「USB 网络」,填背包的 IP 再点「连接」。背包 IP 在控制台顶栏的网络下拉里看。
@@ -88,7 +88,7 @@ adb install XTac-UMI-XR-0.2.5.apk    # 换成拿到的那份
 
     有线连接步骤:
 
-    1. 电脑端先启动服务(见[启动 XTac-UMI XR PC Service](../pc/host-setup.md#35)):`runService.sh`。服务没起来,APP 只会停在「未连接」。
+    1. 电脑端先启动服务(见[启动 XenseVR PC Service](../pc/host-setup.md#35)):`runService.sh`。服务没起来,APP 只会停在「未连接」。
     2. Type-C 线直连头显与数采主机,头显给主机分配 IP。
     3. 打开 XTac-UMI XR,点「重连」,状态变成「已连接」(见[打开 App 后的界面](#pico-toolkit-ui))。
 
@@ -166,7 +166,7 @@ SN 决定左右(`G` 前一个数字单左双右),也是采集单元识别追踪�
 
 === "PC 版"
 
-    界面只有状态、分辨率、重连三项。不用填 PC 端 IP:[有线共享网络](#pico-network)接好后 APP 会自动识别主机上的 XTac-UMI XR PC Service,但要点一下「重连」才会连,打开 APP 不会自动连。
+    界面只有状态、分辨率、重连三项。不用填 PC 端 IP:[有线共享网络](#pico-network)接好后 APP 会自动识别主机上的 XenseVR PC Service,但要点一下「重连」才会连,打开 APP 不会自动连。
 
     ![状态未连接,点「重连」](../assets/pico4/app-step2-disconnected.webp){ width="420" }
 

@@ -128,7 +128,7 @@ You do not measure the mount transform: the rigid offset from tracker to TCP is 
 
 The pivot check needs no extra hardware: rest the midpoint of the two fingers on a fixed point and, holding the handle, sweep through as many orientations as you can. `ee xyz` should barely move while `raw xyz` swings widely; the drift you see is the transform's error. Test both sides; a left value mirrored the wrong way shows up as `ee` swinging about twice as far as it should.
 
-To see both grippers' IMU/encoder and the trackers' 6-DoF pose in a single Rerun view, use the SDK example `rerun_dual_with_tracker.py` (needs `xensevr_pc_service_sdk` and a running XTac-UMI XR PC Service). It skips LeRobot's automatic SN matching, so you must pass the SNs explicitly. SNs belong to a specific unit: on another unit, use the ones it reports, and shake each gripper in turn to verify left and right:
+To see both grippers' IMU/encoder and the trackers' 6-DoF pose in a single Rerun view, use the SDK example `rerun_dual_with_tracker.py` (needs `xensevr_pc_service_sdk` and a running XenseVR PC Service). It skips LeRobot's automatic SN matching, so you must pass the SNs explicitly. SNs belong to a specific unit: on another unit, use the ones it reports, and shake each gripper in turn to verify left and right:
 
 ```bash
 python third_party/taccap-gripper/python/examples/rerun_dual_with_tracker.py \

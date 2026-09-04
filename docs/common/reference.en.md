@@ -21,8 +21,8 @@ A lookup appendix shared by both editions: terms, feedback channels and related 
 | **Odd is left, even is right** | The last digit of the 4-digit serial number: odd → left, even → right; grippers, sensors and trackers all follow it, see [Serial numbers and side identification](gripper.md#sn) |
 | **GSPS** | Visuotactile sensor (one on each finger), serial number `GSPS01...` |
 | **XC** | The wrist UVC camera, serial number `XC...` |
-| **XTac-UMI XR** | The VR client app on the Pico4 headset; it sends the headset and tracker poses to the collection side and establishes the world frame at launch; see [Pico4 headset and tracker setup](pico4.md) |
-| **XTac-UMI XR PC Service / runtime** | The service that receives the headset pose: on the Developer Kit a daemon on the collection PC that you start by hand; on the Backpack Kit built into Collector |
+| **XTac-UMI XR** | The VR client app on the Pico4 headset (formerly XenseVR-Toolkit); it sends the headset and tracker poses to the collection side and establishes the world frame at launch; see [Pico4 headset and tracker setup](pico4.md) |
+| **XenseVR PC Service / runtime** | The service that receives the headset pose, the collection-unit end of XTac-UMI XR (the service name did not change with the app): on the Developer Kit a daemon on the collection PC that you start by hand; on the Backpack Kit built into Collector |
 | **tcp** | Tool Center Point, the end-effector pose (`tcp.x/y/z` + the 6D rotation `r1..r6`); the frame is in [Coordinate frames](coordinates.md) |
 | **6D rotation** | The **first two columns** of the rotation matrix R (world ← body): `r1..r3` = first column = the body X axis expressed in the world frame, `r4..r6` = second column = the Y axis. The third column is their cross product and can be recovered → [the convention in detail](../pc/recording.md#53) |
 | **shifted-frame** | Shifted-frame pairing: the observation at t-1 goes with the action at t |

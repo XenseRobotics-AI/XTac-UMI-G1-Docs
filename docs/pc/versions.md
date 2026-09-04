@@ -44,7 +44,7 @@ flowchart LR
 | `xense.taccap` SDK | 与主仓库子模块配套 | 0.1.9(子模块 `a3382db`) |
 | 夹爪固件 | 命令集 V2.1(帧格式 V1.8),leader ≥ 1.2.0 / follower ≥ 1.1.0 | leader 1.2.2 / follower 1.1.5(分支 `hw_v1.1.0`),随 SDK 走,见 [OTA](#ota) |
 | `xensesdk` | 由安装脚本提供 | 2.1.1 |
-| XTac-UMI XR PC Service(`.deb`) | ≥ v0.2.0,装机直接用 v0.2.1 | v0.2.1 |
+| XenseVR PC Service(`.deb`) | ≥ v0.2.0,装机直接用 v0.2.1 | v0.2.1 |
 | `xensevr_pc_service_sdk` | 绑定在主仓库内,链接 `.deb` 里的 C SDK | 0.2.1,版本号取自 `.deb` |
 
 `.deb`(`/opt/apps/roboticsservice/SDK`)是 Pico4 C SDK 的唯一来源,重跑 `--install` 不会重编它;脚本跳过版本一致的包,停在 v0.2.0 的机器会拿旧 SDK 编绑定,装机直接用 v0.2.1。v0.2.0 只比 v0.1.0 多了转发[头显相机](recording.md#56)帧,不用它就无行为变化。
