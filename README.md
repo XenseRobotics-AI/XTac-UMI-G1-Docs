@@ -106,8 +106,23 @@ SDK 的开发文档放在
 
 - 站点 logo 与 favicon → `docs/assets/brand/logo.png` / `docs/assets/brand/favicon.png`
 
-## 发布
+## 分支与发布
 
-推送到 `main` 分支后,GitHub Actions 自动 `mkdocs build --strict` 并发布到
-GitHub Pages。首次需在仓库 **Settings → Pages → Source** 选择
-**GitHub Actions**。
+站点从 `gh-pages` 分支发布(Settings → Pages → Source 已设为 `gh-pages` / `/`),
+两个分支各有自己的地址:
+
+| 分支 | 用途 | 地址 |
+|---|---|---|
+| `main` | 生产 | <https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/> |
+| `dev` | 预览、试用 | <https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/> |
+
+日常改动先合进 `dev`,在预览站上试用确认,再合进 `main` 上生产。推送任一分支都会
+自动 `mkdocs build --strict` 并发布;也可以在 Actions 里手动运行 **Deploy docs**,
+选 `dev` 或 `root` 发布任意分支。
+
+发布用 git + rsync 自己写 `gh-pages`,删除范围是精确控制的:发布 `main` 时排除
+`/dev/`,发布 `dev` 时只动 `dev/`,两边不会互相覆盖。预览站构建前会把 `mkdocs.yml`
+里的 `site_url` 与英文旧地址跳转统一加上 `/dev/` 前缀、站名加「(预览)」后缀,
+所以预览站自成一体,不会把读者甩回生产站。
+
+`gh-pages` 是构建产物,不要手工编辑,也不要从它上面开分支。
