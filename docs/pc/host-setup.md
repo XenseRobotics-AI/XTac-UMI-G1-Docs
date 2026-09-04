@@ -100,11 +100,11 @@ lsusb -t
 
 ## Pico4 头显与追踪器
 
-Pico4 Ultra 企业版配套的独立运动追踪器装在夹爪顶部提供 6-DoF 位姿,头显上运行 XTac-UMI XR,位姿经下面的 [XenseVR PC Service](#35) 送到采集端。头显的开箱与系统设置、安装 XTac-UMI XR、网络连接、追踪器绑定、追踪模式与启动对齐两种形态共用,写在[Pico4 头显与追踪器](../common/pico4.md);出厂已配置的头显直接从[网络连接](../common/pico4.md#pico-network)开始,每次采集前只需接 USB、短按追踪器电源键到蓝灯亮、[点「重连」](../common/pico4.md#pico-toolkit-ui)、[启动对齐](../common/pico4.md#pico-frame)。
+Pico4 Ultra 企业版配套的独立运动追踪器装在夹爪顶部提供 6-DoF 位姿,头显上运行 XTac-UMI XR,位姿经下面的 [XenseVR PC Service](#35) 送到采集单元。头显的开箱与系统设置、安装 XTac-UMI XR、网络连接、追踪器绑定、追踪模式与启动对齐两种形态共用,写在[Pico4 头显与追踪器](../common/pico4.md);出厂已配置的头显直接从[网络连接](../common/pico4.md#pico-network)开始,每次采集前只需接 USB、短按追踪器电源键到蓝灯亮、[点「重连」](../common/pico4.md#pico-toolkit-ui)、[启动对齐](../common/pico4.md#pico-frame)。
 
 ## 启动 XenseVR PC Service {#35}
 
-追踪器与主机的 XenseVR PC Service(RoboticsService)守护进程通信,它负责设备发现、状态监控与实时追踪数据分发,采集端从它读位姿。[Docker 交付镜像](install.md#docker)的容器启动时会自动拉起它;只处理数据、不用追踪器时可用 `START_XENSEVR_SERVICE=0` 关掉。
+追踪器与主机的 XenseVR PC Service(RoboticsService)守护进程通信,它负责设备发现、状态监控与实时追踪数据分发,采集单元从它读位姿。[Docker 交付镜像](install.md#docker)的容器启动时会自动拉起它;只处理数据、不用追踪器时可用 `START_XENSEVR_SERVICE=0` 关掉。
 
 ```bash
 /opt/apps/roboticsservice/runService.sh
@@ -112,7 +112,7 @@ Pico4 Ultra 企业版配套的独立运动追踪器装在夹爪顶部提供 6-Do
 
 同一时间只能运行一个实例,重复启动会失败或冲突。
 
-服务可提供 Head / 手柄 / 手势 / 全身动捕 / Tracker 独立追踪多类数据,数采用两类:Tracker 独立追踪位姿(夹爪位姿,带 `sn` 区分追踪器)和头部位姿(头显自己的位姿,和[头显双目画面](recording.md#56)配套)。头显把每只眼的画面和自己的位姿发给 PC Service 再转给采集端,和追踪器共用同一条连接,服务没起来两者都没有;走这一路服务要 ≥ v0.2.0(见[版本基线](versions.md#required)),只用追踪器则版本无所谓。
+服务可提供 Head / 手柄 / 手势 / 全身动捕 / Tracker 独立追踪多类数据,数采用两类:Tracker 独立追踪位姿(夹爪位姿,带 `sn` 区分追踪器)和头部位姿(头显自己的位姿,和[头显双目画面](recording.md#56)配套)。头显把每只眼的画面和自己的位姿发给 PC Service 再转给采集单元,和追踪器共用同一条连接,服务没起来两者都没有;走这一路服务要 ≥ v0.2.0(见[版本基线](versions.md#required)),只用追踪器则版本无所谓。
 
 服务目录 `/opt/apps/roboticsservice/` 附带 `ConsoleDemo` / `RobotDemoQt` 演示程序,可确认头显已被发现、追踪数据正常(需与服务相同的运行环境)。
 
