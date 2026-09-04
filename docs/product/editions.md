@@ -8,11 +8,7 @@ XTac-UMI 有两种配置:**背包版**(XTac-UMI 数采背包)和 **PC 版**(XTac
 
     ---
 
-    - 背包即主机,平板即控制台,不需要 PC
-    - 夹爪按键开录,灯语反馈,单人可操作
-    - MCAP 原始记录,一键发布 LeRobot 到 ModelScope
-
-    **适合**:采集团队、外部现场、规模化采集
+    面向规模化数采工厂与采集团队:背包即主机、平板即控制台、夹爪按键开录;软件闭源交付,支持轻量二次开发。
 
     [快速开始](../backpack/index.md){ .md-button .md-button--primary }
 
@@ -20,11 +16,7 @@ XTac-UMI 有两种配置:**背包版**(XTac-UMI 数采背包)和 **PC 版**(XTac
 
     ---
 
-    - 接入你自己的 x86 工作站,完全走 LeRobot 框架
-    - `lerobot-record` 直接产出 LeRobotDataset
-    - 改代码、接自定义机器人都方便
-
-    **适合**:研究与算法团队、自建训练管线
+    基于 lerobot 开源生态,适合研究与算法团队:接入自己的工作站,直接产出 LeRobotDataset;完全开放二次开发。
 
     [快速开始](../pc/index.md){ .md-button .md-button--primary }
 
@@ -42,8 +34,8 @@ XTac-UMI 有两种配置:**背包版**(XTac-UMI 数采背包)和 **PC 版**(XTac
 | 原始数据 | MCAP(每条 episode 一个文件)+ H.264;LeRobot 是离线导出 | LeRobotDataset v3 直接落盘 |
 | 导出与上传 | 浏览器按 episode 下载 MCAP;LeRobot 发布到 ModelScope,发布后默认清盘 | Hugging Face Hub |
 | 升级 | 系统页导入固件包(`.tar.zst`),保留上一版本可回滚;手动应用前先停录,远程下发的更新会等当前条录完再重启 | 拉仓库、跑安装脚本或换镜像 tag;夹爪固件 OTA 用 SDK 脚本 |
-| 二次开发 | 不面向改代码;交付 MCAP / LeRobot 数据 | 改 Python 代码、接自定义机器人都方便 |
-| 适合谁 | 数据采集团队、外部现场、规模化采集 | 研究与算法团队,自建训练管线 |
+| 二次开发 | 闭源,轻量:采集软件以固件包整体交付,定制基于导出的 MCAP / LeRobot 数据、上传配置与按键绑定,不改采集软件本身 | 完全开放:基于 lerobot 开源生态,改 Python 代码、接自定义机器人都可以 |
+| 适合谁 | 规模化数采工厂、数据采集团队、外部现场 | 研究与算法团队、自建训练管线 |
 
 ## 箱内清单与接线 {#kit}
 
@@ -88,9 +80,9 @@ XTac-UMI 有两种配置:**背包版**(XTac-UMI 数采背包)和 **PC 版**(XTac
 
     可以。背包版从 MCAP 导出的和 PC 版直接落盘的都是 LeRobotDataset v3,同一套 `lerobot` 工具都能加载。两边的相机键名与状态字段布局不完全相同,合并前先对照各自的 `meta/info.json`;PC 版的字段见[数据集](../pc/dataset.md#61)。
 
-??? question "背包版能改代码吗"
+??? question "背包版能二次开发吗"
 
-    不面向。背包上的采集软件以固件包整体交付和升级,交付物是 MCAP 与 LeRobot 数据。要改采集逻辑、接自定义机器人,选 PC 版。
+    能,但是轻量的。背包上的采集软件闭源,以固件包整体交付和升级;定制基于导出的 MCAP / LeRobot 数据、上传配置与按键绑定,不改采集软件本身。要改采集逻辑、接自定义机器人,选完全开放的 PC 版。
 
 ??? question "PC 版一定要 NVIDIA 显卡吗"
 

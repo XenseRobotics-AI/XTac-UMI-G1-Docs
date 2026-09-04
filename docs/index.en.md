@@ -49,7 +49,7 @@ Pick one to start. Hardware, calibration and data definitions are the same on bo
     - Start recording from the gripper button with LED feedback; one person can run it
     - Raw MCAP recording, one-click LeRobot publishing to ModelScope
 
-    For: collection teams, field work, collection at scale
+    For: data-collection factories and collection teams; closed-source software with light customization
     { .xu-card__fit }
 
     [Quick start](backpack/index.md){ .md-button .md-button--primary }
@@ -66,7 +66,7 @@ Pick one to start. Hardware, calibration and data definitions are the same on bo
 
     - Plugs into your own x86 workstation and runs entirely on the LeRobot framework
     - `lerobot-record` writes a LeRobotDataset directly
-    - Easy to modify the code or attach a custom robot
+    - Built on the open-source lerobot ecosystem, fully open to customization
 
     For: research and algorithm teams, self-hosted training pipelines
     { .xu-card__fit }

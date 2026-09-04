@@ -8,7 +8,7 @@
 - 箱内:Pico4 Ultra 企业版头显 + 手柄 ×1、XTac-UMI G1 ×2、Type-C 线 ×2、数采背包 ×1、12V3A 36W 适配器 ×1、充电宝 ×2(Type-C 输出 5V3A / 12V3A);开箱核对见[开箱、接线与供电](unbox-connect.md#unbox)。
 - 产出:每条录制一个 [MCAP](projects-export.md#mcap),同步记录左右鱼眼、四路视触觉、头显与双追踪器 6DoF 位姿、夹爪开合度;按任务导出 [LeRobot v3 数据集](projects-export.md#lerobot),可直接发布到 ModelScope。
 - 操作:夹爪按键开录、停录,指示灯反馈状态,单人可完成整套采集。
-- 适合:采集团队、外部现场、规模化采集。需要接自己的 x86 工作站、完全走 LeRobot 框架的另一种形态见 [PC 版](../pc/index.md);两种配置的差异见[产品线与配置对比](../product/editions.md)。
+- 适合:规模化数采工厂与采集团队;软件闭源交付,支持轻量二次开发。需要接自己的 x86 工作站、完全走 LeRobot 框架的另一种形态见 [PC 版](../pc/index.md);两种配置的差异见[产品线与配置对比](../product/editions.md)。
 
 产品定位与控制台介绍见[认识数采背包](../product/backpack.md);[背包接口](unbox-connect.md#ports)、[适配器](unbox-connect.md#adapter)与[充电宝](unbox-connect.md#powerbank)两种接线方式、[机身标签](network.md#label)在各自的操作页里。
 

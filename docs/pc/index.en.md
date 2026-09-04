@@ -3,7 +3,7 @@
 The Developer Kit (the PC edition) puts the compute on your own x86 workstation (NVIDIA GPU recommended; Mamba source install or the Docker image): the grippers plug straight into the host over USB, the Pico4 Ultra Enterprise headset and trackers come in through the XenseVR PC Service, and the whole chain runs on the LeRobot framework.
 The hardware you need is the XTac-UMI G1 leader gripper (one or a pair), the Pico4 Ultra Enterprise with its trackers, and that workstation.
 The operator's interface is the terminal plus a Rerun preview window; `lerobot-record` writes a LeRobotDataset v3 straight to disk, ready to push to the Hugging Face Hub.
-It suits research and algorithm teams with their own training pipelines, and anyone who wants to change the Python code or hook up a custom robot.
+Built on the open-source lerobot ecosystem, it suits research and algorithm teams with their own training pipelines; it is fully open to customization, whether that means changing the Python code or hooking up a custom robot.
 If you want no PC at all, with a collection team driving it from a tablet and the gripper buttons in the field, that is the [Backpack Kit](../backpack/index.md); the two editions are compared in [Editions](../product/editions.md).
 
 Hardware connected, environment installed, leader gripper calibrated? What follows takes you from

@@ -3,7 +3,7 @@
 PC 版把计算放在你自己的 x86 工作站上(推荐 NVIDIA GPU,Mamba 源码安装或 Docker 镜像二选一):夹爪 USB 直连主机,Pico4 Ultra 企业版头显与追踪器经 XenseVR PC Service 接入,整条链路走 LeRobot 框架。
 需要的硬件是 XTac-UMI G1 主夹爪(单只或一对)、Pico4 Ultra 企业版加追踪器,以及这台工作站。
 操作界面是终端命令加 Rerun 预览窗口,`lerobot-record` 直接落盘 LeRobotDataset v3,可推到 Hugging Face Hub。
-适合研究与算法团队、自建训练管线,以及要改 Python 代码或接自定义机器人的场景。
+基于 lerobot 开源生态,适合研究与算法团队、自建训练管线;完全开放二次开发,改 Python 代码或接自定义机器人都可以。
 不需要 PC、由采集团队在现场用平板和夹爪按键操作的是[背包版](../backpack/index.md);两种配置的对比见[产品线与配置对比](../product/editions.md)。
 
 硬件已连好、环境已装好、主夹爪已标定?下面从上电到出第一条数据,照抄即可。第一次用请先走

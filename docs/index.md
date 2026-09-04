@@ -49,7 +49,7 @@ hide:
     - 夹爪按键开录,灯语反馈,单人可操作
     - MCAP 原始记录,一键发布 LeRobot 到 ModelScope
 
-    适合:采集团队、外部现场、规模化采集
+    适合:规模化数采工厂与采集团队;软件闭源交付,支持轻量二次开发
     { .xu-card__fit }
 
     [快速开始](backpack/index.md){ .md-button .md-button--primary }
@@ -66,7 +66,7 @@ hide:
 
     - 接入你自己的 x86 工作站,完全走 LeRobot 框架
     - `lerobot-record` 直接产出 LeRobotDataset
-    - 改代码、接自定义机器人都方便
+    - 基于 lerobot 开源生态,完全开放二次开发
 
     适合:研究与算法团队、自建训练管线
     { .xu-card__fit }
