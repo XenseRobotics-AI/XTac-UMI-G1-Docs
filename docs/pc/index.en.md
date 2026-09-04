@@ -1,6 +1,6 @@
 # XTac-UMI G1 Developer Kit
 
-The Developer Kit (the PC edition) puts the compute on your own x86 workstation (NVIDIA GPU recommended; Mamba source install or the Docker image): the grippers plug straight into the host over USB, the Pico4 Ultra Enterprise headset plugs into the host over a Type-C cable as a wired shared network (WiFi also works), its pose comes in through the XenseVR PC Service running on the host, and the whole chain runs on the LeRobot framework.
+The Developer Kit (the PC edition) puts the compute on your own x86 workstation (NVIDIA GPU recommended; Mamba source install or the Docker image): the grippers plug straight into the host over USB, the Pico4 Ultra Enterprise headset plugs into the host over a Type-C cable as a wired shared network (wired by default; WiFi is for quick debugging only), its pose comes in through the XTac-UMI XR PC Service running on the host, and the whole chain runs on the LeRobot framework.
 The hardware you need is the XTac-UMI G1 leader gripper (one or a pair), the Pico4 Ultra Enterprise with its trackers, and that workstation.
 The operator's interface is the terminal plus a Rerun preview window; `lerobot-record` writes a LeRobotDataset v3 straight to disk, ready to push to the Hugging Face Hub.
 Built on the open-source lerobot ecosystem, it suits research and algorithm teams with their own training pipelines; it is fully open to customization, whether that means changing the Python code or hooking up a custom robot.
@@ -33,10 +33,10 @@ Before you start, confirm:
 2. Bimanual rig: check the [USB bandwidth budget](host-setup.md#usb-budget) before going any further.
 3. Connect the Pico4 Ultra Enterprise's wired shared network and turn off the collection PC's WiFi.
    The wired shared network conflicts with the PC's WiFi, which makes tracking unstable or
-   unreachable. The headset also supports WiFi, but for real collection use the cable; see
+   unreachable. The headset also supports WiFi, but the link fluctuates and pose data arrives late, so keep it for quick debugging; see
    [Network connection](../common/pico4.md#pico-network).
 4. Power on the Pico4 Ultra Enterprise and short-press the tracker's power button until the blue light comes on (first use needs [binding](../common/pico4.md#pico-tracker-bind) first).
-5. Start the XenseVR PC Service on the host:
+5. Start the XTac-UMI XR PC Service on the host:
 
     ```bash
     /opt/apps/roboticsservice/runService.sh    # before opening the app
@@ -51,7 +51,7 @@ flowchart LR
     A[Plug in gripper USB] --> U[Bimanual: check USB bandwidth budget]
     U --> N[Connect Pico4 Ultra Enterprise<br/>wired network, turn WiFi off]
     N --> B[Power on Pico4 Ultra Enterprise<br/>pair the tracker]
-    B --> D[Start XenseVR PC Service]
+    B --> D[Start XTac-UMI XR PC Service]
     D --> C[Launch XTac-UMI XR<br/>freeze origin, shows Connected]
     C --> E[Run calibration / recording]
 ```
@@ -61,7 +61,7 @@ flowchart LR
 
 Never restart XTac-UMI XR during collection: it resets the world origin and leaves poses inside one dataset referenced to different frames; see [Startup and frame alignment](../common/pico4.md#pico-frame).
 
-Power off in the reverse order: stop recording / replay first and wait for the current episode to be saved, then quit XTac-UMI XR and stop the XenseVR PC Service, and finally unplug the cables in the order given in [Power and connection requirements](../common/gripper.md#power): unplug the host end first, then loosen the screws and unplug the gripper end; on the follower gripper, cut the 24V before unplugging the gripper end.
+Power off in the reverse order: stop recording / replay first and wait for the current episode to be saved, then quit XTac-UMI XR and stop the XTac-UMI XR PC Service, and finally unplug the cables in the order given in [Power and connection requirements](../common/gripper.md#power): unplug the host end first, then loosen the screws and unplug the gripper end; on the follower gripper, cut the 24V before unplugging the gripper end.
 
 ## Self-check {#self-check}
 

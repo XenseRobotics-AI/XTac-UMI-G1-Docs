@@ -1,6 +1,6 @@
 # PC 版:XTac-UMI G1 开发套件
 
-PC 版把计算放在你自己的 x86 工作站上(推荐 NVIDIA GPU,Mamba 源码安装或 Docker 镜像二选一):夹爪 USB 直连主机,Pico4 Ultra 企业版头显也用 Type-C 线直连主机走有线共享网络(也支持 WiFi),位姿经主机上的 XenseVR PC Service 接入,整条链路走 LeRobot 框架。
+PC 版把计算放在你自己的 x86 工作站上(推荐 NVIDIA GPU,Mamba 源码安装或 Docker 镜像二选一):夹爪 USB 直连主机,Pico4 Ultra 企业版头显也用 Type-C 线直连主机走有线共享网络(默认有线,WiFi 仅供临时调试),位姿经主机上的 XTac-UMI XR PC Service 接入,整条链路走 LeRobot 框架。
 需要的硬件是 XTac-UMI G1 主夹爪(单只或一对)、Pico4 Ultra 企业版加追踪器,以及这台工作站。
 操作界面是终端命令加 Rerun 预览窗口,`lerobot-record` 直接落盘 LeRobotDataset v3,可推到 Hugging Face Hub。
 基于 lerobot 开源生态,适合研究与算法团队、自建训练管线;完全开放二次开发,改 Python 代码或接自定义机器人都可以。
@@ -27,10 +27,10 @@ PC 版把计算放在你自己的 x86 工作站上(推荐 NVIDIA GPU,Mamba 源�
 1. 将 XTac-UMI G1 插入主机(USB)。
 2. 双夹爪:先查 [USB 带宽预算](host-setup.md#usb-budget),再往后走。
 3. 接好 Pico4 Ultra 企业版的有线共享网络,并关闭数采电脑的 WiFi——有线共享网络会与电脑 WiFi
-   冲突,导致追踪不稳或连不上。头显也支持 WiFi 接入,但正式采集建议走有线,见
+   冲突,导致追踪不稳或连不上。头显也支持 WiFi,但会有网络波动与位姿延迟,只用于临时调试,见
    [网络连接](../common/pico4.md#pico-network)。
 4. 开启 Pico4 Ultra 企业版,短按追踪器电源键至蓝灯亮起(首次使用需先[绑定](../common/pico4.md#pico-tracker-bind))。
-5. 启动主机的 XenseVR PC Service:
+5. 启动主机的 XTac-UMI XR PC Service:
 
     ```bash
     /opt/apps/roboticsservice/runService.sh    # 要在打开 APP 之前
@@ -45,7 +45,7 @@ flowchart LR
     A[插入夹爪 USB] --> U[双夹爪:查 USB 带宽预算]
     U --> N[接 Pico4 Ultra 企业版<br/>有线网络并关闭 WiFi]
     N --> B[开启 Pico4 Ultra 企业版<br/>配对追踪器]
-    B --> D[启动 XenseVR PC Service]
+    B --> D[启动 XTac-UMI XR PC Service]
     D --> C[启动 XTac-UMI XR<br/>冻结原点、显示已连接]
     C --> E[跑标定/录制]
 ```
@@ -55,7 +55,7 @@ flowchart LR
 
 采集全程不要重启 XTac-UMI XR:重启会重设世界原点,同一数据集内位姿参考系就不一致了,见[启动与坐标系对齐](../common/pico4.md#pico-frame)。
 
-下电按相反顺序:先停止录制 / 回放并等当前集存盘,再退出 XTac-UMI XR、停掉 XenseVR PC Service,最后按[供电与连接要求](../common/gripper.md#power)里的拔线顺序拔线:先拔数采终端端,再松螺钉拔夹爪端,从夹爪拔夹爪端前先断 24V。
+下电按相反顺序:先停止录制 / 回放并等当前集存盘,再退出 XTac-UMI XR、停掉 XTac-UMI XR PC Service,最后按[供电与连接要求](../common/gripper.md#power)里的拔线顺序拔线:先拔数采终端端,再松螺钉拔夹爪端,从夹爪拔夹爪端前先断 24V。
 
 ## 自检 {#self-check}
 

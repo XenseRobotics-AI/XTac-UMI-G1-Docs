@@ -5,7 +5,7 @@ The standalone motion tracker that ships with the Pico4 Ultra Enterprise mounts 
 | | Backpack Kit | Developer Kit |
 |---|---|---|
 | Where the headset plugs in | The backpack's `PICO` port (wired USB), or the same WiFi as the backpack | The collection PC's Type-C port (wired USB shared network), or the same WiFi as the PC |
-| Where the pose service runs | The XenseVR runtime is built into XTac-UMI Collector; it is up as soon as the backpack boots, nothing to start | The [XenseVR PC Service](../pc/host-setup.md#35) on the collection PC, started by hand before every session |
+| Where the pose service runs | The XTac-UMI XR runtime is built into XTac-UMI Collector; it is up as soon as the backpack boots, nothing to start | The [XTac-UMI XR PC Service](../pc/host-setup.md#35) on the collection PC, started by hand before every session |
 | How the app connects | Tick "USB network" → tap "Connect"; over WiFi leave it unticked and enter the backpack IP | Tap "Reconnect"; no IP to enter |
 
 On a factory-configured headset, developer mode, the power policy, the app, the tracker binding and the tracking mode are already set and survive power cycles (redo them only after a factory reset or a headset swap), so start at [Network connection](#pico-network). Plugging in, short-pressing the tracker's power button until the blue light comes on, [connecting in the app](#pico-toolkit-ui) and [startup alignment](#pico-frame) are needed before every session.
@@ -65,7 +65,10 @@ adb install XTac-UMI-XR-0.2.5.apk    # substitute the build you were given
 
 ## Network connection {#pico-network}
 
-Tracking data has to reach the XenseVR pose service on the collection side. Both wired and wireless work. In a busy WiFi environment (congested channels, heavy interference) the pose stutters, jitters or drops data, and this is not easy to tell apart from other faults. Use the wired link for real collection; wireless is only for quick debugging.
+Tracking data has to reach the XTac-UMI XR pose service on the collection unit. **Wired is the default**: a Type-C cable gives the link to itself, with stable, predictable latency.
+
+!!! warning "Wireless is for quick debugging only, never for real collection"
+    Over WiFi the headset and the collection unit compete for the channel with everything else on site. The link fluctuates and pose data arrives late: at best the pose stutters and jitters, at worst frames are dropped. None of this is visible while recording, and afterwards it is hard to tell apart from other causes, so the whole batch has to be recollected. Use the cable for real collection.
 
 On both editions, set USB up on the headset first: Settings → Developer options → enable "USB debugging" → set "USB connection" to "File transfer". Re-check this after every USB re-plug, as it reverts to the default. If you cannot select it, reboot the Pico.
 
@@ -76,7 +79,7 @@ On both editions, set USB up on the headset first: Settings → Developer option
     Wired setup:
 
     1. Run a Type-C cable from the Type-C port on the side of the headset to the backpack's `PICO` port. When running from a power bank, the headset takes the two-in-one cable first: its charging plug goes to the power bank, its data plug to the backpack's `PICO` port; wiring in [Power bank wiring](../backpack/unbox-connect.md#powerbank).
-    2. Power on the backpack. The XenseVR runtime is built into Collector and starts with it; there is no separate service to launch.
+    2. Power on the backpack. The XTac-UMI XR runtime is built into Collector and starts with it; there is no separate service to launch.
     3. Open XTac-UMI XR, tick "USB network" and tap "Connect": the backpack brings up its own network on the USB link (address `192.168.58.1`), nothing to enter by hand.
 
     Over WiFi, put the headset and the backpack on the same network (the same router, say; the backpack only joins 5 GHz WiFi), leave "USB network" unticked in the app, enter the backpack's IP and tap "Connect". The backpack's IP is in the network drop-down in the console's top bar.
@@ -85,7 +88,7 @@ On both editions, set USB up on the headset first: Settings → Developer option
 
     Wired setup:
 
-    1. Start the service on the PC first (see [Start the XenseVR PC Service](../pc/host-setup.md#35)): `runService.sh`. With the service down, the app just sits on "Not connected".
+    1. Start the service on the PC first (see [Start the XTac-UMI XR PC Service](../pc/host-setup.md#35)): `runService.sh`. With the service down, the app just sits on "Not connected".
     2. Run a Type-C cable straight from the headset to the collection PC; the headset assigns the PC an IP.
     3. Open XTac-UMI XR, tap "Reconnect", and the status changes to "Connected" (see [The app's screen](#pico-toolkit-ui)).
 
@@ -163,7 +166,7 @@ With the headset on, open XTac-UMI XR from the Library. On first launch it asks 
 
 === "Developer Kit"
 
-    The screen has only three items: Status, Resolution and Reconnect. There is no PC IP to enter: once the [wired shared network](#pico-network) is up, the app finds the XenseVR PC Service on the host by itself, but you have to tap "Reconnect" to connect. Opening the app does not connect it.
+    The screen has only three items: Status, Resolution and Reconnect. There is no PC IP to enter: once the [wired shared network](#pico-network) is up, the app finds the XTac-UMI XR PC Service on the host by itself, but you have to tap "Reconnect" to connect. Opening the app does not connect it.
 
     ![Status not connected; tap "Reconnect"](../assets/pico4/app-step2-disconnected.webp){ width="420" }
 

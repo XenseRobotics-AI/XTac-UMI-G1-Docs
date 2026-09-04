@@ -356,7 +356,7 @@ lerobot-record \
 
 Here `left_` / `right_` means the headset's left / right eye, not the arms (on a bimanual rig only `{side}_wrist` and `{side}_tcp.*` are per arm). Two single-gripper processes that both enable the head camera get the same stream.
 
-Prerequisites: XenseVR PC Service ≥ v0.2.0, older versions do not forward the camera frames (see [version baseline](versions.md#required)); the headset app is streaming. The camera and the tracker share one SDK connection, so the headset must be connected to the [PC Service](host-setup.md#35); turning one off does not disconnect the other.
+Prerequisites: XTac-UMI XR PC Service ≥ v0.2.0, older versions do not forward the camera frames (see [version baseline](versions.md#required)); the headset app is streaming. The camera and the tracker share one SDK connection, so the headset must be connected to the [PC Service](host-setup.md#35); turning one off does not disconnect the other.
 
 !!! warning "The headset's \"Resolution\" and `--robot.head_camera_width/_height` must agree"
     Only `640x480` (default), `1024x768` and `1280x960` are accepted, one for each setting the headset app's "Resolution" offers. The size is decided by the XTac-UMI XR UI (default `640`, which is also the recommended setting); the command-line flags only declare what you expect. Anything else is an error, and a first frame whose size disagrees with the config also fails at connect; nothing is silently resampled (that would change the recorded field of view). All three are 4:3, matching the sensor (the PICO camera API's per-frame cap of 2328x1748 is also 4:3), so asking for 16:9 only gets you a crop or a stretch. Default meets default, so nothing to pass; raise the headset's setting and both flags have to follow:

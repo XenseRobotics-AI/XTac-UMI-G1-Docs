@@ -22,7 +22,7 @@
 | **GSPS** | 视触觉传感器(左右指各一),序列号 `GSPS01...` |
 | **XC** | 腕部 UVC 相机,序列号 `XC...` |
 | **XTac-UMI XR** | 装在 Pico4 头显上的 VR 客户端 APP,把头显与追踪器位姿送到采集单元,启动瞬间建立世界坐标系;见 [Pico4 头显与追踪器配置](pico4.md) |
-| **XenseVR PC Service / 运行时** | 接收头显位姿的服务:PC 版是数采主机上的守护进程,要手动启动;背包版内置在 Collector 里 |
+| **XTac-UMI XR PC Service / 运行时** | 接收头显位姿的服务:PC 版是数采主机上的守护进程,要手动启动;背包版内置在 Collector 里 |
 | **tcp** | Tool Center Point,末端执行器位姿(`tcp.x/y/z` + 6D 旋转 `r1..r6`),坐标系见[坐标系](coordinates.md) |
 | **6D rotation** | 旋转矩阵 R(世界 ← 本体)的**前两列**:`r1..r3` = 第一列 = 本体 X 轴在世界系下的方向,`r4..r6` = 第二列 = Y 轴;第三列为叉积,可算回 → [约定详解](../pc/recording.md#53) |
 | **shifted-frame** | 移位帧配对:t-1 观测配 t 动作 |

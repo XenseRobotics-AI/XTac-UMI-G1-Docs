@@ -40,7 +40,7 @@ The two paths produce the same collection environment; pick one and follow it th
 
 Default to Mamba: it puts no extra demand on the graphics driver, editing the collection program is easy, and the commands on the following pages are written for this path. Choose Docker when you already have the NVIDIA driver and would rather not build an environment yourself.
 
-Both paths need internet access: Mamba fetches conda-forge and PyPI packages, clones the GitHub repo and its submodules and downloads the XenseVR PC Service `.deb`; Docker installs Docker Engine and the NVIDIA Container Toolkit and pulls the image. On an offline machine Mamba does not work at all, and Docker only works from a `.tar` delivery bundle. On a restricted network set up a proxy first; the Docker script accepts `XENSE_PROXY_URL`.
+Both paths need internet access: Mamba fetches conda-forge and PyPI packages, clones the GitHub repo and its submodules and downloads the XTac-UMI XR PC Service `.deb`; Docker installs Docker Engine and the NVIDIA Container Toolkit and pulls the image. On an offline machine Mamba does not work at all, and Docker only works from a `.tar` delivery bundle. On a restricted network set up a proxy first; the Docker script accepts `XENSE_PROXY_URL`.
 
 === "Mamba (from source)"
 
@@ -91,7 +91,7 @@ Both paths need internet access: Mamba fetches conda-forge and PyPI packages, cl
     git submodule update --init --recursive --progress
     ```
 
-    There is only one submodule, [`third_party/taccap-gripper`](https://github.com/XenseRobotics-AI/TacCap-Gripper), which installs the package `xense.taccap` (the tactile gripper SDK). `xensesdk` (the visuotactile sensor SDK) is installed automatically by `setup_env.sh --install`. The Python bindings of `xensevr_pc_service_sdk` (Pico4) live in the main repo, and the C SDK they link against (`PXREARobotSDK.h` + `libPXREARobotSDK.so`) comes out of the [XenseVR PC Service `.deb`](#24) installed in the next step; from now on that C SDK is updated through a new `.deb` release, not by re-running `--install`.
+    There is only one submodule, [`third_party/taccap-gripper`](https://github.com/XenseRobotics-AI/TacCap-Gripper), which installs the package `xense.taccap` (the tactile gripper SDK). `xensesdk` (the visuotactile sensor SDK) is installed automatically by `setup_env.sh --install`. The Python bindings of `xensevr_pc_service_sdk` (Pico4) live in the main repo, and the C SDK they link against (`PXREARobotSDK.h` + `libPXREARobotSDK.so`) comes out of the [XTac-UMI XR PC Service `.deb`](#24) installed in the next step; from now on that C SDK is updated through a new `.deb` release, not by re-running `--install`.
 
     !!! warning "Rebuild `xense.taccap` after updating the submodule"
         The `taccap-gripper` Python package ships a compiled build artefact. `git submodule update` only updates the files and does not rebuild, after which `import xense.taccap` fails with an error like `AttributeError: module 'xense.taccap._taccap_native' has no attribute 'GripperAutoCalConfig'`. After pulling an update that touches `cpp/` or `python/bindings/`, rebuild (no sudo needed), or just run `bash setup_env.sh --install`:
@@ -118,9 +118,9 @@ Both paths need internet access: Mamba fetches conda-forge and PyPI packages, cl
     ./setup_env.sh --install
     ```
 
-    This step updates the environment from `conda_environment.yaml`, installs the main package from `pyproject.toml`, installs `xensesdk` and the XenseVR PC Service daemon, then builds `xensevr_pc_service_sdk` (Pico4, linked against the C SDK from the `.deb`) and `xense.taccap` (gripper, from the submodule).
+    This step updates the environment from `conda_environment.yaml`, installs the main package from `pyproject.toml`, installs `xensesdk` and the XTac-UMI XR PC Service daemon, then builds `xensevr_pc_service_sdk` (Pico4, linked against the C SDK from the `.deb`) and `xense.taccap` (gripper, from the submodule).
 
-    XenseVR PC Service is a `.deb` of about 110 MB. The script downloads the package for the current architecture from the [v0.2.1 release](https://github.com/XenseRobotics-AI/XenseVR-PC-Service/releases/tag/v0.2.1) (`$XENSEVR_DEB_URL` overrides the download URL) and installs it with `sudo dpkg -i` into `/opt/apps/roboticsservice`; when the same version is already installed it skips, and a partial download is reused. The C SDK the Pico4 bindings link against comes from this package, so a failed download stops `--install`; for an offline or patched package, point `$XENSEVR_DEB` at a local file. The baseline is v0.2.1 because it rebuilt the C SDK; v0.2.0 would build the Pico4 bindings against the old SDK. The [headset stereo view and head pose](recording.md#56) need PC Service ≥ v0.2.0; the tracker is unaffected.
+    XTac-UMI XR PC Service is a `.deb` of about 110 MB. The script downloads the package for the current architecture from the [v0.2.1 release](https://github.com/XenseRobotics-AI/XenseVR-PC-Service/releases/tag/v0.2.1) (`$XENSEVR_DEB_URL` overrides the download URL) and installs it with `sudo dpkg -i` into `/opt/apps/roboticsservice`; when the same version is already installed it skips, and a partial download is reused. The C SDK the Pico4 bindings link against comes from this package, so a failed download stops `--install`; for an offline or patched package, point `$XENSEVR_DEB` at a local file. The baseline is v0.2.1 because it rebuilt the C SDK; v0.2.0 would build the Pico4 bindings against the old SDK. The [headset stereo view and head pose](recording.md#56) need PC Service ≥ v0.2.0; the tracker is unaffected.
 
     ### Verify the install {#25}
 
@@ -156,7 +156,7 @@ Both paths need internet access: Mamba fetches conda-forge and PyPI packages, cl
 
     ### Image contents and host requirements {#docker}
 
-    The image already contains the full `xense-taccap` environment, the CUDA user-space libraries, the collection program and the three hardware SDKs (XenseSDK, TacCap-Gripper, the Pico4 bindings); the container starts XenseVR PC Service on launch, and no submodules or host environment are needed. So that tactile sensors, wrist cameras, the gripper serial port and the Pico4 can be hot-plugged mid-collection, the container runs in **privileged mode** and shares the host's network and IPC. Only run it on a data-collection host you trust.
+    The image already contains the full `xense-taccap` environment, the CUDA user-space libraries, the collection program and the three hardware SDKs (XenseSDK, TacCap-Gripper, the Pico4 bindings); the container starts XTac-UMI XR PC Service on launch, and no submodules or host environment are needed. So that tactile sensors, wrist cameras, the gripper serial port and the Pico4 can be hot-plugged mid-collection, the container runs in **privileged mode** and shares the host's network and IPC. Only run it on a data-collection host you trust.
 
     Host requirements: Ubuntu 22.04 / 24.04 **amd64**, **NVIDIA driver ≥ 570.144** (check with `nvidia-smi --query-gpu=driver_version --format=csv,noheader`). The script will not install or upgrade the GPU driver for you (that depends on the card, Secure Boot and a reboot) and stops if the requirement is not met; Docker Engine, the Compose plugin and the NVIDIA Container Toolkit are installed automatically if absent.
 
@@ -344,7 +344,7 @@ Both paths need internet access: Mamba fetches conda-forge and PyPI packages, cl
     !!! warning "Do not change `runtime: nvidia` in `compose.yaml` to `gpus: all`"
         `gpus: all` only requests compute + utility: the container runs CUDA and `nvidia-smi` works, but NVIDIA's Vulkan ICD is not injected and Rerun fails with `WGPU error: Failed to create surface for any enabled backend`. `runtime: nvidia` requires the NVIDIA runtime to be registered with Docker (`install_customer.sh` does this); if it is not, Compose fails with `Unknown runtime specified nvidia`, see [Troubleshooting](troubleshooting.md#docker).
 
-    When you only process data and no Pico4 is attached, you can skip starting XenseVR PC Service; its log is at `/tmp/xensevr-service.log` inside the container:
+    When you only process data and no Pico4 is attached, you can skip starting XTac-UMI XR PC Service; its log is at `/tmp/xensevr-service.log` inside the container:
 
     ```bash
     START_XENSEVR_SERVICE=0 docker compose run --rm xense-taccap

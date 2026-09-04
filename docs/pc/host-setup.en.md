@@ -1,6 +1,6 @@
 # Host setup
 
-A gripper being listed is not the same as it being openable. This page covers the two one-off host-side settings (serial permissions and ModemManager), explains how devices are assigned to left and right by serial number, and starts the XenseVR PC Service; after that you can move on to calibration and collection. The headset and trackers are set up in [Pico4 headset and trackers](../common/pico4.md), shared by both editions.
+A gripper being listed is not the same as it being openable. This page covers the two one-off host-side settings (serial permissions and ModemManager), explains how devices are assigned to left and right by serial number, and starts the XTac-UMI XR PC Service; after that you can move on to calibration and collection. The headset and trackers are set up in [Pico4 headset and trackers](../common/pico4.md), shared by both editions.
 
 ## Serial permissions (dialout) {#31}
 
@@ -100,11 +100,11 @@ Each `480M` `root_hub` line is one budget; count the cameras under each. Two bus
 
 ## Pico4 headset and trackers
 
-The standalone motion tracker that ships with the Pico4 Ultra Enterprise mounts on top of the gripper and provides the 6-DoF pose; XTac-UMI XR runs on the headset, and the pose reaches collection via the [XenseVR PC Service](#35) below. Unboxing and system settings, installing XTac-UMI XR, the network connection, tracker binding, tracking mode and startup alignment are shared by both editions and live in [Pico4 headset and trackers](../common/pico4.md). On a factory-configured headset start at [Network connection](../common/pico4.md#pico-network); before every session you only need to plug in the USB, short-press the tracker's power button until the blue light comes on, [tap "Reconnect"](../common/pico4.md#pico-toolkit-ui) and do the [startup alignment](../common/pico4.md#pico-frame).
+The standalone motion tracker that ships with the Pico4 Ultra Enterprise mounts on top of the gripper and provides the 6-DoF pose; XTac-UMI XR runs on the headset, and the pose reaches collection via the [XTac-UMI XR PC Service](#35) below. Unboxing and system settings, installing XTac-UMI XR, the network connection, tracker binding, tracking mode and startup alignment are shared by both editions and live in [Pico4 headset and trackers](../common/pico4.md). On a factory-configured headset start at [Network connection](../common/pico4.md#pico-network); before every session you only need to plug in the USB, short-press the tracker's power button until the blue light comes on, [tap "Reconnect"](../common/pico4.md#pico-toolkit-ui) and do the [startup alignment](../common/pico4.md#pico-frame).
 
-## Start the XenseVR PC Service {#35}
+## Start the XTac-UMI XR PC Service {#35}
 
-The tracker talks to the host's XenseVR PC Service (RoboticsService) daemon, which handles device discovery, status monitoring and live tracking-data distribution. Collection reads poses from it. The [Docker image](install.md#docker) container launches it automatically on start; when you only work on data and do not need the tracker, turn it off with `START_XENSEVR_SERVICE=0`.
+The tracker talks to the host's XTac-UMI XR PC Service (RoboticsService) daemon, which handles device discovery, status monitoring and live tracking-data distribution. Collection reads poses from it. The [Docker image](install.md#docker) container launches it automatically on start; when you only work on data and do not need the tracker, turn it off with `START_XENSEVR_SERVICE=0`.
 
 ```bash
 /opt/apps/roboticsservice/runService.sh

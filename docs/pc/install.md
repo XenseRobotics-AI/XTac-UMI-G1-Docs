@@ -40,7 +40,7 @@
 
 默认走 Mamba:对显卡驱动没有额外要求,改采集程序也方便,后续各页命令都按这条路径书写;有 NVIDIA 驱动又不想自己建环境时选 Docker。
 
-两条路径都要能访问外网:Mamba 要拉 conda-forge 与 PyPI 包、克隆 GitHub 仓库与子模块、下载 XenseVR PC Service 的 `.deb`;Docker 要装 Docker Engine 与 NVIDIA Container Toolkit 并拉镜像。离线机器 Mamba 走不通,Docker 只能靠 `.tar` 交付包。受限网络先配好代理,Docker 脚本支持 `XENSE_PROXY_URL`。
+两条路径都要能访问外网:Mamba 要拉 conda-forge 与 PyPI 包、克隆 GitHub 仓库与子模块、下载 XTac-UMI XR PC Service 的 `.deb`;Docker 要装 Docker Engine 与 NVIDIA Container Toolkit 并拉镜像。离线机器 Mamba 走不通,Docker 只能靠 `.tar` 交付包。受限网络先配好代理,Docker 脚本支持 `XENSE_PROXY_URL`。
 
 === "Mamba 源码安装"
 
@@ -91,7 +91,7 @@
     git submodule update --init --recursive --progress
     ```
 
-    子模块只有一个:[`third_party/taccap-gripper`](https://github.com/XenseRobotics-AI/TacCap-Gripper),装出来的包是 `xense.taccap`(触觉夹爪 SDK)。`xensesdk`(视触觉传感器 SDK)由 `setup_env.sh --install` 自动安装;`xensevr_pc_service_sdk`(Pico4)的 Python 绑定在主仓库里,要链接的 C SDK(`PXREARobotSDK.h` + `libPXREARobotSDK.so`)取自下一步安装的 [XenseVR PC Service `.deb`](#24),这个 C SDK 今后随新版 `.deb` 更新,不是重跑 `--install`。
+    子模块只有一个:[`third_party/taccap-gripper`](https://github.com/XenseRobotics-AI/TacCap-Gripper),装出来的包是 `xense.taccap`(触觉夹爪 SDK)。`xensesdk`(视触觉传感器 SDK)由 `setup_env.sh --install` 自动安装;`xensevr_pc_service_sdk`(Pico4)的 Python 绑定在主仓库里,要链接的 C SDK(`PXREARobotSDK.h` + `libPXREARobotSDK.so`)取自下一步安装的 [XTac-UMI XR PC Service `.deb`](#24),这个 C SDK 今后随新版 `.deb` 更新,不是重跑 `--install`。
 
     !!! warning "更新子模块后必须重新编译 `xense.taccap`"
         `taccap-gripper` 的 Python 包带一份编译产物,`git submodule update` 只更新文件不重新编译,之后 `import xense.taccap` 会报 `AttributeError: module 'xense.taccap._taccap_native' has no attribute 'GripperAutoCalConfig'` 一类错误。拉取含 `cpp/` 或 `python/bindings/` 改动的更新后重新构建(不需要 sudo),或直接 `bash setup_env.sh --install`:
@@ -118,9 +118,9 @@
     ./setup_env.sh --install
     ```
 
-    这一步用 `conda_environment.yaml` 更新环境,从 `pyproject.toml` 装主包,装 `xensesdk` 与 XenseVR PC Service 守护进程,再编译 `xensevr_pc_service_sdk`(Pico4,链接 `.deb` 里的 C SDK)与 `xense.taccap`(夹爪,来自子模块)。
+    这一步用 `conda_environment.yaml` 更新环境,从 `pyproject.toml` 装主包,装 `xensesdk` 与 XTac-UMI XR PC Service 守护进程,再编译 `xensevr_pc_service_sdk`(Pico4,链接 `.deb` 里的 C SDK)与 `xense.taccap`(夹爪,来自子模块)。
 
-    XenseVR PC Service 是约 110 MB 的 `.deb`,脚本从 [v0.2.1 release](https://github.com/XenseRobotics-AI/XenseVR-PC-Service/releases/tag/v0.2.1) 下载当前架构的包(`$XENSEVR_DEB_URL` 可覆盖下载地址),再 `sudo dpkg -i` 装到 `/opt/apps/roboticsservice`;已装同一版本时跳过,下了一半的文件也复用。Pico4 绑定要链接的 C SDK 就在这个包里,下载失败时 `--install` 会直接停下,离线或打过补丁的包用 `$XENSEVR_DEB` 指向本地文件。基线定在 v0.2.1 是因为它重新编译过 C SDK,v0.2.0 会拿旧 SDK 编 Pico4 绑定;[头显双目与头部位姿](recording.md#56)需要 PC Service ≥ v0.2.0,追踪器不受影响。
+    XTac-UMI XR PC Service 是约 110 MB 的 `.deb`,脚本从 [v0.2.1 release](https://github.com/XenseRobotics-AI/XenseVR-PC-Service/releases/tag/v0.2.1) 下载当前架构的包(`$XENSEVR_DEB_URL` 可覆盖下载地址),再 `sudo dpkg -i` 装到 `/opt/apps/roboticsservice`;已装同一版本时跳过,下了一半的文件也复用。Pico4 绑定要链接的 C SDK 就在这个包里,下载失败时 `--install` 会直接停下,离线或打过补丁的包用 `$XENSEVR_DEB` 指向本地文件。基线定在 v0.2.1 是因为它重新编译过 C SDK,v0.2.0 会拿旧 SDK 编 Pico4 绑定;[头显双目与头部位姿](recording.md#56)需要 PC Service ≥ v0.2.0,追踪器不受影响。
 
     ### 验证安装 {#25}
 
@@ -156,7 +156,7 @@
 
     ### 镜像内容与主机要求 {#docker}
 
-    镜像已包含完整的 `xense-taccap` 环境、CUDA 用户态库、采集程序和三个硬件 SDK(XenseSDK、TacCap-Gripper、Pico4 绑定),容器启动时自动拉起 XenseVR PC Service,不需要子模块或主机环境。为支持采集中热插拔触觉传感器、腕相机、夹爪串口和 Pico4,容器以**特权模式**运行并共享主机网络与 IPC,只在信任的采集主机上运行。
+    镜像已包含完整的 `xense-taccap` 环境、CUDA 用户态库、采集程序和三个硬件 SDK(XenseSDK、TacCap-Gripper、Pico4 绑定),容器启动时自动拉起 XTac-UMI XR PC Service,不需要子模块或主机环境。为支持采集中热插拔触觉传感器、腕相机、夹爪串口和 Pico4,容器以**特权模式**运行并共享主机网络与 IPC,只在信任的采集主机上运行。
 
     主机要求:Ubuntu 22.04 / 24.04 **amd64**,**NVIDIA 驱动 ≥ 570.144**(`nvidia-smi --query-gpu=driver_version --format=csv,noheader` 可查)。脚本不会替你装或升级显卡驱动(涉及显卡型号、Secure Boot 和重启),不满足会直接停下;Docker Engine、Compose 插件和 NVIDIA Container Toolkit 缺了则自动装。
 
@@ -344,7 +344,7 @@
     !!! warning "别把 `compose.yaml` 里的 `runtime: nvidia` 改成 `gpus: all`"
         `gpus: all` 只申请到 compute + utility,容器能跑 CUDA、`nvidia-smi` 也正常,但 NVIDIA 的 Vulkan ICD 不会注入,Rerun 报 `WGPU error: Failed to create surface for any enabled backend`。`runtime: nvidia` 要求 NVIDIA runtime 已注册进 Docker(`install_customer.sh` 会做),没注册时 Compose 报 `Unknown runtime specified nvidia`,见[故障排查](troubleshooting.md#docker)。
 
-    只处理数据、不接 Pico4 时可以不启动 XenseVR PC Service,服务日志在容器内 `/tmp/xensevr-service.log`:
+    只处理数据、不接 Pico4 时可以不启动 XTac-UMI XR PC Service,服务日志在容器内 `/tmp/xensevr-service.log`:
 
     ```bash
     START_XENSEVR_SERVICE=0 docker compose run --rm xense-taccap

@@ -192,7 +192,7 @@
 ## Pico4 追踪器与位姿
 
 ??? failure "没有位姿 / 追踪器连不上 / 位姿不稳"
-    **原因**:电脑 WiFi 与 Pico4 Ultra 企业版有线共享网络冲突(最常见);或 XenseVR PC Service、XTac-UMI XR 未启动,追踪器未配对或没电。
+    **原因**:电脑 WiFi 与 Pico4 Ultra 企业版有线共享网络冲突(最常见);或 XTac-UMI XR PC Service、XTac-UMI XR 未启动,追踪器未配对或没电。
 
     **解决**:先关闭数采电脑 WiFi,只保留有线共享网络(见[网络连接](../common/pico4.md#pico-network));再按[上电顺序](index.md#power-on)逐项确认;启动服务 `/opt/apps/roboticsservice/runService.sh`;必要时用 `python -m lerobot.robots.taccap_gripper.check_tracker` 自检。
 
@@ -219,7 +219,7 @@
 ??? failure "头显里显示「已连接」,PC 端却收不到任何位姿"
     **原因**:「已连接」只说明 App 连到了服务;主机侧服务没起来,或追踪器没开机、没绑定。
 
-    **解决**:确认主机已启动 [XenseVR PC Service](host-setup.md#35);再用 `/opt/apps/roboticsservice/` 的 `ConsoleDemo` 或 `python -m lerobot.robots.taccap_gripper.check_tracker` 看能否读到带 `sn` 的位姿,读不到就回[绑定](../common/pico4.md#pico-tracker-bind)确认两枚追踪器都已开机并「已连接」。
+    **解决**:确认主机已启动 [XTac-UMI XR PC Service](host-setup.md#35);再用 `/opt/apps/roboticsservice/` 的 `ConsoleDemo` 或 `python -m lerobot.robots.taccap_gripper.check_tracker` 看能否读到带 `sn` 的位姿,读不到就回[绑定](../common/pico4.md#pico-tracker-bind)确认两枚追踪器都已开机并「已连接」。
 
 ??? failure "追踪器侧别匹配错 / PC 服务枚举不稳"
     **原因**:序列号不合规,或枚举抖动。

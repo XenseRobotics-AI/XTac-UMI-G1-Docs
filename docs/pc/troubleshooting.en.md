@@ -192,7 +192,7 @@ First note down the device number, how it is connected, the indicator light stat
 ## Pico4 tracker and pose
 
 ??? failure "No pose / the tracker will not connect / the pose is unstable"
-    **Cause:** the computer's WiFi conflicting with the Pico4 Ultra Enterprise wired network sharing (most common); or XenseVR PC Service or XTac-UMI XR not started, or the tracker unpaired or out of charge.
+    **Cause:** the computer's WiFi conflicting with the Pico4 Ultra Enterprise wired network sharing (most common); or XTac-UMI XR PC Service or XTac-UMI XR not started, or the tracker unpaired or out of charge.
 
     **Fix:** turn the data-collection host's WiFi off first and leave only the wired network sharing (see [Network connection](../common/pico4.md#pico-network)); then walk through the [Power-on sequence](index.md#power-on) item by item; start the service with `/opt/apps/roboticsservice/runService.sh`; if needed, self-check with `python -m lerobot.robots.taccap_gripper.check_tracker`.
 
@@ -219,7 +219,7 @@ First note down the device number, how it is connected, the indicator light stat
 ??? failure "The headset says \"connected\" but the PC receives no pose at all"
     **Cause:** "connected" only means the app reached the service; the host-side service is not running, or the tracker is off or unbound.
 
-    **Fix:** confirm the host has started [XenseVR PC Service](host-setup.md#35); then use `ConsoleDemo` in `/opt/apps/roboticsservice/` or `python -m lerobot.robots.taccap_gripper.check_tracker` to see whether a pose with an `sn` comes through. If not, go back to [binding](../common/pico4.md#pico-tracker-bind) and confirm both trackers are powered on and show "connected".
+    **Fix:** confirm the host has started [XTac-UMI XR PC Service](host-setup.md#35); then use `ConsoleDemo` in `/opt/apps/roboticsservice/` or `python -m lerobot.robots.taccap_gripper.check_tracker` to see whether a pose with an `sn` comes through. If not, go back to [binding](../common/pico4.md#pico-tracker-bind) and confirm both trackers are powered on and show "connected".
 
 ??? failure "The tracker is matched to the wrong side / PC Service enumeration is unstable"
     **Cause:** a non-conforming serial number, or jitter in enumeration.

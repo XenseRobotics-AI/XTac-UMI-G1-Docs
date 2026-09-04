@@ -1,6 +1,6 @@
 # 主机配置
 
-夹爪能被列出不等于能被打开。本页做完主机侧两项一次性配置(串口权限、ModemManager),讲清设备按序列号自动分左右,再启动 XenseVR PC Service,之后就能进入标定与采集;头显与追踪器的配置两种形态共用,在[Pico4 头显与追踪器](../common/pico4.md)。
+夹爪能被列出不等于能被打开。本页做完主机侧两项一次性配置(串口权限、ModemManager),讲清设备按序列号自动分左右,再启动 XTac-UMI XR PC Service,之后就能进入标定与采集;头显与追踪器的配置两种形态共用,在[Pico4 头显与追踪器](../common/pico4.md)。
 
 ## 串口权限(dialout) {#31}
 
@@ -100,15 +100,17 @@ lsusb -t
 
 ## Pico4 头显与追踪器
 
-Pico4 Ultra 企业版配套的独立运动追踪器装在夹爪顶部提供 6-DoF 位姿,头显上运行 XTac-UMI XR,位姿经下面的 [XenseVR PC Service](#35) 送到采集单元。头显的开箱与系统设置、安装 XTac-UMI XR、网络连接、追踪器绑定、追踪模式与启动对齐两种形态共用,写在[Pico4 头显与追踪器](../common/pico4.md);出厂已配置的头显直接从[网络连接](../common/pico4.md#pico-network)开始,每次采集前只需接 USB、短按追踪器电源键到蓝灯亮、[点「重连」](../common/pico4.md#pico-toolkit-ui)、[启动对齐](../common/pico4.md#pico-frame)。
+Pico4 Ultra 企业版配套的独立运动追踪器装在夹爪顶部提供 6-DoF 位姿,头显上运行 XTac-UMI XR,位姿经下面的 [XTac-UMI XR PC Service](#35) 送到采集单元。头显的开箱与系统设置、安装 XTac-UMI XR、网络连接、追踪器绑定、追踪模式与启动对齐两种形态共用,写在[Pico4 头显与追踪器](../common/pico4.md);出厂已配置的头显直接从[网络连接](../common/pico4.md#pico-network)开始,每次采集前只需接 USB、短按追踪器电源键到蓝灯亮、[点「重连」](../common/pico4.md#pico-toolkit-ui)、[启动对齐](../common/pico4.md#pico-frame)。
 
-## 启动 XenseVR PC Service {#35}
+## 启动 XTac-UMI XR PC Service {#35}
 
-追踪器与主机的 XenseVR PC Service(RoboticsService)守护进程通信,它负责设备发现、状态监控与实时追踪数据分发,采集单元从它读位姿。[Docker 交付镜像](install.md#docker)的容器启动时会自动拉起它;只处理数据、不用追踪器时可用 `START_XENSEVR_SERVICE=0` 关掉。
+追踪器与主机的 XTac-UMI XR PC Service(RoboticsService)守护进程通信,它负责设备发现、状态监控与实时追踪数据分发,采集单元从它读位姿。[Docker 交付镜像](install.md#docker)的容器启动时会自动拉起它;只处理数据、不用追踪器时可用 `START_XENSEVR_SERVICE=0` 关掉。
 
 ```bash
 /opt/apps/roboticsservice/runService.sh
 ```
+
+安装包与代码里仍是旧名 XenseVR:`.deb` 叫 `XenseVR-PC-Service_<版本>_amd64.deb`,装到 `/opt/apps/roboticsservice/`,Python 包是 `xensevr_pc_service_sdk`,环境变量是 `XENSEVR_DEB_URL` 等。文档按产品名写 XTac-UMI XR PC Service,按文件名操作时以上面这些为准。
 
 同一时间只能运行一个实例,重复启动会失败或冲突。
 

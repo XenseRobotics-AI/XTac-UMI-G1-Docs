@@ -28,7 +28,7 @@ XTac-UMI 有两种配置:**背包版**(XTac-UMI 数采背包)和 **PC 版**(XTac
 |---|---|---|
 | 计算节点 | 随机附带的 RK3588 数采背包,eMMC 系统盘 + NVMe 数据盘 | 用户自备 x86 工作站,Mamba 源码安装或 Docker 镜像;正式采集要求 NVIDIA GPU,Mamba 路径没有 GPU 也能装,只能降级录制 |
 | 操作界面 | 浏览器控制台:实时监控 / 项目 / 回放 / 系统;平板、手机、PC 都只当浏览器 | 终端命令 + Rerun 预览窗口 |
-| 接入方式 | 夹爪接 `UMI-L` / `UMI-R`;头显接 `PICO` 口走 USB 网络,或 WiFi;操作端连背包热点或局域网 | 夹爪 USB 直连主机;头显用 Type-C 线直连主机走有线共享网络,或 WiFi;主机侧跑 XenseVR PC Service |
+| 接入方式 | 夹爪接 `UMI-L` / `UMI-R`;头显接 `PICO` 口走 USB 网络(默认有线,WiFi 仅供临时调试);操作端连背包热点或局域网 | 夹爪 USB 直连主机;头显用 Type-C 线直连主机走有线共享网络(默认有线,WiFi 仅供临时调试);主机侧跑 XTac-UMI XR PC Service |
 | 录制控制 | 右爪长按开始、左爪长按停止、左爪双击删除上一条;灯语反馈;控制台也可操作 | `lerobot-record` 命令行参数,`--robot.id` 必填 |
 | 采集模式 | 双爪 · 双爪 + 头显 · 单爪 · 单爪 + 头显 · 仅头显 | 单 / 双夹爪,可选头显相机 |
 | 原始数据 | MCAP(每条 episode 一个文件)+ H.264;LeRobot 是离线导出 | LeRobotDataset v3 直接落盘 |

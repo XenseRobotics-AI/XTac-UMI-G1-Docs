@@ -356,7 +356,7 @@ lerobot-record \
 
 这里的 `left_` / `right_` 指头显的左眼 / 右眼,不是左右手(双夹爪的 `{side}_wrist`、`{side}_tcp.*` 才按手臂分);两个单夹爪进程同时开头显相机,拿到的是同一路画面。
 
-前置条件:XenseVR PC Service ≥ v0.2.0,更低版本不转发相机画面(见[版本基线](versions.md#required));头显 APP 正在推流,相机和追踪器共用同一条 SDK 连接,头显必须已连上 [PC Service](host-setup.md#35),关掉一个不会断开另一个。
+前置条件:XTac-UMI XR PC Service ≥ v0.2.0,更低版本不转发相机画面(见[版本基线](versions.md#required));头显 APP 正在推流,相机和追踪器共用同一条 SDK 连接,头显必须已连上 [PC Service](host-setup.md#35),关掉一个不会断开另一个。
 
 !!! warning "头显里的「分辨率」和 `--robot.head_camera_width/_height` 必须一致"
     只接受 `640x480`(默认)、`1024x768`、`1280x960` 三档,与头显 APP 的「分辨率」一一对应;尺寸由 XTac-UMI XR 界面决定(默认 `640`,也是推荐档位),命令行参数只是声明预期。填别的直接报错,首帧尺寸与配置不一致也在 connect 时报错,不会悄悄重采样(那会改掉记录下来的视场角)。三档都是 4:3,与传感器一致(PICO 相机接口单帧上限 2328x1748 也是 4:3),按 16:9 要画面只会得到裁剪或拉伸。默认对默认不用加参数;在头显里调高后命令行两处一起改:

@@ -128,7 +128,7 @@ python -m lerobot.robots.taccap_gripper.check_tracker --side right
 
 支点检查不需额外硬件:把两指中点抵在一个固定点上,握着手柄尽量多变换姿态摆动。`ee xyz` 应基本不动而 `raw xyz` 大幅摆动,看到的漂移量即该变换的误差。左右都要测;左侧镜像方向错了,表现为 `ee` 摆动幅度约为应有的两倍。
 
-要在 Rerun 单视图里看双夹爪 IMU/编码器和追踪器 6-DoF 位姿,用 SDK 示例 `rerun_dual_with_tracker.py`(需 `xensevr_pc_service_sdk` 与 XenseVR PC Service 运行)。它不走 LeRobot 的 SN 自动匹配,必须显式传 SN;SN 属于具体机台,换机要换成你那台报出的,并逐个摇晃夹爪验证左右:
+要在 Rerun 单视图里看双夹爪 IMU/编码器和追踪器 6-DoF 位姿,用 SDK 示例 `rerun_dual_with_tracker.py`(需 `xensevr_pc_service_sdk` 与 XTac-UMI XR PC Service 运行)。它不走 LeRobot 的 SN 自动匹配,必须显式传 SN;SN 属于具体机台,换机要换成你那台报出的,并逐个摇晃夹爪验证左右:
 
 ```bash
 python third_party/taccap-gripper/python/examples/rerun_dual_with_tracker.py \
