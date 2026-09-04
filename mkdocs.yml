@@ -8,9 +8,9 @@
 
 site_name: XTac-UMI 文档
 site_description: XTac-UMI 手持式多模态数据采集系统:XTac-UMI G1 视触觉夹爪、数采背包与 PC 开发套件的产品介绍与使用手册
-site_author: XenseRobotics
+site_author: 千觉机器人
 site_url: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/
-copyright: 文档版本 v0.0.6 &nbsp;·&nbsp; Copyright &copy; 2026 XenseRobotics Co., Ltd.
+copyright: Copyright &copy; 2026 千觉机器人科技(上海)有限公司
 
 # 不打包进站点的 docs 内文件(素材说明)
 exclude_docs: |
@@ -95,6 +95,8 @@ plugins:
           name: English
           build: true
           site_name: "XTac-UMI Docs"
+          site_author: XenseRobotics
+          copyright: Copyright &copy; 2026 XenseRobotics Co., Ltd.
           nav_translations:
             产品: Product
             首页: Home
