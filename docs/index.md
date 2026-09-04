@@ -1,18 +1,23 @@
 ---
-template: home.html
 hide:
   - navigation
   - toc
-hero_eyebrow: "XTAC-UMI · 手持式多模态数据采集系统"
-hero_title: "让机器人数据集拥有触觉"
-hero_sub: "双夹爪视触觉、腕部鱼眼、头显第一视角与 6DoF 位姿同步记录。一次手持示教,直接得到可训练的数据集。"
-hero_primary: "选择配置"
-hero_primary_href: "product/editions.md"
-hero_secondary: "看看数据长什么样"
-hero_secondary_href: "pc/dataset.md#61"
-hero_image: "assets/product/g1-render-plate.webp"
-hero_image_alt: "XTac-UMI G1 视触觉夹爪"
 ---
+
+<div class="tc-hero" markdown>
+
+<span class="tc-eyebrow">XTac-UMI · 手持式多模态数据采集系统</span>
+
+# 让机器人数据集拥有触觉
+
+<p class="tc-sub">双夹爪视触觉、腕部鱼眼、头显第一视角与 6DoF 位姿同步记录。一次手持示教,直接得到可训练的数据集。</p>
+
+[选择配置](product/editions.md){ .md-button .md-button--primary }
+[看看数据长什么样](pc/dataset.md#61){ .md-button }
+
+![XTac-UMI G1 产品外观](assets/product/xtac-umi-g1-hero.webp){ .tc-hero-img }
+
+</div>
 
 <div class="xu-stats" markdown>
 

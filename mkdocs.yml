@@ -34,25 +34,23 @@ edit_uri: ""
 theme:
   name: material
   language: zh
-  # 首页模板 overrides/home.html(通栏首屏);其余页面不覆盖模板
-  custom_dir: overrides
-  # 千觉 wordmark,白色版给黑色页眉用;favicon 待正式方形标志
-  logo: assets/brand/logo-light.svg
+  # TODO: 正式方形标志与 favicon 到位后启用(文件放 docs/assets/brand/;千觉 wordmark 已在 logo.svg / logo-light.svg)
+  # logo: assets/brand/logo.svg
+  # favicon: assets/brand/favicon.png
   icon:
     repo: fontawesome/brands/github
-  # 品牌:黑色页眉 + Xense 黄强调,与产品(白机身、黑指衬、黄指尖)和控制台深色界面一致
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
-      primary: black
-      accent: yellow
+      primary: indigo
+      accent: indigo
       toggle:
         icon: material/weather-night
         name: 切换到暗色模式
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
-      primary: black
-      accent: yellow
+      primary: indigo
+      accent: indigo
       toggle:
         icon: material/weather-sunny
         name: 切换到亮色模式
@@ -82,7 +80,7 @@ plugins:
   - glightbox:
       # 首屏产品图不进灯箱
       skip_classes:
-        - xu-hero__img
+        - tc-hero-img
   - i18n:
       docs_structure: suffix
       fallback_to_default: true

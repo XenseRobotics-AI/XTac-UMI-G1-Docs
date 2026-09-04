@@ -1,18 +1,23 @@
 ---
-template: home.html
 hide:
   - navigation
   - toc
-hero_eyebrow: "XTac-UMI · Handheld multimodal data collection system"
-hero_title: "Give robot datasets a sense of touch"
-hero_sub: "Visuotactile sensing on both grippers, a wrist fisheye, the headset's first-person view and 6DoF pose, all recorded in sync. One handheld demonstration, one training-ready dataset."
-hero_primary: "Choose a kit"
-hero_primary_href: "product/editions.md"
-hero_secondary: "See what the data looks like"
-hero_secondary_href: "pc/dataset.md#61"
-hero_image: "assets/product/g1-render-plate.webp"
-hero_image_alt: "XTac-UMI G1 visuotactile gripper"
 ---
+
+<div class="tc-hero" markdown>
+
+<span class="tc-eyebrow">XTac-UMI · Handheld multimodal data collection system</span>
+
+# Give robot datasets a sense of touch
+
+<p class="tc-sub">Visuotactile sensing on both grippers, a wrist fisheye, the headset's first-person view and 6DoF pose, all recorded in sync. One handheld demonstration, one training-ready dataset.</p>
+
+[Choose a kit](product/editions.md){ .md-button .md-button--primary }
+[See what the data looks like](pc/dataset.md#61){ .md-button }
+
+![XTac-UMI G1 product photo](assets/product/xtac-umi-g1-hero.webp){ .tc-hero-img }
+
+</div>
 
 <div class="xu-stats" markdown>
 

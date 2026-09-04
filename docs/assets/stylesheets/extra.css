@@ -1,3 +1,41 @@
+/* ===== 首页 Hero(浅色居中,产品图在下) ===== */
+.tc-hero {
+  text-align: center;
+  padding: 2.2rem 0 1.2rem;
+}
+.tc-hero .tc-eyebrow {
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  font-size: .72rem;
+  color: var(--md-primary-fg-color);
+  font-weight: 700;
+}
+.tc-hero h1 {
+  font-weight: 800;
+  font-size: 2.1rem;
+  line-height: 1.15;
+  margin: .3rem 0 .5rem;
+}
+.tc-hero .tc-sub {
+  color: var(--md-default-fg-color--light);
+  font-size: 1.05rem;
+  max-width: 42rem;
+  margin: 0 auto 1.1rem;
+}
+.tc-hero .md-button {
+  margin: .3rem .3rem 0;
+}
+
+/* 首页 Hero 产品图 */
+.tc-hero-img {
+  display: block;
+  max-width: min(760px, 100%);
+  height: auto;
+  margin: 1.4rem auto 0;
+  border-radius: .6rem;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, .14);
+}
+
 /* 卡片网格里的图标略放大 */
 .md-typeset .grid.cards :is(.twemoji, .emojione, .gemoji) svg {
   height: 1.4rem;
@@ -16,7 +54,7 @@
   line-height: 1.5;
   letter-spacing: .01em;
 }
-/* 分组内二级章节名(环境部署 / 主机与设备配置 …)—— 明显更小、常规字重、略淡 */
+/* 分组内二级章节名 —— 明显更小、常规字重、略淡 */
 .md-nav--primary .md-nav__item--section .md-nav__list .md-nav__link {
   font-size: .75rem;
   font-weight: 400;
@@ -38,148 +76,37 @@
 }
 
 /* =====================================================================
-   产品线首页(overrides/home.html + docs/index.md),类名一律 xu- 前缀
+   首页首屏之下的段落(docs/index.md),类名一律 xu- 前缀;颜色全部取主题变量
    ===================================================================== */
 
 :root {
-  --xu-black: #0F0F10;
-  --xu-black-2: #1A1A1C;
-  --xu-yellow: #F2B705;
-  --xu-yellow-2: #FFC93A;   /* 黄色按钮悬停 */
-  --xu-slate: #3D5A80;
-  --xu-ink: #F4F2EC;        /* 深色块上的文字 */
-  --xu-ink-2: #B7B3A9;
-  --xu-ink-3: #171614;      /* 黄色按钮上的文字 */
-  --xu-line-dark: #2E2E31;  /* 深色块上的分隔线 */
-  --xu-serif: "Noto Serif SC", "Songti SC", "SimSun", serif;
-  --xu-tag-bp-bg: #FBF0CC;
+  --xu-tag-bp-bg: #FBF0CC;   /* 背包版标记:暖色,与黄色指尖呼应 */
   --xu-tag-bp-fg: #6B5100;
-  --xu-tag-pc-bg: #E3E9F1;
+  --xu-tag-pc-bg: #E3E9F1;   /* PC 版标记:冷色 */
   --xu-tag-pc-fg: #3D5A80;
 }
 [data-md-color-scheme="slate"] {
   --xu-tag-bp-bg: rgba(242, 183, 5, .16);
-  --xu-tag-bp-fg: #F2B705;
+  --xu-tag-bp-fg: #F2C43D;
   --xu-tag-pc-bg: rgba(61, 90, 128, .38);
   --xu-tag-pc-fg: #A8BEDB;
 }
 
-/* 首页大标题用衬线体(首屏 h1 与各段 h2) */
-.md-typeset .xu-hero__title,
-.md-typeset .xu-home h2 {
-  font-family: var(--xu-serif);
-  font-weight: 700;
-}
-
-/* ---- 首屏:通栏深色,两栏 ---- */
-.xu-hero {
-  background: radial-gradient(120% 90% at 85% 10%, #26241C 0%, var(--xu-black) 55%);
-  color: var(--xu-ink);
-}
-.xu-hero .md-typeset {
-  color: var(--xu-ink);
-}
-.md-typeset.xu-hero__inner {
-  display: grid;
-  grid-template-columns: 1.15fr .85fr;
-  gap: 2rem;
-  align-items: center;
-  padding: 2.8rem 1.2rem 2.6rem;
-}
-.md-typeset .xu-hero__eyebrow {
-  margin: 0 0 .7rem;
-  color: var(--xu-yellow);
-  font-size: .62rem;
-  font-weight: 500;
-  letter-spacing: .2em;
-  text-transform: uppercase;
-}
-.md-typeset .xu-hero__title {
-  margin: 0 0 .7rem;
-  color: var(--xu-ink);
-  font-size: clamp(1.8rem, 1.3rem + 1.6vw, 2.4rem);
-  line-height: 1.2;
-  text-wrap: balance;
-}
-.md-typeset .xu-hero__sub {
-  max-width: 28rem;
-  margin: 0 0 1.4rem;
-  color: var(--xu-ink-2);
-  font-size: .85rem;
-  line-height: 1.75;
-}
-.md-typeset .xu-hero__actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: .6rem;
-  margin: 0;
-}
-.md-typeset .xu-hero .md-button {
-  border-color: #4A4A4E;
-  color: var(--xu-ink);
-  font-weight: 600;
-  padding: .55em 1.4em;
-}
-.md-typeset .xu-hero .md-button:hover,
-.md-typeset .xu-hero .md-button:focus {
-  background-color: var(--xu-yellow);
-  border-color: var(--xu-yellow);
-  color: var(--xu-ink-3);
-}
-.md-typeset .xu-hero .md-button--primary {
-  background-color: var(--xu-yellow);
-  border-color: var(--xu-yellow);
-  color: var(--xu-ink-3);
-}
-.md-typeset .xu-hero .md-button--primary:hover,
-.md-typeset .xu-hero .md-button--primary:focus {
-  background-color: var(--xu-yellow-2);
-  border-color: var(--xu-yellow-2);
-}
-.md-typeset .xu-hero__img {
-  display: block;
-  justify-self: end;
-  width: 100%;
-  max-width: 16rem;
-  height: auto;
-  margin: 0;
-  border-radius: .5rem;
-}
-@media screen and (max-width: 76.1875em) {
-  .md-typeset.xu-hero__inner {
-    padding-right: .8rem;
-    padding-left: .8rem;
-  }
-}
-@media screen and (max-width: 59.9375em) {
-  .md-typeset.xu-hero__inner {
-    grid-template-columns: 1fr;
-    gap: 1.6rem;
-    padding-top: 2.2rem;
-    padding-bottom: 2rem;
-  }
-  .md-typeset .xu-hero__img {
-    justify-self: start;
-    max-width: 12rem;
-  }
-}
-
-/* ---- 数据点行:紧贴首屏,四格 / 窄屏两格 ---- */
+/* ---- 数据点行:四格 / 窄屏两格 ---- */
 .md-typeset .xu-stats {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  margin: 0 0 2.4rem;
-  border: 1px solid var(--xu-line-dark);
-  border-top: 0;
-  border-radius: 0 0 .4rem .4rem;
-  background: var(--xu-black-2);
-  color: var(--xu-ink-2);
+  margin: 1.8rem 0 2.4rem;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: .4rem;
+  background: var(--md-code-bg-color);
+  color: var(--md-default-fg-color--light);
   overflow: hidden;
 }
 .md-typeset .xu-stats > * {
   margin: 0;
   padding: .9rem 1.2rem;
-  border-right: 1px solid var(--xu-line-dark);
+  border-right: 1px solid var(--md-default-fg-color--lightest);
   font-size: .68rem;
   line-height: 1.5;
 }
@@ -189,9 +116,9 @@
 .md-typeset .xu-stats strong {
   display: block;
   margin-bottom: .1rem;
-  color: var(--xu-ink);
+  color: var(--md-default-fg-color);
   font-size: 1.05rem;
-  font-weight: 600;
+  font-weight: 700;
   font-variant-numeric: tabular-nums;
 }
 @media screen and (max-width: 44.9375em) {
@@ -202,7 +129,7 @@
     border-right: 0;
   }
   .md-typeset .xu-stats > :nth-child(-n + 2) {
-    border-bottom: 1px solid var(--xu-line-dark);
+    border-bottom: 1px solid var(--md-default-fg-color--lightest);
   }
 }
 
@@ -306,7 +233,6 @@
 
 /* 关闭动效偏好:首页元素不做过渡 */
 @media (prefers-reduced-motion: reduce) {
-  .md-typeset .xu-hero .md-button,
   .md-typeset .xu-cards .md-button,
   .md-typeset .grid.cards.xu-cards > ul > li {
     transition: none;
