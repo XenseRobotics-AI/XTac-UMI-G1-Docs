@@ -11,7 +11,7 @@
 |---|---|---|
 | `brand/` | 站点 logo(`logo.svg` 深色版、`logo-light.svg` 白色版给黑色页眉)、favicon | 主题 |
 | `product/` | 产品渲染图、背包接口与标签照片、接线图 | 首页、product/ |
-| `backpack/` | XTac-UMI Collector 控制台截图(按 0.3.9 核对;文件名沿用 Taccap-User-Doc;首页与 product/ 的控制台展示图也从这里取) | 首页、product/、backpack/ |
+| `backpack/` | XTac-UMI Collector 控制台截图(按 0.3.16 核对,其中导出、设置、系统更新几页的旧图待重截;文件名沿用 Taccap-User-Doc;首页与 product/ 的控制台展示图也从这里取) | 首页、product/、backpack/ |
 | `pico4/` | Pico4 Ultra 企业版系统与 APP 截图 | common/pico4 |
 | `hardware/` | 夹爪接口、锁紧、指示灯示意 | common/gripper、product/g1 |
 | `bringup/` `record/` `dataset/` | PC 版启动、录制、数据集截图 | pc/ |
