@@ -1,52 +1,119 @@
-name: Deploy docs to GitHub Pages
+name: Deploy docs
+
+# 站点从 gh-pages 分支发布(仓库 Settings → Pages → Source 选 gh-pages / root):
+#   main → 分支根目录   https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/
+#   dev  → dev/ 子目录  https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/
+# 两个 job 都自己用 git + rsync 写 gh-pages,好处是能精确控制删除范围:
+# main 发布时不碰 dev/,dev 发布时只动 dev/。
 
 on:
   push:
     branches:
       - main
+      - dev
     paths:
       - "docs/**"
+      - "overrides/**"
       - "mkdocs.yml"
       - "requirements.txt"
       - ".github/workflows/deploy.yml"
   workflow_dispatch:
+    inputs:
+      target:
+        description: '发布到哪里:root(生产)或 dev(预览)'
+        required: true
+        default: dev
+        type: choice
+        options: [dev, root]
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
-# 同一时间只跑一个发布,不取消进行中的
+# gh-pages 是唯一的写入目标,并发写会互相覆盖,所以串行执行;
+# 不取消进行中的那次,免得推到一半的分支状态残缺。
 concurrency:
-  group: pages
+  group: gh-pages
   cancel-in-progress: false
 
+env:
+  SITE_BASE: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs
+
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Configure Pages (auto-enable)
-        uses: actions/configure-pages@v5
-        with:
-          enablement: true
+
+      - name: 确定发布目标
+        id: target
+        run: |
+          set -euo pipefail
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+              target="${{ inputs.target }}"
+          elif [[ "${{ github.ref_name }}" == "main" ]]; then
+              target="root"
+          else
+              target="dev"
+          fi
+          if [[ "${target}" == "root" ]]; then
+              echo "subdir=" >> "${GITHUB_OUTPUT}"
+              echo "url=${SITE_BASE}/" >> "${GITHUB_OUTPUT}"
+          else
+              echo "subdir=dev" >> "${GITHUB_OUTPUT}"
+              echo "url=${SITE_BASE}/dev/" >> "${GITHUB_OUTPUT}"
+          fi
+          echo "target=${target}" >> "${GITHUB_OUTPUT}"
+          echo "发布 ${{ github.ref_name }} → ${target}"
+
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Install dependencies
-        run: pip install -r requirements.txt
-      - name: Build site
-        run: mkdocs build --strict
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: site
+          cache: pip
 
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
+      - name: 安装依赖
+        run: pip install -r requirements.txt
+
+      # 预览站要自成一体:canonical、sitemap 与英文旧地址跳转都得指向 /dev/,
+      # 否则读者会被这些链接甩回生产站,看到的还是旧内容。
+      - name: 预览站改写站点地址与站名
+        if: steps.target.outputs.target == 'dev'
+        run: |
+          set -euo pipefail
+          sed -i "s#${SITE_BASE}/#${SITE_BASE}/dev/#g" mkdocs.yml
+          sed -i "s#^site_name: .*#& (预览)#" mkdocs.yml
+          grep -m1 '^site_name:' mkdocs.yml
+          grep -m1 '^site_url:' mkdocs.yml
+
+      - name: 构建
+        run: mkdocs build --strict
+        env:
+          DISABLE_MKDOCS_2_WARNING: "true"
+
+      - name: 写入 gh-pages
+        run: |
+          set -euo pipefail
+          subdir='${{ steps.target.outputs.subdir }}'
+          git clone -q --depth 1 --branch gh-pages \
+              "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" gh-pages
+          if [[ -n "${subdir}" ]]; then
+              # 预览:只替换这一个子目录,根目录的生产站原样不动
+              mkdir -p "gh-pages/${subdir}"
+              rsync -a --delete site/ "gh-pages/${subdir}/"
+          else
+              # 生产:替换根目录下所有内容,但保留 dev/ 与 .git
+              rsync -a --delete --exclude '/dev/' --exclude '/.git/' site/ gh-pages/
+          fi
+          touch gh-pages/.nojekyll
+          cd gh-pages
+          if git diff --quiet && git diff --cached --quiet && [[ -z "$(git status --porcelain)" ]]; then
+              echo "内容无变化,跳过提交"
+              exit 0
+          fi
+          git add -A
+          git -c user.name='github-actions[bot]' \
+              -c user.email='41898282+github-actions[bot]@users.noreply.github.com' \
+              commit -q -m "deploy: ${{ github.ref_name }} → ${{ steps.target.outputs.target }} (${GITHUB_SHA::7})"
+          git push -q origin gh-pages
+
+      - name: 输出地址
+        run: echo "已发布 → ${{ steps.target.outputs.url }}" >> "${GITHUB_STEP_SUMMARY}"
