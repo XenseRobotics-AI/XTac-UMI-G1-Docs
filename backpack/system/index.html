@@ -1,0 +1,2538 @@
+<!DOCTYPE html><html lang="zh" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="XTac-UMI 手持式多模态数据采集系统:XTac-UMI G1 视触觉夹爪、数采背包与 PC 开发套件的产品介绍与使用手册">
+      
+      
+        <meta name="author" content="千觉机器人">
+      
+      
+        <link rel="canonical" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/backpack/system/">
+      
+      
+        <link rel="prev" href="../playback/">
+      
+      
+        <link rel="next" href="../update/">
+      
+      
+        
+          <link rel="alternate" href="./" hreflang="zh">
+        
+          <link rel="alternate" href="../../en/backpack/system/" hreflang="en">
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>系统设置 - XTac-UMI 文档</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#系统设置" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="XTac-UMI 文档" class="md-header__button md-logo" aria-label="XTac-UMI 文档" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            XTac-UMI 文档
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              系统设置
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo" aria-label="切换到暗色模式" type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换到暗色模式" for="__palette_1" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"></path></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo" aria-label="切换到亮色模式" type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换到亮色模式" for="__palette_0" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"></path></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="选择当前语言">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"></path></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="zh" class="md-select__link">
+              简体中文
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../en/backpack/system/" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required="">
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard="" data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"></path></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix="">
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/XenseRobotics-AI/XTac-UMI-G1-Docs" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    XenseRobotics-AI/XTac-UMI-G1-Docs
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../.." class="md-tabs__link">
+          
+  
+  
+    
+  
+  产品
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+    
+  
+  背包版
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../pc/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  PC 版
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../common/pico4/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  通用
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="XTac-UMI 文档" class="md-nav__button md-logo" aria-label="XTac-UMI 文档" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    XTac-UMI 文档
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/XenseRobotics-AI/XTac-UMI-G1-Docs" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    XenseRobotics-AI/XTac-UMI-G1-Docs
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix="">
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../.." class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    产品
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_1" id="__nav_1_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    产品
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../product/editions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    产品线与配置对比
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../product/g1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    认识 XTac-UMI G1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../product/backpack/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    认识数采背包
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../product/specs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    技术参数
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../product/safety/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    安全与合规
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked="">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    背包版
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    背包版
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../unbox-connect/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    开箱、接线与供电
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../network/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    网络与控制台入口
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../monitor-record/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    实时监控与录制
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../projects-export/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    项目、导出与发布
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../playback/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    回放
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系统设置
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系统设置
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#系统页有什么" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        系统页有什么
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#device-info" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        设备信息
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gripper" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        夹爪配置
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="夹爪配置">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#什么时候需要标" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        什么时候需要标
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#怎么标" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        怎么标
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#夹爪固件升级" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        夹爪固件升级
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#capture-settings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        采集设置
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="采集设置">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#capture-mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        采集模式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#undistort" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        腕部鱼眼去畸变
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#keybinding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        录制快捷键
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#voice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        语音播报
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#指示灯与设备按键" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        指示灯与设备按键
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#upload" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        上传配置
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wifi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        网络 / 配网
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="网络 / 配网">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#wifi-site" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        连现场 WiFi
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wifi-wired" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        有线 IP
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#camera-profiles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        相机参数包
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#update" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        系统更新
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        纳管
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../update/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    升级与 OTA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    故障排查
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../versions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    版本
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../pc/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PC 版
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    PC 版
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pc/install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    安装
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pc/host-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    主机配置
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pc/calibration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    标定与自检
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pc/recording/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    数据采集
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pc/dataset/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    数据集
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pc/troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    故障排查
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pc/versions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    版本与升级
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pc/reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RobotConfig 与 SDK
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4">
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    通用
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    通用
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../common/pico4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pico4 头显与追踪器
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../common/gripper/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    夹爪按键、指示灯与序列号
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../common/coordinates/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    坐标系
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../common/maintenance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    维护保养
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../common/reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    术语表与支持
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#系统页有什么" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        系统页有什么
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#device-info" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        设备信息
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gripper" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        夹爪配置
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="夹爪配置">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#什么时候需要标" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        什么时候需要标
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#怎么标" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        怎么标
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#夹爪固件升级" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        夹爪固件升级
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#capture-settings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        采集设置
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="采集设置">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#capture-mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        采集模式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#undistort" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        腕部鱼眼去畸变
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#keybinding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        录制快捷键
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#voice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        语音播报
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#指示灯与设备按键" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        指示灯与设备按键
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#upload" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        上传配置
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wifi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        网络 / 配网
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="网络 / 配网">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#wifi-site" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        连现场 WiFi
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wifi-wired" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        有线 IP
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#camera-profiles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        相机参数包
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#update" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        系统更新
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        纳管
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="系统设置">系统设置<a class="headerlink" href="#系统设置" title="锚点链接">¶</a></h1>
+<p>本页讲 XTac-UMI Collector 控制台(下称控制台)「系统」页里的每个子项:它是什么、什么时候需要改、怎么改、改错了会怎样。读完能独立完成首次部署时的夹爪标定、采集设置、上传凭据与网络配置,并知道哪些项日常不该碰。</p>
+<h2 id="系统页有什么">系统页有什么<a class="headerlink" href="#系统页有什么" title="锚点链接">¶</a></h2>
+<p>控制台顶栏进「系统」,左侧子项按使用频率排列;每个子项都能用 <code>/system/&lt;id&gt;</code> 直链打开,方便支持人员发链接。</p>
+<table>
+<thead>
+<tr>
+<th>子项</th>
+<th>直链</th>
+<th>用途</th>
+<th>什么时候来</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#device-info">设备信息</a></td>
+<td><code>/system/device-info</code></td>
+<td>版本、序列号、头显详情、夹爪 MCU 与摄像头清单</td>
+<td>报修、对机器、升级后核对</td>
+</tr>
+<tr>
+<td><a href="#gripper">夹爪配置</a></td>
+<td><code>/system/gripper-calibration</code></td>
+<td>夹爪开合标定、MCU 固件升级</td>
+<td>首次部署、换过夹爪</td>
+</tr>
+<tr>
+<td><a href="#capture-settings">采集设置</a></td>
+<td><code>/system/capture-settings</code></td>
+<td>采集模式、腕部去畸变、录制快捷键、语音播报、灯语与按键说明</td>
+<td>首次部署、接线变了、想调现场反馈</td>
+</tr>
+<tr>
+<td><a href="#upload">上传配置</a></td>
+<td><code>/system/upload</code></td>
+<td>远端上传凭据(ModelScope / S3 / STS)</td>
+<td>要上传数据之前</td>
+</tr>
+<tr>
+<td><a href="#wifi">网络 / 配网</a></td>
+<td><code>/system/wifi</code></td>
+<td>连现场 WiFi、有线 IP、热点入口</td>
+<td>换场地、要多人访问</td>
+</tr>
+<tr>
+<td><a href="#camera-profiles">相机参数包</a></td>
+<td><code>/system/camera-profiles</code></td>
+<td>导入或恢复相机参数包(.xpack)</td>
+<td>技术支持给了新包</td>
+</tr>
+<tr>
+<td><a href="#update">系统更新</a></td>
+<td><code>/system/update</code></td>
+<td>升级与回滚</td>
+<td>有新版本时</td>
+</tr>
+<tr>
+<td><a href="#matrix">纳管</a></td>
+<td><code>/system/matrix</code></td>
+<td>多机管理接入</td>
+<td>当前不需要</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="admonition-title">先停录制</p>
+<p>录制进行中,切换采集模式、改腕部去畸变配置、夹爪开合标定、夹爪固件升级、相机参数包上传 / 恢复、系统更新应用都会被设备拒绝(界面提示「录制进行中」)。遇到这类提示先在监控页停止录制。</p>
+</div>
+<h2 id="device-info">设备信息<a class="headerlink" href="#device-info" title="锚点链接">¶</a></h2>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/backpack/device-info.webp" data-desc-position="bottom"><img alt="设备信息页" src="../../assets/backpack/device-info.webp"></a></p>
+<p>一页看全这台背包的软件版本、身份序列号、头显详情、夹爪 MCU 与摄像头清单。全部只读,不需要改。</p>
+<ul>
+<li>指标卡:采集端版本、git、构建时间、架构、设备 SN(产线烧录、印在机身标签上的那串)、硬件序列、节点 ID、模式(standalone / matrix)。读不到的显示 <code>--</code>。</li>
+<li>头显:每台一张卡,显示在线 / 离线,以及 Head SN、XUMI 软件版本、分辨率,和左右目相机内参(原始 4 项顺序)、外参(原始 4×4 顺序)。已发现头显但还没收到相机参数时提示「已发现头显,尚未收到相机参数。」,没连头显时显示「未检测到头显。」。</li>
+<li>夹爪 MCU:每爪一行,左爪 / 右爪徽章、SN、固件版本、波特率、标定掩码(0x 十六进制)、串口端口。</li>
+<li>摄像头:运行时聚合的逻辑相机清单,每行显示侧别·角色、product / serial 与 v4l2 节点,离线的标注「(离线)」。</li>
+</ul>
+<p>四份数据独立拉取,头显或 MCU 掉线不会把整页清空;右上角「刷新」手动重拉。</p>
+<div class="admonition warning">
+<p class="admonition-title">头显认 Head SN,不认连接 ID</p>
+<p>0.3.16 起头显的身份以「Head SN」与「XUMI 软件版本」为准,两者取头显随相机参数上报的值。旧版本页面上那个「连接 ID」已经不再显示,也不再能当作头显的设备 SN —— 记录、报修、对机器都改用 Head SN。</p>
+</div>
+<p>什么时候来这一页:</p>
+<ul>
+<li>报修、对机器:抄设备 SN 与硬件序列,头显抄 Head SN。认机只认这几样,不要记 IP,DHCP 地址会变。</li>
+<li>升级后:核对「采集端版本 / git / 构建时间」,确认新版真的生效。文档按 0.3.16 编写,实际以这里显示为准。</li>
+<li>监控页相机路数与预期对不上:先看这里哪台相机「(离线)」。</li>
+<li>夹爪标定前:看固件版本是否 ≥ 1.2.0.0(即 PC 版所说的命令集 V2.1、构建号 1.2.0,见<a href="../../pc/versions/#v21">三套编号</a>),低于它的爪不支持行程标定。</li>
+</ul>
+<h2 id="gripper">夹爪配置<a class="headerlink" href="#gripper" title="锚点链接">¶</a></h2>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/backpack/gripper.webp" data-desc-position="bottom"><img alt="夹爪配置页" src="../../assets/backpack/gripper.webp"></a></p>
+<p>做夹爪开合(行程)标定:先闭合写零点,再全开写最大行程,两个值都写进夹爪 MCU 的 flash;同一页还能给夹爪 MCU 刷固件。</p>
+<p>页面上半是左右两张 URDF 俯视预览,实时显示编码器角度(rad 与度)、旋转进度与已存最大行程(未标定显示「未标定」);下面每爪一张标定卡:状态(读取中 / 离线 / 不支持 / 已标定 / 未标定)、固件 SN、固件版本、角色(Leader / Follower)、当前角度、已存最大行程、当前归一化开度。只有支持标定的爪会出现两步向导。</p>
+<h3 id="什么时候需要标">什么时候需要标<a class="headerlink" href="#什么时候需要标" title="锚点链接">¶</a></h3>
+<p>标定值存在夹爪自己的 flash 里,断电不丢、换背包不用重标,一只爪标一次就够。控制台向导与 PC 版的 <code>calibrate.py</code> 脚本写的是同一份值,两者等价:在任一处标过,另一处不用再标。什么情况算"没标"或"标歪了"(拆装过编码器、动过机械限位、擦除过固件)、以及双爪只标一侧为什么比都不标更糟,见 PC 版<a href="../../pc/calibration/#41">夹爪标定</a>,规则完全一样。在背包版里的表现是:标定卡显示「未标定」,或监控页里夹爪张到机械极限时归一化开度顶不到 1.0。</p>
+<h3 id="怎么标">怎么标<a class="headerlink" href="#怎么标" title="锚点链接">¶</a></h3>
+<p>逐爪做,顺序不可跳;第 1 步没完成时第 2 步按钮锁定。</p>
+<ol>
+<li>确认该爪在线,状态不是「离线 / 不支持」。行程标定需要 Leader 固件 ≥ 1.2.0.0(即 PC 版所说的命令集 V2.1、构建号 1.2.0,见<a href="../../pc/versions/#v21">三套编号</a>),Follower 夹爪不支持;显示「不支持」时先看固件版本或确认接的是主夹爪。</li>
+<li>把夹爪完全闭合并握住,点「确认已完全闭合」,确认弹窗后写入零点。设备会自动回读,残差 ≤ 0.01 rad 为正常;超差会提示重做第 1 步。</li>
+<li>把夹爪打开到机械极限并保持不动,点「确认已完全打开」,写入最大行程。读数必须大于 0,写入后立即回读校验。</li>
+<li>看到「开合标定完成:最大行程 … rad,归一化开度范围为 0–1」即完成,另一侧重复。</li>
+</ol>
+<p>全开角没有固定标准值,机械极限处的实测值就是标定值。</p>
+<div class="admonition danger">
+<p class="admonition-title">写 flash 直接覆盖旧值,而且要一次做完</p>
+<p>零点与最大行程写入即覆盖 MCU flash,不可撤销。第 2 步必须紧接第 1 步完成:只写零点不写行程是半标定状态,归一化开度不可用;双爪只标一侧会让左右开合度落在不同刻度上,数据里看不出异常。要标就两侧都标完。</p>
+</div>
+<h3 id="夹爪固件升级">夹爪固件升级<a class="headerlink" href="#夹爪固件升级" title="锚点链接">¶</a></h3>
+<p>同页下方的「夹爪固件升级」面板:选目标爪、选 <code>.bin</code>、「上传并刷写」,刷完等夹爪重启后给背包断电再上电。步骤、按角色选镜像的规则与刷后为什么必须断电见<a href="../update/#gripper-firmware">夹爪固件</a>。</p>
+<h2 id="capture-settings">采集设置<a class="headerlink" href="#capture-settings" title="锚点链接">¶</a></h2>
+<p>这一页收齐「录哪几路 / 导出成什么样 / 现场怎么触发和反馈」这一类设备级配置,页内自上而下是五块:采集模式、腕部鱼眼去畸变、录制快捷键、语音播报、灯语与设备按键。共同点是都在开工前设一次,并且都只影响之后的新录制。</p>
+<p>0.3.14 起这一页由原先分开的「采集模式」与「按键绑定」两页合并而来;老的直链已经作废,统一走 <code>/system/capture-settings</code>。</p>
+<h3 id="capture-mode">采集模式<a class="headerlink" href="#capture-mode" title="锚点链接">¶</a></h3>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/backpack/capture-mode.webp" data-desc-position="bottom"><img alt="采集模式" src="../../assets/backpack/capture-mode.webp"></a></p>
+<p>采集模式是这台背包的设备级通道预设:当前采几只爪、要不要头显双目。它决定监控页布局、录制内容和离线导出的通道契约,是有限的五种预设而不是自由勾选,导出侧才能校验每条 episode 该有几路相机。</p>
+<table>
+<thead>
+<tr>
+<th>模式</th>
+<th>标识</th>
+<th>夹爪</th>
+<th>头显</th>
+<th>相机路数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>双爪</td>
+<td><code>dual_claw</code></td>
+<td>2 只夹爪</td>
+<td>不含头显</td>
+<td>6 路</td>
+</tr>
+<tr>
+<td>双爪 + 头显</td>
+<td><code>dual_claw_head</code></td>
+<td>2 只夹爪</td>
+<td>含 PICO 双目</td>
+<td>8 路</td>
+</tr>
+<tr>
+<td>单爪</td>
+<td><code>single_claw</code></td>
+<td>1 只夹爪</td>
+<td>不含头显</td>
+<td>3 路</td>
+</tr>
+<tr>
+<td>单爪 + 头显</td>
+<td><code>single_claw_head</code></td>
+<td>1 只夹爪</td>
+<td>含 PICO 双目</td>
+<td>5 路</td>
+</tr>
+<tr>
+<td>仅头显</td>
+<td><code>head_only</code></td>
+<td>无夹爪</td>
+<td>含 PICO 双目</td>
+<td>2 路</td>
+</tr>
+</tbody>
+</table>
+<p>「双爪」是出厂默认。「单爪」的左右侧不在这里选,由设备按 MCU 实际接在哪一侧自动判定,换爪不用改配置。「仅头显」是纯视觉采集,没有夹爪数据。</p>
+<p>什么时候改:首次部署按实际接了什么选一次;之后只有接线变了(少接一只爪、不接头显)才需要动。同一任务从头到尾保持同一模式。</p>
+<p>怎么改:</p>
+<ol>
+<li>要选带头显的模式,先看这一块右上角的 PICO 指示为「PICO 就绪」;「PICO 在线但未就绪」或「PICO 离线」时先处理头显连接。</li>
+<li>点目标模式卡片。单击即切,立即生效,没有确认弹窗。</li>
+<li>回监控页核对画面路数与预期一致。</li>
+</ol>
+<div class="admonition warning">
+<p class="admonition-title">切错模式的后果留在数据里</p>
+<p>切换只影响之后的新录制,历史 episode 保留录制时冻结的模式与通道。模式选少了,之后的录制就少通道,导出预检会按剖面拦截(例如 <code>head_only</code> 数据过不了双臂剖面的 LeRobot 预检);同一任务里混采了不同模式,导出会报「相机集合与首个 episode 不一致」,只能删掉与首条不一致的条目或拆成两个任务。录制中选项灰掉,不能切换。</p>
+</div>
+<h3 id="undistort">腕部鱼眼去畸变<a class="headerlink" href="#undistort" title="锚点链接">¶</a></h3>
+<p>腕部相机是广角镜头,画面四周有明显拉伸。打开这个开关,<strong>导出的数据集里</strong>腕部画面会被矫正成接近直线的透视。默认关闭。</p>
+<p>关键在于它是一个<strong>导出项</strong>,不是录制项:</p>
+<ul>
+<li>录制文件里保存的始终是相机原始鱼眼图,矫正只在导出时进行。</li>
+<li>开关只影响之后的新录制;历史 episode 重新导出,得到的仍是录制当时冻结的取景。</li>
+<li>录制中改不了,当前 episode 的矫正配方已在开录时冻结。</li>
+</ul>
+<p>打开后出现两组选项:</p>
+<table>
+<thead>
+<tr>
+<th>组</th>
+<th>选项</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>视野</td>
+<td>裁到无黑边(推荐)</td>
+<td>自然焦距,四周裁掉无效区</td>
+</tr>
+<tr>
+<td></td>
+<td>折中</td>
+<td>视野与黑边之间取中</td>
+</tr>
+<tr>
+<td></td>
+<td>最大视野</td>
+<td>宽视野,保留四角黑边</td>
+</tr>
+<tr>
+<td>边缘投影</td>
+<td>标准直线</td>
+<td>直线保持笔直</td>
+</tr>
+<tr>
+<td></td>
+<td>压缩边缘</td>
+<td>边缘渐进压缩,同画幅塞进更大视野</td>
+</tr>
+</tbody>
+</table>
+<p>矫正参数读自夹爪 MCU 的 flash(产测标定时写入),每爪一行显示状态:「已标定 · 基准 W×H」「未标定 · 按默认内参矫正」「未标定」或「MCU 离线」;「重新读取标定」手动重拉。</p>
+<div class="admonition warning">
+<p class="admonition-title">「未标定 · 按默认内参矫正」不等于标好了</p>
+<p>0.3.15 起,未标定的那一侧也会用该型号镜头的通用参数矫正,导出的腕部画面同样接近直线透视。但通用参数不含单台镜头的个体差异,精度不及逐台标定,所以这一侧的状态仍然显示「未标定」,提示这台设备值得补做一次标定。补做完成后自动改用本台设备自己的参数,现场不需要任何操作。未标定不会拦住采集。</p>
+</div>
+<h3 id="keybinding">录制快捷键<a class="headerlink" href="#keybinding" title="锚点链接">¶</a></h3>
+<p>浏览器里「开始 / 结束录制」的键盘快捷键,现场不用回到界面点按钮。什么时候用:平板或电脑接了键盘。</p>
+<p>怎么改:点「绑定快捷键」,按下想用的键(可带 Ctrl / Alt / Shift)即完成;「重新绑定」换键,「清除」撤销,绑定中按 Esc(界面上是「取消(Esc)」)取消。快捷键存在当前浏览器里,换一台平板要重新绑;只在控制台页面打开时生效,输入框聚焦时不触发,不会在打任务指令时误开录。绑错了没有后果,清除重绑即可。</p>
+<p>快捷键与下面的设备按键是两条独立的路:快捷键要浏览器在线并聚焦,设备按键不经过浏览器,是现场推荐的录制方式。</p>
+<h3 id="voice">语音播报<a class="headerlink" href="#voice" title="锚点链接">¶</a></h3>
+<p>设备喇叭在关键节点用中文语音提示,不需要平板在旁边,也不受浏览器影响。理由很实际:采集时双手都在夹爪上、眼睛盯着现场,看灯要专门抬头,语音不用。</p>
+<p>出声的时机有四种,对应五句固定播报:</p>
+<table>
+<thead>
+<tr>
+<th>时机</th>
+<th>播报</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>开始录制</td>
+<td>「录制开始」</td>
+</tr>
+<tr>
+<td>一条录完</td>
+<td>「录制完成请重置环境」</td>
+</tr>
+<tr>
+<td>录制中出现严重问题</td>
+<td>「录制失败」</td>
+</tr>
+<tr>
+<td>录制中夹爪或头显掉线</td>
+<td>「夹爪连接失败」/「pico连接失败」</td>
+</tr>
+</tbody>
+</table>
+<p>这一块里可调的只有两样,都是重启后保留的:</p>
+<ul>
+<li>开关:一键静音(界面显示「开启」/「已静音」)。</li>
+<li>播放音量:0–100 的滑块(0.3.16 新增),只调播放阶段的软件增益,不改 WAV 素材也不动系统声卡;最大档相当于 +3 dB。</li>
+</ul>
+<p>每句话旁边都有一个「试听「…」」按钮,走的是与真实播报完全相同的链路,所以试听没声也能分辨原因:当前静音会提示先打开开关,设备没有可用音频输出会提示语音播报本次运行已停用。</p>
+<p>播报的内容与时机是固定值,现场改不了,改口径要发版 —— 同一批设备的行为因此完全一致。</p>
+<h3 id="指示灯与设备按键">指示灯与设备按键<a class="headerlink" href="#指示灯与设备按键" title="锚点链接">¶</a></h3>
+<p>同页最下面是灯语与设备按键的对照表,只读,不可配置:按键一栏列出右爪长按 / 左爪长按 / 左爪双击 / 删除确认中按右爪的操作顺序;灯语一栏里每种灯按真实的形状与节奏演示 —— 常亮、呼吸、闪、脉冲、快闪各是什么样一眼可辨,不必再从文字里分辨「快闪」和「脉冲」的差别,删除确认时的紫灯也在表里。</p>
+<p>绑定爪位、键位、时序与灯语口径是全机队固定值,现场不可调,控制台里也没有改的入口;当前生效值就在这一块查看。手势与灯语的正文见<a href="../../common/gripper/#buttons">夹爪按键、指示灯与序列号</a>。</p>
+<h2 id="upload">上传配置<a class="headerlink" href="#upload" title="锚点链接">¶</a></h2>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/backpack/upload.webp" data-desc-position="bottom"><img alt="上传配置页" src="../../assets/backpack/upload.webp"></a></p>
+<p>上传配置是把数据传到远端用的账号凭据。可以配多档,每档一个名字(命名槽位),新建项目时绑定其中一档,该项目之后的上传默认走它。一台背包给不同客户或项目采数据、各自传到不同去处,就各建一档。凭据只在这里填一次,导出窗口里不再填仓库和令牌。</p>
+<p>后端种类有三种,字段按种类切换(它们的凭据没有一个字段是共用的):</p>
+<table>
+<thead>
+<tr>
+<th>种类</th>
+<th>传什么</th>
+<th>要填</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ModelScope</td>
+<td>LeRobot 数据集</td>
+<td>Owner(账号 / 组织)、Token、新建仓库可见性</td>
+</tr>
+<tr>
+<td>S3 对象存储</td>
+<td>LeRobot 数据集</td>
+<td>桶名、Endpoint、Region(可留空)、Access Key、Secret Key</td>
+</tr>
+<tr>
+<td>STS(导出 MCAP)</td>
+<td>离线导出的 <code>*.train.mcap</code></td>
+<td>Server、Account / OpenID、Project、Project Type、Task ID(可留空)</td>
+</tr>
+</tbody>
+</table>
+<p>列表里每档显示名称、种类徽章与目标(owner / 桶 / project),以及凭据尾四位掩码和「校验 / 编辑 / 删除」。</p>
+<p>各种类要知道的:</p>
+<ul>
+<li><strong>ModelScope</strong>:数据集仓库建在 Owner 名下(<code>&lt;owner&gt;/&lt;仓库名&gt;</code>)。可见性选私有(推荐)或公开,只在首次建仓时生效,改这里不会动已存在的仓库。获取 token:登录 <a href="https://www.modelscope.cn/my/overview">ModelScope</a>,点头像 → 账号设置 → 访问令牌 → 新建访问令牌。</li>
+<li><strong>S3</strong>:桶要预先建好,设备只往里写、不会建桶,也管不了桶的访问策略(所以没有可见性选项);数据集放在 <code>桶 / 项目-任务 /</code> 下。</li>
+<li><strong>STS</strong>:只上传离线导出的训练 MCAP,不接收 LeRobot。每个文件上传前由 Server 签发短期凭据,设备 SN 固定用本机背包的,不能在配置里覆盖。</li>
+</ul>
+<p>怎么配:</p>
+<ol>
+<li>「新建配置」,填名称、选后端种类、填该种类的字段,保存。</li>
+<li>点「校验」。ModelScope 会拿 token 验证并核对线上账号与填写的 owner 是否一致;S3 校验桶可读写;STS 只校验配置完整,账号鉴权在每个 MCAP 上传时才做。</li>
+<li>新建项目时在「上传后端」里选这档;已有项目在项目行的「上传后端」里补绑。项目没绑定时,导出窗口里可以临时从下拉选一档。</li>
+</ol>
+<p>上传本身的步骤见<a href="../projects-export/#export">导出与上传</a>。</p>
+<div class="admonition warning">
+<p class="admonition-title">绑错档撤不回来</p>
+<p>把 A 客户的数据传进 B 客户的账号后,ModelScope 的程序化删除受限,撤回要走它的网页控制台;公开发布同样不可逆。建项目时核对绑定的是哪一档。项目上传过一次之后,仓库坐标就记在游标里,改绑到会换仓库的配置会被设备拒绝。</p>
+</div>
+<p>其他要知道的:凭据保存在设备状态盘(权限 0600),保存后不再回显,编辑时留空表示保留设备上已存的那份;编辑时换了后端种类,凭据必须重填,没有可以沿用的字段。删除一档不影响已上传的数据,绑定了它的项目在上传时会提示重新绑定。</p>
+<h2 id="wifi">网络 / 配网<a class="headerlink" href="#wifi" title="锚点链接">¶</a></h2>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/backpack/wifi.webp" data-desc-position="bottom"><img alt="网络 / 配网页" src="../../assets/backpack/wifi.webp"></a></p>
+<p>这一页管背包的三个网络口:自己常驻的配网热点(只读展示)、作为客户端连现场 WiFi、有线 IPv4。三种打开控制台的方式与各自的适用场景在<a href="../network/">网络与控制台入口</a>,这里只讲怎么改。</p>
+<p>页面分四块:</p>
+<ul>
+<li>本机配网热点(SoftAP · 5G,常驻):热点 SSID、WPA2 密码、浏览器入口 <code>http://xense-&lt;序列号后 6 位&gt;.local</code> 与备用入口 <code>http://192.168.44.1</code>。这一块不可改,是永远的兜底入口。</li>
+<li>当前外网连接(wlan0):所连 SSID、IPv4,「断开并遗忘」。</li>
+<li>附近 WiFi:「重新扫描」,列表显示 SSID、信号强度、<code>5G</code> 与「开放」/「当前」徽章。</li>
+<li>有线连接:网卡、当前地址、网关、DNS 只读展示;模式「自动(DHCP)」或「静态 IP」,「应用有线配置」。</li>
+</ul>
+<h3 id="wifi-site">连现场 WiFi<a class="headerlink" href="#wifi-site" title="锚点链接">¶</a></h3>
+<p>什么时候需要:现场有可用的 5 GHz WiFi,想让同网段的多台电脑或平板直接访问背包。只有一台平板、走热点就够的场景不需要配。</p>
+<p>推荐全程通过热点操作,不需要背包先有网:</p>
+<ol>
+<li>手机或平板连背包热点 <code>xense-&lt;序列号后 6 位&gt;</code>(密码见机身标签或本页)。</li>
+<li>浏览器打开 <code>http://192.168.44.1</code>(见<a href="../network/#softap">热点入口</a>),进 系统 → 网络 / 配网。</li>
+<li>「重新扫描」,点目标 SSID,输密码,连接;开放网点一下直接连。</li>
+<li>配完手机断开热点即可。背包会记住这个网络,重启后自动重连;「断开并遗忘」会删掉这条记录。</li>
+</ol>
+<p>只列 5 GHz:热点与现场 WiFi 共用同一路射频,现场 WiFi 一旦落到 2.4 GHz,热点会被拽到同一信道而掉线。所以扫描列表在设备端就滤掉了 2.4 GHz,2.4 GHz-only 的网络看不到也连不上;双频同名的 SSID 会被钉在 5 GHz 上。现场只有 2.4 GHz 时改用有线或直接走热点。</p>
+<h3 id="wifi-wired">有线 IP<a class="headerlink" href="#wifi-wired" title="锚点链接">¶</a></h3>
+<p>有线口出厂默认 DHCP,插上路由器 LAN 口即可用,日常不用动。只有现场没有 DHCP(背包与电脑网线直连、接无 DHCP 的交换机)或 IT 要求固定地址时才配静态:模式选「静态 IP」,IP 带 CIDR 前缀(如 <code>192.168.1.10/24</code>,多个用逗号分隔),网关与 DNS 可留空(纯直连就该留空),「应用有线配置」。没插网线时也能保存,插线后生效。静态模式下 IP 为空无法提交。有线接入的拓扑见<a href="../unbox-connect/#desk">固定工位的布置</a>。</p>
+<div class="admonition warning">
+<p class="admonition-title">改有线 IP 可能把自己踢下线</p>
+<p>应用后背包的有线 IP 会变。你正通过有线访问控制台的话,页面会断开,要用新地址重新打开;换址过程中页面可能报网络错误,但配置多半已经生效。改砸了连热点走 <code>192.168.44.1</code>,把模式改回「自动(DHCP)」即可恢复。</p>
+</div>
+<h2 id="camera-profiles">相机参数包<a class="headerlink" href="#camera-profiles" title="锚点链接">¶</a></h2>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/backpack/camera-profiles.webp" data-desc-position="bottom"><img alt="相机参数包页" src="../../assets/backpack/camera-profiles.webp"></a></p>
+<p>相机参数包(<code>.xpack</code>)装的是相机的标定与曝光参数。背包出厂时已内置一套,日常不需要动这一页;只有技术支持给了新的 <code>.xpack</code>(更换或返修相机模组之后、参数更新时)才需要导入。</p>
+<p>页面显示当前参数包状态(出厂默认 / 已自定义),逐包列出前缀、大小与「已替换 / 默认」标签;下面是「更换参数包」:选 <code>.xpack</code> 文件「上传并生效」(带进度条),或「恢复默认」退回出厂(已是默认时按钮禁用)。</p>
+<p>怎么导入:</p>
+<ol>
+<li>选 <code>.xpack</code>,点「上传并生效」,确认弹窗。</li>
+<li>等提示「已生效;在线相机已重开验证,离线相机会在上线时应用」。</li>
+<li>要退回出厂:「恢复默认」,确认。</li>
+</ol>
+<p>上传即生效,没有「暂存后再应用」的中间态,相机会重新打开并验证参数,所以录制期间会被拒绝(提示「操作被拒绝:正在录制或相机状态发生变化,请停止录制并刷新后重试」)。上传内容与当前一致时不做改动;激活失败时新包会被自动清掉,设备停在原来的参数上,不留残包。导入了不匹配的包但激活成功,表现是画面异常,「恢复默认」即可退回。</p>
+<h2 id="update">系统更新<a class="headerlink" href="#update" title="锚点链接">¶</a></h2>
+<p>采集单元的升级包导入、A/B 回滚与远程更新单独一页,见<a href="../update/">升级与 OTA</a>。</p>
+<h2 id="matrix">纳管<a class="headerlink" href="#matrix" title="锚点链接">¶</a></h2>
+<p>预留给多机管理,当前不需要配置。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden="">
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚">
+        
+          
+          <a href="../playback/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 回放">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                回放
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../update/" class="md-footer__link md-footer__link--next" aria-label="下一页: 升级与 OTA">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                升级与 OTA
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © 2026 千觉机器人科技(上海)有限公司
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/XenseRobotics-AI/XTac-UMI-G1-Docs" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.tracking", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "navigation.footer", "toc.follow", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.tooltips"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>
