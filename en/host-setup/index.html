@@ -1,0 +1,1732 @@
+<!DOCTYPE html><html lang="en" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="XenseRobotics XTac-UMI G1 手持触觉数采夹爪 · 基于 lerobot 的数据采集快速上手">
+      
+      
+        <meta name="author" content="XenseRobotics">
+      
+      
+        <link rel="canonical" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/host-setup/">
+      
+      
+        <link rel="prev" href="../install/">
+      
+      
+        <link rel="next" href="../calibration/">
+      
+      
+        
+          <link rel="alternate" href="../../host-setup/" hreflang="zh">
+        
+          <link rel="alternate" href="./" hreflang="en">
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Host &amp; Pico4 Setup - XTac-UMI G1 Data-Collection Guide</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#host-and-pico4-setup" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../" title="XTac-UMI G1 Data-Collection Guide" class="md-header__button md-logo" aria-label="XTac-UMI G1 Data-Collection Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            XTac-UMI G1 Data-Collection Guide
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Host &amp; Pico4 Setup
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo" aria-label="切换到暗色模式" type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换到暗色模式" for="__palette_1" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"></path></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo" aria-label="切换到亮色模式" type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换到亮色模式" for="__palette_0" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"></path></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="Select language">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"></path></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="../../host-setup/" hreflang="zh" class="md-select__link">
+              简体中文
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required="">
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard="" data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"></path></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix="">
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/XenseRobotics-AI/XTac-UMI-G1-Docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    XenseRobotics-AI/XTac-UMI-G1-Docs
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../" title="XTac-UMI G1 Data-Collection Guide" class="md-nav__button md-logo" aria-label="XTac-UMI G1 Data-Collection Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    XTac-UMI G1 Data-Collection Guide
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/XenseRobotics-AI/XTac-UMI-G1-Docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    XenseRobotics-AI/XTac-UMI-G1-Docs
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix="">
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../device/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Device Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked="">
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Ready
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Getting Ready
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Host &amp; Pico4 Setup
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Host &amp; Pico4 Setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Serial permissions (dialout)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stop ModemManager grabbing the port (udev)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Device auto-discovery and the odd-left/even-right rule
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Device auto-discovery and the odd-left/even-right rule">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#serial-grammar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Serial grammar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#side-rule" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Side rule
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#usb-budget" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        USB bandwidth budget
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#34" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pico4 Ultra Enterprise setup
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Pico4 Ultra Enterprise setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pico-unbox" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Unboxing and the system update
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pico-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        System settings: developer mode and power policy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pico-app" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Installing XTac-UMI XR
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pico-network" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Network connection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pico-tracker-bind" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Binding the motion tracker to the headset
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Binding the motion tracker to the headset">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pico-tracker-sn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reading a tracker SN
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pico-tracker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tracking mode
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pico-toolkit-ui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The app's screen
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pico-frame" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Startup and frame alignment
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#35" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Start the XenseVR PC Service
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#36" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Power-on sequence
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../calibration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Calibration &amp; Self-check
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5">
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Recording &amp; Data
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Recording &amp; Data
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../recording/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Collection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dataset/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dataset
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6">
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../maintenance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Maintenance
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../versions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Versions &amp; Upgrades
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference &amp; Support
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Serial permissions (dialout)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stop ModemManager grabbing the port (udev)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Device auto-discovery and the odd-left/even-right rule
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Device auto-discovery and the odd-left/even-right rule">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#serial-grammar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Serial grammar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#side-rule" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Side rule
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#usb-budget" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        USB bandwidth budget
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#34" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pico4 Ultra Enterprise setup
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Pico4 Ultra Enterprise setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pico-unbox" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Unboxing and the system update
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pico-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        System settings: developer mode and power policy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pico-app" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Installing XTac-UMI XR
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pico-network" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Network connection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pico-tracker-bind" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Binding the motion tracker to the headset
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Binding the motion tracker to the headset">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pico-tracker-sn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reading a tracker SN
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pico-tracker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tracking mode
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pico-toolkit-ui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The app's screen
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pico-frame" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Startup and frame alignment
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#35" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Start the XenseVR PC Service
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#36" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Power-on sequence
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="host-and-pico4-setup">Host and Pico4 setup<a class="headerlink" href="#host-and-pico4-setup" title="锚点链接">¶</a></h1>
+<p>A gripper being listed is not the same as it being openable. This page covers the two one-off host-side settings (serial permissions and ModemManager), explains how devices are assigned to left and right by serial number, and takes the Pico4 Ultra Enterprise from unboxing to "Connected". After that you can start the XenseVR PC Service and move on to calibration and collection.</p>
+<h2 id="31">Serial permissions (dialout)<a class="headerlink" href="#31" title="锚点链接">¶</a></h2>
+<p>The gripper MCU enumerates as <code>/dev/ttyACM*</code>, owned by group <code>dialout</code>. A user outside that group can have the SDK list grippers but cannot open the port to read the firmware serial, so <code>scan_grippers()</code> reports <code>role=Unknown</code> with an empty <code>firmware_sn</code>:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>RuntimeError: No leader gripper discovered for the left side.
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a># underneath: IoError: SerialBus: open(/dev/serial/by-id/...): Permission denied
+</span></code></pre></div>
+<p>Join the group once:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sudo<span class="w"> </span>usermod<span class="w"> </span>-aG<span class="w"> </span>dialout<span class="w"> </span><span class="s2">"</span><span class="nv">$USER</span><span class="s2">"</span>
+</span></code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Log back in after changing the group, or this step did nothing</p>
+<p>Group membership only applies to newly created login sessions. The current terminal still holds the old permissions and keeps reporting <code>role=Unknown</code>. Log out and back in (or run <code>newgrp dialout</code>), re-plug the gripper, then verify.</p>
+</div>
+<p>Verify: <code>role</code> must be <code>Leader</code>/<code>Follower</code> (not <code>Unknown</code>) and <code>firmware_sn</code> non-empty:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"from xense.taccap import scan_grippers</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="s2">for g in scan_grippers(): print(g.side.name, g.role.name, repr(g.firmware_sn))"</span>
+</span></code></pre></div>
+<p>If <code>firmware_sn</code> stays empty after fixing permissions, the SN may not be burned in, the serial read may still be failing, or firmware communication may be faulty. An empty SN alone is not enough to infer a firmware version. Save the full error, retest with a different cable and port, and contact the device or firmware team if it persists.</p>
+<h2 id="32">Stop ModemManager grabbing the port (udev)<a class="headerlink" href="#32" title="锚点链接">¶</a></h2>
+<p>With the <a href="../install/#docker">Docker image</a>, <code>install_customer.sh</code> has already installed this udev rule on the host (a container cannot manage the host's hot-plug rules), so you do not need to redo it.</p>
+<p>The gripper MCU is a CH343 USB-serial device (<code>1a86:55d2</code>, CDC-ACM). On every hot-plug, ModemManager (the default cellular-modem service on Ubuntu/GNOME) probes the fresh port with AT commands and holds it for a few seconds, so connecting fails during that window:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>IoError: SerialBus: open(/dev/serial/by-id/usb-1a86_USB_Dual_Serial_..-if02): Device or resource busy
+</span></code></pre></div>
+<p>Typical symptom: the first launch works, but unplugging, moving to another port and relaunching immediately gives busy. This is not a tactile, camera or bandwidth problem. The braille driver <code>brltty</code> grabs <code>1a86</code> the same way. Stopgap: wait about 3 s after plugging in before launching.</p>
+<p>Permanent fix: a udev rule telling ModemManager to ignore these devices (real modems are unaffected):</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/udev/rules.d/99-taccap-ignore-modemmanager.rules<span class="w"> </span>&gt;/dev/null<span class="w"> </span><span class="s">&lt;&lt;'EOF'</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="s"># XTac-UMI G1 MCUs are CH343 USB-serial (1a86:55d2) — keep ModemManager off them</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="s">ACTION=="add|change", SUBSYSTEMS=="usb", ATTRS{idVendor}=="1a86", ENV{ID_MM_DEVICE_IGNORE}="1"</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="s">EOF</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>sudo<span class="w"> </span>udevadm<span class="w"> </span>control<span class="w"> </span>--reload-rules<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>udevadm<span class="w"> </span>trigger
+</span></code></pre></div>
+<p>Verify:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>udevadm<span class="w"> </span>info<span class="w"> </span>-q<span class="w"> </span>property<span class="w"> </span>-n<span class="w"> </span>/dev/ttyACM0<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>ID_MM_DEVICE_IGNORE<span class="w">   </span><span class="c1"># -&gt; ID_MM_DEVICE_IGNORE=1</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>mmcli<span class="w"> </span>-L<span class="w">                                                               </span><span class="c1"># gripper no longer listed</span>
+</span></code></pre></div>
+<p>Delete the rule file and reload to revert. On a dedicated host with no cellular module you can also <code>sudo systemctl disable --now ModemManager</code>.</p>
+<h2 id="33">Device auto-discovery and the odd-left/even-right rule<a class="headerlink" href="#33" title="锚点链接">¶</a></h2>
+<p>Every device is auto-discovered by serial number + USB topology and assigned to <code>left</code>/<code>right</code>. No serials are hand-listed.</p>
+<h3 id="serial-grammar">Serial grammar<a class="headerlink" href="#serial-grammar" title="锚点链接">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Device</th>
+<th>Grammar</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Gripper</td>
+<td><code>TCGU01&lt;batch&gt;&lt;line&gt;&lt;seq&gt;&lt;m\|s&gt;</code></td>
+<td><code>TCGU01A24Z0002m</code></td>
+</tr>
+<tr>
+<td>Tactile</td>
+<td><code>GSPS01&lt;batch&gt;&lt;line&gt;&lt;seq&gt;</code></td>
+<td><code>GSPS01A25Z0011</code></td>
+</tr>
+<tr>
+<td>Camera</td>
+<td><code>XC&lt;batch&gt;&lt;line&gt;&lt;seq&gt;&lt;m\|s&gt;</code></td>
+<td><code>XCA24Z0007m</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>&lt;seq&gt;</code> is 4 digits; <code>m</code> → leader gripper, <code>s</code> → follower gripper.</p>
+<h3 id="side-rule">Side rule<a class="headerlink" href="#side-rule" title="锚点链接">¶</a></h3>
+<p>The last digit of the 4-digit sequence: odd → left, even → right. This applies to grippers, wrist cameras, and which of a gripper's two fingertip tactile sensors is left or right.</p>
+<p>Tactile sensors map to <code>{side}_tactile_{left,right}</code>: the two GSPS sensors sharing a gripper's USB hub are that gripper's pair, and the gripper's side is read from its firmware SN (the side in the <code>scan_grippers()</code> output), not from the CH343 <code>mcu_serial</code>, so hub → gripper → side. Which of the two is left/right comes from the last digit of the GSPS serial.</p>
+<p>The Pico4 Ultra Enterprise tracker uses a different serial system, shaped like <code>PC2310MLL3200496G</code>. The side is the digit in front of the trailing <code>G</code>, odd-left / even-right: here it is <code>6</code>, so the tracker is on the right. This SN is not shown on the headset, see <a href="#pico-tracker-sn">Reading a tracker SN</a>.</p>
+<p>A non-conforming serial, the wrong count on a side, two fingertip sensors mapping to the same side, two grippers claiming the same tactile side, or a tactile hub with no matching gripper all make discovery fail outright and name the offending hub/serial. Duplicates are reported before gaps: a side coming up empty usually means its device put itself on the other side, so re-check the side that has two first.</p>
+<h3 id="usb-budget">USB bandwidth budget<a class="headerlink" href="#usb-budget" title="锚点链接">¶</a></h3>
+<p>Whether a camera can be opened at all is decided by bandwidth the moment you plug the cables in. When a camera will not open, measure this first.</p>
+<p>Every UVC camera reserves its own share of isochronous bandwidth for as long as it is open, and the budget is per USB 2.0 bus: 480 Mbit/s per bus, of which about 384 Mbit/s goes to isochronous transfers. A bimanual rig puts six cameras on it (four tactile + two wrist cameras), plus the laptop's built-in webcam.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>lsusb<span class="w"> </span>-t
+</span></code></pre></div>
+<p>Each <code>480M</code> <code>root_hub</code> line is one budget; count the cameras under each. Two buses with three cameras each is comfortable. Six on one bus has to be measured, because different sensor batches request different amounts. The tactile sensors and wrist cameras are USB 2.0 devices, so a blue USB 3 port still puts them on that controller's USB 2.0 bus. Splitting them means plugging into a second host controller (a Thunderbolt / USB4 dock brings its own, a plain hub does not).</p>
+<p><code>Not enough bandwidth for altsetting N</code> in the kernel log when collection starts is this problem. How to watch the log, the full diagnosis, the measured numbers and three fixes that look promising and are not: see <a href="../troubleshooting/#usb-bandwidth">Troubleshooting · Not enough USB bandwidth</a>.</p>
+<h2 id="34">Pico4 Ultra Enterprise setup<a class="headerlink" href="#34" title="锚点链接">¶</a></h2>
+<p>The standalone motion tracker that ships with the Pico4 Ultra Enterprise mounts on top of the gripper and provides the 6-DoF pose. XTac-UMI XR (the VR client app) runs on the headset, and the pose reaches collection via the <a href="#35">XenseVR PC Service</a>.</p>
+<p>On a factory-configured headset, developer mode, the power policy, the app, the tracker binding and the tracking mode are already set and survive power cycles (redo them only after a factory reset or a headset swap), so start at <a href="#pico-network">Network connection</a>. Plugging in the USB, short-pressing the tracker's power button until the blue light comes on, <a href="#pico-toolkit-ui">tapping "Reconnect"</a> and <a href="#pico-frame">startup alignment</a> are needed before every session.</p>
+<h3 id="pico-unbox">Unboxing and the system update<a class="headerlink" href="#pico-unbox" title="锚点链接">¶</a></h3>
+<ol>
+<li>
+<p>Unbox: peel the protective sticker off the front panel, the tape off the controllers and the sticker off the lenses, then hold the power button to switch it on.</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/pico4/unbox-film.webp" data-desc-position="bottom"><img alt="Protective sticker on the front sensor bar" src="../../assets/pico4/unbox-film.webp" width="440"></a></p>
+</li>
+<li>
+<p>Update the system. This is required on a new unit: it ships on an older build and only works properly once updated, and it has to be done before pairing the tracker or installing the app. Join a WiFi network with internet access, go to Settings → System update, and tap "Download and install" to reach 5.15.5.U or later. The package is about 1.9 GB.</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/pico4/system-update.webp" data-desc-position="bottom"><img alt="System update to 5.15.5.U" src="../../assets/pico4/system-update.webp" width="560"></a></p>
+</li>
+</ol>
+<h3 id="pico-system">System settings: developer mode and power policy<a class="headerlink" href="#pico-system" title="锚点链接">¶</a></h3>
+<ol>
+<li>
+<p>Enable developer mode: Settings → About → tap "Software version" several times → "Developer options" appears on the left → turn on USB debugging.</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/pico4/devmode-tap-version.webp" data-desc-position="bottom"><img alt="Tap the software version repeatedly" src="../../assets/pico4/devmode-tap-version.webp" width="480"></a></p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/pico4/devmode-usb-debug.webp" data-desc-position="bottom"><img alt="Developer options → turn on USB debugging" src="../../assets/pico4/devmode-usb-debug.webp" width="480"></a></p>
+</li>
+<li>
+<p>Disable sleep and screen-off: in Developer options tap "Enterprise Settings" → System Settings → Power policy (only the Enterprise edition has this item; the consumer edition cannot set "Never"). It ships as screen-off 30 s, system sleep 5 min, battery icon hidden. Change all three, in this order:</p>
+<ol>
+<li>System sleep = Never first;</li>
+<li>Screen off = Never second;</li>
+<li>Set the battery and charging status icon at the bottom to "Always show", so you can check the charge mid-session.</li>
+</ol>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/pico4/power-step4-final.webp" data-desc-position="bottom"><img alt="Final power policy settings" src="../../assets/pico4/power-step4-final.webp" width="480"></a></p>
+</li>
+</ol>
+<div class="admonition warning">
+<p class="admonition-title">Sleep first, screen-off second; the order cannot be reversed</p>
+<p>The screen-off timeout is bounded by the system sleep timeout. Set screen-off first, while system sleep is still at its default, and its "Never" gets clamped back to a finite value: it looks set but is not in effect. When done, leave Settings and come back to confirm both read "Never".</p>
+</div>
+<p>If you skip this: once the headset screen-blanks or sleeps between episodes, XTac-UMI XR gets suspended or killed and tracking drops out, and restarting it resets the world frame (see <a href="#pico-frame">Frame alignment</a>). Taking the headset off and setting it down triggers this too.</p>
+<h3 id="pico-app">Installing XTac-UMI XR<a class="headerlink" href="#pico-app" title="锚点链接">¶</a></h3>
+<ol>
+<li>
+<p>On the PC: connect the headset to the PC over USB and copy <code>XTac-UMI-XR-0.1.X.apk</code> into the headset's <code>Download/</code> directory (<code>0.1.X</code> is the version; use whichever build you were given).</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/pico4/install-step1-copy.webp" data-desc-position="bottom"><img alt="Copy the apk into the Pico's Download folder" src="../../assets/pico4/install-step1-copy.webp" width="480"></a></p>
+</li>
+<li>
+<p>Put the headset on, tap "File Manager" on the taskbar, and go into the "Download" folder.</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/pico4/install-step2-filemanager.webp" data-desc-position="bottom"><img alt="File Manager → Download" src="../../assets/pico4/install-step2-filemanager.webp" width="480"></a></p>
+</li>
+<li>
+<p>Tap <code>XTac-UMI-XR-0.1.X.apk</code> and choose "Install" in the "Install this app?" dialog. Once installed, XTac-UMI XR appears in the "Library".</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/pico4/install-step3-confirm.webp" data-desc-position="bottom"><img alt="Confirming the install" src="../../assets/pico4/install-step3-confirm.webp" width="480"></a></p>
+</li>
+</ol>
+<h3 id="pico-network">Network connection<a class="headerlink" href="#pico-network" title="锚点链接">¶</a></h3>
+<p>Tracking data has to reach the XenseVR PC Service on the collection PC. Both wired and wireless work:</p>
+<table>
+<thead>
+<tr>
+<th>Link</th>
+<th>How</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Wired USB shared network (recommended)</td>
+<td>Type-C cable straight to the collection PC; the headset assigns the PC an IP</td>
+</tr>
+<tr>
+<td>WiFi</td>
+<td>Headset and collection PC on the same network</td>
+</tr>
+</tbody>
+</table>
+<p>In a busy WiFi environment (congested channels, heavy interference) the pose stutters, jitters or drops data, and this is not easy to tell apart from other faults. Use the wired link for real collection; wireless is only for quick debugging.</p>
+<p>Wired setup:</p>
+<ol>
+<li>On the headset: Settings → Developer options → enable "USB debugging" → set "USB connection" to "File transfer". Re-check this after every USB re-plug, as it reverts to the default. If you cannot select it, reboot the Pico.</li>
+<li>Start the service on the PC first (see <a href="#35">Start the XenseVR PC Service</a>): <code>runService.sh</code>. With the service down, the app just sits on "Not connected".</li>
+<li>Open XTac-UMI XR, tap "Reconnect", and the status changes to "Connected" (see <a href="#pico-toolkit-ui">The app's screen</a>).</li>
+</ol>
+<p>Over WiFi, put the headset and the collection PC on the same network; everything else is the same.</p>
+<div class="admonition warning">
+<p class="admonition-title">On the wired link, turn the collection PC's WiFi off</p>
+<p>The wired shared network conflicts with other networks on the PC (WiFi above all) through routing and interface contention, leaving the tracker unreachable or its pose unstable. Keep only the headset's shared network.</p>
+</div>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/pico4/usb-shared-network.webp" data-desc-position="bottom"><img alt="USB connection set to file transfer" src="../../assets/pico4/usb-shared-network.webp" width="520"></a></p>
+<h3 id="pico-tracker-bind">Binding the motion tracker to the headset<a class="headerlink" href="#pico-tracker-bind" title="锚点链接">¶</a></h3>
+<p>On first use, or after swapping a tracker, the PICO Motion Tracker must be bound to this headset first. Until it is, it cannot be selected in tracking mode, and neither XTac-UMI XR nor the PC Service will discover its SN.</p>
+<p>Before pairing, scan the QR code on the back of the tracker with your phone to get its full SN, and mount it on the gripper by odd-left / even-right (see <a href="#33">Device auto-discovery</a>). The six digits in the red box are the number shown in the "My trackers" list after pairing (e.g. <code>Tracker 150311</code>).</p>
+<table>
+<thead>
+<tr>
+<th>Scan this</th>
+<th>You get this</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/pico4/tracker-sn-qr.webp" data-desc-position="bottom"><img alt="The QR code on the back of the tracker" src="../../assets/pico4/tracker-sn-qr.webp" width="300"></a></td>
+<td><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/pico4/tracker-sn-left.webp" data-desc-position="bottom"><img alt="Scan result, left tracker" src="../../assets/pico4/tracker-sn-left.webp" width="320"></a><br><code>1</code> before the <code>G</code>, odd → left gripper</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>
+<p>Open the "Motion Tracker" app from the Library and tap the icon in the top-right corner of the main screen to enter the pairing screen.</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/pico4/tracker-pair-entry.webp" data-desc-position="bottom"><img alt="The top-right icon opens the pairing screen" src="../../assets/pico4/tracker-pair-entry.webp" width="440"></a></p>
+</li>
+<li>
+<p>Hold the tracker's power button for about 6 seconds, until the indicator alternates blue and red. That is Bluetooth pairing mode.</p>
+</li>
+<li>Tap "Start pairing". The headset plays a tone when pairing succeeds, and the tracker appears in the "My trackers" list with its battery level and number (e.g. <code>Tracker 150399</code>), marked "Connected".</li>
+<li>
+<p>One tracker per gripper, so bind both. The top of the list should read "2 paired".</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/pico4/tracker-bind.webp" data-desc-position="bottom"><img alt="Motion Tracker app: 2 paired" src="../../assets/pico4/tracker-bind.webp" width="440"></a></p>
+</li>
+</ol>
+<div class="admonition warning">
+<p class="admonition-title">Power-on is a short press; only pairing needs the hold</p>
+<p>Solid blue is just powered on, not pairing mode, and the app will not find it. Everyday power-on is a short press until the blue light comes on; only first-time binding needs the ~6 s hold until it alternates blue and red.</p>
+</div>
+<p>The binding is stored on the headset; everyday power cycles and app restarts do not need a re-bind. Re-bind after swapping trackers, moving to another headset or a factory reset: unpair from the ⓘ on the right of the list entry first, then bind the new one.</p>
+<div class="admonition warning">
+<p class="admonition-title">In standalone tracking mode the tracker must stay in the headset's view</p>
+<p>A tracker occluded for long by your body, the desk edge or the other hand loses tracking (pose jumps or a frozen pose). Do not let the tracker on top of the gripper leave the headset's view for long.</p>
+</div>
+<h4 id="pico-tracker-sn">Reading a tracker SN<a class="headerlink" href="#pico-tracker-sn" title="锚点链接">¶</a></h4>
+<p>The SN determines the side (the digit before the <code>G</code>, odd-left / even-right) and is also how the PC Service identifies a tracker. It is not visible on the headset: the "Motion Tracker" app only shows a short number (e.g. <code>Tracker 150399</code>), and the SN on XTac-UMI XR's Network panel (e.g. <code>PA9410MGL…</code>) is the headset's own. Read the full SN (shaped like <code>PC2310MLL3200496G</code>) with the PC Service's Python interface:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">xensevr_pc_service_sdk</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">xrt</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="n">xrt</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="nb">print</span><span class="p">(</span><span class="n">xrt</span><span class="o">.</span><span class="n">get_motion_tracker_serial_numbers</span><span class="p">())</span>   <span class="c1"># e.g. ['PC2310MLL3200496G', ...]</span>
+</span></code></pre></div>
+<p>It only returns the trackers the service is currently receiving data from, so first: tracker bound and powered on → XTac-UMI XR <a href="#pico-toolkit-ui">"Connected"</a> → <a href="#35">PC Service</a> running on the host. Miss any one and you get an empty list. With the SN in hand you can pin it via <code>--robot.tracker_serial=&lt;SN&gt;</code> and skip auto-matching. Shake one gripper at a time to confirm which SN is which hand before writing it into your config.</p>
+<h3 id="pico-tracker">Tracking mode<a class="headerlink" href="#pico-tracker" title="锚点链接">¶</a></h3>
+<p>Once bound, open "Motion Tracking" on the headset, find "Tracking mode" in its settings, select "Standalone tracking" and tap "Confirm". The row should then read "Standalone tracking". The factory default "Full-body motion capture" wears trackers on the body to follow a human pose; "Standalone tracking" fixes a tracker to an object and follows that object's pose, which is how a gripper is used.</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/pico4/tracker-mode2-pick.webp" data-desc-position="bottom"><img alt="Pick standalone tracking and confirm" src="../../assets/pico4/tracker-mode2-pick.webp" width="480"></a></p>
+<h3 id="pico-toolkit-ui">The app's screen<a class="headerlink" href="#pico-toolkit-ui" title="锚点链接">¶</a></h3>
+<p>With the headset on, open XTac-UMI XR from the Library. The screen has only three items: Status, Resolution and Reconnect ("Collapse" folds the panel away). Until "Status" reads "Connected", the PC reads no pose at all.</p>
+<p>There is no PC IP to enter: once the <a href="#pico-network">wired shared network</a> is up, the app finds the XenseVR PC Service on the host by itself, but you have to tap "Reconnect" to connect. Opening the app does not connect it. On first launch it asks "Allow XTac-UMI XR to use the camera?". Tap "Allow", or you get no <a href="../recording/#56">headset camera</a> frames.</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/pico4/app-step2-disconnected.webp" data-desc-position="bottom"><img alt="Status not connected; tap &quot;Reconnect&quot;" src="../../assets/pico4/app-step2-disconnected.webp" width="420"></a></p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/pico4/app-step3-camera.webp" data-desc-position="bottom"><img alt="Allow XTac-UMI XR to use the camera" src="../../assets/pico4/app-step3-camera.webp" width="380"></a></p>
+<p>"Resolution" is the capture resolution of the <a href="../recording/#56">headset camera</a>. There are three settings, <code>640</code> / <code>1024</code> / <code>1280</code>, defaulting to <code>640</code>, which is the one to use. It does nothing if you are not using the headset camera. Raise it here and the collection command's <code>--robot.head_camera_width/_height</code> has to follow with the matching values, or connect fails on the first frame's size. The mapping table is in <a href="../recording/#56">Headset camera</a>.</p>
+<p>High-accuracy tracking is on by default; there is no toggle. If it never connects, the cause is usually the <a href="#pico-network">network</a> not being up or the PC's WiFi still on. Once it reads "Connected", confirm on the host that a pose with an <code>sn</code> comes through, via <code>ConsoleDemo</code> in <code>/opt/apps/roboticsservice/</code> or <code>python -m lerobot.robots.taccap_gripper.check_tracker</code>. The headset saying it is connected and the host actually receiving data are two different things.</p>
+<h3 id="pico-frame">Startup and frame alignment<a class="headerlink" href="#pico-frame" title="锚点链接">¶</a></h3>
+<p>Wear the headset and face straight towards the robot when you launch XTac-UMI XR, then <a href="#pico-toolkit-ui">tap "Reconnect"</a> to get to "Connected". The moment it launches, the world frame's origin and orientation are frozen.</p>
+<p>Recorded poses land in a gravity-aligned world frame: +X = straight ahead, +Y = left, +Z = up. The origin sits where the headset was at the moment of launch. In the picture below, red = X (forward), green = Y (left), blue = Z (up):</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/pico4/world-frame-origin.webp" data-desc-position="bottom"><img alt="The world frame frozen at launch" src="../../assets/pico4/world-frame-origin.webp" width="420"></a></p>
+<p>The frame follows the headset only for that one instant at launch. Once frozen it stays put in space, and turning your head or walking around does not carry it with you. Every <code>tcp.*</code> pose in the dataset is referenced to it.</p>
+<div class="admonition danger">
+<p class="admonition-title">Face straight towards the robot at launch; do not restart XTac-UMI XR between episodes</p>
+<p>Facing straight ahead is what aligns world X with the robot's forward direction. Only the orientation matters; where you stand does not. After a restart of XTac-UMI XR the origin and orientation change, leaving poses inside one dataset referenced to different frames.</p>
+</div>
+<h2 id="35">Start the XenseVR PC Service<a class="headerlink" href="#35" title="锚点链接">¶</a></h2>
+<p>The tracker talks to the host's XenseVR PC Service (RoboticsService) daemon, which handles device discovery, status monitoring and live tracking-data distribution. Collection reads poses from it. The <a href="../install/#docker">Docker image</a> container launches it automatically on start; when you only work on data and do not need the tracker, turn it off with <code>START_XENSEVR_SERVICE=0</code>.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>/opt/apps/roboticsservice/runService.sh
+</span></code></pre></div>
+<p>Only one instance can run at a time; starting a second one fails or conflicts.</p>
+<p>The service can supply several kinds of data (Head / controllers / hand tracking / full-body mocap / standalone Tracker). Collection uses two of them: the standalone Tracker pose (the gripper pose, carrying an <code>sn</code> that distinguishes the trackers) and the head pose (the headset's own pose, used together with the <a href="../recording/#56">headset's stereo frames</a>). The headset sends each eye's frames and its own pose to the PC Service, which forwards them to collection; they share one connection with the trackers, so with the service down neither works. This path needs a service at v0.2.0 or later (see <a href="../versions/#required">Version baseline</a>); if you only use trackers, the version makes no difference.</p>
+<p>The service directory <code>/opt/apps/roboticsservice/</code> ships the <code>ConsoleDemo</code> / <code>RobotDemoQt</code> demos for confirming that the headset was discovered and tracking data looks right (they need the same runtime environment as the service).</p>
+<h2 id="36">Power-on sequence<a class="headerlink" href="#36" title="锚点链接">¶</a></h2>
+<p>The power-on and power-off sequence is described once, in <a href="../quickstart/#power-on">Quickstart · Power-on and power-off sequence</a>; follow the 7 steps there. On a bimanual rig, read the <a href="#usb-budget">USB bandwidth budget</a> before plugging in the cables.</p>
+<p>Next → <a href="../calibration/">Calibration and self-check</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden="">
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer">
+        
+          
+          <a href="../install/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Installation">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Installation
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../calibration/" class="md-footer__link md-footer__link--next" aria-label="Next: Calibration &amp; Self-check">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Calibration &amp; Self-check
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      文档版本 v0.0.6 &nbsp;·&nbsp; Copyright © 2026 XenseRobotics Co., Ltd.
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/XenseRobotics-AI/XTac-UMI-G1-Docs" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tracking", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "navigation.footer", "toc.follow", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.tooltips"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>
