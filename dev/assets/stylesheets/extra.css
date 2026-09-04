@@ -1,0 +1,240 @@
+/* ===== 首页 Hero(浅色居中,产品图在下) ===== */
+.tc-hero {
+  text-align: center;
+  padding: 2.2rem 0 1.2rem;
+}
+.tc-hero .tc-eyebrow {
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  font-size: .72rem;
+  color: var(--md-primary-fg-color);
+  font-weight: 700;
+}
+.tc-hero h1 {
+  font-weight: 800;
+  font-size: 2.1rem;
+  line-height: 1.15;
+  margin: .3rem 0 .5rem;
+}
+.tc-hero .tc-sub {
+  color: var(--md-default-fg-color--light);
+  font-size: 1.05rem;
+  max-width: 42rem;
+  margin: 0 auto 1.1rem;
+}
+.tc-hero .md-button {
+  margin: .3rem .3rem 0;
+}
+
+/* 首页 Hero 产品图 */
+.tc-hero-img {
+  display: block;
+  max-width: min(760px, 100%);
+  height: auto;
+  margin: 1.4rem auto 0;
+  border-radius: .6rem;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, .14);
+}
+
+/* 卡片网格里的图标略放大 */
+.md-typeset .grid.cards :is(.twemoji, .emojione, .gemoji) svg {
+  height: 1.4rem;
+}
+
+/* =====================================================================
+   前端美化:左侧目录字号加大(页眉标题保持单行,不换行)
+   ===================================================================== */
+
+/* 左侧目录:一级分组 / 顶层章节名 —— 大、粗、深色(不用蓝) */
+.md-nav--primary > .md-nav__list > .md-nav__item > .md-nav__link {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--md-default-fg-color);
+  margin-top: .8rem;
+  line-height: 1.5;
+  letter-spacing: .01em;
+}
+/* 分组内二级章节名 —— 明显更小、常规字重、略淡 */
+.md-nav--primary .md-nav__item--section .md-nav__list .md-nav__link {
+  font-size: .75rem;
+  font-weight: 400;
+  color: var(--md-default-fg-color--light);
+  line-height: 1.3;
+}
+/* 彩色只留给「当前选中项」,标题本身不用蓝 */
+.md-nav__link--active,
+.md-nav__link--active > .md-ellipsis {
+  font-weight: 700;
+  color: var(--md-primary-fg-color) !important;
+}
+
+/* 删掉左侧栏灰色站点标题(与顶部页眉站名重复);仅桌面端隐藏,移动端抽屉保留 */
+@media screen and (min-width: 76.25em) {
+  .md-sidebar--primary .md-nav--primary > .md-nav__title {
+    display: none;
+  }
+}
+
+/* =====================================================================
+   首页首屏之下的段落(docs/index.md),类名一律 xu- 前缀;颜色全部取主题变量
+   ===================================================================== */
+
+:root {
+  --xu-tag-bp-bg: #FBF0CC;   /* 背包版标记:暖色,与黄色指尖呼应 */
+  --xu-tag-bp-fg: #6B5100;
+  --xu-tag-pc-bg: #E3E9F1;   /* PC 版标记:冷色 */
+  --xu-tag-pc-fg: #3D5A80;
+}
+[data-md-color-scheme="slate"] {
+  --xu-tag-bp-bg: rgba(242, 183, 5, .16);
+  --xu-tag-bp-fg: #F2C43D;
+  --xu-tag-pc-bg: rgba(61, 90, 128, .38);
+  --xu-tag-pc-fg: #A8BEDB;
+}
+
+/* ---- 数据点行:四格 / 窄屏两格 ---- */
+.md-typeset .xu-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  margin: 1.8rem 0 2.4rem;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: .4rem;
+  background: var(--md-code-bg-color);
+  color: var(--md-default-fg-color--light);
+  overflow: hidden;
+}
+.md-typeset .xu-stats > * {
+  margin: 0;
+  padding: .9rem 1.2rem;
+  border-right: 1px solid var(--md-default-fg-color--lightest);
+  font-size: .68rem;
+  line-height: 1.5;
+}
+.md-typeset .xu-stats > :last-child {
+  border-right: 0;
+}
+.md-typeset .xu-stats strong {
+  display: block;
+  margin-bottom: .1rem;
+  color: var(--md-default-fg-color);
+  font-size: 1.05rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+@media screen and (max-width: 44.9375em) {
+  .md-typeset .xu-stats {
+    grid-template-columns: 1fr 1fr;
+  }
+  .md-typeset .xu-stats > :nth-child(2n) {
+    border-right: 0;
+  }
+  .md-typeset .xu-stats > :nth-child(-n + 2) {
+    border-bottom: 1px solid var(--md-default-fg-color--lightest);
+  }
+}
+
+/* ---- 形态卡片:grid cards 之上加图、标记与底部按钮 ---- */
+.md-typeset .grid.cards.xu-cards > ul > li {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.md-typeset .xu-cards > ul > li > p {
+  margin: .35rem 0;
+}
+.md-typeset .xu-cards > ul > li > hr {
+  margin: .4rem 0 .6rem;
+}
+.md-typeset .xu-cards > ul > li > ul {
+  margin: 0 0 .6rem;
+  color: var(--md-default-fg-color--light);
+  font-size: .72rem;
+}
+.md-typeset .xu-cards .xu-card__img {
+  display: block;
+  width: calc(100% + 1.6rem);
+  max-width: none;
+  height: 10.5rem;
+  margin: -.8rem -.8rem .4rem;
+  object-fit: cover;
+  background: var(--md-default-fg-color--lightest);
+}
+.md-typeset .xu-cards .xu-card__title {
+  font-size: 1rem;
+  font-weight: 700;
+}
+.md-typeset .xu-cards .xu-card__fit {
+  color: var(--md-default-fg-color--light);
+  font-size: .7rem;
+}
+.md-typeset .xu-cards .xu-card__actions {
+  margin-top: auto;
+  padding-top: .5rem;
+}
+.md-typeset .xu-cards .md-button {
+  margin: 0 .4rem .3rem 0;
+  padding: .45em 1.1em;
+  font-size: .7rem;
+}
+
+/* 形态标记 */
+.md-typeset .xu-tag {
+  display: inline-block;
+  padding: .1em .55em;
+  border-radius: .2rem;
+  font-size: .62rem;
+  font-weight: 600;
+  letter-spacing: .04em;
+  line-height: 1.5;
+  vertical-align: middle;
+}
+.md-typeset .xu-tag--backpack {
+  background: var(--xu-tag-bp-bg);
+  color: var(--xu-tag-bp-fg);
+}
+.md-typeset .xu-tag--pc {
+  background: var(--xu-tag-pc-bg);
+  color: var(--xu-tag-pc-fg);
+}
+
+/* ---- 展示段:图文两栏 ---- */
+.md-typeset .xu-spot {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.6rem;
+  align-items: center;
+  margin: 2.4rem 0;
+}
+.md-typeset .xu-spot > p {
+  margin: 0;
+}
+.md-typeset .xu-spot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: .4rem;
+}
+.md-typeset .xu-spot__text > :first-child {
+  margin-top: 0;
+}
+.md-typeset .xu-spot__text > :last-child {
+  margin-bottom: 0;
+}
+.md-typeset .xu-spot__text p {
+  color: var(--md-default-fg-color--light);
+}
+@media screen and (max-width: 59.9375em) {
+  .md-typeset .xu-spot {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+/* 关闭动效偏好:首页元素不做过渡 */
+@media (prefers-reduced-motion: reduce) {
+  .md-typeset .xu-cards .md-button,
+  .md-typeset .grid.cards.xu-cards > ul > li {
+    transition: none;
+  }
+}

@@ -1,0 +1,2241 @@
+<!DOCTYPE html><html lang="zh" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="XTac-UMI 手持式多模态数据采集系统:XTac-UMI G1 视触觉夹爪、数采背包与 PC 开发套件的产品介绍与使用手册">
+      
+      
+        <meta name="author" content="千觉机器人">
+      
+      
+        <link rel="canonical" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/pc/troubleshooting/">
+      
+      
+        <link rel="prev" href="../dataset/">
+      
+      
+        <link rel="next" href="../versions/">
+      
+      
+        
+          <link rel="alternate" href="./" hreflang="zh">
+        
+          <link rel="alternate" href="../../en/pc/troubleshooting/" hreflang="en">
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>故障排查 - XTac-UMI 文档 (预览)</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#故障排查" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="XTac-UMI 文档 (预览)" class="md-header__button md-logo" aria-label="XTac-UMI 文档 (预览)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            XTac-UMI 文档 (预览)
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              故障排查
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo" aria-label="切换到暗色模式" type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换到暗色模式" for="__palette_1" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"></path></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo" aria-label="切换到亮色模式" type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换到亮色模式" for="__palette_0" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"></path></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="选择当前语言">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"></path></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="zh" class="md-select__link">
+              简体中文
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../en/pc/troubleshooting/" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required="">
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard="" data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"></path></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix="">
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/XenseRobotics-AI/XTac-UMI-G1-Docs" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    XenseRobotics-AI/XTac-UMI-G1-Docs
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../.." class="md-tabs__link">
+          
+  
+  
+    
+  
+  产品
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../backpack/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  背包版
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+    
+  
+  PC 版
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../common/pico4/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  通用
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="XTac-UMI 文档 (预览)" class="md-nav__button md-logo" aria-label="XTac-UMI 文档 (预览)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    XTac-UMI 文档 (预览)
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/XenseRobotics-AI/XTac-UMI-G1-Docs" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    XenseRobotics-AI/XTac-UMI-G1-Docs
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix="">
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../.." class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    产品
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_1" id="__nav_1_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    产品
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../product/editions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    产品线与配置对比
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../product/g1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    认识 XTac-UMI G1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../product/backpack/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    认识数采背包
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../product/specs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    技术参数
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../product/safety/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    安全与合规
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../backpack/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    背包版
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    背包版
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../backpack/unbox-connect/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    开箱、接线与供电
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../backpack/network/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    网络与控制台入口
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../backpack/monitor-record/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    实时监控与录制
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../backpack/projects-export/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    项目、导出与发布
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../backpack/playback/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    回放
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../backpack/system/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系统设置
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../backpack/update/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    升级与 OTA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../backpack/troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    故障排查
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../backpack/versions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    版本
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked="">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PC 版
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    PC 版
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    安装
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../host-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    主机配置
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../calibration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    标定与自检
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../recording/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    数据采集
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dataset/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    数据集
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    故障排查
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    故障排查
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#环境与安装" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        环境与安装
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Docker 交付镜像
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hardware" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        硬件与指示灯
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#串口权限与设备发现" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        串口权限与设备发现
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="串口权限与设备发现">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#usb-bandwidth" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        USB 带宽不够
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pico4-追踪器与位姿" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pico4 追踪器与位姿
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#head-camera" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        头显相机
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#采集与录制" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        采集与录制
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#数据与磁盘" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        数据与磁盘
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../versions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    版本与升级
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RobotConfig 与 SDK
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4">
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    通用
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    通用
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../common/pico4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pico4 头显与追踪器
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../common/gripper/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    夹爪按键、指示灯与序列号
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../common/coordinates/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    坐标系
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../common/maintenance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    维护保养
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../common/reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    术语表与支持
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#环境与安装" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        环境与安装
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Docker 交付镜像
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hardware" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        硬件与指示灯
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#串口权限与设备发现" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        串口权限与设备发现
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="串口权限与设备发现">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#usb-bandwidth" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        USB 带宽不够
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pico4-追踪器与位姿" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pico4 追踪器与位姿
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#head-camera" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        头显相机
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#采集与录制" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        采集与录制
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#数据与磁盘" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        数据与磁盘
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="故障排查">故障排查<a class="headerlink" href="#故障排查" title="锚点链接">¶</a></h1>
+<p>本页按症状分类,每条给出原因与解决办法。多数问题出在串口权限与 ModemManager 抢占,先看下文「串口权限与设备发现」;动手前先跑<a href="../">快速开始</a>的自检,再对照症状。</p>
+<h2 id="环境与安装">环境与安装<a class="headerlink" href="#环境与安装" title="锚点链接">¶</a></h2>
+<details class="failure">
+<summary><code>setup_env.sh --install</code> 一开始就报 <code>needs system packages that are not installed</code></summary>
+<p><strong>原因</strong>:硬件 SDK 要现编译,缺 <code>build-essential</code> / <code>cmake</code> / <code>pkg-config</code> / <code>git</code> / <code>curl</code> 中的某几个,脚本故意在开跑前就停。</p>
+<p><strong>解决</strong>:照它打印的那一行安装,清单见<a href="../install/#apt">系统依赖包</a>。另有两条只告警不阻断,也别跳过:<code>libusb-0.1.so.4</code>(<code>libusb-dev</code> 提供)是相机的运行期依赖,缺了要到 <code>connect()</code> 才失败,相机连不上先查它;<code>v4l-utils</code> 提供排查相机用的 <code>v4l2-ctl</code>。</p>
+</details>
+<details class="failure">
+<summary><code>import xensesdk</code> / <code>import xensevr_pc_service_sdk</code> / <code>import xense.taccap</code> 失败</summary>
+<p><strong>原因</strong>:环境未装全,或未激活 <code>xense-taccap</code> 环境。</p>
+<p><strong>解决</strong>:<code>mamba activate xense-taccap</code> 后重跑 <code>./setup_env.sh --install</code>,逐个验证见<a href="../install/#25">安装验证</a>。</p>
+</details>
+<details class="failure">
+<summary><code>torchcodec</code> 加载失败 / 视频编码报错</summary>
+<p><strong>原因</strong>:<code>torchcodec</code> 与当前 PyTorch 版本不匹配,或 PyAV 不是要求的 <code>15.1.0</code>。</p>
+<p><strong>解决</strong>:重跑 <code>setup_env.sh --install</code> 自动校正;需要带 <code>libsvtav1</code> 的系统 FFmpeg 时再单独安装。</p>
+</details>
+<h2 id="docker">Docker 交付镜像<a class="headerlink" href="#docker" title="锚点链接">¶</a></h2>
+<p>只在走 <a href="../install/#docker">Docker 交付镜像</a>时会遇到;容器里串口 busy 见下文 <code>Device or resource busy</code>。</p>
+<details class="failure">
+<summary><code>could not select device driver ... gpu</code> / 容器里看不到显卡</summary>
+<p><strong>原因</strong>:NVIDIA Container Toolkit 没装好,或装完没重启 Docker daemon。</p>
+<p><strong>解决</strong>:<code>install_customer.sh</code> 会自动装;手工确认用 <code>docker run --rm --gpus all ubuntu:22.04 nvidia-smi</code>,看不到显卡就重装 Toolkit 并 <code>sudo systemctl restart docker</code>,宿主机驱动要 ≥ 570.144。</p>
+</details>
+<details class="failure">
+<summary><code>Unknown runtime specified nvidia</code>,<code>docker compose</code> 起不来</summary>
+<p><strong>原因</strong>:NVIDIA runtime 没注册进 Docker;<code>compose.yaml</code> 为拿到图形能力用的是 <code>runtime: nvidia</code>(见<a href="../install/#docker-gui">容器里的图形界面</a>)。</p>
+<p><strong>解决</strong>:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sudo<span class="w"> </span>nvidia-ctk<span class="w"> </span>runtime<span class="w"> </span>configure<span class="w"> </span>--runtime<span class="o">=</span>docker
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>restart<span class="w"> </span>docker
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>docker<span class="w"> </span>info<span class="w"> </span>--format<span class="w"> </span><span class="s1">'{{json .Runtimes}}'</span><span class="w">     </span><span class="c1"># 输出里要能看到 nvidia</span>
+</span></code></pre></div>
+</details>
+<details class="failure">
+<summary>容器里 Rerun 起不来:<code>Failed to create surface for any enabled backend</code> / Vulkan adapter 错误,但 <code>nvidia-smi</code> 正常</summary>
+<p><strong>原因</strong>:X11 没授权;或容器拿到了 CUDA 却没拿到 NVIDIA 的 Vulkan ICD,典型是把 <code>compose.yaml</code> 的 <code>runtime: nvidia</code> 改回了只申请 compute + utility 的 <code>gpus: all</code>,此时 <code>vulkaninfo</code> 报 <code>INCOMPATIBLE_DRIVER</code> 或列不出 NVIDIA 设备。</p>
+<p><strong>解决</strong>:宿主机图形桌面用户下执行 <code>xhost +si:localuser:root</code>,确认 <code>echo "$DISPLAY"</code> 非空、<code>/tmp/.X11-unix</code> 存在;<code>docker info --format '{{json .Runtimes}}'</code> 没列出 nvidia 就按上一条注册,有就把 <code>compose.yaml</code> 改回 <code>runtime: nvidia</code>;再确认容器里 <code>vulkaninfo --summary</code> 认得显卡。</p>
+</details>
+<details class="failure">
+<summary><code>pull access denied ... 'docker login'</code>,或改了 <code>LEROBOT_IMAGE_TAG</code> 拉到的还是老镜像</summary>
+<p><strong>原因</strong>:镜像是公开的,不需要登录;是镜像名解析错了,或 <code>.env</code> 改完没重新拉、不在执行 <code>docker compose</code> 的目录里。</p>
+<p><strong>解决</strong>:<code>docker compose config --images</code> 看解析出的镜像名,检查 <code>.env</code> 里 <code>LEROBOT_IMAGE</code> 有没有写错(默认 <code>ghcr.io/xenserobotics-ai/xense-taccap-lerobot</code>,正常只写 tag 一行),再 <code>docker compose pull</code>,见<a href="../install/#docker-pin">钉死镜像版本</a>。</p>
+</details>
+<details class="failure">
+<summary>进容器时打印 <code>groups: cannot find name for group ID &lt;n&gt;</code></summary>
+<p>无害。NVIDIA runtime 注入了宿主机的 <code>render</code> 组 GID,容器里没有同名组;不影响 GPU、相机或采集。</p>
+</details>
+<details class="failure">
+<summary><code>0.0.5</code> 及更早的镜像:<code>mamba activate</code> 报 <code>Shell not initialized</code>;一开录就崩,报 <code>FileNotFoundError: 'spd-say'</code>;导出的 <code>.mp4</code> 都报 <code>Permission denied</code>,元数据却拷得动</summary>
+<p><strong>原因</strong>:老镜像的三个已知问题,<code>0.0.6</code> 起已修。进容器时环境已经激活,不需要 activate;镜像没有语音播报用的 <code>spd-say</code>,而 <code>--play_sounds</code> 默认 <code>true</code>,播报抛异常后进程以 <code>terminate called without an active exception</code> 崩掉;录出的视频是 <code>-rw------- root</code>,元数据是 <code>0644</code>,非 root 拷贝时只有视频失败,文件本身是好的。</p>
+<p><strong>解决</strong>:升级镜像(见<a href="../install/#docker-pin">钉死镜像版本</a>)。仍钉在老镜像时:手工切环境先 <code>eval "$(mamba shell hook --shell bash)"</code>;录制加 <code>--play_sounds=false</code>,采集不受影响(容器里刻意不装语音合成器,装了 <code>spd-say</code> 会一直挂着,要听提示音就在宿主机上录);老镜像录出的视频升级后权限也不会变,按<a href="../install/#docker-data">数据放在哪</a>以 root 拷、拷完 <code>chown</code>,不要用 <code>--user</code>。</p>
+</details>
+<details class="failure">
+<summary>宿主机能看到触觉传感器,容器里找不到</summary>
+<p><strong>原因</strong>:容器不是通过 Compose 启动的(<code>/dev</code>、<code>/run/udev</code> 没透传),或 USB 重新枚举后节点还没稳定。</p>
+<p><strong>解决</strong>:用 <code>docker compose run --rm xense-taccap</code> 进容器,<code>ls /dev/v4l/by-id/*GSPS*</code> 确认节点在;空的话回宿主机重插 USB hub,再 <code>sudo udevadm settle --timeout=20</code>。</p>
+</details>
+<details class="failure">
+<summary>容器重启后传感器要重新读一遍、启动变慢</summary>
+<p><strong>原因</strong>:<code>xensesdk-cache</code> volume 被删了;它按序列号缓存传感器配置,避免每次启动重读 flash 并触发 USB 重新枚举。</p>
+<p><strong>解决</strong>:让它留着,各 volume 的用途见<a href="../install/#docker-data">数据放在哪</a>。</p>
+</details>
+<h2 id="hardware">硬件与指示灯<a class="headerlink" href="#hardware" title="锚点链接">¶</a></h2>
+<p>先记下设备编号、连接方式、指示灯状态、软件报错和现场照片。目前只有<strong>白色长亮 = 正常运行</strong>是确定的灯语,其余灯态仍在开发测试中,以最终发布版本为准。上下电注意防静电。</p>
+<div class="admonition danger">
+<p class="admonition-title">异味、冒烟、明显发热、结构破损或线缆破皮</p>
+<p>立即断电并停止使用。</p>
+</div>
+<details class="failure">
+<summary>主夹爪指示灯不亮</summary>
+<p><strong>原因</strong>:线缆未插紧、供电不足或接口损坏;主夹爪只能用配套 Type-C 线供电(DC 5V/500mA),不能接 9V/12V 快充适配器。</p>
+<p><strong>解决</strong>:重插并旋紧锁紧螺钉,换终端接口;仍不亮则停用并联系支持。</p>
+</details>
+<details class="failure">
+<summary>红灯闪烁 / 设备异常重启</summary>
+<p><strong>原因</strong>:设备故障或通信异常。</p>
+<p><strong>解决</strong>:停止录制并重新上电;反复出现则联系技术支持,附上灯态与日志。</p>
+</details>
+<details class="failure">
+<summary>软件识别不到主夹爪 / <code>lsusb</code> 数量不对</summary>
+<p><strong>原因</strong>:USB 异常、线缆故障或软件未刷新。</p>
+<p><strong>解决</strong>:<code>lsusb</code> 应看到全部 UVC 设备,双夹爪 6 个(4 个 <code>Xense Robotics ... GSPS01…</code> 触觉 + 2 个 <code>Sunplus ... XCA…</code> 腕相机),单臂 3 个;序列号末位单左双右,见<a href="../../common/gripper/#sn">序列号与左右识别</a>。数量不对就检查线缆锁紧与左右接法,重开采集软件,换 Type-C 接口或线缆;能列出但打不开见下一节。</p>
+</details>
+<details class="failure">
+<summary>图像黑屏 / 无图像</summary>
+<p><strong>原因</strong>:UVC 未识别、传感器连接异常或通道选错。</p>
+<p><strong>解决</strong>:<code>lsusb</code> 确认识别到该设备,重启采集软件,重新上电。</p>
+</details>
+<details class="failure">
+<summary>图像有污点 / 模糊</summary>
+<p><strong>原因</strong>:传感器表面污渍、异物或损伤。</p>
+<p><strong>解决</strong>:无尘布清洁,见<a href="../../common/maintenance/">维护保养</a>;有划伤、凹陷需更换传感器。</p>
+</details>
+<details class="failure">
+<summary>从夹爪不上电 / 通信异常</summary>
+<p><strong>原因</strong>:从夹爪供电走 24V 适配器、通信走 Type-C。不上电是 24V 未连或适配器异常;通信异常是 Type-C 未连、未识别,或线缆被机器人运动拉扯。</p>
+<p><strong>解决</strong>:检查 24V 适配器、插座、电源接口与规格,先连 24V 再连 Type-C 并锁紧(见<a href="../#power-on">上电顺序</a>);重连 Type-C 并旋紧锁紧螺钉,走线避开关节与夹爪运动区,首次运行前低速测试。</p>
+</details>
+<details class="failure">
+<summary>OTA 升级时蓝灯亮得过久</summary>
+<p><strong>原因</strong>:升级未完成或流程异常。</p>
+<p><strong>解决</strong>:升级期间不要断电;长时间无变化按<a href="../versions/#ota">固件 OTA 升级</a>处理并联系支持。</p>
+</details>
+<h2 id="串口权限与设备发现">串口权限与设备发现<a class="headerlink" href="#串口权限与设备发现" title="锚点链接">¶</a></h2>
+<details class="failure">
+<summary><code>connect()</code> 报 <code>No leader gripper discovered for the &lt;side&gt; side.</code></summary>
+<p><strong>原因</strong>(最常见):用户不在 <code>dialout</code> 组,SDK 能列出夹爪但打不开串口读固件 SN,于是 <code>role=Unknown</code> / <code>firmware_sn</code> 为空;底层是 <code>IoError: SerialBus: open(...): Permission denied</code>。</p>
+<p><strong>解决</strong>:<code>sudo usermod -aG dialout "$USER"</code>,然后必须注销重登(或 <code>newgrp dialout</code>)再重插夹爪,不重登报错不变。详见<a href="../host-setup/#31">串口权限</a>。</p>
+</details>
+<details class="failure">
+<summary><code>Device or resource busy</code>(热插拔后立即启动;容器里 <code>/dev/ttyACM*</code> 报 busy 也是它)</summary>
+<p><strong>原因</strong>:ModemManager 每次热插拔都用 AT 指令探测 CH343 串口并占用几秒,典型是拔下、换口、立即重启就 busy;装了 <code>brltty</code> 也会同样抢占。容器里也一样,规则要装在宿主机。</p>
+<p><strong>解决</strong>:临时办法是插好等约 3 秒;永久办法是加 udev 规则让 ModemManager 忽略 <code>1a86</code> 设备(Docker 路径的 <code>install_customer.sh</code> 已装过一次),规则与验证命令见<a href="../host-setup/#32">关闭 ModemManager 抢占</a>,装完重插夹爪。</p>
+</details>
+<details class="failure">
+<summary>修好权限后 <code>firmware_sn</code> 仍为空 / <code>role=Unknown</code></summary>
+<p><strong>原因</strong>:SN 未烧录、串口读取仍失败、固件通信异常或设备端配置问题;不能只凭空 SN 推断固件版本。</p>
+<p><strong>解决</strong>:保存完整底层报错,换线、换口复测;仍为空时联系设备或固件团队核对 SN 烧录与通信状态。</p>
+</details>
+<details class="failure">
+<summary>报错指名某个 hub / 序列号</summary>
+<p><strong>原因</strong>:装配与"单左双右"规则不符:序列号不合规、每侧数量不对、两枚指尖触觉传感器映射到同一侧、触觉 hub 找不到对应夹爪。</p>
+<p><strong>解决</strong>:按报错指名的物理设备或 hub 排查装配与接线,规则见<a href="../host-setup/#33">设备发现</a>。</p>
+</details>
+<details class="failure">
+<summary>腕相机 / 视触觉打不开、<code>video ... busy</code></summary>
+<p><strong>原因</strong>:相机被外部相机服务占用,或用户不在 <code>video</code> 组。</p>
+<p><strong>解决</strong>:确认相机服务状态;<code>sudo usermod -aG video "$USER"</code>,重登生效。每次挂的不是同一路时看下面的 USB 带宽。</p>
+</details>
+<h3 id="usb-bandwidth">USB 带宽不够<a class="headerlink" href="#usb-bandwidth" title="锚点链接">¶</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">双夹爪装机第一天就量一次,别等到相机打不开</p>
+<p>这是双夹爪现场最常见的故障,插线那一刻就决定了,取决于两只夹爪插在哪几个物理口上。带宽预算怎么算、<code>lsusb -t</code> 怎么看,见 <a href="../host-setup/#usb-budget">USB 带宽预算</a>,本节只讲判定与处置。</p>
+</div>
+<details class="failure">
+<summary>某一路相机打不开(<code>Cannot open camera N</code>),而且每次挂的不是同一路</summary>
+<p><strong>原因</strong>:USB 带宽不够,不是硬件坏了。每个 UVC 相机打开时都独占预留一份等时带宽,超出总线预算(约 384 Mbit/s)时最后打开的那路失败,而谁最后打开每次不同,所以故障会"飘"。插蓝色 USB 3 口没用,触觉与腕相机仍落在同一控制器的 USB 2.0 总线上。</p>
+<p><strong>先确认是不是带宽</strong>:<code>lsusb -t</code> 数一数每条 <code>480M</code> 总线上挂了几个相机,双夹爪六个挤一条很可能超;启动时另开终端盯内核日志:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sudo<span class="w"> </span>dmesg<span class="w"> </span>-w<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>--line-buffered<span class="w"> </span>-iE<span class="w"> </span><span class="s2">"uvcvideo|bandwidth|disconnect"</span>
+</span></code></pre></div>
+<p><code>--line-buffered</code> 不能省,否则 <code>grep</code> 一直缓冲像卡住。相机打不开那一刻打出 <code>Not enough bandwidth for altsetting N</code> 即可确诊。也可以拆成两半各跑一次:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># 只开触觉(关掉腕相机)</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>lerobot-teleoperate<span class="w"> </span>--robot.type<span class="o">=</span>bi_taccap_gripper<span class="w"> </span>--robot.id<span class="o">=</span><span class="m">0</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span>--robot.left_enable_wrist_camera<span class="o">=</span><span class="nb">false</span><span class="w"> </span>--robot.right_enable_wrist_camera<span class="o">=</span><span class="nb">false</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">    </span>--robot.enable_tracker<span class="o">=</span><span class="nb">false</span><span class="w"> </span>--fps<span class="o">=</span><span class="m">30</span><span class="w"> </span>--display_data<span class="o">=</span><span class="nb">true</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="c1"># 只开腕相机(关掉触觉)</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>lerobot-teleoperate<span class="w"> </span>--robot.type<span class="o">=</span>bi_taccap_gripper<span class="w"> </span>--robot.id<span class="o">=</span><span class="m">0</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">    </span>--robot.enable_tactile<span class="o">=</span><span class="nb">false</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">    </span>--robot.enable_tracker<span class="o">=</span><span class="nb">false</span><span class="w"> </span>--fps<span class="o">=</span><span class="m">30</span><span class="w"> </span>--display_data<span class="o">=</span><span class="nb">true</span>
+</span></code></pre></div>
+<p>两半分别正常、合起来失败就是带宽问题;<code>enable_tactile=false</code> 只用于判断,不要拿它录数据。</p>
+<p><strong>解决</strong>:先确认腕相机没被从默认 <code>MJPG</code> 改成 <code>YUYV</code>(<code>--robot.wrist_camera_fourcc</code>),<code>MJPG</code> 正是为省带宽才设为默认。仍超就只能加一个 USB 主控制器而不是 hub(Thunderbolt / USB4 扩展坞自带 xHCI 控制器,普通 hub 不带),把一只夹爪插过去后 <code>lsusb -t</code> 应多出一行新的 <code>480M</code> root_hub。装第二个控制器前可先关腕相机录,数据集将没有 <code>{side}_wrist</code> 键,开录前定下来,不要一半有一半没有。</p>
+</details>
+<details class="question">
+<summary>到底超了多少?</summary>
+<p>以本机实测为准。一台只有一条 <code>480M</code> 总线的双夹爪主机量到:</p>
+<table>
+<thead>
+<tr>
+<th>开哪些相机</th>
+<th>预留</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>只开四路触觉(两侧 <code>_enable_wrist_camera=false</code>)</td>
+<td>242 Mbit/s</td>
+<td>正常</td>
+</tr>
+<tr>
+<td>只开两路腕相机(<code>--robot.enable_tactile=false</code>)</td>
+<td>够用</td>
+<td>正常</td>
+</tr>
+<tr>
+<td>六个全开(默认)</td>
+<td>6 × 60.4 = 362 Mbit/s</td>
+<td>失败</td>
+</tr>
+</tbody>
+</table>
+<p><code>altsetting 6</code> 是每微帧 944 字节,即每枚触觉 60.4 Mbit/s,而 320x240 YUYV@30 实际只有约 37 Mbit/s,腕相机申请得更多;362 对约 384 就差在边上。自己读数:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># I:* 是当前生效的 altsetting;类名在这个文件里是小写的 (video)</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>sudo<span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s2">"^(T:|I:\*.*video|E:.*Isoc)"</span><span class="w"> </span>/sys/kernel/debug/usb/devices
+</span></code></pre></div>
+<p>每个 video 接口的 <code>Alt=</code> 与其 <code>E:</code> 行的 <code>MxPS=</code> 给出预留量(<code>MxPS × 8000 × 8</code> bit/s),按总线求和再与约 384 Mbit/s 比;申请量由固件的 UVC 描述符决定,采集程序改不了。</p>
+</details>
+<details class="question">
+<summary>换个 USB 口、调低 <code>tactile_fps</code>、<code>uvcvideo quirks=128</code> 有用吗?</summary>
+<p>都没用:换物理 USB 口,同一控制器的所有口共用一条 USB 2.0 总线,要换就换到另一个控制器;调低 <code>--robot.tactile_fps</code>,只节流 Python 侧读取,传感器 SDK 不接受 fps 参数,USB 上的流没变;<code>uvcvideo quirks=128</code>(<code>UVC_QUIRK_FIX_BANDWIDTH</code>)实测无效,它按 <code>宽 × 高 × bpp</code> 重算预留量,对超得最多的 MJPEG 腕相机无从下手。</p>
+</details>
+<h2 id="pico4-追踪器与位姿">Pico4 追踪器与位姿<a class="headerlink" href="#pico4-追踪器与位姿" title="锚点链接">¶</a></h2>
+<details class="failure">
+<summary>没有位姿 / 追踪器连不上 / 位姿不稳</summary>
+<p><strong>原因</strong>:电脑 WiFi 与 Pico4 Ultra 企业版有线共享网络冲突(最常见);或 XenseVR PC Service、XTac-UMI XR 未启动,追踪器未配对或没电。</p>
+<p><strong>解决</strong>:先关闭数采电脑 WiFi,只保留有线共享网络(见<a href="../../common/pico4/#pico-network">网络连接</a>);再按<a href="../#power-on">上电顺序</a>逐项确认;启动服务 <code>/opt/apps/roboticsservice/runService.sh</code>;必要时用 <code>python -m lerobot.robots.taccap_gripper.check_tracker</code> 自检。</p>
+</details>
+<details class="failure">
+<summary>位姿参考系在集之间漂移</summary>
+<p><strong>原因</strong>:分集途中重启了 XTac-UMI XR,世界原点被重设。</p>
+<p><strong>解决</strong>:分集之间不重启 XTac-UMI XR,已重启的把之后的数据当新数据集处理,见<a href="../../common/pico4/#pico-frame">坐标系对齐</a>。</p>
+</details>
+<details class="failure">
+<summary>采集间隙位姿突然中断 / 头显自己灭屏</summary>
+<p><strong>原因</strong>:头显未关闭灭屏与系统休眠,挂起后 XTac-UMI XR 被暂停或杀掉,重启它又会造成上一条的漂移。</p>
+<p><strong>解决</strong>:企业设置 → 系统设置 → 电源策略,先把「系统休眠」设为「永不」,再把「灭屏」设为「永不」(顺序反了灭屏会被休眠时间钳制回有限值),见<a href="../../common/pico4/#pico-system">系统设置</a>。</p>
+</details>
+<details class="failure">
+<summary>追踪模式里选不到追踪器 / PC Service 发现不了这个 SN / 配对界面搜不到追踪器</summary>
+<p><strong>原因</strong>:追踪器没有绑定到这台头显(新机、换了追踪器或头显、恢复过出厂设置);配对时搜不到是追踪器没进入蓝牙配对状态(蓝灯常亮)。</p>
+<p><strong>解决</strong>:打开「体感追踪器」App 完成绑定,两枚都要绑;配对前长按电源键约 6 秒,直到指示灯蓝红交替闪烁,再点「开始配对」。见<a href="../../common/pico4/#pico-tracker-bind">绑定追踪器</a>。</p>
+</details>
+<details class="failure">
+<summary>XTac-UMI XR 一直显示「未连接」</summary>
+<p><strong>原因</strong>:多半不在 App,而是有线共享网络没接好,或数采电脑的 WiFi 没关。</p>
+<p><strong>解决</strong>:先点「重连」;仍不行就按<a href="../../common/pico4/#pico-network">网络连接</a>重接一遍并确认电脑 WiFi 已关,界面见<a href="../../common/pico4/#pico-toolkit-ui">打开 App 后的界面</a>。</p>
+</details>
+<details class="failure">
+<summary>头显里显示「已连接」,PC 端却收不到任何位姿</summary>
+<p><strong>原因</strong>:「已连接」只说明 App 连到了服务;主机侧服务没起来,或追踪器没开机、没绑定。</p>
+<p><strong>解决</strong>:确认主机已启动 <a href="../host-setup/#35">XenseVR PC Service</a>;再用 <code>/opt/apps/roboticsservice/</code> 的 <code>ConsoleDemo</code> 或 <code>python -m lerobot.robots.taccap_gripper.check_tracker</code> 看能否读到带 <code>sn</code> 的位姿,读不到就回<a href="../../common/pico4/#pico-tracker-bind">绑定</a>确认两枚追踪器都已开机并「已连接」。</p>
+</details>
+<details class="failure">
+<summary>追踪器侧别匹配错 / PC 服务枚举不稳</summary>
+<p><strong>原因</strong>:序列号不合规,或枚举抖动。</p>
+<p><strong>解决</strong>:用 <code>--robot.tracker_serial=&lt;SN&gt;</code> 逐字钉住(不枚举、不校验);或核对序列号末尾字母 <code>G</code> 前一个数字,单左双右,见<a href="../../common/pico4/#pico-tracker-sn">追踪器序列号</a>。</p>
+</details>
+<h2 id="head-camera">头显相机<a class="headerlink" href="#head-camera" title="锚点链接">¶</a></h2>
+<details class="failure">
+<summary>开了 <code>--robot.enable_head_camera=true</code>,一直卡在等待首帧</summary>
+<p><strong>原因</strong>:画面由 PC Service 转发,任何一环没通都收不到帧:服务版本低于 v0.2.0(v0.1.0 不转发头显相机画面),或头显 App 没在推流。</p>
+<p><strong>解决</strong>:按顺序查:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># 1) 服务 deb 版本:需要 ≥ 0.2.0</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>dpkg<span class="w"> </span>-s<span class="w"> </span>xensevr-pc-service<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s1">'^(Version|Architecture):'</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="c1"># 2) 是否带相机接口</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"import xensevr_pc_service_sdk as xrt; print(hasattr(xrt, 'has_pico_camera_frame'))"</span>
+</span></code></pre></div>
+<p>再确认头显已连上 PC Service 且 App 正在推流(相机与追踪器共用同一条连接)。前置条件见<a href="../recording/#56">头显相机</a>。</p>
+</details>
+<details class="failure">
+<summary><code>AttributeError: module 'xensevr_pc_service_sdk' has no attribute 'has_pico_camera_frame'</code></summary>
+<p><strong>原因</strong>:加载的是旧版接口(相机接口随 v0.2.0 加入)。这个模块链接的 C SDK 取自已安装的 <code>.deb</code>,先看装的是哪一版:<code>dpkg -s xensevr-pc-service | grep -E '^(Status|Version):'</code>。</p>
+<p><strong>解决</strong>:拉最新主仓库后重跑 <code>./setup_env.sh --install</code>,它会把 <code>.deb</code> 一并升到基线版本;仍为 <code>False</code> 时用 <code>python -c "import xensevr_pc_service_sdk as x; print(x.__file__)"</code> 确认加载的是哪一份。<code>Status</code> 不是 <code>install ok installed</code>(例如 <code>dpkg -r</code> 删过,残留 <code>deinstall ok config-files</code>)时同样重装一次。</p>
+</details>
+<details class="failure">
+<summary>日志反复出现左右眼偏差(skew)告警</summary>
+<p><strong>原因</strong>:两只眼是两条独立消息,时间戳差超过 <code>--robot.head_camera_pair_max_skew_ms</code>(默认 20 ms);常见于主机负载过高,或头显与 PC 之间链路抖动。</p>
+<p><strong>解决</strong>:告警不中断录制,但这几帧左右眼可能不同步。先降低主机负载(减少相机路数、用 <code>--robot.head_camera_eyes=left</code> 只录一只眼);链路问题按<a href="../../common/pico4/#pico-network">网络连接</a>排查;确认只是抖动时再适当放宽该阈值。</p>
+</details>
+<details class="failure">
+<summary><code>head_camera_width/_height</code> 报尺寸不支持,或尺寸合法、connect 时仍报首帧尺寸不符</summary>
+<p><strong>原因</strong>:头显相机只接受与头显 App「分辨率」三档一一对应的三种尺寸,填别的直接报错;尺寸合法仍报不符,是命令行与头显里的「分辨率」对不上,最常见是头显调到了 <code>1024</code> 或 <code>1280</code>,命令行还是默认。</p>
+<p><strong>解决</strong>:两边取同一个值,头显停在默认 <code>640</code> 就不加参数,对应表见<a href="../recording/#56">头显相机</a>;改尺寸等于换了一组数据,变更前后的 episode 不能混用。头显那一项在<a href="../../common/pico4/#pico-toolkit-ui">打开 App 后的界面</a>。</p>
+</details>
+<h2 id="采集与录制">采集与录制<a class="headerlink" href="#采集与录制" title="锚点链接">¶</a></h2>
+<details class="failure">
+<summary>命令刚敲下去就退出:<code>--robot.id is required</code></summary>
+<p><strong>原因</strong>:<code>--robot.id</code> 是必填的工位号,解析命令行时就检查。</p>
+<p><strong>解决</strong>:补上工位号,填数字即可(<code>0</code> / <code>1</code>…,一套设备一个,双夹爪算一套;前缀按 <code>--robot.type</code> 自动补成 <code>taccap_0</code> / <code>bi_taccap_0</code>),例如 <code>lerobot-record --robot.type=bi_taccap_gripper --robot.id=0 ...</code>。它标的是工位不是硬件,换夹爪不用改;设备身份记在数据集的 <code>meta/hardware.json</code> 里,见 <a href="../recording/#robot-id"><code>--robot.id</code> 与硬件清单</a>。</p>
+</details>
+<details class="failure">
+<summary>续录时告警:数据集里已有的 <code>meta/hardware.json</code> 和当前硬件对不上</summary>
+<p><strong>原因</strong>:用 <code>--resume</code> 续录时换了夹爪或触觉传感器,程序保留原文件并告警。</p>
+<p><strong>解决</strong>:告警不阻断录制。有意换硬件就继续,这条告警就是数据集跨了两套硬件的记录;不是有意的(比如插错了一只夹爪),先停下把设备换回去。</p>
+</details>
+<details class="failure">
+<summary>开了 <code>--display_data=true</code> 后日志频繁出现 <code>[slow_frame]</code></summary>
+<p><strong>原因</strong>:Rerun 显示占掉了帧预算。双夹爪 + 头显(四路触觉、两路腕相机、两只眼)实测 JPEG 压缩每帧 13.2 ms、不压缩 3.1 ms,而 30 fps 的预算只有 33.3 ms。先看 <code>[slow_frame]</code> 行末的 <code>top_obs=</code>,分清是传感器慢还是显示贵,两者解法相反。</p>
+<p><strong>解决</strong>:确认 <code>--display_compressed_images=false</code>、<code>--display_image_every_n=1</code> 这两个默认值没被改过;仍超时再调大 <code>--display_image_every_n</code>,相机画面刷新变稀,<code>tcp.*</code>、<code>gripper.pos</code> 等标量仍全速,这是最后手段。</p>
+</details>
+<details class="failure">
+<summary>录制中途停下,提示 <code>Device lost mid-recording</code></summary>
+<p><strong>原因</strong>:某路相机或夹爪编码器掉线:线松、锁紧螺钉没拧紧、线缆受力、hub 掉电、供电不稳或 USB 口接触不良。采集主动停止,已录部分会存盘。</p>
+<p><strong>解决</strong>:掉线那一集最后一两秒是重复的旧值,建议弃用。检查锁紧螺钉、走线与 USB 口(反复出现且换口无效见 <a href="#usb-bandwidth">USB 带宽不够</a>),再用 <code>--resume</code> 在同一数据集上续录,见<a href="../recording/#52">录制</a>。</p>
+</details>
+<details class="failure">
+<summary>没有独显的机器上,录制一开始就报编码器打不开</summary>
+<p><strong>原因</strong>:机器没有 NVIDIA 驱动,却在用 GPU 硬件编码器。</p>
+<p><strong>解决</strong>:改用 CPU 编码器并关掉流式编码:<code>lerobot-record ... --dataset.vcodec=libsvtav1 --dataset.streaming_encoding=false</code>,原因见<a href="../recording/#no-gpu">没有 NVIDIA GPU 的主机怎么录</a>。</p>
+</details>
+<details class="failure">
+<summary>编码器跟不上、日志出现丢帧告警</summary>
+<p><strong>原因</strong>:实时编码队列满时会丢最旧帧(不阻塞采集循环)。</p>
+<p><strong>解决</strong>:增大 <code>--dataset.encoder_threads</code>、用 <code>--dataset.vcodec=auto</code> 硬件编码,或调 <code>--dataset.encoder_queue_maxsize</code>,见<a href="../recording/#54">录制选项</a>。</p>
+</details>
+<details class="failure">
+<summary>夹爪开度不对 / 闭合时不为 0</summary>
+<p><strong>原因</strong>:编码器零点漂移或未标定;没标过的主夹爪采集程序会拒绝连接并提示要跑的命令。</p>
+<p><strong>解决</strong>:<code>python third_party/taccap-gripper/python/examples/calibrate.py left</code>(或 <code>right</code>)重新标定,同时重标零点与行程上限,都写入 MCU flash,每台标一次即可,见<a href="../calibration/#41">夹爪标定</a>。</p>
+</details>
+<details class="failure">
+<summary>标定报 <code>encoder-max calibration needs command set &gt;= V2.1</code></summary>
+<p><strong>原因</strong>:固件命令集低于 V2.1(即 leader &lt; 1.2.0),不支持行程标定;<code>calibrate.py</code> 原样退出、不改动任何东西。</p>
+<p><strong>解决</strong>:刷固件,步骤(先升 SDK、按角色选镜像、镜像只写文件名)见<a href="../versions/#ota">固件 OTA 升级</a>,刷完重跑 <code>calibrate.py</code>。</p>
+</details>
+<h2 id="数据与磁盘">数据与磁盘<a class="headerlink" href="#数据与磁盘" title="锚点链接">¶</a></h2>
+<details class="failure">
+<summary>采集变慢 / 磁盘写满</summary>
+<p><strong>原因</strong>:双夹爪多相机原始视频吞吐可达约 280 MB/s,编码后写入量取决于分辨率、画面内容、编码器与码率;盘空间不足、持续写入性能不足或编码线程跟不上都会出问题。</p>
+<p><strong>解决</strong>:先用少量 episode 实测编码后体积和丢帧情况,再规划批量采集;定期检查 <code>df -h</code> 与数据集目录大小,见<a href="../dataset/#storage-planning">存储规划</a>。</p>
+</details>
+<hr>
+<p>仍未解决?带上完整报错、自检输出(<code>scan_grippers</code> 的 side / role / firmware_sn)、版本信息和复现命令,按<a href="../../common/reference/#support">支持与反馈</a>的渠道反馈。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden="">
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚">
+        
+          
+          <a href="../dataset/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 数据集">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                数据集
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../versions/" class="md-footer__link md-footer__link--next" aria-label="下一页: 版本与升级">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                版本与升级
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © 2026 千觉机器人科技(上海)有限公司
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/XenseRobotics-AI/XTac-UMI-G1-Docs" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.tracking", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "navigation.footer", "toc.follow", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.tooltips"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>
