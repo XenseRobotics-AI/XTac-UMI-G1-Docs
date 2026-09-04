@@ -1,0 +1,2427 @@
+<!DOCTYPE html><html lang="en" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="XenseRobotics XTac-UMI G1 手持触觉数采夹爪 · 基于 lerobot 的数据采集快速上手">
+      
+      
+        <meta name="author" content="XenseRobotics">
+      
+      
+        <link rel="canonical" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/02-environment/">
+      
+      
+        <link rel="prev" href="../hardware/">
+      
+      
+        <link rel="next" href="../03-host-hardware/">
+      
+      
+        
+          <link rel="alternate" href="../../02-environment/" hreflang="zh">
+        
+          <link rel="alternate" href="./" hreflang="en">
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Installation - XTac-UMI G1 Data-Collection Quickstart</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#2-environment-setup" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../" title="XTac-UMI G1 Data-Collection Quickstart" class="md-header__button md-logo" aria-label="XTac-UMI G1 Data-Collection Quickstart" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            XTac-UMI G1 Data-Collection Quickstart
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Installation
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo" aria-label="切换到暗色模式" type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换到暗色模式" for="__palette_1" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"></path></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo" aria-label="切换到亮色模式" type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换到亮色模式" for="__palette_0" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"></path></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="Select language">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"></path></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="../../02-environment/" hreflang="zh" class="md-select__link">
+              简体中文
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="en" class="md-select__link">
+              English (partial)
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required="">
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard="" data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"></path></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix="">
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/XenseRobotics-AI/XTac-UMI-G1-Docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    XenseRobotics-AI/XTac-UMI-G1-Docs
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../" title="XTac-UMI G1 Data-Collection Quickstart" class="md-nav__button md-logo" aria-label="XTac-UMI G1 Data-Collection Quickstart" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    XTac-UMI G1 Data-Collection Quickstart
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/XenseRobotics-AI/XTac-UMI-G1-Docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    XenseRobotics-AI/XTac-UMI-G1-Docs
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix="">
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../highlights/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Highlights
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked="">
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Ready
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Getting Ready
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hardware/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hardware
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#host-spec" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Collection host requirements
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#choose" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Choosing an install path
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#apt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisite: system packages (apt)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#21-prerequisite-install-mamba--miniforge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Prerequisite: install Mamba / Miniforge
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Clone the repo and its submodules
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#23-create-and-activate-the-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Create and activate the environment
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#24" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 One-shot install
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#25" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5 Verify the install
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Docker delivery image
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Docker delivery image">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#host-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Host requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ghcr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        One-shot install
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker-pin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pin a version before you record
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker-host" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Host setup after installing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#entering-the-container-and-verifying" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Entering the container and verifying
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Where the data lives, and why --rm does not lose it
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker-data-dir" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Writing datasets straight to a host directory
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker-gui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Graphics from inside the container
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-host-hardware/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Host &amp; Device Setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6">
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Software Usage
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Software Usage
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-calibration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Calibration &amp; self-check
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-data-collection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data preview and collection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../best-practices/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Best Practices
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7">
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Data
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-dataset/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dataset &amp; Examples
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data-management/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Management
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8">
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../maintenance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Maintenance
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-faq-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FAQ &amp; Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../versions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Versions &amp; Support
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8_5">
+        
+          
+          <label class="md-nav__link" for="__nav_8_5" id="__nav_8_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix: SDK
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Appendix: SDK
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdk-overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SDK Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdk-install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install &amp; Build
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdk-examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Examples
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#host-spec" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Collection host requirements
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#choose" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Choosing an install path
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#apt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisite: system packages (apt)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#21-prerequisite-install-mamba--miniforge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Prerequisite: install Mamba / Miniforge
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Clone the repo and its submodules
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#23-create-and-activate-the-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Create and activate the environment
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#24" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 One-shot install
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#25" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5 Verify the install
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Docker delivery image
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Docker delivery image">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#host-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Host requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ghcr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        One-shot install
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker-pin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pin a version before you record
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker-host" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Host setup after installing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#entering-the-container-and-verifying" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Entering the container and verifying
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Where the data lives, and why --rm does not lose it
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker-data-dir" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Writing datasets straight to a host directory
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker-gui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Graphics from inside the container
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="2-environment-setup">2. Environment Setup<a class="headerlink" href="#2-environment-setup" title="锚点链接">¶</a></h1>
+<p>This chapter targets <strong>Ubuntu 22.04 / 24.04 LTS (amd64)</strong> and gets <code>xense-taccap-lerobot</code> plus
+every hardware SDK installed and verified.</p>
+<div class="admonition info">
+<p class="admonition-title">Verified environment for the XTac-UMI G1</p>
+<p>XTac-UMI G1 hardware bring-up and collection were verified inside the <code>mamba</code> environment
+<code>xense-taccap</code>. The test host currently reads as:</p>
+<ul>
+<li>OS: Ubuntu 22.04.5 LTS / Ubuntu 24.04.4 LTS</li>
+<li>Linux kernel: <strong>6.8, 6.14 and 7.0 series all verified</strong> — the kernel version is not a
+  constraint</li>
+<li>Architecture: <code>x86_64</code></li>
+<li>Python: <code>3.12.13</code> (the main repository requires <strong>≥ 3.12</strong>)</li>
+<li>Repo commit and per-package versions: see <a href="../versions/">Versions &amp; Support</a> (single source
+  of truth, so nothing drifts between copies)</li>
+</ul>
+<p>Ubuntu 22.04 LTS is also covered by this chapter. Other distributions or architectures need
+verifying separately against their actual driver, UVC, serial-permission and <code>.deb</code> support.</p>
+<p>The <strong>hardware</strong> that machine needs is in the next section,
+<a href="#host-spec">Collection host requirements</a>.</p>
+</div>
+<h2 id="host-spec">Collection host requirements<a class="headerlink" href="#host-spec" title="锚点链接">¶</a></h2>
+<p>Collection is <strong>real time</strong>: on a bimanual rig six cameras are streamed and encoded at once, and a
+frame's entire budget is <strong>33.3 ms</strong> (30 fps). So the host is not a "anything that boots" affair —
+<strong>an underspecified machine shows up as dropped frames and slow recording, not as an error</strong>, and
+it is not easy to spot in the data afterwards.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>Minimum</strong></th>
+<th><strong>Recommended</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CPU</td>
+<td>Intel <strong>12th-gen i7</strong> or better (or an AMD equivalent)</td>
+<td><strong>13th / 14th-gen i7 / i9</strong> or equivalent (≥ 8 performance cores)</td>
+</tr>
+<tr>
+<td>Memory</td>
+<td><strong>8 GB</strong></td>
+<td><strong>32 GB</strong></td>
+</tr>
+<tr>
+<td>GPU</td>
+<td>NVIDIA <strong>RTX 3060 / 8 GB VRAM</strong> or better</td>
+<td>NVIDIA <strong>RTX 4070 / 12 GB VRAM</strong> or better</td>
+</tr>
+<tr>
+<td>GPU driver</td>
+<td><strong>≥ 570.144</strong></td>
+<td>Same</td>
+</tr>
+<tr>
+<td>Disk</td>
+<td>512 GB SSD</td>
+<td><strong>1 TB NVMe SSD</strong></td>
+</tr>
+<tr>
+<td>USB</td>
+<td><strong>One gripper</strong> (3 cameras) can share a single USB 2.0 bus</td>
+<td><strong>Bimanual</strong> (6 cameras) split across <strong>two USB 2.0 buses</strong>, i.e. two independent USB host controllers</td>
+</tr>
+<tr>
+<td>OS</td>
+<td>Ubuntu 22.04 / 24.04 LTS, <strong>amd64</strong></td>
+<td>Same</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition tip">
+<p class="admonition-title">What the NVIDIA card buys you is recording efficiency</p>
+<p><code>--dataset.vcodec=auto</code> hands H.264 encoding to the <strong>dedicated encoder chip</strong> on the card,
+leaving the CPU to feed it frames. Without an NVIDIA card that path does not exist: streaming
+encoding has to go off and the CPU does the encoding — <strong>it records, but noticeably less
+efficiently</strong> (slow episode saves, <code>[slow_frame]</code> far sooner). See
+<a href="../05-data-collection/#no-gpu">Recording on a machine with no NVIDIA GPU</a>.</p>
+<p>The Docker delivery image, for its part, requires an NVIDIA card and driver. Check the driver
+with:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>nvidia-smi<span class="w"> </span>--query-gpu<span class="o">=</span>driver_version,name<span class="w"> </span>--format<span class="o">=</span>csv,noheader
+</span></code></pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Where each number comes from</p>
+<ul>
+<li><strong>CPU</strong> — the capture loop, tactile image decoding and feeding the encoder all sit on the
+  CPU, and a bimanual frame is six to eight images. A 12th-gen i7 is the lowest part measured
+  to hold 30 fps.</li>
+<li><strong>Memory</strong> — 8 GB covers collection itself. It gets tight once you watch the live streams in
+  Rerun (<code>--display_data</code>) or process data on the same machine, hence 32 GB.</li>
+<li><strong>Disk</strong> — raw video off the cameras peaks around <strong>280 MB/s</strong> (bimanual); what lands on disk
+  is a separate figure, see <a href="../data-management/#storage-planning">Disk planning</a>.
+  <strong>Do not record straight onto a spinning disk or a USB external drive.</strong></li>
+<li><strong>USB</strong> — tactile sensors and wrist cameras are USB 2.0 devices, and each open camera
+  <strong>reserves</strong> isochronous bandwidth out of a fixed per-bus budget. That is <strong>3 cameras per
+  gripper</strong> (2 tactile + 1 wrist); put all 6 of a bimanual rig on one bus and some <strong>will not
+  open</strong> — regardless of how fast the CPU or GPU is, and plugging into a blue USB 3 port does
+  not fix it. Count what hangs off each <code>480M</code> bus with <code>lsusb -t</code> before wiring up, see
+  <a href="../03-host-hardware/#usb-budget">USB bandwidth budget</a>.</li>
+</ul>
+</div>
+<h2 id="choose">Choosing an install path<a class="headerlink" href="#choose" title="锚点链接">¶</a></h2>
+<p>There are two paths. They produce the same collection environment — pick one and follow it
+through.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>Mamba install from source</strong></th>
+<th><strong>Docker delivery image</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>What you get</td>
+<td>The source repo; you build the environment</td>
+<td>A prebuilt image pulled from a public registry, and one script to run</td>
+</tr>
+<tr>
+<td>Time</td>
+<td>Longer — the gripper SDK and the Pico4 bindings are compiled here</td>
+<td>Minutes to tens of minutes, depending on how fast you can pull ~21 GB</td>
+</tr>
+<tr>
+<td>NVIDIA GPU</td>
+<td>Installs without one, but the <a href="#host-spec">minimum spec</a> starts at an RTX 3060 / 8 GB — with no NVIDIA card you are on the <a href="../05-data-collection/#no-gpu">degraded path</a></td>
+<td><strong>Required</strong>, driver ≥ 570.144</td>
+</tr>
+<tr>
+<td>Isolation</td>
+<td>Installed into a Mamba env on the host</td>
+<td>Lives in a container, host stays clean</td>
+</tr>
+<tr>
+<td>Editing the code</td>
+<td>Easy</td>
+<td>Awkward</td>
+</tr>
+<tr>
+<td>Steps</td>
+<td>2.1 – 2.5 below</td>
+<td><a href="#docker">Docker delivery image</a></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Default to Mamba</strong> — it puts no extra demand on the graphics driver (<strong>it installs on a machine
+with no NVIDIA driver at all</strong>), and it is the one to pick if you will be editing the collection
+program. The commands in the rest of this manual are written for this path.</p>
+<p>Docker is there for a machine that already has the <strong>NVIDIA driver</strong>, when you would rather not
+build an environment yourself.</p>
+<div class="admonition warning">
+<p class="admonition-title">Both paths need internet access</p>
+<p>Installing pulls things down — conda fetches conda-forge and PyPI packages, clones the GitHub
+repo and its submodules, and downloads the XenseVR PC Service <code>.deb</code>; Docker installs Docker
+Engine and the NVIDIA Container Toolkit. <strong>Neither path works on an offline machine.</strong></p>
+<p>On a restricted network, set the terminal's proxy up first (the Docker script accepts
+<code>XENSE_PROXY_URL</code> — see <a href="#docker">One-shot install</a>).</p>
+</div>
+<p>Sections 2.1 – 2.5 below are the <strong>Mamba install-from-source</strong> path.</p>
+<div class="admonition info">
+<p class="admonition-title">On Docker? Skip 2.1 – 2.5 entirely</p>
+<p>The image already has the Mamba environment, the collection program and all three hardware
+SDKs — nothing to clone, no environment to create, no <code>setup_env.sh</code> to run. Go straight to
+<a href="#docker">Docker delivery image</a> below.</p>
+</div>
+<div class="admonition info">
+<p class="admonition-title">Overview</p>
+<p>Install the system packages → install Mamba → clone the repo (with submodules) → create the
+environment → <code>setup_env.sh --install</code> → verify.</p>
+</div>
+<h2 id="apt">Prerequisite: system packages (apt)<a class="headerlink" href="#apt" title="锚点链接">¶</a></h2>
+<p>The hardware SDKs are <strong>compiled</strong> during <code>setup_env.sh --install</code>, and a fresh Ubuntu install does
+not even have a compiler:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>build-essential<span class="w"> </span>cmake<span class="w"> </span>pkg-config<span class="w"> </span>git<span class="w"> </span>curl
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>libusb-dev<span class="w">    </span><span class="c1"># ⚠️ cameras do not connect without a current libusb — read the box below</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>v4l-utils<span class="w">     </span><span class="c1"># not needed to record, but this is how you debug a camera</span>
+</span></code></pre></div>
+<p><code>setup_env.sh</code> checks for these before it starts and <strong>stops with the exact apt line</strong> if any are
+missing — otherwise the failure surfaces much later, inside CMake or the linker, where it reads
+like a broken SDK and costs an afternoon.</p>
+<div class="admonition danger">
+<p class="admonition-title"><code>libusb-dev</code> — install it, and keep it current</p>
+<p><strong>Recent Linux kernel updates require a matching libusb update. If libusb is stale (or
+missing), the cameras will not connect.</strong> This is the single most common way a rig that worked
+yesterday stops working today: the host takes an <code>apt upgrade</code> that includes a new kernel,
+libusb is left behind, and the tactile / wrist cameras stop opening.</p>
+<p><strong>Nothing in the error message points at libusb</strong>, so people go hunting through hubs, cables
+and USB bandwidth first — <strong>check this before any of that.</strong></p>
+<p><code>sudo apt install -y libusb-dev</code> pulls in the current <code>libusb-0.1-4</code> runtime
+(<code>libusb-0.1.so.4</code>) alongside the headers; that runtime is what the prebuilt camera stack
+loads. If it is already installed, upgrade it anyway after a kernel bump — <code>apt update</code> first,
+so apt sees the newer version:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>update<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>--only-upgrade<span class="w"> </span>libusb-dev<span class="w"> </span>libusb-1.0-0
+</span></code></pre></div>
+<p>A reboot after a kernel upgrade is worth doing for the same reason: the running kernel and the
+userspace USB stack should come from the same upgrade.</p>
+<p><code>setup_env.sh</code> checks <code>libusb-0.1.so.4</code> too, but <strong>only as a warning</strong> — it is a <strong>runtime</strong>
+dependency of the cameras, not a build one, so a missing libusb lets the install finish and
+then fails at <code>connect()</code>. Which is exactly why it is called out here rather than left to be
+discovered on the rig.</p>
+</div>
+<p>The <code>v4l-utils</code> line only <strong>warns</strong>, but install it anyway: <code>v4l2-ctl --list-formats-ext</code> is the
+instrument you reach for when <a href="../03-host-hardware/#usb-budget">a camera will not open</a>, which
+happens to be the most common bring-up problem on this hardware. A host without it is a host nobody
+can debug remotely.</p>
+<div class="admonition note">
+<p class="admonition-title">Neither <code>ffmpeg</code> nor <code>libudev-dev</code> is needed</p>
+<p><code>torchcodec</code> loads the FFmpeg <strong>shared libraries</strong> the conda environment supplies, so the system
+<code>ffmpeg</code> binary is irrelevant. <code>libudev</code> is reached at <strong>runtime</strong> by prebuilt wheels, through
+the <code>libudev1</code> base package that any Ubuntu already has — nothing here compiles against its
+headers. libusb is the <strong>exception</strong> — see the box above.</p>
+</div>
+<h2 id="21-prerequisite-install-mamba--miniforge">2.1 Prerequisite: install Mamba / Miniforge<a class="headerlink" href="#21-prerequisite-install-mamba--miniforge" title="锚点链接">¶</a></h2>
+<p>Mamba is strongly recommended: dependency solving is <strong>~10× faster</strong> than stock conda, and faster
+on every channel.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>curl<span class="w"> </span>-L<span class="w"> </span>-O<span class="w"> </span><span class="s2">"https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-</span><span class="k">$(</span>uname<span class="k">)</span><span class="s2">-</span><span class="k">$(</span>uname<span class="w"> </span>-m<span class="k">)</span><span class="s2">.sh"</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>bash<span class="w"> </span>Miniforge3-<span class="k">$(</span>uname<span class="k">)</span>-<span class="k">$(</span>uname<span class="w"> </span>-m<span class="k">)</span>.sh
+</span></code></pre></div>
+<h2 id="22">2.2 Clone the repo and its submodules<a class="headerlink" href="#22" title="锚点链接">¶</a></h2>
+<p>Hardware SDKs live in <code>third_party/</code> submodules, so the clone <strong>must</strong> be recursive:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>git<span class="w"> </span>clone<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span>--recurse-submodules<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">  </span>https://github.com/XenseRobotics-AI/xense-taccap-lerobot.git
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="nb">cd</span><span class="w"> </span>xense-taccap-lerobot
+</span></code></pre></div>
+<p>Already cloned without submodules:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>git<span class="w"> </span>submodule<span class="w"> </span>update<span class="w"> </span>--init<span class="w"> </span>--recursive<span class="w"> </span>--progress
+</span></code></pre></div>
+<p>Submodules and the packages they install — there is <strong>only one</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Submodule</th>
+<th>Package installed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/XenseRobotics-AI/TacCap-Gripper"><code>third_party/taccap-gripper</code></a></td>
+<td><code>xense.taccap</code> (XTac-UMI G1 tactile gripper SDK)</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">xensesdk is not a submodule</p>
+<p><code>xensesdk</code> is the visuotactile sensor SDK. <code>setup_env.sh --install</code> installs it
+automatically — there is no submodule to pull.</p>
+</div>
+<div class="admonition info">
+<p class="admonition-title"><code>xensevr_pc_service_sdk</code> (Pico4 tracker / headset camera) has no submodule either</p>
+<p>Its Python bindings live in the main repo, and the C SDK they
+link against — <code>PXREARobotSDK.h</code> plus <code>libPXREARobotSDK.so</code> — is copied straight out of the
+<a href="#24">XenseVR PC Service <code>.deb</code></a> installed in the next step, which ships it already — so there
+is no longer a service-source checkout carried around just to rebuild that library.
+<strong>A recursive clone drops from ~33 MiB to ~1.6 MiB</strong>, and installing no longer runs cmake or
+links it.</p>
+<p>One consequence worth knowing: an update to that C SDK now reaches you through a new <code>.deb</code>
+release, not by re-running <code>--install</code>.</p>
+</div>
+<div class="admonition danger">
+<p class="admonition-title">Rebuild <code>xense.taccap</code> after updating the submodule</p>
+<p>The <code>taccap-gripper</code> Python package ships a <strong>compiled build artefact</strong>. <code>git submodule
+update</code> only updates the files, it does not rebuild — with updated files against a stale
+build, <code>import xense.taccap</code> fails outright, e.g.:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>AttributeError: module 'xense.taccap._taccap_native' has no attribute 'GripperAutoCalConfig'
+</span></code></pre></div>
+<p>After pulling any submodule update touching <code>cpp/</code> or <code>python/bindings/</code>, rebuild:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nb">cd</span><span class="w"> </span>~/xense-taccap-lerobot
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="nv">LIBRARY_PATH</span><span class="o">=</span><span class="s2">"</span><span class="si">${</span><span class="nv">CONDA_PREFIX</span><span class="si">}</span><span class="s2">/lib"</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">  </span>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>third_party/taccap-gripper<span class="w"> </span>--no-deps<span class="w"> </span>--no-build-isolation
+</span></code></pre></div>
+<p>Or just run <code>bash setup_env.sh --install</code> (which handles the other SDKs too). <strong>No sudo
+needed.</strong> Verify afterwards:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"import xense.taccap as t; print(t.__version__)"</span>
+</span></code></pre></div>
+</div>
+<h2 id="23-create-and-activate-the-environment">2.3 Create and activate the environment<a class="headerlink" href="#23-create-and-activate-the-environment" title="锚点链接">¶</a></h2>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>./setup_env.sh<span class="w"> </span>--mamba
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>mamba<span class="w"> </span>activate<span class="w"> </span>xense-taccap
+</span></code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">Environment name</p>
+<p><code>--mamba</code> creates <code>xense-taccap</code> by default; append a name after <code>--mamba</code> to use your own.</p>
+</div>
+<h2 id="24">2.4 One-shot install<a class="headerlink" href="#24" title="锚点链接">¶</a></h2>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>./setup_env.sh<span class="w"> </span>--install
+</span></code></pre></div>
+<p>This step will:</p>
+<ul>
+<li>update the mamba/conda environment from <code>conda_environment.yaml</code></li>
+<li>install the main package from <code>pyproject.toml</code></li>
+<li>install the <code>xensesdk</code> visuotactile sensor SDK</li>
+<li>install the <strong>XenseVR PC Service daemon</strong> (a ~110 MB <code>.deb</code>, into <code>/opt/apps/roboticsservice</code>)</li>
+<li>build the two hardware SDKs: <code>xensevr_pc_service_sdk</code> (Pico4, linked against the C SDK from that
+  <code>.deb</code>) and <code>xense.taccap</code> (gripper, from the submodule)</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Where the XenseVR PC Service .deb comes from</p>
+<p><code>./setup_env.sh --install</code> downloads the <code>.deb</code> for your architecture straight from the
+<a href="https://github.com/XenseRobotics-AI/XenseVR-PC-Service/releases/tag/v0.2.1">v0.2.1 release</a>
+(override the URL with <code>$XENSEVR_DEB_URL</code>) and runs <code>sudo dpkg -i</code>.</p>
+<p><strong>When that same version is already installed it skips without downloading a byte</strong>, so
+re-running <code>--install</code> no longer waits on 110 MB; a previous download, complete or partial, is
+reused rather than started over.</p>
+</div>
+<div class="admonition danger">
+<p class="admonition-title">A failed download now stops the install</p>
+<p>The C SDK the Pico4 bindings link against comes out of this package (see
+<a href="#22">2.2</a>), so <code>--install</code> stops rather than build against a
+library that is not there. Point <code>$XENSEVR_DEB</code> at a local file for an offline or patched
+package.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Why the baseline is v0.2.1 rather than v0.2.0</p>
+<p>The script skips a package whose version already matches. v0.2.1 is the same daemon as v0.2.0;
+what differs is the <strong>rebuilt C SDK</strong> — a host left on v0.2.0 would keep the older SDK and build
+its Pico4 bindings against it. That is the reason to move, not a new daemon feature.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Headset stereo and head pose need PC Service &gt;= v0.2.0</p>
+<p>Only v0.2.0 and later forward the headset camera's frames, and both the
+<a href="../05-data-collection/#56">stereo view and the head pose</a> come down that path. Tracking is
+unaffected — if you do not use the headset camera, the version makes no difference.</p>
+</div>
+<h2 id="25">2.5 Verify the install<a class="headerlink" href="#25" title="锚点链接">¶</a></h2>
+<p>All three packages importing means success:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">'import xensevr_pc_service_sdk; print("xensevr_pc_service_sdk OK -&gt;", xensevr_pc_service_sdk.__file__)'</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">'import xensesdk; print("xensesdk OK -&gt;", xensesdk.__file__)'</span>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">'import xense.taccap; print("xense.taccap OK -&gt;", xense.taccap.__file__)'</span>
+</span></code></pre></div>
+<p>One more if you use the <a href="../05-data-collection/#56">headset camera</a> — it checks that what your
+environment loads is the build that carries the camera API:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">'import xensevr_pc_service_sdk as xrt; print("pico camera API:", hasattr(xrt, "has_pico_camera_frame"))'</span>
+</span></code></pre></div>
+<p><code>False</code> means an older version is being loaded; re-run <code>./setup_env.sh --install</code>.</p>
+<p>Optional — confirm the video codec dependencies load (<code>torchcodec</code> is pinned by the PyTorch
+compatibility matrix, PyAV is pinned to <code>15.1.0</code>; FFmpeg is not part of the conda solve):</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">'import torchcodec; print("torchcodec OK -&gt;", torchcodec.__version__)'</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">'import av; print("PyAV OK -&gt;", av.__version__)'</span>
+</span></code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">Need a system ffmpeg?</p>
+<p>If you need a system ffmpeg with <code>libsvtav1</code>, install it separately (apt, or an official
+static build); the default encoding path on this 0.5.1 fork does not depend on it.</p>
+</div>
+<hr>
+<h2 id="docker">Docker delivery image<a class="headerlink" href="#docker" title="锚点链接">¶</a></h2>
+<p>The image already contains the full <code>xense-taccap</code> environment, the CUDA user-space libraries, the
+collection program and all three hardware SDKs (XenseSDK, TacCap-Gripper, the Pico4 bindings). The
+container also starts the XenseVR PC Service on launch.</p>
+<div class="admonition warning">
+<p class="admonition-title">The container runs privileged</p>
+<p>So that tactile sensors, the wrist camera, the gripper serial port and the Pico4 can be
+hot-plugged mid-session, the container runs privileged and shares the host's network and IPC.
+<strong>Only run it on a collection host you trust.</strong></p>
+</div>
+<h3 id="host-requirements">Host requirements<a class="headerlink" href="#host-requirements" title="锚点链接">¶</a></h3>
+<ul>
+<li>Ubuntu 22.04 / 24.04, <strong>amd64</strong></li>
+<li><strong>NVIDIA driver ≥ 570.144</strong> — check with
+  <code>nvidia-smi --query-gpu=driver_version --format=csv,noheader</code></li>
+</ul>
+<p>The installer <strong>will not install or upgrade the GPU driver</strong> for you (that depends on the card,
+Secure Boot and a reboot); it stops and tells you if the driver is missing or too old. Docker
+Engine, the Compose plugin and the NVIDIA Container Toolkit are installed automatically if absent.</p>
+<h3 id="ghcr">One-shot install<a class="headerlink" href="#ghcr" title="锚点链接">¶</a></h3>
+<p>The image is published to the GitHub Container Registry. <strong>The package is public — pulling needs
+no login:</strong></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>ghcr.io/xenserobotics-ai/xense-taccap-lerobot
+</span></code></pre></div>
+<p>Run it as a <strong>normal user</strong>, not root:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/XenseRobotics-AI/xense-taccap-lerobot.git
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="nb">cd</span><span class="w"> </span>xense-taccap-lerobot
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>./docker/install_customer.sh
+</span></code></pre></div>
+<p>The script, in order: checks the system and GPU driver → installs Docker and the NVIDIA Container
+Toolkit as needed (and registers the NVIDIA runtime with Docker) → installs the gripper's serial
+udev rule (the ModemManager rule from <a href="../03-host-hardware/#32">3.2</a>) → pulls the image → runs a
+CUDA and graphics smoke test.</p>
+<p>Cloning the repo is only how you get <code>compose.yaml</code> and this script. <strong>The collection program
+itself is in the image</strong> — no submodules to fetch, nothing to build on the host.</p>
+<div class="admonition tip">
+<p class="admonition-title">Behind a proxy</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="nv">XENSE_PROXY_URL</span><span class="o">=</span>http://127.0.0.1:7897<span class="w"> </span>./docker/install_customer.sh
+</span></code></pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Fully offline machines: the <code>.tar</code> bundle still works</p>
+<p>Ask your delivery contact for the image tar, drop it in the repo root (or pass it as the first
+argument) and the script verifies and imports it instead of going to the network:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>./docker/install_customer.sh<span class="w"> </span>xense-taccap-lerobot-0.0.6-linux-amd64.tar
+</span></code></pre></div>
+<p>Pulling is the default because <strong>upgrades are much cheaper that way</strong>: the image is tens of GB,
+most of it dependency layers that rarely change, so an upgrade fetches only the layers that
+moved instead of moving a whole bundle again.</p>
+</div>
+<h3 id="docker-pin">Pin a version before you record<a class="headerlink" href="#docker-pin" title="锚点链接">¶</a></h3>
+<p>The default tag is <code>latest</code>, and <code>latest</code> <strong>floats</strong> — the next release repoints it, and your
+collection environment changes without you asking. Before real collection, pin a version in the
+repo root's <code>.env</code>:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>LEROBOT_IMAGE_TAG=0.0.6
+</span></code></pre></div>
+<p>Confirm that is what resolves, then pull:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>config<span class="w"> </span>--images
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>docker<span class="w"> </span>compose<span class="w"> </span>pull
+</span></code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">The tag line is all you need</p>
+<p><code>compose.yaml</code> already defaults to <code>ghcr.io/xenserobotics-ai/xense-taccap-lerobot</code>, so <strong>do not set
+<code>LEROBOT_IMAGE</code></strong> — it is only for running under a different image name, e.g. one you built
+yourself.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Two known issues to work around if you pin <code>0.0.5</code> or earlier</p>
+<p><strong><code>0.0.6</code> fixes both</strong>, so pinning that version means neither applies. Machines still on
+<code>0.0.5</code> or earlier:</p>
+<ul>
+<li><strong>Record with <code>--play_sounds=false</code></strong>, or the first episode's spoken announcement kills the
+  process (the image has no <code>spd-say</code>) → <a href="../troubleshooting/#docker">Troubleshooting</a>.</li>
+<li><strong>Export by copying as root and then <code>chown</code></strong>, because videos recorded by this image are
+  <code>0600 root</code> → <a href="#docker-data">Where the data lives</a>.</li>
+</ul>
+<p>Neither affects the recorded data itself, so <strong>there is no need to upgrade mid-collection</strong> —
+work around them as above.</p>
+</div>
+<h3 id="docker-host">Host setup after installing<a class="headerlink" href="#docker-host" title="锚点链接">¶</a></h3>
+<p>The installer already added you to the <code>docker</code> group, but <strong>that does not take effect in your
+current terminal</strong>. Run these two on the <strong>host</strong> — neither is skippable:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>newgrp<span class="w"> </span>docker<span class="w">                    </span><span class="c1"># make docker group membership active in this terminal</span>
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>xhost<span class="w"> </span>+si:localuser:root<span class="w">         </span><span class="c1"># needed to show Rerun and other windows</span>
+</span></code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Type them one at a time — do not paste the block</p>
+<p><code>newgrp</code> opens a <strong>subshell</strong>, so anything pasted after it gets swallowed by that subshell and
+looks like it silently did nothing. Wait for <code>newgrp</code> to return, then type the <code>xhost</code> line.</p>
+<p>Entering the container without <code>newgrp docker</code> gives you <code>permission denied</code>.
+<strong>Logging out and back in is the cleaner option</strong>: after <code>newgrp</code>, files you create in that
+terminal get group <code>docker</code>, which logging back in avoids.</p>
+</div>
+<p>Revoke the <code>xhost</code> grant when you are done:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>xhost<span class="w"> </span>-si:localuser:root
+</span></code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title"><code>docker</code> group membership is close to root</p>
+<p>Add only the users who need to collect — not every local account.</p>
+</div>
+<h3 id="entering-the-container-and-verifying">Entering the container and verifying<a class="headerlink" href="#entering-the-container-and-verifying" title="锚点链接">¶</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>xense-taccap
+</span></code></pre></div>
+<p>Inside the container, all four imports must pass and the GPU must be visible:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">'import torch; print(torch.__version__, torch.cuda.is_available())'</span>
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">'import xensesdk; print("xensesdk -&gt;", xensesdk.__file__)'</span>
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">'import xense.taccap; print("taccap -&gt;", xense.taccap.__file__)'</span>
+</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">'import xensevr_pc_service_sdk; print("pico4 -&gt;", xensevr_pc_service_sdk.__file__)'</span>
+</span></code></pre></div>
+<p>Then check that the Pico4 bindings and the daemon they depend on are <strong>the same version</strong>:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">'import importlib.metadata as M; print("pico4 -&gt;", M.version("xensevr_pc_service_sdk"))'</span>
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>dpkg-query<span class="w"> </span>-W<span class="w"> </span>-f<span class="o">=</span><span class="s1">'daemon -&gt; ${Version}\n'</span><span class="w"> </span>xensevr-pc-service
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>pico4 -&gt; 0.2.1
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>daemon -&gt; 0.2.1
+</span></code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">These two must match — if they do not, do not record with this image</p>
+<p>The C SDK the Pico4 bindings link against comes from that <code>.deb</code>. A mismatch means the image is
+a half-updated build and the tracker data may be wrong. Pull a different tag, or contact your
+delivery contact.</p>
+</div>
+<p>Then confirm the devices are discovered:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>lerobot-find-cameras
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>lerobot-info
+</span></code></pre></div>
+<p>You can also run a single command without an interactive shell:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>xense-taccap<span class="w"> </span>lerobot-info
+</span></code></pre></div>
+<h3 id="docker-data">Where the data lives, and why <code>--rm</code> does not lose it<a class="headerlink" href="#docker-data" title="锚点链接">¶</a></h3>
+<p>Four paths inside the container are <strong>Docker volumes</strong>, so removing the temporary container leaves
+them untouched:</p>
+<table>
+<thead>
+<tr>
+<th>Path in container</th>
+<th>Volume</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/data</code></td>
+<td><code>lerobot-data</code></td>
+<td><strong>Datasets</strong> (<code>HF_LEROBOT_HOME=/data/lerobot</code>)</td>
+</tr>
+<tr>
+<td><code>/root/.xensesdk</code></td>
+<td><code>xensesdk-cache</code></td>
+<td>Per-serial tactile sensor configuration cache</td>
+</tr>
+<tr>
+<td><code>/root/.cache/huggingface</code></td>
+<td><code>huggingface-cache</code></td>
+<td>Hugging Face cache</td>
+</tr>
+<tr>
+<td><code>/root/.cache/torch</code></td>
+<td><code>torch-cache</code></td>
+<td>Torch cache</td>
+</tr>
+</tbody>
+</table>
+<p>On the host these volumes actually live at
+<code>/var/lib/docker/volumes/xense-taccap-lerobot_&lt;volume&gt;/_data</code>, owned by root, so a plain <code>ls</code> needs
+sudo. <strong>Going through the container is easier:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>xense-taccap<span class="w"> </span>bash<span class="w"> </span>-lc<span class="w"> </span><span class="s1">'ls -la /data/lerobot'</span>
+</span></code></pre></div>
+<div class="admonition danger">
+<p class="admonition-title">Never run <code>docker volume prune</code></p>
+<p>It removes volumes that <strong>no container is currently using</strong> — which is exactly the state your
+data volume sits in most of the time, because the containers are <code>--rm</code>. That command will take
+your recorded datasets with it, unrecoverably.</p>
+<p>Use <code>docker image prune</code> to reclaim image space and <code>docker builder prune</code> for build cache;
+neither touches volumes.</p>
+</div>
+<p>To export data to the host, <strong>read as root and hand ownership back in the same command</strong> — this is
+currently the only form that works on recorded data:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>mkdir<span class="w"> </span>-p<span class="w"> </span><span class="nb">export</span>
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>docker<span class="w"> </span>compose<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>--no-deps<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a><span class="w">    </span>--entrypoint<span class="w"> </span>/bin/bash<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-29-4"><a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a><span class="w">    </span>-v<span class="w"> </span><span class="s2">"</span><span class="nv">$PWD</span><span class="s2">/export:/export"</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-29-5"><a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a><span class="w">    </span>xense-taccap<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-29-6"><a id="__codelineno-29-6" name="__codelineno-29-6" href="#__codelineno-29-6"></a><span class="w">    </span>-lc<span class="w"> </span><span class="s2">"cp -a /data/lerobot /export/ &amp;&amp; chown -R </span><span class="k">$(</span>id<span class="w"> </span>-u<span class="k">)</span><span class="s2">:</span><span class="k">$(</span>id<span class="w"> </span>-g<span class="k">)</span><span class="s2"> /export"</span>
+</span></code></pre></div>
+<p>All three parts are load-bearing, not decoration:</p>
+<ul>
+<li><strong><code>--entrypoint /bin/bash</code></strong> — the container's default startup script does <code>chmod 0700</code> on its
+  runtime directory and also starts the XenseVR service. A file copy needs neither, and that chmod
+  is exactly what breaks the <code>--user</code> form below.</li>
+<li><strong><code>chown</code> inside the same command</strong> — without it the exported files are owned by root and you can
+  neither delete nor edit them from the host.</li>
+<li><strong><code>mkdir -p export</code> first</strong> — a mount point Docker creates for you is root-owned, so a non-root
+  write into it fails.</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Do not switch to <code>--user</code> to copy as yourself</p>
+<p>Two things break, and the second one looks like corrupt files:</p>
+<ul>
+<li><code>docker compose run --user ...</code> <strong>still runs the startup script</strong>, and a non-root user cannot
+  change the runtime directory's permissions, so it fails with
+  <code>chmod: changing permissions of '/tmp/xdg-runtime': Operation not permitted</code>.</li>
+<li><strong>Videos recorded by the <code>0.0.5</code> and earlier images are <code>-rw------- root</code></strong>, so a non-root
+  copy fails on <strong>every video</strong> with
+  <code>cp: cannot open '.../file-000.mp4' for reading: Permission denied</code>. The sibling metadata is
+  a normal <code>0644</code> and copies fine, so <strong>only the <code>.mp4</code> files fail</strong> — which reads like a few
+  damaged files. From <code>0.0.6</code> on, videos land as <code>0644</code> and this stops happening — but that
+  depends on <strong>the image that recorded the data</strong>, and upgrading does not rewrite files that
+  were already written.</li>
+</ul>
+</div>
+<p><code>cp -a</code> carries the permissions across, so data recorded by <code>0.0.5</code> and earlier still exports as
+<code>0600</code> (just owned by you now). To make it readable by your group or by others, append one more
+step to the command above:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="w">    </span><span class="o">&amp;&amp;</span><span class="w"> </span>chmod<span class="w"> </span>-R<span class="w"> </span>u+rwX,go+rX<span class="w"> </span>/export
+</span></code></pre></div>
+<h3 id="docker-data-dir">Writing datasets straight to a host directory<a class="headerlink" href="#docker-data-dir" title="锚点链接">¶</a></h3>
+<p>If you look at or delete recordings regularly, or you have a large disk mounted elsewhere, <strong>this
+saves far more effort than copying data out every time</strong>. Set it in <code>.env</code>:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>LEROBOT_DATA_DIR=/home/you/.cache/huggingface/docker_data
+</span></code></pre></div>
+<p>A value containing <code>/</code> is treated as a <strong>bind mount</strong>, anything else as a named volume; leaving it
+unset keeps the default <code>lerobot-data</code> and behaves exactly as before. Confirm what resolved, then
+record as usual — the data appears under <code>&lt;that directory&gt;/lerobot/</code>:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>config
+</span></code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">A bind mount fixes the location, not the ownership</p>
+<p>Recording still runs as root, so <strong>the files are root-owned</strong> even inside your own directory.
+Hand them back when you are done:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>--no-deps<span class="w"> </span>--entrypoint<span class="w"> </span>/bin/bash<span class="w"> </span>--user<span class="w"> </span><span class="m">0</span>:0<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-33-2"><a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a><span class="w">    </span>xense-taccap<span class="w"> </span>-lc<span class="w"> </span><span class="s2">"chown -R </span><span class="k">$(</span>id<span class="w"> </span>-u<span class="k">)</span><span class="s2">:</span><span class="k">$(</span>id<span class="w"> </span>-g<span class="k">)</span><span class="s2"> /data"</span>
+</span></code></pre></div>
+<p>Or on the host directly:
+<code>sudo chown -R "$(id -u):$(id -g)" ~/.cache/huggingface/docker_data</code>.
+Check with <code>ls -ln</code>, which prints <strong>numeric</strong> uid/gid and so makes it obvious whether the chown
+actually took:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>ls<span class="w"> </span>-ln<span class="w"> </span>~/.cache/huggingface/docker_data/lerobot
+</span></code></pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Do not edit <code>compose.yaml</code> to do this</p>
+<p><code>compose.yaml</code> is tracked in the repo. Hard-coding one machine's absolute path into it conflicts
+on the next <code>git pull</code> and mounts a non-existent path on any other machine. <code>LEROBOT_DATA_DIR</code>
+goes in <code>.env</code>, which is never committed.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Keep the sensor-config cache</p>
+<p>The second volume holds each sensor's configuration. Keeping it means a restart does not have
+to re-read sensor flash, which would also re-enumerate the USB devices — <strong>faster to start and
+steadier with it than without.</strong></p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Device discovery works the same inside the container</p>
+<p>Compose passes the host's <code>/dev</code> and <code>/run/udev</code> through, so <code>/dev/v4l/by-id</code>,
+<code>/dev/v4l/by-path</code> and <code>/dev/serial/by-path</code> are all readable inside — which is what
+<a href="../03-host-hardware/#33">the auto-discovery in 3.3</a> is built on.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Pushing to the Hub from inside the container</p>
+<p>Put the token in the repo root's <code>.env</code> — the same file you pinned the tag in — and it reaches
+the container as <code>HF_TOKEN</code>:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>HF_TOKEN=hf_xxxxxxxxxxxxxxxx
+</span></code></pre></div>
+<p>Without it you have to <code>hf auth login</code> every time — the container is <code>--rm</code>, so a login does
+not persist.</p>
+</div>
+<h3 id="docker-gui">Graphics from inside the container<a class="headerlink" href="#docker-gui" title="锚点链接">¶</a></h3>
+<p>The image ships the XKB, Vulkan and XDG runtime libraries Rerun needs and sets
+<code>WGPU_BACKEND=vulkan</code>; Compose passes <code>DISPLAY</code> and the X11 socket through. If no window appears,
+do the <a href="#docker-host"><code>xhost</code> authorisation</a> above, then confirm the GPU is visible inside the
+container:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>vulkaninfo<span class="w"> </span>--summary
+</span></code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Do not change <code>runtime: nvidia</code> in <code>compose.yaml</code> to <code>gpus: all</code></p>
+<p>They look equivalent and are not. <code>gpus: all</code> only requests <strong>compute + utility</strong>: CUDA runs,
+<code>nvidia-smi</code> works, but <strong>the graphics libraries are never injected</strong> — NVIDIA's Vulkan ICD is
+absent from the container and Rerun dies with</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>WGPU error: Failed to create surface for any enabled backend
+</span></code></pre></div>
+<p>which is a confusing failure, because the GPU is plainly "visible" and only the window fails to
+come up. <code>runtime: nvidia</code> is the part that brings graphics in.</p>
+<p>The cost is that it requires the NVIDIA runtime to be registered with Docker (which
+<code>install_customer.sh</code> does). If it is not, Compose fails immediately with
+<code>Unknown runtime specified nvidia</code> — a far better failure than silently losing graphics. See
+<a href="../troubleshooting/#docker">Troubleshooting</a>.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Working on data only, with no Pico4 attached</p>
+<p>The container starts the XenseVR PC Service by default. Turn it off when you do not need the
+tracker:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a><span class="nv">START_XENSEVR_SERVICE</span><span class="o">=</span><span class="m">0</span><span class="w"> </span>docker<span class="w"> </span>compose<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>xense-taccap
+</span></code></pre></div>
+<p>Its log is at <code>/tmp/xensevr-service.log</code> inside the container.</p>
+</div>
+<hr>
+<p>With the environment installed, <strong>do the host and hardware configuration next</strong> (serial
+permissions, device discovery) — otherwise grippers get listed but cannot be opened.</p>
+<p>Next → <a href="../03-host-hardware/">3. Host &amp; Device Setup</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden="">
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer">
+        
+          
+          <a href="../hardware/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Hardware">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Hardware
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../03-host-hardware/" class="md-footer__link md-footer__link--next" aria-label="Next: Host &amp; Device Setup">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Host &amp; Device Setup
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      文档版本 v0.0.6 &nbsp;·&nbsp; Copyright © 2026 XenseRobotics Co., Ltd.
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/XenseRobotics-AI/XTac-UMI-G1-Docs" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tracking", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "navigation.footer", "toc.follow", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.tooltips"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>

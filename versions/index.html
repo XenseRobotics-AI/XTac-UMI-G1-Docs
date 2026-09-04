@@ -1,0 +1,2389 @@
+<!DOCTYPE html><html lang="zh" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="XenseRobotics XTac-UMI G1 手持触觉数采夹爪 · 基于 lerobot 的数据采集快速上手">
+      
+      
+        <meta name="author" content="XenseRobotics">
+      
+      
+        <link rel="canonical" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/versions/">
+      
+      
+        <link rel="prev" href="../07-faq-reference/">
+      
+      
+        <link rel="next" href="../sdk-overview/">
+      
+      
+        
+          <link rel="alternate" href="./" hreflang="zh">
+        
+          <link rel="alternate" href="../en/versions/" hreflang="en">
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>版本与支持 - XTac-UMI G1 数采快速使用手册</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  <link href="../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#版本与支持" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="XTac-UMI G1 数采快速使用手册" class="md-header__button md-logo" aria-label="XTac-UMI G1 数采快速使用手册" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            XTac-UMI G1 数采快速使用手册
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              版本与支持
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo" aria-label="切换到暗色模式" type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换到暗色模式" for="__palette_1" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"></path></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo" aria-label="切换到亮色模式" type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换到亮色模式" for="__palette_0" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"></path></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="选择当前语言">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"></path></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="zh" class="md-select__link">
+              简体中文
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../en/versions/" hreflang="en" class="md-select__link">
+              English (partial)
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required="">
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard="" data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"></path></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix="">
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/XenseRobotics-AI/XTac-UMI-G1-Docs" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    XenseRobotics-AI/XTac-UMI-G1-Docs
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="XTac-UMI G1 数采快速使用手册" class="md-nav__button md-logo" aria-label="XTac-UMI G1 数采快速使用手册" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    XTac-UMI G1 数采快速使用手册
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/XenseRobotics-AI/XTac-UMI-G1-Docs" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    XenseRobotics-AI/XTac-UMI-G1-Docs
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix="">
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    首页
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    一页速通
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    概述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../highlights/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    产品亮点
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5">
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    准备工作
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    准备工作
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hardware/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    硬件介绍
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-environment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    环境安装
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-host-hardware/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    主机与设备配置
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6">
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    软件使用
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    软件使用
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-calibration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    标定与自检
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-data-collection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    数据预览与采集
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../best-practices/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    采集规范与最佳实践
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7">
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    数据介绍
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    数据介绍
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-dataset/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    数据集与示例
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data-management/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    数据管理与命名
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" checked="">
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    参考
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    参考
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    故障排查
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../maintenance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    维护保养
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-faq-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    常见问题与参考
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    版本与支持
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    版本与支持
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#required" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        必须升级到最新版本
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="必须升级到最新版本">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#v21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        三套编号:V2.1 是命令集,不是固件版本
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#版本兼容基线" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        版本兼容基线
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check-versions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        如何查版本
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#升级与更新" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        升级与更新
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="升级与更新">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#repo-update" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        仓库 + 子模块
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ota" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        固件 OTA 升级
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ota-when" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        我需要刷吗?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#怎么刷" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        怎么刷
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#support" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        支持与反馈
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#兼容性与发布维护" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        兼容性与发布维护
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8_5">
+        
+          
+          <label class="md-nav__link" for="__nav_8_5" id="__nav_8_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    附录:SDK 与二次开发
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    附录:SDK 与二次开发
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdk-overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SDK 概览
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdk-install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    安装与构建
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdk-examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    示例
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#required" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        必须升级到最新版本
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="必须升级到最新版本">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#v21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        三套编号:V2.1 是命令集,不是固件版本
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#版本兼容基线" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        版本兼容基线
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check-versions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        如何查版本
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#升级与更新" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        升级与更新
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="升级与更新">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#repo-update" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        仓库 + 子模块
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ota" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        固件 OTA 升级
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ota-when" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        我需要刷吗?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#怎么刷" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        怎么刷
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#support" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        支持与反馈
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#兼容性与发布维护" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        兼容性与发布维护
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="版本与支持">版本与支持<a class="headerlink" href="#版本与支持" title="锚点链接">¶</a></h1>
+<p>本手册对应的版本基线、如何查版本、如何升级,以及遇到问题怎么反馈。</p>
+<h2 id="required">必须升级到最新版本<a class="headerlink" href="#required" title="锚点链接">¶</a></h2>
+<div class="admonition danger">
+<p class="admonition-title">这不是可选项——采集前请先把四项都升到下表版本</p>
+<p>整条链路是<strong>配套</strong>的:固件带<a href="#v21">命令集 V2.1</a> 才支持行程标定,SDK ≥ 0.1.7 才能安全刷固件,
+而 0.1.9 才是<strong>附带修掉三个已知缺陷的镜像</strong>的那一版(见<a href="#ota-when">已知缺陷</a>);
+<code>gripper.pos</code> 的 0–1 归一化则要固件、SDK、标定三者齐了才成立。主夹爪缺标定或固件过低时
+<strong>采集程序会直接拒绝连接</strong>,不会让你采出刻度错的数据;但版本不配套的其它组合仍可能
+<strong>"正常"跑完并落盘</strong>,只是数据和别人对不上——事后从数据里看不出来。</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>组件</th>
+<th>最低要求版本</th>
+<th>怎么查</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>xense-taccap-lerobot</code></td>
+<td><code>0.5.1+xtac.0.0.6</code></td>
+<td><code>pip show lerobot</code> 或看 <code>pyproject.toml</code></td>
+</tr>
+<tr>
+<td><code>xense.taccap</code> SDK</td>
+<td><strong>0.1.9</strong></td>
+<td><code>python -c "import xense.taccap as t; print(t.__version__)"</code></td>
+</tr>
+<tr>
+<td>夹爪固件</td>
+<td><strong>命令集 V2.1</strong>,即构建 leader <strong>≥ 1.2.0</strong> / follower <strong>≥ 1.1.0</strong>(<a href="#v21">区别</a>)</td>
+<td>跑 <a href="../04-calibration/#41"><code>calibrate.py</code></a>,版本不够会打印当前版本并退出;想直接读版本见<a href="#v21">下面这条命令</a></td>
+</tr>
+<tr>
+<td>每台 leader 的编码器标定</td>
+<td>零点 + 行程上限已写入 flash</td>
+<td><a href="../04-calibration/#41">4.1 夹爪标定</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="v21">三套编号:V2.1 是命令集,不是固件版本<a class="headerlink" href="#v21" title="锚点链接">¶</a></h3>
+<p>夹爪固件涉及<strong>三套互不相干的编号</strong>,长得像但含义完全不同:</p>
+<table>
+<thead>
+<tr>
+<th>编号</th>
+<th>当前值</th>
+<th>是什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>帧格式(wire framing)</td>
+<td><code>V1.8</code></td>
+<td>字节怎么打包成帧(字节填充、CRC)。极少变动,本手册基本不提</td>
+</tr>
+<tr>
+<td><strong>命令集(command set)</strong></td>
+<td><strong><code>V2.1</code></strong></td>
+<td>固件<strong>实现了哪些命令</strong>。每条命令按引入时的版本标注</td>
+</tr>
+<tr>
+<td>固件构建号</td>
+<td>leader <code>≥ 1.2.0</code><br>follower <code>≥ 1.1.0</code></td>
+<td>具体那一版镜像。<strong>这是最小值,不是必须精确匹配的值</strong>——1.2.2 之类的更高版本同样支持 V2.1,不需要为此回刷。但更高的构建号可能修掉了<a href="#ota-when">已知缺陷</a>,那是另一回事</td>
+</tr>
+</tbody>
+</table>
+<p><strong>本手册里说的「V2.1」一律指命令集</strong>,因为行程标定用的 <code>EncoderMaxCal</code> 命令正是 V2.1 引入的
+(<code>V2.0</code> 引入鱼眼标定,<code>V1.9</code> 引入 LED 与私有电机参数)。所以"标定要求固件 ≥ V2.1"说的是
+<strong>命令集</strong>要够新。</p>
+<p>对应关系是<strong>门槛</strong>而非等号:<strong>命令集 V2.1 从 leader <code>1.2.0</code> / follower <code>1.1.0</code> 起开始支持</strong>,
+更高的构建号(如 leader <code>1.2.2</code>)同样支持。所以看到自己是 1.2.1 或 1.2.2 都不必疑惑,也不需要回刷到
+1.2.0——<strong>"我们跑的版本"和"我们要求的版本"是两件事</strong>。主从两个号不同,只是因为它们本来就是
+两份不同的固件,不是谁更新。</p>
+<p><strong>但"够用"不等于"没缺陷"</strong>:命令集够不够是一回事,那一版镜像有没有已知问题是另一回事。
+leader <code>1.2.2</code> / follower <code>1.1.5</code> 修掉了三个在更早固件上都存在的缺陷,详见
+<a href="#ota-when">但 V2.1 只是能用的底线</a>。</p>
+<p>一条命令查完 SDK 版本和每只夹爪的固件构建号。<strong>固件版本不在 SN 里</strong>,SN 只给出侧别与角色,
+版本要用 <code>GetVersion</code> 向固件问:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>python<span class="w"> </span>-<span class="w"> </span><span class="s">&lt;&lt;'EOF'</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="s">import xense.taccap as t</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="s">from xense.taccap import scan_grippers, LeaderGripper, FollowerGripper, Cmd</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="s">print("xense.taccap", t.__version__, "(需要 &gt;= 0.1.9)")</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="s">for ep in scan_grippers():</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="s">    cls = LeaderGripper if ep.firmware_sn.endswith("m") else FollowerGripper</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="s">    g = cls(mcu_device=ep.mcu_device)          # 只开 MCU;相机默认不开</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="s">    ack = g.transport.send_cmd(Cmd.GetVersion, b"", 500)</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="s">    print(f"  {ep.firmware_sn}  {ep.side.name:5}  fw={ack.data[0]}.{ack.data[1]}.{ack.data[2]}")</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="s">EOF</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>  TCGU01A28Z0023m  Left   fw=1.2.1
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>  TCGU01A28Z0024m  Right  fw=1.2.1
+</span></code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">本文出现的序列号和版本号都是<strong>示例</strong></p>
+<p>上面这两行是某台设备上的实际输出,写在这里只是让你知道<strong>输出长什么样</strong>。你手上这台的
+SN 一定不同,版本号也可能更高——本文后面凡是出现具体 SN(如 <code>TCGU01A28Z0023m</code>)的地方,
+都是同一个意思:那是举例,以你自己跑出来的结果为准。</p>
+<p>SN 里唯一需要你去读的是<strong>最后一个字符</strong>:<code>m</code> = 主夹爪,<code>s</code> = 从夹爪。这决定刷哪个镜像,
+见 <a href="#ota">固件 OTA 升级</a>。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">为什么这样构造夹爪对象</p>
+<p>只传 <code>mcu_device</code>:不开腕相机,<code>normalize_position</code> 也保持默认的 <code>False</code>——<strong>没做过行程标定的
+夹爪照样能读到版本</strong>,不会在构造时因为读不到 encoder-max 而抛错。这条也不依赖 SDK 的
+<code>examples/</code>,升级前后都能跑。</p>
+<p>ACK 里其实有<strong>第 4 个字节 <code>build</code></strong>,固件把它恒定写 0,SDK 各处一律按
+<code>MAJOR.MINOR.PATCH</code> 显示。别把它写进版本比较——<code>1.2.1.0</code> 这种四段写法是过时格式。</p>
+</div>
+<p><strong>升级顺序不能乱</strong>,每一步都依赖上一步:</p>
+<pre class="mermaid"><code>flowchart LR
+    A[拉仓库 + 子模块] --&gt; B[重新编译 xense.taccap] --&gt; C[刷固件 OTA] --&gt; D[每台 leader 标定]</code></pre>
+<ol>
+<li><a href="#repo-update">拉仓库与子模块</a> —— 子模块要跟着一起更新。</li>
+<li><strong>重新编译 SDK</strong>,否则新旧文件不配套,<code>import xense.taccap</code> 直接失败。</li>
+<li><a href="#ota">固件 OTA 升级</a> —— <strong>必须在第 2 步之后</strong>,理由见该节。</li>
+<li><a href="../04-calibration/#41">夹爪标定</a> —— 升级本身<strong>不产生标定值</strong>,不标的主夹爪连不上。</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">已经采过的数据不用重采</p>
+<p>这里要求的是<strong>今后采集</strong>用统一版本。历史数据保持原样即可;若要和升级后的数据混用,
+先确认两批的 <code>gripper.pos</code> 是否落在同一刻度上(升级+标定前后不一定一致)。</p>
+</div>
+<h2 id="版本兼容基线">版本兼容基线<a class="headerlink" href="#版本兼容基线" title="锚点链接">¶</a></h2>
+<p>本页将“支持范围”和“已验证基线”分开列出。实际命令与字段仍以本地 checkout 为准。</p>
+<table>
+<thead>
+<tr>
+<th>组件</th>
+<th>支持范围 / 约束</th>
+<th>已验证基线</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>操作系统 / 架构</td>
+<td>Ubuntu 22.04 / 24.04,<strong>amd64</strong></td>
+<td>Ubuntu 22.04.5 LTS / 24.04.4 LTS,x86_64</td>
+</tr>
+<tr>
+<td>Linux 内核</td>
+<td>不构成约束</td>
+<td>6.8 / 6.14 / 7.0 系列均已验证</td>
+</tr>
+<tr>
+<td>采集主机(CPU / 内存 / 硬盘)</td>
+<td><strong>最低</strong>:12 代 i7、8 GB 内存、512 GB SSD;<strong>推荐</strong>:13/14 代 i7/i9、32 GB 内存、1 TB NVMe SSD。两档明细见<a href="../02-environment/#host-spec">采集主机配置要求</a></td>
+<td>—</td>
+</tr>
+<tr>
+<td>NVIDIA GPU / 驱动</td>
+<td><strong>最低 RTX 3060 / 8 GB 显存</strong>(推荐 RTX 4070 / 12 GB 及以上),<strong>驱动 ≥ 570.144</strong>。没有 NVIDIA 显卡的机器只能<a href="../05-data-collection/#no-gpu">降级录制</a>,效率明显下降</td>
+<td>驱动 570.144 / 580.126.09</td>
+</tr>
+<tr>
+<td>Python</td>
+<td><strong>≥ 3.12</strong>(<code>pyproject.toml</code> 的 <code>requires-python</code>;<code>conda_environment.yaml</code> 固定 <code>python=3.12</code>)</td>
+<td>3.12.13</td>
+</tr>
+<tr>
+<td>PyTorch</td>
+<td><code>torch&gt;=2.2.1,&lt;2.11.0</code>;<code>torchvision&gt;=0.21.0,&lt;0.26.0</code></td>
+<td>2.10.0 / torchvision 0.25.0</td>
+</tr>
+<tr>
+<td><code>torchcodec</code></td>
+<td><code>&gt;=0.2.1,&lt;0.11.0</code>,由 <code>setup_env.sh</code> <strong>按当前 torch 版本自动对齐</strong>(不匹配会强制重装)</td>
+<td>0.10.0</td>
+</tr>
+<tr>
+<td>PyAV</td>
+<td><code>av&gt;=15.0.0,&lt;16.0.0</code>,安装脚本固定装 <strong>15.1.0</strong></td>
+<td>15.1.0</td>
+</tr>
+<tr>
+<td><code>rerun-sdk</code></td>
+<td><code>&gt;=0.24.0,&lt;0.27.0</code>(<code>--display_data</code> 用)</td>
+<td>0.26.2</td>
+</tr>
+<tr>
+<td><code>opencv-python</code></td>
+<td>固定 <code>==4.12.0.88</code>(XenseRobotics 各 SDK 统一)</td>
+<td>4.12.0.88</td>
+</tr>
+<tr>
+<td>NumPy</td>
+<td><code>&gt;=1.26.4</code></td>
+<td>2.2.6</td>
+</tr>
+<tr>
+<td><code>xense-taccap-lerobot</code></td>
+<td>基于 lerobot 0.5.1 定制;版本号 <code>0.5.1+xtac.0.0.6</code>(与文档版本同步)</td>
+<td><code>main@d1b9e79a</code></td>
+</tr>
+<tr>
+<td><code>xense.taccap</code>(<code>taccap-gripper</code> SDK)</td>
+<td>与主仓库子模块版本配套</td>
+<td>0.1.9(子模块 <code>a3382db</code>)</td>
+</tr>
+<tr>
+<td>夹爪固件命令集</td>
+<td><strong>V2.1</strong>(帧格式另计,为 V1.8;区别见<a href="#v21">三套编号</a>)</td>
+<td>命令集 V2.1</td>
+</tr>
+<tr>
+<td>夹爪固件构建</td>
+<td>leader <strong>≥ 1.2.0</strong> / follower <strong>≥ 1.1.0</strong> 即支持命令集 V2.1</td>
+<td>当前基线附带 leader <strong>1.2.2</strong> / follower <strong>1.1.5</strong>(固件源码分支 <code>hw_v1.1.0</code>),两版都修掉了<a href="#ota-when">三个已知缺陷</a>并已过硬件验证;镜像版本随 SDK 走,以 <code>firmware/manifest.json</code> 为准,见 <a href="#ota">固件 OTA 升级</a></td>
+</tr>
+<tr>
+<td><code>xensesdk</code></td>
+<td>由安装脚本提供</td>
+<td>2.1.1</td>
+</tr>
+<tr>
+<td>XenseVR PC Service(<code>.deb</code> 守护进程)</td>
+<td>≥ <strong>v0.2.0</strong>;<strong>装机请直接用 v0.2.1</strong>,理由见下</td>
+<td>v0.2.1</td>
+</tr>
+<tr>
+<td><code>xensevr_pc_service_sdk</code>(Python 接口)</td>
+<td>绑定在主仓库内(不再是子模块),链接 <code>.deb</code> 里的 C SDK</td>
+<td>0.2.1 —— <strong>版本号取自 <code>.deb</code></strong>,见下</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title"><code>.deb</code> 现在是 Pico4 C SDK 的唯一来源</p>
+<p>以前为了编译 <code>libPXREARobotSDK.so</code> 要克隆 <code>third_party/XenseVR-PC-Service</code> 子模块;
+现在这个库直接从已安装的 <code>.deb</code>(<code>/opt/apps/roboticsservice/SDK</code>)里取,<strong>子模块已删除</strong>。
+带来两件事:</p>
+<ul>
+<li><strong>递归克隆从约 33 MiB 降到约 1.6 MiB</strong>,安装时也不再链接 gRPC 静态库。</li>
+<li><strong>这个 C SDK 的更新随新版 <code>.deb</code> 分发</strong>,重跑 <code>--install</code> 不会重新编译它。</li>
+</ul>
+<p>脚本会跳过"版本已经一致"的包,所以停在 <strong>v0.2.0</strong> 的机器会拿旧 SDK 去编绑定——
+v0.2.1 是同一个守护进程配<strong>重新编译过的 SDK</strong>,装机请直接用它。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title"><code>pip show xensevr-pc-service-sdk</code> 跟着 <code>.deb</code> 走</p>
+<p>这个包在构建时向 <code>dpkg</code> 问 <code>xensevr-pc-service</code> 的版本,所以显示的就是 <code>.deb</code> 的版本
+(如 <code>0.2.1</code>)。</p>
+<p><strong>判断有没有头显相机支持,请看接口在不在</strong>——它反映的是实际加载的那个模块:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"import xensevr_pc_service_sdk as xrt; print(hasattr(xrt, 'has_pico_camera_frame'))"</span>
+</span></code></pre></div>
+<p>服务本体的版本用 <code>dpkg -s xensevr-pc-service</code> 查(见<a href="#check-versions">如何查版本</a>)。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">PC Service v0.2.0 只影响头显相机</p>
+<p>v0.2.0 相对 v0.1.0 只多做一件事:<strong>转发头显相机的视频帧</strong>,这是
+<a href="../05-data-collection/#56">头显相机</a>画面的通路。老版本头显 APK 配 v0.2.0 也照常工作,
+所以<strong>不用头显相机就没有任何行为变化</strong>。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">版本以本地为准</p>
+<p>命令与字段应以你本地这一版主仓库、以及夹爪 SDK 附带的设备说明为准。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">头显相机需要 <code>ffc94d53</code> 之后的版本</p>
+<p>本手册中的<a href="../05-data-collection/#56">头显相机</a>、Insight 链路移除、以及
+<a href="../05-data-collection/#world-view"><code>/world</code> 3D 视图</a>的改动,来自
+<a href="https://github.com/XenseRobotics-AI/xense-taccap-lerobot/pull/9">PR #9</a>,已合入 <code>main</code>(<code>ffc94d53</code>)。</p>
+<p>checkout 停在更早的版本时:<code>--robot.enable_head_camera</code> 在单夹爪上还不存在,
+双夹爪上它指的是旧的 Insight 相机,Rerun 里也仍然画着 TRACKER 坐标系和虚线。
+执行 <code>git pull --recurse-submodules</code> + <code>./setup_env.sh --install</code> 即与本手册一致。</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">子模块已改用 HTTPS——<code>ffc94d53</code> 及更早的版本需要 GitHub SSH key</p>
+<p>早期版本的 <code>.gitmodules</code> 用的是 <code>git@github.com:</code> 形式,机器上没配 GitHub SSH key 时
+<a href="../02-environment/">克隆仓库与子模块</a> 那一步会失败(顶层仓库能克隆,拉子模块时报错)。
+现在已全部改为 <code>https://</code>,任何机器都能直接拉。Docker 路径同样要过这一关——镜像构建
+只校验子模块是否已就位,拉取仍由宿主机在构建前完成。</p>
+<p><strong>已经升级到新版本、但拉子模块仍然要 SSH key</strong>:<code>.gitmodules</code> 只是模板,老机器
+<code>.git/config</code> 里记的还是旧 URL,<code>git pull</code> 不会改写它。同步一次即可:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>git<span class="w"> </span>submodule<span class="w"> </span>sync<span class="w"> </span>--recursive
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>git<span class="w"> </span>submodule<span class="w"> </span>update<span class="w"> </span>--init<span class="w"> </span>--recursive<span class="w"> </span>--progress
+</span></code></pre></div>
+<p><strong>必须停在旧版本时</strong>,全局改写 URL 绕过:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>url.<span class="s2">"https://github.com/"</span>.insteadOf<span class="w"> </span><span class="s2">"git@github.com:"</span>
+</span></code></pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">主夹爪拒绝连接的行为需要 <code>4fb5b79b</code> 之后的版本</p>
+<p>从这一版起,<strong>未标定的主夹爪会被直接拒绝连接</strong>,不用你自己判断标没标过。
+停在更早的版本时没有这道拦截,<strong>务必自己按 <a href="../04-calibration/#41">4.1.3</a> 确认
+<code>gripper.pos</code> 张到底能到 <code>1.0</code></strong> 再开录。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">头显位姿进 action、显示默认不压缩,需要 <code>f491cae5</code> 之后的版本</p>
+<p>两项变化都在这之后:<code>head_camera.*</code> 从"仅观测"变成<strong>同时也是动作</strong>
+(见 <a href="../05-data-collection/#56">5.6 位姿与可视化</a>);<code>--display_compressed_images</code>
+的默认值从 <code>true</code> 改为 <strong><code>false</code></strong>,并新增 <code>--display_image_every_n</code>。</p>
+<p>停在更早的版本时:头显位姿只作为观测落盘,策略不会被要求复现它;Rerun 显示默认走 JPEG
+压缩,开 <code>--display_data=true</code> 更容易出现 <code>[slow_frame]</code>。</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">固件镜像 1.2.2 / 1.1.5:这一次<strong>建议刷</strong>,和之前几次不一样</p>
+<p>子模块升到 SDK <strong>0.1.9</strong>(<code>3dac16a</code>)后,<code>firmware/</code> 里附带的镜像是 leader <strong>1.2.2</strong> /
+follower <strong>1.1.5</strong>。更早的基线附带 1.2.1 / 1.1.1(SDK <code>83314c8</code>),再早是 1.2.0 / 1.1.0。</p>
+<p><strong>前几次升级只改了 LED 颜色一类的表面行为,这一次不是。</strong>1.2.2 / 1.1.5 修掉了三个实打实
+的缺陷,它们在所有更早的固件上都存在,包括完全满足命令集 V2.1 的那些——是什么、怎么表现,
+见<a href="#ota-when">但 V2.1 只是能用的底线</a>。要求门槛不变(leader ≥ 1.2.0 / follower ≥ 1.1.0),
+变的是<strong>推荐值</strong>。</p>
+<p>两件事随之而来,刷之前先读:</p>
+<ul>
+<li>这两版镜像是<strong>本地工具链编译</strong>的,不是固件团队发布工具链的产物(<code>manifest.json</code> 的
+  <code>build</code> 字段写着 <code>local</code>)。换来的是那三条修复,代价是少了那条发布链路的背书;
+  两版都已在两台实机上验证过。</li>
+<li><strong>刷完必须断电重插</strong>,这是流程的一步,不是排障手段——见 <a href="#ota">OTA</a> 里那条 danger。</li>
+</ul>
+</div>
+<div class="admonition danger">
+<p class="admonition-title"><code>--robot.id</code> 变成必填,需要 <code>e8146c4e</code> 之后的版本</p>
+<p>从这一版起,<code>lerobot-record</code> / <code>lerobot-teleoperate</code> <strong>必须</strong>带 <code>--robot.id</code>,
+漏了在解析命令行时就退出;录制时还会往数据集里写一份
+<a href="../05-data-collection/#robot-id"><code>meta/hardware.json</code></a>(夹爪固件 SN + 触觉 SN)。</p>
+<p>停在更早的版本时:<code>--robot.id</code> 可以不填,数据集里也<strong>没有 <code>meta/hardware.json</code></strong>——
+那批数据说不出自己是哪套硬件采的,只能靠<a href="../data-management/">采集台账</a>人工记。
+<strong>本手册的命令一律按新版书写。</strong></p>
+</div>
+<div class="admonition note">
+<p class="admonition-title"><code>--robot.id</code> 可以只填数字,需要 <code>04812536</code> 之后的版本</p>
+<p><code>--robot.id=0</code> 会按 <code>--robot.type</code> 自动补前缀(<code>taccap_0</code> / <code>bi_taccap_0</code>)。
+停在更早的版本时,前缀要自己写全:<code>--robot.id=taccap_0</code>。
+<strong>两个版本都接受写全的形式</strong>,所以本手册里的 <code>--robot.id=0</code> 在旧版本上要改写,反之不必。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">无 GPU 主机上的编码器选择,建议用 <code>3b9d2deb</code> 之后的版本</p>
+<p>从这一版起,<code>--dataset.vcodec=auto</code> 通过<strong>真开一次编码会话</strong>来判断有没有硬件编码器,
+所以没有 NVIDIA 驱动的机器上会自动落到 <code>libsvtav1</code>,不需要指定。更早的版本上,
+这类主机请显式写 <code>--dataset.vcodec=libsvtav1</code>。见
+<a href="../05-data-collection/#no-gpu">没有 NVIDIA GPU 的主机怎么录</a>。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Pico4 的 C SDK 改由 <code>.deb</code> 提供,需要 <code>42b44066</code> 之后的版本</p>
+<p><code>third_party/XenseVR-PC-Service</code> 子模块在这一版删除,<code>libPXREARobotSDK.so</code> 改从
+<code>.deb</code> 里取,同时 <code>.deb</code> 基线提到 <strong>v0.2.1</strong>(见上面的基线表)。</p>
+<p>停在更早的版本时:克隆仍需拉这个子模块,<code>--install</code> 仍会现编译这个库;
+<a href="../02-environment/#22">2.2 克隆仓库与子模块</a> 里"只有一个子模块"的说法对不上你的 checkout。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title"><code>setup_env.sh</code> 的 apt 预检查需要 <code>2892929a</code> 之后的版本</p>
+<p>从这一版起,<code>--install</code> 会先查 <code>build-essential</code> / <code>cmake</code> / <code>pkg-config</code> / <code>git</code> / <code>curl</code>
+在不在,缺了直接停下并打印该敲的 apt 命令(见
+<a href="../02-environment/#apt">前置:系统依赖包</a>)。停在更早的版本时没有这道检查,缺包要到
+编译阶段才报出来——照那一节先把包装齐即可。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Docker 交付镜像需要 <code>9387ef05</code> 之后的版本</p>
+<p><a href="../02-environment/#docker">2. 环境部署</a> 里那条 Docker 路径——交付目录、
+<code>install_customer.sh</code>、<code>compose.yaml</code>——来自这次提交,更早的版本里没有。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Docker 改为默认从 GHCR 拉取,需要 <code>854d4cdf</code> 之后的版本</p>
+<p>从这一版起 <code>compose.yaml</code> 的默认镜像就是 <code>ghcr.io/xenserobotics-ai/xense-taccap-lerobot</code>,
+<code>.env</code> 里<strong>只需要写 tag 一行</strong>;<code>.tar</code> 离线包仍然支持,但不再是默认路径。</p>
+<p>停在更早的版本时:默认镜像是<strong>本机构建</strong>的名字,要拉 GHCR 就必须同时写
+<code>LEROBOT_IMAGE</code> 和 <code>LEROBOT_IMAGE_TAG</code> 两行,只改 tag 不生效。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">容器里的图形能力需要 <code>93beb2aa</code> 之后的版本</p>
+<p><code>compose.yaml</code> 从 <code>gpus: all</code> 改成了 <code>runtime: nvidia</code>。停在更早的版本时,容器能跑 CUDA、
+<code>nvidia-smi</code> 也正常,但 NVIDIA 的 Vulkan ICD 不会被注入,<strong>Rerun 窗口起不来</strong>
+(<code>Failed to create surface</code>)。处理见
+<a href="../02-environment/#docker-gui">容器里的图形界面</a>。</p>
+<p>改用 <code>runtime: nvidia</code> 后要求 NVIDIA runtime 已注册进 Docker;没注册会直接报
+<code>Unknown runtime specified nvidia</code>,见<a href="../troubleshooting/#docker">故障排查</a>。</p>
+</div>
+<div class="admonition danger">
+<p class="admonition-title">语音播报不再中断录制,需要 <code>94597ba2</code> 之后的版本;<code>0.0.5</code> 镜像<strong>早于</strong>它</p>
+<p>每集开始会语音播报一句,而播报用的 <code>spd-say</code> 不在镜像里。修复前:第一集播报就抛异常,
+收尾那句又抛一次,进程直接崩掉——<strong>在容器里等于录不了</strong>。修好后播报失败只告警一次。</p>
+<p><strong><code>0.0.6</code> 镜像已经包含这个修复</strong>,升级后不必再带 <code>--play_sounds=false</code>;仍然钉在
+<code>0.0.5</code> 及更早的机器请一律带上,见<a href="../troubleshooting/#docker">故障排查</a>。
+Mamba 路径上装了 <code>speech-dispatcher</code> 的主机不受影响。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">容器里的语音播报是静音的,而且是刻意如此</p>
+<p><code>0.0.6</code> 的镜像装了 <code>speech-dispatcher</code>,但<strong>没有装语音合成器模块</strong>,所以播报只是被安全地
+跳过。补上合成器并不能让你听到声音——容器里没有可用的音频输出,<code>spd-say</code> 会从"立刻失败"
+变成"一直挂着",把录制卡在收尾那一步。为此 <code>d1ad7140</code> 之后的版本给这条阻塞调用加了 10 秒
+上限;<code>0.0.6</code> 镜像早于它,但只要不自己往镜像里装合成器就遇不到。<strong>要听到提示音,在宿主机上录。</strong></p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">录出来的视频对非 root 可读,需要 <code>dac15f74</code> 之后的版本;<code>0.0.5</code> 镜像<strong>早于</strong>它</p>
+<p>修复前视频落盘为 <code>-rw------- root</code>(拼接用的临时文件是 <code>0600</code>,移动时保留了权限),
+而同目录的元数据是正常 <code>0644</code>。后果只在<strong>导出</strong>时显现:非 root 拷贝时只有 <code>.mp4</code> 报
+<code>Permission denied</code>,看着像个别文件坏了。</p>
+<p><strong><code>0.0.6</code> 镜像已经包含这个修复</strong>。但权限取决于<strong>当初录数据的那版镜像</strong>,升级不会改写
+已经录好的文件——老数据仍按 <a href="../02-environment/#docker-data">数据放在哪</a> 的写法
+<strong>以 root 拷、拷完再 <code>chown</code></strong>。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title"><code>LEROBOT_DATA_DIR</code> 把数据落到宿主机目录,需要 <code>89239c71</code> 之后的版本</p>
+<p>在 <code>.env</code> 里设这一项,数据集就直接写进你指定的宿主机目录,不用再从容器里拷出来
+(见 <a href="../02-environment/#docker-data-dir">让数据直接落在宿主机目录</a>)。不设时行为与之前
+完全一致,仍是具名卷 <code>lerobot-data</code>。</p>
+<p>停在更早的版本时:只能用具名卷,想落到宿主机目录得改 <code>compose.yaml</code>——<strong>不建议</strong>,
+那是仓库跟踪的文件,写死绝对路径会在下次 <code>git pull</code> 冲突,换台机器还会挂到不存在的路径。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">头显相机默认 640x480,需要 <code>4b5f5cea</code> 之后的版本;<code>0.0.6</code> 镜像<strong>早于</strong>它</p>
+<p>头显 APP 的「分辨率」有 <code>640</code> / <code>1024</code> / <code>1280</code> 三档,默认 <code>640</code>(每眼 640x480)——
+但采集端原先只认 <code>1024x768</code> 和 <code>1280x960</code>,默认 <code>1024x768</code>。也就是说,头显停在出厂默认时
+开 <code>--robot.enable_head_camera=true</code> 会因首帧尺寸不符连不上,<code>--robot.head_camera_width=640</code>
+也会被判错。<code>4b5f5cea</code> 把 640x480 加进白名单并设为默认,两边默认这才对得上。</p>
+<p>停在更早的版本(含 <code>0.0.6</code> 镜像)时:头显相机只能跑 <code>1024</code> 或 <code>1280</code>——<strong>先在头显里把
+分辨率调上去</strong>,<code>1024</code> 用命令行默认即可,<code>1280</code> 加
+<code>--robot.head_camera_width=1280 --robot.head_camera_height=960</code>。本页其余部分与
+<a href="../05-data-collection/#56">5.6 头显相机</a>按新默认(640x480)描述。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title"><code>--dryrun</code> 已删除,<code>d46fcf66</code> 之后的版本不再接受它</p>
+<p>这个参数只打印一句"动作不会下发给机器人",实际从不生效——设备照常运行。已删掉,
+脚本里带着它的话现在会报未知参数,直接去掉即可。本手册从未使用过它。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">相机连不上要先装 <code>libusb-dev</code>,需要 <code>9a4d696b</code> 之后的版本</p>
+<p>近期的 Linux 内核更新要求配套的 libusb;缺了或者版本落后,<strong>相机就是连不上</strong>,而报错里
+没有一个字提到 libusb——所以排查往往先去翻 USB hub、线材和带宽,方向全错。从这一版起
+<a href="../02-environment/#apt">2. 环境部署</a> 把 <code>libusb-dev</code> 列成独立的安装项,<code>setup_env.sh</code>
+也会在缺 <code>libusb-0.1.so.4</code> 时告警(只告警不中断:编译期用不到它,装得上、连接时才失败)。</p>
+<p><code>apt upgrade</code> 带来新内核之后,记得同步升一次:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>update<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>--only-upgrade<span class="w"> </span>libusb-dev<span class="w"> </span>libusb-1.0-0
+</span></code></pre></div>
+<p>同一版里 <code>usbutils</code> 从推荐列表中移除(相应地,<code>lsusb -t</code> 那半段排查说明也一并去掉了)。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">录到一半换硬件会记成一个新 epoch,需要 <code>052eb354</code> 之后的版本</p>
+<p><code>meta/hardware.json</code> 从"一份扁平的 <code>units</code>"变成 <strong><code>epochs</code> 数组</strong>:每段记
+<code>from_episode</code> / <code>to_episode</code>(左闭右开)、<code>recorded_at</code>,以及那一段用的 <code>robot_id</code>、
+<code>role</code> 和 <code>units</code>。续录时如果换了夹爪或传感器,旧段在当前集数处<strong>封口</strong>,新段接上,
+每一集都还指向真正采它的那套设备。</p>
+<p>停在更早的版本时:续录遇到硬件不一致只<strong>打一条告警并保留原文件</strong>——告警滚过去就没了,
+盘上没有任何东西记下换过硬件,而清单从此把换后采的每一集都记在旧设备名下。
+换句话说,<strong>旧版本不是"记不下换硬件",是"记错"</strong>。</p>
+<p>读取端不用分版本处理:换硬件之前写的老文件(只有扁平 <code>units</code>)会被当成一个开口的
+epoch(<code>from_episode</code> 0、<code>to_episode</code> <code>null</code>)读出来。但要注意,<strong>开口的单段只代表
+"这里没有任何东西说明换过硬件",不等于"确实没换过"</strong>——老格式压根表达不了换硬件这件事。</p>
+</div>
+<div class="admonition danger">
+<p class="admonition-title">触觉的 runtime bundle 随数据集落盘,需要 <code>dbbdd08e</code> 之后的版本</p>
+<p>只记 SN 只说得清"哪枚传感器采的",说不清"采的时候它的标定长什么样"。而从录下来的
+<code>rectify</code> 流重建 depth / force / difference,要的正是这份 <strong>runtime 配置</strong>——它里面带着
+传感器上电时拍的那张参考图。</p>
+<p>从这一版起,每枚传感器的 bundle 写进 <code>meta/runtimes/&lt;SN&gt;-&lt;时间&gt;.bin</code>,epoch 里的每个
+传感器指向自己那一份。这样重建<strong>只靠数据集本身</strong>就能做,不用几个月后再去找那台实物——
+而且那台实物这期间很可能已经重新标定过了。</p>
+<p><strong>为什么值得单独提醒</strong>:拿错 bundle 不会报错。用另一枚传感器的、或者同一枚重标之后的
+bundle 去解,一块<strong>没被碰过的胶体</strong>照样能解出看着挺合理的 depth 和 force,输出里没有
+任何迹象说明它是错的。所以老数据集(没有 <code>meta/runtimes/</code>)的正确做法是<strong>跳过重建</strong>,
+而不是随手找一份 bundle 顶上。</p>
+<p>一次采集会话一份,每枚约 841 KB。文件名里的时间是<strong>北京时间的墙上钟点</strong>,当标签看即可;
+要参与计算请用 epoch 里的 <code>recorded_at</code>(带时区的完整 ISO-8601)。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">腕相机鱼眼矫正,需要 <code>e5b4445a</code> 之后的版本</p>
+<p>新增 <code>--robot.wrist_undistort</code>(<strong>默认关</strong>),开启后腕相机的鱼眼会在<strong>落盘前</strong>被矫正,
+内参取自这只夹爪 flash 里的那份;没标定过的夹爪回退到 SDK 参考内参并告警。
+见 <a href="../05-data-collection/#57">5.7 腕相机鱼眼矫正</a>。</p>
+<p>停在更早的版本时:没有这个参数,<code>wrist_cam</code> 一律是原始鱼眼。</p>
+<p><strong>要紧的是这会改变落盘的数据</strong>——矫正过的和原始鱼眼的 <code>wrist_cam</code> 形状完全一样,
+两批混用时没有任何提示。所以从这一版起,清单里每个 unit 多一项 <code>wrist_undistort</code>
+记录用了哪一种;录到一半改设置会自动另起一个 epoch。<strong>老数据集里没有这一项,
+等同于原始鱼眼。</strong></p>
+</div>
+<h2 id="check-versions">如何查版本<a class="headerlink" href="#check-versions" title="锚点链接">¶</a></h2>
+<p>一条命令把上表里跑在 Python 环境里的都打出来:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>python<span class="w"> </span>-<span class="w"> </span><span class="s">&lt;&lt;'EOF'</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="s">import importlib.metadata as M</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="s">for p in ("lerobot", "taccap-gripper", "xensesdk", "torch", "torchvision",</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="s">          "torchcodec", "av", "rerun-sdk", "opencv-python", "numpy"):</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="s">    try:</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="s">        print(f"{p:16} {M.version(p)}")</span>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="s">    except M.PackageNotFoundError:</span>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="s">        print(f"{p:16} 未安装")</span>
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="s">EOF</span>
+</span></code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># xense-taccap / SDK</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"import xense.taccap as t; print('xense.taccap', t.__version__)"</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"import xensesdk, xensevr_pc_service_sdk; print('xensesdk/pc_service OK')"</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="c1"># NVIDIA 驱动(装了 NVIDIA GPU 时需 &gt;= 570.144)</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>nvidia-smi<span class="w"> </span>--query-gpu<span class="o">=</span>driver_version,name<span class="w"> </span>--format<span class="o">=</span>csv,noheader
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="c1"># XenseVR PC Service 守护进程的 deb 版本(服务本体的版本以这个为准)</span>
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>dpkg<span class="w"> </span>-s<span class="w"> </span>xensevr-pc-service<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s1">'^(Package|Version|Architecture):'</span>
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="c1"># 是否带头显相机接口(需要 PC Service v0.2.0;包版本号不会变,只能看接口)</span>
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"import xensevr_pc_service_sdk as xrt; print('pico camera API:', hasattr(xrt, 'has_pico_camera_frame'))"</span>
+</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>
+</span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="c1"># 固件 SN(含固件方案信息;role/side 由 SN 解析,但 SN 里没有版本)</span>
+</span><span id="__span-7-14"><a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"from xense.taccap import scan_grippers</span>
+</span><span id="__span-7-15"><a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a><span class="s2">for g in scan_grippers(): print(g.side.name, g.role.name, repr(g.firmware_sn))"</span>
+</span><span id="__span-7-16"><a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a>
+</span><span id="__span-7-17"><a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a><span class="c1"># 夹爪固件构建号(向固件问 GetVersion;不依赖 SDK 的 examples/)</span>
+</span><span id="__span-7-18"><a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"</span>
+</span><span id="__span-7-19"><a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a><span class="s2">from xense.taccap import scan_grippers, LeaderGripper, FollowerGripper, Cmd</span>
+</span><span id="__span-7-20"><a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a><span class="s2">for ep in scan_grippers():</span>
+</span><span id="__span-7-21"><a id="__codelineno-7-21" name="__codelineno-7-21" href="#__codelineno-7-21"></a><span class="s2">    cls = LeaderGripper if ep.firmware_sn.endswith('m') else FollowerGripper</span>
+</span><span id="__span-7-22"><a id="__codelineno-7-22" name="__codelineno-7-22" href="#__codelineno-7-22"></a><span class="s2">    g = cls(mcu_device=ep.mcu_device)</span>
+</span><span id="__span-7-23"><a id="__codelineno-7-23" name="__codelineno-7-23" href="#__codelineno-7-23"></a><span class="s2">    ack = g.transport.send_cmd(Cmd.GetVersion, b'', 500)</span>
+</span><span id="__span-7-24"><a id="__codelineno-7-24" name="__codelineno-7-24" href="#__codelineno-7-24"></a><span class="s2">    print(f'{ep.firmware_sn}  {ep.side.name:5}  fw={ack.data[0]}.{ack.data[1]}.{ack.data[2]}')</span>
+</span><span id="__span-7-25"><a id="__codelineno-7-25" name="__codelineno-7-25" href="#__codelineno-7-25"></a><span class="s2">"</span>
+</span><span id="__span-7-26"><a id="__codelineno-7-26" name="__codelineno-7-26" href="#__codelineno-7-26"></a>
+</span><span id="__span-7-27"><a id="__codelineno-7-27" name="__codelineno-7-27" href="#__codelineno-7-27"></a><span class="c1"># 视频编解码</span>
+</span><span id="__span-7-28"><a id="__codelineno-7-28" name="__codelineno-7-28" href="#__codelineno-7-28"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"import torchcodec; print('torchcodec', torchcodec.__version__)"</span>
+</span></code></pre></div>
+<h2 id="升级与更新">升级与更新<a class="headerlink" href="#升级与更新" title="锚点链接">¶</a></h2>
+<h3 id="repo-update">仓库 + 子模块<a class="headerlink" href="#repo-update" title="锚点链接">¶</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>git<span class="w"> </span>pull<span class="w"> </span>--recurse-submodules
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>git<span class="w"> </span>submodule<span class="w"> </span>update<span class="w"> </span>--init<span class="w"> </span>--recursive<span class="w"> </span>--progress
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>./setup_env.sh<span class="w"> </span>--install<span class="w">     </span><span class="c1"># 重新对齐依赖</span>
+</span></code></pre></div>
+<div class="admonition danger">
+<p class="admonition-title">拉完子模块必须重新编译 <code>xense.taccap</code></p>
+<p><code>git submodule update</code> 只更新文件,不会重新编译。见 <a href="../02-environment/">2.2 克隆仓库与子模块</a>。</p>
+</div>
+<h3 id="ota">固件 OTA 升级<a class="headerlink" href="#ota" title="锚点链接">¶</a></h3>
+<h3 id="ota-when">我需要刷吗?<a class="headerlink" href="#ota-when" title="锚点链接">¶</a></h3>
+<p><strong>不用自己查版本号——跑一次 <a href="../04-calibration/#41"><code>calibrate.py</code></a> 就知道。</strong>它在写任何东西
+之前先验固件,不够会原样退出并打印这台当前的版本:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>✗ encoder-max calibration needs command set &gt;= V2.1 (leader &gt;= 1.2.0); this gripper reports 1.1.0.
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>  Nothing was changed. Flash it first: ...
+</span></code></pre></div>
+<p>看到以下<strong>任意一条</strong>就需要刷:</p>
+<table>
+<thead>
+<tr>
+<th>现象</th>
+<th>出处</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>calibrate.py</code> 报 <code>needs command set &gt;= V2.1</code> 并原样退出</td>
+<td><a href="../04-calibration/#41">4.1 夹爪标定</a></td>
+</tr>
+<tr>
+<td>主夹爪连不上,报错里提示先做 OTA 升级</td>
+<td><a href="../04-calibration/#41">4.1.1</a></td>
+</tr>
+<tr>
+<td>夹爪固件低于命令集 <strong>V2.1</strong>(即 leader &lt; 1.2.0 / follower &lt; 1.1.0)</td>
+<td>上面的<a href="#版本兼容基线">基线表</a></td>
+</tr>
+</tbody>
+</table>
+<p>都没遇到就<strong>不用刷</strong>。固件不会自己退化,刷过一次之后除非换主板或擦除固件,不需要再刷。</p>
+<div class="admonition warning">
+<p class="admonition-title">但 V2.1 只是<strong>能用</strong>的底线,不代表<strong>没有已知缺陷</strong></p>
+<p>上面几条判断的是"命令集够不够用"。而 leader <code>1.2.2</code> / follower <code>1.1.5</code> 修掉了三个
+实打实的缺陷,它们在更早的固件上都存在——包括跑在 leader <code>1.2.0</code> / follower <code>1.1.0</code> 上、
+完全满足 V2.1 的那些:</p>
+<table>
+<thead>
+<tr>
+<th>缺陷</th>
+<th>表现</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>命令通道活锁</td>
+<td>持续高速率下发命令后,夹爪<strong>再也不响应任何命令</strong>,而数据流看起来一切正常(帧率、错误计数全对)。只能断电恢复</td>
+</tr>
+<tr>
+<td>日志阻塞实时任务</td>
+<td>固件空载时就在以约 35 KB/s 打日志,而日志发送是阻塞的,会拖住发出它的那个任务</td>
+</tr>
+<tr>
+<td>启动时越界写</td>
+<td>每次上电都会在一个数组末尾之外写一个字节</td>
+</tr>
+</tbody>
+</table>
+<p>第一条最值得注意:<strong>它坏掉的样子和正常几乎无法区分</strong>——设备还在正常推流,只是不再接受
+任何命令。如果你的采集流程里有"发命令 → 等响应"的环节,遇到过莫名其妙的卡住,值得升上来。</p>
+<p>这三条对主从夹爪都成立(它们在两种角色共用的代码里)。</p>
+<p><strong>SDK 升到 0.1.9 之后,<code>firmware/</code> 里附带的就是修好的那两版</strong>,不必再等——按下面
+<a href="#怎么刷">怎么刷</a>走一遍即可。判断自己要不要刷:比对 <a href="#ota"><code>manifest.json</code></a> 里的版本号
+和你这台 <code>GetVersion</code> 读回的号,附带的比手上的高就值得刷。</p>
+</div>
+<h3 id="怎么刷">怎么刷<a class="headerlink" href="#怎么刷" title="锚点链接">¶</a></h3>
+<p><strong>所有夹爪都要升到 V2.1</strong>。低于 V2.1 的固件不支持行程标定,
+<a href="../04-calibration/#41">夹爪标定</a>的第 2 步做不了,主夹爪也就无法连接。</p>
+<p>SDK 自 0.1.7 起<strong>随仓库附带已发布的固件镜像</strong>,直接刷即可:</p>
+<table>
+<thead>
+<tr>
+<th>镜像</th>
+<th>适用角色</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>tc-gu-01-master.bin</code></td>
+<td>主夹爪(SN 末位 <strong><code>m</code></strong>)</td>
+</tr>
+<tr>
+<td><code>tc-gu-01-slave.bin</code></td>
+<td>从夹爪(SN 末位 <strong><code>s</code></strong>)</td>
+</tr>
+</tbody>
+</table>
+<p>路径 <code>third_party/taccap-gripper/firmware/</code>,该目录只保留当前发布版。</p>
+<div class="admonition note">
+<p class="admonition-title">镜像版本随 SDK 版本走,以 <code>manifest.json</code> 为准</p>
+<p><strong>这里不写死版本号</strong>——附带的镜像版本取决于你这一版 SDK。同目录的 <code>manifest.json</code>
+记录了每个镜像的版本、字节数与 CRC32,是唯一出处:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>cat<span class="w"> </span>third_party/taccap-gripper/firmware/manifest.json
+</span></code></pre></div>
+<p>只要不低于 leader <code>1.2.0</code> / follower <code>1.1.0</code>,就已经支持命令集 V2.1。</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">顺序:<strong>先升级 SDK,再刷固件</strong></p>
+<p><strong>刷写与刷后校验请用 0.1.7 及以上的 SDK</strong>,更低版本不要用来刷固件。</p>
+<p>新 SDK 与旧固件通信不变,所以<strong>先升 SDK 总是安全的</strong>。</p>
+<p>这里还有一层:附带哪一版镜像取决于 SDK 版本,所以<strong>要刷到修好三个缺陷的 1.2.2 / 1.1.5,
+SDK 得先升到 0.1.9</strong>。停在更早 SDK 上的机器,<code>firmware/</code> 里躺的还是旧镜像,刷完等于没修。</p>
+</div>
+<p><strong>按角色选镜像,不是按左右手。</strong>角色看固件 SN 的<strong>最后一个字符</strong>:
+<code>TCGU01A28Z0023m</code>(示例 SN) → 末位 <code>m</code> → 主夹爪,用 <code>tc-gu-01-master.bin</code>。同一套设备上的两只夹爪常常<strong>都是主夹爪</strong>。</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c1"># 1. 确认每只夹爪的角色</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"from xense.taccap import scan_grippers</span>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="s2">for g in scan_grippers(): print(g.firmware_sn, '-&gt;', 'master' if g.firmware_sn.endswith('m') else 'slave')"</span>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="c1"># 2. 刷写(镜像只写文件名即可,脚本会去 SDK 的 firmware/ 里找)</span>
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>python<span class="w"> </span>third_party/taccap-gripper/python/examples/ota_update.py<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="w">    </span>tc-gu-01-master.bin<span class="w"> </span>--side<span class="w"> </span>left
+</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>
+</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="c1"># 3. 确认:GetVersion 返回固件编译进去的常量,读回的版本就是实际刷上去的版本</span>
+</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"</span>
+</span><span id="__span-11-11"><a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a><span class="s2">from xense.taccap import scan_grippers, LeaderGripper, Cmd</span>
+</span><span id="__span-11-12"><a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a><span class="s2">for ep in scan_grippers():</span>
+</span><span id="__span-11-13"><a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a><span class="s2">    g = LeaderGripper(mcu_device=ep.mcu_device)</span>
+</span><span id="__span-11-14"><a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a><span class="s2">    ack = g.transport.send_cmd(Cmd.GetVersion, b'', 500)</span>
+</span><span id="__span-11-15"><a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a><span class="s2">    print(f'{ep.firmware_sn}  {ep.side.name:5}  fw={ack.data[0]}.{ack.data[1]}.{ack.data[2]}')</span>
+</span><span id="__span-11-16"><a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a><span class="s2">"</span>
+</span></code></pre></div>
+<p>第 3 步读回的号必须<strong>不低于</strong> leader 1.2.0 / follower 1.1.0;刷的是随 SDK 附带的镜像时,
+读回的通常比这高——SDK 0.1.9 附带的是 leader <code>1.2.2</code> / follower <code>1.1.5</code>,刷的是这两个镜像时
+读回的就是这两个号。<strong>本页各处的具体版本号都是示例</strong>,以你自己读到的为准,这是正常的,
+见<a href="#v21">三套编号</a>。上面用 <code>LeaderGripper</code> 是因为这一步刷的是 master 镜像;从夹爪换
+<code>FollowerGripper</code>,其余不变。</p>
+<div class="admonition tip">
+<p class="admonition-title"><code>--target-version</code> 是可选的</p>
+<p>它只是给固件的安装后校验日志和分区元数据打个标记,<strong>不影响刷什么内容</strong>——刷进去的是哪一版
+由镜像文件本身决定。需要在日志里标注时才加,填 <code>manifest.json</code> 里那个版本号即可:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>python<span class="w"> </span>third_party/taccap-gripper/python/examples/ota_update.py<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">    </span>tc-gu-01-master.bin<span class="w"> </span>--side<span class="w"> </span>left<span class="w"> </span>--target-version<span class="w"> </span><span class="m">1</span>.2.2
+</span></code></pre></div>
+</div>
+<p>约 1 秒写完,夹爪重启并重新识别约 1–3 秒。新固件写在<strong>备用分区</strong>,校验通过之前不会覆盖
+正在运行的那一份——所以传输失败不会把夹爪刷坏。</p>
+<div class="admonition danger">
+<p class="admonition-title">刷完之后<strong>必须断电重插一次</strong>,这是升级流程的一步,不是排障手段</p>
+<p>上面那次重启是<strong>软复位</strong>:MCU 重新初始化了,但夹爪上的 USB 转串口芯片从头到尾没断过电。
+设备回来之后会停在一个<strong>降级状态</strong>,而这个状态从任何看得见的地方都分辨不出来——版本号
+正确、数据流在跑、错误计数全是 0,<strong>唯一的症状是它在悄悄丢状态帧</strong>。</p>
+<p>实测同一只夹爪、同一个固件、同一条线,60 秒一轮:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>丢失的状态帧</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>只做了 OTA</td>
+<td>每轮 35~39 帧,连续三轮</td>
+</tr>
+<tr>
+<td>断电重插之后</td>
+<td><strong>0</strong>,连续三轮</td>
+</tr>
+</tbody>
+</table>
+<p>所以顺序是:<strong>刷写 → 断电重插 → 再做第 3 步的版本确认和后续标定</strong>。在断电之前测到的
+任何数据都不可信。</p>
+<p>这和上面"升级期间不要断电"不冲突:<strong>升级过程中</strong>(蓝灯闪烁时)断电会写坏;<strong>升级完成、
+夹爪已经重启之后</strong>断电重插则是必需的。</p>
+</div>
+<div class="admonition danger">
+<p class="admonition-title">刷错角色会导致夹爪无法启动,需返厂恢复</p>
+<p><code>ota_update.py</code> 会按 CRC32 与 <code>manifest.json</code> 比对识别镜像,<strong>角色不匹配时直接拒绝</strong>
+(不是告警),<code>--force</code> 才能强制。手工编译的镜像识别不出来,会带一条提示放行。</p>
+<p>升级期间<strong>不要断电或拔线</strong>(此时夹爪指示灯蓝色闪烁,见 <a href="../hardware/">硬件介绍</a>)。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">镜像只写文件名,不用管在哪个目录运行</p>
+<p><code>ota_update.py</code> 会依次尝试:你给的原始路径 → SDK 根目录下的同名路径 →
+SDK <code>firmware/</code> 下的同名文件。所以 <code>tc-gu-01-master.bin</code> 在主仓库根目录、
+SDK 目录里、以及其它任何位置都能解析到同一个镜像,不需要按仓库拼前缀。
+路径在<strong>连接设备之前</strong>就检查,写错文件名不会白等一次设备发现。</p>
+</div>
+<p>升到 V2.1 之后,回到 <a href="../04-calibration/#41">4.1 夹爪标定</a> 把零点和行程上限标上——
+升级本身不产生标定值,标定完成之前主夹爪仍然连不上。</p>
+<h2 id="support">支持与反馈<a class="headerlink" href="#support" title="锚点链接">¶</a></h2>
+<p>遇到问题:</p>
+<ol>
+<li>先查<a href="../troubleshooting/">故障排查</a>与<a href="../07-faq-reference/">常见问题</a>。</li>
+<li>文档内容、链接或示例问题可提交到<a href="https://github.com/XenseRobotics-AI/XTac-UMI-G1-Docs/issues">文档仓库 Issues</a>。</li>
+<li>硬件、固件、标定材料或返修问题请通过设备交付 / 售后渠道反馈,并提供设备 SN。</li>
+</ol>
+<p>反馈时请附带:</p>
+<ul>
+<li>完整报错与相关日志,不要截断。</li>
+<li><code>scan_grippers</code> 的 side / role / firmware_sn 输出。</li>
+<li>本页“如何查版本”命令的输出。</li>
+<li>复现步骤、完整命令、单夹爪 / 双夹爪、是否启用追踪器。</li>
+<li>如涉及相机或硬件装配,附设备连接和异常画面照片。</li>
+</ul>
+<h2 id="兼容性与发布维护">兼容性与发布维护<a class="headerlink" href="#兼容性与发布维护" title="锚点链接">¶</a></h2>
+<ul>
+<li>当前站点文档版本为 <code>v0.0.6</code>;内容变更可通过文档仓库 Git 提交历史追踪。</li>
+<li>主仓库版本号与本页文档版本对齐:<code>xense-taccap-lerobot</code> 的 <code>pyproject.toml</code> 记 <code>0.5.1+xtac.0.0.6</code>,其中 <code>0.5.1</code> 是 lerobot 官方基线,<code>xtac.0.0.6</code> 是与本文档同步的产品版本。</li>
+<li><strong>0.0.6 相对 0.0.5:三条都是 Docker 路径上踩过的坑,建议所有机器升级</strong>——录制不再因为语音播报崩溃(不用再带 <code>--play_sounds=false</code>);录出来的视频是 <code>0644</code> 而不是 <code>0600 root</code>,导出时不再只有 <code>.mp4</code> 失败;容器里 <code>mamba activate</code> 不再提示 <code>Shell not initialized</code>。<strong>采集程序本身的行为、数据格式和三个 SDK 与 0.0.5 相同</strong>,升级不改变已录数据,也不需要重新标定。</li>
+<li><strong>SDK 0.1.9 与固件 1.2.2 / 1.1.5</strong>:子模块升到 <code>3dac16a</code> 后附带的镜像修掉了三个共用代码里的
+  缺陷(命令通道活锁、日志阻塞实时任务、上电越界写),<strong>建议所有设备刷上来</strong>——这是自
+  1.2.0 以来第一次"值得为它专门刷一遍"的固件更新。刷完<strong>必须断电重插</strong>。同时数据集多了
+  <code>meta/runtimes/</code>(触觉 runtime bundle),<code>meta/hardware.json</code> 改为 <code>epochs</code> 结构;
+  两项都向后兼容,老数据集照常能读。</li>
+<li><strong>0.0.5 相对 0.0.4:只有安装方式变了</strong>——Docker 改为默认从 GHCR 在线拉取,不再需要 tar 交付包;镜像里的采集程序和三个 SDK 与 0.0.4 相同。已经装好 0.0.4 的机器<strong>没有必须升级的理由</strong>,尤其是采集进行到一半时不要动。</li>
+<li>精确兼容关系以主仓库依赖锁定文件、子模块 commit 和本页“已验证基线”为准,不要仅按包名猜测兼容性。</li>
+<li>升级主仓库、SDK、固件或 XenseVR PC Service 后,应重新执行环境验证、设备自检和一条短 episode 校验。</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden="">
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚">
+        
+          
+          <a href="../07-faq-reference/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 常见问题与参考">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                常见问题与参考
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../sdk-overview/" class="md-footer__link md-footer__link--next" aria-label="下一页: SDK 概览">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                SDK 概览
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      文档版本 v0.0.6 &nbsp;·&nbsp; Copyright © 2026 XenseRobotics Co., Ltd.
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/XenseRobotics-AI/XTac-UMI-G1-Docs" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tracking", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "navigation.footer", "toc.follow", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.tooltips"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>
