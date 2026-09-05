@@ -175,5 +175,22 @@ git switch main && git pull
 git revert -m 1 <合并提交的 sha>     # 走 PR 合并,不要直接推 main
 ```
 
-注意 revert 之后不能靠重新合并同一个分支来恢复(git 认为已经合并过、不会重放),
-要把 revert 再 revert 回来,或者从 `dev` 重新提一个 PR。
+**revert 之后要恢复,只能把 revert 再 revert 回来**,不能靠重新合并 `dev`:
+
+```bash
+# 在 dev 上先同步 main,再反转那两个 revert,内容就回到 dev 上了
+git switch dev
+git merge origin/main            # 这一步会暂时删掉新内容,是预期的
+git revert --no-edit <revert 提交的 sha>   # 按 revert 的相反顺序逐个反转
+git push origin dev
+```
+
+不这么做的话,`dev → main` 的合并会**静默保留那次删除**:git 看到基点上有这些文件、
+`dev` 没改过、`main` 删了,于是采纳删除,不报冲突。发布出去就是一个空壳站,而且事后
+从 PR 上看不出问题。要确认恢复成功,合并前用临时工作区试一次:
+
+```bash
+git worktree add -q --detach /tmp/t origin/main
+(cd /tmp/t && git merge --no-commit --no-ff origin/dev && ls docs/product/*.md | wc -l)
+git worktree remove --force /tmp/t
+```
