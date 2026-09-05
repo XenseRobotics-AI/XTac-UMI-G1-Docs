@@ -6,90 +6,65 @@ hide:
 
 <div class="tc-hero" markdown>
 
-<span class="tc-eyebrow">XTac-UMI · 手持式多模态数据采集系统</span>
+<span class="tc-eyebrow">XenseRobotics · XTac-UMI G1</span>
 
-# 让机器人数据集拥有触觉
+# 手持触觉数采,从开箱到数据集
 
-<p class="tc-sub">双夹爪视触觉、腕部鱼眼、头显第一视角与 6DoF 位姿同步记录。一次手持示教,直接得到可训练的数据集。</p>
+<p class="tc-sub">XTac-UMI G1 手持触觉数采夹爪 × Pico4 Ultra 企业版头显与追踪器<br>基于 lerobot 同步采集视觉 · 触觉 · 第一视角双目 · 手部与头部位姿,直出可训练的标准 <code>LeRobotDataset</code></p>
 
-[选择配置](product/editions.md){ .md-button .md-button--primary }
-[看看数据长什么样](pc/dataset.md#61){ .md-button }
+[一页速通 :material-arrow-right-bold:](quickstart.md){ .md-button .md-button--primary }
+[环境安装](02-environment.md){ .md-button }
+[了解设备](01-overview.md){ .md-button }
 
-![XTac-UMI G1 产品外观](assets/product/xtac-umi-g1-hero.webp){ .tc-hero-img }
-
-</div>
-
-<div class="xu-stats" markdown>
-
-**3 路 / 爪** 1 鱼眼 + 2 视触觉
-
-**6DoF** 头显与双追踪器位姿
-
-**30 Hz** 多源同步记录
-
-**MCAP · LeRobot v3** 原始与训练格式
+![XTac-UMI G1 产品外观](assets/product/xtac-umi-g1-hero.jpg){ .tc-hero-img }
 
 </div>
 
-## 两种配置,一套夹爪
+## 5 分钟看懂全流程
 
-选一个开始。两边的硬件、标定和数据定义相同,差别只在计算放在哪、你用什么操作。
+```mermaid
+flowchart LR
+    A[环境部署<br/>setup_env.sh] --> B[主机/硬件配置<br/>串口权限·设备发现]
+    B --> C[标定与自检<br/>编码器零点·tracker]
+    C --> P[预览实时数据<br/>lerobot-teleoperate]
+    P --> D[数据采集<br/>lerobot-record]
+    D --> E[数据集<br/>校验·回放·上传Hub]
+```
 
-<div class="grid cards xu-cards" markdown>
+## 三步走
 
--   ![XTac-UMI 数采背包正面接口](assets/product/backpack-ports-front.webp){ .xu-card__img }
+本手册是 **xense-taccap-lerobot 数采快速使用文档**,主线三块:**准备就绪 → 采集数据 → 认识数据**。
 
-    <span class="xu-tag xu-tag--backpack">背包版</span>
+<div class="grid cards" markdown>
 
-    **XTac-UMI 数采背包**{ .xu-card__title }
+-   :material-check-decagram-outline: __① 准备工作(前提)__
 
     ---
 
-    - 背包即主机,平板即控制台,不需要 PC
-    - 夹爪按键开录,灯语反馈,单人可操作
-    - MCAP 原始记录,一键发布 LeRobot 到 ModelScope
+    认识拿到的硬件 → 连接硬件、上电 → 装好软件环境与主机/设备配置。这三件是采集前的前提。
 
-    适合:规模化数采工厂与采集团队;软件闭源交付,支持轻量二次开发
-    { .xu-card__fit }
+    [:octicons-arrow-right-24: 硬件介绍](hardware.md) · [环境安装](02-environment.md)
 
-    [快速开始](backpack/index.md){ .md-button .md-button--primary }
-    [了解背包](product/backpack.md){ .md-button }
-    { .xu-card__actions }
-
--   ![XTac-UMI G1 视触觉夹爪](assets/product/g1-render-hero.webp){ .xu-card__img }
-
-    <span class="xu-tag xu-tag--pc">PC 版</span>
-
-    **XTac-UMI G1 开发套件**{ .xu-card__title }
+-   :material-record-circle-outline: __② 软件使用__
 
     ---
 
-    - 接入你自己的 x86 工作站,完全走 LeRobot 框架
-    - `lerobot-record` 直接产出 LeRobotDataset
-    - 基于 lerobot 开源生态,完全开放二次开发
+    标定自检 → `lerobot-teleoperate` 预览确认数据流 → `lerobot-record` 录制。数采的核心操作。
 
-    适合:研究与算法团队、自建训练管线
-    { .xu-card__fit }
+    [:octicons-arrow-right-24: 标定与自检](04-calibration.md) · [数据采集](05-data-collection.md)
 
-    [快速开始](pc/index.md){ .md-button .md-button--primary }
-    [对比两种配置](product/editions.md){ .md-button }
-    { .xu-card__actions }
+-   :material-database-outline: __③ 数据介绍__
 
-</div>
+    ---
 
-<div class="xu-spot" markdown>
+    `LeRobotDataset` 长什么样、每帧记录了什么、如何校验与上传。
 
-![控制台监控页:六路相机、两侧视触觉与头显位姿同屏](assets/backpack/monitor-live.webp)
-
-<div class="xu-spot__text" markdown>
-
-## 录之前先看见
-
-控制台里同时显示六路相机、两侧视触觉与头显位姿,夹爪开合度实时归一化。录制状态、磁盘余量、追踪器丢失都在同一屏上,平板和手机都能看。
+    [:octicons-arrow-right-24: 数据集与示例](06-dataset.md)
 
 </div>
 
-</div>
+!!! note "二次开发?"
+    需要直接调 `xense.taccap` SDK 的,见 [参考 → 附录:SDK 与二次开发](sdk-overview.md)。
 
 ## 相关仓库
 
@@ -97,7 +72,9 @@ hide:
 |---|---|
 | [`xense-taccap-lerobot`](https://github.com/XenseRobotics-AI/xense-taccap-lerobot) | 数采主仓库(lerobot 0.5.1 定制分支,提供 `taccap_gripper` 设备类型) |
 | [`xense.taccap`](https://github.com/XenseRobotics-AI/TacCap-Gripper) | 夹爪 SDK(仓库 `TacCap-Gripper`,子模块 `third_party/taccap-gripper`):IMU、编码器、按键、协议及仅从夹爪具备的电机控制 |
-| [`xensevr_pc_service_sdk`](https://github.com/XenseRobotics-AI/XenseVR-PC-Service) | Pico4 Ultra 追踪器 PC 服务(以 `.deb` 安装,**不是子模块**);v0.2.0 起也承载[头显相机](pc/recording.md#56)画面 |
+| [`xensevr_pc_service_sdk`](https://github.com/XenseRobotics-AI/XenseVR-PC-Service) | Pico4 Ultra 追踪器 PC 服务(以 `.deb` 安装,**不是子模块**);v0.2.0 起也承载[头显相机](05-data-collection.md#56)画面 |
 | [`xensesdk`](https://github.com/XenseRobotics/xensesdk) | 视触觉传感器 SDK,由安装脚本提供([文档站](https://xensedoc.readthedocs.io/en/latest/)) |
 
-PC 版内容对应 `xense.taccap 0.1.9` 与基于 lerobot 0.5.1 定制的 `xense-taccap-lerobot`;命令与字段以你本地主仓库附带的设备说明为准,升级见[版本与升级](pc/versions.md#required)。
+!!! note "适用版本"
+    本手册对应 `xense.taccap 0.1.9`、`xense-taccap-lerobot` 基于 **lerobot 0.5.1** 定制。
+    命令与字段以你本地这一版主仓库附带的设备说明为准。
