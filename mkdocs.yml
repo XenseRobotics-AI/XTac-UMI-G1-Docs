@@ -6,25 +6,16 @@
 # 发布:      GitHub Actions -> gh-pages(见 .github/workflows/deploy.yml)
 # =============================================================================
 
-site_name: XTac-UMI 文档
-site_description: XTac-UMI 手持式多模态数据采集系统:XTac-UMI G1 视触觉夹爪、数采背包与 PC 开发套件的产品介绍与使用手册
-site_author: 千觉机器人
+site_name: XTac-UMI G1 数采快速使用手册
+site_description: XenseRobotics XTac-UMI G1 手持触觉数采夹爪 · 基于 lerobot 的数据采集快速上手
+site_author: XenseRobotics
 site_url: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/
-copyright: Copyright &copy; 2026 千觉机器人科技(上海)有限公司
+copyright: 文档版本 v0.0.6 &nbsp;·&nbsp; Copyright &copy; 2026 XenseRobotics Co., Ltd.
 
-# 不打包进站点的 docs 内文件(素材说明)
+# 不打包进站点的 docs 内文件(素材说明 + 暂移出导航的页面,文件留存备用)
 exclude_docs: |
   assets/README.md
-
-# 链接校验:配合 --strict,断链、缺失锚点、导航外页面都会让构建失败
-validation:
-  nav:
-    omitted_files: warn
-  links:
-    not_found: warn
-    anchors: warn
-    absolute_links: warn
-    unrecognized_links: warn
+  embedded.md
 
 # 文档仓库(右上角链接)
 repo_url: https://github.com/XenseRobotics-AI/XTac-UMI-G1-Docs
@@ -34,8 +25,8 @@ edit_uri: ""
 theme:
   name: material
   language: zh
-  # TODO: 正式方形标志与 favicon 到位后启用(文件放 docs/assets/brand/;千觉 wordmark 已在 logo.svg / logo-light.svg)
-  # logo: assets/brand/logo.svg
+  # TODO: 放好素材后取消注释启用自定义 logo/favicon(文件放 docs/assets/brand/)
+  # logo: assets/brand/logo.png
   # favicon: assets/brand/favicon.png
   icon:
     repo: fontawesome/brands/github
@@ -56,9 +47,7 @@ theme:
         name: 切换到亮色模式
   features:
     # navigation.instant 与 i18n 语言切换器不兼容,勿开启
-    # 顶栏标签 = 产品 / 背包版 / PC 版 / 通用,左侧栏只显示当前标签内的页面
-    - navigation.tabs
-    - navigation.tabs.sticky
+    # 快速手册:不用顶栏 tabs,全部章节走左侧栏(分组 + 展开)
     - navigation.tracking
     - navigation.sections
     - navigation.expand
@@ -77,10 +66,7 @@ theme:
 plugins:
   - search:
       separator: '[\s​\-_,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
-  - glightbox:
-      # 首屏产品图不进灯箱
-      skip_classes:
-        - tc-hero-img
+  - glightbox
   - i18n:
       docs_structure: suffix
       fallback_to_default: true
@@ -92,101 +78,35 @@ plugins:
           name: 简体中文
           build: true
         - locale: en
-          name: English
+          name: English (partial)
           build: true
-          site_name: "XTac-UMI Docs"
-          site_author: XenseRobotics
-          copyright: Copyright &copy; 2026 XenseRobotics Co., Ltd.
+          site_name: "XTac-UMI G1 Data-Collection Quickstart"
           nav_translations:
-            产品: Product
             首页: Home
-            产品线与配置对比: Editions
-            认识 XTac-UMI G1: XTac-UMI G1
-            认识数采背包: The Backpack
-            技术参数: Specifications
-            安全与合规: Safety & Compliance
-            背包版: Backpack Kit
-            PC 版: Developer Kit
-            通用: Common
-            开箱、接线与供电: Unboxing, Wiring & Power
-            网络与控制台入口: Network & Console Access
-            实时监控与录制: Live Monitor & Recording
-            项目、导出与发布: Projects, Export & Publish
-            回放: Playback
-            系统设置: System Settings
-            升级与 OTA: Upgrades & OTA
-            版本: Versions
-            安装: Installation
-            主机配置: Host Setup
-            标定与自检: Calibration & Self-check
-            数据采集: Data Collection
-            数据集: Dataset
+            一页速通: Quickstart
             故障排查: Troubleshooting
-            版本与升级: Versions & Upgrades
-            RobotConfig 与 SDK: RobotConfig & SDK
-            Pico4 头显与追踪器: Pico4 Headset & Trackers
-            夹爪按键、指示灯与序列号: Gripper Buttons, LEDs & Serials
-            坐标系: Coordinate Frames
+            概述: Overview
+            产品亮点: Highlights
+            准备工作: Getting Ready
+            硬件介绍: Hardware
+            环境安装: Installation
+            环境部署: Environment Setup
+            主机与设备配置: Host & Device Setup
+            软件使用: Software Usage
+            标定与自检: Calibration & self-check
+            数据预览与采集: Data preview and collection
+            采集规范与最佳实践: Best Practices
+            数据介绍: Data
+            数据集与示例: Dataset & Examples
+            数据管理与命名: Data Management
+            参考: Reference
             维护保养: Maintenance
-            术语表与支持: Glossary & Support
-  # 旧页面地址跳转到重构后的新页面(重构前的外部链接与收藏不失效)
-  - redirects:
-      redirect_maps:
-        # 第一轮重构前的旧文件名(2026-09 之前)
-        01-overview.md: product/g1.md
-        hardware.md: common/gripper.md
-        highlights.md: product/g1.md
-        02-environment.md: pc/install.md
-        03-host-hardware.md: pc/host-setup.md
-        04-calibration.md: pc/calibration.md
-        05-data-collection.md: pc/recording.md
-        best-practices.md: pc/recording.md
-        06-dataset.md: pc/dataset.md
-        data-management.md: pc/dataset.md
-        07-faq-reference.md: common/reference.md
-        sdk-overview.md: https://github.com/XenseRobotics-AI/TacCap-Gripper/tree/main/docs
-        sdk-install.md: https://github.com/XenseRobotics-AI/TacCap-Gripper/blob/main/docs/INSTALL.md
-        sdk-examples.md: https://github.com/XenseRobotics-AI/TacCap-Gripper/blob/main/docs/EXAMPLES.md
-        # 第一轮重构的扁平文件名 → 产品线目录(PC 版 / 通用)
-        quickstart.md: pc/index.md
-        install.md: pc/install.md
-        host-setup.md: pc/host-setup.md
-        calibration.md: pc/calibration.md
-        recording.md: pc/recording.md
-        dataset.md: pc/dataset.md
-        troubleshooting.md: pc/troubleshooting.md
-        versions.md: pc/versions.md
-        reference.md: pc/reference.md
-        device.md: product/g1.md
-        maintenance.md: common/maintenance.md
-        # 英文站的旧地址。redirects 插件只在默认语言(中文)构建里运行,所以键写成
-        # en/<旧名>.md 让跳转页落到 /en/<旧名>/,目标必须是完整 URL(相对 .md 目标会被
-        # 当成中文页校验)。
-        en/01-overview.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/product/g1/
-        en/hardware.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/common/gripper/
-        en/highlights.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/product/g1/
-        en/02-environment.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/pc/install/
-        en/03-host-hardware.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/pc/host-setup/
-        en/04-calibration.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/pc/calibration/
-        en/05-data-collection.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/pc/recording/
-        en/best-practices.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/pc/recording/
-        en/06-dataset.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/pc/dataset/
-        en/data-management.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/pc/dataset/
-        en/07-faq-reference.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/common/reference/
-        en/sdk-overview.md: https://github.com/XenseRobotics-AI/TacCap-Gripper/tree/main/docs
-        en/sdk-install.md: https://github.com/XenseRobotics-AI/TacCap-Gripper/blob/main/docs/INSTALL.md
-        en/sdk-examples.md: https://github.com/XenseRobotics-AI/TacCap-Gripper/blob/main/docs/EXAMPLES.md
-        en/quickstart.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/pc/
-        en/install.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/pc/install/
-        en/host-setup.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/pc/host-setup/
-        en/calibration.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/pc/calibration/
-        en/recording.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/pc/recording/
-        en/dataset.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/pc/dataset/
-        en/troubleshooting.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/pc/troubleshooting/
-        en/versions.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/pc/versions/
-        en/reference.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/pc/reference/
-        en/device.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/product/g1/
-        en/maintenance.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/common/maintenance/
+            版本与支持: Versions & Support
+            常见问题与参考: FAQ & Reference
+            "附录:SDK 与二次开发": "Appendix: SDK"
+            SDK 概览: SDK Overview
+            安装与构建: Install & Build
+            示例: Examples
 
 markdown_extensions:
   - abbr
@@ -238,39 +158,28 @@ extra:
     - icon: fontawesome/brands/github
       link: https://github.com/XenseRobotics-AI/XTac-UMI-G1-Docs
 
-# 顶栏四个标签:产品(介绍与评估)/ 背包版 / PC 版(各自完整的操作主线)/ 通用(两边共用)
 nav:
-  - 产品:
-      - 首页: index.md
-      - 产品线与配置对比: product/editions.md
-      - 认识 XTac-UMI G1: product/g1.md
-      - 认识数采背包: product/backpack.md
-      - 技术参数: product/specs.md
-      - 安全与合规: product/safety.md
-  - 背包版:
-      - backpack/index.md
-      - 开箱、接线与供电: backpack/unbox-connect.md
-      - 网络与控制台入口: backpack/network.md
-      - 实时监控与录制: backpack/monitor-record.md
-      - 项目、导出与发布: backpack/projects-export.md
-      - 回放: backpack/playback.md
-      - 系统设置: backpack/system.md
-      - 升级与 OTA: backpack/update.md
-      - 故障排查: backpack/troubleshooting.md
-      - 版本: backpack/versions.md
-  - PC 版:
-      - pc/index.md
-      - 安装: pc/install.md
-      - 主机配置: pc/host-setup.md
-      - 标定与自检: pc/calibration.md
-      - 数据采集: pc/recording.md
-      - 数据集: pc/dataset.md
-      - 故障排查: pc/troubleshooting.md
-      - 版本与升级: pc/versions.md
-      - RobotConfig 与 SDK: pc/reference.md
-  - 通用:
-      - Pico4 头显与追踪器: common/pico4.md
-      - 夹爪按键、指示灯与序列号: common/gripper.md
-      - 坐标系: common/coordinates.md
-      - 维护保养: common/maintenance.md
-      - 术语表与支持: common/reference.md
+  - 首页: index.md
+  - 一页速通: quickstart.md
+  - 概述: 01-overview.md
+  - 产品亮点: highlights.md
+  - 准备工作:
+      - 硬件介绍: hardware.md
+      - 环境安装: 02-environment.md
+      - 主机与设备配置: 03-host-hardware.md
+  - 软件使用:
+      - 标定与自检: 04-calibration.md
+      - 数据预览与采集: 05-data-collection.md
+      - 采集规范与最佳实践: best-practices.md
+  - 数据介绍:
+      - 数据集与示例: 06-dataset.md
+      - 数据管理与命名: data-management.md
+  - 参考:
+      - 故障排查: troubleshooting.md
+      - 维护保养: maintenance.md
+      - 常见问题与参考: 07-faq-reference.md
+      - 版本与支持: versions.md
+      - 附录:SDK 与二次开发:
+          - SDK 概览: sdk-overview.md
+          - 安装与构建: sdk-install.md
+          - 示例: sdk-examples.md

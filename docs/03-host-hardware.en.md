@@ -1,0 +1,679 @@
+# 3. Host & Device Setup
+
+A gripper being **listed** is not the same as it being **openable** — this chapter covers serial
+permissions, ModemManager contention, the device auto-discovery rules, and the hardware power-on
+order.
+
+!!! danger "[3.1 Serial permissions](#31) and [3.2 keeping ModemManager off](#32) are required"
+    Both are **one-off host setup** and hold indefinitely once done.
+
+## 3.1 Serial permissions (dialout) {#31}
+
+The gripper MCU enumerates as `/dev/ttyACM*`, owned by group `dialout`. A user outside that group
+can have the SDK *list* grippers but **cannot open the port to read the firmware serial**, so
+`scan_grippers()` reports `role=Unknown` with an empty `firmware_sn`, and connecting fails:
+
+```text
+RuntimeError: No leader gripper discovered for the left side.
+# underneath: IoError: SerialBus: open(/dev/serial/by-id/...): Permission denied
+```
+
+Join the group once, then **log back in** for it to take effect:
+
+```bash
+sudo usermod -aG dialout "$USER"
+```
+
+!!! danger "You **must** log back in, or this step did nothing"
+    Group membership only applies to **newly created login sessions** — this terminal and every
+    window already open still hold the old permissions, so collection keeps reporting
+    `role=Unknown` with an empty `firmware_sn` and it looks as if the command failed.
+
+    **Log out and back in** (or run `newgrp dialout` in this shell), **re-plug the gripper**, then
+    verify below.
+
+Verify — `role` must be `Leader`/`Follower` (not `Unknown`) and `firmware_sn` non-empty:
+
+```bash
+python -c "from xense.taccap import scan_grippers
+for g in scan_grippers(): print(g.side.name, g.role.name, repr(g.firmware_sn))"
+```
+
+!!! warning "Serial still empty?"
+    If `firmware_sn` stays empty after fixing permissions, the SN may not be burned in, the serial
+    read may still be failing, firmware communication may be faulty, or the device may be
+    misconfigured — an empty SN alone is not enough to infer a firmware version. Save the full
+    error, retest with a different cable and port, and contact the device or firmware team if it
+    persists.
+
+## 3.2 Stop ModemManager grabbing the port (udev) {#32}
+
+!!! info "On the Docker delivery image this is already done"
+    `install_customer.sh` installs the udev rule below on the **host** (a container cannot manage
+    the host's hot-plug rules). This section stays as the explanation and as a troubleshooting
+    reference — you do not need to redo it.
+
+The gripper MCU is a CH343 USB-serial device (`1a86:55d2`, CDC-ACM). On every hot-plug,
+**ModemManager** (the default cellular-modem service on Ubuntu/GNOME) probes the fresh port with
+AT commands and holds it open for a few seconds, so connecting fails during that window:
+
+```text
+IoError: SerialBus: open(/dev/serial/by-id/usb-1a86_USB_Dual_Serial_..-if02): Device or resource busy
+```
+
+!!! note "Typical symptom"
+    The **first** launch works (the port has settled), but unplug → different USB port → relaunch
+    immediately gives **busy**. This is **not** a tactile, camera or bandwidth problem. (If the
+    braille driver `brltty` is installed, it grabs `1a86` the same way.) Stopgap: wait ~3 s after
+    plugging in.
+
+Permanent fix — a udev rule telling ModemManager to ignore these devices (real modems are
+unaffected):
+
+```bash
+sudo tee /etc/udev/rules.d/99-taccap-ignore-modemmanager.rules >/dev/null <<'EOF'
+# XTac-UMI G1 MCUs are CH343 USB-serial (1a86:55d2) — keep ModemManager off them
+ACTION=="add|change", SUBSYSTEMS=="usb", ATTRS{idVendor}=="1a86", ENV{ID_MM_DEVICE_IGNORE}="1"
+EOF
+sudo udevadm control --reload-rules && sudo udevadm trigger
+```
+
+Verify:
+
+```bash
+udevadm info -q property -n /dev/ttyACM0 | grep ID_MM_DEVICE_IGNORE   # -> ID_MM_DEVICE_IGNORE=1
+mmcli -L                                                               # gripper no longer listed
+```
+
+Delete the rule file and reload to revert. (On a dedicated robot host with no cellular module you
+can also `sudo systemctl disable --now ModemManager`.)
+
+## 3.3 Device auto-discovery and the odd-left/even-right rule {#33}
+
+Every device is **auto-discovered by serial number + USB topology** and assigned to `left`/`right`
+— **no serials are hand-listed**.
+
+### Serial grammar
+
+| Device | Grammar | Example |
+|---|---|---|
+| Gripper | `TCGU01<batch><line><seq><m\|s>` | `TCGU01A24Z0002m` |
+| Tactile | `GSPS01<batch><line><seq>` | `GSPS01A25Z0011` |
+| Camera | `XC<batch><line><seq><m\|s>` | `XCA24Z0007m` |
+
+`<seq>` is 4 digits; patch `m` → leader, `s` → follower.
+
+### Side rule (odd-left / even-right)
+
+The **last digit** of the 4-digit sequence: **odd → left, even → right**. This governs gripper and
+camera side, and which of a gripper's **two fingertip tactile sensors** is which.
+
+### Tactile left/right → `{side}_tactile_{left,right}`
+
+Combines USB topology with the side rule:
+
+- **Which gripper (side)**: the two GSPS sensors sharing a gripper's **USB hub** are that
+  gripper's pair. That gripper's side is read from its **firmware SN** (the side reported by
+  `scan_grippers()`) — **not** the CH343 `mcu_serial`. So: hub → gripper → side.
+- **Which fingertip tactile sensor (left/right)**: the **last digit** of the GSPS serial (odd-left / even-right).
+
+### Pico4 Ultra Enterprise tracker — a different serial system
+
+Tracker serials look like `PC2310MLL3200496G`, ending in the letter `G`. **The side is the digit
+in front of that `G`: odd is left, even is right** — above, that digit is `6`, even, so the
+tracker is on the **right**. The SN has to be read from the PC Service; it is not shown on the
+headset — see [Reading a tracker SN](#pico-tracker-sn).
+
+!!! note "Mis-burned / mis-installed hardware fails explicitly"
+    Discovery **fails outright and names** the offending hub/serial when it meets a
+    non-conforming serial, the wrong count on a side, two fingertip sensors mapping to the same side, two
+    grippers claiming the same tactile side, or a tactile hub with no matching gripper — so the
+    physical rig and the fields in your data cannot silently drift apart.
+
+!!! tip "Check the side that has **two**"
+    A side coming up empty usually means its device **put itself on the other side**, so
+    discovery reports duplicates before gaps — re-check the serials on the **side with two**
+    against the side rule above, rather than hunting for the one that "went missing".
+
+## 3.4 Pico4 Ultra Enterprise setup {#34}
+
+The **standalone motion tracker** that ships with the Pico4 Ultra Enterprise mounts on top of the
+gripper and provides the 6-DoF pose. **XTac-UMI XR** (the VR client app) runs on the headset,
+and the pose reaches collection via the [XenseVR PC Service](#35). This section is written for
+**configuring a new Pico from scratch**, in the order **unbox and update → system settings →
+install the app → network → bind the tracker → tracking mode and UI → startup alignment**.
+
+!!! tip "Given a factory-configured headset? Skip ahead"
+    Developer mode, the power policy, the app, the tracker binding and the tracking mode are all
+    set at the factory and stored on the headset — anything marked **"skip on a pre-configured
+    headset"** does not apply to you.
+
+    **Start at [Connect the network](#pico-network)**: plug the USB in, short-press the tracker
+    until the LED is solid blue, [open the app and tap Reconnect](#pico-toolkit-ui), then
+    [align the frame](#pico-frame). Those three are needed **before every session** either way.
+
+### Unboxing and the system update {#pico-unbox}
+
+!!! info "Skip this section on a pre-configured headset"
+    What this section sets is stored on the headset and survives power cycles. A unit configured at
+    the factory needs none of it again — unless it is factory-reset or swapped.
+
+**1. Unbox**: peel the protective sticker off the front sensor bar, the tape off the controllers
+and the sticker off the lenses, then hold the power button to switch it on.
+
+=== "Sealed box"
+
+    ![PICO 4 Ultra Enterprise, sealed](assets/pico4/unbox-box.jpg){ width="440" }
+
+=== "Front sticker"
+
+    ![Protective sticker on the front sensor bar](assets/pico4/unbox-film.png){ width="440" }
+
+=== "Sticker removed"
+
+    ![The headset with the sticker peeled off](assets/pico4/unbox-film-done.jpg){ width="440" }
+
+=== "Controller tape"
+
+    ![Tape holding the controllers](assets/pico4/unbox-controller-tape.png){ width="440" }
+
+=== "Lens sticker"
+
+    ![Protective sticker on the lenses](assets/pico4/unbox-lens-sticker.jpg){ width="440" }
+
+=== "Power on"
+
+    ![Hold the power button to switch it on](assets/pico4/unbox-power-on.png){ width="440" }
+
+**2. Update the system** — **required on a new unit**: join a **WiFi network with internet
+access**, go to **Settings → System update** and hit **Download and install** to reach
+**5.15.5.U or later**. The package is about 1.9 GB, so allow time for the download and reboot.
+
+![Settings → System update, offering 5.15.5.U](assets/pico4/system-update.jpg){ width="560" }
+
+!!! danger "A new headset has to be updated first"
+    It ships on an older build and **only works properly once updated**. Do this before pairing
+    the tracker or installing the app.
+
+### System settings: developer mode and power policy {#pico-system}
+
+!!! info "Skip this section on a pre-configured headset"
+    What this section sets is stored on the headset and survives power cycles. A unit configured at
+    the factory needs none of it again — unless it is factory-reset or swapped.
+
+**1. Enable developer mode**: on the headset, Settings → About → tap "Software version" several
+times → "Developer options" appears on the left → turn on **USB debugging**.
+
+=== "Open Settings"
+
+    ![Library → Settings](assets/pico4/devmode.png){ width="480" }
+
+=== "Tap the build number"
+
+    ![About → tap the software version repeatedly](assets/pico4/devmode-tap-version.png){ width="480" }
+
+=== "Developer options + USB debugging"
+
+    ![Developer options appears; turn on USB debugging](assets/pico4/devmode-usb-debug.png){ width="480" }
+
+**2. Disable sleep and screen-off**: with developer mode on, go to Enterprise Settings → System
+Settings → **Power policy** and set both to "**Never**", **in this order**:
+
+1. **System sleep = Never** first;
+2. **Screen off = Never** second;
+3. While you are there, set **Battery and charging icon** to **Always show** — handy for
+   checking the charge mid-session.
+
+=== "Enterprise Settings"
+
+    Tap **Enterprise Settings** in Developer options.
+
+    ![Developer options → Enterprise Settings](assets/pico4/power-step1-enterprise.jpg){ width="480" }
+
+=== "System Settings → Power policy"
+
+    ![Enterprise Settings → System Settings → Power policy](assets/pico4/power-step2-policy.jpg){ width="480" }
+
+=== "Defaults, before the change"
+
+    It ships as **screen-off 30 s, system sleep 5 min, battery icon hidden** — all three change.
+
+    ![The power policy at its factory defaults](assets/pico4/power-step3-before.jpg){ width="480" }
+
+=== "Final settings"
+
+    ![Power policy: screen-off and system sleep both Never, battery icon always shown](assets/pico4/power-step4-final.png){ width="480" }
+
+When you are done it should match "**Final settings**": **screen-off Never, system sleep Never,
+battery icon always shown**.
+
+!!! warning "The order matters"
+    The screen-off timeout is bounded by the system sleep timeout. Set screen-off first, while
+    system sleep is still at its default, and "Never" gets clamped back to a finite value — it
+    looks set but is not in effect. **Sleep first, screen-off second**, then leave Settings and
+    come back to confirm both read "Never".
+
+Skipping this: once the headset screen-blanks or sleeps between episodes, **XTac-UMI XR gets
+suspended or killed by the system** and tracking drops out. Restarting the XTac-UMI XR re-freezes the
+world origin and orientation, leaving poses inside one dataset referenced to different frames
+(see [Frame alignment](#pico-frame)). Simply setting the headset down triggers it too, so it must
+be turned off — "don't take the headset off" is not a workaround.
+
+!!! note "This lives in Enterprise Settings, not the normal ones"
+    "Power policy" is only offered in the **Pico Enterprise** edition's Enterprise Settings; the
+    consumer settings menu has no such item and cannot set screen-off to "Never".
+
+### Installing XTac-UMI XR (Pico4 Ultra Enterprise) {#pico-app}
+
+!!! info "Skip this section on a pre-configured headset"
+    What this section sets is stored on the headset and survives power cycles. A unit configured at
+    the factory needs none of it again — unless it is factory-reset or swapped.
+
+=== "Copy the apk (PC side)"
+
+    Connect the headset to the PC over USB and copy `XTac-UMI-XR-0.1.X.apk` into the headset's
+    `Download/` directory (`0.1.X` is the version — use whichever build you were given).
+
+    ![The apk copied into the Pico's Download folder, seen from the PC](assets/pico4/install-step1-copy.jpg){ width="480" }
+
+=== "Find it on the headset"
+
+    Put the headset on, open **File Manager** from the taskbar, and go into **Download**.
+
+    ![File Manager → Download](assets/pico4/install-step2-filemanager.png){ width="480" }
+
+=== "Install and confirm"
+
+    Tap `XTac-UMI-XR-0.1.X.apk` and choose **Install** in the "Install this app?" dialog.
+
+    ![Confirming the install](assets/pico4/install-step3-confirm.png){ width="480" }
+
+    Back in the **Library**, the app appears as **XTac-UMI XR**.
+
+    ![The apk in the installer list, and XTac-UMI XR in the library once installed](assets/pico4/install-step3-done.jpg){ width="480" }
+
+### Network connection (important) {#pico-network}
+
+Tracking data has to reach the XenseVR PC Service on the collection PC. **Both wired and wireless
+work**:
+
+| Link | How |
+|---|---|
+| **Wired USB shared network** (recommended) | Type-C straight to the collection PC; the headset assigns it an IP |
+| WiFi | Headset and collection PC on the **same network**, no cable |
+
+!!! tip "Prefer the wired link for collection"
+    **In a busy WiFi environment — congested channels, interference — the wireless link suffers**,
+    showing up as a stuttering or jittery pose, or dropped data, none of which is easy to tell
+    apart from other faults. The wired shared network is steadier and is what to use for real
+    collection; wireless suits quick checks or setups where a cable is impractical.
+
+**Wired setup:**
+
+1. On the headset: Settings → Developer options → enable "USB debugging" → set "USB connection"
+   to "**File transfer**". **Re-check this after every USB re-plug** — it reverts to the default.
+   If you cannot select it, reboot the Pico and try again.
+2. **Start the service on the PC first** (see [§3.5](#35)): `runService.sh`.
+3. Open **XTac-UMI XR**, tap "**Reconnect**", and the status reads "**Connected**" (see
+   [the app's screen](#pico-toolkit-ui)).
+
+Over **WiFi**, put the headset and the collection PC on the **same network**; everything else is
+the same.
+
+!!! warning "The service has to be up before you open the app"
+    The app connects to the XenseVR PC Service on the host. **With the service down, the app just
+    sits on "Not connected".** Run `runService.sh` first, then open the app.
+
+!!! danger "On the wired link, turn the collection PC's WiFi off"
+    The wired shared network **conflicts with other networks on the PC — WiFi above all**
+    (routing and interface contention), leaving the tracker unreachable or its pose unstable.
+    **If you are on the cable, turn the PC's WiFi off**, keeping only the headset's shared
+    network.
+
+![USB connection set to file transfer](assets/pico4/usb-shared-network.jpg){ width="520" }
+
+### Binding the motion tracker to the headset {#pico-tracker-bind}
+
+!!! info "Skip this section on a pre-configured headset"
+    What this section sets is stored on the headset and survives power cycles. A unit configured at
+    the factory needs none of it again — unless it is factory-reset or swapped.
+
+**On first use, or after swapping a tracker**, the PICO Motion Tracker must be bound to **this
+headset**. Until it is, it cannot be selected in tracking mode, and neither XTac-UMI XR nor the
+PC Service will discover its SN.
+
+!!! tip "Scan the QR code on the back of the tracker first"
+    It gives you that tracker's full SN, so you can confirm the right one during pairing instead
+    of checking against the PC Service afterwards. **Mount each tracker on the side its SN says**
+    (odd-left / even-right, see [3.3](#33)): **odd on the left gripper, even on the right**.
+
+    | Scan this | You get this |
+    |---|---|
+    | ![The QR code on the back of the tracker](assets/pico4/tracker-sn-qr.jpg){ width="300" } | ![Scan result, left tracker](assets/pico4/tracker-sn-left.png){ width="320" }<br>`1` before the `G` — odd → **left** gripper<br><br>![Scan result, right tracker](assets/pico4/tracker-sn-right.png){ width="320" }<br>`8` before the `G` — even → **right** gripper |
+
+    The six boxed digits are the number shown in the "**My trackers**" list after pairing (e.g.
+    `Tracker 150311`) — that is how you tell which list entry is which physical tracker.
+
+1. Open the **Motion Tracker** app from the **Library** and go to the **pairing screen**.
+2. **Hold the tracker's power button for about 6 seconds**, until the indicator **alternates blue
+   and red** — that is Bluetooth pairing mode (steady blue is just powered on, not pairing, and
+   the app will not find it).
+3. Tap "**Start pairing**" and wait. **The headset plays a tone when pairing succeeds** — that
+   sound is your confirmation. The tracker then appears in the "**My trackers**" list with its
+   battery level and number (e.g. `Tracker 150399`), marked "**Connected**".
+4. **One tracker per gripper — bind both.** The top of the list should read "**2 paired**".
+
+!!! tip "Power-on is a short press; only pairing needs the hold"
+    **Everyday power-on** is a **short press** — the LED goes solid blue.
+    **Only first-time binding** needs the ~6 s hold until it **alternates blue and red**; the rest
+    of the time, do not hold it into pairing mode.
+
+=== "Open the Motion Tracker app"
+
+    Open **Motion Tracker** from the **Library**.
+
+    ![Library → Motion Tracker](assets/pico4/tracker-app-open.png){ width="440" }
+
+=== "Go to the pairing screen"
+
+    On the "PICO Motion Tracker" main screen, tap the **icon in the top-right corner** to open the
+    pairing screen.
+
+    ![Motion Tracker main screen; the top-right icon opens pairing](assets/pico4/tracker-pair-entry.png){ width="440" }
+
+=== "My trackers: 2 paired"
+
+    ![Motion Tracker app: both trackers connected](assets/pico4/tracker-bind.jpg){ width="440" }
+
+!!! note "Binding is one-off; unpair from the ⓘ menu"
+    The binding is stored on the headset and survives everyday power cycles and app restarts.
+    Re-bind only after swapping trackers, moving to another headset, or a factory reset. When
+    **replacing a device**, unpair from the **ⓘ** on the right of the list entry first, then bind
+    the new one.
+
+!!! warning "In standalone tracking mode the tracker must stay in the headset's view"
+    The app says so itself. A tracker occluded for long by your body, the desk edge or the other
+    hand will **lose tracking**, which shows up as pose jumps or a frozen pose. Mind your working
+    posture so the tracker on top of the gripper does not leave the headset's view for long.
+
+#### Reading a tracker SN {#pico-tracker-sn}
+
+The SN determines the side (the digit before the trailing `G`, odd-left / even-right — see [3.3](#33)) and is
+also how the PC Service identifies a tracker.
+
+This SN is not visible on the headset: the "Motion Tracker" app only shows a **short number** (e.g.
+`Tracker 150399`), and the SN on XTac-UMI XR's Network panel (e.g. `PA9410MGL…`) is the
+**headset's own**. The **full tracker SN** you need for side matching (shaped like
+`PC2310MLL3200496G`) is read with the PC Service's Python interface `xensevr_pc_service_sdk`:
+
+```python
+import xensevr_pc_service_sdk as xrt
+
+xrt.init()
+print(xrt.get_motion_tracker_serial_numbers())   # e.g. ['PC2310MLL3200496G', ...]
+```
+
+!!! warning "Reading SNs needs the whole chain up first"
+    `get_motion_tracker_serial_numbers()` reports the trackers the service is **currently
+    receiving data from**. So first: tracker bound and powered on → XTac-UMI XR showing
+    ["Connected"](#pico-toolkit-ui) → [XenseVR PC Service](#35) running on the
+    host. Miss any one and you get an empty list.
+
+With the SN in hand you can pin it via `--robot.tracker_serial=<SN>` and skip auto-matching.
+**Shake one gripper at a time** to confirm which SN is which hand before writing it into your
+config.
+
+### Tracking mode and XTac-UMI XR settings {#pico-tracker}
+
+!!! info "Skip this section on a pre-configured headset"
+    What this section sets is stored on the headset and survives power cycles. A unit configured at
+    the factory needs none of it again — unless it is factory-reset or swapped.
+
+Once bound:
+
+1. Open "**Motion Tracking**" on the headset.
+2. In its settings, set the tracking mode to "**Standalone tracking**".
+
+=== "Find \"Tracking mode\" in Settings"
+
+    It ships as "**Full-body motion capture**" — trackers worn on the body to follow a human
+    pose, which is not what we want.
+
+    ![Settings → Tracking mode](assets/pico4/tracker-mode1-entry.png){ width="480" }
+
+=== "Choose \"Standalone tracking\""
+
+    "**Standalone tracking**" fixes a tracker to an object and follows that object's pose — which
+    is what a gripper is. Select it and tap **Confirm**.
+
+    ![Tracking mode: pick standalone and confirm](assets/pico4/tracker-mode2-pick.png){ width="480" }
+
+=== "What it looks like afterwards"
+
+    The "Tracking mode" row should now read "**Standalone tracking**".
+
+    ![Settings showing tracking mode set to standalone](assets/pico4/tracker-mode3-done.png){ width="480" }
+
+
+The XenseVR PC Service identifies trackers by **serial number (SN)**; the side is matched
+automatically from the digit before the trailing `G`, odd-left / even-right (see [3.3](#33)), or pinned
+with `--robot.tracker_serial=<SN>`.
+
+### The app's screen {#pico-toolkit-ui}
+
+With the headset on, open **XTac-UMI XR** from the **Library**. The screen is small: **Status**,
+**Resolution** and **Reconnect** (plus "Collapse" on the left, which folds the panel away).
+**What you want is Status reading "Connected"** — until then the PC reads no pose at all.
+
+**There is no PC IP to enter**: once the [wired shared network](#pico-network) is up, the app
+finds the XenseVR PC Service on the host by itself — but **you have to tap "Reconnect"** to
+connect. Opening the app does not connect it.
+
+=== "Open the app"
+
+    Open **XTac-UMI XR** from the **Library**.
+
+    ![Library → XTac-UMI XR](assets/pico4/app-step1-open.png){ width="480" }
+
+=== "Status: Not connected"
+
+    It opens on "**Status: Not connected**". **Tap "Reconnect"** — it does not connect by itself,
+    however long you wait.
+
+    ![XTac-UMI XR: status not connected](assets/pico4/app-step2-disconnected.jpg){ width="420" }
+
+=== "Allow camera access"
+
+    On first launch it asks whether to allow XTac-UMI XR to use the camera. Tap "**Allow**" —
+    the [headset camera](05-data-collection.md#56) needs it, and denying leaves you without
+    headset frames.
+
+    ![Allow XTac-UMI XR to use the camera](assets/pico4/app-step3-camera.png){ width="380" }
+
+=== "Status: Connected"
+
+    "**Status: Connected**" is the state you collect from.
+
+    ![XTac-UMI XR: status connected](assets/pico4/app-step4-connected.jpg){ width="420" }
+
+!!! tip "\"Resolution\" is the headset's stereo camera resolution"
+    It sets the capture resolution of the [headset camera](05-data-collection.md#56). There are
+    three settings — `640` / `1024` / `1280` — and it defaults to `640` (640x480 per eye), which
+    is the one to use. It does nothing if you are not using that camera.
+
+    The collection side defaults to 640x480 too, so the two agree out of the box. **Raise it here
+    and the collection command has to follow**: at `1024` pass
+    `--robot.head_camera_width=1024 --robot.head_camera_height=768`, at `1280`
+    `--robot.head_camera_width=1280 --robot.head_camera_height=960`, or connect fails on the first
+    frame's size. See [5.6 Headset camera](05-data-collection.md#56).
+
+!!! note "High-accuracy tracking is always on now"
+    High-accuracy tracking — steadier pose, less jitter — is enabled by default. There is no
+    toggle for it and nothing to set.
+
+!!! warning "Still not connecting?"
+    If Reconnect leaves it on "Not connected", the problem is usually not the app but
+    [the network](#pico-network): the wired shared network is not up, or the PC's WiFi is
+    still on.
+
+!!! tip "Self-check: is the PC actually receiving?"
+    Once it says Connected, confirm on the host that a pose with an `sn` comes through — via
+    `ConsoleDemo` in `/opt/apps/roboticsservice/` or
+    `python -m lerobot.robots.taccap_gripper.check_tracker`. The headset saying it is
+    connected and the host actually receiving data are two different things.
+
+### Startup and frame alignment {#pico-frame}
+
+**Wear the headset and face straight towards the robot when you launch XTac-UMI XR**, then
+tap "**Reconnect**" to get [Status to "Connected"](#pico-toolkit-ui). The moment it launches, the
+**world frame's origin and orientation are frozen**.
+
+Recorded poses land in a **gravity-aligned world frame**: **+X = straight ahead, +Y = left,
++Z = up**.
+
+The picture below is that world frame — **the origin sits where the headset was at the moment of
+launch**, with **red = X (forward), green = Y (left), blue = Z (up)**:
+
+![The world frame frozen at the headset's position at launch: red X forward, green Y left, blue Z up](assets/pico4/world-frame-origin.png){ width="420" }
+
+The frame is drawn on the headset, but it only follows the headset for that one instant — once
+frozen it stays put in space, and **turning your head or walking around does not carry it with
+you**. Every `tcp.*` pose in the dataset is referenced to this fixed frame.
+
+!!! warning "Face straight towards the robot at launch"
+    Facing straight ahead is what aligns world +X with the robot's forward direction (Y left, Z
+    up). **Only the orientation matters** — where you stand (the origin) does not affect later
+    use.
+
+!!! warning "Do not restart XTac-UMI XR between episodes"
+    A restart changes the origin and orientation for everything recorded afterwards, leaving poses
+    inside one dataset referenced to different frames.
+
+## 3.5 Start the XenseVR PC Service {#35}
+
+The tracker talks to the host's **XenseVR PC Service** (RoboticsService) daemon, which handles
+device discovery, status monitoring and live tracking-data distribution. Collection reads poses
+from it.
+
+!!! info "On the Docker delivery image the service starts itself"
+    The container launches it, so the command below is not needed. When you only work on data and
+    do not need the tracker, turn it off with `START_XENSEVR_SERVICE=0` (see
+    [2. Environment Setup · Docker](02-environment.md#docker)).
+
+Start it:
+
+```bash
+/opt/apps/roboticsservice/runService.sh
+```
+
+!!! note "Only one instance at a time"
+    The service allows a single instance; starting a second one fails or conflicts.
+
+The service can supply several kinds of tracking data (headset Head / controllers / hand tracking /
+full-body mocap / **standalone Tracker**). Collection uses two of them:
+
+- **Standalone Tracker pose** — the grippers' pose; the data carries an `sn` distinguishing the
+  trackers.
+- **Head pose** — the headset's own pose, used together with the
+  [headset's stereo frames](05-data-collection.md#56).
+
+!!! note "The headset camera and head pose run through this service too"
+    They are not a separate link: the headset sends each eye's frames and its own pose to the PC
+    Service, which forwards them to collection. So **they share one service and one connection
+    with the trackers** — no service, neither works.
+
+    Two things enable this path: a service at **v0.2.0 or later** (see
+    [2.4 One-shot install](02-environment.md)) and **XTac-UMI XR** installed on the headset. If
+    you only use trackers, the service version makes no difference.
+
+!!! tip "Verifying the service and devices"
+    The service directory ships `ConsoleDemo` / `RobotDemoQt` demos
+    (`/opt/apps/roboticsservice/`) for confirming the headset was discovered and tracking data
+    looks right (they need the same runtime environment as the service).
+
+## 3.6 Hardware power-on order {#36}
+
+!!! note "Startup order"
+    The standard order is below (app screens follow whichever version you have):
+
+1. Plug the XTac-UMI G1 into the host (USB).
+2. **Bimanual rigs: check the USB bandwidth budget** (below) before going any further.
+3. Connect the headset's **wired shared network** and **turn the collection PC's WiFi off**
+   (see [3.4 Network connection](#pico-network)).
+4. Power on the headset, and **short-press** the tracker's power button until the **blue light comes on**
+   (first use needs [binding](#pico-tracker-bind) first).
+5. Start the host's XenseVR PC Service (`runService.sh`).
+6. **Facing straight towards the robot**, launch the XTac-UMI XR app (this **freezes the world
+   origin and orientation** — see [frames](#pico-frame)), and check that its
+   tap "**Reconnect**" so the [status reads "Connected"](#pico-toolkit-ui).
+7. Run the calibration / self-check / recording scripts.
+
+```mermaid
+flowchart LR
+    A[Plug in gripper USB] --> U[Bimanual: check USB budget]
+    U --> N[Connect Pico4 Ultra Enterprise<br/>wired network, WiFi off]
+    N --> B[Power on Pico4 Ultra Enterprise<br/>pair the tracker]
+    B --> D[Start XenseVR PC Service]
+    D --> C[Launch XTac-UMI XR<br/>freeze origin, shows Connected]
+    C --> E[Run calibration / recording]
+```
+
+!!! warning "Step 5 has to come before step 6"
+    The app connects to that service. **With it down, the app sits on "Not connected"** — and
+    restarting the app to retry resets the world origin all over again.
+
+!!! warning "An uncalibrated leader is refused at connect"
+    `gripper.pos` in the dataset is a normalised opening (`0.0` closed / `1.0` open), and those two
+    endpoints come from the **encoder zero** and **travel span** written into MCU flash. **A leader
+    with no stored travel span will not connect** — the program exits with the calibration command
+    in the error, so there is nothing for you to judge: if it connects, it was calibrated.
+
+    The values live in flash and survive power cycles and host changes. Once per unit is enough;
+    this is not a routine step before every session.
+
+    Bimanual rigs especially: **calibrating only one side leaves the two channels on different
+    scales**, so the same physical grip reads differently on each side, with nothing in the data
+    to show it. If you calibrate one, calibrate both:
+
+    ```bash
+    python third_party/taccap-gripper/python/examples/calibrate.py left
+    python third_party/taccap-gripper/python/examples/calibrate.py right
+    ```
+
+    Full procedure, how to confirm it took effect, and scope →
+    [4.1 Gripper calibration (zero + travel span)](04-calibration.md#41)
+
+### Step 2 — check the USB bandwidth budget {#usb-budget}
+
+**It belongs here because it is decided the moment you plug the cables in** — and what it decides
+is whether a camera can be opened at all. When one cannot, working backwards through serials,
+cables, drivers and our code is wasted effort. Measure this first.
+
+Every UVC camera **reserves** isochronous bandwidth for as long as it is open, and that budget is
+**per USB 2.0 bus**: 480 Mbit/s, of which ~384 is available to periodic transfers. A bimanual rig
+puts **six** cameras on it (four tactile + two wrist), plus the laptop's built-in webcam.
+
+```bash
+lsusb -t
+```
+
+**Each `480M` `root_hub` line is one budget** — count the cameras under each. Two `480M` root hubs
+with three cameras each is comfortable. Six on one bus has to be measured: different sensor batches
+request different amounts, so some hosts carry it and some do not.
+
+!!! warning "A blue USB 3 port does not help"
+    The tactile sensors and wrist cameras are **USB 2.0 devices**; a USB 3 port still puts them on
+    that controller's USB 2.0 bus. Splitting them means a **second host controller** — a
+    Thunderbolt/USB4 dock brings its own, a plain hub does not.
+
+Watch the kernel while you start, in a second terminal:
+
+```bash
+sudo dmesg -w | grep --line-buffered -iE "uvcvideo|bandwidth|disconnect"
+```
+
+`Not enough bandwidth for altsetting N` is the diagnosis. The full bisect, the measured numbers, and
+three fixes that look promising and are not → [Troubleshooting · USB
+bandwidth](troubleshooting.md#usb-bandwidth) (Chinese).
+
+Next → [4. Calibration & self-check](04-calibration.md)
