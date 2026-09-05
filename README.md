@@ -53,8 +53,4 @@ mkdocs build --strict
 - Pico4 Ultra 企业版 APP 使用截图 / 数采启动流程截图 → `docs/assets/`
 - 站点 logo 与 favicon → `docs/assets/logo.png` / `docs/assets/favicon.png`
 
-## 发布
 
-推送到 `main` 分支后,GitHub Actions 自动 `mkdocs build --strict` 并发布到
-GitHub Pages。首次需在仓库 **Settings → Pages → Source** 选择
-**GitHub Actions**。
