@@ -1,14 +1,2335 @@
+<!DOCTYPE html><html lang="en" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="XenseRobotics XTac-UMI G1 手持触觉数采夹爪 · 基于 lerobot 的数据采集快速上手">
+      
+      
+        <meta name="author" content="XenseRobotics">
+      
+      
+        <link rel="canonical" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/hardware/">
+      
+      
+        <link rel="prev" href="../highlights/">
+      
+      
+        <link rel="next" href="../02-environment/">
+      
+      
+        
+          <link rel="alternate" href="../../hardware/" hreflang="zh">
+        
+          <link rel="alternate" href="./" hreflang="en">
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Hardware - XTac-UMI G1 Data-Collection Quickstart</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
 
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>Redirecting...</title>
-    <link rel="canonical" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/common/gripper/">
-    <script>var anchor=window.location.hash.substr(1);location.href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/common/gripper/"+(anchor?"#"+anchor:"")</script>
-    <meta http-equiv="refresh" content="0; url=https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/common/gripper/">
-</head>
-<body>
-You're being redirected to a <a href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/common/gripper/">new destination</a>.
-</body>
-</html>
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#硬件介绍" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../" title="XTac-UMI G1 Data-Collection Quickstart" class="md-header__button md-logo" aria-label="XTac-UMI G1 Data-Collection Quickstart" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            XTac-UMI G1 Data-Collection Quickstart
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Hardware
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo" aria-label="切换到暗色模式" type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换到暗色模式" for="__palette_1" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"></path></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo" aria-label="切换到亮色模式" type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换到亮色模式" for="__palette_0" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"></path></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="Select language">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"></path></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="../../hardware/" hreflang="zh" class="md-select__link">
+              简体中文
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="en" class="md-select__link">
+              English (partial)
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required="">
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard="" data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"></path></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix="">
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/XenseRobotics-AI/XTac-UMI-G1-Docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    XenseRobotics-AI/XTac-UMI-G1-Docs
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../" title="XTac-UMI G1 Data-Collection Quickstart" class="md-nav__button md-logo" aria-label="XTac-UMI G1 Data-Collection Quickstart" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    XTac-UMI G1 Data-Collection Quickstart
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/XenseRobotics-AI/XTac-UMI-G1-Docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    XenseRobotics-AI/XTac-UMI-G1-Docs
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix="">
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../highlights/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Highlights
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked="">
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Ready
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Getting Ready
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hardware
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hardware
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#产品组成" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        产品组成
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="产品组成">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#主夹爪区分左右" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        主夹爪(区分左右)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#从夹爪不区分左右" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        从夹爪(不区分左右)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#install" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        主夹爪连接与使用
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="主夹爪连接与使用">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#连接前检查" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        连接前检查
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#连接步骤" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        连接步骤
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#上电与识别" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        上电与识别
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#buttons-leds" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        指示灯状态 🚧
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#buttons" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        按键功能 🚧
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#从夹爪安装与连接" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        从夹爪安装与连接
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="从夹爪安装与连接">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#安装前检查" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        安装前检查
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#法兰安装" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        法兰安装
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#电源与通信连接" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        电源与通信连接
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#视触觉传感器维护与拆装" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        视触觉传感器维护与拆装
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#上电与下电顺序" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        上电与下电顺序
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        序列号与左右识别
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        技术参数
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="技术参数">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#电气与接口" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        电气与接口
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#产品规格整机" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        产品规格(整机)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshoot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        异常排查
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#safety" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        安全须知
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-environment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-host-hardware/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Host &amp; Device Setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6">
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Software Usage
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Software Usage
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-calibration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Calibration &amp; self-check
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-data-collection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data preview and collection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../best-practices/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Best Practices
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7">
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Data
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-dataset/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dataset &amp; Examples
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data-management/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Management
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8">
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../maintenance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Maintenance
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-faq-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FAQ &amp; Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../versions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Versions &amp; Support
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8_5">
+        
+          
+          <label class="md-nav__link" for="__nav_8_5" id="__nav_8_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix: SDK
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Appendix: SDK
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdk-overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SDK Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdk-install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install &amp; Build
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdk-examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Examples
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#产品组成" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        产品组成
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="产品组成">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#主夹爪区分左右" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        主夹爪(区分左右)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#从夹爪不区分左右" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        从夹爪(不区分左右)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#install" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        主夹爪连接与使用
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="主夹爪连接与使用">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#连接前检查" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        连接前检查
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#连接步骤" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        连接步骤
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#上电与识别" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        上电与识别
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#buttons-leds" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        指示灯状态 🚧
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#buttons" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        按键功能 🚧
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#从夹爪安装与连接" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        从夹爪安装与连接
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="从夹爪安装与连接">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#安装前检查" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        安装前检查
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#法兰安装" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        法兰安装
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#电源与通信连接" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        电源与通信连接
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#视触觉传感器维护与拆装" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        视触觉传感器维护与拆装
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#上电与下电顺序" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        上电与下电顺序
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        序列号与左右识别
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        技术参数
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="技术参数">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#电气与接口" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        电气与接口
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#产品规格整机" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        产品规格(整机)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshoot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        异常排查
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#safety" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        安全须知
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="硬件介绍">硬件介绍<a class="headerlink" href="#硬件介绍" title="锚点链接">¶</a></h1>
+<p>XTac-UMI G1 的机械、电气与操作说明,面向数采使用的
+<strong>设备了解与连接上手</strong>。连接、上电或拆装前请先阅读文末 <a href="#safety">安全须知</a>。</p>
+<h2 id="产品组成">产品组成<a class="headerlink" href="#产品组成" title="锚点链接">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>部件</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>主夹爪(区分左右)</td>
+<td>人手侧操作与数据采集;左右按标识区分;Type-C 统一供电+通信</td>
+</tr>
+<tr>
+<td>从夹爪(不区分左右)</td>
+<td>安装于机器人末端,用于执行端操作或回放;24V 供电 + Type-C 通信</td>
+</tr>
+<tr>
+<td>视触觉传感器 ×2</td>
+<td>左右指各一,三色光视触觉成像</td>
+</tr>
+<tr>
+<td>腕部鱼眼相机</td>
+<td>手腕视角 RGB,超大视场角</td>
+</tr>
+<tr>
+<td>Pico4 Ultra 企业版</td>
+<td>配对运动追踪器、建立世界坐标系并向 PC 传输主夹爪 6-DoF 位姿(见 <a href="../03-host-hardware/#34">3.4 Pico4 Ultra 企业版配置</a>)</td>
+</tr>
+<tr>
+<td>Pad 🚧</td>
+<td>任务操作 / 状态查看;<strong>研发中,可选</strong></td>
+</tr>
+<tr>
+<td>数采背包 🚧</td>
+<td>便携采集单元(数采盒子);<strong>研发中,可选</strong></td>
+</tr>
+<tr>
+<td>主控 MCU</td>
+<td>STM32</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition info">
+<p class="admonition-title">🚧 表示尚在开发完善中</p>
+<p>本手册中标 🚧 的内容都<strong>尚未定版</strong>,以最终发布版本为准。</p>
+<ul>
+<li><strong>Pad</strong> 与<strong>数采背包</strong>:研发中的<strong>可选配置</strong>,现阶段可能不随货提供,实际以合同配置为准。</li>
+<li><a href="#buttons-leds"><strong>指示灯状态</strong></a> 与<a href="#buttons"><strong>按键功能</strong></a>:功能已有,但灯语与按键映射还在确定中。</li>
+</ul>
+</div>
+<div class="admonition note">
+<p class="admonition-title">包装清单以随货为准</p>
+<p>标准系统配置(线缆、电源适配器、采集终端等)以<strong>合同配置及随货发货清单</strong>为准;
+缺少关键线缆/电源/终端时请联系项目负责人或技术支持,勿自行替代。</p>
+</div>
+<h3 id="主夹爪区分左右">主夹爪(区分左右)<a class="headerlink" href="#主夹爪区分左右" title="锚点链接">¶</a></h3>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">左主夹爪</label><label for="__tabbed_1_2">右主夹爪</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/hardware/master-left.png" data-desc-position="bottom"><img alt="左主夹爪示意图" src="../../assets/hardware/master-left.png" width="360"></a></p>
+</div>
+<div class="tabbed-block">
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/hardware/master-right.png" data-desc-position="bottom"><img alt="右主夹爪示意图" src="../../assets/hardware/master-right.png" width="360"></a></p>
+</div>
+</div>
+</div>
+<p>主夹爪的电源与通信统一通过 USB Type-C 完成;<strong>按键</strong>用于录制控制,<strong>指示灯</strong>用于判断运行状态。</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/hardware/master-controls.png" data-desc-position="bottom"><img alt="主夹爪操作部件示意图(接口 / 按键 / 指示灯)" src="../../assets/hardware/master-controls.png" width="480"></a></p>
+<h3 id="从夹爪不区分左右">从夹爪(不区分左右)<a class="headerlink" href="#从夹爪不区分左右" title="锚点链接">¶</a></h3>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/hardware/follower-gripper.png" data-desc-position="bottom"><img alt="从夹爪示意图" src="../../assets/hardware/follower-gripper.png" width="360"></a></p>
+<p>从夹爪安装在机器人末端,当前硬件不区分左右;安装时注意法兰方向、线缆走线与机器人运动空间。</p>
+<h2 id="install">主夹爪连接与使用<a class="headerlink" href="#install" title="锚点链接">¶</a></h2>
+<h3 id="连接前检查">连接前检查<a class="headerlink" href="#连接前检查" title="锚点链接">¶</a></h3>
+<ul>
+<li>备齐:左/右主夹爪、两根 <strong>USB 锁紧线</strong>、笔记本/数采终端(这台机器的配置要求见
+  <a href="../02-environment/#host-spec">采集主机配置要求</a>)。线缆<strong>夹爪端固定为 Type-C 锁紧接头</strong>,另一端按数采终端的接口选 <strong>Type-C 或 Type-A</strong> 均可。</li>
+<li>确认<strong>未使用 9V/12V 快充适配器</strong>直连主夹爪。</li>
+<li>检查 Type-C 锁紧端完好、夹爪接口内无异物。</li>
+<li>检查视触觉传感器表面无污渍、划伤、松动、异物。</li>
+</ul>
+<h3 id="连接步骤">连接步骤<a class="headerlink" href="#连接步骤" title="锚点链接">¶</a></h3>
+<p>主夹爪与上位机的连接关系:</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/hardware/master-connection.jpg" data-desc-position="bottom"><img alt="主夹爪连接关系简图" src="../../assets/hardware/master-connection.jpg" width="560"></a></p>
+<ol>
+<li>取出 USB Type-C 通讯线。</li>
+<li>连接主夹爪本体端的 Type-C 接口,<strong>旋紧锁紧螺钉</strong>。</li>
+<li>另一端接数采终端(Type-C 或 Type-A 口皆可),在采集软件中确认主夹爪通信正常。</li>
+</ol>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/hardware/master-connect.png" data-desc-position="bottom"><img alt="主夹爪连接" src="../../assets/hardware/master-connect.png" width="480"></a></p>
+<h3 id="上电与识别">上电与识别<a class="headerlink" href="#上电与识别" title="锚点链接">¶</a></h3>
+<p>主夹爪<strong>无需单独电源</strong>,供电与通信都走 Type-C。连接后观察指示灯,并在采集软件中确认左右主夹爪识别正常。</p>
+<p><strong>用 <code>lsusb</code> 核对传感器</strong>:接线完毕后运行 <code>lsusb</code>,确认能看到全部 UVC 传感器——
+<strong>双夹爪</strong>应有 <strong>6 个</strong>:2 个腕部相机(wrist camera)+ 4 个视触觉传感器(每只主爪 1 相机 + 2 触觉);
+<strong>单臂</strong> 3 个(1 相机 + 2 触觉)。</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>lsusb
+</span></code></pre></div>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/hardware/lsusb.jpg" data-desc-position="bottom"><img alt="双夹爪接好后的 lsusb 输出" src="../../assets/hardware/lsusb.jpg" width="720"></a></p>
+<p>上图是<strong>双夹爪</strong>接好后的实际输出。<strong>两个红框各对应一只主夹爪</strong>,每框内是这只爪的 3 个 UVC 设备:</p>
+<table>
+<thead>
+<tr>
+<th>框内字样</th>
+<th>是什么</th>
+<th>每只主爪</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Xense Robotics ... GSPS01…</code></td>
+<td>视触觉传感器</td>
+<td>2 个</td>
+</tr>
+<tr>
+<td><code>Sunplus ... XCA…</code></td>
+<td>腕部鱼眼相机</td>
+<td>1 个</td>
+</tr>
+</tbody>
+</table>
+<p>序列号末位还能直接看出左右(单左双右,见 <a href="#sn">序列号与左右识别</a>):图中 <code>…0069</code>/<code>…0071</code>
+是左,<code>…0070</code>/<code>…0072</code> 是右。</p>
+<p>数量不对时,检查线缆是否锁紧、USB 口是否接触良好;排查见 <a href="#troubleshoot">异常排查</a>。</p>
+<h3 id="buttons-leds">指示灯状态 🚧<a class="headerlink" href="#buttons-leds" title="锚点链接">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>指示灯</th>
+<th>含义</th>
+<th>用户动作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>白色长亮</td>
+<td>正常运行</td>
+<td>已上电,可以开始采集</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="admonition-title">其余灯态仍在确定中</p>
+<p>录制中、故障、OTA 升级等状态的灯语目前<strong>尚在开发测试中</strong>,本手册暂不列出,
+以最终发布版本为准。看到非白色长亮的灯态时,先按<a href="#troubleshoot">异常排查</a>处理。</p>
+</div>
+<h3 id="buttons">按键功能 🚧<a class="headerlink" href="#buttons" title="锚点链接">¶</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">按键功能正在开发完善中</p>
+<p>主夹爪机身上的两个按键用于录制控制,具体的单击 / 双击 / 长按对应哪些操作
+<strong>仍在开发完善中</strong>,本手册暂不列出,以最终发布版本为准。</p>
+<p>当前阶段请用命令行控制录制,见 <a href="../05-data-collection/">数据采集</a>。</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">没标定的主夹爪连不上,必须先标</p>
+<p>主夹爪的开合在数据里记为归一化的 <code>gripper.pos</code>(<code>0.0</code> 闭合 / <code>1.0</code> 张开)。这两个端点
+存在 MCU flash 中,<strong>每台标一次即可</strong>,断电不丢。没标过的主夹爪采集程序会拒绝连接,
+并提示要跑哪条命令——双夹爪两台都要标 → <a href="../04-calibration/#41">4.1 夹爪标定</a></p>
+<p>标定要求<strong>固件 ≥ V2.1</strong>。固件、SDK 与仓库版本必须配套升级,
+见 <a href="../versions/#required">必须升级到最新版本</a>。</p>
+</div>
+<h2 id="从夹爪安装与连接">从夹爪安装与连接<a class="headerlink" href="#从夹爪安装与连接" title="锚点链接">¶</a></h2>
+<h3 id="安装前检查">安装前检查<a class="headerlink" href="#安装前检查" title="锚点链接">¶</a></h3>
+<ul>
+<li>确认机器人已停机、处于安全姿态。</li>
+<li>确认末端法兰尺寸、螺钉规格、安装方向与末端负载满足项目要求。</li>
+<li>确认 24V 适配器、Type-C 通信线与锁紧结构完好。</li>
+<li>规划线缆走线,避免与关节/夹爪运动区/障碍物干涉。</li>
+</ul>
+<h3 id="法兰安装">法兰安装<a class="headerlink" href="#法兰安装" title="锚点链接">¶</a></h3>
+<p>从夹爪通过法兰安装到机器人末端(尺寸/孔位见下图)。</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1">法兰安装</label><label for="__tabbed_2_2">法兰尺寸</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/hardware/follower-flange-1.png" data-desc-position="bottom"><img alt="从夹爪法兰安装" src="../../assets/hardware/follower-flange-1.png" width="420"></a></p>
+</div>
+<div class="tabbed-block">
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/hardware/follower-flange-2.png" data-desc-position="bottom"><img alt="从夹爪法兰安装尺寸" src="../../assets/hardware/follower-flange-2.png" width="420"></a></p>
+</div>
+</div>
+</div>
+<h3 id="电源与通信连接">电源与通信连接<a class="headerlink" href="#电源与通信连接" title="锚点链接">¶</a></h3>
+<p>从夹爪<strong>通信与供电分开</strong>:通信走 Type-C,供电用 24V 适配器。</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/hardware/follower-connection.jpg" data-desc-position="bottom"><img alt="从夹爪连接关系简图" src="../../assets/hardware/follower-connection.jpg" width="560"></a></p>
+<ol>
+<li>取出 USB Type-C 通讯线、24V 电源适配器。</li>
+<li>连接从夹爪本体端的 <strong>24V 电源适配器</strong>。</li>
+<li>将 Type-C 锁紧线带螺钉的一端接从夹爪本体,<strong>旋紧锁紧螺钉</strong>。</li>
+<li>另一端接数采终端,在软件中确认从夹爪通信正常。</li>
+</ol>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/hardware/follower-connect.png" data-desc-position="bottom"><img alt="从夹爪连接" src="../../assets/hardware/follower-connect.png" width="480"></a></p>
+<div class="admonition warning">
+<p class="admonition-title">线缆与安装检查</p>
+<p>确认从夹爪固定牢靠、24V 连接可靠、Type-C 已锁紧并留足余量;线缆不会在机器人运动中被拉扯/弯折/缠绕。
+<strong>首次运行前建议低速测试</strong>,确认无干涉。</p>
+</div>
+<h2 id="视触觉传感器维护与拆装">视触觉传感器维护与拆装<a class="headerlink" href="#视触觉传感器维护与拆装" title="锚点链接">¶</a></h2>
+<p>视触觉传感器的清洁、存放与拆装见 <a href="../maintenance/">维护保养</a>。</p>
+<h2 id="上电与下电顺序">上电与下电顺序<a class="headerlink" href="#上电与下电顺序" title="锚点链接">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>设备</th>
+<th>供电</th>
+<th>上电顺序</th>
+<th>下电顺序</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>主夹爪</td>
+<td>USB Type-C,DC 5V/500mA</td>
+<td>先连夹爪端并锁紧,再连数采终端</td>
+<td>先拔数采终端端,再松螺钉拔夹爪端</td>
+</tr>
+<tr>
+<td>从夹爪</td>
+<td>24V 适配器 + Type-C</td>
+<td>先连 24V 电源,再连 Type-C 并锁紧</td>
+<td>先拔数采终端端,再断 24V,最后拔夹爪端 Type-C</td>
+</tr>
+</tbody>
+</table>
+<p>上电后观察指示灯并在软件确认识别正常;下电前先<strong>停止当前采集/录制/机器人运动/回放</strong>。</p>
+<div class="admonition warning">
+<p class="admonition-title">静电与异常</p>
+<p>上下电注意防静电。若出现异常重启、无法识别或红灯闪烁,立即停止并按<a href="#troubleshoot">异常排查</a>处理。</p>
+</div>
+<h2 id="sn">序列号与左右识别<a class="headerlink" href="#sn" title="锚点链接">¶</a></h2>
+<p>设备的<strong>左右侧别</strong>由序列号<strong>流水号末位的单双数</strong>区分:<strong>单数 = 左,双数 = 右</strong>(单左双右)。
+采集软件据此<strong>自动分侧</strong>(见 <a href="../03-host-hardware/#33">3.3 设备发现规则</a>),通常无需手动辨别。</p>
+<p>需要手动核对时,跑 <a href="#上电与识别"><code>lsusb</code></a> 看序列号末位即可。</p>
+<h2 id="specs">技术参数<a class="headerlink" href="#specs" title="锚点链接">¶</a></h2>
+<h3 id="电气与接口">电气与接口<a class="headerlink" href="#电气与接口" title="锚点链接">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>主夹爪</th>
+<th>从夹爪</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>供电</td>
+<td>USB Type-C</td>
+<td>24V 电源适配器</td>
+</tr>
+<tr>
+<td>通信</td>
+<td>USB Type-C</td>
+<td>USB Type-C</td>
+</tr>
+<tr>
+<td>标准供电规格</td>
+<td>DC 5V/500mA</td>
+<td>24V</td>
+</tr>
+<tr>
+<td>线缆</td>
+<td>配套锁紧线,夹爪端 Type-C;另一端 Type-C 或 Type-A</td>
+<td>Type-C 通信线 + 24V 电源线</td>
+</tr>
+<tr>
+<td>禁止事项</td>
+<td>禁止 9V/12V 快充直连</td>
+<td>禁止供电规格不匹配/带故障电源</td>
+</tr>
+</tbody>
+</table>
+<h3 id="产品规格整机">产品规格(整机)<a class="headerlink" href="#产品规格整机" title="锚点链接">¶</a></h3>
+<p>下表是<strong>传感器与整机规格</strong>。采集时实际速率可按需配置(如触觉以较低帧率录制),属<strong>使用选择</strong>,不改变传感器规格。</p>
+<table>
+<thead>
+<tr>
+<th>参数项</th>
+<th>规格</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>夹爪类型 / 外形</td>
+<td>二指结构;145 × 186 × 170 mm</td>
+</tr>
+<tr>
+<td>重量(主爪)/ 负载</td>
+<td>约 370 g;最大 2.5 kg</td>
+</tr>
+<tr>
+<td>开合行程 / 角度</td>
+<td>0–150 mm;角度行程<strong>每台各异</strong>,以<a href="../04-calibration/#41">标定</a>写入固件的实测值为准</td>
+</tr>
+<tr>
+<td>续航</td>
+<td>主夹爪无内置电池,由 USB Type-C 总线供电;便携续航取决于数采背包(🚧 研发中)</td>
+</tr>
+<tr>
+<td>多设备时间同步 / 定位</td>
+<td>5 ms;&lt; 3 mm</td>
+</tr>
+<tr>
+<td>视触觉</td>
+<td>2 × 三色光,量程 0–25 N,120 FPS(640×480 MJPG)</td>
+</tr>
+<tr>
+<td>IMU</td>
+<td>9 轴,100 Hz</td>
+</tr>
+<tr>
+<td>腕部鱼眼相机</td>
+<td>FOV 190°;640×480 @ 30 FPS MJPG</td>
+</tr>
+<tr>
+<td>输出数据</td>
+<td>RGB、多模态触觉、夹爪开口角度、IMU、空间定位轨迹</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">内部通信(技术参考)</p>
+<p>对外接口为 USB Type-C;内部 MCU 串口经 CH343(<code>1a86:55d2</code>)桥接,枚举 <code>/dev/ttyACM*</code>,
+USART3 @ 3 Mbps;视触觉与腕相机为 UVC(<code>/dev/video*</code>);从爪经 FDCAN1 @ 1 Mbps 透传灵足电机。</p>
+</div>
+<h2 id="troubleshoot">异常排查<a class="headerlink" href="#troubleshoot" title="锚点链接">¶</a></h2>
+<p>先记录「设备型号/编号、连接方式、指示灯状态、软件报错、现场照片」,再按下表排查;软件类问题见 <a href="../troubleshooting/">故障排查</a>。</p>
+<table>
+<thead>
+<tr>
+<th>现象</th>
+<th>可能原因</th>
+<th>处理</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>指示灯不亮</td>
+<td>线缆未插紧/供电不足/接口损坏</td>
+<td>重插线缆、确认配套 Type-C、换终端接口;仍异常则停用</td>
+</tr>
+<tr>
+<td>软件识别不到主夹爪</td>
+<td>USB 异常/线缆故障/软件未刷新</td>
+<td>检查左右连接、重开采集软件、换 Type-C 接口或线缆</td>
+</tr>
+<tr>
+<td>红色闪烁</td>
+<td>设备故障/通信异常</td>
+<td>停止录制并重新上电;反复出现则联系技术支持(附灯态与日志)</td>
+</tr>
+<tr>
+<td>图像黑屏/无图像</td>
+<td>UVC 未识别/传感器连接异常/通道选错</td>
+<td>检查系统是否识别 UVC、重启采集软件、重新上电</td>
+</tr>
+<tr>
+<td>图像污点/模糊</td>
+<td>表面污渍/异物/损伤</td>
+<td>无尘布清洁;有划伤/凹陷需更换传感器</td>
+</tr>
+<tr>
+<td>录制过程中断</td>
+<td>线缆松动/接触不良/供电不稳</td>
+<td>检查锁紧螺钉、避免线缆受力、重录当前回合</td>
+</tr>
+<tr>
+<td>从夹爪不上电</td>
+<td>24V 未连接/适配器异常</td>
+<td>检查 24V 适配器、插座、电源接口与规格</td>
+</tr>
+<tr>
+<td>从夹爪通信异常</td>
+<td>Type-C 未连/未识别/线缆干涉</td>
+<td>重连 Type-C、检查机器人运动是否拉扯线缆</td>
+</tr>
+<tr>
+<td>OTA 蓝灯过久</td>
+<td>升级未完成/流程异常</td>
+<td>升级期间勿断电;长时间无变化按 OTA 指引并联系支持</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition danger">
+<p class="admonition-title">严重异常</p>
+<p>若发生异味、冒烟、明显发热、结构破损或线缆破皮,<strong>立即断电并停止使用</strong>。</p>
+</div>
+<h2 id="safety">安全须知<a class="headerlink" href="#safety" title="锚点链接">¶</a></h2>
+<div class="admonition danger">
+<p class="admonition-title">连接 / 上电 / 拆装前必读</p>
+<table>
+<thead>
+<tr>
+<th>风险项</th>
+<th>要求</th>
+<th>后果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>主夹爪供电</td>
+<td>仅用配套 USB Type-C 线连数采终端,<strong>DC 5V/500mA</strong></td>
+<td>规格不符可能损坏设备</td>
+</tr>
+<tr>
+<td>禁止快充直连</td>
+<td><strong>禁止 9V/12V 快充适配器直连主夹爪</strong></td>
+<td>可能烧毁控制板</td>
+</tr>
+<tr>
+<td>从夹爪供电</td>
+<td>供电与通信分开,供电用 <strong>24V 适配器</strong></td>
+<td>电源接错可能损坏硬件</td>
+</tr>
+<tr>
+<td>线缆插拔</td>
+<td>插拔带锁紧螺钉的 Type-C 前先停止采集;拔出前先松螺钉</td>
+<td>避免接口受力/数据中断</td>
+</tr>
+<tr>
+<td>静电防护</td>
+<td>上下电、拆装传感器时注意防静电</td>
+<td>静电影响传感器/通信</td>
+</tr>
+<tr>
+<td>传感器表面</td>
+<td>避免尖锐物触碰、划伤、挤压视触觉表面</td>
+<td>弹性体/光学损伤影响数据</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden="">
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer">
+        
+          
+          <a href="../highlights/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Highlights">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Highlights
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../02-environment/" class="md-footer__link md-footer__link--next" aria-label="Next: Installation">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Installation
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      文档版本 v0.0.6 &nbsp;·&nbsp; Copyright © 2026 XenseRobotics Co., Ltd.
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/XenseRobotics-AI/XTac-UMI-G1-Docs" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tracking", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "navigation.footer", "toc.follow", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.tooltips"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>

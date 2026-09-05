@@ -1,14 +1,2958 @@
+<!DOCTYPE html><html lang="zh" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="XenseRobotics XTac-UMI G1 手持触觉数采夹爪 · 基于 lerobot 的数据采集快速上手">
+      
+      
+        <meta name="author" content="XenseRobotics">
+      
+      
+        <link rel="canonical" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/05-data-collection/">
+      
+      
+        <link rel="prev" href="../04-calibration/">
+      
+      
+        <link rel="next" href="../best-practices/">
+      
+      
+        
+          <link rel="alternate" href="./" hreflang="zh">
+        
+          <link rel="alternate" href="../en/05-data-collection/" hreflang="en">
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>数据预览与采集 - XTac-UMI G1 数采快速使用手册</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
 
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>Redirecting...</title>
-    <link rel="canonical" href="../pc/recording/">
-    <script>var anchor=window.location.hash.substr(1);location.href="../pc/recording/"+(anchor?"#"+anchor:"")</script>
-    <meta http-equiv="refresh" content="0; url=../pc/recording/">
-</head>
-<body>
-You're being redirected to a <a href="../pc/recording/">new destination</a>.
-</body>
-</html>
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  <link href="../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#5-数据预览与采集" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="XTac-UMI G1 数采快速使用手册" class="md-header__button md-logo" aria-label="XTac-UMI G1 数采快速使用手册" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            XTac-UMI G1 数采快速使用手册
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              数据预览与采集
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo" aria-label="切换到暗色模式" type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换到暗色模式" for="__palette_1" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"></path></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo" aria-label="切换到亮色模式" type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换到亮色模式" for="__palette_0" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"></path></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="选择当前语言">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"></path></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="zh" class="md-select__link">
+              简体中文
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../en/05-data-collection/" hreflang="en" class="md-select__link">
+              English (partial)
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required="">
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard="" data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"></path></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix="">
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/XenseRobotics-AI/XTac-UMI-G1-Docs" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    XenseRobotics-AI/XTac-UMI-G1-Docs
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="XTac-UMI G1 数采快速使用手册" class="md-nav__button md-logo" aria-label="XTac-UMI G1 数采快速使用手册" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    XTac-UMI G1 数采快速使用手册
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/XenseRobotics-AI/XTac-UMI-G1-Docs" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    XenseRobotics-AI/XTac-UMI-G1-Docs
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix="">
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    首页
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    一页速通
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    概述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../highlights/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    产品亮点
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5">
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    准备工作
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    准备工作
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hardware/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    硬件介绍
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-environment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    环境安装
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-host-hardware/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    主机与设备配置
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked="">
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    软件使用
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    软件使用
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-calibration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    标定与自检
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    数据预览与采集
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    数据预览与采集
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#51" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 采集原理
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#preview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        开录前:先用 lerobot-teleoperate 看一眼
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="开录前:先用 lerobot-teleoperate 看一眼">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#world-view" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rerun 里的 /world 3D 视图
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#52" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 录制
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.2 录制">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#params" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        参数详解
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="参数详解">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#数据集参数---dataset" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        数据集参数 --dataset.*
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#录制控制顶层参数" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        录制控制(顶层参数)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#设备参数---robotxtac-umi-g1-专属" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        设备参数 --robot.*(XTac-UMI G1 专属)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#robot-id" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        --robot.id 与硬件清单
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#53" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 每帧记录内容
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#54" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4 录制选项:流式编码与编码器预热
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.4 录制选项:流式编码与编码器预热">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#no-gpu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        没有 NVIDIA GPU 的主机怎么录
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#55" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.5 分集与复位
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#56" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.6 可选:头显相机(第一视角)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.6 可选:头显相机(第一视角)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#前置条件" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        前置条件
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#分辨率与录制单眼" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        分辨率与录制单眼
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#左右眼配对" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        左右眼配对
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#位姿与可视化" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        位姿与可视化
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#57" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.7 可选:腕相机鱼眼矫正
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.7 可选:腕相机鱼眼矫正">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#没标定的夹爪也能开但用的是参考值" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        没标定的夹爪也能开,但用的是参考值
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#只支持-640480" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        只支持 640×480
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../best-practices/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    采集规范与最佳实践
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7">
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    数据介绍
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    数据介绍
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-dataset/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    数据集与示例
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data-management/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    数据管理与命名
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8">
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    参考
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    参考
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    故障排查
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../maintenance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    维护保养
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-faq-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    常见问题与参考
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../versions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    版本与支持
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8_5">
+        
+          
+          <label class="md-nav__link" for="__nav_8_5" id="__nav_8_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    附录:SDK 与二次开发
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    附录:SDK 与二次开发
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdk-overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SDK 概览
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdk-install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    安装与构建
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdk-examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    示例
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#51" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 采集原理
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#preview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        开录前:先用 lerobot-teleoperate 看一眼
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="开录前:先用 lerobot-teleoperate 看一眼">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#world-view" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rerun 里的 /world 3D 视图
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#52" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 录制
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.2 录制">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#params" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        参数详解
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="参数详解">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#数据集参数---dataset" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        数据集参数 --dataset.*
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#录制控制顶层参数" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        录制控制(顶层参数)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#设备参数---robotxtac-umi-g1-专属" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        设备参数 --robot.*(XTac-UMI G1 专属)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#robot-id" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        --robot.id 与硬件清单
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#53" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 每帧记录内容
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#54" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4 录制选项:流式编码与编码器预热
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.4 录制选项:流式编码与编码器预热">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#no-gpu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        没有 NVIDIA GPU 的主机怎么录
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#55" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.5 分集与复位
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#56" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.6 可选:头显相机(第一视角)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.6 可选:头显相机(第一视角)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#前置条件" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        前置条件
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#分辨率与录制单眼" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        分辨率与录制单眼
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#左右眼配对" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        左右眼配对
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#位姿与可视化" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        位姿与可视化
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#57" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.7 可选:腕相机鱼眼矫正
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.7 可选:腕相机鱼眼矫正">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#没标定的夹爪也能开但用的是参考值" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        没标定的夹爪也能开,但用的是参考值
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#只支持-640480" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        只支持 640×480
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="5-数据预览与采集">5. 数据预览与采集<a class="headerlink" href="#5-数据预览与采集" title="锚点链接">¶</a></h1>
+<p>本章是核心:用 <code>lerobot-record</code> 采集并写出 <code>LeRobotDataset</code>。</p>
+<h2 id="51">5.1 采集原理<a class="headerlink" href="#51" title="锚点链接">¶</a></h2>
+<p><code>taccap_gripper</code> <strong>不需要遥操作端</strong>,录制是自驱动的。</p>
+<p>数据采用<strong>移位帧(shifted-frame)配对</strong>:动作比观测<strong>领先一步</strong>——<em>t-1</em> 步的观测,配
+<em>t</em> 步的位姿(EEF TCP 位姿 + 归一化 <code>gripper.pos</code>,开了<a href="#56">头显相机</a>时还包括
+<strong>头显位姿</strong>)作为动作。因此每集会少 1 帧
+(它没有前一帧可配对)。集与集之间的复位阶段是被动等待:重新摆放设备即可,无需遥操。</p>
+<div class="admonition note">
+<p class="admonition-title">命令行上没有 --teleop.*</p>
+<p>正因为自驱动,录制命令里<strong>不出现任何 <code>--teleop.*</code> 参数</strong>。</p>
+</div>
+<h2 id="preview">开录前:先用 <code>lerobot-teleoperate</code> 看一眼<a class="headerlink" href="#preview" title="锚点链接">¶</a></h2>
+<p><code>lerobot-teleoperate</code> <strong>只读取并预览设备,不写任何数据</strong>,跑一遍是零成本的;录制则是有成本的
+——一条集录废了要重来。而多数问题(某路相机没上来、追踪器没位姿、<code>gripper.pos</code> 顶不到 1.0、
+双夹爪左右接反)在预览里一眼就能看出来。</p>
+<p><strong>你要录到哪一档,就预览到哪一档</strong>——三档接的设备不同,能看到的东西也不同。</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><input id="__tabbed_1_3" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">① 只有夹爪</label><label for="__tabbed_1_2">② 加上追踪器位姿</label><label for="__tabbed_1_3">③ 全开(含头显相机)</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p>触觉两路、腕相机、<code>gripper.pos</code>。追踪器和头显都关着,<strong>不需要启动 PC Service</strong>。</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>lerobot-teleoperate<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">    </span>--robot.type<span class="o">=</span>bi_taccap_gripper<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span>--robot.id<span class="o">=</span><span class="m">0</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span>--robot.enable_tracker<span class="o">=</span><span class="nb">false</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">    </span>--robot.enable_head_camera<span class="o">=</span><span class="nb">false</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">    </span>--fps<span class="o">=</span><span class="m">30</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">    </span>--display_data<span class="o">=</span><span class="nb">true</span>
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<p>多出 <a href="#world-view"><code>/world</code> 3D 视图</a>:夹爪的 EE 标记和它走过的轨迹。
+需要追踪器已开机绑定、Pico4 已连上、<a href="../03-host-hardware/#35">XenseVR PC Service</a> 已启动。</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>lerobot-teleoperate<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">    </span>--robot.type<span class="o">=</span>bi_taccap_gripper<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span>--robot.id<span class="o">=</span><span class="m">0</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">    </span>--robot.enable_tracker<span class="o">=</span><span class="nb">true</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">    </span>--robot.enable_head_camera<span class="o">=</span><span class="nb">false</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">    </span>--fps<span class="o">=</span><span class="m">30</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">    </span>--display_data<span class="o">=</span><span class="nb">true</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">    </span>--show_trajectory<span class="o">=</span><span class="nb">true</span>
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<p>再多出头显双目画面与头部位姿,需要 <strong>PC Service ≥ v0.2.0</strong>(见 <a href="#56">§5.6</a>)。</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>lerobot-teleoperate<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">    </span>--robot.type<span class="o">=</span>bi_taccap_gripper<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span>--robot.id<span class="o">=</span><span class="m">0</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">    </span>--robot.enable_tracker<span class="o">=</span><span class="nb">true</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">    </span>--robot.enable_head_camera<span class="o">=</span><span class="nb">true</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">    </span>--fps<span class="o">=</span><span class="m">30</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">    </span>--display_data<span class="o">=</span><span class="nb">true</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">    </span>--show_trajectory<span class="o">=</span><span class="nb">true</span>
+</span></code></pre></div>
+</div>
+</div>
+</div>
+<p><strong>单夹爪</strong>:换成 <code>--robot.type=taccap_gripper</code>,其余相同。只接了一只时会自动选中;
+<strong>两只都接着</strong>时再加 <code>--robot.side=left|right</code> 指定用哪一只。</p>
+<p>在 Rerun 里逐项确认(②③ 档才有位姿相关的两行):</p>
+<table>
+<thead>
+<tr>
+<th>看什么</th>
+<th>期望</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>左右两路触觉</td>
+<td>都有画面;按压时纹理明显变化</td>
+</tr>
+<tr>
+<td>腕相机</td>
+<td>有画面,视野里没有线缆或杂物遮挡</td>
+</tr>
+<tr>
+<td><code>gripper.pos</code></td>
+<td>张到底到 <strong>1.0</strong>、闭合到 <strong>0.0</strong>——顶不到 1.0 见 <a href="../04-calibration/#413">4.1.3</a></td>
+</tr>
+<tr>
+<td><code>/world</code> 里的 EE 标记与轨迹</td>
+<td>随夹爪平滑移动,不跳变、不卡住——<strong>追踪器要始终在头显视野内</strong>,被遮挡就会丢跟踪</td>
+</tr>
+<tr>
+<td>双夹爪:左右两条轨迹</td>
+<td>各自独立且对应正确的手,没有接反</td>
+</tr>
+</tbody>
+</table>
+<p>都正常再 <code>Ctrl+C</code> 退出,继续下面的录制。</p>
+<div class="admonition note">
+<p class="admonition-title"><code>--robot.enable_head_camera</code> 为什么显式写出来</p>
+<p>它默认就是 <code>false</code>,写出来是为了让这个开关<strong>在命令里可见</strong>——改成 <code>true</code> 就会连同
+头显双目画面与头显位姿一起预览/录制(见 <a href="#56">5.6 头显相机</a>),需要 <strong>PC Service ≥ v0.2.0</strong>。</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">想让它自己停,并打印每帧耗时</p>
+<p><code>--teleop_time_s=10</code> 跑满 10 秒自动退出,<code>--debug_timing=true</code> 打印采样耗时与相机路数。</p>
+</div>
+<h3 id="world-view">Rerun 里的 <code>/world</code> 3D 视图<a class="headerlink" href="#world-view" title="锚点链接">¶</a></h3>
+<p><code>--display_data=true</code> 会开出一个 <code>/world</code> 3D 视图:夹爪以带标签的椭球 + 坐标三轴画在它实时的
+<strong>EEF TCP 位姿</strong>(<code>tcp.*</code>)处,并拖出一条走过的轨迹面包屑。</p>
+<ul>
+<li>场景按 <code>FLU</code>(X 前 / Y 左 / Z 上)声明,所以查看器知道哪个轴是「前」,初始视角朝 +X。
+  世界轴带 <code>+X forward / +Y left / +Z up</code> 标注,转动视角后仍读得出朝向。</li>
+<li>轨迹面包屑保留最近 <strong>90 个采样点(30 fps 下约 3 秒)</strong>,并且<strong>越旧越淡</strong>。够看清刚做完的
+  那一笔,又不至于两只夹爪的轨迹缠成一团。</li>
+<li>开了<a href="#56">头显相机</a>时,头显也会画进同一个 <code>/world</code>——一个更小的<strong>琥珀色 <code>HEAD</code> 标记</strong>,
+  不带轨迹(头一直在动,再拖一条面包屑会把夹爪轨迹盖掉)。头显位姿与 <code>tcp.*</code> 用的是
+  <strong>同一个重力对齐世界系</strong>,所以「人在看哪」和「手在做什么」可以直接放在一起读。</li>
+<li><code>--show_trajectory</code> 默认开启;设为 <code>false</code> 可关闭。<code>--robot.enable_tracker=false</code>
+  (无位姿可画)时会自动跳过。</li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">一眼确认标记画对了</p>
+<p>夹爪平放时,EE 标记应落在<strong>两指中点</strong>、三轴呈 <strong>X 前 / Y 左 / Z 上</strong>;对不上就是追踪器装错了。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">标量面板里的 <code>tracker pose</code></p>
+<p><code>tcp pose</code> 旁边的 <code>tracker pose</code> 是追踪器原始位姿,<strong>仅供查看、不会落盘</strong>(落盘的是 <code>tcp.*</code>)。</p>
+</div>
+<h2 id="52">5.2 录制<a class="headerlink" href="#52" title="锚点链接">¶</a></h2>
+<p>设备<strong>按序列号规则自动发现</strong>——不列举夹爪/触觉/相机序列号。触觉、腕相机、追踪器都按同一套
+规则各自匹配左右。</p>
+<p><strong>和上面预览的那一档对应</strong>——三档录出来的数据集内容不同:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:3"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><input id="__tabbed_2_3" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1">① 只有夹爪</label><label for="__tabbed_2_2">② 加上追踪器位姿</label><label for="__tabbed_2_3">③ 全开(含头显相机)</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p>落盘 <code>gripper.pos</code> + 左右触觉 + 腕相机,<strong>没有位姿</strong>(数据里不会有 <code>tcp.*</code>)。</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>lerobot-record<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">    </span>--robot.type<span class="o">=</span>bi_taccap_gripper<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span>--robot.id<span class="o">=</span><span class="m">0</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">    </span>--robot.enable_tracker<span class="o">=</span><span class="nb">false</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">    </span>--robot.enable_head_camera<span class="o">=</span><span class="nb">false</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">    </span>--display_data<span class="o">=</span><span class="nb">false</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">    </span>--dataset.repo_id<span class="o">=</span>&lt;your_org&gt;/&lt;your_dataset&gt;<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">    </span>--dataset.num_episodes<span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="w">    </span>--dataset.fps<span class="o">=</span><span class="m">30</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="w">    </span>--dataset.push_to_hub<span class="o">=</span><span class="nb">false</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="w">    </span>--dataset.episode_time_s<span class="o">=</span><span class="m">120</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="w">    </span>--dataset.reset_time_s<span class="o">=</span><span class="m">60</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="w">    </span>--dataset.single_task<span class="o">=</span><span class="s1">'Pick up the object'</span>
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<p>再加 <code>tcp.*</code>(EEF TCP 位姿)。<strong>这是最常用的一档</strong>,本章后面的说明默认按它来。</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>lerobot-record<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">    </span>--robot.type<span class="o">=</span>bi_taccap_gripper<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span>--robot.id<span class="o">=</span><span class="m">0</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">    </span>--robot.enable_tracker<span class="o">=</span><span class="nb">true</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">    </span>--robot.enable_head_camera<span class="o">=</span><span class="nb">false</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">    </span>--display_data<span class="o">=</span><span class="nb">false</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">    </span>--dataset.repo_id<span class="o">=</span>&lt;your_org&gt;/&lt;your_dataset&gt;<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">    </span>--dataset.num_episodes<span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w">    </span>--dataset.fps<span class="o">=</span><span class="m">30</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="w">    </span>--dataset.push_to_hub<span class="o">=</span><span class="nb">false</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="w">    </span>--dataset.episode_time_s<span class="o">=</span><span class="m">120</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="w">    </span>--dataset.reset_time_s<span class="o">=</span><span class="m">60</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="w">    </span>--dataset.single_task<span class="o">=</span><span class="s1">'Pick up the object'</span>
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<p>再加头显双目画面与头部位姿,需要 <strong>PC Service ≥ v0.2.0</strong>(见 <a href="#56">§5.6</a>)。</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>lerobot-record<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">    </span>--robot.type<span class="o">=</span>bi_taccap_gripper<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span>--robot.id<span class="o">=</span><span class="m">0</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">    </span>--robot.enable_tracker<span class="o">=</span><span class="nb">true</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">    </span>--robot.enable_head_camera<span class="o">=</span><span class="nb">true</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">    </span>--display_data<span class="o">=</span><span class="nb">false</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">    </span>--dataset.repo_id<span class="o">=</span>&lt;your_org&gt;/&lt;your_dataset&gt;<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">    </span>--dataset.num_episodes<span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">    </span>--dataset.fps<span class="o">=</span><span class="m">30</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="w">    </span>--dataset.push_to_hub<span class="o">=</span><span class="nb">false</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="w">    </span>--dataset.episode_time_s<span class="o">=</span><span class="m">120</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="w">    </span>--dataset.reset_time_s<span class="o">=</span><span class="m">60</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="w">    </span>--dataset.single_task<span class="o">=</span><span class="s1">'Pick up the object'</span>
+</span></code></pre></div>
+</div>
+</div>
+</div>
+<p><strong>单夹爪</strong>:换成 <code>--robot.type=taccap_gripper</code>,其余相同。只接了一只时会自动选中;
+<strong>两只都接着、只录其中一只</strong>时,用 <code>--robot.side=left|right</code> 指定录哪一只——这时它是必填的。</p>
+<div class="admonition tip">
+<p class="admonition-title">正式录制时关掉 <code>--display_data</code></p>
+<p>上面三条命令都写了 <code>--display_data=false</code>(这也是默认值)。Rerun 显示要在采集主循环上
+压缩并推送每一路画面,<strong>开着会明显占用帧预算</strong>;关掉能把这部分负载全部让给采集和编码,
+高分辨率或多相机时尤其明显。</p>
+<p>数据流该在<a href="#preview">开录前的预览</a>里确认,那时开着 <code>--display_data=true</code>;
+确认完就关掉再开录。录制途中确实要盯画面的话,见
+<a href="#params"><code>--display_image_every_n</code></a>。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">录到一半设备掉了会怎样</p>
+<p>某路相机或夹爪编码器<strong>中途掉线</strong>(线松了、hub 掉电)时,采集会<strong>主动停下来,并把已经
+录到的部分存盘</strong>,终端上打印一条 <code>Device lost mid-recording</code>。<strong>不会</strong>继续往数据集里
+写编造的值。</p>
+<p>短暂的读取失败不算掉线——会沿用上一帧的好值撑过去(相机约 2 秒、夹爪编码器约 1 秒),
+超过才判定为掉线。所以掉线那一集的<strong>最后一两秒可能是重复的旧值</strong>,这一集建议弃用。</p>
+<p>处理:检查线缆与 USB 口(见 <a href="../troubleshooting/#usb-bandwidth">某一路相机打不开</a>),
+然后用 <code>--resume</code> 在同一数据集上续录。</p>
+</div>
+<h3 id="params">参数详解<a class="headerlink" href="#params" title="锚点链接">¶</a></h3>
+<p><code>lerobot-record</code> 参数分三类:<strong>数据集</strong>(<code>--dataset.*</code>)、<strong>录制控制</strong>(顶层)、
+<strong>设备</strong>(<code>--robot.*</code>)。完整定义参考 lerobot 官方
+<a href="https://huggingface.co/docs/lerobot/v0.5.1/en/il_robots#record-a-dataset">录制指南</a>(对应本项目定制的 lerobot 基线 0.5.1)。</p>
+<h4 id="数据集参数---dataset">数据集参数 <code>--dataset.*</code><a class="headerlink" href="#数据集参数---dataset" title="锚点链接">¶</a></h4>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>默认</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>repo_id</code></td>
+<td><strong>必填</strong></td>
+<td>数据集标识,<code>{HF用户名}/{数据集名}</code>,如 <code>Xense/pick_demo</code></td>
+</tr>
+<tr>
+<td><code>single_task</code></td>
+<td><strong>必填</strong></td>
+<td>任务的简短准确描述,写入 <code>meta/tasks</code>(如 <code>'Pick up the object'</code>)</td>
+</tr>
+<tr>
+<td><code>root</code></td>
+<td><code>$HF_LEROBOT_HOME/repo_id</code></td>
+<td>本地存储目录;不指定则用默认缓存路径</td>
+</tr>
+<tr>
+<td><code>fps</code></td>
+<td><code>30</code></td>
+<td>采样(录制)帧率上限</td>
+</tr>
+<tr>
+<td><code>episode_time_s</code></td>
+<td><code>120</code></td>
+<td>每集录制时长(秒)</td>
+</tr>
+<tr>
+<td><code>reset_time_s</code></td>
+<td><code>60</code></td>
+<td>每集之间的复位时长(秒),被动等待你重新摆放场景</td>
+</tr>
+<tr>
+<td><code>num_episodes</code></td>
+<td><code>50</code></td>
+<td>录制集数</td>
+</tr>
+<tr>
+<td><code>video</code></td>
+<td><code>true</code></td>
+<td>是否把帧编码为视频(mp4)</td>
+</tr>
+<tr>
+<td><code>push_to_hub</code></td>
+<td><code>false</code></td>
+<td>默认仅保存到本地;需要上传时显式设为 <code>true</code></td>
+</tr>
+<tr>
+<td><code>private</code></td>
+<td><code>false</code></td>
+<td>上传为 Hub 私有仓库</td>
+</tr>
+<tr>
+<td><code>tags</code></td>
+<td>无</td>
+<td>给 Hub 数据集打标签</td>
+</tr>
+<tr>
+<td><code>streaming_encoding</code></td>
+<td><code>true</code></td>
+<td>实时流式编码(见 <a href="#54">§5.4</a>)</td>
+</tr>
+<tr>
+<td><code>vcodec</code></td>
+<td><code>auto</code></td>
+<td>视频编码器(<code>h264</code>/<code>hevc</code>/<code>libsvtav1</code>/<code>auto</code>/硬件编码器)</td>
+</tr>
+<tr>
+<td><code>encoder_threads</code></td>
+<td>自动</td>
+<td>每个编码器实例的线程数</td>
+</tr>
+<tr>
+<td><code>encoder_queue_maxsize</code></td>
+<td><code>30</code></td>
+<td>每相机缓冲帧数(~1s@30fps),编码跟不上时反压丢旧帧</td>
+</tr>
+<tr>
+<td><code>video_encoding_batch_size</code></td>
+<td><code>1</code></td>
+<td>批量编码前累计的集数(1=即时编码)</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">显式写出关键参数</p>
+<p>推荐命令始终显式指定 <code>fps=30</code>、<code>episode_time_s=120</code>、<code>reset_time_s=60</code> 和 <code>push_to_hub=false</code>,避免不同 checkout 的默认值变化影响采集。
+上面的示例把 <code>--robot.enable_head_camera=false</code> 也写了出来,同样是这个道理——它默认就是
+<code>false</code>,写出来是让这个开关在命令里可见。改成 <code>true</code> 即连同头显双目画面与头显位姿一起录
+(见 <a href="#56">§5.6</a>);需要 <strong>PC Service ≥ v0.2.0</strong>。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title"><code>fps</code> 与传感器帧率</p>
+<p><code>fps</code> 是<strong>录制采样率</strong>,不是传感器上限。视触觉传感器本身 120 Hz(<a href="../hardware/#specs">硬件参数</a>),
+按需以更低 <code>fps</code> 录制是<strong>使用选择</strong>,不改变传感器规格。</p>
+</div>
+<h4 id="录制控制顶层参数">录制控制(顶层参数)<a class="headerlink" href="#录制控制顶层参数" title="锚点链接">¶</a></h4>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>默认</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>robot.type</code></td>
+<td><strong>必填</strong></td>
+<td><code>taccap_gripper</code>(单夹爪)/ <code>bi_taccap_gripper</code>(双夹爪)</td>
+</tr>
+<tr>
+<td><code>robot.id</code></td>
+<td><strong>必填</strong></td>
+<td>这套设备的<strong>工位号</strong>,填数字即可(<code>0</code> / <code>1</code>…),前缀按 <code>robot.type</code> 自动补;漏填直接报错退出,见 <a href="#robot-id"><code>--robot.id</code> 与硬件清单</a></td>
+</tr>
+<tr>
+<td><code>fps</code></td>
+<td><code>30</code></td>
+<td><strong>主循环</strong>帧率(设备读取与预览)。与 <code>--dataset.fps</code>(落盘采样率)是两个参数,通常设成相同值</td>
+</tr>
+<tr>
+<td><code>display_data</code></td>
+<td><code>false</code></td>
+<td>在 Rerun 中显示相机画面与 3D 视图</td>
+</tr>
+<tr>
+<td><code>show_trajectory</code></td>
+<td><code>true</code></td>
+<td>Rerun 中叠加 3D 位姿 + 轨迹(需 <code>display_data</code> 且有 <code>tcp.*</code>)</td>
+</tr>
+<tr>
+<td><code>display_compressed_images</code></td>
+<td><code>false</code></td>
+<td>Rerun 里是否 JPEG 压缩后再显示。<strong>默认关</strong>——压缩发生在录制主循环上,开着会吃掉大量帧预算;只有 Rerun 查看器在另一台机器上(<code>--display_ip</code>)时才划算</td>
+</tr>
+<tr>
+<td><code>display_image_every_n</code></td>
+<td><code>1</code></td>
+<td>每 N 帧才刷新一次相机画面(标量始终全速)。<strong>最后手段</strong>,只在仍然超时才动它——它是唯一会改变操作员所见内容的选项</td>
+</tr>
+<tr>
+<td><code>play_sounds</code></td>
+<td><code>true</code></td>
+<td>语音播报录制事件。<strong>容器里没有语音合成器,播报一律是静音的</strong>(只告警一次,不影响录制);要听到就在宿主机上跑</td>
+</tr>
+<tr>
+<td><code>resume</code></td>
+<td><code>false</code></td>
+<td>在已有数据集上<strong>续录</strong></td>
+</tr>
+</tbody>
+</table>
+<h4 id="设备参数---robotxtac-umi-g1-专属">设备参数 <code>--robot.*</code>(XTac-UMI G1 专属)<a class="headerlink" href="#设备参数---robotxtac-umi-g1-专属" title="锚点链接">¶</a></h4>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>默认</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>robot.side</code></td>
+<td>自动</td>
+<td><code>left</code>/<code>right</code>,<strong>单夹爪模式</strong>下两只都接着时必填;只接一只则自动选中</td>
+</tr>
+<tr>
+<td><code>robot.role</code></td>
+<td><code>leader</code></td>
+<td>填 <code>follower</code> 绑定从夹爪</td>
+</tr>
+<tr>
+<td><code>robot.enable_tracker</code></td>
+<td><code>true</code></td>
+<td>关闭则只录触觉 + 夹爪(无位姿)</td>
+</tr>
+<tr>
+<td><code>robot.tracker_serial</code></td>
+<td>未设</td>
+<td>钉住追踪器 SN,绕过侧别自动匹配</td>
+</tr>
+<tr>
+<td><code>robot.enable_wrist_camera</code></td>
+<td><code>true</code></td>
+<td>关闭腕相机</td>
+</tr>
+<tr>
+<td><code>robot.wrist_camera_width/_height/_fps</code></td>
+<td>—</td>
+<td>腕相机分辨率 / 帧率</td>
+</tr>
+<tr>
+<td><code>robot.wrist_camera_fourcc</code></td>
+<td><code>MJPG</code></td>
+<td>腕相机像素格式。默认 MJPG 是为了给同 hub 的两路触觉让出 USB 带宽;<code>YUYV</code> 为无压缩,只在带宽够时用</td>
+</tr>
+<tr>
+<td><code>robot.wrist_undistort</code></td>
+<td><code>false</code></td>
+<td><strong>落盘前</strong>把腕相机的鱼眼矫正掉,见 <a href="#57">§5.7</a></td>
+</tr>
+<tr>
+<td><code>robot.wrist_undistort_balance</code></td>
+<td><code>0.0</code></td>
+<td>矫正后的视野档位,<code>0</code> 保持标定焦距,<code>1</code> 视野最大但黑边更多</td>
+</tr>
+<tr>
+<td><code>robot.enable_head_camera</code></td>
+<td><code>false</code></td>
+<td>录制 Pico4 Ultra 企业版<strong>头显相机</strong>,见 <a href="#56">§5.6</a></td>
+</tr>
+<tr>
+<td><code>robot.head_camera_eyes</code></td>
+<td><code>both</code></td>
+<td><code>both</code> 录左右两只眼(两个键),<code>left</code> / <code>right</code> 只录一只</td>
+</tr>
+<tr>
+<td><code>robot.head_camera_width/_height</code></td>
+<td><code>640</code> / <code>480</code></td>
+<td><strong>每只眼</strong>的尺寸,只接受 <code>640x480</code>、<code>1024x768</code> 或 <code>1280x960</code>;要与头显里的「分辨率」一致</td>
+</tr>
+<tr>
+<td><code>robot.head_camera_fps</code></td>
+<td><code>30</code></td>
+<td>头显相机录制帧率</td>
+</tr>
+<tr>
+<td><code>robot.head_camera_pair_max_skew_ms</code></td>
+<td><code>20.0</code></td>
+<td>左右眼帧序号不同时,判定为同一次曝光的最大时间差</td>
+</tr>
+<tr>
+<td><code>robot.tactile_fps</code></td>
+<td><code>30</code></td>
+<td>触觉录制帧率</td>
+</tr>
+<tr>
+<td><code>robot.tactile_output_types</code></td>
+<td><code>["rectify"]</code></td>
+<td><strong>落盘</strong>的触觉流,<strong>只能填一个</strong></td>
+</tr>
+<tr>
+<td><code>robot.tactile_display_output_types</code></td>
+<td><code>["difference"]</code></td>
+<td><strong>仅显示</strong>、不落盘的额外触觉流</td>
+</tr>
+<tr>
+<td><code>robot.tactile_diff_gain</code></td>
+<td><code>1.0</code></td>
+<td><code>difference</code> 图的增益(只影响显示)</td>
+</tr>
+<tr>
+<td><code>robot.enable_tactile</code></td>
+<td><code>true</code></td>
+<td>关闭则整条触觉链路都不接入(不发现、不落盘)。<strong>排查用,不是录制模式</strong></td>
+</tr>
+<tr>
+<td><code>robot.expected_tactiles_per_side</code></td>
+<td><code>2</code></td>
+<td>每侧应有几枚触觉;数量对不上会直接报错,用于抓装配/烧录错误</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="admonition-title">双夹爪上,<strong>按单元</strong>的那几项要带 <code>left_</code> / <code>right_</code> 前缀</p>
+<p>上表按单夹爪写。<code>bi_taccap_gripper</code> 有两个单元,所以下面这几项在它上面是<strong>每侧一个</strong>——
+写成不带前缀的形式会因为没有这个字段而报错:</p>
+<table>
+<thead>
+<tr>
+<th>单夹爪</th>
+<th>双夹爪</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--robot.enable_wrist_camera</code></td>
+<td><code>--robot.left_enable_wrist_camera</code> / <code>--robot.right_enable_wrist_camera</code></td>
+</tr>
+<tr>
+<td><code>--robot.tracker_serial</code></td>
+<td><code>--robot.left_tracker_serial</code> / <code>--robot.right_tracker_serial</code></td>
+</tr>
+<tr>
+<td><code>--robot.enable_gripper</code> / <code>--robot.enable_imu</code></td>
+<td>同样加 <code>left_</code> / <code>right_</code> 前缀</td>
+</tr>
+<tr>
+<td><code>--robot.gripper_open_rad</code>、<code>--robot.tracker_to_ee_pos/_quat</code></td>
+<td>同上</td>
+</tr>
+</tbody>
+</table>
+<p>其余的都是<strong>两侧共用</strong>一个开关:<code>--robot.enable_tactile</code>、<code>--robot.enable_tracker</code>、
+<code>--robot.tactile_*</code>、<code>--robot.wrist_camera_width/_height/_fps/_fourcc</code>、
+<code>--robot.head_camera_*</code>。</p>
+</div>
+<p>Pico4 Ultra 企业版追踪器上电后,6-DoF 位姿<strong>自动录制</strong>——追踪器按序列号末尾字母 <code>G</code> 前一个数字(单左双右)
+自动匹配本单元侧别。</p>
+<div class="admonition tip">
+<p class="admonition-title">只录触觉 + 夹爪</p>
+<p>加 <code>--robot.enable_tracker=false</code> 关闭位姿录制。</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">追踪器序列号不合规 / PC 服务枚举不稳</p>
+<p>用 <code>--robot.tracker_serial=&lt;SN&gt;</code> 直接钉住序列号——<strong>逐字使用</strong>,不枚举、不校验
+(打错会在 connect 时报设备找不到)。留空(默认)则走自动发现。</p>
+</div>
+<h3 id="robot-id"><code>--robot.id</code> 与硬件清单<a class="headerlink" href="#robot-id" title="锚点链接">¶</a></h3>
+<p>两件事,回答的是两个不同的问题。</p>
+<p><strong><code>--robot.id</code> 是工位号</strong>,<strong>一套设备一个</strong>——双夹爪算一套,不是两个。它标的是<strong>工位</strong>、
+不是工位上装的硬件,所以换了夹爪也不用改。它会出现在日志前缀、标定文件名和下面的硬件清单里,
+但<strong>不是数据集里的一列</strong>。</p>
+<p><strong>填数字就行</strong>,前缀按 <code>--robot.type</code> 自动补:</p>
+<table>
+<thead>
+<tr>
+<th>命令里写</th>
+<th><code>--robot.type</code></th>
+<th>实际存成</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--robot.id=0</code></td>
+<td><code>taccap_gripper</code>(单夹爪)</td>
+<td><code>taccap_0</code></td>
+</tr>
+<tr>
+<td><code>--robot.id=0</code></td>
+<td><code>bi_taccap_gripper</code>(双夹爪)</td>
+<td><code>bi_taccap_0</code></td>
+</tr>
+</tbody>
+</table>
+<p>前缀是 <code>--robot.type</code> 已经说过的事,再手敲一遍只会敲错——双夹爪上写成 <code>--robot.id=taccap_0</code>,
+标签就和实际设备类型对不上了,而这在数据里看不出来。<strong>不是纯数字的一律原样保留</strong>,
+所以老命令里的 <code>--robot.id=taccap_0</code> 照样能用,对应的标定文件名也不会变。</p>
+<p><strong>它是必填的</strong>:漏填或填空会在<strong>解析命令行时</strong>就退出,还没碰到任何设备:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>ValueError: --robot.id is required: the station label for this rig, e.g. --robot.id=0 …
+</span></code></pre></div>
+<p>这样做是为了不让一台设备<strong>匿名</strong>录完一批数据。编号本身不校验——<strong>真正的身份是下面的序列号</strong>,
+所以按房间号之类命名也允许。</p>
+<p><strong>硬件清单才是身份。</strong><code>lerobot-record</code> 在 <code>connect()</code> 之后立刻把
+<code>meta/hardware.json</code> 写进数据集:每只夹爪的<strong>固件 SN</strong>,加上它上面两枚触觉传感器的 SN,
+每枚都带着自己对应的观测键。</p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="p">{</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span><span class="nt">"robot_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bi_taccap_gripper"</span><span class="p">,</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">  </span><span class="nt">"epochs"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">    </span><span class="p">{</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">      </span><span class="nt">"from_episode"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">      </span><span class="nt">"to_episode"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w">      </span><span class="nt">"recorded_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-08-22T16:03:09+08:00"</span><span class="p">,</span>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">      </span><span class="nt">"robot_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bi_taccap_0"</span><span class="p">,</span>
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="w">      </span><span class="nt">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"leader"</span><span class="p">,</span>
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="w">      </span><span class="nt">"units"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="w">        </span><span class="p">{</span>
+</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="w">          </span><span class="nt">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"left"</span><span class="p">,</span>
+</span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="w">          </span><span class="nt">"gripper_sn"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TCGU01A24Z0001m"</span><span class="p">,</span>
+</span><span id="__span-7-14"><a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a><span class="w">          </span><span class="nt">"tactile_sensors"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-7-15"><a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a><span class="w">            </span><span class="p">{</span><span class="w"> </span><span class="nt">"finger"</span><span class="p">:</span><span class="w"> </span><span class="s2">"left"</span><span class="p">,</span><span class="w">  </span><span class="nt">"observation_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"left_tactile_left"</span><span class="p">,</span><span class="w">  </span><span class="nt">"serial"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GSPS01A25Z0011"</span><span class="p">,</span>
+</span><span id="__span-7-16"><a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a><span class="w">              </span><span class="nt">"runtime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"meta/runtimes/GSPS01A25Z0011-20260822T160309.bin"</span><span class="w"> </span><span class="p">},</span>
+</span><span id="__span-7-17"><a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a><span class="w">            </span><span class="p">{</span><span class="w"> </span><span class="nt">"finger"</span><span class="p">:</span><span class="w"> </span><span class="s2">"right"</span><span class="p">,</span><span class="w"> </span><span class="nt">"observation_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"left_tactile_right"</span><span class="p">,</span><span class="w"> </span><span class="nt">"serial"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GSPS01A25Z0012"</span><span class="p">,</span>
+</span><span id="__span-7-18"><a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a><span class="w">              </span><span class="nt">"runtime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"meta/runtimes/GSPS01A25Z0012-20260822T160309.bin"</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-7-19"><a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a><span class="w">          </span><span class="p">],</span>
+</span><span id="__span-7-20"><a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a><span class="w">          </span><span class="nt">"wrist_undistort"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"applied"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-7-21"><a id="__codelineno-7-21" name="__codelineno-7-21" href="#__codelineno-7-21"></a><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-7-22"><a id="__codelineno-7-22" name="__codelineno-7-22" href="#__codelineno-7-22"></a><span class="w">      </span><span class="p">]</span>
+</span><span id="__span-7-23"><a id="__codelineno-7-23" name="__codelineno-7-23" href="#__codelineno-7-23"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-7-24"><a id="__codelineno-7-24" name="__codelineno-7-24" href="#__codelineno-7-24"></a><span class="w">  </span><span class="p">]</span>
+</span><span id="__span-7-25"><a id="__codelineno-7-25" name="__codelineno-7-25" href="#__codelineno-7-25"></a><span class="p">}</span>
+</span></code></pre></div>
+<ul>
+<li><code>side</code> 是<strong>哪只夹爪</strong>,<code>finger</code> 是<strong>这只夹爪上的哪一枚触觉</strong>——两者都叫左右,而且是<strong>互相独立</strong>的
+  (<a href="../03-host-hardware/#33">单左双右</a>对夹爪 SN 和触觉 SN 各判一次)。所以每枚触觉还带上
+  <code>observation_key</code>,数据集里的一列能直接回溯到具体哪一枚传感器,不必再自己套一遍命名规则。</li>
+<li><code>gripper_sn</code> 是<strong>固件 SN</strong>(连接时向固件问的),不是 CH343 的 <code>mcu_serial</code>——后者标的是
+  USB 串口芯片,换根转接就变了。</li>
+<li>单夹爪写的是<strong>同样的结构</strong>,只是 <code>units</code> 里只有一项;读数据集的程序只需要一套代码。</li>
+<li>某一侧夹爪没开时该项记 <code>"gripper_sn": null</code>(不是省略);<code>--robot.enable_tactile=false</code> 时
+  <code>tactile_sensors</code> 为空列表。</li>
+<li>它是<strong>独立的一个文件</strong>,不是 <code>meta/info.json</code> 里的一个键——后者的结构属于上游 lerobot。</li>
+<li><code>runtime</code> 指向这枚传感器的 <strong>runtime bundle</strong>,见下面那条 danger。</li>
+<li><code>wrist_undistort</code> 记这只夹爪的腕相机帧<strong>有没有被矫正</strong>、用的是哪一份内参
+  (<code>"unit"</code> 本机标定 / <code>"reference"</code> SDK 参考值)。只要这只夹爪有腕相机就一定有这一项,
+  没矫正时记 <code>{"applied": false}</code>——缺键和 <code>false</code> 若不可分,事后就说不清了。见 <a href="#57">§5.7</a>。</li>
+</ul>
+<p><strong><code>epochs</code>:一个数据集可以跨几套硬件。</strong>每段记 <code>from_episode</code> / <code>to_episode</code>(<strong>左闭右开</strong>,
+和 <code>dataset_from_index</code> / <code>dataset_to_index</code> 一致)以及 <code>recorded_at</code>。正在录的那一段
+<code>to_episode</code> 是 <code>null</code>——录完之前集数还不知道,写个猜的数不如直说"还开着"。</p>
+<p>用 <code>--resume</code> 续录时:</p>
+<table>
+<thead>
+<tr>
+<th>情况</th>
+<th>行为</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>同一套设备</td>
+<td>什么都不记,当前这段本来就覆盖得到</td>
+</tr>
+<tr>
+<td><strong>换了夹爪或传感器</strong></td>
+<td>旧段在当前集数处<strong>封口</strong>,新段接上,两段都留着名字</td>
+</tr>
+<tr>
+<td>同一套设备换了台电脑(<code>--robot.id</code> 变了)</td>
+<td>也开新段。工位标签变了而硬件没变,照记不误——消费端认 <code>units</code>,<code>units</code> 一样的分段边界就只是"这套设备挪了个地方"</td>
+</tr>
+<tr>
+<td><code>--robot.type</code> 对不上(单夹爪 ↔ 双夹爪)</td>
+<td><strong>不是换硬件,是换数据集</strong>:观测键都不一样。保留原文件并告警</td>
+</tr>
+</tbody>
+</table>
+<p>老数据集(换硬件之前录的,只有扁平的 <code>units</code>)不需要特殊处理:读出来是<strong>一个开口的 epoch</strong>
+(<code>from_episode</code> 0、<code>to_episode</code> <code>null</code>)。但<strong>开口的单段只说明"这里没有任何东西表明换过硬件",
+不等于"确实没换过"</strong>——老格式压根表达不了这件事。</p>
+<div class="admonition danger">
+<p class="admonition-title"><code>meta/runtimes/</code>:重建触觉的衍生通道必须用<strong>这一份</strong> bundle</p>
+<p>录下来的是 <code>rectify</code> 流;depth / force / difference 是<strong>从它算出来的</strong>,而算的时候要用
+那枚传感器的 runtime 配置——里面带着它上电时拍的那张参考图。所以每次采集会话都会把每枚
+传感器的 bundle 写进 <code>meta/runtimes/&lt;SN&gt;-&lt;时间&gt;.bin</code>(每枚约 841 KB),epoch 里各自指向
+自己那一份。这样几个月后重建<strong>只靠数据集本身</strong>就够,不用去找那台实物——何况它这期间很
+可能已经重新标定过了。</p>
+<p><strong>拿错 bundle 不会报错。</strong>用另一枚传感器的、或者同一枚重新标定之后的 bundle 去解,一块
+<strong>没被碰过的胶体</strong>照样解出看着挺合理的 depth 和 force,输出里没有任何迹象说明它是错的。
+所以老数据集(没有 <code>meta/runtimes/</code>)的正确做法是<strong>跳过重建</strong>,而不是随手找一份顶上。</p>
+<p>一次会话一份不是命名的巧合:参考图在每次传感器初始化时重拍,所以每次会话本来就该有自己
+的一份。同一枚传感器拆下来维护再装回去,SN 不变但参考图变了——这会被算作一次变化,
+单独开一个 epoch。</p>
+<p>文件名里的时间是<strong>北京时间的墙上钟点</strong>,不带时区标记,当标签看就行;要参与计算请用
+epoch 上的 <code>recorded_at</code>(带偏移的完整 ISO-8601)。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">追踪器和腕相机不在清单里</p>
+<p>它们是<strong>装上去的配件</strong>;夹爪 + 它的两枚触觉才是这份数据讲的那个单元。</p>
+</div>
+<h2 id="53">5.3 每帧记录内容<a class="headerlink" href="#53" title="锚点链接">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>来源</th>
+<th>由什么开启</th>
+<th>形状 / 类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>tcp.x</code>, <code>tcp.y</code>, <code>tcp.z</code></td>
+<td>追踪器 → EEF TCP 位置</td>
+<td><code>--robot.enable_tracker</code>(默认 <code>true</code>)</td>
+<td>float(m)</td>
+</tr>
+<tr>
+<td><code>tcp.r1</code>..<code>tcp.r6</code></td>
+<td>同上,姿态的 6-D 旋转</td>
+<td>同上</td>
+<td>float</td>
+</tr>
+<tr>
+<td><code>gripper.pos</code></td>
+<td>夹爪编码器</td>
+<td><code>--robot.enable_gripper</code>(默认 <code>true</code>)</td>
+<td>float ∈ [0, 1]</td>
+</tr>
+<tr>
+<td><code>tactile_left</code> / <code>tactile_right</code></td>
+<td>左右视触觉传感器</td>
+<td><strong>始终采集</strong>,无开关</td>
+<td>uint8,约 <code>(400, 700, 3)</code></td>
+</tr>
+<tr>
+<td><code>wrist_cam</code></td>
+<td>腕部相机</td>
+<td><code>--robot.enable_wrist_camera</code>(默认 <code>true</code>)</td>
+<td>uint8 <code>(H, W, 3)</code></td>
+</tr>
+<tr>
+<td><code>left_head</code> / <code>right_head</code></td>
+<td>头显双目,<strong>一只眼一个键</strong></td>
+<td><code>--robot.enable_head_camera</code>(默认 <code>false</code>)</td>
+<td>uint8,默认 <code>(480, 640, 3)</code></td>
+</tr>
+<tr>
+<td><code>head_camera.x/y/z</code></td>
+<td>头显位置(同 <code>tcp.*</code> 世界系),<strong>也是动作</strong></td>
+<td>同上</td>
+<td>float(m)</td>
+</tr>
+<tr>
+<td><code>head_camera.r1..r6</code></td>
+<td>头显姿态的 6-D 旋转,<strong>也是动作</strong></td>
+<td>同上</td>
+<td>float</td>
+</tr>
+<tr>
+<td><code>imu.accel.{x,y,z}</code></td>
+<td>夹爪 IMU 加速度</td>
+<td><code>--robot.enable_imu</code>(默认 <code>false</code>,<strong>预留不录</strong>)</td>
+<td>float(m/s²)</td>
+</tr>
+<tr>
+<td><code>imu.gyro.{x,y,z}</code></td>
+<td>夹爪 IMU 角速度</td>
+<td>同上</td>
+<td>float(rad/s)</td>
+</tr>
+<tr>
+<td><code>imu.mag.{x,y,z}</code></td>
+<td>夹爪 IMU 磁力</td>
+<td>同上</td>
+<td>float(µT)</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">6-D 旋转约定</p>
+<p>记的是旋转矩阵 <strong>R</strong> 的<strong>前两列</strong>——<strong>按列取,不是按行</strong>:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>R = ⎡ r1  r4  · ⎤     第一列 (r1,r2,r3) = 本体 X 轴在世界系下的方向
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>    ⎢ r2  r5  · ⎥     第二列 (r4,r5,r6) = 本体 Y 轴在世界系下的方向
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>    ⎣ r3  r6  · ⎦     第三列 = 前两列的叉积,可自行算回
+</span></code></pre></div>
+<p><strong>R 的方向是「世界 ← 本体」</strong>:它把夹爪本体坐标变换到世界系,所以两列读出来就是夹爪
+<strong>X 轴</strong>和 <strong>Y 轴</strong>在世界系下的单位方向。第三列(Z 轴)等于前两列叉积,因此 6 个数
+足以还原完整旋转,不必再存第三列。</p>
+<p>世界系是重力对齐的 <strong>X 前 / Y 左 / Z 上</strong>(见
+<a href="../03-host-hardware/#pico-frame">启动与坐标系对齐</a>)。<code>tcp.*</code> 与 <code>head_camera.*</code>
+用的是同一套约定。</p>
+</div>
+<div class="admonition info">
+<p class="admonition-title"><code>tcp.*</code> 记的是夹爪末端,不是追踪器</p>
+<p>追踪器拧在夹爪手柄上,它自己的位姿离<strong>两指中点</strong>约 195 mm。落盘前会乘上一个内置的
+刚性安装变换(取自 CAD 装配实测,左右各一套),所以 <code>tcp.*</code> 是 <strong>EEF TCP 位姿</strong>。</p>
+<p>该变换是<strong>机体固连</strong>的——随夹爪一起转,任意姿态下都成立,采集时朝哪个方向起手都行。
+TCP 取两指中点,对称张合时该点不动,因此与 <code>gripper.pos</code> 无关。
+想直观确认,把夹爪平放,看 Rerun <code>/world</code> 里的 EE 标记是否落在两指中点
+→ <a href="#world-view"><code>/world</code> 3D 视图</a>。</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">IMU 是预留能力,当前采集流程不录</p>
+<p>夹爪自带 IMU,采集程序也支持记录,但<strong>标准采集流程默认不开</strong>——上表列出 <code>imu.*</code>
+是为了说明数据格式,按本手册采出来的数据集里<strong>不会有这 9 列</strong>。</p>
+<p>确实需要惯性数据时加 <code>--robot.enable_imu=true</code> 开启
+(双夹爪同样是这个开关,两侧一起生效,键名带 <code>left_</code> / <code>right_</code> 前缀)。</p>
+<p>开启后 <code>observation.state</code> 维度相应增加:单夹爪 10 → 19,双夹爪 20 → 38。
+不需要惯性数据就保持关闭,可少写 9 列。</p>
+</div>
+<p><strong>观测键调节</strong>:</p>
+<ul>
+<li><strong>触觉</strong> → <code>tactile_left</code> / <code>tactile_right</code>;校正图为横向 <code>(400,700,3)</code>(宽高自动推导,
+  <strong>别写死</strong>)。用 <code>--robot.tactile_fps</code> / <code>--robot.tactile_output_types</code> 调;
+  <code>--robot.enable_tactile=false</code> 可把触觉整条拿掉(见下方提示)。</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title"><code>--robot.enable_tactile=false</code> 是排查开关,不要用它录数据</p>
+<p>关掉后触觉<strong>不发现、不落盘</strong>,连观测键都没有——而触觉正是这只夹爪存在的理由,
+这样录出来的数据集缺了最主要的一路。</p>
+<p>它的用途是<strong>把 USB 带宽问题拆成两半</strong>:一条 USB 总线的带宽是有限的,双夹爪的
+四路触觉 + 两路腕相机可能超出预算,表现为<strong>某一路相机打不开</strong>、且每次挂的还不是同一路。
+这时分别关掉触觉、关掉腕相机各跑一次,就知道是不是带宽不够,而不是硬件时好时坏——
+见 <a href="../troubleshooting/#usb-bandwidth">故障排查 · 某一路相机打不开</a>。</p>
+<p>要<strong>少录一路</strong>用别的开关:<code>--robot.enable_wrist_camera=false</code> 关腕相机、
+<code>--robot.enable_tracker=false</code> 关位姿。</p>
+</div>
+<div class="admonition danger">
+<p class="admonition-title">落盘的是 <code>rectify</code>,不是你在 Rerun 里看到的那张图</p>
+<p>两路触觉流<strong>故意不同</strong>:</p>
+<ul>
+<li><strong>落盘</strong> = <code>--robot.tactile_output_types</code>,默认 <code>rectify</code> ——<strong>未做基线相减</strong>的原图,
+  保留传感器看到的全部信息。<strong>只能填一个类型</strong>(每个传感器对应数据集里一个视频键),
+  填多个会直接报错并提示改用显示流。</li>
+<li><strong>显示</strong> = <code>--robot.tactile_display_output_types</code>,默认 <code>difference</code> ——相对传感器
+  <strong>初始化时刻基线</strong>的增强差分图。这张图接触更易读,所以 Rerun 里给操作员看的是它;
+  键名形如 <code>tactile_left_difference</code>,<strong>不在</strong> <code>observation_features</code> 里,不会落盘。</li>
+</ul>
+<p>差分图是<strong>破坏性</strong>的:基线在传感器 init 时抓取,所以<strong>连接时压在胶上的任何力都会被
+整段采集减掉</strong>。这就是它只用于显示、不进数据集的原因——不要为了"看着清楚"把
+<code>--robot.tactile_output_types</code> 改成 <code>difference</code>。</p>
+<p><code>--robot.tactile_diff_gain</code>(默认 <code>1.0</code>)只影响显示流的增益。传感器出厂值 1.5 在本胶体上
+噪声偏大且会削顶;它同时放大信号与噪声,<strong>不改变信噪比</strong>,只是留出余量。</p>
+</div>
+<ul>
+<li><strong>腕相机</strong> → <code>wrist_cam</code>;<code>--robot.enable_wrist_camera=false</code> 跳过;
+  <code>--robot.wrist_camera_width/_height/_fps</code> 调。</li>
+<li><strong>头显相机</strong> → <code>left_head</code> / <code>right_head</code> + <code>head_camera.*</code>;<strong>默认关闭</strong>,
+  <code>--robot.enable_head_camera=true</code> 开启,详见 <a href="#56">§5.6</a>。</li>
+<li><strong>角色</strong> → <code>--robot.role=follower</code> 绑定从夹爪(默认 <code>leader</code>)。</li>
+</ul>
+<h2 id="54">5.4 录制选项:流式编码与编码器预热<a class="headerlink" href="#54" title="锚点链接">¶</a></h2>
+<p>视频键(触觉 + 腕相机)<strong>在采集时实时编码</strong>,而非先存 PNG 再在集尾编码,因此
+<strong>每集结束时几乎不用等</strong>。默认开启(<code>--dataset.streaming_encoding=true</code>):</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>lerobot-record<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">    </span>--robot.type<span class="o">=</span>taccap_gripper<span class="w"> </span>--robot.id<span class="o">=</span><span class="m">0</span><span class="w"> </span>--robot.side<span class="o">=</span>right<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">    </span>--dataset.repo_id<span class="o">=</span>&lt;your_org&gt;/&lt;your_dataset&gt;<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">    </span>--dataset.num_episodes<span class="o">=</span><span class="m">20</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">    </span>--dataset.fps<span class="o">=</span><span class="m">30</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="w">    </span>--dataset.push_to_hub<span class="o">=</span><span class="nb">false</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="w">    </span>--dataset.reset_time_s<span class="o">=</span><span class="m">60</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="w">    </span>--dataset.episode_time_s<span class="o">=</span><span class="m">120</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="w">    </span>--dataset.single_task<span class="o">=</span><span class="s1">'Pick up the object'</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="w">    </span>--dataset.streaming_encoding<span class="o">=</span><span class="nb">true</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="w">    </span>--dataset.encoder_threads<span class="o">=</span><span class="m">2</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-9-12"><a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="w">    </span>--dataset.vcodec<span class="o">=</span>auto
+</span></code></pre></div>
+<ul>
+<li>每个相机一个 <code>_CameraEncoderThread</code>,通过有界队列喂原始帧
+  (<code>--dataset.encoder_queue_maxsize</code>,约 1 秒帧量);编码器跟不上时<strong>丢弃最旧帧并告警</strong>,
+  不阻塞采集循环。</li>
+<li><code>--dataset.vcodec=auto</code> 会优先启用可用的硬件编码。推荐采集主机配 NVIDIA GPU,
+  这样可使用 GPU H.264 硬件编码器,降低多路视频实时编码时的 CPU 压力。
+  <strong>没有 NVIDIA GPU 的主机照样能录</strong>,但要改一个参数,见下。</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">编码器预热</p>
+<p>每集开录前会先把编码器准备好,不占用第一帧的时间预算。这是自动的,不需要设置。</p>
+</div>
+<h3 id="no-gpu">没有 NVIDIA GPU 的主机怎么录<a class="headerlink" href="#no-gpu" title="锚点链接">¶</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">这是给<strong>不达标机器</strong>的临时办法,不是推荐做法</p>
+<p><a href="../02-environment/#host-spec">采集主机的最低要求</a>是 NVIDIA <strong>RTX 3060 / 8 GB 显存</strong>及以上。
+手头只有纯 CPU 的服务器、虚拟机或没有 NVIDIA 显卡的笔记本时,下面这条能让你把数据录下来,
+但<strong>录制效率明显低于达标机器</strong>——存盘慢、更容易掉帧。<strong>正式采集请换达标主机。</strong></p>
+</div>
+<p>上面两个默认值(<code>--dataset.vcodec=auto</code> + <code>--dataset.streaming_encoding=true</code>)是按<strong>装了
+NVIDIA 显卡</strong>来配的。纯 CPU 的服务器、虚拟机、没有独显的笔记本上,<strong>把流式编码关掉</strong>:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>lerobot-record<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">    </span>...<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">    </span>--dataset.streaming_encoding<span class="o">=</span><span class="nb">false</span>
+</span></code></pre></div>
+<p><strong>编码器不用管。</strong><code>--dataset.vcodec=auto</code>(默认)是<strong>真的去开一次编码会话</strong>来探测的,
+所以没有 NVIDIA 驱动的机器上它会报告"没有硬件编码器"并回落到 <code>libsvtav1</code>
+(CPU 上的 AV1,也是离线数据工具的默认编码器)。想让命令自带说明的话,显式写
+<code>--dataset.vcodec=libsvtav1</code> 也完全可以。</p>
+<p><strong>为什么要关流式编码。</strong>流式编码是把编码放在采集主循环上跑——显卡上有专门的编码芯片,
+CPU 只负责喂帧,所以划算;换成 <code>libsvtav1</code> 之后,<strong>编码器就是 CPU 本身</strong>,和采集循环抢同样的
+核心。双夹爪一帧要处理六到八张图,而 30 fps 的预算只有 33.3 ms,于是先看到的就是
+<code>[slow_frame] ... overrun=</code>。</p>
+<p>关掉之后,帧在采集期间先写出来,到 <code>save_episode()</code> 再批量编码:<strong>存盘慢且看得见,
+采集准时</strong>。这个取舍是对的——<strong>存盘慢只是多等一会儿,采集掉帧丢的是补不回来的数据</strong>。</p>
+<div class="admonition tip">
+<p class="admonition-title">确实想在多核服务器上继续开流式编码</p>
+<p>两个旋钮值得知道:</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>默认</th>
+<th>什么时候动它</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--dataset.encoder_threads</code></td>
+<td>自动</td>
+<td>默认让编码器自己挑,在大机器上意味着 <code>libsvtav1</code> 会拿走采集需要的核。<strong>每个编码器给 <code>2</code></strong> 是个稳妥上限</td>
+</tr>
+<tr>
+<td><code>--dataset.encoder_queue_maxsize</code></td>
+<td><code>30</code></td>
+<td>30 fps 下约 1 秒缓冲。它是反压阀:编码跟不上时在这里挡住,而不是让内存一直涨</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="admonition note">
+<p class="admonition-title">终端提示「建议把流式编码开回来」时</p>
+<p><code>--dataset.streaming_encoding=false</code> 时 <code>lerobot-record</code> 会打印一条提示,建议在硬件跟得上
+的机器上开回来。<strong>没有 GPU 的主机就是跟不上的那一种</strong>,这条提示不适用——关着是有意为之。</p>
+</div>
+<h2 id="55">5.5 分集与复位<a class="headerlink" href="#55" title="锚点链接">¶</a></h2>
+<ul>
+<li>一次运行采多集:<code>--dataset.num_episodes=N</code>。</li>
+<li>集与集之间是<strong>被动复位</strong>:重新摆放设备,无需遥操。</li>
+<li>录制过程中可用 lerobot 的键盘控制(重录当前集、提前结束等,按 <code>lerobot-record</code> 的通用约定)。</li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">想采到"好数据"?</p>
+<p>会跑命令只是第一步。务必阅读 <a href="../best-practices/">采集规范与最佳实践</a>——坐标原点纪律、
+触觉接触、演示一致性、增量验证等,直接决定落盘数据的质量。</p>
+</div>
+<h2 id="56">5.6 可选:头显相机(第一视角)<a class="headerlink" href="#56" title="锚点链接">¶</a></h2>
+<p><strong>默认关闭。</strong>打开后录制 Pico4 Ultra 企业版<strong>头显自带的双目相机</strong>,以及头显自身的位姿——
+也就是操作员的第一视角画面和"人在往哪看"。单夹爪(<code>taccap_gripper</code>)和双夹爪
+(<code>bi_taccap_gripper</code>)都支持,开关和参数完全一样。</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>lerobot-record<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">    </span>--robot.type<span class="o">=</span>bi_taccap_gripper<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">    </span>--robot.id<span class="o">=</span><span class="m">0</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">    </span>--robot.enable_tracker<span class="o">=</span><span class="nb">true</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="w">    </span>--robot.enable_head_camera<span class="o">=</span><span class="nb">true</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="w">    </span>--display_data<span class="o">=</span><span class="nb">false</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="w">    </span>--dataset.repo_id<span class="o">=</span>&lt;your_org&gt;/&lt;your_dataset&gt;<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="w">    </span>--dataset.single_task<span class="o">=</span><span class="s1">'Pick up the object'</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="w">    </span>--dataset.fps<span class="o">=</span><span class="m">30</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a><span class="w">    </span>--dataset.push_to_hub<span class="o">=</span><span class="nb">false</span>
+</span></code></pre></div>
+<p>产出三组键:</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>left_head</code> / <code>right_head</code></td>
+<td>头显相机画面,<strong>一只眼一个视频键</strong>,默认各 <code>(480, 640, 3)</code></td>
+</tr>
+<tr>
+<td><code>head_camera.x/y/z</code></td>
+<td>头显位置(m);<strong>同时进 action</strong></td>
+</tr>
+<tr>
+<td><code>head_camera.r1..r6</code></td>
+<td>头显姿态,6-D 旋转(约定同 <code>tcp.*</code>);<strong>同时进 action</strong></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="admonition-title"><code>left_</code> / <code>right_</code> 在这里指的是<strong>眼睛</strong>,不是左右手</p>
+<p>双夹爪上 <code>{side}_wrist</code>、<code>{side}_tcp.*</code> 是按<strong>手臂</strong>分左右的;但头显只有一个,
+<code>left_head</code> / <code>right_head</code> 指的是<strong>头显的左眼 / 右眼</strong>。同理:两个单夹爪进程同时开头显相机,
+拿到的是<strong>同一个头显的同一路画面</strong>,不是两个独立视角。</p>
+</div>
+<h3 id="前置条件">前置条件<a class="headerlink" href="#前置条件" title="锚点链接">¶</a></h3>
+<ol>
+<li><strong>XenseVR PC Service ≥ v0.2.0</strong>。更低版本不转发相机画面,见 <a href="../02-environment/">2.4 一键安装</a>。</li>
+<li><strong>头显 APP 正在推流</strong>。相机和追踪器<strong>共用同一条 SDK 连接</strong>,所以头显必须已连上 PC Service
+   (见 <a href="../03-host-hardware/#35">3.5 启动 XenseVR PC Service</a>)。反过来,关掉相机不会断开追踪器的
+   连接,关掉追踪器也不会断开相机。</li>
+</ol>
+<h3 id="分辨率与录制单眼">分辨率与录制单眼<a class="headerlink" href="#分辨率与录制单眼" title="锚点链接">¶</a></h3>
+<p><code>--robot.head_camera_width/_height</code> <strong>只接受 <code>640x480</code>(默认)、<code>1024x768</code> 和 <code>1280x960</code></strong>
+三档,和头显 APP 的「分辨率」一一对应;填别的直接报错,不会悄悄降级;首帧尺寸与配置不一致时
+同样报错——重采样会<strong>悄悄改掉记录下来的视场角</strong>。三个尺寸都是 4:3,与传感器一致(PICO 的相机
+访问接口单帧上限 2328x1748,也是 4:3;按 16:9 要画面,得到的是裁剪或拉伸,而不是更大的视场)。</p>
+<div class="admonition warning">
+<p class="admonition-title">头显里的「分辨率」和这两个参数必须一致</p>
+<p>出画面的是头显,尺寸由 XTac-UMI XR 界面上的「<strong>分辨率</strong>」决定(默认 <code>640</code>,也是推荐档位);
+命令行这两个参数只是<strong>声明你预期收到什么</strong>。两边对不上,connect 时就会因首帧尺寸不符报错。</p>
+<p>默认对默认,两边都是 640x480,不用加参数。<strong>在头显里把分辨率调高之后,命令行也要跟着改</strong>:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c1"># 头显选 1024</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>--robot.head_camera_width<span class="o">=</span><span class="m">1024</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>--robot.head_camera_height<span class="o">=</span><span class="m">768</span>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="c1"># 头显选 1280</span>
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>--robot.head_camera_width<span class="o">=</span><span class="m">1280</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>--robot.head_camera_height<span class="o">=</span><span class="m">960</span>
+</span></code></pre></div>
+<p>两处一起改,不要只改一边。</p>
+</div>
+<p>只要一只眼时用 <code>--robot.head_camera_eyes=left</code>(或 <code>right</code>):JPEG 解码量和编码器压力都减半,
+数据集里也只有一个头部视频键。</p>
+<div class="admonition danger">
+<p class="admonition-title">改分辨率或改录制的眼睛 = 换了一组数据</p>
+<p><strong>变更前后的 episode 不能混用</strong>——要改就在开录前定下来。</p>
+</div>
+<h3 id="左右眼配对">左右眼配对<a class="headerlink" href="#左右眼配对" title="锚点链接">¶</a></h3>
+<p>两只眼是<strong>两条独立消息</strong>分别到达的,而且分成两个视频键之后,一旦配错在数据里<strong>看不出任何痕迹</strong>。
+所以每帧都会比对两只眼的最新帧:帧序号相同就是确定的同一次曝光;序号不同则要求时间戳相差不超过
+<code>--robot.head_camera_pair_max_skew_ms</code>(默认 20 ms,对比 30 fps 下约 33 ms 的帧周期)。
+超出不会中断录制,而是打一条<strong>限流的告警并给出实测偏差</strong>——让问题看得见,而不是默默写进数据集。</p>
+<h3 id="位姿与可视化">位姿与可视化<a class="headerlink" href="#位姿与可视化" title="锚点链接">¶</a></h3>
+<p><code>head_camera.*</code> 是<strong>头显位姿</strong>,并且已经重映射到与 <code>tcp.*</code> <strong>相同的重力对齐世界系</strong>
+(用的是追踪器那套 Pico→world 变换)。这意味着头和手第一次可以直接比较、画在同一个 3D 场景里:
+开 <code>--display_data=true</code> 时,<code>/world</code> 视图里会多出一个琥珀色的 <code>HEAD</code> 标记
+(见 <a href="#world-view"><code>/world</code> 3D 视图</a>)。</p>
+<div class="admonition note">
+<p class="admonition-title">维度变化</p>
+<p>开启后 <code>observation.state</code> 增加 9 维(头显位姿)。单夹爪 10 → 19,双夹爪 20 → 29。
+再叠加 <code>--robot.enable_imu=true</code> 时按各自规则继续累加。</p>
+</div>
+<h2 id="57">5.7 可选:腕相机鱼眼矫正<a class="headerlink" href="#57" title="锚点链接">¶</a></h2>
+<p>腕相机是 190° 鱼眼,<strong>默认落盘的是原始鱼眼帧</strong>。加
+<code>--robot.wrist_undistort=true</code> 会在写入数据集<strong>之前</strong>把它矫正成直线投影,
+内参取自这只夹爪 flash 里存的那份。</p>
+<div class="admonition danger">
+<p class="admonition-title">开与不开,录出来的是两种数据,而且看不出来</p>
+<p>矫正过的 <code>wrist_cam</code> 和原始鱼眼的 <code>wrist_cam</code> <strong>形状和 dtype 完全一样</strong>,
+所以两批数据混在一起训练时,<strong>没有任何东西会提示你它们不是同一种</strong>。</p>
+<p>正因如此,录制时会把用了哪一种写进
+<a href="#robot-id"><code>meta/hardware.json</code></a> 的每个 unit:</p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="nt">"wrist_undistort"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"applied"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="nt">"calibration"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unit"</span><span class="p">,</span><span class="w"> </span><span class="nt">"balance"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="w"> </span><span class="p">}</span>
+</span></code></pre></div>
+<p><code>calibration</code> 是 <code>"unit"</code>(这台自己的标定)或 <code>"reference"</code>(SDK 参考值)。
+录到一半改了这个设置,会<strong>自动另起一个 epoch</strong>。</p>
+<p><strong>建议:一个数据集从头到尾只用一种。</strong></p>
+</div>
+<h3 id="没标定的夹爪也能开但用的是参考值">没标定的夹爪也能开,但用的是参考值<a class="headerlink" href="#没标定的夹爪也能开但用的是参考值" title="锚点链接">¶</a></h3>
+<p>这台从未存过鱼眼标定时,<strong>不会报错</strong>——SDK 会用一组内置的参考内参顶上,连接时打一条
+告警:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>Wrist undistortion is using the SDK's REFERENCE intrinsics because the wrist lens
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>has never been calibrated ... Rectification will be approximate
+</span></code></pre></div>
+<p>清单里则记为 <code>"calibration": "reference"</code>。够用来看画面,但<strong>主点会偏</strong>(实测一台
+相差 37.7 像素),要在矫正图上按像素测量就得先标:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>python<span class="w"> </span>third_party/taccap-gripper/python/examples/fisheye_cal.py<span class="w"> </span>set-fisheye
+</span></code></pre></div>
+<h3 id="只支持-640480">只支持 640×480<a class="headerlink" href="#只支持-640480" title="锚点链接">¶</a></h3>
+<p>固件里存的鱼眼记录<strong>只有 8 个浮点数,不带图像尺寸</strong>,所以换个分辨率就等于猜缩放系数。
+<code>--robot.wrist_undistort=true</code> 配上别的 <code>--robot.wrist_camera_width/_height</code> 会在
+<strong>解析命令行时</strong>直接退出,不会等到连上设备才报。</p>
+<div class="admonition note">
+<p class="admonition-title">画面偏心不代表标定错了</p>
+<p>矫正后画面可能偏向一侧、甚至略微倾斜,<strong>而标定是对的</strong>:传感器未必装在镜头光心上,
+而去畸变绕的是<strong>主点</strong>,不是画幅中心。原始鱼眼把这件事藏起来了(周边被压缩),
+矫正只是把它显现出来。详见
+<a href="../sdk-overview/#fisheye-fallback">SDK 附录 → 鱼眼标定读不到时会怎样</a>。</p>
+<p><strong>不要自己去改 <code>cx</code>。</strong>实测把它改成画幅中心,画面反而偏得更远。</p>
+</div>
+<p>下一步 → <a href="../best-practices/">采集规范与最佳实践</a> → <a href="../06-dataset/">数据集与示例</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden="">
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚">
+        
+          
+          <a href="../04-calibration/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 标定与自检">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                标定与自检
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../best-practices/" class="md-footer__link md-footer__link--next" aria-label="下一页: 采集规范与最佳实践">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                采集规范与最佳实践
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      文档版本 v0.0.6 &nbsp;·&nbsp; Copyright © 2026 XenseRobotics Co., Ltd.
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/XenseRobotics-AI/XTac-UMI-G1-Docs" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tracking", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "navigation.footer", "toc.follow", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.tooltips"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>

@@ -1,14 +1,2450 @@
+<!DOCTYPE html><html lang="zh" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="XenseRobotics XTac-UMI G1 手持触觉数采夹爪 · 基于 lerobot 的数据采集快速上手">
+      
+      
+        <meta name="author" content="XenseRobotics">
+      
+      
+        <link rel="canonical" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/03-host-hardware/">
+      
+      
+        <link rel="prev" href="../02-environment/">
+      
+      
+        <link rel="next" href="../04-calibration/">
+      
+      
+        
+          <link rel="alternate" href="./" hreflang="zh">
+        
+          <link rel="alternate" href="../en/03-host-hardware/" hreflang="en">
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>主机与设备配置 - XTac-UMI G1 数采快速使用手册</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
 
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>Redirecting...</title>
-    <link rel="canonical" href="../pc/host-setup/">
-    <script>var anchor=window.location.hash.substr(1);location.href="../pc/host-setup/"+(anchor?"#"+anchor:"")</script>
-    <meta http-equiv="refresh" content="0; url=../pc/host-setup/">
-</head>
-<body>
-You're being redirected to a <a href="../pc/host-setup/">new destination</a>.
-</body>
-</html>
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  <link href="../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#3-主机与硬件配置" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="XTac-UMI G1 数采快速使用手册" class="md-header__button md-logo" aria-label="XTac-UMI G1 数采快速使用手册" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            XTac-UMI G1 数采快速使用手册
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              主机与设备配置
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo" aria-label="切换到暗色模式" type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换到暗色模式" for="__palette_1" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"></path></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo" aria-label="切换到亮色模式" type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换到亮色模式" for="__palette_0" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"></path></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="选择当前语言">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"></path></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="zh" class="md-select__link">
+              简体中文
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../en/03-host-hardware/" hreflang="en" class="md-select__link">
+              English (partial)
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required="">
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard="" data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"></path></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix="">
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/XenseRobotics-AI/XTac-UMI-G1-Docs" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    XenseRobotics-AI/XTac-UMI-G1-Docs
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="XTac-UMI G1 数采快速使用手册" class="md-nav__button md-logo" aria-label="XTac-UMI G1 数采快速使用手册" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    XTac-UMI G1 数采快速使用手册
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/XenseRobotics-AI/XTac-UMI-G1-Docs" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    XenseRobotics-AI/XTac-UMI-G1-Docs
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix="">
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    首页
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    一页速通
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    概述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../highlights/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    产品亮点
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked="">
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    准备工作
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    准备工作
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hardware/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    硬件介绍
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-environment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    环境安装
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    主机与设备配置
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    主机与设备配置
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 串口权限(dialout)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 关闭 ModemManager 抢占(udev)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 设备自动发现与"单左双右"规则
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.3 设备自动发现与&quot;单左双右&quot;规则">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#序列号语法" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        序列号语法
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#侧别规则单左双右" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        侧别规则(单左双右)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#触觉左右--side_tactile_leftright" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        触觉左右 → {side}_tactile_{left,right}
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pico4-ultra-企业版追踪器另一套序列号" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pico4 Ultra 企业版追踪器——另一套序列号
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#34" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4 Pico4 Ultra 企业版配置
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.4 Pico4 Ultra 企业版配置">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pico-unbox" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        开箱与系统更新
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pico-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        系统设置:开发者模式与电源策略
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pico-app" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        安装 XTac-UMI XR(Pico4 Ultra 企业版)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pico-network" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        网络连接(重要)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pico-tracker-bind" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        绑定运动追踪器到头显
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="绑定运动追踪器到头显">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pico-tracker-sn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        读取追踪器 SN
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pico-tracker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        追踪模式与 XTac-UMI XR 设置
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pico-toolkit-ui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        打开 App 后的界面
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pico-frame" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        启动与坐标系对齐
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#35" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.5 启动 XenseVR PC Service
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#36" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.6 硬件上电顺序
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.6 硬件上电顺序">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#usb-budget" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第 2 步:查 USB 带宽预算
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6">
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    软件使用
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    软件使用
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-calibration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    标定与自检
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-data-collection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    数据预览与采集
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../best-practices/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    采集规范与最佳实践
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7">
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    数据介绍
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    数据介绍
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-dataset/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    数据集与示例
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data-management/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    数据管理与命名
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8">
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    参考
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    参考
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    故障排查
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../maintenance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    维护保养
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-faq-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    常见问题与参考
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../versions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    版本与支持
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8_5">
+        
+          
+          <label class="md-nav__link" for="__nav_8_5" id="__nav_8_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    附录:SDK 与二次开发
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    附录:SDK 与二次开发
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdk-overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SDK 概览
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdk-install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    安装与构建
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdk-examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    示例
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 串口权限(dialout)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 关闭 ModemManager 抢占(udev)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 设备自动发现与"单左双右"规则
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.3 设备自动发现与&quot;单左双右&quot;规则">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#序列号语法" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        序列号语法
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#侧别规则单左双右" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        侧别规则(单左双右)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#触觉左右--side_tactile_leftright" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        触觉左右 → {side}_tactile_{left,right}
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pico4-ultra-企业版追踪器另一套序列号" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pico4 Ultra 企业版追踪器——另一套序列号
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#34" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4 Pico4 Ultra 企业版配置
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.4 Pico4 Ultra 企业版配置">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pico-unbox" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        开箱与系统更新
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pico-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        系统设置:开发者模式与电源策略
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pico-app" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        安装 XTac-UMI XR(Pico4 Ultra 企业版)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pico-network" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        网络连接(重要)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pico-tracker-bind" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        绑定运动追踪器到头显
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="绑定运动追踪器到头显">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pico-tracker-sn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        读取追踪器 SN
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pico-tracker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        追踪模式与 XTac-UMI XR 设置
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pico-toolkit-ui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        打开 App 后的界面
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pico-frame" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        启动与坐标系对齐
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#35" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.5 启动 XenseVR PC Service
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#36" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.6 硬件上电顺序
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.6 硬件上电顺序">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#usb-budget" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第 2 步:查 USB 带宽预算
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="3-主机与硬件配置">3. 主机与硬件配置<a class="headerlink" href="#3-主机与硬件配置" title="锚点链接">¶</a></h1>
+<p>夹爪能被<strong>列出</strong>不等于能被<strong>打开</strong>——本章解决串口权限、ModemManager 抢占、
+设备自动发现规则,并给出硬件上电顺序。</p>
+<div class="admonition danger">
+<p class="admonition-title"><a href="#31">3.1 串口权限</a> 与 <a href="#32">3.2 屏蔽 ModemManager</a> 是必做项</p>
+<p>两项都是<strong>主机侧的一次性配置</strong>,做完长期有效。</p>
+</div>
+<h2 id="31">3.1 串口权限(dialout)<a class="headerlink" href="#31" title="锚点链接">¶</a></h2>
+<p>夹爪 MCU 枚举为 <code>/dev/ttyACM*</code>,属 <code>dialout</code> 组。若用户不在该组,SDK 能<em>列出</em>夹爪
+但<strong>打不开串口读固件序列号</strong>,于是 <code>scan_grippers()</code> 报 <code>role=Unknown</code> / <code>firmware_sn</code>
+为空,连接失败:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>RuntimeError: No leader gripper discovered for the left side.
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a># 底层实为: IoError: SerialBus: open(/dev/serial/by-id/...): Permission denied
+</span></code></pre></div>
+<p>一次性加入组,然后<strong>重新登录</strong>使其生效:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sudo<span class="w"> </span>usermod<span class="w"> </span>-aG<span class="w"> </span>dialout<span class="w"> </span><span class="s2">"</span><span class="nv">$USER</span><span class="s2">"</span>
+</span></code></pre></div>
+<div class="admonition danger">
+<p class="admonition-title">改完组<strong>必须重登</strong>,否则这一步等于没做</p>
+<p>组权限只对<strong>新建的登录会话</strong>生效——当前终端、已经开着的窗口全都还是旧权限,
+直接跑采集程序仍会报 <code>role=Unknown</code> / <code>firmware_sn</code> 为空,看着像是命令没生效。</p>
+<p><strong>注销重登</strong>(或在当前 shell 执行 <code>newgrp dialout</code>),<strong>再重新插拔夹爪</strong>,然后往下验证。</p>
+</div>
+<p>验证——<code>role</code> 必须是 <code>Leader</code>/<code>Follower</code>(不是 <code>Unknown</code>),<code>firmware_sn</code> 非空:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"from xense.taccap import scan_grippers</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="s2">for g in scan_grippers(): print(g.side.name, g.role.name, repr(g.firmware_sn))"</span>
+</span></code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">序列号仍为空?</p>
+<p>修好权限后 <code>firmware_sn</code> 仍为空,可能是 SN 未烧录、串口读取仍失败、固件通信异常或设备端配置问题;不能只根据空 SN 推断固件版本。保存完整报错并换线 / 换口复测,仍异常时联系设备或固件团队。</p>
+</div>
+<h2 id="32">3.2 关闭 ModemManager 抢占(udev)<a class="headerlink" href="#32" title="锚点链接">¶</a></h2>
+<div class="admonition info">
+<p class="admonition-title">用 Docker 交付镜像的话本节已经做过了</p>
+<p><code>install_customer.sh</code> 会把下面这条 udev 规则装到<strong>主机</strong>上(容器管不了主机的热插拔
+规则)。本节留作原理说明和排查参考,不用重做。</p>
+</div>
+<p>夹爪 MCU 是 CH343 USB 串口(<code>1a86:55d2</code>,CDC-ACM)。每次热插拔,<strong>ModemManager</strong>
+(Ubuntu/GNOME 默认的蜂窝调制解调器服务)会用 AT 指令探测新端口并占用几秒,导致这段
+时间内连接失败:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>IoError: SerialBus: open(/dev/serial/by-id/usb-1a86_USB_Dual_Serial_..-if02): Device or resource busy
+</span></code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">典型症状</p>
+<p><strong>第一次</strong>启动正常(端口已稳定),但拔下→换个 USB 口→立即重启就 <strong>busy</strong>。
+这<strong>不是</strong>触觉/相机/带宽问题。(若装了盲文驱动 <code>brltty</code>,它也会同样抢占 <code>1a86</code>。)
+临时办法:插好后等 ~3 秒再启动。</p>
+</div>
+<p>永久修复——用 udev 规则让 ModemManager 忽略这类设备(不影响真正的调制解调器):</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/udev/rules.d/99-taccap-ignore-modemmanager.rules<span class="w"> </span>&gt;/dev/null<span class="w"> </span><span class="s">&lt;&lt;'EOF'</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="s"># XTac-UMI G1 MCUs are CH343 USB-serial (1a86:55d2) — keep ModemManager off them</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="s">ACTION=="add|change", SUBSYSTEMS=="usb", ATTRS{idVendor}=="1a86", ENV{ID_MM_DEVICE_IGNORE}="1"</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="s">EOF</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>sudo<span class="w"> </span>udevadm<span class="w"> </span>control<span class="w"> </span>--reload-rules<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>udevadm<span class="w"> </span>trigger
+</span></code></pre></div>
+<p>验证:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>udevadm<span class="w"> </span>info<span class="w"> </span>-q<span class="w"> </span>property<span class="w"> </span>-n<span class="w"> </span>/dev/ttyACM0<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>ID_MM_DEVICE_IGNORE<span class="w">   </span><span class="c1"># -&gt; ID_MM_DEVICE_IGNORE=1</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>mmcli<span class="w"> </span>-L<span class="w">                                                               </span><span class="c1"># 夹爪不再被列出</span>
+</span></code></pre></div>
+<p>删除规则文件并重载即可还原。(专用机器人主机若无蜂窝模块,也可
+<code>sudo systemctl disable --now ModemManager</code>。)</p>
+<h2 id="33">3.3 设备自动发现与"单左双右"规则<a class="headerlink" href="#33" title="锚点链接">¶</a></h2>
+<p>所有设备<strong>按序列号 + USB 拓扑自动发现</strong>并分配到 <code>left</code>/<code>right</code>,<strong>不手写序列号</strong>。</p>
+<h3 id="序列号语法">序列号语法<a class="headerlink" href="#序列号语法" title="锚点链接">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>设备</th>
+<th>语法</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>夹爪 Gripper</td>
+<td><code>TCGU01&lt;batch&gt;&lt;line&gt;&lt;seq&gt;&lt;m\|s&gt;</code></td>
+<td><code>TCGU01A24Z0002m</code></td>
+</tr>
+<tr>
+<td>触觉 Tactile</td>
+<td><code>GSPS01&lt;batch&gt;&lt;line&gt;&lt;seq&gt;</code></td>
+<td><code>GSPS01A25Z0011</code></td>
+</tr>
+<tr>
+<td>相机 Camera</td>
+<td><code>XC&lt;batch&gt;&lt;line&gt;&lt;seq&gt;&lt;m\|s&gt;</code></td>
+<td><code>XCA24Z0007m</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>&lt;seq&gt;</code> 为 4 位;patch <code>m</code> → leader(主夹爪),<code>s</code> → follower(从夹爪)。</p>
+<h3 id="侧别规则单左双右">侧别规则(单左双右)<a class="headerlink" href="#侧别规则单左双右" title="锚点链接">¶</a></h3>
+<p>4 位序列号的<strong>最后一位</strong>:<strong>奇数 → 左,偶数 → 右</strong>。适用于夹爪 / 腕相机的侧别,
+以及同一只夹爪上<strong>两枚指尖触觉传感器</strong>的左右。</p>
+<h3 id="触觉左右--side_tactile_leftright">触觉左右 → <code>{side}_tactile_{left,right}</code><a class="headerlink" href="#触觉左右--side_tactile_leftright" title="锚点链接">¶</a></h3>
+<p>结合 USB 拓扑与侧别规则:</p>
+<ul>
+<li><strong>属于哪个夹爪(side)</strong>:共享同一夹爪 <strong>USB hub</strong> 的两枚 GSPS 传感器就是该夹爪的一对;
+  夹爪的侧别读自其<strong>固件 SN</strong>(即 <code>scan_grippers()</code> 输出里的 side),<strong>不是</strong> CH343 的
+  <code>mcu_serial</code>。即:hub → 夹爪 → 侧别。</li>
+<li><strong>哪一枚指尖触觉传感器(left/right)</strong>:GSPS 序列号的<strong>最后一位</strong>(单左双右)。</li>
+</ul>
+<h3 id="pico4-ultra-企业版追踪器另一套序列号">Pico4 Ultra 企业版追踪器——另一套序列号<a class="headerlink" href="#pico4-ultra-企业版追踪器另一套序列号" title="锚点链接">¶</a></h3>
+<p>追踪器序列号形如 <code>PC2310MLL3200496G</code>,末尾是字母 <code>G</code>。<strong>根据 <code>G</code> 前的那个数字判断:单左双右</strong>
+——上面这个号 <code>G</code> 前面是 <code>6</code>,双数,所以这枚追踪器在<strong>右</strong>侧。这个 SN 需要从 PC Service 读取,
+头显界面上看不到,见 <a href="#pico-tracker-sn">读取追踪器 SN</a>。</p>
+<div class="admonition note">
+<p class="admonition-title">硬件烧错/装错会显式报错</p>
+<p>遇到不合规序列号、每侧数量不对、两枚指尖触觉传感器映射到同一侧、两只夹爪抢同一触觉侧别,
+或触觉 hub 找不到对应夹爪时,设备发现会<strong>直接报错并指明</strong>出问题的 hub/序列号,
+避免实际装配和数据里的字段悄悄对不上。</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">先查「挤了两个」的那一侧</p>
+<p>某侧为空,通常是它的设备<strong>把自己算到了另一侧</strong>去了。所以报错会先报重复、再报缺失——
+照着<strong>挤了两个的那一侧</strong>按上面的侧别规则复核序列号,比去找"不见了"的那只快。</p>
+</div>
+<h2 id="34">3.4 Pico4 Ultra 企业版配置<a class="headerlink" href="#34" title="锚点链接">¶</a></h2>
+<p>Pico4 Ultra 企业版配套的<strong>独立运动追踪器</strong>装在夹爪顶部,提供 6-DoF 位姿。在 Pico4 Ultra 企业版上运行 <strong>XTac-UMI XR</strong>
+(VR 客户端 APP),位姿经 <a href="#35">XenseVR PC Service</a> 送到采集端。
+本节按<strong>全新 Pico 从零配置</strong>书写,顺序是「<strong>开箱与系统更新 → 系统设置 → 安装 APP →
+网络连接 → 绑定追踪器 → 追踪模式与界面设置 → 启动对齐</strong>」。</p>
+<div class="admonition tip">
+<p class="admonition-title">拿到的是出厂已配置的头显?跳过前面几节</p>
+<p>开发者模式、电源策略、APP 安装、追踪器绑定、追踪模式这些都已在出厂时设好,写在头显里
+断电不丢——凡是标着「<strong>预配置设备可跳过本节</strong>」的都不用看。</p>
+<p><strong>直接从 <a href="#pico-network">网络连接</a> 开始</strong>:接上 USB、短按追踪器电源键到蓝灯亮,
+<a href="#pico-toolkit-ui">打开 APP 点「重连」</a>、做 <a href="#pico-frame">启动对齐</a>。这三步
+<strong>每次采集都要做</strong>,预配置与否都一样。</p>
+</div>
+<h3 id="pico-unbox">开箱与系统更新<a class="headerlink" href="#pico-unbox" title="锚点链接">¶</a></h3>
+<div class="admonition info">
+<p class="admonition-title">预配置设备可跳过本节</p>
+<p>本节的设置写在头显里,断电不丢。出厂已配置的设备无需重做——除非恢复出厂设置或更换头显。</p>
+</div>
+<p><strong>1. 开箱</strong>:撕掉机身前面板保护贴、控制器胶条与镜片贴纸,长按电源键开机。</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:6"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><input id="__tabbed_1_3" name="__tabbed_1" type="radio"><input id="__tabbed_1_4" name="__tabbed_1" type="radio"><input id="__tabbed_1_5" name="__tabbed_1" type="radio"><input id="__tabbed_1_6" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">崭新包装</label><label for="__tabbed_1_2">撕前面板保护贴</label><label for="__tabbed_1_3">撕完的样子</label><label for="__tabbed_1_4">撕控制器胶条</label><label for="__tabbed_1_5">撕镜片贴纸</label><label for="__tabbed_1_6">长按开机</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../assets/pico4/unbox-box.jpg" data-desc-position="bottom"><img alt="PICO 4 Ultra 企业版原包装" src="../assets/pico4/unbox-box.jpg" width="440"></a></p>
+</div>
+<div class="tabbed-block">
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../assets/pico4/unbox-film.png" data-desc-position="bottom"><img alt="头显前面板传感器条上的保护贴" src="../assets/pico4/unbox-film.png" width="440"></a></p>
+</div>
+<div class="tabbed-block">
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../assets/pico4/unbox-film-done.jpg" data-desc-position="bottom"><img alt="保护贴撕除后的头显" src="../assets/pico4/unbox-film-done.jpg" width="440"></a></p>
+</div>
+<div class="tabbed-block">
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../assets/pico4/unbox-controller-tape.png" data-desc-position="bottom"><img alt="控制器上的固定胶条" src="../assets/pico4/unbox-controller-tape.png" width="440"></a></p>
+</div>
+<div class="tabbed-block">
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../assets/pico4/unbox-lens-sticker.jpg" data-desc-position="bottom"><img alt="镜片(眼罩)上的保护贴纸" src="../assets/pico4/unbox-lens-sticker.jpg" width="440"></a></p>
+</div>
+<div class="tabbed-block">
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../assets/pico4/unbox-power-on.png" data-desc-position="bottom"><img alt="长按电源键开机" src="../assets/pico4/unbox-power-on.png" width="440"></a></p>
+</div>
+</div>
+</div>
+<p><strong>2. 更新系统</strong>——<strong>新机必做</strong>:连上<strong>有网的 WiFi</strong>,进 <strong>设置 → 系统升级</strong>,
+点「<strong>下载并安装</strong>」升到 <strong>5.15.5.U 或更高</strong>。安装包约 1.9 GB,留足下载与重启的时间。</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../assets/pico4/system-update.jpg" data-desc-position="bottom"><img alt="设置 → 系统升级:检测到 5.15.5.U" src="../assets/pico4/system-update.jpg" width="560"></a></p>
+<div class="admonition danger">
+<p class="admonition-title">新机必须先升级系统</p>
+<p>出厂系统版本偏低,<strong>升级之后才能正常使用</strong>。请在配对追踪器、装 APP 之前先做完这一步。</p>
+</div>
+<h3 id="pico-system">系统设置:开发者模式与电源策略<a class="headerlink" href="#pico-system" title="锚点链接">¶</a></h3>
+<div class="admonition info">
+<p class="admonition-title">预配置设备可跳过本节</p>
+<p>本节的设置写在头显里,断电不丢。出厂已配置的设备无需重做——除非恢复出厂设置或更换头显。</p>
+</div>
+<p><strong>1. 开启开发者模式</strong>:在 Pico4 Ultra 企业版内打开 设置 → 关于本机 → 连续点击「软件版本号」数次 →
+左侧出现「开发者选项」→ 打开 <strong>USB 调试</strong>。</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:3"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><input id="__tabbed_2_3" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1">打开设置</label><label for="__tabbed_2_2">连点软件版本号</label><label for="__tabbed_2_3">开发者选项 + USB 调试</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../assets/pico4/devmode.png" data-desc-position="bottom"><img alt="资源库 → 设置" src="../assets/pico4/devmode.png" width="480"></a></p>
+</div>
+<div class="tabbed-block">
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../assets/pico4/devmode-tap-version.png" data-desc-position="bottom"><img alt="关于本机 → 连续点击软件版本号" src="../assets/pico4/devmode-tap-version.png" width="480"></a></p>
+</div>
+<div class="tabbed-block">
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../assets/pico4/devmode-usb-debug.png" data-desc-position="bottom"><img alt="左侧出现开发者选项,打开 USB 调试" src="../assets/pico4/devmode-usb-debug.png" width="480"></a></p>
+</div>
+</div>
+</div>
+<p><strong>2. 关闭休眠与灭屏</strong>:开发者模式打开后,进入 企业设置 → 系统设置 → <strong>电源策略</strong>,
+按下面的<strong>顺序</strong>把两项都改成「<strong>永不</strong>」:</p>
+<ol>
+<li>先设 <strong>系统休眠 = 永不</strong>;</li>
+<li>再设 <strong>灭屏(息屏)= 永不</strong>;</li>
+<li>顺手把最下方的<strong>电量及充电状态图标</strong>设为「<strong>常驻显示</strong>」——采集途中能随时看到剩余电量。</li>
+</ol>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:4"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio"><input id="__tabbed_3_2" name="__tabbed_3" type="radio"><input id="__tabbed_3_3" name="__tabbed_3" type="radio"><input id="__tabbed_3_4" name="__tabbed_3" type="radio"><div class="tabbed-labels"><label for="__tabbed_3_1">进企业设置</label><label for="__tabbed_3_2">系统设置 → 电源策略</label><label for="__tabbed_3_3">改之前的默认值</label><label for="__tabbed_3_4">最终设置</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p>开发者选项里点「<strong>企业设置</strong>」。</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../assets/pico4/power-step1-enterprise.jpg" data-desc-position="bottom"><img alt="开发者选项 → 企业设置" src="../assets/pico4/power-step1-enterprise.jpg" width="480"></a></p>
+</div>
+<div class="tabbed-block">
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../assets/pico4/power-step2-policy.jpg" data-desc-position="bottom"><img alt="企业设置 → 系统设置 → 电源策略" src="../assets/pico4/power-step2-policy.jpg" width="480"></a></p>
+</div>
+<div class="tabbed-block">
+<p>出厂默认是<strong>灭屏 30 秒、系统休眠 5 分钟、电量图标不显示</strong>——三项都要改。</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../assets/pico4/power-step3-before.jpg" data-desc-position="bottom"><img alt="电源策略的出厂默认值" src="../assets/pico4/power-step3-before.jpg" width="480"></a></p>
+</div>
+<div class="tabbed-block">
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../assets/pico4/power-step4-final.png" data-desc-position="bottom"><img alt="电源策略:灭屏与系统休眠均为「永不」,电量图标常驻显示" src="../assets/pico4/power-step4-final.png" width="480"></a></p>
+</div>
+</div>
+</div>
+<p>改完应该和「<strong>最终设置</strong>」那张一致:<strong>灭屏 = 永不、系统休眠 = 永不、电量及充电状态图标 = 常驻显示</strong>。</p>
+<div class="admonition warning">
+<p class="admonition-title">顺序不能反</p>
+<p>灭屏时间受系统休眠时间约束。若先改灭屏,系统休眠仍是默认值,灭屏的「永不」会被
+钳制回一个有限值(表面看已设置,实际未生效)。<strong>先休眠、后灭屏</strong>,改完退出设置再回来
+确认两项都显示「永不」。</p>
+</div>
+<p>不做这一步的后果:头显在采集间隙自动灭屏/休眠后,<strong>XTac-UMI XR 会被系统挂起或杀掉</strong>,
+追踪数据中断;重启 XTac-UMI XR 又会重新冻结世界系原点与方向,导致同一数据集内位姿参考系不一致
+(见 <a href="#pico-frame">坐标系对齐</a>)。摘下头显放置时同样会触发,所以必须关掉,不能只靠「别摘头显」。</p>
+<div class="admonition note">
+<p class="admonition-title">本项在企业设置里,不在普通设置里</p>
+<p>「电源策略」只在 <strong>Pico 企业版</strong>的「企业设置」里;消费版没有这一项,也调不到「永不」。</p>
+</div>
+<h3 id="pico-app">安装 XTac-UMI XR(Pico4 Ultra 企业版)<a class="headerlink" href="#pico-app" title="锚点链接">¶</a></h3>
+<div class="admonition info">
+<p class="admonition-title">预配置设备可跳过本节</p>
+<p>本节的设置写在头显里,断电不丢。出厂已配置的设备无需重做——除非恢复出厂设置或更换头显。</p>
+</div>
+<div class="tabbed-set tabbed-alternate" data-tabs="4:3"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio"><input id="__tabbed_4_2" name="__tabbed_4" type="radio"><input id="__tabbed_4_3" name="__tabbed_4" type="radio"><div class="tabbed-labels"><label for="__tabbed_4_1">拷贝 apk(电脑侧)</label><label for="__tabbed_4_2">在头显里找到它</label><label for="__tabbed_4_3">安装并确认</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p>用 USB 线连接 Pico4 Ultra 企业版与电脑,把 <code>XTac-UMI-XR-0.1.X.apk</code> 拷到头显的
+<code>Download/</code> 目录(<code>0.1.X</code> 是版本号,以你拿到的那份为准)。</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../assets/pico4/install-step1-copy.jpg" data-desc-position="bottom"><img alt="电脑侧把 apk 拷进 Pico 的 Download 目录" src="../assets/pico4/install-step1-copy.jpg" width="480"></a></p>
+</div>
+<div class="tabbed-block">
+<p>戴上头显,任务栏点「<strong>文件管理</strong>」,进「<strong>Download</strong>」文件夹。</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../assets/pico4/install-step2-filemanager.png" data-desc-position="bottom"><img alt="文件管理 → Download" src="../assets/pico4/install-step2-filemanager.png" width="480"></a></p>
+</div>
+<div class="tabbed-block">
+<p>点 <code>XTac-UMI-XR-0.1.X.apk</code>,在弹出的「要安装此应用吗?」里选「<strong>安装</strong>」。</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../assets/pico4/install-step3-confirm.png" data-desc-position="bottom"><img alt="确认安装" src="../assets/pico4/install-step3-confirm.png" width="480"></a></p>
+<p>装好后回到「<strong>资源库</strong>」,应该能看到名为 <strong>XTac-UMI XR</strong> 的应用。</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../assets/pico4/install-step3-done.jpg" data-desc-position="bottom"><img alt="安装包里的 apk,以及装好后出现在资源库里的 XTac-UMI XR" src="../assets/pico4/install-step3-done.jpg" width="480"></a></p>
+</div>
+</div>
+</div>
+<h3 id="pico-network">网络连接(重要)<a class="headerlink" href="#pico-network" title="锚点链接">¶</a></h3>
+<p>追踪数据要送到数采电脑上的 XenseVR PC Service,<strong>有线和无线两种接法都支持</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>接法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>USB 有线共享网络</strong>(推荐)</td>
+<td>用 Type-C 线直连数采电脑,由头显给电脑分配 IP</td>
+</tr>
+<tr>
+<td>WiFi 无线</td>
+<td>头显与数采电脑接入<strong>同一个网络</strong>,不用接线</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition tip">
+<p class="admonition-title">采集时优先走有线</p>
+<p><strong>WiFi 环境复杂时(信道拥挤、干扰多)无线传输会受影响</strong>,表现为位姿卡顿、抖动或掉数据,
+而且不容易和别的问题区分。有线共享网络更稳定,正式采集建议用它;无线适合临时调试或
+不方便接线的场合。</p>
+</div>
+<p><strong>有线连接步骤:</strong></p>
+<ol>
+<li>在 Pico4 Ultra 企业版内打开 设置 → 开发者选项 → 打开「USB 调试」→「USB 连接」选择「<strong>传输文件</strong>」。
+   <strong>每次拔插 USB 后都要回来确认这一项</strong>——它会掉回默认值。选不了就重启 Pico 再试。</li>
+<li><strong>电脑端先启动服务</strong>(见 <a href="#35">§3.5</a>):<code>runService.sh</code>。</li>
+<li>打开 <strong>XTac-UMI XR</strong>,点「<strong>重连</strong>」,状态变成「<strong>已连接</strong>」
+   (见 <a href="#pico-toolkit-ui">打开 App 后的界面</a>)。</li>
+</ol>
+<p>走 <strong>WiFi</strong> 时把头显和数采电脑接进<strong>同一个网络</strong>,其余相同。</p>
+<div class="admonition warning">
+<p class="admonition-title">服务要在打开 APP 之前起来</p>
+<p><strong>服务没起来,APP 只会停在「未连接」</strong>——先 <code>runService.sh</code>,再打开 APP。</p>
+</div>
+<div class="admonition danger">
+<p class="admonition-title">走有线时,关掉数采电脑的 WiFi</p>
+<p>有线共享网络会与电脑上的<strong>其他网络(尤其 WiFi)冲突</strong>(路由 / 网卡抢占),导致追踪器
+连不上或位姿不稳。<strong>用有线就把电脑的 WiFi 关掉</strong>,只保留头显的共享网络。</p>
+</div>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../assets/pico4/usb-shared-network.jpg" data-desc-position="bottom"><img alt="USB 连接选择传输文件" src="../assets/pico4/usb-shared-network.jpg" width="520"></a></p>
+<h3 id="pico-tracker-bind">绑定运动追踪器到头显<a class="headerlink" href="#pico-tracker-bind" title="锚点链接">¶</a></h3>
+<div class="admonition info">
+<p class="admonition-title">预配置设备可跳过本节</p>
+<p>本节的设置写在头显里,断电不丢。出厂已配置的设备无需重做——除非恢复出厂设置或更换头显。</p>
+</div>
+<p><strong>首次使用、或更换追踪器后</strong>,必须先把 PICO Motion Tracker <strong>绑定到这台头显</strong>。
+未绑定时,追踪模式里选不到它,XTac-UMI XR 与 PC Service 也发现不了对应 SN。</p>
+<div class="admonition tip">
+<p class="admonition-title">配对前先用手机扫追踪器背面的二维码拿到 SN</p>
+<p>扫出来的就是这枚追踪器的完整 SN,配对时可以直接核对,不用等装好了再去 PC Service 查。
+<strong>装的时候按 SN 对应侧别</strong>(单左双右,见 <a href="#33">3.3</a>):<strong>单数装左夹爪,双数装右夹爪</strong>。</p>
+<table>
+<thead>
+<tr>
+<th>扫这里</th>
+<th>扫出来是这样</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../assets/pico4/tracker-sn-qr.jpg" data-desc-position="bottom"><img alt="追踪器背面的二维码" src="../assets/pico4/tracker-sn-qr.jpg" width="300"></a></td>
+<td><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../assets/pico4/tracker-sn-left.png" data-desc-position="bottom"><img alt="左追踪器的扫描结果" src="../assets/pico4/tracker-sn-left.png" width="320"></a><br><code>G</code> 前是 <code>1</code>,单数 → 装<strong>左</strong>夹爪<br><br><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../assets/pico4/tracker-sn-right.png" data-desc-position="bottom"><img alt="右追踪器的扫描结果" src="../assets/pico4/tracker-sn-right.png" width="320"></a><br><code>G</code> 前是 <code>8</code>,双数 → 装<strong>右</strong>夹爪</td>
+</tr>
+</tbody>
+</table>
+<p>红框圈出的六位数,就是配对后「<strong>我的追踪器</strong>」列表里显示的编号(如 <code>Tracker 150311</code>)——
+列表里哪一项对应哪一枚,靠这六位数对上。</p>
+</div>
+<ol>
+<li>从 <strong>资源库</strong> 打开「<strong>体感追踪器</strong>」App,进入<strong>配对界面</strong>。</li>
+<li><strong>长按追踪器电源键约 6 秒</strong>,直到指示灯<strong>蓝红交替闪烁</strong>——这是蓝牙配对状态
+   (只亮蓝灯是普通开机,不是配对状态,App 扫不到)。</li>
+<li>在配对界面点「<strong>开始配对</strong>」,等待绑定完成。<strong>配对成功时头显会响一声提示音</strong>——听到提示音
+   就表示绑上了。该追踪器随即出现在「<strong>我的追踪器</strong>」列表里,显示电量与编号
+   (如 <code>Tracker 150399</code>)并标注「<strong>已连接</strong>」。</li>
+<li><strong>两只夹爪各一枚,需要绑定两枚</strong>。列表顶部应显示「<strong>已配对 2 个</strong>」。</li>
+</ol>
+<div class="admonition tip">
+<p class="admonition-title">开机是短按,配对才要长按</p>
+<p><strong>日常开机短按</strong>电源键,蓝灯亮起即可;<strong>只有首次绑定</strong>才长按约 6 秒到蓝红交替闪烁。</p>
+</div>
+<div class="tabbed-set tabbed-alternate" data-tabs="5:3"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio"><input id="__tabbed_5_2" name="__tabbed_5" type="radio"><input id="__tabbed_5_3" name="__tabbed_5" type="radio"><div class="tabbed-labels"><label for="__tabbed_5_1">打开体感追踪器 App</label><label for="__tabbed_5_2">进入配对界面</label><label for="__tabbed_5_3">我的追踪器:已配对 2 个</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p>从<strong>资源库</strong>里点开「<strong>体感追踪器</strong>」。</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../assets/pico4/tracker-app-open.png" data-desc-position="bottom"><img alt="资源库 → 体感追踪器" src="../assets/pico4/tracker-app-open.png" width="440"></a></p>
+</div>
+<div class="tabbed-block">
+<p>在「PICO 体感追踪器」主界面,点<strong>右上角的图标</strong>进入配对界面。</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../assets/pico4/tracker-pair-entry.png" data-desc-position="bottom"><img alt="体感追踪器主界面,右上角进入配对" src="../assets/pico4/tracker-pair-entry.png" width="440"></a></p>
+</div>
+<div class="tabbed-block">
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../assets/pico4/tracker-bind.jpg" data-desc-position="bottom"><img alt="体感追踪器 App:两枚追踪器均已连接" src="../assets/pico4/tracker-bind.jpg" width="440"></a></p>
+</div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">绑定是一次性的;解除配对在 ⓘ 里</p>
+<p>绑定关系保存在头显上,日常开关机、重启 APP <strong>不需要重绑</strong>;
+更换追踪器、换用另一台头显或头显恢复出厂设置后需要重新绑定。
+<strong>更换设备</strong>时先在列表项右侧的 <strong>ⓘ</strong> 中解除配对,再绑新的。</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">独立追踪模式下,追踪器必须在头显视野内</p>
+<p>App 自身也会提示这一点。追踪器被身体、桌沿或另一只手长时间遮挡会<strong>丢跟踪</strong>,
+表现为位姿跳变或卡住。采集时注意作业姿态,别让夹爪顶部的追踪器长时间脱离头显视野。</p>
+</div>
+<h4 id="pico-tracker-sn">读取追踪器 SN<a class="headerlink" href="#pico-tracker-sn" title="锚点链接">¶</a></h4>
+<p>SN 决定左右(末尾字母 <code>G</code> 前一个数字:单左双右,见 <a href="#33">3.3</a>),也是 PC Service 识别追踪器的依据。</p>
+<p>头显里看不到这个 SN:「体感追踪器」App 只显示<strong>短编号</strong>(如 <code>Tracker 150399</code>),
+XTac-UMI XR 的 Network 面板显示的 SN(如 <code>PA9410MGL…</code>)是<strong>头显自己的</strong>。
+匹配左右要用的<strong>追踪器完整 SN</strong>(形如 <code>PC2310MLL3200496G</code>)用 PC Service 的 Python 接口
+<code>xensevr_pc_service_sdk</code> 读取:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">xensevr_pc_service_sdk</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">xrt</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="n">xrt</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="nb">print</span><span class="p">(</span><span class="n">xrt</span><span class="o">.</span><span class="n">get_motion_tracker_serial_numbers</span><span class="p">())</span>   <span class="c1"># 例:['PC2310MLL3200496G', ...]</span>
+</span></code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">读 SN 需要整条链路先跑起来</p>
+<p><code>get_motion_tracker_serial_numbers()</code> 报的是<strong>服务当前收到数据的</strong>追踪器。
+所以要先:追踪器已绑定并开机 → XTac-UMI XR 显示<a href="#pico-toolkit-ui">「已连接」</a>
+→ 主机已启动 <a href="#35">XenseVR PC Service</a>。少任一步,返回的会是空列表。</p>
+</div>
+<p>拿到 SN 后可用 <code>--robot.tracker_serial=&lt;SN&gt;</code> 直接钉住,跳过自动匹配。
+<strong>逐个摇晃夹爪</strong>确认哪个 SN 对应哪只手,再写进配置。</p>
+<h3 id="pico-tracker">追踪模式与 XTac-UMI XR 设置<a class="headerlink" href="#pico-tracker" title="锚点链接">¶</a></h3>
+<div class="admonition info">
+<p class="admonition-title">预配置设备可跳过本节</p>
+<p>本节的设置写在头显里,断电不丢。出厂已配置的设备无需重做——除非恢复出厂设置或更换头显。</p>
+</div>
+<p>绑定完成后:</p>
+<ol>
+<li>在 Pico4 Ultra 企业版里打开「<strong>体感追踪</strong>」。</li>
+<li>进入设置,追踪模式选「<strong>独立追踪</strong>」。</li>
+</ol>
+<div class="tabbed-set tabbed-alternate" data-tabs="6:3"><input checked="checked" id="__tabbed_6_1" name="__tabbed_6" type="radio"><input id="__tabbed_6_2" name="__tabbed_6" type="radio"><input id="__tabbed_6_3" name="__tabbed_6" type="radio"><div class="tabbed-labels"><label for="__tabbed_6_1">进设置找到「追踪模式」</label><label for="__tabbed_6_2">选「独立追踪」</label><label for="__tabbed_6_3">改完的样子</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p>出厂默认是「<strong>全身动捕</strong>」——把追踪器戴在身上追人体姿态,不是我们要的。</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../assets/pico4/tracker-mode1-entry.png" data-desc-position="bottom"><img alt="设置 → 追踪模式" src="../assets/pico4/tracker-mode1-entry.png" width="480"></a></p>
+</div>
+<div class="tabbed-block">
+<p>「<strong>独立追踪</strong>」是把追踪器固定在物体上追物体的位姿——夹爪就属于这种用法。
+选中后点「<strong>确定</strong>」。</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../assets/pico4/tracker-mode2-pick.png" data-desc-position="bottom"><img alt="追踪模式:选独立追踪并确定" src="../assets/pico4/tracker-mode2-pick.png" width="480"></a></p>
+</div>
+<div class="tabbed-block">
+<p>「追踪模式」这一行应该显示「<strong>独立追踪</strong>」。</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../assets/pico4/tracker-mode3-done.png" data-desc-position="bottom"><img alt="设置里追踪模式已是独立追踪" src="../assets/pico4/tracker-mode3-done.png" width="480"></a></p>
+</div>
+</div>
+</div>
+<p>追踪器由 XenseVR PC Service 按<strong>序列号(SN)</strong>识别;侧别按 SN 末尾字母 <code>G</code> 前一个数字单左双右自动匹配
+(见 <a href="#33">3.3</a>),或用 <code>--robot.tracker_serial=&lt;SN&gt;</code> 直接钉住。</p>
+<h3 id="pico-toolkit-ui">打开 App 后的界面<a class="headerlink" href="#pico-toolkit-ui" title="锚点链接">¶</a></h3>
+<p>戴上头显,从<strong>资源库</strong>打开 <strong>XTac-UMI XR</strong>。界面很简单,只有<strong>状态</strong>、<strong>分辨率</strong>、
+<strong>重连</strong>三项(左边的「折叠」把面板收起来)。<strong>要的就是「状态」显示「已连接」</strong>——
+在那之前 PC 端读不到任何位姿。</p>
+<p><strong>不用填 PC 端 IP</strong>:<a href="#pico-network">有线共享网络</a>接好后,APP 会自动识别主机上的
+XenseVR PC Service——但<strong>要点一下「重连」才会连上</strong>,打开 APP 不会自动连。</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="7:4"><input checked="checked" id="__tabbed_7_1" name="__tabbed_7" type="radio"><input id="__tabbed_7_2" name="__tabbed_7" type="radio"><input id="__tabbed_7_3" name="__tabbed_7" type="radio"><input id="__tabbed_7_4" name="__tabbed_7" type="radio"><div class="tabbed-labels"><label for="__tabbed_7_1">打开软件</label><label for="__tabbed_7_2">状态:未连接</label><label for="__tabbed_7_3">允许相机权限</label><label for="__tabbed_7_4">状态:已连接</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p>从<strong>资源库</strong>点开 <strong>XTac-UMI XR</strong>。</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../assets/pico4/app-step1-open.png" data-desc-position="bottom"><img alt="资源库 → XTac-UMI XR" src="../assets/pico4/app-step1-open.png" width="480"></a></p>
+</div>
+<div class="tabbed-block">
+<p>刚打开时是「<strong>状态:未连接</strong>」。<strong>点一下「重连」</strong>才会连——它不会自己连上,等多久都没用。</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../assets/pico4/app-step2-disconnected.jpg" data-desc-position="bottom"><img alt="XTac-UMI XR:状态 未连接" src="../assets/pico4/app-step2-disconnected.jpg" width="420"></a></p>
+</div>
+<div class="tabbed-block">
+<p>首次打开会问「允许"XTac-UMI XR"使用相机权限吗?」,点「<strong>允许</strong>」。
+<a href="../05-data-collection/#56">头显相机</a>要用到它,点了「不允许」就取不到头显画面。</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../assets/pico4/app-step3-camera.png" data-desc-position="bottom"><img alt="允许 XTac-UMI XR 使用相机权限" src="../assets/pico4/app-step3-camera.png" width="380"></a></p>
+</div>
+<div class="tabbed-block">
+<p>「<strong>状态:已连接</strong>」就是可以开始采集的状态。</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../assets/pico4/app-step4-connected.jpg" data-desc-position="bottom"><img alt="XTac-UMI XR:状态 已连接" src="../assets/pico4/app-step4-connected.jpg" width="420"></a></p>
+</div>
+</div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">「分辨率」是头显双目相机的分辨率</p>
+<p><a href="../05-data-collection/#56">头显相机</a>的取流分辨率,三档 <code>640</code> / <code>1024</code> / <code>1280</code>,
+<strong>默认 <code>640</code>(每眼 640x480),推荐就用这一档</strong>。不用头显相机时它不起作用。</p>
+<p>采集端的默认值也是 640x480,两边开箱即对得上。<strong>在这里调高了档位,采集命令要跟着改</strong>:
+选 <code>1024</code> 加 <code>--robot.head_camera_width=1024 --robot.head_camera_height=768</code>,选 <code>1280</code> 加
+<code>--robot.head_camera_width=1280 --robot.head_camera_height=960</code>,否则 connect 会报首帧尺寸
+不符。见 <a href="../05-data-collection/#56">5.6 头显相机</a>。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">高精度追踪已默认常开</p>
+<p>高精度追踪模式(位姿更稳、抖动更小)现在默认开启,界面上没有开关,不需要手动设置。</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">一直连不上?先查网络这一步</p>
+<p>多半不在 APP,而在<a href="#pico-network">网络连接</a>:有线网没接好,或电脑 WiFi 没关。</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">自检:PC 端有没有真的收到</p>
+<p>显示「已连接」之后,在主机上用 <code>/opt/apps/roboticsservice/</code> 的 <code>ConsoleDemo</code> 或
+<code>python -m lerobot.robots.taccap_gripper.check_tracker</code> 确认能读到带 <code>sn</code> 的位姿——
+头显里显示连上,和主机真的收到数据,是两件事。</p>
+</div>
+<h3 id="pico-frame">启动与坐标系对齐<a class="headerlink" href="#pico-frame" title="锚点链接">¶</a></h3>
+<p><strong>佩戴 Pico4 Ultra 企业版启动 XTac-UMI XR 时,面朝机器人正前方</strong>,再
+<a href="#pico-toolkit-ui">点「重连」</a>把状态连成「<strong>已连接</strong>」。启动瞬间<strong>冻结世界系的原点与方向</strong>。</p>
+<p>录制位姿落在<strong>重力对齐的世界系</strong>:<strong>X 正 = 面朝前方,Y 正 = 左,Z 正 = 上</strong>。</p>
+<p>下图画的就是这个世界系——<strong>原点在启动那一刻头显所在的位置</strong>,三根轴按
+<strong>红 = X(前)、绿 = Y(左)、蓝 = Z(上)</strong>:</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../assets/pico4/world-frame-origin.png" data-desc-position="bottom"><img alt="启动瞬间在头显位置冻结的世界坐标系:红 X 前、绿 Y 左、蓝 Z 上" src="../assets/pico4/world-frame-origin.png" width="420"></a></p>
+<p>图里的坐标系是<strong>画在头显上的</strong>,但它只在启动那一瞬间跟着头显——冻结之后就固定在空间里,
+<strong>之后你转头、走动都不会带着它动</strong>。数据集里所有 <code>tcp.*</code> 位姿都以这个固定的系为参考。</p>
+<div class="admonition warning">
+<p class="admonition-title">启动时必须面朝机器人正前方</p>
+<p>这样世界系 X 轴才对齐机器人正前方。<strong>只需对齐方向</strong>,站在哪个位置不影响。</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">分集之间不要重启 XTac-UMI XR</p>
+<p>一旦重启,后续录制的原点/方向会变,导致同一数据集内位姿参考系不一致。</p>
+</div>
+<h2 id="35">3.5 启动 XenseVR PC Service<a class="headerlink" href="#35" title="锚点链接">¶</a></h2>
+<p>追踪器与主机的 <strong>XenseVR PC Service</strong>(RoboticsService)守护进程通信;它负责设备发现、
+状态监控与实时追踪数据分发,采集端从它读取位姿。</p>
+<div class="admonition info">
+<p class="admonition-title">用 Docker 交付镜像的话服务会自动启动</p>
+<p>容器启动时会自己拉起这个服务,不用手动执行下面的命令。只处理数据、用不到追踪器时,
+可以用 <code>START_XENSEVR_SERVICE=0</code> 关掉(见 <a href="../02-environment/#docker">2. 环境部署 · Docker</a>)。</p>
+</div>
+<p>启动:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>/opt/apps/roboticsservice/runService.sh
+</span></code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">同一时间只能运行一个实例</p>
+<p>该服务一次只允许运行一个实例;重复启动会失败或冲突。</p>
+</div>
+<p>服务可提供多类追踪数据(Pico4 Ultra 企业版 Head / 手柄 / 手势 / 全身动捕 / <strong>Tracker 独立追踪</strong>)。
+数采用到其中两类:</p>
+<ul>
+<li><strong>Tracker 独立追踪位姿</strong>——夹爪的位姿,数据中带 <code>sn</code> 用于区分不同追踪器。</li>
+<li><strong>头部位姿</strong>——头显自己的位姿,和<a href="../05-data-collection/#56">头显双目画面</a>配套使用。</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">头显相机与头部位姿也走这个服务</p>
+<p>它们不是另一条链路:头显把每只眼的画面和自己的位姿发给 PC Service,服务转发给采集端。
+<strong>和追踪器共用同一个服务、同一条连接</strong>——服务没起来,两者都没有。</p>
+<p>要用这一路,只需两件事:服务升到 <strong>v0.2.0 以上</strong>(见 <a href="../02-environment/">2.4 一键安装</a>)、
+头显里装上 <strong>XTac-UMI XR</strong>。只用追踪器的话,服务版本没有区别。</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">验证服务与设备</p>
+<p>服务目录附带 <code>ConsoleDemo</code> / <code>RobotDemoQt</code> 演示程序(<code>/opt/apps/roboticsservice/</code>),
+可用于确认 Pico4 Ultra 企业版已被发现、追踪数据正常(需与服务相同的运行环境)。</p>
+</div>
+<h2 id="36">3.6 硬件上电顺序<a class="headerlink" href="#36" title="锚点链接">¶</a></h2>
+<div class="admonition note">
+<p class="admonition-title">启动顺序</p>
+<p>标准启动顺序如下(APP 界面以实际版本为准):</p>
+</div>
+<ol>
+<li>将 XTac-UMI G1 插入主机(USB)。</li>
+<li><strong>双夹爪:先查一下 USB 带宽预算</strong>(见下),再往后走。</li>
+<li>接好 Pico4 Ultra 企业版的<strong>有线共享网络</strong>,并<strong>关闭数采电脑的 WiFi</strong>(见 <a href="#pico-network">3.4 网络连接</a>)。</li>
+<li>开启 Pico4 Ultra 企业版,<strong>短按</strong>追踪器电源键至<strong>蓝灯亮起</strong>(首次使用需先<a href="#pico-tracker-bind">绑定</a>)。</li>
+<li>启动主机的 XenseVR PC Service(<code>runService.sh</code>)。</li>
+<li><strong>面朝机器人正前方</strong>,启动 XTac-UMI XR APP(<strong>冻结世界系原点与方向</strong>,见 <a href="#pico-frame">坐标系</a>),
+   点「<strong>重连</strong>」使<a href="#pico-toolkit-ui">状态变为「已连接」</a>。</li>
+<li>运行标定 / 自检 / 录制脚本。</li>
+</ol>
+<pre class="mermaid"><code>flowchart LR
+    A[插入夹爪 USB] --&gt; U[双夹爪:查 USB 带宽预算]
+    U --&gt; N[接 Pico4 Ultra 企业版&lt;br/&gt;有线网络并关闭 WiFi]
+    N --&gt; B[开启 Pico4 Ultra 企业版&lt;br/&gt;配对追踪器]
+    B --&gt; D[启动 XenseVR PC Service]
+    D --&gt; C[启动 XTac-UMI XR&lt;br/&gt;冻结原点、显示已连接]
+    C --&gt; E[跑标定/录制]</code></pre>
+<div class="admonition warning">
+<p class="admonition-title">第 5 步必须在第 6 步之前</p>
+<p><strong>服务没起来,APP 只会停在「未连接」</strong>——重启 APP 重连还会把世界系原点重设一次。</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">主夹爪没标定的话,采集程序会拒绝连接</p>
+<p>数据集里的 <code>gripper.pos</code> 是归一化开度(<code>0.0</code> 闭合 / <code>1.0</code> 张开),这两个端点来自写在
+MCU flash 里的<strong>编码器零点</strong>和<strong>行程上限</strong>。<strong>没标过行程上限的主夹爪连不上</strong>,程序会
+带着标定命令报错退出——所以不用自己判断该不该标,能连上就是标过了。</p>
+<p>标定值存在 flash 里,断电不丢、换主机也不用重标,一台标一次就够,不是每次开录的例行步骤。</p>
+<p>双夹爪尤其注意:<strong>只标一侧会让左右两条通道落在不同刻度上</strong>,同一个握持动作左右读数不同,
+而数据里看不出任何异常。要标就两侧都标:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>python<span class="w"> </span>third_party/taccap-gripper/python/examples/calibrate.py<span class="w"> </span>left
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>python<span class="w"> </span>third_party/taccap-gripper/python/examples/calibrate.py<span class="w"> </span>right
+</span></code></pre></div>
+<p>完整步骤、如何确认生效、适用范围 → <a href="../04-calibration/#41">4.1 夹爪标定(零点 + 行程)</a></p>
+</div>
+<h3 id="usb-budget">第 2 步:查 USB 带宽预算<a class="headerlink" href="#usb-budget" title="锚点链接">¶</a></h3>
+<p><strong>放在这里,是因为它在插线那一刻就已经决定了</strong>,而它决定的是"某一路相机能不能打开"。
+相机打不开时,从序列号、线缆、驱动、采集程序一路往回找都是白找——先量这一步。</p>
+<p>每个 UVC 相机在打开期间都要<strong>独占预留</strong>一份等时带宽,这份预算<strong>按 USB 2.0 总线算</strong>:
+一条总线 480 Mbit/s,其中约 384 Mbit/s 给等时传输。双夹爪一共 <strong>六个</strong>相机
+(四路触觉 + 两路腕相机),再加笔记本自带的摄像头。</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>lsusb<span class="w"> </span>-t
+</span></code></pre></div>
+<p>输出里<strong>每一行 <code>480M</code> 的 <code>root_hub</code> 就是一份预算</strong>——数一数每份上挂了几个相机。
+<strong>两条 <code>480M</code> 总线各挂三个</strong>是宽裕的;六个挤在一条上就得实测,不同批次的传感器申请量不同,
+有的机器扛得住、有的扛不住。</p>
+<div class="admonition warning">
+<p class="admonition-title">插蓝色 USB 3 口不解决问题</p>
+<p>触觉和腕相机都是 <strong>USB 2.0 设备</strong>,插进 USB 3 口仍然落在该控制器的 USB 2.0 总线上。
+要分开就得插到<strong>另一个主控制器</strong>上(Thunderbolt / USB4 扩展坞自带一个,普通 hub 不带)。</p>
+</div>
+<p>启动采集时在另一个终端盯着内核日志,一眼看出是不是带宽:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>sudo<span class="w"> </span>dmesg<span class="w"> </span>-w<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>--line-buffered<span class="w"> </span>-iE<span class="w"> </span><span class="s2">"uvcvideo|bandwidth|disconnect"</span>
+</span></code></pre></div>
+<p>出现 <code>Not enough bandwidth for altsetting N</code> 就是它。完整的判定、实测数字,以及三条<strong>看着像
+解法其实没用</strong>的办法 → <a href="../troubleshooting/#usb-bandwidth">故障排查 · USB 带宽不够</a>。</p>
+<p>下一步 → <a href="../04-calibration/">4. 标定与自检</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden="">
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚">
+        
+          
+          <a href="../02-environment/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 环境安装">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                环境安装
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../04-calibration/" class="md-footer__link md-footer__link--next" aria-label="下一页: 标定与自检">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                标定与自检
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      文档版本 v0.0.6 &nbsp;·&nbsp; Copyright © 2026 XenseRobotics Co., Ltd.
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/XenseRobotics-AI/XTac-UMI-G1-Docs" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tracking", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "navigation.footer", "toc.follow", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.tooltips"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>

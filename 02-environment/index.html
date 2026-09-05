@@ -1,14 +1,2359 @@
+<!DOCTYPE html><html lang="zh" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="XenseRobotics XTac-UMI G1 手持触觉数采夹爪 · 基于 lerobot 的数据采集快速上手">
+      
+      
+        <meta name="author" content="XenseRobotics">
+      
+      
+        <link rel="canonical" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/02-environment/">
+      
+      
+        <link rel="prev" href="../hardware/">
+      
+      
+        <link rel="next" href="../03-host-hardware/">
+      
+      
+        
+          <link rel="alternate" href="./" hreflang="zh">
+        
+          <link rel="alternate" href="../en/02-environment/" hreflang="en">
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>环境安装 - XTac-UMI G1 数采快速使用手册</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
 
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>Redirecting...</title>
-    <link rel="canonical" href="../pc/install/">
-    <script>var anchor=window.location.hash.substr(1);location.href="../pc/install/"+(anchor?"#"+anchor:"")</script>
-    <meta http-equiv="refresh" content="0; url=../pc/install/">
-</head>
-<body>
-You're being redirected to a <a href="../pc/install/">new destination</a>.
-</body>
-</html>
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  <link href="../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#2-环境部署" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="XTac-UMI G1 数采快速使用手册" class="md-header__button md-logo" aria-label="XTac-UMI G1 数采快速使用手册" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            XTac-UMI G1 数采快速使用手册
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              环境安装
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo" aria-label="切换到暗色模式" type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换到暗色模式" for="__palette_1" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"></path></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo" aria-label="切换到亮色模式" type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换到亮色模式" for="__palette_0" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"></path></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="选择当前语言">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"></path></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="zh" class="md-select__link">
+              简体中文
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../en/02-environment/" hreflang="en" class="md-select__link">
+              English (partial)
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required="">
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard="" data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"></path></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix="">
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/XenseRobotics-AI/XTac-UMI-G1-Docs" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    XenseRobotics-AI/XTac-UMI-G1-Docs
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="XTac-UMI G1 数采快速使用手册" class="md-nav__button md-logo" aria-label="XTac-UMI G1 数采快速使用手册" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    XTac-UMI G1 数采快速使用手册
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/XenseRobotics-AI/XTac-UMI-G1-Docs" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    XenseRobotics-AI/XTac-UMI-G1-Docs
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix="">
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    首页
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    一页速通
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    概述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../highlights/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    产品亮点
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked="">
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    准备工作
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    准备工作
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hardware/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    硬件介绍
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    环境安装
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    环境安装
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#host-spec" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        采集主机配置要求
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#choose" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        选择安装方式
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#apt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        前置:系统依赖包(apt)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#21-前置安装-mamba--miniforge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 前置:安装 Mamba / Miniforge
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 克隆仓库与子模块
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#23-创建并激活环境" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 创建并激活环境
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#24" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 一键安装
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#25" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5 验证安装
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Docker 交付镜像
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Docker 交付镜像">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#主机要求" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        主机要求
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ghcr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        一键安装
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker-pin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        录数据前先把版本钉死
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker-host" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        安装后的主机设置
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#进入容器与验证" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        进入容器与验证
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        数据放在哪、为什么删容器不丢
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker-data-dir" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        让数据直接落在宿主机目录
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker-gui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        容器里的图形界面
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-host-hardware/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    主机与设备配置
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6">
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    软件使用
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    软件使用
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-calibration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    标定与自检
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-data-collection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    数据预览与采集
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../best-practices/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    采集规范与最佳实践
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7">
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    数据介绍
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    数据介绍
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-dataset/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    数据集与示例
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data-management/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    数据管理与命名
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8">
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    参考
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    参考
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    故障排查
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../maintenance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    维护保养
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-faq-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    常见问题与参考
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../versions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    版本与支持
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8_5">
+        
+          
+          <label class="md-nav__link" for="__nav_8_5" id="__nav_8_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    附录:SDK 与二次开发
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    附录:SDK 与二次开发
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdk-overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SDK 概览
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdk-install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    安装与构建
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdk-examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    示例
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#host-spec" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        采集主机配置要求
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#choose" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        选择安装方式
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#apt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        前置:系统依赖包(apt)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#21-前置安装-mamba--miniforge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 前置:安装 Mamba / Miniforge
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 克隆仓库与子模块
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#23-创建并激活环境" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 创建并激活环境
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#24" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 一键安装
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#25" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5 验证安装
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Docker 交付镜像
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Docker 交付镜像">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#主机要求" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        主机要求
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ghcr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        一键安装
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker-pin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        录数据前先把版本钉死
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker-host" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        安装后的主机设置
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#进入容器与验证" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        进入容器与验证
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        数据放在哪、为什么删容器不丢
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker-data-dir" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        让数据直接落在宿主机目录
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker-gui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        容器里的图形界面
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="2-环境部署">2. 环境部署<a class="headerlink" href="#2-环境部署" title="锚点链接">¶</a></h1>
+<p>本章面向 <strong>Ubuntu 22.04 / 24.04 LTS(amd64)</strong>,把 <code>xense-taccap-lerobot</code> 及全部硬件 SDK
+装好并验证。</p>
+<div class="admonition info">
+<p class="admonition-title">XTac-UMI G1 已验证环境</p>
+<p>XTac-UMI G1 硬件联调与采集流程在 <code>mamba</code> 环境 <code>xense-taccap</code> 下验证。当前可读取的测试主机环境:</p>
+<ul>
+<li>OS: Ubuntu 22.04.5 LTS / Ubuntu 24.04.4 LTS</li>
+<li>Linux kernel: <strong>6.8 / 6.14 / 7.0 系列均已验证</strong>,内核版本不构成约束</li>
+<li>机器架构: <code>x86_64</code></li>
+<li>Python: <code>3.12.13</code>(主仓库要求 <strong>≥ 3.12</strong>)</li>
+<li>仓库 commit 与各包版本: 见 <a href="../versions/">版本与支持</a>(唯一出处,避免多处抄写走样)</li>
+</ul>
+<p>Ubuntu 22.04 LTS 也是本章覆盖的目标环境;其它发行版或架构需按实际驱动、UVC、串口权限和 <code>.deb</code> 包支持情况单独验证。</p>
+<p>这台机器的<strong>硬件配置</strong>要求见下面一节 <a href="#host-spec">采集主机配置要求</a>。</p>
+</div>
+<h2 id="host-spec">采集主机配置要求<a class="headerlink" href="#host-spec" title="锚点链接">¶</a></h2>
+<p>采集是<strong>实时</strong>的:双夹爪六路相机边取流边编码,一帧只有 <strong>33.3 ms</strong> 的预算(30 fps)。
+所以主机不是"能开机就行"——<strong>配低了的表现是丢帧和录制效率低,而不是报错</strong>,
+事后从数据里也不容易看出来。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>最低要求</strong></th>
+<th><strong>推荐配置</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CPU</td>
+<td>Intel <strong>12 代 i7</strong> 及以上(或同级 AMD)</td>
+<td><strong>13 / 14 代 i7 / i9</strong> 或同级(≥ 8 性能核)</td>
+</tr>
+<tr>
+<td>内存</td>
+<td><strong>8 GB</strong></td>
+<td><strong>32 GB</strong></td>
+</tr>
+<tr>
+<td>GPU</td>
+<td>NVIDIA <strong>RTX 3060 / 8 GB 显存</strong>及以上</td>
+<td>NVIDIA <strong>RTX 4070 / 12 GB 显存</strong>及以上</td>
+</tr>
+<tr>
+<td>显卡驱动</td>
+<td><strong>≥ 570.144</strong></td>
+<td>同左</td>
+</tr>
+<tr>
+<td>硬盘</td>
+<td>512 GB SSD</td>
+<td><strong>1 TB NVMe SSD</strong></td>
+</tr>
+<tr>
+<td>USB</td>
+<td><strong>单夹爪</strong>(3 路相机)接在同一条 USB 2.0 总线上即可</td>
+<td><strong>双夹爪</strong>(6 路相机)分挂<strong>两条 USB 2.0 总线</strong>,即两个独立 USB 主控制器</td>
+</tr>
+<tr>
+<td>系统</td>
+<td>Ubuntu 22.04 / 24.04 LTS,<strong>amd64</strong></td>
+<td>同左</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition tip">
+<p class="admonition-title">NVIDIA 显卡决定的是录制效率</p>
+<p><code>--dataset.vcodec=auto</code> 会把 H.264 编码交给显卡上<strong>专用的编码芯片</strong>,CPU 只负责喂帧。
+没有 NVIDIA 显卡时这条路走不通,只能关掉流式编码改用 CPU 编码——<strong>能录,但效率明显下降</strong>
+(存盘变慢、更容易 <code>[slow_frame]</code>),见
+<a href="../05-data-collection/#no-gpu">没有 NVIDIA GPU 的主机怎么录</a>。</p>
+<p>Docker 交付镜像则要求 NVIDIA 显卡与驱动。驱动版本用这条查:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>nvidia-smi<span class="w"> </span>--query-gpu<span class="o">=</span>driver_version,name<span class="w"> </span>--format<span class="o">=</span>csv,noheader
+</span></code></pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">各项配置为什么是这个数</p>
+<ul>
+<li><strong>CPU</strong> —— 采集主循环、触觉图像解码、给编码器喂帧都压在 CPU 上,双夹爪一帧要处理
+  六到八张图。12 代 i7 是实测能稳住 30 fps 的下限。</li>
+<li><strong>内存</strong> —— 8 GB 只够跑采集本身。<strong>开 <code>--display_data</code> 用 Rerun 看实时数据</strong>、
+  或者边采边处理数据时会很紧张,推荐 32 GB。</li>
+<li><strong>硬盘</strong> —— 满负荷时原始视频出流可达约 <strong>280 MB/s</strong>(双夹爪),
+  落盘量另算,见<a href="../data-management/#storage-planning">磁盘规划与估算</a>。
+  <strong>机械硬盘和 USB 移动硬盘不要用来直接录</strong>。</li>
+<li><strong>USB</strong> —— 触觉与腕相机都是 USB 2.0 设备,每路相机打开时都要<strong>独占预留</strong>一份等时带宽,
+  而一条 480M 总线的预算是固定的。<strong>每只夹爪 3 路</strong>(触觉 ×2 + 腕相机),
+  双夹爪 6 路挤在同一条总线上会有相机<strong>打不开</strong>——这与 CPU / 显卡多快无关,
+  插蓝色 USB 3 口也不解决。接线前先 <code>lsusb -t</code> 数一数每条 <code>480M</code> 总线上挂了几个,见
+  <a href="../03-host-hardware/#usb-budget">USB 带宽预算</a>。</li>
+</ul>
+</div>
+<h2 id="choose">选择安装方式<a class="headerlink" href="#choose" title="锚点链接">¶</a></h2>
+<p>有两条路径,装出来的采集环境是同一套,选一条走完即可。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>Mamba 源码安装</strong></th>
+<th><strong>Docker 交付镜像</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>拿到的东西</td>
+<td>源码仓库,自己建环境</td>
+<td>从公开镜像仓库拉一个现成镜像,跑一个脚本</td>
+</tr>
+<tr>
+<td>耗时</td>
+<td>较长,夹爪 SDK 与 Pico4 绑定都要现编译</td>
+<td>几分钟到几十分钟,取决于拉镜像的网速(约 21 GB)</td>
+</tr>
+<tr>
+<td>NVIDIA GPU</td>
+<td>装得上,但<a href="#host-spec">最低配置</a>按 RTX 3060 / 8 GB 显存起——没有 NVIDIA 显卡时只能<a href="../05-data-collection/#no-gpu">降级录制</a></td>
+<td><strong>必需</strong>,驱动 ≥ 570.144</td>
+</tr>
+<tr>
+<td>环境隔离</td>
+<td>装在主机的 Mamba 环境里</td>
+<td>装在容器里,不污染主机</td>
+</tr>
+<tr>
+<td>改代码</td>
+<td>方便</td>
+<td>不方便</td>
+</tr>
+<tr>
+<td>步骤</td>
+<td>下面 2.1 – 2.5</td>
+<td><a href="#docker">Docker 交付镜像</a></td>
+</tr>
+</tbody>
+</table>
+<p><strong>默认走 Mamba</strong>——它对显卡驱动没有额外要求(<strong>没装 NVIDIA 驱动的机器也装得上</strong>),
+要改采集程序也方便。本手册后续章节的命令都按这条路径书写。</p>
+<p>机器有 <strong>NVIDIA 驱动</strong>、又不想自己建环境时,可以选 Docker。</p>
+<div class="admonition warning">
+<p class="admonition-title">两条路径都需要能访问外网</p>
+<p>安装过程要从网上取东西——conda 要拉 conda-forge 与 PyPI 包、克隆 GitHub 仓库与子模块、
+下载 XenseVR PC Service 的 <code>.deb</code>;Docker 要装 Docker Engine 与 NVIDIA Container Toolkit。
+<strong>离线机器两条都走不通。</strong></p>
+<p>在受限网络里,给终端配好代理再开始(Docker 那条脚本支持 <code>XENSE_PROXY_URL</code>,见
+<a href="#docker">一键安装</a>)。</p>
+</div>
+<p>以下 2.1 – 2.5 是 <strong>Mamba 源码安装</strong>这条路径。</p>
+<div class="admonition info">
+<p class="admonition-title">走 Docker 的话,2.1 – 2.5 整段跳过</p>
+<p>镜像里已经装好了 Mamba 环境、采集程序和三个硬件 SDK,不需要克隆仓库、建环境或跑
+<code>setup_env.sh</code>——直接看后面的 <a href="#docker">Docker 交付镜像</a>。</p>
+</div>
+<div class="admonition info">
+<p class="admonition-title">总览</p>
+<p>装系统依赖包 → 装 Mamba → 克隆仓库(含子模块)→ 建环境 → <code>setup_env.sh --install</code> → 验证。</p>
+</div>
+<h2 id="apt">前置:系统依赖包(apt)<a class="headerlink" href="#apt" title="锚点链接">¶</a></h2>
+<p>硬件 SDK 是在 <code>setup_env.sh --install</code> 那一步<strong>现编译</strong>的,而刚装好的 Ubuntu 上连编译器都没有。
+先装上:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>build-essential<span class="w"> </span>cmake<span class="w"> </span>pkg-config<span class="w"> </span>git<span class="w"> </span>curl
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>libusb-dev<span class="w">    </span><span class="c1"># ⚠️ libusb 不够新,相机就是连不上 —— 见下面这条</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>v4l-utils<span class="w">     </span><span class="c1"># 采集用不到,但排查相机全靠它</span>
+</span></code></pre></div>
+<p><code>setup_env.sh</code> 开跑前会先查这几个命令在不在,缺了<strong>直接停下并打印该敲哪一行 apt</strong>——
+否则错误要等到 CMake 或链接阶段才冒出来,看着像 SDK 坏了,能耗掉一下午。</p>
+<div class="admonition danger">
+<p class="admonition-title"><code>libusb-dev</code>:要装,而且要跟着内核一起保持更新</p>
+<p><strong>近期的 Linux 内核更新要求配套更新 libusb。libusb 落后(或缺失)时,相机就是连不上。</strong>
+这是"昨天还好好的机器今天突然不行"最常见的一种:主机做了一次带新内核的 <code>apt upgrade</code>,
+libusb 没跟上,触觉和腕相机就打不开了。</p>
+<p><strong>报错里没有一个字提到 libusb</strong>,所以排查通常先去翻 USB hub、线材和带宽——方向全错。
+<strong>先查这一条,再查别的。</strong></p>
+<p><code>sudo apt install -y libusb-dev</code> 会连带装上当前的 <code>libusb-0.1-4</code> 运行库
+(<code>libusb-0.1.so.4</code>),预编译的相机栈加载的正是它。已经装过也一样:<strong>内核升级之后再升一次</strong>
+(先 <code>apt update</code>,否则 apt 看不到新版本):</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>update<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>--only-upgrade<span class="w"> </span>libusb-dev<span class="w"> </span>libusb-1.0-0
+</span></code></pre></div>
+<p>内核升级后<strong>重启一次</strong>同理:运行的内核和用户态 USB 栈应该来自同一次升级。</p>
+<p><code>setup_env.sh</code> 会检查 <code>libusb-0.1.so.4</code>,但<strong>只告警不中断</strong>——它是相机的<strong>运行期</strong>依赖,
+编译期用不到,所以缺了照样装得完,等到 <code>connect()</code> 才失败。正因如此这里要单独点出来,
+而不是留到设备上现踩。</p>
+</div>
+<p><code>v4l-utils</code> 那行只是<strong>告警</strong>,不阻断安装,但强烈建议装上:<code>v4l2-ctl --list-formats-ext</code>
+正是<a href="../03-host-hardware/#usb-budget">相机打不开</a>时最趁手的那把尺子——这也恰好是这套硬件上
+最常见的装机问题。缺了它的机器,<strong>远程根本没法帮你查</strong>。</p>
+<div class="admonition note">
+<p class="admonition-title">不需要 <code>ffmpeg</code>,也不需要 <code>libudev-dev</code></p>
+<p><code>torchcodec</code> 用的是 conda 环境里那份 FFmpeg <strong>动态库</strong>,系统装不装 <code>ffmpeg</code> 命令都不影响。
+<code>libudev</code> 是<strong>运行期</strong>由预编译 wheel 加载的,用的是 Ubuntu 本来就有的 <code>libudev1</code>,
+没有任何东西需要它的 <code>-dev</code> 头文件。libusb 是<strong>例外</strong>——见上面那条。</p>
+</div>
+<h2 id="21-前置安装-mamba--miniforge">2.1 前置:安装 Mamba / Miniforge<a class="headerlink" href="#21-前置安装-mamba--miniforge" title="锚点链接">¶</a></h2>
+<p>强烈推荐用 Mamba:依赖求解比原生 conda <strong>快约 10×</strong>,且在所有 channel 上都更快。</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>curl<span class="w"> </span>-L<span class="w"> </span>-O<span class="w"> </span><span class="s2">"https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-</span><span class="k">$(</span>uname<span class="k">)</span><span class="s2">-</span><span class="k">$(</span>uname<span class="w"> </span>-m<span class="k">)</span><span class="s2">.sh"</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>bash<span class="w"> </span>Miniforge3-<span class="k">$(</span>uname<span class="k">)</span>-<span class="k">$(</span>uname<span class="w"> </span>-m<span class="k">)</span>.sh
+</span></code></pre></div>
+<h2 id="22">2.2 克隆仓库与子模块<a class="headerlink" href="#22" title="锚点链接">¶</a></h2>
+<p>仓库用 <code>third_party/</code> 子模块管理硬件 SDK,<strong>必须</strong>递归克隆:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>git<span class="w"> </span>clone<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span>--recurse-submodules<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">  </span>https://github.com/XenseRobotics-AI/xense-taccap-lerobot.git
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="nb">cd</span><span class="w"> </span>xense-taccap-lerobot
+</span></code></pre></div>
+<p>若已经克隆但漏了子模块:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>git<span class="w"> </span>submodule<span class="w"> </span>update<span class="w"> </span>--init<span class="w"> </span>--recursive<span class="w"> </span>--progress
+</span></code></pre></div>
+<p>子模块与对应安装包——<strong>只有一个</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>子模块</th>
+<th>安装后的包</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/XenseRobotics-AI/TacCap-Gripper"><code>third_party/taccap-gripper</code></a></td>
+<td><code>xense.taccap</code>(XTac-UMI G1 触觉夹爪 SDK)</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">xensesdk 不是子模块</p>
+<p><code>xensesdk</code> 是视触觉传感器 SDK,由 <code>setup_env.sh --install</code> 自动安装,无需单独拉取子模块。</p>
+</div>
+<div class="admonition info">
+<p class="admonition-title"><code>xensevr_pc_service_sdk</code>(Pico4 追踪器 / 头显相机)也不再是子模块</p>
+<p>它的 Python 绑定就在主仓库里,绑定要链接的 C SDK
+(<code>PXREARobotSDK.h</code> + <code>libPXREARobotSDK.so</code>)<strong>直接从下一步安装的
+<a href="#24">XenseVR PC Service <code>.deb</code></a> 里取</strong>——那个包本来就带着它,不必再为了重新编译它而克隆
+一份服务源码。<strong>递归克隆从约 33 MiB 降到约 1.6 MiB</strong>,安装时也不再跑 cmake 链接。</p>
+<p>对使用者的影响只有一条:<strong>这个 C SDK 的更新,今后是通过新版 <code>.deb</code> 到你手上的</strong>,
+不是重跑一次 <code>--install</code>。</p>
+</div>
+<div class="admonition danger">
+<p class="admonition-title">更新子模块后必须重新编译 <code>xense.taccap</code></p>
+<p><code>taccap-gripper</code> 的 Python 包里带一份<strong>编译产物</strong>。<code>git submodule update</code> 只更新文件,
+不会重新编译——文件更新了而编译产物还是旧的时候,<code>import xense.taccap</code> 会直接失败,例如:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>AttributeError: module 'xense.taccap._taccap_native' has no attribute 'GripperAutoCalConfig'
+</span></code></pre></div>
+<p>拉取任何含 <code>cpp/</code> 或 <code>python/bindings/</code> 改动的子模块更新后,重新构建:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nb">cd</span><span class="w"> </span>~/xense-taccap-lerobot
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="nv">LIBRARY_PATH</span><span class="o">=</span><span class="s2">"</span><span class="si">${</span><span class="nv">CONDA_PREFIX</span><span class="si">}</span><span class="s2">/lib"</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">  </span>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>third_party/taccap-gripper<span class="w"> </span>--no-deps<span class="w"> </span>--no-build-isolation
+</span></code></pre></div>
+<p>或直接 <code>bash setup_env.sh --install</code>(会一并处理其他 SDK)。<strong>不需要 sudo。</strong>
+完成后验证:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"import xense.taccap as t; print(t.__version__)"</span>
+</span></code></pre></div>
+</div>
+<h2 id="23-创建并激活环境">2.3 创建并激活环境<a class="headerlink" href="#23-创建并激活环境" title="锚点链接">¶</a></h2>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>./setup_env.sh<span class="w"> </span>--mamba
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>mamba<span class="w"> </span>activate<span class="w"> </span>xense-taccap
+</span></code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">环境名</p>
+<p><code>--mamba</code> 默认创建 <code>xense-taccap</code> 环境;要自定义环境名,在 <code>--mamba</code> 后追加名称。</p>
+</div>
+<h2 id="24">2.4 一键安装<a class="headerlink" href="#24" title="锚点链接">¶</a></h2>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>./setup_env.sh<span class="w"> </span>--install
+</span></code></pre></div>
+<p>这一步会:</p>
+<ul>
+<li>用 <code>conda_environment.yaml</code> 更新 mamba/conda 环境</li>
+<li>从 <code>pyproject.toml</code> 安装主包</li>
+<li>安装 <code>xensesdk</code> 视触觉传感器 SDK</li>
+<li>安装 <strong>XenseVR PC Service 守护进程</strong>(约 110 MB 的 <code>.deb</code>,装到 <code>/opt/apps/roboticsservice</code>)</li>
+<li>编译两个硬件 SDK:<code>xensevr_pc_service_sdk</code>(Pico4,链接上一步 <code>.deb</code> 里的 C SDK)
+  与 <code>xense.taccap</code>(夹爪,来自子模块)</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">XenseVR PC Service 的 .deb 从哪来</p>
+<p><code>./setup_env.sh --install</code> 会直接从
+<a href="https://github.com/XenseRobotics-AI/XenseVR-PC-Service/releases/tag/v0.2.1">v0.2.1 release</a>
+下载当前机器架构对应的 <code>.deb</code> 包(可用 <code>$XENSEVR_DEB_URL</code> 覆盖下载地址),
+再执行 <code>sudo dpkg -i</code> 安装。</p>
+<p><strong>已经装了同一版本时会直接跳过,一个字节都不下</strong>,所以重跑 <code>--install</code> 不会再等这 110 MB;
+上次下到一半或已下完的文件也会被复用,不会重来。</p>
+</div>
+<div class="admonition danger">
+<p class="admonition-title">这个包下不下来,安装会直接停</p>
+<p>Pico4 绑定要链接的 C SDK 现在就在这个包里(见 <a href="#22">2.2 克隆仓库与子模块</a>)。
+所以下载失败时 <code>--install</code> 会<strong>直接停下</strong>,而不是拿一个不存在的库去编译。
+离线或需要打补丁的包,用 <code>$XENSEVR_DEB</code> 指向本地文件。</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">头显双目与头部位姿需要 PC Service ≥ v0.2.0</p>
+<p>只有 v0.2.0 及以上的服务才转发头显相机的画面,<a href="../05-data-collection/#56">头显双目与头部位姿</a>
+都靠这条通路。追踪器不受影响——不用头显相机的话,装哪个版本没区别。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">为什么基线是 v0.2.1 而不是 v0.2.0</p>
+<p>脚本会跳过"版本已经一致"的包。v0.2.1 和 v0.2.0 是同一个守护进程,区别在于<strong>重新编译过的
+C SDK</strong>——停在 v0.2.0 的机器会拿旧 SDK 去编 Pico4 绑定。所以这次要升一下,
+并不是守护进程本身有什么新功能。</p>
+</div>
+<h2 id="25">2.5 验证安装<a class="headerlink" href="#25" title="锚点链接">¶</a></h2>
+<p>三个包全部能 import 即成功:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">'import xensevr_pc_service_sdk; print("xensevr_pc_service_sdk OK -&gt;", xensevr_pc_service_sdk.__file__)'</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">'import xensesdk; print("xensesdk OK -&gt;", xensesdk.__file__)'</span>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">'import xense.taccap; print("xense.taccap OK -&gt;", xense.taccap.__file__)'</span>
+</span></code></pre></div>
+<p>用<a href="../05-data-collection/#56">头显相机</a>时再补一条——检查是不是带相机接口的新版本:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">'import xensevr_pc_service_sdk as xrt; print("pico camera API:", hasattr(xrt, "has_pico_camera_frame"))'</span>
+</span></code></pre></div>
+<p>返回 <code>False</code> 说明环境里加载的还是旧版本,重新执行 <code>./setup_env.sh --install</code> 即可。</p>
+<p>可选:确认视频编解码依赖可加载(<code>torchcodec</code> 按 PyTorch 兼容矩阵固定,PyAV 固定为 <code>15.1.0</code>;FFmpeg 不参与 conda 求解):</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">'import torchcodec; print("torchcodec OK -&gt;", torchcodec.__version__)'</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">'import av; print("PyAV OK -&gt;", av.__version__)'</span>
+</span></code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">需要系统 ffmpeg?</p>
+<p>需要带 <code>libsvtav1</code> 的系统 ffmpeg 请单独装(apt 或官方静态构建),默认编码路径不依赖它。</p>
+</div>
+<hr>
+<h2 id="docker">Docker 交付镜像<a class="headerlink" href="#docker" title="锚点链接">¶</a></h2>
+<p>镜像里已经包含完整的 <code>xense-taccap</code> 环境、CUDA 用户态库、采集程序和三个硬件 SDK
+(XenseSDK、TacCap-Gripper、Pico4 绑定),容器启动时还会自动拉起 XenseVR PC Service。</p>
+<div class="admonition warning">
+<p class="admonition-title">容器以特权模式运行</p>
+<p>为了支持采集过程中热插拔触觉传感器、腕相机、夹爪串口和 Pico4,容器使用特权模式,
+并共享主机的网络与 IPC。<strong>只在你信任的采集主机上运行。</strong></p>
+</div>
+<h3 id="主机要求">主机要求<a class="headerlink" href="#主机要求" title="锚点链接">¶</a></h3>
+<ul>
+<li>Ubuntu 22.04 / 24.04,<strong>amd64</strong></li>
+<li><strong>NVIDIA 驱动 ≥ 570.144</strong> —— <code>nvidia-smi --query-gpu=driver_version --format=csv,noheader</code> 可查</li>
+</ul>
+<p>安装脚本<strong>不会替你装或升级显卡驱动</strong>(涉及显卡型号、Secure Boot 和重启),驱动不满足
+会直接停下来提示。Docker Engine、Compose 插件和 NVIDIA Container Toolkit 缺了则由脚本自动装。</p>
+<h3 id="ghcr">一键安装<a class="headerlink" href="#ghcr" title="锚点链接">¶</a></h3>
+<p>镜像发布在 GitHub Container Registry,<strong>包是公开的,拉取不需要登录</strong>:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>ghcr.io/xenserobotics-ai/xense-taccap-lerobot
+</span></code></pre></div>
+<p>用<strong>普通用户</strong>(不要用 root)执行:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/XenseRobotics-AI/xense-taccap-lerobot.git
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="nb">cd</span><span class="w"> </span>xense-taccap-lerobot
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>./docker/install_customer.sh
+</span></code></pre></div>
+<p>脚本依次完成:检查系统与显卡驱动 → 按需安装 Docker 与 NVIDIA Container Toolkit
+(并把 NVIDIA runtime 注册进 Docker)→ 安装夹爪串口的 udev 规则(即
+<a href="../03-host-hardware/#32">3.2</a> 的 ModemManager 屏蔽规则)→ 拉取镜像 →
+跑一次 CUDA 与图形能力的冒烟测试。</p>
+<p>克隆仓库只是为了拿到 <code>compose.yaml</code> 和这个脚本,<strong>采集程序本身在镜像里</strong>,不需要拉子模块,
+也不用在主机上建环境。</p>
+<div class="admonition tip">
+<p class="admonition-title">需要走代理时</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="nv">XENSE_PROXY_URL</span><span class="o">=</span>http://127.0.0.1:7897<span class="w"> </span>./docker/install_customer.sh
+</span></code></pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">完全离线的机器:仍然可以用 <code>.tar</code> 交付包</p>
+<p>向交付渠道要镜像 tar 包,放进仓库根目录(或作为第一个参数传给脚本),脚本会改为
+校验并导入它,不走网络:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>./docker/install_customer.sh<span class="w"> </span>xense-taccap-lerobot-0.0.6-linux-amd64.tar
+</span></code></pre></div>
+<p>在线拉取是默认路径,原因是<strong>后续升级更省事</strong>——镜像二十多 GB,绝大部分是不常变的
+依赖层,升级时只拉变动的那几层,不用重新搬一整包。</p>
+</div>
+<h3 id="docker-pin">录数据前先把版本钉死<a class="headerlink" href="#docker-pin" title="锚点链接">¶</a></h3>
+<p>默认拉的是 <code>latest</code>,它是<strong>浮动</strong>的——下次发布会把它指向新镜像,你的采集环境会在不知情的
+情况下变。正式采集前在仓库根目录的 <code>.env</code> 里钉死一个版本:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>LEROBOT_IMAGE_TAG=0.0.6
+</span></code></pre></div>
+<p>改完确认解析到的确实是这一版,再拉:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>config<span class="w"> </span>--images
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>docker<span class="w"> </span>compose<span class="w"> </span>pull
+</span></code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">只需要写 tag 这一行</p>
+<p><code>compose.yaml</code> 的默认镜像已经是 <code>ghcr.io/xenserobotics-ai/xense-taccap-lerobot</code>,
+<strong>不需要再写 <code>LEROBOT_IMAGE</code></strong>;它只在你要换一个镜像名(比如本机自建)时才用得上。</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">钉在 <code>0.0.5</code> 及更早的话,有两条已知问题要绕一下</p>
+<p><strong><code>0.0.6</code> 两条都已修好</strong>,钉这一版就不必管;仍然停在 <code>0.0.5</code> 及更早的机器要注意:</p>
+<ul>
+<li><strong>录制要加 <code>--play_sounds=false</code></strong>,否则第一集语音播报就会让程序崩掉
+  (镜像里没有 <code>spd-say</code>)→ <a href="../troubleshooting/#docker">故障排查</a>。</li>
+<li><strong>导出数据要以 root 拷、拷完再 <code>chown</code></strong>,因为这版镜像录出来的视频是 <code>0600 root</code>
+  → <a href="#docker-data">数据放在哪</a>。</li>
+</ul>
+<p>两条都不影响录到的数据本身,所以<strong>采集进行到一半时不必急着升级</strong>,按上面绕开即可。</p>
+</div>
+<h3 id="docker-host">安装后的主机设置<a class="headerlink" href="#docker-host" title="锚点链接">¶</a></h3>
+<p>脚本已经把你加进 <code>docker</code> 组了,但<strong>当前终端不会自动生效</strong>。这两条在<strong>宿主机</strong>上敲,
+不能跳过:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>newgrp<span class="w"> </span>docker<span class="w">                    </span><span class="c1"># 让 docker 组权限在当前终端生效</span>
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>xhost<span class="w"> </span>+si:localuser:root<span class="w">         </span><span class="c1"># 要在容器里显示 Rerun 等窗口</span>
+</span></code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">逐条敲,不要整块粘贴</p>
+<p><code>newgrp</code> 会开一个<strong>子 shell</strong>,整块粘贴时它后面的命令会被这个子 shell 吃掉——看起来
+像是敲了却没反应。<code>xhost</code> 那条也是同理,必须等 <code>newgrp</code> 之后再单独敲。</p>
+<p>不执行 <code>newgrp docker</code> 就直接进容器,会得到 <code>permission denied</code>。
+<strong>注销后重新登录是更干净的做法</strong>:<code>newgrp</code> 之后你在该终端新建的文件属组会变成
+<code>docker</code>,重新登录则没有这个副作用。</p>
+</div>
+<p><code>xhost</code> 的授权用完可以撤销:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>xhost<span class="w"> </span>-si:localuser:root
+</span></code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title"><code>docker</code> 组成员权限接近 root</p>
+<p>只把需要采集的用户加进去,不要图省事把所有本地用户都加上。</p>
+</div>
+<h3 id="进入容器与验证">进入容器与验证<a class="headerlink" href="#进入容器与验证" title="锚点链接">¶</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>xense-taccap
+</span></code></pre></div>
+<p>在容器里逐条确认——四个 import 全过、GPU 可见:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">'import torch; print(torch.__version__, torch.cuda.is_available())'</span>
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">'import xensesdk; print("xensesdk -&gt;", xensesdk.__file__)'</span>
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">'import xense.taccap; print("taccap -&gt;", xense.taccap.__file__)'</span>
+</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">'import xensevr_pc_service_sdk; print("pico4 -&gt;", xensevr_pc_service_sdk.__file__)'</span>
+</span></code></pre></div>
+<p>再确认 Pico4 绑定和它依赖的守护进程是<strong>同一个版本</strong>:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">'import importlib.metadata as M; print("pico4 -&gt;", M.version("xensevr_pc_service_sdk"))'</span>
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>dpkg-query<span class="w"> </span>-W<span class="w"> </span>-f<span class="o">=</span><span class="s1">'daemon -&gt; ${Version}\n'</span><span class="w"> </span>xensevr-pc-service
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>pico4 -&gt; 0.2.1
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>daemon -&gt; 0.2.1
+</span></code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">这两行必须一致,不一致就别拿这个镜像录数据</p>
+<p>Pico4 绑定链接的 C SDK 就取自那个 <code>.deb</code>。两者对不上说明镜像是半新不旧的构建,
+追踪器数据可能不对。换一个 tag 重新 <code>docker compose pull</code>,或联系交付渠道。</p>
+</div>
+<p>再确认设备能被发现:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>lerobot-find-cameras
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>lerobot-info
+</span></code></pre></div>
+<p>不进交互 shell 也可以直接跑一条命令:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>xense-taccap<span class="w"> </span>lerobot-info
+</span></code></pre></div>
+<h3 id="docker-data">数据放在哪、为什么删容器不丢<a class="headerlink" href="#docker-data" title="锚点链接">¶</a></h3>
+<p>容器里的这四个目录都挂在 <strong>Docker volume</strong> 上,<code>--rm</code> 删掉临时容器不影响它们:</p>
+<table>
+<thead>
+<tr>
+<th>容器内路径</th>
+<th>volume</th>
+<th>放什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/data</code></td>
+<td><code>lerobot-data</code></td>
+<td><strong>数据集</strong>(<code>HF_LEROBOT_HOME=/data/lerobot</code>)</td>
+</tr>
+<tr>
+<td><code>/root/.xensesdk</code></td>
+<td><code>xensesdk-cache</code></td>
+<td>视触觉传感器按序列号缓存的配置</td>
+</tr>
+<tr>
+<td><code>/root/.cache/huggingface</code></td>
+<td><code>huggingface-cache</code></td>
+<td>Hugging Face 缓存</td>
+</tr>
+<tr>
+<td><code>/root/.cache/torch</code></td>
+<td><code>torch-cache</code></td>
+<td>Torch 缓存</td>
+</tr>
+</tbody>
+</table>
+<p>查看数据。这些卷在宿主机上的实际位置是
+<code>/var/lib/docker/volumes/xense-taccap-lerobot_&lt;卷名&gt;/_data</code>,属 root,直接 <code>ls</code> 要 sudo;
+<strong>走容器看更省事</strong>:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>xense-taccap<span class="w"> </span>bash<span class="w"> </span>-lc<span class="w"> </span><span class="s1">'ls -la /data/lerobot'</span>
+</span></code></pre></div>
+<div class="admonition danger">
+<p class="admonition-title">不要用 <code>docker volume prune</code></p>
+<p>它删的是"当前没有容器在用"的卷,而你的数据卷<strong>平时正是这个状态</strong>(容器是 <code>--rm</code> 的)
+——那条命令会把录好的数据一起删掉,且不可恢复。</p>
+<p>清理镜像用 <code>docker image prune</code>,清理构建缓存用 <code>docker builder prune</code>,这两个都不碰卷。</p>
+</div>
+<p>把数据导出到宿主机。<strong>以 root 读、拷完在同一条命令里交还属主</strong>——这是目前唯一对已录数据
+成立的写法:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>mkdir<span class="w"> </span>-p<span class="w"> </span><span class="nb">export</span>
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>docker<span class="w"> </span>compose<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>--no-deps<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a><span class="w">    </span>--entrypoint<span class="w"> </span>/bin/bash<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-29-4"><a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a><span class="w">    </span>-v<span class="w"> </span><span class="s2">"</span><span class="nv">$PWD</span><span class="s2">/export:/export"</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-29-5"><a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a><span class="w">    </span>xense-taccap<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-29-6"><a id="__codelineno-29-6" name="__codelineno-29-6" href="#__codelineno-29-6"></a><span class="w">    </span>-lc<span class="w"> </span><span class="s2">"cp -a /data/lerobot /export/ &amp;&amp; chown -R </span><span class="k">$(</span>id<span class="w"> </span>-u<span class="k">)</span><span class="s2">:</span><span class="k">$(</span>id<span class="w"> </span>-g<span class="k">)</span><span class="s2"> /export"</span>
+</span></code></pre></div>
+<p>三个部分都是必需的,不是可省的装饰:</p>
+<ul>
+<li><strong><code>--entrypoint /bin/bash</code></strong> —— 容器默认的启动脚本会 <code>chmod 0700</code> 运行目录,还会顺带拉起
+  XenseVR 服务;拷个文件不需要这些,而且下面那条 <code>--user</code> 的坑正出在这里。</li>
+<li><strong><code>chown</code> 放在同一条命令里</strong> —— 不放的话导出的文件属主是 root,你在宿主机上既删不掉也改不了。</li>
+<li><strong>先 <code>mkdir -p export</code></strong> —— Docker 自动创建的挂载点归 root,非 root 写不进去。</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">不要改成用 <code>--user</code> 以自己的身份拷</p>
+<p>两个地方会挂,而且第二个很像"文件坏了":</p>
+<ul>
+<li><code>docker compose run --user ...</code> <strong>仍然会跑启动脚本</strong>,而非 root 改不动运行目录的权限,
+  于是报 <code>chmod: changing permissions of '/tmp/xdg-runtime': Operation not permitted</code>。</li>
+<li><strong><code>0.0.5</code> 及更早的镜像录出来的视频是 <code>-rw------- root</code></strong>,非 root 拷贝会在<strong>每个视频</strong>上
+  报 <code>cp: cannot open '.../file-000.mp4' for reading: Permission denied</code>。元数据是正常的
+  <code>0644</code>、拷得动,所以<strong>只有 <code>.mp4</code> 失败</strong>,看着像个别文件损坏。<code>0.0.6</code> 起视频落盘即为
+  <code>0644</code>,不会再有这个现象——但<strong>这取决于当初录数据的那版镜像</strong>,升级不会改写已经录好的文件。</li>
+</ul>
+</div>
+<p><code>cp -a</code> 会把权限一起带过去。<code>0.0.5</code> 及更早录的数据因此导出后仍是 <code>0600</code>(只是属主已经是你);
+要让同组或其他用户也能读,在上面那条末尾再接一段:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="w">    </span><span class="o">&amp;&amp;</span><span class="w"> </span>chmod<span class="w"> </span>-R<span class="w"> </span>u+rwX,go+rX<span class="w"> </span>/export
+</span></code></pre></div>
+<h3 id="docker-data-dir">让数据直接落在宿主机目录<a class="headerlink" href="#docker-data-dir" title="锚点链接">¶</a></h3>
+<p>要频繁看数据、删数据,或者另挂了一块大盘时,<strong>这条比每次拷出来省事得多</strong>。在 <code>.env</code> 里指定:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>LEROBOT_DATA_DIR=/home/你的用户名/.cache/huggingface/docker_data
+</span></code></pre></div>
+<p>带 <code>/</code> 的值按 <strong>bind mount</strong> 处理,不带 <code>/</code> 的当具名卷;不设就还是默认的 <code>lerobot-data</code>,
+行为与之前完全一致。改完确认一下再录,数据会出现在 <code>&lt;那个目录&gt;/lerobot/</code>:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>config
+</span></code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">bind mount 解决了位置,但不解决属主</p>
+<p>录制仍以 root 运行,所以即使落在你自己的目录里,<strong>文件属主还是 root</strong>。录完交还给自己:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>--no-deps<span class="w"> </span>--entrypoint<span class="w"> </span>/bin/bash<span class="w"> </span>--user<span class="w"> </span><span class="m">0</span>:0<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-33-2"><a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a><span class="w">    </span>xense-taccap<span class="w"> </span>-lc<span class="w"> </span><span class="s2">"chown -R </span><span class="k">$(</span>id<span class="w"> </span>-u<span class="k">)</span><span class="s2">:</span><span class="k">$(</span>id<span class="w"> </span>-g<span class="k">)</span><span class="s2"> /data"</span>
+</span></code></pre></div>
+<p>或者直接在宿主机 <code>sudo chown -R "$(id -u):$(id -g)" ~/.cache/huggingface/docker_data</code>。
+用 <code>ls -ln</code> 检查——它显示<strong>数字</strong> uid/gid,一眼就能看出 chown 到底生效没有:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>ls<span class="w"> </span>-ln<span class="w"> </span>~/.cache/huggingface/docker_data/lerobot
+</span></code></pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">不要改 <code>compose.yaml</code> 来做这件事</p>
+<p><code>compose.yaml</code> 是仓库里被跟踪的文件,把某台机器的绝对路径写进去,下次 <code>git pull</code> 会冲突,
+换台机器还会挂到一个不存在的路径上。<code>LEROBOT_DATA_DIR</code> 写在 <code>.env</code> 里,<code>.env</code> 不会被提交。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">传感器配置缓存别删</p>
+<p>第二个 volume 存的是每枚传感器的配置。留着它,容器重启时就不必重新读传感器 flash、
+也不会因此触发 USB 重新枚举——<strong>启动更快,也更稳</strong>。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">设备发现在容器里同样成立</p>
+<p>Compose 会把宿主机的 <code>/dev</code> 和 <code>/run/udev</code> 透传进来,所以容器里也能读到
+<code>/dev/v4l/by-id</code>、<code>/dev/v4l/by-path</code> 和 <code>/dev/serial/by-path</code>——
+<a href="../03-host-hardware/#33">3.3 的自动发现</a>靠的就是这些路径。</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">要在容器里<a href="../06-dataset/#64">上传 Hub</a></p>
+<p>把 token 写进仓库根目录的 <code>.env</code>(就是钉版本号的那个文件),它会作为 <code>HF_TOKEN</code> 带进容器:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>HF_TOKEN=hf_xxxxxxxxxxxxxxxx
+</span></code></pre></div>
+<p>不写的话,每次进容器都得重新 <code>hf auth login</code>——容器是 <code>--rm</code> 的,登录状态不留存。</p>
+</div>
+<h3 id="docker-gui">容器里的图形界面<a class="headerlink" href="#docker-gui" title="锚点链接">¶</a></h3>
+<p>镜像已带齐 Rerun 需要的 XKB / Vulkan / XDG 运行库,并默认 <code>WGPU_BACKEND=vulkan</code>;
+Compose 也透传了 <code>DISPLAY</code> 和 X11 socket。窗口出不来时,先做上面那次
+<a href="#docker-host"><code>xhost</code> 授权</a>,再在容器里确认显卡可见:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>vulkaninfo<span class="w"> </span>--summary
+</span></code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">别把 <code>compose.yaml</code> 里的 <code>runtime: nvidia</code> 改成 <code>gpus: all</code></p>
+<p>这两种写法看着等价,实际不是:<code>gpus: all</code> 只申请到 <strong>compute + utility</strong>,容器能跑 CUDA、
+<code>nvidia-smi</code> 也正常,但<strong>图形库不会被注入</strong>——NVIDIA 的 Vulkan ICD 不在容器里,Rerun 于是报</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>WGPU error: Failed to create surface for any enabled backend
+</span></code></pre></div>
+<p>这个失败很有迷惑性:GPU 明明"看得见",偏偏只有窗口起不来。<code>runtime: nvidia</code> 才是把
+图形能力带进来的那一项。</p>
+<p>代价是它要求 NVIDIA runtime 已经注册进 Docker(<code>install_customer.sh</code> 会做)。
+没注册时 Compose 会立刻报 <code>Unknown runtime specified nvidia</code> ——
+这比悄悄丢掉图形能力好排查得多,处理办法见<a href="../troubleshooting/#docker">故障排查</a>。</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">只处理数据、不接 Pico4 时</p>
+<p>容器默认会启动 XenseVR PC Service。用不到追踪器时可以关掉:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a><span class="nv">START_XENSEVR_SERVICE</span><span class="o">=</span><span class="m">0</span><span class="w"> </span>docker<span class="w"> </span>compose<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>xense-taccap
+</span></code></pre></div>
+<p>服务日志在容器内 <code>/tmp/xensevr-service.log</code>。</p>
+</div>
+<hr>
+<p>环境装好后,<strong>先做主机与硬件配置</strong>(串口权限、设备发现),否则夹爪能被列出却打不开。</p>
+<p>下一步 → <a href="../03-host-hardware/">3. 主机与硬件配置</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden="">
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚">
+        
+          
+          <a href="../hardware/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 硬件介绍">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                硬件介绍
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../03-host-hardware/" class="md-footer__link md-footer__link--next" aria-label="下一页: 主机与设备配置">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                主机与设备配置
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      文档版本 v0.0.6 &nbsp;·&nbsp; Copyright © 2026 XenseRobotics Co., Ltd.
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/XenseRobotics-AI/XTac-UMI-G1-Docs" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tracking", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "navigation.footer", "toc.follow", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.tooltips"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>
