@@ -7,14 +7,14 @@
 
 ## 目录约定
 
-| 子目录 | 用途 | 对应页面 |
+| 子目录 | 用途 | 对应章节 |
 |---|---|---|
-| `brand/` | 站点 logo(`logo.svg` 深色版、`logo-light.svg` 白色版给黑色页眉)、favicon | 主题 |
-| `product/` | 产品渲染图、背包接口与标签照片、接线图 | 首页、product/ |
-| `backpack/` | XTac-UMI Collector 控制台截图(按 0.3.16 核对,其中导出、设置、系统更新几页的旧图待重截;文件名沿用 Taccap-User-Doc;首页与 product/ 的控制台展示图也从这里取) | 首页、product/、backpack/ |
-| `pico4/` | Pico4 Ultra 企业版系统与 APP 截图 | common/pico4 |
-| `hardware/` | 夹爪接口、锁紧、指示灯示意 | common/gripper、product/g1 |
-| `bringup/` `record/` `dataset/` | PC 版启动、录制、数据集截图 | pc/ |
+| `brand/` | 站点 logo、favicon | 主题 |
+| `pico4/` | Pico4 Ultra 企业版 APP 使用截图 | §3.4 |
+| `bringup/` | 数采启动流程截图 | §3.6 |
+| `hardware/` | 设备/串口/接线/发现规则示意 | §3 |
+| `record/` | 录制终端/界面、Rerun 截图 | §4 / §5 |
+| `dataset/` | 数据集结构、校验、可视化 | §6 |
 
 ## 命名约定
 
