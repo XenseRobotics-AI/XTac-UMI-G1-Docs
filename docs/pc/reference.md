@@ -25,8 +25,8 @@
 | `robot.enable_tactile` | `true` | 关闭则整条触觉链路都不接入(不发现、不落盘)。**排查用,不是录制模式** |
 | `robot.tactile_fps` | `30` | 触觉帧率 |
 | `robot.tactile_output_types` | `["rectify"]` | **落盘**的触觉流,**只能填一个**;填多个直接报错 |
-| `robot.tactile_display_output_types` | `["difference"]` | **仅供 Rerun 显示**、不落盘的额外触觉流;设为空列表则关闭 |
-| `robot.tactile_diff_gain` | `1.0` | `difference` 图的线性增益(只影响显示流);`None` = 用传感器出厂值 |
+| `robot.tactile_display_output_types` | `["rectify"]` | Rerun 显示哪一路触觉,**默认与落盘同一路**(空列表等价);填 `["difference"]` 才多出一路仅显示、不落盘的流 |
+| `robot.tactile_diff_gain` | `1.0` | `difference` 图的线性增益;**默认不请求 `difference`,故不起作用**;`None` = 用传感器出厂值 |
 | `robot.expected_tactiles_per_side` | `2` | 每侧应有几枚触觉;数量对不上直接报错 |
 | `robot.enable_gripper` / `robot.enable_imu` | `true` / `false` | 夹爪本体读数 / IMU 通道 |
 | `robot.gripper_open_rad` | `1.7` | **仅从夹爪用**。主夹爪一律用自己固件里实测的行程上限,本项对它没有任何作用——没标定的主夹爪会被拒绝连接,而不是退回这个常量。见[夹爪标定](calibration.md#41) |

@@ -187,7 +187,7 @@ Both paths need internet access: Mamba fetches conda-forge and PyPI packages, cl
     For a fully offline machine, ask your delivery channel for the image `.tar` bundle, drop it in the repo root or pass it as the first argument, and the script verifies and imports it instead:
 
     ```bash
-    ./docker/install_customer.sh xense-taccap-lerobot-0.0.6-linux-amd64.tar
+    ./docker/install_customer.sh xense-taccap-lerobot-0.0.7-linux-amd64.tar
     ```
 
     Pulling online is still the default: most of the image's twenty-odd GB is dependency layers that rarely change, so an upgrade fetches only the few layers that moved.
@@ -197,7 +197,7 @@ Both paths need internet access: Mamba fetches conda-forge and PyPI packages, cl
     The default `latest` tag floats: the next release repoints it to a new image. Before real collection, pin a version in the repo root's `.env`. `compose.yaml` already defaults to `ghcr.io/xenserobotics-ai/xense-taccap-lerobot`, so there is no need to set `LEROBOT_IMAGE` (only for a different image name):
 
     ```dotenv
-    LEROBOT_IMAGE_TAG=0.0.6
+    LEROBOT_IMAGE_TAG=0.0.7
     ```
 
     Confirm that this is the version that resolves, then pull:
