@@ -223,8 +223,10 @@ IMU 默认不录,按本页采出的数据集里没有这 9 列;需要时加 `--r
 !!! warning "`--robot.enable_tactile=false` 是排查开关,不要用它录数据"
     关掉后触觉不发现、不落盘、无观测键。它用来把 USB 带宽问题拆成两半:双夹爪四路触觉 + 两路腕相机可能超出一条总线的预算,表现为某一路相机打不开、且每次不是同一路;分别关触觉、关腕相机各跑一次即可判断,见[某一路相机打不开](troubleshooting.md#usb-bandwidth)。要少录一路用 `--robot.enable_wrist_camera=false` 或 `--robot.enable_tracker=false`。
 
-!!! danger "落盘的是 `rectify`,不是 Rerun 里看到的那张图"
-    落盘 = `--robot.tactile_output_types`,默认 `rectify`(未做基线相减的原图),只能填一个,多填报错。显示 = `--robot.tactile_display_output_types`,默认 `difference`(相对初始化时刻基线的差分图),键名如 `tactile_left_difference`,不在 `observation_features` 里、不落盘。差分是破坏性的:连接时压在胶上的力会被整段减掉,不要把 `--robot.tactile_output_types` 改成 `difference`。`--robot.tactile_diff_gain`(默认 `1.0`)只影响显示;出厂值 1.5 在本胶体上噪声偏大且会削顶。
+!!! tip "默认情况下,Rerun 里看到的就是落盘的那张图"
+    落盘 = `--robot.tactile_output_types`,默认 `rectify`(未做基线相减的原图),只能填一个,多填报错。显示 = `--robot.tactile_display_output_types`,默认同样是 `rectify`(填空列表 `'[]'` 等价),所以传感器每帧只读一次,屏幕上和数据集里是同一张图。改成别的类型,才会在同一次读取上多出一路只显示、不落盘的流,键名如 `tactile_left_difference`,不在 `observation_features` 里。
+
+    值得知道的那个类型是 `difference`(相对初始化时刻基线的增强差分图)。它曾经是默认值:早期胶体上 `rectify` 几乎看不出形变,只能靠差分图判断接触;2026-08 换硅胶之后 `rectify` 上直接能看出接触,显示流就不必再拿一路不落盘的图挡在操作员眼前。真要开回去(`--robot.tactile_display_output_types='["difference"]'`),记住差分是破坏性的:基线在传感器 init 时抓取,连接时压在胶上的力会被整段减掉,所以四枚指尖连接时都要空载,也不要为了看着清楚把 `--robot.tactile_output_types` 改成 `difference`。`--robot.tactile_diff_gain`(默认 `1.0`)只是这张差分图的增益,不请求 `difference` 时什么都不做;出厂值 1.5 在本胶体上噪声偏大且会削顶。
 
 ## 录制选项:流式编码与编码器预热 {#54}
 

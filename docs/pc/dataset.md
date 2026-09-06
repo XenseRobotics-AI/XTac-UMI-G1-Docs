@@ -65,6 +65,25 @@ lerobot-check-dataset --repo-id <your_org>/<your_dataset> --episode-index 0 2 4
 | `root` | 本地根目录(默认 `~/.cache/huggingface/lerobot`) |
 | `episode-index` | 只检查指定集(可多值,如 `0 2 4`) |
 
+检查项包括 `meta/` 是否齐全、集数是否对得上、parquet 的行数与索引是否连续、有没有 NaN、视频文件是否存在且帧数与 parquet 对齐,以及**相机格式**——双臂数据集会被判为 6 相机(四路触觉 + 两路腕相机)还是 8 相机(再加头显两只眼),两种格式训练时的输入维度不同。
+
+### 双臂 8 相机 → 6 相机 {#8to6}
+
+开了[头显相机](recording.md#56)录的双臂数据集是 8 相机格式。要把它降成 6 相机格式(与 `--robot.enable_head_camera=false` 录出来的同构),用 `lerobot-edit-dataset`:
+
+```bash
+lerobot-edit-dataset \
+    --repo_id <your_org>/<dataset_8cam> \
+    --new_repo_id <your_org>/<dataset_6cam> \
+    --operation.type convert_8_to_6_cameras \
+    --local_files_only
+```
+
+它丢掉头显两只眼的图像键,以及 `action` / `observation.state` 里的 `head_camera.*` 维度,**原数据集不动**,结果写到 `--new_repo_id`。源数据集本来就是 6 相机、或者相机键对不上预期时,命令直接报错拒绝转换,而不是转出一个说不清格式的数据集。
+
+!!! tip "本地数据集加 `--local_files_only`"
+    `lerobot-edit-dataset` 的各项操作默认允许在本地找不到时去 Hugging Face Hub 取;带上 `--local_files_only` 就只读本地,避免手滑打错 `repo_id` 时静悄悄从网上拉一份下来。
+
 ## 回放与可视化
 
 - 在线浏览:数据集上传到 Hub 后,用 [LeRobot Dataset Visualizer](https://huggingface.co/spaces/lerobot/visualize_dataset) 逐集查看视频与数据。

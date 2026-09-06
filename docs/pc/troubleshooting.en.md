@@ -2,6 +2,10 @@
 
 This page is organised by symptom; each entry gives the cause and the fix. Most problems come down to serial permissions and ModemManager grabbing the port, so read "Serial permissions and device discovery" below first. Before touching anything, run the self-check in [Quickstart](index.md), then match against the symptoms.
 
+## Attach the full log when reporting a problem {#logs}
+
+The full log is at `~/xenselogs/session_<timestamp>.log`, one file per run. The screen keeps only the few lines worth watching; this file has everything, with the collection program, `xensesdk` and the video encoding library all in one place, plus timestamps for key presses. Attach this file rather than the last few lines off the screen. The directory can be changed with the `XENSE_LOG_DIR` environment variable.
+
 ## Environment and installation
 
 ??? failure "`setup_env.sh --install` stops immediately with `needs system packages that are not installed`"
@@ -268,6 +272,16 @@ First note down the device number, how it is connected, the indicator light stat
     **Cause:** the gripper or tactile sensors were swapped when resuming with `--resume`; the program keeps the original file and warns.
 
     **Fix:** the warning does not stop recording. If the hardware change was intentional, carry on; the warning is the record that this dataset spans two sets of hardware. If it was not intentional (a gripper plugged into the wrong place, say), stop and put the original device back.
+
+??? failure "Recording dies partway through with `ValueError: You must add one or several frames`"
+    **Cause:** for about 2 s between two episodes nobody reads keyboard events (saving plus encoder warm-up), and a **right arrow** pressed in that gap stays pending. The usual trigger is the previous episode's reset timing out on its own just as you reach for the key. The next episode then exits with zero frames recorded, the reset still runs in full, and saving raises this error, killing the whole session. It surfaces more than two minutes after the keypress, with a perfectly normal-looking reset in between, so it is hard to connect to that key.
+
+    **Fix:** upgrade to `0.0.7` or newer, where key presses in that gap are discarded. On an earlier version, do not press the arrow keys early between episodes; wait until the next episode's prompt is printed. The keyboard hook is global, so a right arrow in **any** window ends the episode (Rerun included, whose timeline scrubs with the arrow keys); the keypress timestamps in the [session log](#logs) are the first evidence to check for "it exited on its own".
+
+??? failure "`[stale_frames]` is printed at the end of every episode, or a camera capture stall warning appears"
+    **Cause:** one camera's background capture stalled briefly. The collection loop is **not blocked** by it (it gets the cached previous frame), so the frame rate looks entirely normal and the cost lands in the data instead: what was recorded during that window is a **repeat of the old image**. The `[stale_frames]` line gives how many frames in that episode were duplicates, in how many runs, and the longest run.
+
+    **Fix:** look at the proportion first. Some duplication is expected: the sensor's background capture and the recording loop each run freely at the same nominal rate, the phase drifts, and occasionally a frame is sampled twice before a new one lands. That produces many **single-frame** duplicates and needs no action. What is worth chasing is a **long contiguous run**, which is a real stall, most often the GPU encoder starving the tactile threads for 0.3 to 0.9 s while 8 cameras encode at once. A few percent in short runs is fine to use; an episode with a very long run is a still image for that stretch and is better discarded. If it persists, work through [Not enough USB bandwidth](#usb-bandwidth) or record fewer cameras at once.
 
 ??? failure "`[slow_frame]` appears constantly in the log after enabling `--display_data=true`"
     **Cause:** the Rerun display is eating the frame budget. Measured on a bimanual rig with the headset (four tactile streams, two wrist cameras, two eyes): 13.2 ms per frame with JPEG compression, 3.1 ms without, while the whole budget at 30 fps is 33.3 ms. Look at `top_obs=` at the end of the `[slow_frame]` line first to tell a slow sensor from an expensive display; the two have opposite fixes.

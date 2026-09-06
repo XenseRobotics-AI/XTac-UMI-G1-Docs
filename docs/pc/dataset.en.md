@@ -65,6 +65,25 @@ lerobot-check-dataset --repo-id <your_org>/<your_dataset> --episode-index 0 2 4
 | `root` | Local root directory (default `~/.cache/huggingface/lerobot`) |
 | `episode-index` | Check only these episodes (accepts several, e.g. `0 2 4`) |
 
+It checks that `meta/` is complete, that the episode count agrees, that the parquet row counts and indices are contiguous, that there are no NaNs, that the video files exist and their frame counts line up with the parquet, and the **camera format**: a bimanual dataset is classified as 6 cameras (four tactile streams plus two wrist cameras) or 8 (plus the headset's two eyes), and the two formats have different input dimensions at training time.
+
+### Bimanual 8 cameras → 6 cameras {#8to6}
+
+A bimanual dataset recorded with the [head camera](recording.md#56) on is in the 8-camera format. To reduce it to the 6-camera format (the same shape as one recorded with `--robot.enable_head_camera=false`), use `lerobot-edit-dataset`:
+
+```bash
+lerobot-edit-dataset \
+    --repo_id <your_org>/<dataset_8cam> \
+    --new_repo_id <your_org>/<dataset_6cam> \
+    --operation.type convert_8_to_6_cameras \
+    --local_files_only
+```
+
+It drops the two headset eye image keys and the `head_camera.*` dimensions from `action` / `observation.state`. **The source dataset is left untouched** and the result is written to `--new_repo_id`. If the source is already 6-camera, or the camera keys do not match what is expected, the command errors out and refuses rather than producing a dataset of unclear format.
+
+!!! tip "Add `--local_files_only` for local datasets"
+    By default the `lerobot-edit-dataset` operations are allowed to fetch from the Hugging Face Hub when a dataset is not found locally. `--local_files_only` reads only local files, so a mistyped `repo_id` cannot quietly pull a copy off the network.
+
 ## Replay and visualisation
 
 - Online: once the dataset is on the Hub, the [LeRobot Dataset Visualizer](https://huggingface.co/spaces/lerobot/visualize_dataset) browses each episode's video and data.

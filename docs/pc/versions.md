@@ -9,7 +9,7 @@
 
 | 组件 | 最低要求 | 怎么查 |
 |---|---|---|
-| `xense-taccap-lerobot` | `0.5.1+xtac.0.0.6` | `pip show lerobot` 或看 `pyproject.toml` |
+| `xense-taccap-lerobot` | `0.5.1+xtac.0.0.7` | `pip show lerobot` 或看 `pyproject.toml` |
 | `xense.taccap` SDK | **0.1.9** | `python -c "import xense.taccap as t; print(t.__version__)"` |
 | 夹爪固件 | **命令集 V2.1**,即 leader ≥ 1.2.0 / follower ≥ 1.1.0 | 跑 [`calibrate.py`](calibration.md#41),版本不够会打印当前版本并退出;或[直接读](#check-versions) |
 | 每台 leader 的编码器标定 | 零点 + 行程上限已写入 flash | [夹爪标定](calibration.md#41) |
@@ -40,10 +40,10 @@ flowchart LR
 | `rerun-sdk` | `>=0.24.0,<0.27.0` | 0.26.2 |
 | `opencv-python` | `==4.12.0.88` | 4.12.0.88 |
 | NumPy | `>=1.26.4` | 2.2.6 |
-| `xense-taccap-lerobot` | 基于 lerobot 0.5.1,版本号 `0.5.1+xtac.0.0.6` | `main@d1b9e79a` |
-| `xense.taccap` SDK | 与主仓库子模块配套 | 0.1.9(子模块 `a3382db`) |
-| 夹爪固件 | 命令集 V2.1(帧格式 V1.8),leader ≥ 1.2.0 / follower ≥ 1.1.0 | leader 1.2.2 / follower 1.1.5(分支 `hw_v1.1.0`),随 SDK 走,见 [OTA](#ota) |
-| `xensesdk` | 由安装脚本提供 | 2.1.1 |
+| `xense-taccap-lerobot` | 基于 lerobot 0.5.1,版本号 `0.5.1+xtac.0.0.7` | `main@31efb9b6` |
+| `xense.taccap` SDK | 与主仓库子模块配套 | 0.1.9(子模块 `3d44440`) |
+| 夹爪固件 | 命令集 V2.1(帧格式 V1.8),leader ≥ 1.2.0 / follower ≥ 1.1.0 | leader 1.2.2 / follower 1.1.6,随 SDK 走,以 `firmware/manifest.json` 为准,见 [OTA](#ota) |
+| `xensesdk` | 由安装脚本提供 | 2.1.2 |
 | XenseVR PC Service(`.deb`) | ≥ v0.2.0,装机直接用 v0.2.1 | v0.2.1 |
 | `xensevr_pc_service_sdk` | 绑定在主仓库内,链接 `.deb` 里的 C SDK | 0.2.1,版本号取自 `.deb` |
 
@@ -129,7 +129,7 @@ git submodule update --init --recursive --progress
 
 跑一次 [`calibrate.py`](calibration.md#41) 就知道:它先验固件,不够就原样退出并打印当前版本(报错样例见[夹爪标定](calibration.md#41))。看到任意一条就要刷:`calibrate.py` 报 `needs command set >= V2.1` 退出;主夹爪连不上且报错提示先做 OTA;固件低于命令集 V2.1。固件不会退化,刷过一次后除非换主板或擦除固件,不用再刷。
 
-但 V2.1 只是能用的底线,leader 1.2.2 / follower 1.1.5 修掉了三个更早固件(主从共用代码)都有的缺陷:
+但 V2.1 只是能用的底线,leader 1.2.2 / follower 1.1.6 修掉了三个更早固件(主从共用代码)都有的缺陷:
 
 | 缺陷 | 表现 |
 |---|---|
@@ -139,10 +139,12 @@ git submodule update --init --recursive --progress
 
 第一条坏掉时和正常几乎无法区分,遇到过莫名卡住的值得升。这两版镜像由本地工具链编译(`manifest.json` 的 `build` 为 `local`),已在两台实机验证;`manifest.json` 里的版本比 `GetVersion` 读回的高就刷。
 
+从夹爪的 `1.1.6` 在 `1.1.5` 之上又加了一层**运动安全包络**(误差与力矩钳位、可配温度墙、零速持续力矩降额),用来兜住夹爪硬顶到全闭把整机拖到掉电重启这类情况;命令与协议不变。
+
 ### 怎么刷
 
 !!! warning "先升级 SDK,再刷固件"
-    刷写与刷后校验请用 0.1.7 及以上的 SDK;新 SDK 与旧固件通信不变,先升 SDK 总是安全的。附带哪版镜像取决于 SDK,要刷到 1.2.2 / 1.1.5 得先升到 0.1.9,否则刷完等于没修。
+    刷写与刷后校验请用 0.1.7 及以上的 SDK;新 SDK 与旧固件通信不变,先升 SDK 总是安全的。附带哪版镜像跟着 SDK 走,要刷到 1.2.2 / 1.1.6 得先升到 0.1.9,否则刷完等于没修。但**SDK 版本号本身不足以确定镜像版本**:0.1.9 这个号下先后附带过 follower `1.1.5` 和 `1.1.6`(前者是后者的基础),唯一权威是 `firmware/manifest.json` 里的 `version`,不要从 SDK 版本号去推。
 
 SDK 自 0.1.7 起随仓库附带固件镜像,路径 `third_party/taccap-gripper/firmware/`,只保留当前发布版;镜像版本随 SDK 走,以同目录 `manifest.json`(各镜像的版本、字节数与 CRC32)为准:`cat third_party/taccap-gripper/firmware/manifest.json`。
 
@@ -172,7 +174,7 @@ for ep in scan_grippers():
 "
 ```
 
-镜像名按给的路径、SDK 根目录、SDK `firmware/` 依次解析,在哪运行都行,连接设备前就检查。`--target-version 1.2.2` 可选,只给校验日志和分区元数据打标记,不影响刷的内容。约 1 秒写完,夹爪重启约 1–3 秒;新固件写在备用分区,校验通过前不覆盖运行中的那份,传输失败不会刷坏。第 3 步读回的号必须不低于 leader 1.2.0 / follower 1.1.0,刷 SDK 0.1.9 附带的镜像时读回 1.2.2 / 1.1.5;刷从夹爪时把 `LeaderGripper` 换成 `FollowerGripper`。
+镜像名按给的路径、SDK 根目录、SDK `firmware/` 依次解析,在哪运行都行,连接设备前就检查。`--target-version 1.2.2` 可选,只给校验日志和分区元数据打标记,不影响刷的内容。约 1 秒写完,夹爪重启约 1–3 秒;新固件写在备用分区,校验通过前不覆盖运行中的那份,传输失败不会刷坏。第 3 步读回的号必须不低于 leader 1.2.0 / follower 1.1.0,刷当前基线附带的镜像时读回 1.2.2 / 1.1.6;刷从夹爪时把 `LeaderGripper` 换成 `FollowerGripper`。
 
 !!! danger "刷错角色会导致夹爪无法启动,需返厂恢复"
     `ota_update.py` 按 CRC32 与 `manifest.json` 比对识别镜像,角色不匹配时直接拒绝,`--force` 才能强制;手工编译的镜像识别不出来,带提示放行。升级期间([指示灯](../common/gripper.md#buttons-leds)蓝色闪烁)不要断电或拔线。

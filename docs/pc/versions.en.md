@@ -9,7 +9,7 @@ This page gives the version baseline you must reach before collecting, and how t
 
 | Component | Minimum | How to check |
 |---|---|---|
-| `xense-taccap-lerobot` | `0.5.1+xtac.0.0.6` | `pip show lerobot`, or look at `pyproject.toml` |
+| `xense-taccap-lerobot` | `0.5.1+xtac.0.0.7` | `pip show lerobot`, or look at `pyproject.toml` |
 | `xense.taccap` SDK | **0.1.9** | `python -c "import xense.taccap as t; print(t.__version__)"` |
 | Gripper firmware | **command set V2.1**, i.e. leader ≥ 1.2.0 / follower ≥ 1.1.0 | Run [`calibrate.py`](calibration.md#41); if the version is too old it prints the current version and exits. Or [read it directly](#check-versions) |
 | Encoder calibration on every leader | Zero + travel limit written to flash | [Gripper calibration](calibration.md#41) |
@@ -40,10 +40,10 @@ Commands and fields should be taken from your local checkout and from the device
 | `rerun-sdk` | `>=0.24.0,<0.27.0` | 0.26.2 |
 | `opencv-python` | `==4.12.0.88` | 4.12.0.88 |
 | NumPy | `>=1.26.4` | 2.2.6 |
-| `xense-taccap-lerobot` | Based on lerobot 0.5.1, version `0.5.1+xtac.0.0.6` | `main@d1b9e79a` |
-| `xense.taccap` SDK | Matched to the main repo's submodule | 0.1.9 (submodule `a3382db`) |
-| Gripper firmware | Command set V2.1 (wire framing V1.8), leader ≥ 1.2.0 / follower ≥ 1.1.0 | leader 1.2.2 / follower 1.1.5 (branch `hw_v1.1.0`), follows the SDK, see [OTA](#ota) |
-| `xensesdk` | Provided by the install script | 2.1.1 |
+| `xense-taccap-lerobot` | Based on lerobot 0.5.1, version `0.5.1+xtac.0.0.7` | `main@31efb9b6` |
+| `xense.taccap` SDK | Matched to the main repo's submodule | 0.1.9 (submodule `3d44440`) |
+| Gripper firmware | Command set V2.1 (wire framing V1.8), leader ≥ 1.2.0 / follower ≥ 1.1.0 | leader 1.2.2 / follower 1.1.6, follows the SDK, with `firmware/manifest.json` as the authority, see [OTA](#ota) |
+| `xensesdk` | Provided by the install script | 2.1.2 |
 | XenseVR PC Service (`.deb`) | ≥ v0.2.0; install v0.2.1 on a new machine | v0.2.1 |
 | `xensevr_pc_service_sdk` | Bundled in the main repo; links the C SDK from the `.deb` | 0.2.1, the version comes from the `.deb` |
 
@@ -129,7 +129,7 @@ git submodule update --init --recursive --progress
 
 Run [`calibrate.py`](calibration.md#41) once and it tells you: it verifies the firmware first, and if it is too old it exits without changing anything and prints the current version (sample error in [Gripper calibration](calibration.md#41)). Any one of these means you need to flash: `calibrate.py` reports `needs command set >= V2.1` and exits; the leader gripper will not connect and the error tells you to do an OTA first; the firmware is below command set V2.1. Firmware does not regress, and once flashed it does not need flashing again unless the board is replaced or the firmware erased.
 
-But V2.1 is only the floor for working. Leader 1.2.2 / follower 1.1.5 fix three defects present in every older firmware (leader and follower share the code):
+But V2.1 is only the floor for working. Leader 1.2.2 / follower 1.1.6 fix three defects present in every older firmware (leader and follower share the code):
 
 | Defect | How it shows up |
 |---|---|
@@ -139,10 +139,12 @@ But V2.1 is only the floor for working. Leader 1.2.2 / follower 1.1.5 fix three 
 
 The first is nearly indistinguishable from working when it strikes; if you have seen a gripper hang for no clear reason, it is worth upgrading. These two images were built with a local toolchain (`build` in `manifest.json` is `local`) and have been validated on two physical units; if the version in `manifest.json` is higher than what `GetVersion` reads back, flash.
 
+The follower's `1.1.6` adds, on top of `1.1.5`, a **motion safety envelope** (error and torque clamps, a configurable temperature wall, zero-speed holding-torque derating) to catch cases like a gripper driven hard into full close browning out the whole machine; commands and protocol are unchanged.
+
 ### How to flash
 
 !!! warning "Upgrade the SDK first, then flash the firmware"
-    Use SDK 0.1.7 or newer to flash and to verify afterwards; a new SDK talks to old firmware unchanged, so upgrading the SDK first is always safe. Which image ships depends on the SDK, so reaching 1.2.2 / 1.1.5 requires upgrading to 0.1.9 first; otherwise flashing fixes nothing.
+    Use SDK 0.1.7 or newer to flash and to verify afterwards; a new SDK talks to old firmware unchanged, so upgrading the SDK first is always safe. Which image ships follows the SDK, so reaching 1.2.2 / 1.1.6 requires upgrading to 0.1.9 first; otherwise flashing fixes nothing. But **the SDK version number alone does not pin the image version**: that same 0.1.9 has shipped follower `1.1.5` and, later, `1.1.6` (which builds on it). The only authority is the `version` field in `firmware/manifest.json`; do not infer it from the SDK version.
 
 Since 0.1.7 the SDK ships the firmware images with the repo, under `third_party/taccap-gripper/firmware/`, which only keeps the current release. Image versions follow the SDK; the `manifest.json` in the same directory (each image's version, byte count and CRC32) is authoritative: `cat third_party/taccap-gripper/firmware/manifest.json`.
 
@@ -172,7 +174,7 @@ for ep in scan_grippers():
 "
 ```
 
-The image name is resolved against the path you gave, the SDK root and the SDK's `firmware/`, in that order, so it works from any directory, and it is checked before connecting to the device. `--target-version 1.2.2` is optional; it only tags the verification log and the partition metadata and does not affect what gets flashed. The write takes about 1 second and the gripper reboots in about 1–3 seconds; the new firmware is written to the spare partition and does not overwrite the running one until it verifies, so a failed transfer cannot brick the gripper. What step 3 reads back must be not below leader 1.2.0 / follower 1.1.0; flashing the images bundled with SDK 0.1.9 reads back 1.2.2 / 1.1.5. For a follower gripper, replace `LeaderGripper` with `FollowerGripper`.
+The image name is resolved against the path you gave, the SDK root and the SDK's `firmware/`, in that order, so it works from any directory, and it is checked before connecting to the device. `--target-version 1.2.2` is optional; it only tags the verification log and the partition metadata and does not affect what gets flashed. The write takes about 1 second and the gripper reboots in about 1–3 seconds; the new firmware is written to the spare partition and does not overwrite the running one until it verifies, so a failed transfer cannot brick the gripper. What step 3 reads back must be not below leader 1.2.0 / follower 1.1.0; flashing the images bundled with the current baseline reads back 1.2.2 / 1.1.6. For a follower gripper, replace `LeaderGripper` with `FollowerGripper`.
 
 !!! danger "Flashing the wrong role leaves a gripper that will not start and needs a factory repair"
     `ota_update.py` identifies the image by CRC32 against `manifest.json` and refuses outright on a role mismatch; `--force` is required to override. A hand-built image cannot be identified and is let through with a note. Do not cut power or unplug anything during the upgrade (the [indicator](../common/gripper.md#buttons-leds) blinks blue).

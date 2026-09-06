@@ -25,8 +25,8 @@ A lookup appendix: `RobotConfig` options and the SDK entry point. The collection
 | `robot.enable_tactile` | `true` | Off leaves the whole tactile chain unconnected (no discovery, nothing written). **A diagnostic, not a recording mode** |
 | `robot.tactile_fps` | `30` | Tactile frame rate |
 | `robot.tactile_output_types` | `["rectify"]` | The tactile stream **written to disk**; **exactly one**, more than one is an error |
-| `robot.tactile_display_output_types` | `["difference"]` | Extra tactile streams **for Rerun display only**, never written to disk; an empty list turns them off |
-| `robot.tactile_diff_gain` | `1.0` | Linear gain on the `difference` image (display stream only); `None` = the sensor's factory value |
+| `robot.tactile_display_output_types` | `["rectify"]` | Which tactile stream Rerun shows: **the recorded one by default** (an empty list means the same); `["difference"]` adds a display-only stream that is never recorded |
+| `robot.tactile_diff_gain` | `1.0` | Linear gain on the `difference` image; **inert by default**, since `difference` is not requested; `None` = the sensor's factory value |
 | `robot.expected_tactiles_per_side` | `2` | How many tactile sensors each side should have; a mismatch is an error |
 | `robot.enable_gripper` / `robot.enable_imu` | `true` / `false` | The gripper's own readings / the IMU channel |
 | `robot.gripper_open_rad` | `1.7` | **Follower only.** A leader always uses the measured travel limit in its own firmware, and this option does nothing for it: an uncalibrated leader is refused a connection rather than falling back to this constant. See [Gripper calibration](calibration.md#41) |
