@@ -2147,12 +2147,12 @@
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="nv">XENSE_PROXY_URL</span><span class="o">=</span>http://127.0.0.1:7897<span class="w"> </span>./docker/install_customer.sh
 </span></code></pre></div>
 <p>完全离线的机器向交付渠道要镜像 <code>.tar</code> 包,放进仓库根目录或作为第一个参数传给脚本,脚本会改为校验并导入:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>./docker/install_customer.sh<span class="w"> </span>xense-taccap-lerobot-0.0.6-linux-amd64.tar
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>./docker/install_customer.sh<span class="w"> </span>xense-taccap-lerobot-0.0.7-linux-amd64.tar
 </span></code></pre></div>
 <p>在线拉取仍是默认:镜像二十多 GB 大部分是不常变的依赖层,升级只拉变动的几层。</p>
 <h3 id="docker-pin">录数据前先把版本钉死<a class="headerlink" href="#docker-pin" title="锚点链接">¶</a></h3>
 <p>默认拉的 <code>latest</code> 是浮动的,下次发布会指向新镜像。正式采集前在仓库根目录的 <code>.env</code> 里钉死版本;<code>compose.yaml</code> 默认镜像已是 <code>ghcr.io/xenserobotics-ai/xense-taccap-lerobot</code>,不需要再写 <code>LEROBOT_IMAGE</code>(只在换镜像名时用):</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>LEROBOT_IMAGE_TAG=0.0.6
+<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>LEROBOT_IMAGE_TAG=0.0.7
 </span></code></pre></div>
 <p>改完确认解析到的是这一版,再拉:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>config<span class="w"> </span>--images

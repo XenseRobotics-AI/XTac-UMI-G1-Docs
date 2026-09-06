@@ -1749,13 +1749,13 @@
 </tr>
 <tr>
 <td><code>robot.tactile_display_output_types</code></td>
-<td><code>["difference"]</code></td>
-<td><strong>仅供 Rerun 显示</strong>、不落盘的额外触觉流;设为空列表则关闭</td>
+<td><code>["rectify"]</code></td>
+<td>Rerun 显示哪一路触觉,<strong>默认与落盘同一路</strong>(空列表等价);填 <code>["difference"]</code> 才多出一路仅显示、不落盘的流</td>
 </tr>
 <tr>
 <td><code>robot.tactile_diff_gain</code></td>
 <td><code>1.0</code></td>
-<td><code>difference</code> 图的线性增益(只影响显示流);<code>None</code> = 用传感器出厂值</td>
+<td><code>difference</code> 图的线性增益;<strong>默认不请求 <code>difference</code>,故不起作用</strong>;<code>None</code> = 用传感器出厂值</td>
 </tr>
 <tr>
 <td><code>robot.expected_tactiles_per_side</code></td>

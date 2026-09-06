@@ -1271,6 +1271,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="数据校验">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#8to6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        双臂 8 相机 → 6 相机
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1698,6 +1715,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="数据校验">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#8to6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        双臂 8 相机 → 6 相机
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1839,6 +1873,20 @@
 </tr>
 </tbody>
 </table>
+<p>检查项包括 <code>meta/</code> 是否齐全、集数是否对得上、parquet 的行数与索引是否连续、有没有 NaN、视频文件是否存在且帧数与 parquet 对齐,以及<strong>相机格式</strong>——双臂数据集会被判为 6 相机(四路触觉 + 两路腕相机)还是 8 相机(再加头显两只眼),两种格式训练时的输入维度不同。</p>
+<h3 id="8to6">双臂 8 相机 → 6 相机<a class="headerlink" href="#8to6" title="锚点链接">¶</a></h3>
+<p>开了<a href="../recording/#56">头显相机</a>录的双臂数据集是 8 相机格式。要把它降成 6 相机格式(与 <code>--robot.enable_head_camera=false</code> 录出来的同构),用 <code>lerobot-edit-dataset</code>:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>lerobot-edit-dataset<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">    </span>--repo_id<span class="w"> </span>&lt;your_org&gt;/&lt;dataset_8cam&gt;<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span>--new_repo_id<span class="w"> </span>&lt;your_org&gt;/&lt;dataset_6cam&gt;<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">    </span>--operation.type<span class="w"> </span>convert_8_to_6_cameras<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">    </span>--local_files_only
+</span></code></pre></div>
+<p>它丢掉头显两只眼的图像键,以及 <code>action</code> / <code>observation.state</code> 里的 <code>head_camera.*</code> 维度,<strong>原数据集不动</strong>,结果写到 <code>--new_repo_id</code>。源数据集本来就是 6 相机、或者相机键对不上预期时,命令直接报错拒绝转换,而不是转出一个说不清格式的数据集。</p>
+<div class="admonition tip">
+<p class="admonition-title">本地数据集加 <code>--local_files_only</code></p>
+<p><code>lerobot-edit-dataset</code> 的各项操作默认允许在本地找不到时去 Hugging Face Hub 取;带上 <code>--local_files_only</code> 就只读本地,避免手滑打错 <code>repo_id</code> 时静悄悄从网上拉一份下来。</p>
+</div>
 <h2 id="回放与可视化">回放与可视化<a class="headerlink" href="#回放与可视化" title="锚点链接">¶</a></h2>
 <ul>
 <li>在线浏览:数据集上传到 Hub 后,用 <a href="https://huggingface.co/spaces/lerobot/visualize_dataset">LeRobot Dataset Visualizer</a> 逐集查看视频与数据。</li>
@@ -1852,33 +1900,33 @@
 <p>上传前执行 <code>hf auth login</code>(旧版也可使用 <code>huggingface-cli login</code>),或设置 <code>HF_TOKEN</code>,否则会因鉴权失败。</p>
 </div>
 <p>用已安装的 <code>lerobot-push-dataset-to-hub</code> 控制台入口推送:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># 基本用法(需要 --repo-id 与 --dataset-path)</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>lerobot-push-dataset-to-hub<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span>--repo-id<span class="w"> </span>&lt;your_org&gt;/&lt;your_dataset&gt;<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">    </span>--dataset-path<span class="w"> </span>~/.cache/huggingface/lerobot/&lt;your_org&gt;/&lt;your_dataset&gt;
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># 基本用法(需要 --repo-id 与 --dataset-path)</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>lerobot-push-dataset-to-hub<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span>--repo-id<span class="w"> </span>&lt;your_org&gt;/&lt;your_dataset&gt;<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">    </span>--dataset-path<span class="w"> </span>~/.cache/huggingface/lerobot/&lt;your_org&gt;/&lt;your_dataset&gt;
 </span></code></pre></div>
 <p>常用变体:</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><input id="__tabbed_1_3" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">大数据集</label><label for="__tabbed_1_2">私有仓库</label><label for="__tabbed_1_3">不传视频</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>lerobot-push-dataset-to-hub<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">    </span>--repo-id<span class="w"> </span>&lt;your_org&gt;/&lt;your_dataset&gt;<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span>--dataset-path<span class="w"> </span>~/.cache/huggingface/lerobot/&lt;your_org&gt;/&lt;your_dataset&gt;<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">    </span>--upload-large-folder
-</span></code></pre></div>
-</div>
-<div class="tabbed-block">
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>lerobot-push-dataset-to-hub<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">    </span>--repo-id<span class="w"> </span>&lt;your_org&gt;/&lt;your_dataset&gt;<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span>--dataset-path<span class="w"> </span>~/.cache/huggingface/lerobot/&lt;your_org&gt;/&lt;your_dataset&gt;<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">    </span>--private
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">    </span>--upload-large-folder
 </span></code></pre></div>
 </div>
 <div class="tabbed-block">
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>lerobot-push-dataset-to-hub<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">    </span>--repo-id<span class="w"> </span>&lt;your_org&gt;/&lt;your_dataset&gt;<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span>--dataset-path<span class="w"> </span>~/.cache/huggingface/lerobot/&lt;your_org&gt;/&lt;your_dataset&gt;<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">    </span>--no-videos
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">    </span>--private
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>lerobot-push-dataset-to-hub<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">    </span>--repo-id<span class="w"> </span>&lt;your_org&gt;/&lt;your_dataset&gt;<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">    </span>--dataset-path<span class="w"> </span>~/.cache/huggingface/lerobot/&lt;your_org&gt;/&lt;your_dataset&gt;<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">    </span>--no-videos
 </span></code></pre></div>
 </div>
 </div>
@@ -1890,15 +1938,15 @@
 <li>粗估单条 episode 体积 ≈ 各编码视频流平均码率 × 时长 + Parquet 与元数据。相机数、分辨率、<code>fps</code>、<code>episode_time_s</code> 都会放大体积。</li>
 <li>大批量采集前先录制 2–3 条代表性 episode,运行完整性检查,再测量实际体积并按计划集数估算:</li>
 </ul>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>du<span class="w"> </span>-sh<span class="w"> </span>~/.cache/huggingface/lerobot/&lt;your_org&gt;/&lt;your_dataset&gt;
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>df<span class="w"> </span>-h<span class="w"> </span>~/.cache/huggingface/lerobot<span class="w">          </span><span class="c1"># 看目标盘剩余空间</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>du<span class="w"> </span>-sh<span class="w"> </span>~/.cache/huggingface/lerobot/&lt;your_org&gt;/&lt;your_dataset&gt;
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>df<span class="w"> </span>-h<span class="w"> </span>~/.cache/huggingface/lerobot<span class="w">          </span><span class="c1"># 看目标盘剩余空间</span>
 </span></code></pre></div>
 <h2 id="清理与维护">清理与维护<a class="headerlink" href="#清理与维护" title="锚点链接">¶</a></h2>
 <p>磁盘紧张时,先确认数据已通过 <code>lerobot-check-dataset</code> 校验并完成备份或上传。为保留恢复机会,先把目标数据集移动到单独的隔离目录,观察无误后再通过文件管理器删除:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>/data/lerobot-trash
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>realpath<span class="w"> </span>~/.cache/huggingface/lerobot/&lt;your_org&gt;/&lt;old_dataset&gt;
-</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>du<span class="w"> </span>-sh<span class="w"> </span>~/.cache/huggingface/lerobot/&lt;your_org&gt;/&lt;old_dataset&gt;
-</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>mv<span class="w"> </span>--<span class="w"> </span>~/.cache/huggingface/lerobot/&lt;your_org&gt;/&lt;old_dataset&gt;<span class="w"> </span>/data/lerobot-trash/
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>/data/lerobot-trash
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>realpath<span class="w"> </span>~/.cache/huggingface/lerobot/&lt;your_org&gt;/&lt;old_dataset&gt;
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>du<span class="w"> </span>-sh<span class="w"> </span>~/.cache/huggingface/lerobot/&lt;your_org&gt;/&lt;old_dataset&gt;
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>mv<span class="w"> </span>--<span class="w"> </span>~/.cache/huggingface/lerobot/&lt;your_org&gt;/&lt;old_dataset&gt;<span class="w"> </span>/data/lerobot-trash/
 </span></code></pre></div>
 <div class="admonition warning">
 <p class="admonition-title">移动前核对 <code>realpath</code> 输出</p>

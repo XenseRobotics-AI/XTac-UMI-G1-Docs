@@ -1269,6 +1269,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
       
         <li class="md-nav__item">
+  <a href="#logs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Attach the full log when reporting a problem
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#environment-and-installation" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1685,6 +1696,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
       
         <li class="md-nav__item">
+  <a href="#logs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Attach the full log when reporting a problem
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#environment-and-installation" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1808,6 +1830,8 @@
 
 <h1 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="锚点链接">¶</a></h1>
 <p>This page is organised by symptom; each entry gives the cause and the fix. Most problems come down to serial permissions and ModemManager grabbing the port, so read "Serial permissions and device discovery" below first. Before touching anything, run the self-check in <a href="../">Quickstart</a>, then match against the symptoms.</p>
+<h2 id="logs">Attach the full log when reporting a problem<a class="headerlink" href="#logs" title="锚点链接">¶</a></h2>
+<p>The full log is at <code>~/xenselogs/session_&lt;timestamp&gt;.log</code>, one file per run. The screen keeps only the few lines worth watching; this file has everything, with the collection program, <code>xensesdk</code> and the video encoding library all in one place, plus timestamps for key presses. Attach this file rather than the last few lines off the screen. The directory can be changed with the <code>XENSE_LOG_DIR</code> environment variable.</p>
 <h2 id="environment-and-installation">Environment and installation<a class="headerlink" href="#environment-and-installation" title="锚点链接">¶</a></h2>
 <details class="failure">
 <summary><code>setup_env.sh --install</code> stops immediately with <code>needs system packages that are not installed</code></summary>
@@ -2073,6 +2097,16 @@
 <summary>Resuming warns that the dataset's existing <code>meta/hardware.json</code> does not match the current hardware</summary>
 <p><strong>Cause:</strong> the gripper or tactile sensors were swapped when resuming with <code>--resume</code>; the program keeps the original file and warns.</p>
 <p><strong>Fix:</strong> the warning does not stop recording. If the hardware change was intentional, carry on; the warning is the record that this dataset spans two sets of hardware. If it was not intentional (a gripper plugged into the wrong place, say), stop and put the original device back.</p>
+</details>
+<details class="failure">
+<summary>Recording dies partway through with <code>ValueError: You must add one or several frames</code></summary>
+<p><strong>Cause:</strong> for about 2 s between two episodes nobody reads keyboard events (saving plus encoder warm-up), and a <strong>right arrow</strong> pressed in that gap stays pending. The usual trigger is the previous episode's reset timing out on its own just as you reach for the key. The next episode then exits with zero frames recorded, the reset still runs in full, and saving raises this error, killing the whole session. It surfaces more than two minutes after the keypress, with a perfectly normal-looking reset in between, so it is hard to connect to that key.</p>
+<p><strong>Fix:</strong> upgrade to <code>0.0.7</code> or newer, where key presses in that gap are discarded. On an earlier version, do not press the arrow keys early between episodes; wait until the next episode's prompt is printed. The keyboard hook is global, so a right arrow in <strong>any</strong> window ends the episode (Rerun included, whose timeline scrubs with the arrow keys); the keypress timestamps in the <a href="#logs">session log</a> are the first evidence to check for "it exited on its own".</p>
+</details>
+<details class="failure">
+<summary><code>[stale_frames]</code> is printed at the end of every episode, or a camera capture stall warning appears</summary>
+<p><strong>Cause:</strong> one camera's background capture stalled briefly. The collection loop is <strong>not blocked</strong> by it (it gets the cached previous frame), so the frame rate looks entirely normal and the cost lands in the data instead: what was recorded during that window is a <strong>repeat of the old image</strong>. The <code>[stale_frames]</code> line gives how many frames in that episode were duplicates, in how many runs, and the longest run.</p>
+<p><strong>Fix:</strong> look at the proportion first. Some duplication is expected: the sensor's background capture and the recording loop each run freely at the same nominal rate, the phase drifts, and occasionally a frame is sampled twice before a new one lands. That produces many <strong>single-frame</strong> duplicates and needs no action. What is worth chasing is a <strong>long contiguous run</strong>, which is a real stall, most often the GPU encoder starving the tactile threads for 0.3 to 0.9 s while 8 cameras encode at once. A few percent in short runs is fine to use; an episode with a very long run is a still image for that stretch and is better discarded. If it persists, work through <a href="#usb-bandwidth">Not enough USB bandwidth</a> or record fewer cameras at once.</p>
 </details>
 <details class="failure">
 <summary><code>[slow_frame]</code> appears constantly in the log after enabling <code>--display_data=true</code></summary>

@@ -1749,13 +1749,13 @@
 </tr>
 <tr>
 <td><code>robot.tactile_display_output_types</code></td>
-<td><code>["difference"]</code></td>
-<td>Extra tactile streams <strong>for Rerun display only</strong>, never written to disk; an empty list turns them off</td>
+<td><code>["rectify"]</code></td>
+<td>Which tactile stream Rerun shows: <strong>the recorded one by default</strong> (an empty list means the same); <code>["difference"]</code> adds a display-only stream that is never recorded</td>
 </tr>
 <tr>
 <td><code>robot.tactile_diff_gain</code></td>
 <td><code>1.0</code></td>
-<td>Linear gain on the <code>difference</code> image (display stream only); <code>None</code> = the sensor's factory value</td>
+<td>Linear gain on the <code>difference</code> image; <strong>inert by default</strong>, since <code>difference</code> is not requested; <code>None</code> = the sensor's factory value</td>
 </tr>
 <tr>
 <td><code>robot.expected_tactiles_per_side</code></td>

@@ -1802,7 +1802,7 @@
 <tbody>
 <tr>
 <td><code>xense-taccap-lerobot</code></td>
-<td><code>0.5.1+xtac.0.0.6</code></td>
+<td><code>0.5.1+xtac.0.0.7</code></td>
 <td><code>pip show lerobot</code> 或看 <code>pyproject.toml</code></td>
 </tr>
 <tr>
@@ -1894,23 +1894,23 @@
 </tr>
 <tr>
 <td><code>xense-taccap-lerobot</code></td>
-<td>基于 lerobot 0.5.1,版本号 <code>0.5.1+xtac.0.0.6</code></td>
-<td><code>main@d1b9e79a</code></td>
+<td>基于 lerobot 0.5.1,版本号 <code>0.5.1+xtac.0.0.7</code></td>
+<td><code>main@31efb9b6</code></td>
 </tr>
 <tr>
 <td><code>xense.taccap</code> SDK</td>
 <td>与主仓库子模块配套</td>
-<td>0.1.9(子模块 <code>a3382db</code>)</td>
+<td>0.1.9(子模块 <code>3d44440</code>)</td>
 </tr>
 <tr>
 <td>夹爪固件</td>
 <td>命令集 V2.1(帧格式 V1.8),leader ≥ 1.2.0 / follower ≥ 1.1.0</td>
-<td>leader 1.2.2 / follower 1.1.5(分支 <code>hw_v1.1.0</code>),随 SDK 走,见 <a href="#ota">OTA</a></td>
+<td>leader 1.2.2 / follower 1.1.6,随 SDK 走,以 <code>firmware/manifest.json</code> 为准,见 <a href="#ota">OTA</a></td>
 </tr>
 <tr>
 <td><code>xensesdk</code></td>
 <td>由安装脚本提供</td>
-<td>2.1.1</td>
+<td>2.1.2</td>
 </tr>
 <tr>
 <td>XenseVR PC Service(<code>.deb</code>)</td>
@@ -2003,7 +2003,7 @@
 <h2 id="ota">固件 OTA 升级<a class="headerlink" href="#ota" title="锚点链接">¶</a></h2>
 <h3 id="ota-when">我需要刷吗<a class="headerlink" href="#ota-when" title="锚点链接">¶</a></h3>
 <p>跑一次 <a href="../calibration/#41"><code>calibrate.py</code></a> 就知道:它先验固件,不够就原样退出并打印当前版本(报错样例见<a href="../calibration/#41">夹爪标定</a>)。看到任意一条就要刷:<code>calibrate.py</code> 报 <code>needs command set &gt;= V2.1</code> 退出;主夹爪连不上且报错提示先做 OTA;固件低于命令集 V2.1。固件不会退化,刷过一次后除非换主板或擦除固件,不用再刷。</p>
-<p>但 V2.1 只是能用的底线,leader 1.2.2 / follower 1.1.5 修掉了三个更早固件(主从共用代码)都有的缺陷:</p>
+<p>但 V2.1 只是能用的底线,leader 1.2.2 / follower 1.1.6 修掉了三个更早固件(主从共用代码)都有的缺陷:</p>
 <table>
 <thead>
 <tr>
@@ -2027,10 +2027,11 @@
 </tbody>
 </table>
 <p>第一条坏掉时和正常几乎无法区分,遇到过莫名卡住的值得升。这两版镜像由本地工具链编译(<code>manifest.json</code> 的 <code>build</code> 为 <code>local</code>),已在两台实机验证;<code>manifest.json</code> 里的版本比 <code>GetVersion</code> 读回的高就刷。</p>
+<p>从夹爪的 <code>1.1.6</code> 在 <code>1.1.5</code> 之上又加了一层<strong>运动安全包络</strong>(误差与力矩钳位、可配温度墙、零速持续力矩降额),用来兜住夹爪硬顶到全闭把整机拖到掉电重启这类情况;命令与协议不变。</p>
 <h3 id="怎么刷">怎么刷<a class="headerlink" href="#怎么刷" title="锚点链接">¶</a></h3>
 <div class="admonition warning">
 <p class="admonition-title">先升级 SDK,再刷固件</p>
-<p>刷写与刷后校验请用 0.1.7 及以上的 SDK;新 SDK 与旧固件通信不变,先升 SDK 总是安全的。附带哪版镜像取决于 SDK,要刷到 1.2.2 / 1.1.5 得先升到 0.1.9,否则刷完等于没修。</p>
+<p>刷写与刷后校验请用 0.1.7 及以上的 SDK;新 SDK 与旧固件通信不变,先升 SDK 总是安全的。附带哪版镜像跟着 SDK 走,要刷到 1.2.2 / 1.1.6 得先升到 0.1.9,否则刷完等于没修。但<strong>SDK 版本号本身不足以确定镜像版本</strong>:0.1.9 这个号下先后附带过 follower <code>1.1.5</code> 和 <code>1.1.6</code>(前者是后者的基础),唯一权威是 <code>firmware/manifest.json</code> 里的 <code>version</code>,不要从 SDK 版本号去推。</p>
 </div>
 <p>SDK 自 0.1.7 起随仓库附带固件镜像,路径 <code>third_party/taccap-gripper/firmware/</code>,只保留当前发布版;镜像版本随 SDK 走,以同目录 <code>manifest.json</code>(各镜像的版本、字节数与 CRC32)为准:<code>cat third_party/taccap-gripper/firmware/manifest.json</code>。</p>
 <table>
@@ -2069,7 +2070,7 @@
 </span><span id="__span-5-15"><a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="s2">    print(f'{ep.firmware_sn}  {ep.side.name:5}  fw={ack.data[0]}.{ack.data[1]}.{ack.data[2]}')</span>
 </span><span id="__span-5-16"><a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a><span class="s2">"</span>
 </span></code></pre></div>
-<p>镜像名按给的路径、SDK 根目录、SDK <code>firmware/</code> 依次解析,在哪运行都行,连接设备前就检查。<code>--target-version 1.2.2</code> 可选,只给校验日志和分区元数据打标记,不影响刷的内容。约 1 秒写完,夹爪重启约 1–3 秒;新固件写在备用分区,校验通过前不覆盖运行中的那份,传输失败不会刷坏。第 3 步读回的号必须不低于 leader 1.2.0 / follower 1.1.0,刷 SDK 0.1.9 附带的镜像时读回 1.2.2 / 1.1.5;刷从夹爪时把 <code>LeaderGripper</code> 换成 <code>FollowerGripper</code>。</p>
+<p>镜像名按给的路径、SDK 根目录、SDK <code>firmware/</code> 依次解析,在哪运行都行,连接设备前就检查。<code>--target-version 1.2.2</code> 可选,只给校验日志和分区元数据打标记,不影响刷的内容。约 1 秒写完,夹爪重启约 1–3 秒;新固件写在备用分区,校验通过前不覆盖运行中的那份,传输失败不会刷坏。第 3 步读回的号必须不低于 leader 1.2.0 / follower 1.1.0,刷当前基线附带的镜像时读回 1.2.2 / 1.1.6;刷从夹爪时把 <code>LeaderGripper</code> 换成 <code>FollowerGripper</code>。</p>
 <div class="admonition danger">
 <p class="admonition-title">刷错角色会导致夹爪无法启动,需返厂恢复</p>
 <p><code>ota_update.py</code> 按 CRC32 与 <code>manifest.json</code> 比对识别镜像,角色不匹配时直接拒绝,<code>--force</code> 才能强制;手工编译的镜像识别不出来,带提示放行。升级期间(<a href="../../common/gripper/#buttons-leds">指示灯</a>蓝色闪烁)不要断电或拔线。</p>

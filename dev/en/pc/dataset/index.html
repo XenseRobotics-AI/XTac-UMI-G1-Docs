@@ -1271,6 +1271,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Checking the data">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#8to6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bimanual 8 cameras → 6 cameras
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1698,6 +1715,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Checking the data">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#8to6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bimanual 8 cameras → 6 cameras
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1839,6 +1873,20 @@
 </tr>
 </tbody>
 </table>
+<p>It checks that <code>meta/</code> is complete, that the episode count agrees, that the parquet row counts and indices are contiguous, that there are no NaNs, that the video files exist and their frame counts line up with the parquet, and the <strong>camera format</strong>: a bimanual dataset is classified as 6 cameras (four tactile streams plus two wrist cameras) or 8 (plus the headset's two eyes), and the two formats have different input dimensions at training time.</p>
+<h3 id="8to6">Bimanual 8 cameras → 6 cameras<a class="headerlink" href="#8to6" title="锚点链接">¶</a></h3>
+<p>A bimanual dataset recorded with the <a href="../recording/#56">head camera</a> on is in the 8-camera format. To reduce it to the 6-camera format (the same shape as one recorded with <code>--robot.enable_head_camera=false</code>), use <code>lerobot-edit-dataset</code>:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>lerobot-edit-dataset<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">    </span>--repo_id<span class="w"> </span>&lt;your_org&gt;/&lt;dataset_8cam&gt;<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span>--new_repo_id<span class="w"> </span>&lt;your_org&gt;/&lt;dataset_6cam&gt;<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">    </span>--operation.type<span class="w"> </span>convert_8_to_6_cameras<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">    </span>--local_files_only
+</span></code></pre></div>
+<p>It drops the two headset eye image keys and the <code>head_camera.*</code> dimensions from <code>action</code> / <code>observation.state</code>. <strong>The source dataset is left untouched</strong> and the result is written to <code>--new_repo_id</code>. If the source is already 6-camera, or the camera keys do not match what is expected, the command errors out and refuses rather than producing a dataset of unclear format.</p>
+<div class="admonition tip">
+<p class="admonition-title">Add <code>--local_files_only</code> for local datasets</p>
+<p>By default the <code>lerobot-edit-dataset</code> operations are allowed to fetch from the Hugging Face Hub when a dataset is not found locally. <code>--local_files_only</code> reads only local files, so a mistyped <code>repo_id</code> cannot quietly pull a copy off the network.</p>
+</div>
 <h2 id="replay-and-visualisation">Replay and visualisation<a class="headerlink" href="#replay-and-visualisation" title="锚点链接">¶</a></h2>
 <ul>
 <li>Online: once the dataset is on the Hub, the <a href="https://huggingface.co/spaces/lerobot/visualize_dataset">LeRobot Dataset Visualizer</a> browses each episode's video and data.</li>
@@ -1852,33 +1900,33 @@
 <p>Before uploading, run <code>hf auth login</code> (older versions also accept <code>huggingface-cli login</code>) or set <code>HF_TOKEN</code>; otherwise the push fails on authentication.</p>
 </div>
 <p>Push with the installed <code>lerobot-push-dataset-to-hub</code> console entry point:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># basic form (--repo-id and --dataset-path are both needed)</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>lerobot-push-dataset-to-hub<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span>--repo-id<span class="w"> </span>&lt;your_org&gt;/&lt;your_dataset&gt;<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">    </span>--dataset-path<span class="w"> </span>~/.cache/huggingface/lerobot/&lt;your_org&gt;/&lt;your_dataset&gt;
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># basic form (--repo-id and --dataset-path are both needed)</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>lerobot-push-dataset-to-hub<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span>--repo-id<span class="w"> </span>&lt;your_org&gt;/&lt;your_dataset&gt;<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">    </span>--dataset-path<span class="w"> </span>~/.cache/huggingface/lerobot/&lt;your_org&gt;/&lt;your_dataset&gt;
 </span></code></pre></div>
 <p>Common variants:</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><input id="__tabbed_1_3" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">Large dataset</label><label for="__tabbed_1_2">Private repository</label><label for="__tabbed_1_3">Without video</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>lerobot-push-dataset-to-hub<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">    </span>--repo-id<span class="w"> </span>&lt;your_org&gt;/&lt;your_dataset&gt;<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span>--dataset-path<span class="w"> </span>~/.cache/huggingface/lerobot/&lt;your_org&gt;/&lt;your_dataset&gt;<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">    </span>--upload-large-folder
-</span></code></pre></div>
-</div>
-<div class="tabbed-block">
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>lerobot-push-dataset-to-hub<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">    </span>--repo-id<span class="w"> </span>&lt;your_org&gt;/&lt;your_dataset&gt;<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span>--dataset-path<span class="w"> </span>~/.cache/huggingface/lerobot/&lt;your_org&gt;/&lt;your_dataset&gt;<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">    </span>--private
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">    </span>--upload-large-folder
 </span></code></pre></div>
 </div>
 <div class="tabbed-block">
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>lerobot-push-dataset-to-hub<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">    </span>--repo-id<span class="w"> </span>&lt;your_org&gt;/&lt;your_dataset&gt;<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span>--dataset-path<span class="w"> </span>~/.cache/huggingface/lerobot/&lt;your_org&gt;/&lt;your_dataset&gt;<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">    </span>--no-videos
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">    </span>--private
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>lerobot-push-dataset-to-hub<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">    </span>--repo-id<span class="w"> </span>&lt;your_org&gt;/&lt;your_dataset&gt;<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">    </span>--dataset-path<span class="w"> </span>~/.cache/huggingface/lerobot/&lt;your_org&gt;/&lt;your_dataset&gt;<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">    </span>--no-videos
 </span></code></pre></div>
 </div>
 </div>
@@ -1890,15 +1938,15 @@
 <li>A rough estimate per episode is the average bitrate of each encoded video stream × the duration, plus the Parquet and metadata. Camera count, resolution, <code>fps</code> and <code>episode_time_s</code> all scale it up.</li>
 <li>Before a large collection run, record 2–3 representative episodes, run the integrity check, then measure the real size and extrapolate to the number of episodes you plan:</li>
 </ul>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>du<span class="w"> </span>-sh<span class="w"> </span>~/.cache/huggingface/lerobot/&lt;your_org&gt;/&lt;your_dataset&gt;
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>df<span class="w"> </span>-h<span class="w"> </span>~/.cache/huggingface/lerobot<span class="w">          </span><span class="c1"># free space on the target disk</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>du<span class="w"> </span>-sh<span class="w"> </span>~/.cache/huggingface/lerobot/&lt;your_org&gt;/&lt;your_dataset&gt;
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>df<span class="w"> </span>-h<span class="w"> </span>~/.cache/huggingface/lerobot<span class="w">          </span><span class="c1"># free space on the target disk</span>
 </span></code></pre></div>
 <h2 id="cleanup-and-maintenance">Cleanup and maintenance<a class="headerlink" href="#cleanup-and-maintenance" title="锚点链接">¶</a></h2>
 <p>When disk gets tight, first confirm the data passed <code>lerobot-check-dataset</code> and has been backed up or uploaded. To keep a way back, move the dataset into a separate quarantine directory first and only delete it through the file manager once you are sure:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>/data/lerobot-trash
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>realpath<span class="w"> </span>~/.cache/huggingface/lerobot/&lt;your_org&gt;/&lt;old_dataset&gt;
-</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>du<span class="w"> </span>-sh<span class="w"> </span>~/.cache/huggingface/lerobot/&lt;your_org&gt;/&lt;old_dataset&gt;
-</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>mv<span class="w"> </span>--<span class="w"> </span>~/.cache/huggingface/lerobot/&lt;your_org&gt;/&lt;old_dataset&gt;<span class="w"> </span>/data/lerobot-trash/
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>/data/lerobot-trash
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>realpath<span class="w"> </span>~/.cache/huggingface/lerobot/&lt;your_org&gt;/&lt;old_dataset&gt;
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>du<span class="w"> </span>-sh<span class="w"> </span>~/.cache/huggingface/lerobot/&lt;your_org&gt;/&lt;old_dataset&gt;
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>mv<span class="w"> </span>--<span class="w"> </span>~/.cache/huggingface/lerobot/&lt;your_org&gt;/&lt;old_dataset&gt;<span class="w"> </span>/data/lerobot-trash/
 </span></code></pre></div>
 <div class="admonition warning">
 <p class="admonition-title">Check the <code>realpath</code> output before moving</p>

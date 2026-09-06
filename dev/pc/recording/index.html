@@ -2571,9 +2571,10 @@
 <p class="admonition-title"><code>--robot.enable_tactile=false</code> 是排查开关,不要用它录数据</p>
 <p>关掉后触觉不发现、不落盘、无观测键。它用来把 USB 带宽问题拆成两半:双夹爪四路触觉 + 两路腕相机可能超出一条总线的预算,表现为某一路相机打不开、且每次不是同一路;分别关触觉、关腕相机各跑一次即可判断,见<a href="../troubleshooting/#usb-bandwidth">某一路相机打不开</a>。要少录一路用 <code>--robot.enable_wrist_camera=false</code> 或 <code>--robot.enable_tracker=false</code>。</p>
 </div>
-<div class="admonition danger">
-<p class="admonition-title">落盘的是 <code>rectify</code>,不是 Rerun 里看到的那张图</p>
-<p>落盘 = <code>--robot.tactile_output_types</code>,默认 <code>rectify</code>(未做基线相减的原图),只能填一个,多填报错。显示 = <code>--robot.tactile_display_output_types</code>,默认 <code>difference</code>(相对初始化时刻基线的差分图),键名如 <code>tactile_left_difference</code>,不在 <code>observation_features</code> 里、不落盘。差分是破坏性的:连接时压在胶上的力会被整段减掉,不要把 <code>--robot.tactile_output_types</code> 改成 <code>difference</code>。<code>--robot.tactile_diff_gain</code>(默认 <code>1.0</code>)只影响显示;出厂值 1.5 在本胶体上噪声偏大且会削顶。</p>
+<div class="admonition tip">
+<p class="admonition-title">默认情况下,Rerun 里看到的就是落盘的那张图</p>
+<p>落盘 = <code>--robot.tactile_output_types</code>,默认 <code>rectify</code>(未做基线相减的原图),只能填一个,多填报错。显示 = <code>--robot.tactile_display_output_types</code>,默认同样是 <code>rectify</code>(填空列表 <code>'[]'</code> 等价),所以传感器每帧只读一次,屏幕上和数据集里是同一张图。改成别的类型,才会在同一次读取上多出一路只显示、不落盘的流,键名如 <code>tactile_left_difference</code>,不在 <code>observation_features</code> 里。</p>
+<p>值得知道的那个类型是 <code>difference</code>(相对初始化时刻基线的增强差分图)。它曾经是默认值:早期胶体上 <code>rectify</code> 几乎看不出形变,只能靠差分图判断接触;2026-08 换硅胶之后 <code>rectify</code> 上直接能看出接触,显示流就不必再拿一路不落盘的图挡在操作员眼前。真要开回去(<code>--robot.tactile_display_output_types='["difference"]'</code>),记住差分是破坏性的:基线在传感器 init 时抓取,连接时压在胶上的力会被整段减掉,所以四枚指尖连接时都要空载,也不要为了看着清楚把 <code>--robot.tactile_output_types</code> 改成 <code>difference</code>。<code>--robot.tactile_diff_gain</code>(默认 <code>1.0</code>)只是这张差分图的增益,不请求 <code>difference</code> 时什么都不做;出厂值 1.5 在本胶体上噪声偏大且会削顶。</p>
 </div>
 <h2 id="54">录制选项:流式编码与编码器预热<a class="headerlink" href="#54" title="锚点链接">¶</a></h2>
 <p>视频键(触觉 + 腕相机)在采集时实时编码,而非先存 PNG 再在集尾编码,每集结束几乎不用等。默认开启(<code>--dataset.streaming_encoding=true</code>):</p>
