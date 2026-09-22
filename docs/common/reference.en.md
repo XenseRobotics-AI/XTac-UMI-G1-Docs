@@ -8,7 +8,7 @@ A lookup appendix shared by both editions: terms, feedback channels and related 
 |---|---|
 | **XTac-UMI G1** | The handheld UMI data-collection gripper, the sensor carrier shared by both editions; see [XTac-UMI G1](../product/g1.md) |
 | **Backpack** | The Backpack Kit's collection end: an RK3588 compute node that the grippers and the headset plug into and that runs XTac-UMI Collector; formally the XTac-UMI Backpack, see [The Backpack](../product/backpack.md) |
-| **XTac-UMI Collector** | The collection software on the backpack: it takes in the cameras, the gripper MCUs and the headset pose, and handles recording, replay, export and device management; version baseline 0.3.9, the device's System page is authoritative |
+| **XTac-UMI Collector** | The collection software on the backpack: it takes in the cameras, the gripper MCUs and the headset pose, and handles recording, replay, export and device management; version baseline 0.3.16, the device's System page is authoritative |
 | **Console** | Collector's browser UI, opened from a tablet, phone or PC connected to the backpack; the live monitor, projects and system pages all live there |
 | **Project / task / episode** | How the Backpack Kit organises data: tasks under a project, each task carrying a LeRobot language instruction, and each start-to-stop recording being one episode |
 | **MCAP** | The raw recording format of each Backpack Kit episode, storing cameras, encoders, IMU, poses and events by topic; the LeRobot export is converted from it |

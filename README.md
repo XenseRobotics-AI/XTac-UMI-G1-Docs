@@ -74,7 +74,7 @@ mkdocs build --strict
 固件 OTA 在 `pc/versions.md`,背包升级在 `backpack/update.md`。改内容时先找到正文位置,
 不要在别的页面再写一份。
 
-背包版内容按 XTac-UMI Collector **0.3.9** 核对;版本号出现处写 0.3.9,并注明以设备系统页
+背包版内容按 XTac-UMI Collector **0.3.16** 核对;版本号出现处写 0.3.16,并注明以设备系统页
 显示为准。云 OTA 服务端、多机纳管(matrix)、诊断收集在软件里仍是设计稿,文档不承诺。
 
 按 commit 号记录的历史变更放在
