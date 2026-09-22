@@ -1634,41 +1634,10 @@
 </li>
 </ul>
 </div>
-<div class="xu-spot">
-<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../assets/backpack/monitor-live.webp" data-desc-position="bottom"><img alt="Console monitor page: six cameras, both visuotactile sensors and headset pose on one screen" src="../assets/backpack/monitor-live.webp"></a></p>
-<div class="xu-spot__text">
 <h2 id="see-it-before-you-record">See it before you record<a class="headerlink" href="#see-it-before-you-record" title="锚点链接">¶</a></h2>
-<p>The console shows all six cameras, both visuotactile sensors and the headset pose at once, with gripper opening normalized in real time. Recording state, free disk space and tracker loss are on the same screen, viewable from a tablet or a phone.</p>
-</div>
-</div>
+<p>The console's live monitor is a Backpack Kit capability; the main text is in the <a href="backpack/#overview">Backpack Kit entry point</a>.</p>
 <h2 id="related-repositories">Related repositories<a class="headerlink" href="#related-repositories" title="锚点链接">¶</a></h2>
-<table>
-<thead>
-<tr>
-<th>Repo / package</th>
-<th>Role</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="https://github.com/XenseRobotics-AI/xense-taccap-lerobot"><code>xense-taccap-lerobot</code></a></td>
-<td>Data-collection repo (lerobot 0.5.1 customized branch, providing the <code>taccap_gripper</code> robot type)</td>
-</tr>
-<tr>
-<td><a href="https://github.com/XenseRobotics-AI/TacCap-Gripper"><code>xense.taccap</code></a></td>
-<td>Gripper SDK (repo <code>TacCap-Gripper</code>, submodule <code>third_party/taccap-gripper</code>): IMU, encoder, buttons, protocol, and the motor control that only the follower gripper has</td>
-</tr>
-<tr>
-<td><a href="https://github.com/XenseRobotics-AI/XenseVR-PC-Service"><code>xensevr_pc_service_sdk</code></a></td>
-<td>Pico4 Ultra tracker PC service (installed as a <code>.deb</code>, <strong>not a submodule</strong>); from v0.2.0 it also carries the <a href="pc/recording/#56">head camera</a> frames</td>
-</tr>
-<tr>
-<td><a href="https://github.com/XenseRobotics/xensesdk"><code>xensesdk</code></a></td>
-<td>Visuotactile sensor SDK, provided by the install script (<a href="https://xensedoc.readthedocs.io/en/latest/">docs site</a>)</td>
-</tr>
-</tbody>
-</table>
-<p>The Developer Kit pages match <code>xense.taccap 0.1.9</code> and <code>xense-taccap-lerobot</code>, customized from lerobot 0.5.1. For commands and field names, go by the device notes shipped with your local checkout of the main repo; for upgrades see <a href="pc/versions/#required">Versions and upgrades</a>.</p>
+<p>The Developer Kit builds on the open-source lerobot ecosystem; the full list of the data-collection repo, the gripper SDK and the tracker service is in <a href="common/reference/#references">References</a>. The Backpack Kit is delivered as an integrated system with the collection software preinstalled, so you do not have to install any of those repositories yourself.</p>
 
 
 

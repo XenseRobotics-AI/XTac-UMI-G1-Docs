@@ -93,7 +93,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#升级与-ota" class="md-skip">
+        <a href="#upgrades-and-ota" class="md-skip">
           Skip to content
         </a>
       
@@ -956,19 +956,19 @@
   <a href="#bundle" class="md-nav__link">
     <span class="md-ellipsis">
       
-        导入升级包
+        Importing an upgrade bundle
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="导入升级包">
+    <nav class="md-nav" aria-label="Importing an upgrade bundle">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#system-patch" class="md-nav__link">
     <span class="md-ellipsis">
       
-        控制台升级包覆盖不到的更新
+        Updates a console bundle does not cover
       
     </span>
   </a>
@@ -984,7 +984,7 @@
   <a href="#rollback" class="md-nav__link">
     <span class="md-ellipsis">
       
-        A/B 双槽与回滚
+        A/B slots and rollback
       
     </span>
   </a>
@@ -995,7 +995,7 @@
   <a href="#remote" class="md-nav__link">
     <span class="md-ellipsis">
       
-        远程强制更新
+        Remote forced updates
       
     </span>
   </a>
@@ -1006,7 +1006,7 @@
   <a href="#gripper-firmware" class="md-nav__link">
     <span class="md-ellipsis">
       
-        夹爪固件
+        Gripper firmware
       
     </span>
   </a>
@@ -1644,19 +1644,19 @@
   <a href="#bundle" class="md-nav__link">
     <span class="md-ellipsis">
       
-        导入升级包
+        Importing an upgrade bundle
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="导入升级包">
+    <nav class="md-nav" aria-label="Importing an upgrade bundle">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#system-patch" class="md-nav__link">
     <span class="md-ellipsis">
       
-        控制台升级包覆盖不到的更新
+        Updates a console bundle does not cover
       
     </span>
   </a>
@@ -1672,7 +1672,7 @@
   <a href="#rollback" class="md-nav__link">
     <span class="md-ellipsis">
       
-        A/B 双槽与回滚
+        A/B slots and rollback
       
     </span>
   </a>
@@ -1683,7 +1683,7 @@
   <a href="#remote" class="md-nav__link">
     <span class="md-ellipsis">
       
-        远程强制更新
+        Remote forced updates
       
     </span>
   </a>
@@ -1694,7 +1694,7 @@
   <a href="#gripper-firmware" class="md-nav__link">
     <span class="md-ellipsis">
       
-        夹爪固件
+        Gripper firmware
       
     </span>
   </a>
@@ -1718,106 +1718,106 @@
 
 
 
-<h1 id="升级与-ota">升级与 OTA<a class="headerlink" href="#升级与-ota" title="锚点链接">¶</a></h1>
-<p>本页讲 XTac-UMI Collector 控制台(下称控制台)自身的升级:在系统页导入升级包、升级失败时怎么回到上一版、远端下发的强制更新在现场会怎么表现。读完能独立完成一次升级并核对结果。夹爪固件的刷写在页末单独一节。</p>
-<p>控制台程序的升级都在 控制台 → 系统 → 系统更新 页完成,版本以这一页显示为准(本文按 0.3.16 写)。页面从上到下是指标卡(当前版本、git、构建时间、架构、状态:空闲 / 已就绪 / 应用中 / 错误)与「上传固件包」「待应用版本」「回滚」「远程更新」四张卡。</p>
-<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/backpack/update.webp" data-desc-position="bottom"><img alt="系统更新页" src="../../../assets/backpack/update.webp"></a></p>
-<p>截图为旧版界面,当前页面在「回滚」右侧还有「云 OTA 下发」与「matrix 下发」两张远程更新卡。</p>
-<h2 id="bundle">导入升级包<a class="headerlink" href="#bundle" title="锚点链接">¶</a></h2>
-<p>升级包是一个 <code>.tar.zst</code> 文件,由技术支持提供,文件名形如 <code>taccap-collector-95a9f890c421-v0.3.16-aarch64.tar.zst</code>:中间 12 位是 git hash,后面是版本号与架构。包里只有控制台程序(前后端打在同一个二进制里)和一份 <code>manifest.json</code>,不含夹爪固件、相机参数包与任何采集数据。因此,部分需要更新设备系统组件的修复,不会随这个控制台升级包安装,见<a href="#system-patch">控制台升级包覆盖不到的更新</a>。</p>
-<p>一个版本的身份是<strong>版本号 + 12 位 git hash</strong>:版本号更高会升;版本号相同但 hash 不同也会升(同版本的修订构建);两者都相同则什么也不做。核对版本时两样都要对上。</p>
+<h1 id="upgrades-and-ota">Upgrades and OTA<a class="headerlink" href="#upgrades-and-ota" title="锚点链接">¶</a></h1>
+<p>This page covers upgrading the XTac-UMI Collector console (below, "the console") itself: importing an upgrade bundle on the System page, getting back to the previous version when an upgrade fails, and how a forced update pushed from a management end behaves on site. By the end you can carry out an upgrade on your own and verify the result. Flashing gripper firmware has its own section at the end of the page.</p>
+<p>Console upgrades are all done on the console's System → System update page, and that page is authoritative for the version (this page is written against 0.3.16). From top to bottom the page has a metrics card (current version, git, build time, architecture, and status: idle / ready / applying / error) and four cards: "Upload firmware bundle", "Pending version", "Rollback" and "Remote update".</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/backpack/update.webp" data-desc-position="bottom"><img alt="System update page" src="../../../assets/backpack/update.webp"></a></p>
+<p>The screenshot shows an older version of the page; the current one also has "Cloud OTA push" and "matrix push" remote-update cards to the right of "Rollback".</p>
+<h2 id="bundle">Importing an upgrade bundle<a class="headerlink" href="#bundle" title="锚点链接">¶</a></h2>
+<p>An upgrade bundle is a <code>.tar.zst</code> file supplied by technical support, named like <code>taccap-collector-95a9f890c421-v0.3.16-aarch64.tar.zst</code>: the middle 12 characters are the git hash, followed by the version number and the architecture. The bundle holds only the console program (front end and back end in a single binary) plus a <code>manifest.json</code> — no gripper firmware, no camera profiles and no collected data. Fixes that need the device's system components updated therefore do not ship with this console bundle, see <a href="#system-patch">Updates a console bundle does not cover</a>.</p>
+<p>A version's identity is its <strong>version number plus the 12-character git hash</strong>: a higher version number upgrades; the same version number with a different hash also upgrades (a revision build of the same version); if both match, nothing happens. Check both when you verify a version.</p>
 <ol>
-<li>停止录制。应用更新时服务会重启,录制进行中会被直接拒绝。</li>
-<li>「上传固件包」→ 选 <code>.tar.zst</code> → 「上传并校验」,带上传进度条。校验通过后提示「已上传并校验:&lt;版本&gt;」,状态变为「已就绪」。</li>
-<li>在「待应用版本」卡核对版本号、git 与 <code>sha256</code>。</li>
-<li>「应用更新并重启」→ 确认。页面显示「服务重启中,等待重新连接…」,新版本起来后提示「更新已应用,服务已重启」。前端最多等 90 秒,超时提示「服务重启超时,请手动刷新确认状态」,通常刷新一下就回来了。</li>
-<li>到<a href="../system/#device-info">设备信息</a>核对「采集端版本 / git / 构建时间」确实变了。</li>
+<li>Stop recording. The service restarts when an update is applied, and a recording in progress is refused outright.</li>
+<li>"Upload firmware bundle" → pick the <code>.tar.zst</code> → "Upload and verify", with an upload progress bar. Once it passes you get "Uploaded and verified: &lt;version&gt;" and the status becomes "ready".</li>
+<li>On the "Pending version" card, check the version number, the git hash and the <code>sha256</code>.</li>
+<li>"Apply update and restart" → confirm. The page shows "Service restarting, waiting to reconnect…", and once the new version is up you get "Update applied, service restarted". The front end waits at most 90 seconds; on timeout it says "Service restart timed out, refresh manually to confirm the status", and a refresh usually brings it back.</li>
+<li>Go to <a href="../system/#device-info">Device info</a> and check that the collector version / git / build time really did change.</li>
 </ol>
-<p>校验在设备端做三件事,任一不过就拒收并写进「上次错误」:<code>sha256</code> 与包内 <code>manifest.json</code> 对账(包损坏或传输不完整);架构必须与设备一致(背包是 <code>aarch64</code>);当前版本必须不低于包声明的最低起始版本(不允许跨大版本或降级)。上传本身不改变任何东西,拒收后当前版本照常运行。</p>
-<h3 id="system-patch">控制台升级包覆盖不到的更新<a class="headerlink" href="#system-patch" title="锚点链接">¶</a></h3>
-<p>控制台升级包更新的是控制台程序本身。少数修复要改的是设备上的系统组件,「系统更新」页没有这个入口,只能由技术支持在设备上处理。</p>
+<p>The device runs three checks and refuses the bundle if any of them fails, writing the reason into "Last error": the <code>sha256</code> must reconcile with the bundle's <code>manifest.json</code> (a corrupt or incomplete transfer); the architecture must match the device (the backpack is <code>aarch64</code>); and the current version must not be below the minimum starting version the bundle declares (no jumping major versions and no downgrades). Uploading by itself changes nothing, and after a refusal the current version keeps running.</p>
+<h3 id="system-patch">Updates a console bundle does not cover<a class="headerlink" href="#system-patch" title="锚点链接">¶</a></h3>
+<p>A console upgrade bundle updates the console program itself. A few fixes change the device's system components instead; the System update page has no entry point for those, and only technical support can carry them out on the device.</p>
 <div class="admonition warning">
-<p class="admonition-title">不是所有更新都能从「系统更新」页完成</p>
-<p>控制台升级包不覆盖设备的系统组件。0.3.19 修的「插着 Pico 时背包的外网出口被 Pico 抢占」就属于这一类:把控制台程序升到 0.3.19 或更高之后,这项修复不一定同时生效,较早出厂的设备可能无法获得相应的系统修复。</p>
-<p>这台设备要不要额外处理,<strong>以技术支持的通知为准</strong>。技术支持明确告知需要时由他们处理,现场不需要、也无法自行操作;控制台上看到的版本号仍然只代表控制台程序的版本。</p>
-<p>技术支持提供的其他文件<strong>不要</strong>传进「上传固件包」——那里只接受 <code>.tar.zst</code> 控制台升级包,传别的会被校验拒收。</p>
+<p class="admonition-title">Not every update can be done from the System update page</p>
+<p>A console upgrade bundle does not cover the device's system components. The fix in 0.3.19 for "the backpack's internet route is taken over by the Pico when it is plugged in" is one of these: after you upgrade the console program to 0.3.19 or later, that fix does not necessarily take effect at the same time, and earlier units may not have the corresponding system fix.</p>
+<p>Whether a given device needs anything extra <strong>is for technical support to tell you</strong>. When technical support says it does, they handle it; there is nothing to do on site, and no way to do it there. The version shown in the console still refers only to the console program.</p>
+<p>Do <strong>not</strong> upload any other file technical support gives you into "Upload firmware bundle" — it accepts only <code>.tar.zst</code> console upgrade bundles, and anything else is refused by the verification step.</p>
 </div>
-<h2 id="rollback">A/B 双槽与回滚<a class="headerlink" href="#rollback" title="锚点链接">¶</a></h2>
-<p>应用更新时,设备把正在运行的程序保留为上一版,再原子地换入新版并重启;新版启动后要真正监听、连续存活 30 秒且本机健康检查通过,这次升级才算提交。提交后上一版仍然留着供手动回滚;下一次升级会把它覆盖,所以只能退一步。</p>
-<p>自动回滚在这些情况下发生,不需要人干预:</p>
+<h2 id="rollback">A/B slots and rollback<a class="headerlink" href="#rollback" title="锚点链接">¶</a></h2>
+<p>When an update is applied, the device keeps the running program as the previous version, then atomically swaps in the new one and restarts. The new version has to actually listen, stay alive for 30 seconds and pass the local health check before the upgrade counts as committed. After a commit the previous version is still kept for a manual rollback; the next upgrade overwrites it, so you can only go back one step.</p>
+<p>Automatic rollback happens in these cases, with no intervention:</p>
 <ul>
-<li>新程序起不来、启动早期崩溃或健康检查不过,连续失败 3 次后自动换回上一版并重启。</li>
-<li>启动时发现换入的文件与记录不符(损坏或错包),立即换回。</li>
-<li>升级中途断电:换入的顺序是先保留旧版、再原子替换,任何时刻磁盘上都有一份完整可运行的程序;重新上电后要么新版通过自检并提交,要么按上面的规则退回旧版,不会变砖。重新上电后到系统更新页看当前版本与「上次操作 / 上次错误」,需要的话重新导入包。</li>
+<li>The new program does not come up, crashes early in start-up or fails its health check: after 3 consecutive failures it switches back to the previous version and restarts.</li>
+<li>At start-up the swapped-in file does not match the record (corrupt or the wrong bundle): it switches back immediately.</li>
+<li>Power loss mid-upgrade: the order is keep the old version first, then swap atomically, so at every moment there is a complete, runnable program on disk. After power returns, either the new version passes its self-check and commits, or it falls back under the rules above. It cannot be bricked. After power returns, open the System update page to see the current version and "Last operation / Last error", and re-import the bundle if you need to.</li>
 </ul>
-<p>手动回滚:「回滚」卡显示「可回滚」时,点「回滚到上一版本」→ 确认,服务重启回到旧版。显示「不可用」说明这台设备还没成功应用过更新(出厂首装),没有上一版可退。回滚同样要求没有进行中的录制。</p>
-<p>回滚与升级只换控制台程序;录制数据、项目 / 任务、上传配置与网络配置存放在别处,不受影响。</p>
-<h2 id="remote">远程强制更新<a class="headerlink" href="#remote" title="锚点链接">¶</a></h2>
-<p>本节只适用于已接入管理端的部署;未接入管理端的设备不会出现这些远程更新卡片,升级按上面的<a href="#bundle">导入升级包</a>走。</p>
-<p>0.3.9 起,管理端可以指定版本下发到设备并强制安装,操作员不需要逐台导入包;也可以分批发布,先在小范围验证再推广。前提是背包能访问远端:接<a href="../network/#lan">有线或现场 WiFi</a>;只开着自己热点的背包收不到。</p>
-<p>设备收到后按固定顺序走,「什么时候真的重启」只由设备端决定:</p>
+<p>Manual rollback: when the "Rollback" card shows "Rollback available", click "Roll back to previous version" → confirm, and the service restarts on the old version. "Unavailable" means this device has never successfully applied an update (first install from the factory), so there is no previous version to fall back to. Rollback likewise requires that no recording is in progress.</p>
+<p>Rollback and upgrade only swap the console program; recorded data, projects / tasks, upload configurations and the network configuration are stored elsewhere and are unaffected.</p>
+<h2 id="remote">Remote forced updates<a class="headerlink" href="#remote" title="锚点链接">¶</a></h2>
+<p>This section applies only to deployments connected to a management end; a device that is not connected will not show these remote-update cards, and upgrades follow <a href="#bundle">Importing an upgrade bundle</a> above.</p>
+<p>Since 0.3.9 a management end can push a specified version to a device and force the install, so operators do not have to import the bundle on each unit one by one; it can also roll out in batches, validating on a few devices before going wider. The prerequisite is that the backpack can reach the remote end: connect it <a href="../network/#lan">by cable or to the site WiFi</a>; a backpack running only its own hotspot will not receive anything.</p>
+<p>Once a device receives a push it goes through a fixed sequence, and "when it actually restarts" is decided solely by the device:</p>
 <ol>
-<li>下载:后台下载升级包,右下角卡片显示进度(源不给总大小时只显示已下载多少)。</li>
-<li>暂存:下载完成后走与手动导入完全相同的校验;通过后才开始倒计时,下载耗时不计入。</li>
-<li>倒计时:宽限期由下发方指定,默认 5 分钟、最短 30 秒。卡片显示「将在 N 分 NN 秒后自动更新并重启」;想提前可以点「立即更新」(录制中会被拒)。</li>
-<li>到点:没在录制就立即应用并重启;正在录制则卡片变为「更新等待采集结束」,等本条 episode 正常收尾后再重启,绝不打断采集。晚几分钟升级,比一条被腰斩的 episode 便宜得多。</li>
-<li>新版本第一次进入界面,卡片显示「已更新到新版本」与本次更新内容,点「知道了」关闭。</li>
+<li>Download: the bundle downloads in the background and a card at the bottom right shows progress (if the source does not give a total size, it shows only how much has been downloaded).</li>
+<li>Staging: once downloaded it goes through exactly the same verification as a manual import; only after it passes does the countdown start, and the download time is not counted.</li>
+<li>Countdown: the grace period is set by the pushing end, 5 minutes by default and 30 seconds at the shortest. The card shows "Will update and restart automatically in N min NN s"; to go early, click "Update now" (refused while recording).</li>
+<li>At the deadline: if nothing is recording it applies and restarts immediately; if a recording is in progress the card changes to "Update waiting for collection to finish" and it restarts once the current episode has ended normally — it never interrupts collection. Upgrading a few minutes later is far cheaper than an episode cut in half.</li>
+<li>The first time you open the interface on the new version, the card shows "Updated to the new version" together with this release's changes; click "Got it" to dismiss it.</li>
 </ol>
-<p>卡片贴在右下角常驻,刻意不做全屏遮罩:宽限期里操作员很可能正在采集,画面与停止按钮都不能被挡住。另有两次一次性提示抓注意力:新版本刚下发时弹一次确认框(「现在就更新吗?」选「取消」则继续倒计时),倒计时快到时弹一次「即将自动更新,请尽快收尾」。</p>
+<p>The card stays pinned at the bottom right and deliberately avoids a full-screen overlay: during the grace period the operator may well be collecting, and neither the view nor the stop button may be covered. Two one-off prompts do grab attention: a confirmation dialog when the new version is first pushed ("Update now?" — "Cancel" lets the countdown continue), and one "About to update automatically, please wrap up" as the countdown runs out.</p>
 <table>
 <thead>
 <tr>
-<th>卡片状态</th>
-<th>含义</th>
-<th>你要做的</th>
+<th>Card status</th>
+<th>What it means</th>
+<th>What you do</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>管理端已下发更新,正在下载</td>
-<td>后台下载中</td>
-<td>不用管,可以继续采集</td>
+<td>Management end has pushed an update, downloading</td>
+<td>Downloading in the background</td>
+<td>Nothing; you can keep collecting</td>
 </tr>
 <tr>
-<td>管理端要求更新,将在 … 后自动更新</td>
-<td>已暂存,倒计时中</td>
-<td>收尾当前工作;或点「立即更新」</td>
+<td>Management end requires an update, will update automatically in …</td>
+<td>Staged, counting down</td>
+<td>Wrap up what you are doing, or click "Update now"</td>
 </tr>
 <tr>
-<td>更新等待采集结束</td>
-<td>到点但在录制</td>
-<td>正常录完这条,停录后自动重启</td>
+<td>Update waiting for collection to finish</td>
+<td>Deadline reached but recording</td>
+<td>Finish this episode normally; it restarts once you stop</td>
 </tr>
 <tr>
-<td>正在更新</td>
-<td>服务即将重启</td>
-<td>等界面短暂断开后自动恢复</td>
+<td>Updating</td>
+<td>The service is about to restart</td>
+<td>Wait for the interface to drop briefly and come back</td>
 </tr>
 <tr>
-<td>更新准备失败</td>
-<td>下载或校验失败</td>
-<td>不用手动重试,设备下一轮自动重投;持续失败先查网络</td>
+<td>Update preparation failed</td>
+<td>The download or verification failed</td>
+<td>No need to retry by hand; the device re-attempts on its next round. If it keeps failing, check the network first</td>
 </tr>
 <tr>
-<td>已更新到新版本</td>
-<td>升级完成</td>
-<td>看一眼更新内容,点「知道了」</td>
+<td>Updated to the new version</td>
+<td>Upgrade complete</td>
+<td>Glance at the changes and click "Got it"</td>
 </tr>
 </tbody>
 </table>
-<p>系统更新页的「远程更新」卡显示同一份状态(来源、阶段、剩余秒数),没有下发时显示「当前无远程下发的更新」。远端下发的重启与回滚同样遵守录制保护。</p>
-<h2 id="gripper-firmware">夹爪固件<a class="headerlink" href="#gripper-firmware" title="锚点链接">¶</a></h2>
-<p>夹爪(XTac-UMI G1)的 MCU 固件不走上面的升级包。背包版在控制台里直接刷:控制台 → 系统 → <a href="../system/#gripper">夹爪配置</a> 页的「夹爪固件升级」面板,不需要 PC 与 SDK 脚本。固件镜像、按角色选镜像的规则、当前发布版本(主夹爪 1.2.2)与「我需要刷吗」的判断见 <a href="../../pc/versions/#ota">PC 版的固件 OTA 升级</a>,两种形态刷的是同一份镜像。</p>
+<p>The System update page's "Remote update" card shows the same state (source, stage, seconds remaining), and displays "No remote update pushed" when there is none. Restarts and rollbacks pushed from the remote end obey the same recording protection.</p>
+<h2 id="gripper-firmware">Gripper firmware<a class="headerlink" href="#gripper-firmware" title="锚点链接">¶</a></h2>
+<p>The gripper's (XTac-UMI G1) MCU firmware does not go through the upgrade bundle above. On the Backpack Kit you flash it from the console directly: the "Gripper firmware upgrade" panel on the console's System → <a href="../system/#gripper">Gripper</a> page, with no PC or SDK script needed. The firmware images, the rule for picking an image by role, the current released version (leader 1.2.2) and how to judge "do I need to flash?" are in <a href="../../pc/versions/#ota">the Developer Kit's firmware OTA upgrade</a>; both configurations flash the same image.</p>
 <ol>
-<li>停止录制,且没有正在进行的开合标定。固件升级独占串口,两者进行中都会被拒。</li>
-<li>「夹爪固件升级」→ 选目标爪(左爪 / 右爪,面板显示该爪的 SN,固件只会刷到选中的这一只;该爪的角色 Leader / Follower 看同页标定卡)→ 选 <code>.bin</code> → 「上传并刷写」→ 确认。</li>
-<li>看上传进度与刷写阶段(启动中 → 写入中 → 校验中 → 应用中 → 完成),完成后提示「固件已刷写完成,设备正在重启」。中途可「中止」:新固件写在备用分区,校验通过前不覆盖运行中的那份,中止或传输失败不会刷坏,重来即可。</li>
-<li>等夹爪重启完成后,给背包断电再上电(或拔插该夹爪的 Type-C 线)。刷后的重启是软复位,夹爪的 USB 转串口芯片没断过电,会停在悄悄丢状态帧的降级状态,原因见 <a href="../../pc/versions/#ota">PC 版的说明</a>。</li>
-<li>到<a href="../system/#device-info">设备信息</a>的「夹爪 MCU」核对固件版本;主夹爪升到 1.2.0 以上后回<a href="../system/#gripper">夹爪配置</a>重标零点与行程。</li>
+<li>Stop recording, and make sure no travel calibration is running. Firmware upgrades take exclusive use of the serial port, and either one in progress will be refused.</li>
+<li>"Gripper firmware upgrade" → pick the target gripper (left / right; the panel shows that gripper's SN, and the firmware only ever goes to the one you select — its role, leader or follower, is on the calibration card on the same page) → pick the <code>.bin</code> → "Upload and flash" → confirm.</li>
+<li>Watch the upload progress and the flashing stages (starting → writing → verifying → applying → done); when it finishes you get "Firmware flashed, the device is restarting". You can "Abort" part-way: the new firmware is written to the spare partition and does not overwrite the running copy until it verifies, so aborting or a failed transfer cannot brick it — just start again.</li>
+<li>Once the gripper has restarted, power the backpack off and on again (or unplug and replug that gripper's Type-C cable). The restart after flashing is a soft reset, so the gripper's USB-to-serial chip never loses power and it sits in a degraded state quietly dropping status frames; the reason is in <a href="../../pc/versions/#ota">the Developer Kit's notes</a>.</li>
+<li>Check the firmware version under "Gripper MCU" on <a href="../system/#device-info">Device info</a>; after a leader gripper goes above 1.2.0, go back to <a href="../system/#gripper">Gripper</a> and redo the zero and travel calibration.</li>
 </ol>
 <div class="admonition danger">
-<p class="admonition-title">按角色选镜像,刷写期间不要断电或拔线</p>
-<p>主夹爪(SN 末位 <code>m</code>)刷 <code>tc-gu-01-master.bin</code>,从夹爪(SN 末位 <code>s</code>)刷 <code>tc-gu-01-slave.bin</code>,按角色不按左右;控制台不校验镜像与角色是否匹配,刷错角色夹爪无法启动,需返厂恢复。写入与应用阶段断电或拔线会写坏固件。</p>
+<p class="admonition-title">Pick the image by role, and never cut power or unplug while flashing</p>
+<p>The leader gripper (SN ending in <code>m</code>) takes <code>tc-gu-01-master.bin</code> and the follower (SN ending in <code>s</code>) takes <code>tc-gu-01-slave.bin</code> — by role, not by left or right. The console does not check that the image matches the role; flash the wrong role and the gripper will not start, and only the factory can recover it. Cutting power or unplugging during the writing and applying stages will corrupt the firmware.</p>
 </div>
 
 
