@@ -38,7 +38,9 @@ If you hit a problem:
 
 Please include:
 
-- The complete error and the relevant logs, untruncated.
+- The complete error text, plus the matching log:
+    - Developer Kit: attach the complete log file for that run, `~/xenselogs/session_<timestamp>.log` — the whole file, not just the last few lines on screen; see [Troubleshooting](../pc/troubleshooting.md#logs).
+    - Backpack Kit: attach a screenshot of the console's system-log panel and note roughly when the error appeared; the panel does not export a log file, so there is none to look for on the device.
 - Device identity: on the Backpack Kit, copy the device SN, the collector version and each gripper's SN / firmware version from the console's System → Device info page; on the Developer Kit, the side / role / firmware_sn output from `scan_grippers` and the output of the command in [How to check versions](../pc/versions.md#check-versions).
 - Steps to reproduce, the full command or console actions, single or bimanual, and whether the tracker was enabled.
 - For anything involving cameras or hardware assembly, photos of the device connections and of what looks wrong.
