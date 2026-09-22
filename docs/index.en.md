@@ -77,27 +77,10 @@ Pick one to start. Hardware, calibration and data definitions are the same on bo
 
 </div>
 
-<div class="xu-spot" markdown>
-
-![Console monitor page: six cameras, both visuotactile sensors and headset pose on one screen](assets/backpack/monitor-live.webp)
-
-<div class="xu-spot__text" markdown>
-
 ## See it before you record
 
-The console shows all six cameras, both visuotactile sensors and the headset pose at once, with gripper opening normalized in real time. Recording state, free disk space and tracker loss are on the same screen, viewable from a tablet or a phone.
-
-</div>
-
-</div>
+The console's live monitor is a Backpack Kit capability; the main text is in the [Backpack Kit entry point](backpack/index.md#overview).
 
 ## Related repositories
 
-| Repo / package | Role |
-|---|---|
-| [`xense-taccap-lerobot`](https://github.com/XenseRobotics-AI/xense-taccap-lerobot) | Data-collection repo (lerobot 0.5.1 customized branch, providing the `taccap_gripper` robot type) |
-| [`xense.taccap`](https://github.com/XenseRobotics-AI/TacCap-Gripper) | Gripper SDK (repo `TacCap-Gripper`, submodule `third_party/taccap-gripper`): IMU, encoder, buttons, protocol, and the motor control that only the follower gripper has |
-| [`xensevr_pc_service_sdk`](https://github.com/XenseRobotics-AI/XenseVR-PC-Service) | Pico4 Ultra tracker PC service (installed as a `.deb`, **not a submodule**); from v0.2.0 it also carries the [head camera](pc/recording.md#56) frames |
-| [`xensesdk`](https://github.com/XenseRobotics/xensesdk) | Visuotactile sensor SDK, provided by the install script ([docs site](https://xensedoc.readthedocs.io/en/latest/)) |
-
-The Developer Kit pages match `xense.taccap 0.1.9` and `xense-taccap-lerobot`, customized from lerobot 0.5.1. For commands and field names, go by the device notes shipped with your local checkout of the main repo; for upgrades see [Versions and upgrades](pc/versions.md#required).
+The Developer Kit builds on the open-source lerobot ecosystem; the full list of the data-collection repo, the gripper SDK and the tracker service is in [References](common/reference.md#references). The Backpack Kit is delivered as an integrated system with the collection software preinstalled, so you do not have to install any of those repositories yourself.

@@ -45,7 +45,7 @@ Please include:
 - Steps to reproduce, the full command or console actions, single or bimanual, and whether the tracker was enabled.
 - For anything involving cameras or hardware assembly, photos of the device connections and of what looks wrong.
 
-## References
+## References {#references}
 
 | Resource | URL | Notes |
 |---|---|---|

@@ -10,6 +10,10 @@
 - 操作:夹爪按键开录、停录,指示灯反馈状态,单人可完成整套采集。
 - 适合:规模化数采工厂与采集团队;软件闭源交付,支持轻量二次开发。需要接自己的 x86 工作站、完全走 LeRobot 框架的另一种形态见 [PC 版](../pc/index.md);两种配置的差异见[产品线与配置对比](../product/editions.md)。
 
+![控制台监控页:六路相机、两侧视触觉与头显位姿同屏](../assets/backpack/monitor-live.webp)
+
+录之前先看见:控制台同屏显示六路相机、两侧视触觉与头显位姿,夹爪开合度实时归一化;录制状态、磁盘余量与追踪器丢失都在同一屏上,平板和手机都能看。开录前该逐项确认什么见[实时监控里确认](monitor-record.md#checks)。
+
 产品定位与控制台介绍见[认识数采背包](../product/backpack.md);[背包接口](unbox-connect.md#ports)、[适配器](unbox-connect.md#adapter)与[充电宝](unbox-connect.md#powerbank)两种接线方式、[机身标签](network.md#label)在各自的操作页里。
 
 ## 首次部署清单 {#first-deploy}

@@ -77,27 +77,10 @@ hide:
 
 </div>
 
-<div class="xu-spot" markdown>
-
-![控制台监控页:六路相机、两侧视触觉与头显位姿同屏](assets/backpack/monitor-live.webp)
-
-<div class="xu-spot__text" markdown>
-
 ## 录之前先看见
 
-控制台里同时显示六路相机、两侧视触觉与头显位姿,夹爪开合度实时归一化。录制状态、磁盘余量、追踪器丢失都在同一屏上,平板和手机都能看。
-
-</div>
-
-</div>
+控制台的实时监控属于背包版的能力,正文见[背包版入口](backpack/index.md#overview)。
 
 ## 相关仓库
 
-| 仓库 / 包 | 作用 |
-|---|---|
-| [`xense-taccap-lerobot`](https://github.com/XenseRobotics-AI/xense-taccap-lerobot) | 数采主仓库(lerobot 0.5.1 定制分支,提供 `taccap_gripper` 设备类型) |
-| [`xense.taccap`](https://github.com/XenseRobotics-AI/TacCap-Gripper) | 夹爪 SDK(仓库 `TacCap-Gripper`,子模块 `third_party/taccap-gripper`):IMU、编码器、按键、协议及仅从夹爪具备的电机控制 |
-| [`xensevr_pc_service_sdk`](https://github.com/XenseRobotics-AI/XenseVR-PC-Service) | Pico4 Ultra 追踪器 PC 服务(以 `.deb` 安装,**不是子模块**);v0.2.0 起也承载[头显相机](pc/recording.md#56)画面 |
-| [`xensesdk`](https://github.com/XenseRobotics/xensesdk) | 视触觉传感器 SDK,由安装脚本提供([文档站](https://xensedoc.readthedocs.io/en/latest/)) |
-
-PC 版内容对应 `xense.taccap 0.1.9` 与基于 lerobot 0.5.1 定制的 `xense-taccap-lerobot`;命令与字段以你本地主仓库附带的设备说明为准,升级见[版本与升级](pc/versions.md#required)。
+PC 版基于 lerobot 开源生态,数采主仓库、夹爪 SDK 与追踪器服务的完整清单见[参考资料](common/reference.md#references)。背包版是整机交付,采集软件预装在背包里,不需要自行安装这些仓库。
