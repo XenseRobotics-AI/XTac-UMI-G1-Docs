@@ -932,7 +932,7 @@
   <a href="#ssh" class="md-nav__link">
     <span class="md-ellipsis">
       
-        高级:SSH 登录背包
+        高级排查:由技术支持处理
       
     </span>
   </a>
@@ -1826,7 +1826,7 @@
   <a href="#ssh" class="md-nav__link">
     <span class="md-ellipsis">
       
-        高级:SSH 登录背包
+        高级排查:由技术支持处理
       
     </span>
   </a>
@@ -1957,12 +1957,15 @@
 </tr>
 </tbody>
 </table>
-<h2 id="ssh">高级:SSH 登录背包<a class="headerlink" href="#ssh" title="锚点链接">¶</a></h2>
-<p>非开发人员不需要登录背包。需要看网口状态时:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>ssh<span class="w"> </span>xense@&lt;背包IP&gt;
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>ifconfig
-</span></code></pre></div>
-<p><code>ap0</code> 是热点口,恒为 <code>192.168.44.1</code>;<code>eth0</code> 是有线口;<code>wlan0</code> 是连现场 WiFi 的无线口。</p>
+<h2 id="ssh">高级排查:由技术支持处理<a class="headerlink" href="#ssh" title="锚点链接">¶</a></h2>
+<p>日常的网络状态与连接操作都在控制台里完成:本机当前可用的全部访问地址看顶栏的<a href="#status">网络下拉</a>;有线地址、网关、「未插线」这类连接状态,以及连现场 WiFi、改有线 IP,都在 系统 → <a href="../system/#wifi">网络 / 配网</a>。</p>
+<p>设备后台只供技术支持做诊断。<strong>请勿自行登录后台或改动系统配置</strong>:那里的改动不在控制台的可见范围内,配错会让设备连热点入口一起失去。</p>
+<p>按本页的接入方式与<a href="../troubleshooting/">故障排查</a>逐条试过仍然连不上时,把这些交给技术支持,不要自己进后台:</p>
+<ul>
+<li>机身标签上的 SN,以及你用的是哪个入口(热点 / 设备名 / 有线 IP);</li>
+<li>顶栏<a href="#status">网络下拉</a>里显示的地址,以及 系统 → <a href="../system/#wifi">网络 / 配网</a> 页上的有线状态与当前外网连接;</li>
+<li>界面上的报错原文。</li>
+</ul>
 
 
 

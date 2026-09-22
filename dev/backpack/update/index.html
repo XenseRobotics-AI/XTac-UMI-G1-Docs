@@ -961,6 +961,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="导入升级包">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#system-patch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        控制台升级包覆盖不到的更新
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1632,6 +1649,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="导入升级包">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#system-patch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        控制台升级包覆盖不到的更新
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1686,11 +1720,11 @@
 
 <h1 id="升级与-ota">升级与 OTA<a class="headerlink" href="#升级与-ota" title="锚点链接">¶</a></h1>
 <p>本页讲 XTac-UMI Collector 控制台(下称控制台)自身的升级:在系统页导入升级包、升级失败时怎么回到上一版、远端下发的强制更新在现场会怎么表现。读完能独立完成一次升级并核对结果。夹爪固件的刷写在页末单独一节。</p>
-<p>所有操作都在 控制台 → 系统 → 系统更新 页完成,版本以这一页显示为准(本文按 0.3.16 写)。页面从上到下是指标卡(当前版本、git、构建时间、架构、状态:空闲 / 已就绪 / 应用中 / 错误)与「上传固件包」「待应用版本」「回滚」「远程更新」四张卡。</p>
+<p>控制台程序的升级都在 控制台 → 系统 → 系统更新 页完成,版本以这一页显示为准(本文按 0.3.16 写)。页面从上到下是指标卡(当前版本、git、构建时间、架构、状态:空闲 / 已就绪 / 应用中 / 错误)与「上传固件包」「待应用版本」「回滚」「远程更新」四张卡。</p>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/backpack/update.webp" data-desc-position="bottom"><img alt="系统更新页" src="../../assets/backpack/update.webp"></a></p>
 <p>截图为旧版界面,当前页面在「回滚」右侧还有「云 OTA 下发」与「matrix 下发」两张远程更新卡。</p>
 <h2 id="bundle">导入升级包<a class="headerlink" href="#bundle" title="锚点链接">¶</a></h2>
-<p>升级包是一个 <code>.tar.zst</code> 文件,由技术支持提供,文件名形如 <code>taccap-collector-95a9f890c421-v0.3.16-aarch64.tar.zst</code>:中间 12 位是 git hash,后面是版本号与架构。包里只有控制台程序(前后端打在同一个二进制里)和一份 <code>manifest.json</code>,不含夹爪固件、相机参数包与任何采集数据。</p>
+<p>升级包是一个 <code>.tar.zst</code> 文件,由技术支持提供,文件名形如 <code>taccap-collector-95a9f890c421-v0.3.16-aarch64.tar.zst</code>:中间 12 位是 git hash,后面是版本号与架构。包里只有控制台程序(前后端打在同一个二进制里)和一份 <code>manifest.json</code>,不含夹爪固件、相机参数包与任何采集数据。因此,部分需要更新设备系统组件的修复,不会随这个控制台升级包安装,见<a href="#system-patch">控制台升级包覆盖不到的更新</a>。</p>
 <p>一个版本的身份是<strong>版本号 + 12 位 git hash</strong>:版本号更高会升;版本号相同但 hash 不同也会升(同版本的修订构建);两者都相同则什么也不做。核对版本时两样都要对上。</p>
 <ol>
 <li>停止录制。应用更新时服务会重启,录制进行中会被直接拒绝。</li>
@@ -1700,6 +1734,14 @@
 <li>到<a href="../system/#device-info">设备信息</a>核对「采集端版本 / git / 构建时间」确实变了。</li>
 </ol>
 <p>校验在设备端做三件事,任一不过就拒收并写进「上次错误」:<code>sha256</code> 与包内 <code>manifest.json</code> 对账(包损坏或传输不完整);架构必须与设备一致(背包是 <code>aarch64</code>);当前版本必须不低于包声明的最低起始版本(不允许跨大版本或降级)。上传本身不改变任何东西,拒收后当前版本照常运行。</p>
+<h3 id="system-patch">控制台升级包覆盖不到的更新<a class="headerlink" href="#system-patch" title="锚点链接">¶</a></h3>
+<p>控制台升级包更新的是控制台程序本身。少数修复要改的是设备上的系统组件,「系统更新」页没有这个入口,只能由技术支持在设备上处理。</p>
+<div class="admonition warning">
+<p class="admonition-title">不是所有更新都能从「系统更新」页完成</p>
+<p>控制台升级包不覆盖设备的系统组件。0.3.19 修的「插着 Pico 时背包的外网出口被 Pico 抢占」就属于这一类:把控制台程序升到 0.3.19 或更高之后,这项修复不一定同时生效,较早出厂的设备可能无法获得相应的系统修复。</p>
+<p>这台设备要不要额外处理,<strong>以技术支持的通知为准</strong>。技术支持明确告知需要时由他们处理,现场不需要、也无法自行操作;控制台上看到的版本号仍然只代表控制台程序的版本。</p>
+<p>技术支持提供的其他文件<strong>不要</strong>传进「上传固件包」——那里只接受 <code>.tar.zst</code> 控制台升级包,传别的会被校验拒收。</p>
+</div>
 <h2 id="rollback">A/B 双槽与回滚<a class="headerlink" href="#rollback" title="锚点链接">¶</a></h2>
 <p>应用更新时,设备把正在运行的程序保留为上一版,再原子地换入新版并重启;新版启动后要真正监听、连续存活 30 秒且本机健康检查通过,这次升级才算提交。提交后上一版仍然留着供手动回滚;下一次升级会把它覆盖,所以只能退一步。</p>
 <p>自动回滚在这些情况下发生,不需要人干预:</p>
@@ -1711,6 +1753,7 @@
 <p>手动回滚:「回滚」卡显示「可回滚」时,点「回滚到上一版本」→ 确认,服务重启回到旧版。显示「不可用」说明这台设备还没成功应用过更新(出厂首装),没有上一版可退。回滚同样要求没有进行中的录制。</p>
 <p>回滚与升级只换控制台程序;录制数据、项目 / 任务、上传配置与网络配置存放在别处,不受影响。</p>
 <h2 id="remote">远程强制更新<a class="headerlink" href="#remote" title="锚点链接">¶</a></h2>
+<p>本节只适用于已接入管理端的部署;未接入管理端的设备不会出现这些远程更新卡片,升级按上面的<a href="#bundle">导入升级包</a>走。</p>
 <p>0.3.9 起,管理端可以指定版本下发到设备并强制安装,操作员不需要逐台导入包;也可以分批发布,先在小范围验证再推广。前提是背包能访问远端:接<a href="../network/#lan">有线或现场 WiFi</a>;只开着自己热点的背包收不到。</p>
 <p>设备收到后按固定顺序走,「什么时候真的重启」只由设备端决定:</p>
 <ol>
