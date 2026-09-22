@@ -93,7 +93,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#开箱接线与供电" class="md-skip">
+        <a href="#unboxing-cabling-and-power" class="md-skip">
           Skip to content
         </a>
       
@@ -788,7 +788,7 @@
   <a href="#unbox" class="md-nav__link">
     <span class="md-ellipsis">
       
-        开箱核对
+        Unboxing checks
       
     </span>
   </a>
@@ -799,7 +799,7 @@
   <a href="#ports" class="md-nav__link">
     <span class="md-ellipsis">
       
-        背包接口
+        The backpack's ports
       
     </span>
   </a>
@@ -810,7 +810,7 @@
   <a href="#order" class="md-nav__link">
     <span class="md-ellipsis">
       
-        接线与拔线顺序
+        Connection and disconnection order
       
     </span>
   </a>
@@ -821,7 +821,7 @@
   <a href="#adapter" class="md-nav__link">
     <span class="md-ellipsis">
       
-        适配器供电
+        Adapter power
       
     </span>
   </a>
@@ -832,7 +832,7 @@
   <a href="#powerbank" class="md-nav__link">
     <span class="md-ellipsis">
       
-        充电宝供电
+        Power-bank power
       
     </span>
   </a>
@@ -843,7 +843,7 @@
   <a href="#pico-link" class="md-nav__link">
     <span class="md-ellipsis">
       
-        头显接背包
+        Connecting the headset to the backpack
       
     </span>
   </a>
@@ -854,7 +854,7 @@
   <a href="#desk" class="md-nav__link">
     <span class="md-ellipsis">
       
-        固定工位的布置
+        A fixed workstation layout
       
     </span>
   </a>
@@ -865,7 +865,7 @@
   <a href="#verify" class="md-nav__link">
     <span class="md-ellipsis">
       
-        上电后核对
+        Checks after powering up
       
     </span>
   </a>
@@ -1671,7 +1671,7 @@
   <a href="#unbox" class="md-nav__link">
     <span class="md-ellipsis">
       
-        开箱核对
+        Unboxing checks
       
     </span>
   </a>
@@ -1682,7 +1682,7 @@
   <a href="#ports" class="md-nav__link">
     <span class="md-ellipsis">
       
-        背包接口
+        The backpack's ports
       
     </span>
   </a>
@@ -1693,7 +1693,7 @@
   <a href="#order" class="md-nav__link">
     <span class="md-ellipsis">
       
-        接线与拔线顺序
+        Connection and disconnection order
       
     </span>
   </a>
@@ -1704,7 +1704,7 @@
   <a href="#adapter" class="md-nav__link">
     <span class="md-ellipsis">
       
-        适配器供电
+        Adapter power
       
     </span>
   </a>
@@ -1715,7 +1715,7 @@
   <a href="#powerbank" class="md-nav__link">
     <span class="md-ellipsis">
       
-        充电宝供电
+        Power-bank power
       
     </span>
   </a>
@@ -1726,7 +1726,7 @@
   <a href="#pico-link" class="md-nav__link">
     <span class="md-ellipsis">
       
-        头显接背包
+        Connecting the headset to the backpack
       
     </span>
   </a>
@@ -1737,7 +1737,7 @@
   <a href="#desk" class="md-nav__link">
     <span class="md-ellipsis">
       
-        固定工位的布置
+        A fixed workstation layout
       
     </span>
   </a>
@@ -1748,7 +1748,7 @@
   <a href="#verify" class="md-nav__link">
     <span class="md-ellipsis">
       
-        上电后核对
+        Checks after powering up
       
     </span>
   </a>
@@ -1772,147 +1772,147 @@
 
 
 
-<h1 id="开箱接线与供电">开箱、接线与供电<a class="headerlink" href="#开箱接线与供电" title="锚点链接">¶</a></h1>
-<p>把箱里的东西接成一套能上电的系统:夹爪接背包、头显接背包、适配器或充电宝二选一供电。读完背包已上电、夹爪指示灯绿常亮,接着翻到<a href="../network/">网络与控制台入口</a>打开控制台。</p>
-<h2 id="unbox">开箱核对<a class="headerlink" href="#unbox" title="锚点链接">¶</a></h2>
-<p>箱内物品与数量见<a href="../../product/editions/">产品线与配置对比</a>。接线前只核对三件事:</p>
+<h1 id="unboxing-cabling-and-power">Unboxing, cabling and power<a class="headerlink" href="#unboxing-cabling-and-power" title="锚点链接">¶</a></h1>
+<p>Turn what is in the box into a system you can power up: grippers to the backpack, headset to the backpack, and either the adapter or a power bank for power. By the end the backpack is powered up and the gripper LEDs are solid green; then turn to <a href="../network/">Network and console access</a> to open the console.</p>
+<h2 id="unbox">Unboxing checks<a class="headerlink" href="#unbox" title="锚点链接">¶</a></h2>
+<p>The box contents and quantities are in <a href="../../product/editions/">Product line and configuration comparison</a>. Before cabling, check only three things:</p>
 <ul>
-<li>两只 XTac-UMI G1 一左一右:序列号末位单数为左、双数为右(<a href="../../common/gripper/#sn">序列号与左右识别</a>);Type-C 线的锁紧接头完好,夹爪接口内无异物。</li>
-<li>背包机身标签印着这台设备的 SN、热点名 <code>xense-&lt;序列号后 6 位&gt;</code>、热点密码与控制台地址,连网时要用,别撕(<a href="../network/#label">认机看标签</a>)。</li>
-<li>头显已按<a href="../../common/pico4/">Pico4 头显与追踪器</a>配好:开发者模式、灭屏与休眠设为永不、两只追踪器已配对、XTac-UMI XR 已安装。接线不依赖这些,但没配好头显连不上。</li>
+<li>The two XTac-UMI G1 grippers are one left and one right: an odd last digit of the serial number means left, an even one means right (<a href="../../common/gripper/#sn">Serial numbers and side identification</a>). The Type-C cables' locking connectors are undamaged, and there is nothing lodged in the gripper connectors.</li>
+<li>The backpack's body label carries this device's SN, its hotspot name <code>xense-&lt;last 6 of the serial&gt;</code>, the hotspot password and the console address. You need these to get on the network, so do not peel it off (<a href="../network/#label">Identify the unit by its label</a>).</li>
+<li>The headset has been set up as described in <a href="../../common/pico4/">Pico4 headset and tracker setup</a>: developer mode on, screen timeout and system sleep set to "Never", both trackers paired, and XTac-UMI XR installed. Cabling does not depend on any of this, but without it the headset will not connect.</li>
 </ul>
-<h2 id="ports">背包接口<a class="headerlink" href="#ports" title="锚点链接">¶</a></h2>
+<h2 id="ports">The backpack's ports<a class="headerlink" href="#ports" title="锚点链接">¶</a></h2>
 <table>
 <thead>
 <tr>
-<th>接口</th>
-<th>位置</th>
-<th>接什么</th>
+<th>Port</th>
+<th>Location</th>
+<th>What goes in it</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>UMI-L / UMI-R</td>
-<td>两侧</td>
-<td>左 / 右夹爪,Type-C 锁紧线</td>
+<td>Both sides</td>
+<td>Left / right gripper, Type-C locking cable</td>
 </tr>
 <tr>
 <td>PICO</td>
-<td>前面板</td>
-<td>头显,Type-C;走 USB 网络,能否同时给头显供电以随机说明为准</td>
+<td>Front panel</td>
+<td>The headset, Type-C; it carries the USB network, and whether it can also power the headset depends on the notes shipped with your unit</td>
 </tr>
 <tr>
-<td>HEAD、USB</td>
-<td>前面板</td>
-<td>本页流程不用</td>
+<td>HEAD, USB</td>
+<td>Front panel</td>
+<td>Not used in this procedure</td>
 </tr>
 <tr>
 <td>DC</td>
-<td>后面板</td>
-<td>12 V 供电输入,接线图上标为 Type-C,以实物为准;接适配器或充电宝</td>
+<td>Rear panel</td>
+<td>12 V power input, marked as Type-C on the wiring diagram but go by the physical unit; takes the adapter or a power bank</td>
 </tr>
 <tr>
-<td>网口</td>
-<td>后面板</td>
-<td>RJ45,接路由器 LAN 口</td>
+<td>Ethernet</td>
+<td>Rear panel</td>
+<td>RJ45, to a router's LAN port</td>
 </tr>
 <tr>
-<td>SD 卡槽、HDMI、耳机</td>
-<td>后面板</td>
-<td>日常采集不用</td>
+<td>SD card slot, HDMI, headphone</td>
+<td>Rear panel</td>
+<td>Not used in day-to-day collection</td>
 </tr>
 </tbody>
 </table>
-<p>接口照片见<a href="../../product/backpack/">认识数采背包</a>。</p>
-<h2 id="order">接线与拔线顺序<a class="headerlink" href="#order" title="锚点链接">¶</a></h2>
-<p>顺序固定:夹爪 → 头显 → 背包上电。</p>
+<p>Photographs of the ports are in <a href="../../product/backpack/">The Backpack</a>.</p>
+<h2 id="order">Connection and disconnection order<a class="headerlink" href="#order" title="锚点链接">¶</a></h2>
+<p>The order is fixed: grippers → headset → power up the backpack.</p>
 <ol>
-<li>接夹爪:Type-C 锁紧线带螺钉的一端接夹爪本体,旋紧锁紧螺钉;另一端接背包侧面,左爪接 UMI-L,右爪接 UMI-R。夹爪由这根线总线供电,不需要单独电源。</li>
-<li>接头显:按<a href="#adapter">适配器供电</a>或<a href="#powerbank">充电宝供电</a>两种接法之一。</li>
-<li>给背包上电:DC 口接适配器或充电宝。开机后热点自动开启,夹爪指示灯绿常亮即待机(灯语见<a href="../../common/gripper/#buttons-leds">夹爪按键、指示灯与序列号</a>)。</li>
+<li>Connect the grippers: the end of the Type-C locking cable with the screws goes into the gripper body, and you tighten the locking screws; the other end goes into the side of the backpack, the left gripper to UMI-L and the right to UMI-R. The gripper is bus-powered over this cable and needs no separate supply.</li>
+<li>Connect the headset: follow either <a href="#adapter">Adapter power</a> or <a href="#powerbank">Power-bank power</a>.</li>
+<li>Power up the backpack: the DC port takes the adapter or a power bank. The hotspot comes up automatically after boot, and a solid green gripper LED means standby (the LED patterns are in <a href="../../common/gripper/#buttons-leds">Gripper buttons, LEDs and serial numbers</a>).</li>
 </ol>
-<p>拔线顺序相反:先停止录制,再拔背包端,最后松开锁紧螺钉拔夹爪端。上下电与插拔线缆时注意防静电。</p>
+<p>Disconnection is the reverse: stop recording first, then unplug the backpack end, and finally loosen the locking screws and unplug the gripper end. Take anti-static precautions when powering up or down and when plugging or unplugging cables.</p>
 <div class="admonition warning">
-<p class="admonition-title">先锁紧夹爪端,再接背包端</p>
-<p>锁紧螺钉没旋紧,采集中线缆一松动夹爪就掉线,系统日志会反复出现 <code>mcu ... disconnected / reconnected</code>,这一条数据就废了。</p>
+<p class="admonition-title">Tighten the gripper end before connecting the backpack end</p>
+<p>If the locking screws are not tight, the cable works loose during collection and the gripper drops out; the system log fills with <code>mcu ... disconnected / reconnected</code> and that recording is wasted.</p>
 </div>
-<h2 id="adapter">适配器供电<a class="headerlink" href="#adapter" title="锚点链接">¶</a></h2>
-<p>有插座的固定工位用这一种:头显一根线接背包,适配器接市电。</p>
-<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/product/backpack-wiring-adapter.webp" data-desc-position="bottom"><img alt="适配器供电接线:左右夹爪接背包两侧,头显 Type-C 接 PICO 口,适配器接 DC 口" src="../../../assets/product/backpack-wiring-adapter.webp"></a></p>
+<h2 id="adapter">Adapter power<a class="headerlink" href="#adapter" title="锚点链接">¶</a></h2>
+<p>Use this at a fixed workstation with a mains socket: one cable from the headset to the backpack, and the adapter to the mains.</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/product/backpack-wiring-adapter.webp" data-desc-position="bottom"><img alt="Adapter wiring: left and right grippers to the sides of the backpack, the headset's Type-C to the PICO port, the adapter to the DC port" src="../../../assets/product/backpack-wiring-adapter.webp"></a></p>
 <ol>
-<li>左 / 右夹爪分别接 UMI-L / UMI-R。</li>
-<li>头显用 Type-C 线接背包 PICO 口,走 USB 网络;这一根线能否同时给头显供电以随机说明为准。</li>
-<li>12V3A 36W 适配器接背包 DC 口,再插市电。</li>
+<li>Connect the left / right grippers to UMI-L / UMI-R.</li>
+<li>Connect the headset to the backpack's PICO port with a Type-C cable, carrying the USB network; whether that one cable can also power the headset depends on the notes shipped with your unit.</li>
+<li>Connect the 12 V 3 A 36 W adapter to the backpack's DC port, then plug it into the mains.</li>
 </ol>
-<h2 id="powerbank">充电宝供电<a class="headerlink" href="#powerbank" title="锚点链接">¶</a></h2>
-<p>离开插座移动采集用这一种:头显与背包各由一路充电宝输出供电,箱内配两只充电宝(Type-C 输出 5V3A / 12V3A)。</p>
-<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/product/backpack-wiring-powerbank.webp" data-desc-position="bottom"><img alt="充电宝供电接线:头显接二合一线,充电口接充电宝、数据口接 PICO 口;充电宝另一路经 0.5 m 双 C 线接 DC 口" src="../../../assets/product/backpack-wiring-powerbank.webp"></a></p>
-<p>线束按图中标签对号:</p>
+<h2 id="powerbank">Power-bank power<a class="headerlink" href="#powerbank" title="锚点链接">¶</a></h2>
+<p>Use this for mobile collection away from a socket: the headset and the backpack each take one power-bank output, and the box contains two power banks (Type-C output 5 V 3 A / 12 V 3 A).</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/product/backpack-wiring-powerbank.webp" data-desc-position="bottom"><img alt="Power-bank wiring: the headset takes the two-in-one cable, its charging leg to a power bank and its data leg to the PICO port; the other power bank feeds the DC port over a 0.5 m C-to-C cable" src="../../../assets/product/backpack-wiring-powerbank.webp"></a></p>
+<p>Match the cable harness to the labels in the diagram:</p>
 <table>
 <thead>
 <tr>
-<th>线束标签</th>
-<th>线</th>
-<th>接法</th>
+<th>Harness label</th>
+<th>Cable</th>
+<th>How it connects</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>UMI-L / UMI-R</td>
-<td>1.5 m 双 C</td>
-<td>左 / 右夹爪 ↔ 背包 UMI-L / UMI-R</td>
+<td>1.5 m C-to-C</td>
+<td>Left / right gripper ↔ the backpack's UMI-L / UMI-R</td>
 </tr>
 <tr>
 <td>PICO-LINK / PICO-DATA / POWER-PICO</td>
-<td>二合一 Type-C(数据 + 充电)</td>
-<td>PICO-LINK 端接头显;PICO-DATA 接背包 PICO 口;POWER-PICO 接充电宝</td>
+<td>Two-in-one Type-C (data + charging)</td>
+<td>PICO-LINK to the headset; PICO-DATA to the backpack's PICO port; POWER-PICO to a power bank</td>
 </tr>
 <tr>
 <td>12V DC-IN / POWER-COMPUTE</td>
-<td>0.5 m 双 C</td>
-<td>充电宝 ↔ 背包 DC 口,用充电宝的 12V3A 输出</td>
+<td>0.5 m C-to-C</td>
+<td>Power bank ↔ the backpack's DC port, using the power bank's 12 V 3 A output</td>
 </tr>
 </tbody>
 </table>
 <ol>
-<li>左 / 右夹爪分别接 UMI-L / UMI-R。</li>
-<li>头显先接二合一 Type-C 线:充电口接充电宝,数据口接背包 PICO 口。</li>
-<li>充电宝另一条线接背包 DC 口。</li>
+<li>Connect the left / right grippers to UMI-L / UMI-R.</li>
+<li>Connect the headset to the two-in-one Type-C cable first: the charging leg to a power bank, the data leg to the backpack's PICO port.</li>
+<li>Run the second cable from the other power bank to the backpack's DC port.</li>
 </ol>
-<p>头显供电不足会掉电关机(运行功耗约 6–7 W,但需要稳定的供电能力)。箱内充电宝已按此选型;自购充电宝按 20 W 以上稳定输出选,磁吸充电宝要输出 5.4–8.4 V / 5 A Max 并配磁吸底座。背包自身的电池、续航与功耗数据待补。</p>
+<p>If the headset is underpowered it will lose power and shut down (it draws roughly 6–7 W in operation, but needs a stable supply). The power banks in the box were chosen with this in mind; if you buy your own, pick one with a stable output above 20 W, and a magnetic power bank must output 5.4–8.4 V / 5 A max and come with a magnetic base. The backpack's own battery, runtime and power figures are to be added.</p>
 <div class="admonition warning">
-<p class="admonition-title">采集中不要往充电宝上加设备</p>
-<p>部分充电宝接上第二台设备时会停掉原有输出口,头显或背包会当场断电。所有线在开录前接好。</p>
+<p class="admonition-title">Do not add devices to a power bank during collection</p>
+<p>Some power banks shut down an existing output port when a second device is plugged in, and the headset or the backpack loses power on the spot. Connect every cable before you start recording.</p>
 </div>
-<h2 id="pico-link">头显接背包<a class="headerlink" href="#pico-link" title="锚点链接">¶</a></h2>
-<p>戴上头显打开 XTac-UMI XR,两种连接方式:</p>
+<h2 id="pico-link">Connecting the headset to the backpack<a class="headerlink" href="#pico-link" title="锚点链接">¶</a></h2>
+<p>Put the headset on and open XTac-UMI XR; there are two ways to connect:</p>
 <ul>
-<li>USB 网络(默认,正式采集用这条):头显 Type-C 口已通过上面的接线连到背包 PICO 口。在 XR 里勾选「USB 网络」点「连接」,背包会自动在 USB 链路上建网(地址 <code>192.168.58.1</code>),不用手填。</li>
-<li>WiFi(仅供临时调试,会有网络波动与位姿延迟):头显与背包接同一台路由器(头显连路由器 WiFi,背包走网口或现场 WiFi,见<a href="../network/#lan">接入现场网络</a>),XR 里不勾「USB 网络」,填背包的 IP 再连接。要事先知道背包 IP,且背包服务已开启。</li>
+<li>USB network (the default, and what real collection uses): the headset's Type-C port is already wired to the backpack's PICO port by the steps above. In XR, tick "USB network" and tap "Connect"; the backpack brings the network up on the USB link automatically (address <code>192.168.58.1</code>) with nothing to type.</li>
+<li>WiFi (for quick debugging only; the link fluctuates and poses arrive late): put the headset and the backpack on the same router (the headset on the router's WiFi, the backpack on Ethernet or site WiFi, see <a href="../network/#lan">Joining a site network</a>), leave "USB network" unticked in XR, enter the backpack's IP and connect. You need to know the backpack's IP beforehand, and its service must already be running.</li>
 </ul>
-<p>XR 右上角是折叠按钮;追踪器精度不准或与背包断开时,XR 与控制台监控页都有图标提示。界面说明见 <a href="../../common/pico4/#pico-toolkit-ui">XTac-UMI XR 界面</a>。</p>
-<p>站到作业位、面朝作业方向再打开 XR:首次启动 XR 的位置就是<a href="../../common/pico4/#pico-frame">世界坐标系原点</a>,采集过程中不要重启 XR。</p>
+<p>The fold button is at the top right of XR; when tracking accuracy degrades or a tracker disconnects from the backpack, both XR and the console's live monitor page show an icon. The interface is described in <a href="../../common/pico4/#pico-toolkit-ui">The XTac-UMI XR interface</a>.</p>
+<p>Stand at the work position facing the working direction before you open XR: where you are when XR first starts becomes the <a href="../../common/pico4/#pico-frame">world-frame origin</a>, and you must not restart XR during a collection run.</p>
 <div class="admonition warning">
-<p class="admonition-title">头显灭屏与休眠必须设为永不</p>
-<p>头显灭屏后停止工作,位姿数据随之中断。在头显的 开发者选项 → 企业设置 → 电源策略 里把系统休眠和灭屏时间都改为永不,步骤见<a href="../../common/pico4/#pico-system">Pico4 头显与追踪器</a>。</p>
+<p class="admonition-title">The headset's screen timeout and system sleep must be set to \"Never\"</p>
+<p>Once the headset's screen turns off it stops working, and the pose data stops with it. In the headset's Developer options → Enterprise settings → Power policy, set both the system sleep and the screen timeout to "Never"; the steps are in <a href="../../common/pico4/#pico-system">Pico4 headset and tracker setup</a>.</p>
 </div>
-<h2 id="desk">固定工位的布置<a class="headerlink" href="#desk" title="锚点链接">¶</a></h2>
-<p>实验室里常把背包、PC 与路由器接成一个局域网,PC 用浏览器开控制台:</p>
-<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/backpack/hardware-topology.webp" data-desc-position="bottom"><img alt="接线拓扑:路由器 ↔ 背包 ↔ PC,夹爪走 C2C" src="../../../assets/backpack/hardware-topology.webp"></a></p>
+<h2 id="desk">A fixed workstation layout<a class="headerlink" href="#desk" title="锚点链接">¶</a></h2>
+<p>In a lab the backpack, a PC and a router are often wired into one local network, with the PC opening the console in a browser:</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/backpack/hardware-topology.webp" data-desc-position="bottom"><img alt="Wiring topology: router ↔ backpack ↔ PC, with the grippers on C-to-C cables" src="../../../assets/backpack/hardware-topology.webp"></a></p>
 <ul>
-<li>背包网口与 PC 网线都接路由器 LAN 口;背包有线口出厂 DHCP,插上即用。</li>
-<li>头显仍走 PICO 口 USB 网络;或连路由器 WiFi,在 XR 里填背包 IP。</li>
-<li>PC 浏览器打开背包 IP 或 <code>http://xense-&lt;序列号后 6 位&gt;.local</code>。找 IP 用 <a href="../network/#scanner">Windows 设备扫描器</a>;Ubuntu 的 PC 记得在系统设置里勾选 Wired,见<a href="../network/#wired">有线</a>。</li>
+<li>The backpack's Ethernet port and the PC's cable both go to the router's LAN ports; the backpack's wired port ships on DHCP and works as soon as you plug it in.</li>
+<li>The headset still goes over the PICO port's USB network, or joins the router's WiFi with the backpack's IP entered in XR.</li>
+<li>The PC's browser opens the backpack's IP or <code>http://xense-&lt;last 6 of the serial&gt;.local</code>. To find the IP, use the <a href="../network/#scanner">Windows device scanner</a>; on an Ubuntu PC remember to tick Wired in the system settings, see <a href="../network/#wired">Wired</a>.</li>
 </ul>
-<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/backpack/desk-setup.webp" data-desc-position="bottom"><img alt="桌面实物连接" src="../../../assets/backpack/desk-setup.webp"></a></p>
-<h2 id="verify">上电后核对<a class="headerlink" href="#verify" title="锚点链接">¶</a></h2>
-<p>打开控制台后看三处,任何一处不对回头查接线:</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/backpack/desk-setup.webp" data-desc-position="bottom"><img alt="The desk setup in the flesh" src="../../../assets/backpack/desk-setup.webp"></a></p>
+<h2 id="verify">Checks after powering up<a class="headerlink" href="#verify" title="锚点链接">¶</a></h2>
+<p>Once the console is open, look at three things; if any of them is wrong, go back and check the cabling:</p>
 <ul>
-<li>顶栏右侧「路相机」显示 在线数 / 总数,双爪模式应为 6 / 6;少一路多半是夹爪线没锁紧或没插到底。</li>
-<li>夹爪指示灯绿常亮。红爆闪是夹爪端自检有问题,红常亮是背包侧检测到夹爪掉线。</li>
-<li>系统 → <a href="../system/#capture-mode">采集模式</a>与实际接法一致(双爪 / 双爪 + 头显 / 单爪 / 单爪 + 头显 / 仅头显);头显连上后监控页位姿视图跟手动,见<a href="../monitor-record/#checks">画面与位姿检查</a>。</li>
+<li>The "cameras" counter at the top right shows online / total, which should be 6 / 6 in dual-gripper mode; one missing usually means a gripper cable is not tightened or not fully seated.</li>
+<li>The gripper LEDs are solid green. A rapid red flash means the gripper's own self-check found a problem; solid red means the backpack detected that the gripper dropped out.</li>
+<li>System → <a href="../system/#capture-mode">Capture mode</a> matches how the system is actually wired (dual gripper / dual gripper + headset / single gripper / single gripper + headset / headset only); once the headset is connected, the pose view on the live monitor page should follow your hand, see <a href="../monitor-record/#checks">Camera and pose checks</a>.</li>
 </ul>
-<p>上电没反应或头显时断时续,先换线、换口试。DC 口、PICO 口或 USB 口本身接触不良属硬件问题,记下机身 SN 联系支持,不要用力掰扯接口,见<a href="../troubleshooting/">故障排查</a>。</p>
+<p>If nothing happens when you power up, or the headset keeps dropping in and out, try a different cable and a different port first. Poor contact in the <code>DC</code>, <code>PICO</code> or <code>USB</code> port itself is a hardware fault: note the serial number on the body and contact support, and do not force or lever the connector — see <a href="../troubleshooting/">Troubleshooting</a>.</p>
 
 
 

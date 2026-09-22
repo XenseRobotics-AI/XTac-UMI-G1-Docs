@@ -3,7 +3,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="开录前在控制台确认画面、位姿、开合度与磁盘,选好项目与任务,用夹爪按键录制、停止与删除上一条">
+        <meta name="description" content="Before recording, confirm the views, poses, gripper opening and disk space in the console, pick a project and task, then record, stop and delete the previous take with the gripper buttons">
       
       
         <meta name="author" content="XenseRobotics">
@@ -93,7 +93,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#实时监控与录制" class="md-skip">
+        <a href="#live-monitor-and-recording" class="md-skip">
           Skip to content
         </a>
       
@@ -844,7 +844,7 @@
   <a href="#checks" class="md-nav__link">
     <span class="md-ellipsis">
       
-        开录前在控制台确认
+        Confirm in the console before recording
       
     </span>
   </a>
@@ -855,7 +855,7 @@
   <a href="#project-task" class="md-nav__link">
     <span class="md-ellipsis">
       
-        选项目与任务
+        Picking a project and task
       
     </span>
   </a>
@@ -866,19 +866,19 @@
   <a href="#record" class="md-nav__link">
     <span class="md-ellipsis">
       
-        录制
+        Recording
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="录制">
+    <nav class="md-nav" aria-label="Recording">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#feedback" class="md-nav__link">
     <span class="md-ellipsis">
       
-        现场反馈:灯语与语音
+        On-site feedback: LEDs and voice
       
     </span>
   </a>
@@ -889,7 +889,7 @@
   <a href="#record-gates" class="md-nav__link">
     <span class="md-ellipsis">
       
-        开录门槛
+        Recording gates
       
     </span>
   </a>
@@ -900,7 +900,7 @@
   <a href="#record-live" class="md-nav__link">
     <span class="md-ellipsis">
       
-        录制中
+        While recording
       
     </span>
   </a>
@@ -911,7 +911,7 @@
   <a href="#record-stop" class="md-nav__link">
     <span class="md-ellipsis">
       
-        停止后
+        After stopping
       
     </span>
   </a>
@@ -922,7 +922,7 @@
   <a href="#episode-state" class="md-nav__link">
     <span class="md-ellipsis">
       
-        条目状态
+        Entry states
       
     </span>
   </a>
@@ -933,7 +933,7 @@
   <a href="#record-delete" class="md-nav__link">
     <span class="md-ellipsis">
       
-        删除上一条
+        Deleting the previous take
       
     </span>
   </a>
@@ -1688,7 +1688,7 @@
   <a href="#checks" class="md-nav__link">
     <span class="md-ellipsis">
       
-        开录前在控制台确认
+        Confirm in the console before recording
       
     </span>
   </a>
@@ -1699,7 +1699,7 @@
   <a href="#project-task" class="md-nav__link">
     <span class="md-ellipsis">
       
-        选项目与任务
+        Picking a project and task
       
     </span>
   </a>
@@ -1710,19 +1710,19 @@
   <a href="#record" class="md-nav__link">
     <span class="md-ellipsis">
       
-        录制
+        Recording
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="录制">
+    <nav class="md-nav" aria-label="Recording">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#feedback" class="md-nav__link">
     <span class="md-ellipsis">
       
-        现场反馈:灯语与语音
+        On-site feedback: LEDs and voice
       
     </span>
   </a>
@@ -1733,7 +1733,7 @@
   <a href="#record-gates" class="md-nav__link">
     <span class="md-ellipsis">
       
-        开录门槛
+        Recording gates
       
     </span>
   </a>
@@ -1744,7 +1744,7 @@
   <a href="#record-live" class="md-nav__link">
     <span class="md-ellipsis">
       
-        录制中
+        While recording
       
     </span>
   </a>
@@ -1755,7 +1755,7 @@
   <a href="#record-stop" class="md-nav__link">
     <span class="md-ellipsis">
       
-        停止后
+        After stopping
       
     </span>
   </a>
@@ -1766,7 +1766,7 @@
   <a href="#episode-state" class="md-nav__link">
     <span class="md-ellipsis">
       
-        条目状态
+        Entry states
       
     </span>
   </a>
@@ -1777,7 +1777,7 @@
   <a href="#record-delete" class="md-nav__link">
     <span class="md-ellipsis">
       
-        删除上一条
+        Deleting the previous take
       
     </span>
   </a>
@@ -1806,155 +1806,155 @@
 
 
 
-<h1 id="实时监控与录制">实时监控与录制<a class="headerlink" href="#实时监控与录制" title="锚点链接">¶</a></h1>
-<p>本页讲 XTac-UMI Collector 控制台(下称控制台)的「实时监控」页:开录前要在这一屏上确认什么、项目与任务怎么选、录制怎么开始与停止、录坏的一条怎么当场删掉。夹爪按键的手势、灯语与语音播报的正文都在<a href="../../common/gripper/#buttons-leds">夹爪按键与指示灯</a>一处,本页只链接。</p>
-<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/backpack/monitor-live.webp" data-desc-position="bottom"><img alt="实时监控页" src="../../../assets/backpack/monitor-live.webp"></a></p>
-<p>页面自上而下分三层:顶栏是设备状态(视频带宽、路相机、监控时长、录制时长、CPU、内存、硬盘、系统);中间左右两列各是一只夹爪的鱼眼与左指 / 右指两路视触觉,中列是头显双目与「双臂 / 头部位姿」3D 视图,视图下方两张卡是左右爪开合角度;底部左起是「当前任务条数」卡、项目 / 任务选择与录制按钮、实时监控连接卡(「关闭推流」「刷新设备」)。</p>
-<h2 id="checks">开录前在控制台确认<a class="headerlink" href="#checks" title="锚点链接">¶</a></h2>
-<p>每次开录前把下面五项过一遍,任何一项不对都不要开录:</p>
+<h1 id="live-monitor-and-recording">Live monitor and recording<a class="headerlink" href="#live-monitor-and-recording" title="锚点链接">¶</a></h1>
+<p>This page covers the "Live monitor" page of the XTac-UMI Collector console (below, "the console"): what to confirm on that one screen before recording, how to pick a project and task, how recording starts and stops, and how to delete a bad take on the spot. The gripper button gestures, the LED patterns and the voice announcements are all documented in one place, <a href="../../common/gripper/#buttons-leds">Gripper buttons and LEDs</a>; this page only links to them.</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/backpack/monitor-live.webp" data-desc-position="bottom"><img alt="The live monitor page" src="../../../assets/backpack/monitor-live.webp"></a></p>
+<p>The page has three layers from top to bottom. The top bar is device status (video bandwidth, cameras, monitoring time, recording time, CPU, memory, disk, system). The middle has a left and a right column, each holding one gripper's fisheye view plus its left-finger / right-finger visuotactile feeds, with a centre column holding the headset's stereo pair and the "arms / head pose" 3D view, and two cards below that view showing the left and right gripper opening angles. The bottom holds, from the left, the "current task count" card, the project / task selectors with the record button, and the live-monitor connection card ("Stop streaming", "Refresh devices").</p>
+<h2 id="checks">Confirm in the console before recording<a class="headerlink" href="#checks" title="锚点链接">¶</a></h2>
+<p>Run through these five items before every recording, and do not start if any of them is wrong:</p>
 <table>
 <thead>
 <tr>
-<th>看什么</th>
-<th>期望</th>
-<th>不对时</th>
+<th>What to look at</th>
+<th>What you want</th>
+<th>When it is wrong</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>六路画面</td>
-<td>顶栏「路相机」与采集模式一致(双爪 6 / 6,带头显 8 / 8),每格都有画面。两路鱼眼清晰不糊;视触觉是差分渲染,按压时接触区域显出彩色形变场,指衬边缘常态可见轻微纹理属正常</td>
-<td>鱼眼糊影多半是旋钮被误碰、焦距变了,先拧回清晰再录;路数不对去<a href="../system/#capture-mode">系统 → 采集模式</a>核对;某一路一直黑点「刷新设备」</td>
+<td>The six views</td>
+<td>The top bar's "cameras" count matches the capture mode (6 / 6 for dual gripper, 8 / 8 with the headset) and every tile has an image. Both fisheye views are sharp, not blurred; the visuotactile feed is a difference rendering, so pressing shows the contact area as a coloured deformation field, and a faint texture at the edge of the finger pad is normal</td>
+<td>A blurred fisheye usually means the focus ring was knocked and the focus has shifted — turn it back to sharp before recording. If the count is wrong, check it against <a href="../system/#capture-mode">System → Capture mode</a>; if one feed stays black, click "Refresh devices"</td>
 </tr>
 <tr>
-<td>头显位姿与追踪器状态</td>
-<td>动一动夹爪与头显,3D 模型跟随;位姿卡右上角指示灯绿</td>
-<td>「位姿在线」但模型不动,多半是 Pico 里的追踪器 APP 没真正开起来,长按追踪器电源键重新激活并重启 Pico 内 APP;灯由绿转黄并提示,是追踪器出了头显视野(设备只报方向、没有位置),把追踪器转回视野内;左右追踪器的归属按左单右双核对序列号,见 <a href="../../common/pico4/#pico-tracker-sn">Pico4 追踪器序列号</a></td>
+<td>Headset pose and tracker state</td>
+<td>Move a gripper and the headset and the 3D model follows; the indicator at the top right of the pose card is green</td>
+<td>"Pose online" but the model does not move usually means the tracker app inside the Pico never really started — hold the tracker's power button to reactivate it and restart the app on the Pico. The light turning from green to yellow with a prompt means a tracker has left the headset's field of view (the device is reporting orientation only, with no position), so bring it back into view. Check the left and right trackers' assignment by serial number, odd left and even right, see <a href="../../common/pico4/#pico-tracker-sn">Pico4 tracker serial numbers</a></td>
 </tr>
 <tr>
-<td>两爪开合度</td>
-<td>位姿视图下方两张卡各显示弧度、角度与归一化百分比:张到底约 100 %,闭合约 0 %(闭合时约 0.02 rad,再加一点力可以到 0)</td>
-<td>张到底顶不到 100 % 或闭合回不到 0,去<a href="../system/#gripper">系统 → 夹爪配置</a>重标</td>
+<td>Both grippers' opening</td>
+<td>The two cards below the pose view each show radians, degrees and a normalised percentage: about 100 % fully open, about 0 % closed (about 0.02 rad closed, and a little more force reaches 0)</td>
+<td>If fully open will not reach 100 % or closing will not return to 0, recalibrate at <a href="../system/#gripper">System → Gripper</a></td>
 </tr>
 <tr>
-<td>磁盘余量</td>
-<td>顶栏「硬盘」占用低于 80 %</td>
-<td>达到 80 % 会直接拒绝开录,先把已采数据<a href="../projects-export/#archive">导出后归档</a>或删掉不要的录制</td>
+<td>Free disk space</td>
+<td>The top bar's "disk" usage is below 80 %</td>
+<td>At 80 % recording is refused outright; first <a href="../projects-export/#archive">export and archive</a> the data you have, or delete recordings you do not need</td>
 </tr>
 <tr>
-<td>录制状态</td>
-<td>项目 / 任务卡右上的状态行显示「待机」,后面的徽章是当前采集模式(如「双爪 + 头显」);「开始录制」按钮可点</td>
-<td>徽章带「Pico 未就绪」、按钮灰掉时,状态行下面会写原因(未选项目 / 任务、Pico 位姿 / 双目 / 时钟同步未就绪等),先处理原因</td>
+<td>Recording state</td>
+<td>The status line at the top right of the project / task card reads "Standby", followed by a badge showing the current capture mode (for example "dual gripper + headset"), and the "Start recording" button is clickable</td>
+<td>When the badge says "Pico not ready" and the button is greyed out, the reason is written below the status line (no project / task selected, Pico pose / stereo / clock sync not ready, and so on) — deal with the reason first</td>
 </tr>
 </tbody>
 </table>
-<p>头显与视触觉的预览是减半分辨率推流的,看起来比录制粗一些是正常的,录进 MCAP 的仍是全分辨率。平板弱网时某一路断掉只会那一路显示「网络抖动,等待恢复」并自动重连,其它路不受影响,不用刷新页面;只有一路长时间黑才点「刷新设备」。</p>
-<h2 id="project-task">选项目与任务<a class="headerlink" href="#project-task" title="锚点链接">¶</a></h2>
-<p>录制条目落在「项目 → 任务」两级之下,监控页底部的两个下拉分别选项目和任务,末项分别是「新建项目...」「新建任务...」,可以就地新建;也可以在<a href="../projects-export/">项目页</a>新建并把某个任务「设为当前目标」。任务里的采集模式(双爪 / 带头显 / 单爪)不在这里选,在<a href="../system/#capture-mode">系统 → 采集模式</a>切,并且同一任务从头到尾保持同一模式。</p>
-<p>新建项目只填名称。如果已在<a href="../system/#upload">系统 → 上传配置</a>配好上传后端,可以在这里给项目绑定一个,之后该项目发布时默认用它;不绑定就在发布时再选。</p>
-<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/backpack/new-project.webp" data-desc-position="bottom"><img alt="新建项目" src="../../../assets/backpack/new-project.webp"></a></p>
-<p>新建任务的字段:</p>
+<p>The headset and visuotactile previews are streamed at half resolution, so they look coarser than the recording; that is normal, and what goes into the MCAP is still full resolution. On a weak network on a tablet, a single feed dropping shows "Network jitter, waiting to recover" on that feed alone and reconnects automatically, leaving the others unaffected with no need to refresh the page; only click "Refresh devices" when one feed stays black for a long time.</p>
+<h2 id="project-task">Picking a project and task<a class="headerlink" href="#project-task" title="锚点链接">¶</a></h2>
+<p>Recordings land under a two-level "project → task" hierarchy. The two drop-downs at the bottom of the live monitor page pick the project and the task, and their last entries, "New project…" and "New task…", let you create one on the spot; you can also create them on the <a href="../projects-export/">Projects page</a> and set a task as the current target there. The capture mode for a task (dual gripper / with headset / single gripper) is not chosen here but switched at <a href="../system/#capture-mode">System → Capture mode</a>, and one task keeps the same mode from start to finish.</p>
+<p>A new project takes only a name. If you have already configured an upload backend at <a href="../system/#upload">System → Upload configuration</a>, you can bind one to the project here and that project will use it by default when publishing; without a binding you pick one at publish time.</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/backpack/new-project.webp" data-desc-position="bottom"><img alt="Creating a project" src="../../../assets/backpack/new-project.webp"></a></p>
+<p>The fields for a new task:</p>
 <table>
 <thead>
 <tr>
-<th>字段</th>
-<th>填什么</th>
+<th>Field</th>
+<th>What to enter</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>任务名称</td>
-<td>短标签,如「桌面抓取-薯片」</td>
+<td>Task name</td>
+<td>A short label, for example "desk grasp – chips"</td>
 </tr>
 <tr>
-<td>任务指令 / prompt(必填)</td>
-<td>LeRobot 语言指令,写完整的自然语言,如 <em>open the lid of the container on the table, take out the chips, place them into the box, and close the lid</em></td>
+<td>Task instruction / prompt (required)</td>
+<td>The LeRobot language instruction, written as complete natural language, for example <em>open the lid of the container on the table, take out the chips, place them into the box, and close the lid</em></td>
 </tr>
 <tr>
-<td>目标条数</td>
-<td>这个任务要采多少条,可留空</td>
+<td>Target count</td>
+<td>How many takes this task should collect; may be left blank</td>
 </tr>
 <tr>
-<td>目标时长(分钟)</td>
-<td>这个任务要采多长,可留空</td>
+<td>Target duration (minutes)</td>
+<td>How long this task should collect for; may be left blank</td>
 </tr>
 </tbody>
 </table>
-<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/backpack/new-task-live.webp" data-desc-position="bottom"><img alt="新建任务" src="../../../assets/backpack/new-task-live.webp"></a></p>
-<p>目标留空时监控页只显示已采数量、不画进度。填了目标条数就是硬门槛:录满即拒绝开录,控制台按钮和夹爪按键都会被挡。</p>
-<p>这道拦截按<strong>累计采集</strong>计算(0.3.14 起):「已就绪」与「已上传」的条目都算进去,归档只删本地文件、不改状态,所以<strong>上传与归档都腾不出名额</strong>。录满后要继续采只有两条路 —— 提高任务的目标条数,或删除不该计入目标的录制。「删除上条并重录」净条数不变,不受影响。</p>
-<p>左下角「当前任务条数」卡显示当前任务已采条数、时长与对目标的进度,与上面那道拦截同一口径。已删除的不计入,上传与归档都不会让进度倒退;用夹爪按键或另一台平板开 / 停录,这张卡与项目页的列表也会即时更新。</p>
-<p>腕部相机固定 640×480 @ 30 fps、触觉固定 640×480 @ 120 fps,都不可调;LeRobot 导出固定 30 fps,分辨率照抄采集不缩放。</p>
-<h2 id="record">录制<a class="headerlink" href="#record" title="锚点链接">¶</a></h2>
-<p>日常以夹爪按键为主:右爪长按开始,左爪长按停止,由设备端状态机接管,不需要浏览器在线。手势表、灯语表与删除确认的按法见<a href="../../common/gripper/#buttons">夹爪按键与指示灯</a>,绑定爪位与时序是全机队固定值,现场不可调。控制台底部的「开始录制 / 结束录制」按钮做同一件事,给没拿夹爪的人用;想给这两个按钮绑浏览器快捷键,去<a href="../system/#keybinding">设置 › 采集设置 › 录制快捷键</a>。</p>
-<h3 id="feedback">现场反馈:灯语与语音<a class="headerlink" href="#feedback" title="锚点链接">¶</a></h3>
-<p>采集时双手都在夹爪上、眼睛盯着现场,不一定看得见平板。设备因此给两条不看屏幕也成立的反馈,内容互补:</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/backpack/new-task-live.webp" data-desc-position="bottom"><img alt="Creating a task" src="../../../assets/backpack/new-task-live.webp"></a></p>
+<p>With the targets left blank the live monitor page shows only the count collected so far and draws no progress. Setting a target count makes it a hard gate: once it is met, recording is refused and both the console button and the gripper buttons are blocked.</p>
+<p>That gate counts <strong>cumulative collection</strong> (since 0.3.14): both "ready" and "uploaded" entries count towards it, and archiving only deletes local files without changing the state, so <strong>neither uploading nor archiving frees up room</strong>. Once the target is met there are only two ways to keep collecting — raise the task's target count, or delete recordings that should not count towards it. "Delete the previous take and re-record" leaves the net count unchanged and is unaffected.</p>
+<p>The "current task count" card at the bottom left shows the current task's count, duration and progress against the target, on the same basis as that gate. Deleted entries are not counted, and neither uploading nor archiving makes the progress go backwards; starting or stopping a recording with the gripper buttons or from another tablet updates this card and the Projects page list immediately.</p>
+<p>The wrist cameras are fixed at 640×480 @ 30 fps and the tactile sensors at 640×480 @ 120 fps, neither adjustable; the LeRobot export is fixed at 30 fps and copies the collected resolution without scaling.</p>
+<h2 id="record">Recording<a class="headerlink" href="#record" title="锚点链接">¶</a></h2>
+<p>Day to day the gripper buttons are the main control: long-press the right gripper to start and the left gripper to stop, handled by a state machine on the device with no browser needed. The gesture table, the LED table and how to confirm a deletion are in <a href="../../common/gripper/#buttons">Gripper buttons and LEDs</a>; which gripper does what and the timings are fixed fleet-wide and cannot be changed on site. The "Start recording / Stop recording" buttons at the bottom of the console do the same thing, for someone who is not holding a gripper; to bind a browser shortcut to those two buttons, go to <a href="../system/#keybinding">Settings › Capture settings › Recording shortcut</a>.</p>
+<h3 id="feedback">On-site feedback: LEDs and voice<a class="headerlink" href="#feedback" title="锚点链接">¶</a></h3>
+<p>During collection both hands are on the grippers and your eyes are on the scene, so you may well not see the tablet. The device therefore gives two forms of feedback that work without looking at a screen, and they complement each other:</p>
 <ul>
-<li><strong>灯语</strong>:夹爪上的指示灯,按常亮 / 呼吸 / 闪 / 脉冲 / 快闪区分状态,要抬头看一眼爪子。含义见<a href="../../common/gripper/#leds">指示灯</a>。</li>
-<li><strong>语音播报</strong>:设备喇叭直接出声,不需要平板在旁边,也不受浏览器影响。四个时机:开始录制、一条录完(提示复位现场、准备下一条)、录制中出现严重问题、录制中夹爪或头显掉线。句子见<a href="../../common/gripper/#voice-cues">语音播报</a>。</li>
+<li><strong>LEDs</strong>: the indicator on the gripper, distinguishing states by solid / breathing / blinking / pulsing / fast-blinking — you have to glance up at the gripper. The meanings are in <a href="../../common/gripper/#leds">LEDs</a>.</li>
+<li><strong>Voice announcements</strong>: the device speaker speaks out loud, with no tablet needed nearby and independent of the browser. Four moments: recording starts, an episode finishes (prompting you to reset the scene and prepare the next one), a serious problem occurs during recording, and a gripper or the headset drops out during recording. The sentences are in <a href="../../common/gripper/#voice-cues">Voice announcements</a>.</li>
 </ul>
-<p>播报的内容与时机是固定值,现场不可更改,保证同批设备行为一致;能改的只有开关与音量(0–100 滑块),开关旁可逐句试听、确认喇叭是否正常,设置重启后保留,位置在<a href="../system/#voice">设置 › 采集设置</a>。</p>
-<h3 id="record-gates">开录门槛<a class="headerlink" href="#record-gates" title="锚点链接">¶</a></h3>
-<p>无论从按键还是按钮开录,设备都按这个顺序检查,第一项不过就停下:</p>
+<p>The wording and the timing of the announcements are fixed values that cannot be changed on site, which keeps a batch of devices behaving identically; only the switch and the volume (a 0–100 slider) are adjustable, with a per-line preview next to the switch for confirming the speaker works. The settings survive a reboot and live in <a href="../system/#voice">Settings › Capture settings</a>.</p>
+<h3 id="record-gates">Recording gates<a class="headerlink" href="#record-gates" title="锚点链接">¶</a></h3>
+<p>Whether you start from a button on the gripper or in the console, the device checks these in order and stops at the first failure:</p>
 <ol>
-<li>磁盘占用低于 80 %;</li>
-<li>已选项目与任务,且该任务的累计采集条数未达目标条数;</li>
-<li>夹爪 MCU 在线;</li>
-<li>带头显的模式:Pico 位姿、双目与时钟同步就绪;</li>
-<li>追踪器处于「视线内正常追踪」:静止 5 秒以上或移出视野时拒绝开录(录制中途短暂静止不会中断,也不计入质检,静止时位置仍然准确)。</li>
+<li>Disk usage below 80 %;</li>
+<li>A project and task are selected, and that task's cumulative count has not reached the target count;</li>
+<li>The gripper MCUs are online;</li>
+<li>In a mode with the headset: the Pico pose, the stereo pair and clock sync are ready;</li>
+<li>The trackers are "tracking normally within the field of view": recording is refused if a tracker has been still for more than 5 seconds or has left the field of view (being briefly still mid-recording does not interrupt anything and is not counted against quality, since the position stays accurate while still).</li>
 </ol>
-<p>被拒时控制台弹「无法开始录制」窗口写明原因,按键开录被拒也弹同一个窗口;人不在平板旁就听语音、看灯语。录满时的原话是「任务「…」已达到累计采集目标(N/M),已拒绝开始录制。如需继续采集,请提高任务的目标条数,或删除不应计入目标的录制」。</p>
-<h3 id="record-live">录制中<a class="headerlink" href="#record-live" title="锚点链接">¶</a></h3>
-<p>状态行变成「录制中」加走表时长,采集模式徽章仍在;顶栏「录制时长」同步走表。录制卡上用红字实时累计三项:「坏帧 N」(送达但内容残缺)、「掉线 N」(设备级断开、帧根本没送达)、「tracker 出视野 X s」(次数多于一次时带 ×N)。相机全绿时出视野是唯一的线索,看到就该考虑停下重录。录制中不能切采集模式、不能删除条目、不能改任务。</p>
-<h3 id="record-stop">停止后<a class="headerlink" href="#record-stop" title="锚点链接">¶</a></h3>
-<p>左爪长按或点「结束录制」,条目保存进当前任务,灯白闪一下回到待机;条目编号的规则见<a href="../projects-export/#projects">项目页</a>。</p>
-<p>停录瞬间设备做一次质检,下面任一项命中就把这条标为「数据可疑」:夹爪黄脉冲,项目页该条的「质量」列有标记,条目照样保存。</p>
+<p>When it is refused, the console opens a "Cannot start recording" dialog stating the reason, and a refusal from the gripper buttons opens the same dialog; if you are not near the tablet, listen for the announcement and look at the LEDs. When the target is met the exact wording is "Task '…' has reached its cumulative collection target (N/M); recording refused. To keep collecting, raise the task's target count or delete recordings that should not count towards the target."</p>
+<h3 id="record-live">While recording<a class="headerlink" href="#record-live" title="锚点链接">¶</a></h3>
+<p>The status line changes to "Recording" with a running timer, and the capture-mode badge stays; the top bar's "recording time" runs in step. The recording card accumulates three figures live, in red: "bad frames N" (delivered but incomplete), "dropouts N" (a device-level disconnection, where the frames never arrived at all) and "tracker out of view X s" (with ×N when it happened more than once). When every camera is green, going out of view is the only clue there is, so when you see it you should consider stopping and re-recording. While recording you cannot switch the capture mode, delete entries or change the task.</p>
+<h3 id="record-stop">After stopping<a class="headerlink" href="#record-stop" title="锚点链接">¶</a></h3>
+<p>Long-press the left gripper or click "Stop recording", and the entry is saved into the current task; the LED flashes white once and returns to standby. How entries are numbered is in the <a href="../projects-export/#projects">Projects page</a>.</p>
+<p>The moment you stop, the device runs a quality check, and any one of the following marks the entry "data suspect": the gripper pulses yellow and the "Quality" column of that row on the Projects page carries a mark. The entry is saved either way.</p>
 <ul>
-<li>录制时长低于 1 s(基本是误触);</li>
-<li>任一相机通道一帧都没录到,或整条没收到任何视频帧;</li>
-<li>追踪器追踪失效时长超过本条时长的 20 %(疑似出视野);</li>
-<li>触觉矫正配方缺失(这条的 LeRobot 导出必失败)。</li>
+<li>The recording is shorter than 1 s (almost always a misfire);</li>
+<li>Any camera channel recorded not one frame, or the whole take received no video frames at all;</li>
+<li>Tracking was lost for more than 20 % of the take's duration (suspected to have left the field of view);</li>
+<li>The tactile rectification recipe is missing (this take's LeRobot export is certain to fail).</li>
 </ul>
-<p>被标可疑的条目,当场用<a href="#record-delete">删除上一条</a>删掉重录,比事后在项目页翻要省事。</p>
-<h3 id="episode-state">条目状态<a class="headerlink" href="#episode-state" title="锚点链接">¶</a></h3>
-<p>条目保存后有四档状态,项目页的条目行与手机端卡片都按这四档显示:</p>
+<p>For an entry marked suspect, <a href="#record-delete">deleting the previous take</a> on the spot and re-recording is easier than hunting for it on the Projects page afterwards.</p>
+<h3 id="episode-state">Entry states<a class="headerlink" href="#episode-state" title="锚点链接">¶</a></h3>
+<p>Once saved, an entry has one of four states, shown the same way on the Projects page rows and on the mobile cards:</p>
 <table>
 <thead>
 <tr>
-<th>状态</th>
-<th>含义</th>
-<th>还能做什么</th>
+<th>State</th>
+<th>What it means</th>
+<th>What you can still do</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>已就绪</td>
-<td>刚录完,原始文件在设备上,没上传过</td>
-<td>回放、导出(两种格式)、上传、归档、删除</td>
+<td>Ready</td>
+<td>Just recorded; the raw file is on the device and has never been uploaded</td>
+<td>Replay, export (either format), upload, archive, delete</td>
 </tr>
 <tr>
-<td>已上传</td>
-<td>至少用一种格式上传过,原始文件仍在设备上</td>
-<td>同上;还能再导出另一种格式</td>
+<td>Uploaded</td>
+<td>Uploaded in at least one format, with the raw file still on the device</td>
+<td>The same; plus exporting in the other format</td>
 </tr>
 <tr>
-<td>已归档</td>
-<td>只剩目录里的记录,原始文件已在归档时清理</td>
-<td>只剩记录与删除;回放入口置灰,也导不出任何格式</td>
+<td>Archived</td>
+<td>Only the catalogue record is left; the raw file was cleared at archive time</td>
+<td>Only the record and deletion; the replay entry point is greyed out and no format can be exported</td>
 </tr>
 <tr>
-<td>已丢弃</td>
-<td>录制中途失败,没形成可用数据</td>
-<td>删除</td>
+<td>Discarded</td>
+<td>The recording failed part-way and produced no usable data</td>
+<td>Delete</td>
 </tr>
 </tbody>
 </table>
-<p>「已上传」说的是远端有没有副本,「已归档」说的是本地文件还在不在,两件事各占一列。上传完成后<strong>默认不删本地文件</strong>(0.3.10 起的行为变化),要删得在上传前勾自动归档;不勾就随时可以事后手动<a href="../projects-export/#archive">归档</a>。累计采集条数数的是「已就绪」与「已上传」两档,归档不改变状态、仍然计入,只有「已丢弃」和已删除的不算。</p>
-<h3 id="record-delete">删除上一条<a class="headerlink" href="#record-delete" title="锚点链接">¶</a></h3>
-<p>按键:左爪双击进入删除确认(紫闪,5 秒超时),确认态再双击删除,按法见<a href="../../common/gripper/#buttons">夹爪按键与指示灯</a>。控制台:点「删除上条并重录」,会删掉当前任务最新一条并立即开始新录制,没有二次确认,录制中不可用。</p>
-<p>要删更早的条目,到<a href="../projects-export/">项目页</a>找到那一行点「删除」,确认框会写出条目编号、时长与大小,并一并删除它的 MCAP 与 H264 文件,不可恢复。</p>
-<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/backpack/delete-select.webp" data-desc-position="bottom"><img alt="项目页里选中要删的条目" src="../../../assets/backpack/delete-select.webp"></a></p>
-<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/backpack/delete-confirm.webp" data-desc-position="bottom"><img alt="删除确认" src="../../../assets/backpack/delete-confirm.webp"></a></p>
+<p>"Uploaded" says whether a copy exists remotely and "archived" says whether the local file is still there; they are two separate things in two separate columns. After an upload completes the local file is <strong>kept by default</strong> (a behaviour change since 0.3.10); to delete it, tick auto-archive before uploading, and if you do not, you can <a href="../projects-export/#archive">archive</a> by hand at any point afterwards. The cumulative collection count covers the "ready" and "uploaded" states, and archiving does not change the state so it still counts; only "discarded" and deleted entries do not.</p>
+<h3 id="record-delete">Deleting the previous take<a class="headerlink" href="#record-delete" title="锚点链接">¶</a></h3>
+<p>With the buttons: double-click the left gripper to enter delete confirmation (purple flashing, with a 5-second timeout), then double-click again in that state to delete; the gestures are in <a href="../../common/gripper/#buttons">Gripper buttons and LEDs</a>. In the console: click "Delete previous and re-record", which deletes the current task's most recent entry and immediately starts a new recording, with no second confirmation; it is unavailable while recording.</p>
+<p>To delete an earlier entry, find its row on the <a href="../projects-export/">Projects page</a> and click "Delete". The confirmation dialog states the entry's number, duration and size, and deletes its MCAP and H264 files along with it. This cannot be undone.</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/backpack/delete-select.webp" data-desc-position="bottom"><img alt="Selecting an entry to delete on the Projects page" src="../../../assets/backpack/delete-select.webp"></a></p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/backpack/delete-confirm.webp" data-desc-position="bottom"><img alt="The delete confirmation" src="../../../assets/backpack/delete-confirm.webp"></a></p>
 
 
 
