@@ -26,9 +26,9 @@ The headset and visuotactile previews are streamed at half resolution, so they l
 
 ## Picking a project and task {#project-task}
 
-Recordings land under a two-level "project → task" hierarchy. The two drop-downs at the bottom of the live monitor page pick the project and the task, and their last entries, "New project…" and "New task…", let you create one on the spot; you can also create them on the [Projects page](projects-export.md) and set a task as the current target there. The capture mode for a task (dual gripper / with headset / single gripper) is not chosen here but switched at [System → Capture mode](system.md#capture-mode), and one task keeps the same mode from start to finish.
+Recordings land under a two-level "project → task" hierarchy. The two drop-downs at the bottom of the live monitor page pick the project and the task, and their last entries, "New project…" and "New task…", let you create one on the spot; you can also create them on the [Projects page](projects-export.md) and set a task as the current target there. **The capture mode is a property of the project, frozen once the project is created**; it cannot be switched part-way, and the System page only displays it, see [Current project capture config](system.md#capture-mode).
 
-A new project takes only a name. If you have already configured an upload backend at [System → Upload configuration](system.md#upload), you can bind one to the project here and that project will use it by default when publishing; without a binding you pick one at publish time.
+Besides the name, a new project also fixes this project's **capture config** in one go: the capture mode (one of six), the PICO resolution (only for modes with the headset), the tactile export orientation, the PICO image source (raw fisheye or undistorted) and wrist fisheye rectification. **Once created they are frozen and cannot be changed** — to use a different set, create a new project; what each one means is in [Current project capture config](system.md#capture-mode). If you have already configured an upload backend at [System → Upload configuration](system.md#upload), you can also bind one to the project here and that project will use it by default when publishing; without a binding you pick one at publish time.
 
 ![Creating a project](../assets/backpack/new-project.webp)
 
@@ -71,14 +71,16 @@ Whether you start from a button on the gripper or in the console, the device che
 1. Disk usage below 80 %;
 2. A project and task are selected, and that task's cumulative count has not reached the target count;
 3. The gripper MCUs are online;
-4. In a mode with the headset: the Pico pose, the stereo pair and clock sync are ready;
-5. The trackers are "tracking normally within the field of view": recording is refused if a tracker has been still for more than 5 seconds or has left the field of view (being briefly still mid-recording does not interrupt anything and is not counted against quality, since the position stays accurate while still).
+4. In a mode with the headset: the Pico pose, the video and clock sync are ready;
+5. The trackers are "tracking normally within the field of view": recording is refused if a tracker has been still for more than 5 seconds or has left the field of view (being briefly still mid-recording does not interrupt anything and is not counted against quality, since the position stays accurate while still);
+6. The headset's video parameters match the project: after you select a project or the headset reconnects, the device re-reads the headset's mono / stereo setting, resolution and image source automatically, then checks them once more just before recording starts. **If no confirmation arrives, the check times out, or the headset disconnected or its parameters changed in the meantime, recording is refused** — the message says which of those it was.
+7. The headset's video clock is sane: if one eye's video time runs more than 1 second ahead of the time it was received, you get "headset … eye video time sync abnormal" and recording is refused — that is the headset app's camera clock disagreeing with its sync clock, not a problem with the backpack.
 
 When it is refused, the console opens a "Cannot start recording" dialog stating the reason, and a refusal from the gripper buttons opens the same dialog; if you are not near the tablet, listen for the announcement and look at the LEDs. When the target is met the exact wording is "Task '…' has reached its cumulative collection target (N/M); recording refused. To keep collecting, raise the task's target count or delete recordings that should not count towards the target."
 
 ### While recording {#record-live}
 
-The status line changes to "Recording" with a running timer, and the capture-mode badge stays; the top bar's "recording time" runs in step. The recording card accumulates three figures live, in red: "bad frames N" (delivered but incomplete), "dropouts N" (a device-level disconnection, where the frames never arrived at all) and "tracker out of view X s" (with ×N when it happened more than once). When every camera is green, going out of view is the only clue there is, so when you see it you should consider stopping and re-recording. While recording you cannot switch the capture mode, delete entries or change the task.
+The status line changes to "Recording" with a running timer, and the capture-mode badge stays; the top bar's "recording time" runs in step. The recording card accumulates three figures live, in red: "bad frames N" (delivered but incomplete), "dropouts N" (a device-level disconnection, where the frames never arrived at all) and "tracker out of view X s" (with ×N when it happened more than once). When every camera is green, going out of view is the only clue there is, so when you see it you should consider stopping and re-recording. While recording you cannot delete entries or change the task; the capture mode belongs to the project and can never be switched.
 
 ### After stopping {#record-stop}
 

@@ -2,7 +2,7 @@
 
 This page covers upgrading the XTac-UMI Collector console (below, "the console") itself: importing an upgrade bundle on the System page, getting back to the previous version when an upgrade fails, and how a forced update pushed from a management end behaves on site. By the end you can carry out an upgrade on your own and verify the result. Flashing gripper firmware has its own section at the end of the page.
 
-Console upgrades are all done on the console's System → System update page, and that page is authoritative for the version (this page is written against 0.3.16). From top to bottom the page has a metrics card (current version, git, build time, architecture, and status: idle / ready / applying / error) and four cards: "Upload firmware bundle", "Pending version", "Rollback" and "Remote update".
+Console upgrades are all done on the console's System → System update page, and that page is authoritative for the version (this page is written against 0.4.1). From top to bottom the page has a metrics card (current version, git, build time, architecture, and status: idle / ready / applying / error) and four cards: "Upload firmware bundle", "Pending version", "Rollback" and "Remote update".
 
 ![System update page](../assets/backpack/update.webp)
 
@@ -10,7 +10,7 @@ The screenshot shows an older version of the page; the current one also has "Clo
 
 ## Importing an upgrade bundle {#bundle}
 
-An upgrade bundle is a `.tar.zst` file supplied by technical support, named like `taccap-collector-95a9f890c421-v0.3.16-aarch64.tar.zst`: the middle 12 characters are the git hash, followed by the version number and the architecture. The bundle holds only the console program (front end and back end in a single binary) plus a `manifest.json` — no gripper firmware, no camera profiles and no collected data. Fixes that need the device's system components updated therefore do not ship with this console bundle, see [Updates a console bundle does not cover](#system-patch).
+An upgrade bundle is a `.tar.zst` file supplied by technical support, named like `taccap-collector-v0.4.1-245dd270d88f-aarch64.tar.zst`: the version number comes first, then 12 characters of git hash, then the architecture. The bundle holds only the console program (front end and back end in a single binary) plus a `manifest.json` — no gripper firmware, no camera profiles and no collected data. Fixes that need the device's system components updated therefore do not ship with this console bundle, see [Updates a console bundle does not cover](#system-patch).
 
 A version's identity is its **version number plus the 12-character git hash**: a higher version number upgrades; the same version number with a different hash also upgrades (a revision build of the same version); if both match, nothing happens. Check both when you verify a version.
 
@@ -26,8 +26,12 @@ The device runs three checks and refuses the bundle if any of them fails, writin
 
 A console upgrade bundle updates the console program itself. A few fixes change the device's system components instead; the System update page has no entry point for those, and only technical support can carry them out on the device.
 
+The 0.4.x networking changes are partly of this kind: after upgrading, the new networking behaviour is only complete once the device's system components have been updated too. On a device that lacks them the upgrade still completes normally and **the network settings are left as they are** — the connection you are using will not be changed out from under you.
+
 !!! warning "Not every update can be done from the System update page"
     A console upgrade bundle does not cover the device's system components. The fix in 0.3.19 for "the backpack's internet route is taken over by the Pico when it is plugged in" is one of these: after you upgrade the console program to 0.3.19 or later, that fix does not necessarily take effect at the same time, and earlier units may not have the corresponding system fix.
+
+    One more thing to watch when upgrading to 0.4.x: the network settings migration runs **after the upgrade has passed its self-check**, so what you see right after the restart may still be the old settings and change a little later. If you cannot connect after an upgrade, work through [Network and console access](network.md) to find the address again.
 
     Whether a given device needs anything extra **is for technical support to tell you**. When technical support says it does, they handle it; there is nothing to do on site, and no way to do it there. The version shown in the console still refers only to the console program.
 
