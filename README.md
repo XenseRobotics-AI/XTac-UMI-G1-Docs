@@ -74,8 +74,10 @@ mkdocs build --strict
 固件 OTA 在 `pc/versions.md`,背包升级在 `backpack/update.md`。改内容时先找到正文位置,
 不要在别的页面再写一份。
 
-背包版内容按 XTac-UMI Collector **0.3.16** 核对;版本号出现处写 0.3.16,并注明以设备系统页
-显示为准。云 OTA 服务端、多机纳管(matrix)、诊断收集在软件里仍是设计稿,文档不承诺。
+背包版内容按 XTac-UMI Collector **0.4.1** 核对(tag `v0.4.1`,commit `245dd27`);版本号出现处
+写 0.4.1,并注明以设备系统页显示为准。**正文正在逐页从 0.3.16 同步到 0.4.1**,尚未同步的页面
+页脚仍写 0.3.16 —— 改完一页才把那一页的页脚翻过来,不要一次性全改,否则页面会自称新版却写着
+旧行为。云 OTA 服务端、多机纳管(matrix)、诊断收集在软件里仍是设计稿,文档不承诺。
 
 按 commit 号记录的历史变更放在
 [xense-taccap-lerobot 的 CHANGELOG](https://github.com/XenseRobotics-AI/xense-taccap-lerobot/blob/main/CHANGELOG.md),
