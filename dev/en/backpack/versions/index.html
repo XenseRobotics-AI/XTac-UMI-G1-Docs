@@ -93,7 +93,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#版本" class="md-skip">
+        <a href="#versions" class="md-skip">
           Skip to content
         </a>
       
@@ -1012,7 +1012,7 @@
   <a href="#baseline" class="md-nav__link">
     <span class="md-ellipsis">
       
-        版本基线
+        Version baseline
       
     </span>
   </a>
@@ -1023,7 +1023,7 @@
   <a href="#history" class="md-nav__link">
     <span class="md-ellipsis">
       
-        各版本要点
+        Version highlights
       
     </span>
   </a>
@@ -1605,7 +1605,7 @@
   <a href="#baseline" class="md-nav__link">
     <span class="md-ellipsis">
       
-        版本基线
+        Version baseline
       
     </span>
   </a>
@@ -1616,7 +1616,7 @@
   <a href="#history" class="md-nav__link">
     <span class="md-ellipsis">
       
-        各版本要点
+        Version highlights
       
     </span>
   </a>
@@ -1640,75 +1640,75 @@
 
 
 
-<h1 id="版本">版本<a class="headerlink" href="#版本" title="锚点链接">¶</a></h1>
-<p>本页给出背包版各组件的版本基线,以及 XTac-UMI Collector 各版本的对外要点。版本号以你自己设备上读到的为准:采集单元与夹爪固件看控制台 系统 → <a href="../system/#device-info">设备信息</a>,头显在 Pico 设置里看,平板在系统设置里看。</p>
-<h2 id="baseline">版本基线<a class="headerlink" href="#baseline" title="锚点链接">¶</a></h2>
-<p>按 XTac-UMI Collector 0.4.1 配套。整套设备的软硬件版本要对应,升级任一组件后回到这张表核对。</p>
+<h1 id="versions">Versions<a class="headerlink" href="#versions" title="锚点链接">¶</a></h1>
+<p>This page gives the version baseline for the Backpack Kit's components, and the customer-facing highlights of the XTac-UMI Collector version it is written against. Go by the version numbers you read on your own devices: the collection unit and the gripper firmware are on the console's System → <a href="../system/#device-info">Device info</a>, the headset is in the Pico settings, and the tablet is in its system settings.</p>
+<h2 id="baseline">Version baseline<a class="headerlink" href="#baseline" title="锚点链接">¶</a></h2>
+<p>Matched to XTac-UMI Collector 0.4.1. The software and hardware versions across the set have to match each other, so come back to this table after upgrading any one of them.</p>
 <table>
 <thead>
 <tr>
-<th>组件</th>
-<th>基线</th>
-<th>在哪看 / 怎么升</th>
+<th>Component</th>
+<th>Baseline</th>
+<th>Where to check / how to upgrade</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>平板 OS(小米平板)</td>
-<td>建议 3.0.303 及以上</td>
-<td>平板 设置 → 我的设备;随系统更新</td>
+<td>Tablet OS (Xiaomi tablet)</td>
+<td>3.0.303 or above recommended</td>
+<td>Tablet Settings → My device; follows the system update</td>
 </tr>
 <tr>
-<td>数采背包 OS 固件</td>
+<td>Backpack OS firmware</td>
 <td>V1.2.0</td>
-<td>出厂预装,由技术支持升级</td>
+<td>Pre-installed at the factory, upgraded by technical support</td>
 </tr>
 <tr>
-<td>XTac-UMI Collector(采集单元)</td>
+<td>XTac-UMI Collector (collection unit)</td>
 <td>0.4.1</td>
-<td>控制台 系统 → <a href="../system/#device-info">设备信息</a>「采集端版本」;升级见<a href="../update/">升级与 OTA</a></td>
+<td>The console's System → <a href="../system/#device-info">Device info</a>, "collector version"; upgrading is in <a href="../update/">Upgrades and OTA</a></td>
 </tr>
 <tr>
 <td>Pico OS</td>
-<td>建议 5.15.5.U 及以上</td>
-<td>头显 设置 → 通用 → 关于;升级见 <a href="../../common/pico4/#pico-system">Pico4 头显与追踪器</a></td>
+<td>5.15.5.U or above recommended</td>
+<td>Headset Settings → General → About; upgrading is in <a href="../../common/pico4/#pico-system">Pico4 headset and tracker setup</a></td>
 </tr>
 <tr>
-<td>XTac-UMI XR(头显应用)</td>
+<td>XTac-UMI XR (headset app)</td>
 <td>0.2.5</td>
-<td>头显应用库;安装与升级见 <a href="../../common/pico4/#pico-app">Pico4 头显与追踪器</a></td>
+<td>The headset's app library; installing and upgrading are in <a href="../../common/pico4/#pico-app">Pico4 headset and tracker setup</a></td>
 </tr>
 <tr>
-<td>主夹爪固件</td>
+<td>Leader gripper firmware</td>
 <td>V1.2.2</td>
-<td>控制台 系统 → <a href="../system/#device-info">设备信息</a>「夹爪 MCU」;升级在 系统 → <a href="../system/#gripper">夹爪配置</a></td>
+<td>The console's System → <a href="../system/#device-info">Device info</a>, "gripper MCU"; upgrading is at System → <a href="../system/#gripper">Gripper</a></td>
 </tr>
 </tbody>
 </table>
-<p>背包版的采集单元升级全部在控制台里完成,不需要 PC。PC 版的版本基线是另一套,见 <a href="../../pc/versions/#required">PC 版 · 版本与升级</a>。</p>
-<h2 id="history">各版本要点<a class="headerlink" href="#history" title="锚点链接">¶</a></h2>
-<p>本页只列当前配套版本的要点。<strong>更早版本的更新内容以设备上显示的那份为准</strong>:0.3.9 起,每次升级完成后首次进入控制台会展示这一版的更新内容,本页不再逐版罗列。</p>
+<p>Upgrading the Backpack Kit's collection unit is done entirely in the console, with no PC needed. The Developer Kit has its own baseline, see <a href="../../pc/versions/#required">Developer Kit · Versions and upgrades</a>.</p>
+<h2 id="history">Version highlights<a class="headerlink" href="#history" title="锚点链接">¶</a></h2>
+<p>This page lists only the highlights of the version it is matched to. <strong>For earlier versions, go by what the device shows</strong>: since 0.3.9, the first time you enter the console after an upgrade it displays that version's changes, so they are not repeated here version by version.</p>
 <table>
 <thead>
 <tr>
-<th>版本</th>
-<th>日期</th>
-<th>要点</th>
+<th>Version</th>
+<th>Date</th>
+<th>Highlights</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>0.4.1</td>
 <td>2026-09-22</td>
-<td>选中项目或头显重连后,自动读取并同步头显的单目 / 双目、分辨率与图像源;开录前还会再核对一次,没收到确认、超时或期间发生重连都会拒绝开录。新建项目可以选用头显的鱼眼原图或去畸变画面,旧项目没选过这一项的保持原样。录制期间不会自动改设备配置,既有的画面尺寸、追踪与时钟检查照常执行。本版以控制台升级包交付,不改写设备的系统分区</td>
+<td>After you select a project or the headset reconnects, the headset's mono / stereo setting, resolution and image source are read and synchronised automatically; they are checked once more before recording starts, and recording is refused if no confirmation arrives, the check times out, or a reconnection happens in the meantime. A new project can choose the headset's raw fisheye frame or its undistorted view, and older projects that never chose keep what they had. Device configuration is not changed automatically during recording, and the existing frame-size, tracking and clock checks run as before. This version ships as a console upgrade bundle and does not rewrite the device's system partitions</td>
 </tr>
 </tbody>
 </table>
 <div class="admonition warning">
-<p class="admonition-title">本站正文尚未全部同步到 0.4.1</p>
-<p>基线已切到 0.4.1,但各页正文正在逐页同步。<strong>尚未同步的页面会在页脚注明它依据的版本</strong>,那些页面的操作步骤与 0.4.1 的实际界面可能有出入 —— 以设备上看到的为准,拿不准就联系<a href="../../common/reference/#support">支持</a>。</p>
+<p class="admonition-title">Not every page on this site has been synced to 0.4.1 yet</p>
+<p>The baseline has moved to 0.4.1, but the pages are being synced one at a time. <strong>A page that has not been synced states the version it is written against in its footer</strong>, and the steps on those pages may differ from what 0.4.1 actually shows — go by what you see on the device, and contact <a href="../../common/reference/#support">support</a> if you are unsure.</p>
 </div>
-<p>升级步骤与回滚见<a href="../update/">升级与 OTA</a>;升级遇到问题联系<a href="../../common/reference/#support">支持</a>。</p>
+<p>The upgrade steps and rollback are in <a href="../update/">Upgrades and OTA</a>; if an upgrade goes wrong, contact <a href="../../common/reference/#support">support</a>.</p>
 
 
 

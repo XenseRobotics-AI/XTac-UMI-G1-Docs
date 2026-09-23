@@ -93,7 +93,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#故障排查" class="md-skip">
+        <a href="#troubleshooting" class="md-skip">
           Skip to content
         </a>
       
@@ -984,7 +984,7 @@
   <a href="#connect" class="md-nav__link">
     <span class="md-ellipsis">
       
-        连接与控制台入口
+        Connecting and reaching the console
       
     </span>
   </a>
@@ -995,7 +995,7 @@
   <a href="#power" class="md-nav__link">
     <span class="md-ellipsis">
       
-        供电与接口
+        Power and connectors
       
     </span>
   </a>
@@ -1006,7 +1006,7 @@
   <a href="#tracker" class="md-nav__link">
     <span class="md-ellipsis">
       
-        头显与追踪器
+        Headset and trackers
       
     </span>
   </a>
@@ -1017,7 +1017,7 @@
   <a href="#record" class="md-nav__link">
     <span class="md-ellipsis">
       
-        采集与录制
+        Collection and recording
       
     </span>
   </a>
@@ -1028,7 +1028,7 @@
   <a href="#export" class="md-nav__link">
     <span class="md-ellipsis">
       
-        回放、导出与数据
+        Replay, export and data
       
     </span>
   </a>
@@ -1039,7 +1039,7 @@
   <a href="#update" class="md-nav__link">
     <span class="md-ellipsis">
       
-        升级
+        Upgrades
       
     </span>
   </a>
@@ -1649,7 +1649,7 @@
   <a href="#connect" class="md-nav__link">
     <span class="md-ellipsis">
       
-        连接与控制台入口
+        Connecting and reaching the console
       
     </span>
   </a>
@@ -1660,7 +1660,7 @@
   <a href="#power" class="md-nav__link">
     <span class="md-ellipsis">
       
-        供电与接口
+        Power and connectors
       
     </span>
   </a>
@@ -1671,7 +1671,7 @@
   <a href="#tracker" class="md-nav__link">
     <span class="md-ellipsis">
       
-        头显与追踪器
+        Headset and trackers
       
     </span>
   </a>
@@ -1682,7 +1682,7 @@
   <a href="#record" class="md-nav__link">
     <span class="md-ellipsis">
       
-        采集与录制
+        Collection and recording
       
     </span>
   </a>
@@ -1693,7 +1693,7 @@
   <a href="#export" class="md-nav__link">
     <span class="md-ellipsis">
       
-        回放、导出与数据
+        Replay, export and data
       
     </span>
   </a>
@@ -1704,7 +1704,7 @@
   <a href="#update" class="md-nav__link">
     <span class="md-ellipsis">
       
-        升级
+        Upgrades
       
     </span>
   </a>
@@ -1728,198 +1728,198 @@
 
 
 
-<h1 id="故障排查">故障排查<a class="headerlink" href="#故障排查" title="锚点链接">¶</a></h1>
-<p>本页按症状分类,每条给出原因与解决办法。现场最常见的三类是连不上 XTac-UMI Collector 控制台(下称控制台)、录制不给开、导出预检不过;动手前先听设备语音、看夹爪灯语与监控页的状态点,再对照症状。灯语的完整含义见<a href="../../common/gripper/#buttons-leds">夹爪按键、指示灯与序列号</a>。</p>
+<h1 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="锚点链接">¶</a></h1>
+<p>This page is organised by symptom, with a cause and a fix for each. The three most common on site are not being able to reach the XTac-UMI Collector console (below, "the console"), recording being refused, and the export pre-check failing. Before touching anything, listen for the device's voice announcement, look at the gripper LEDs and check the status dots on the live monitor page, then match the symptom. The full meaning of the LED patterns is in <a href="../../common/gripper/#buttons-leds">Gripper buttons, LEDs and serial numbers</a>.</p>
 <div class="admonition danger">
-<p class="admonition-title">异味、冒烟、明显发热、结构破损或线缆破皮</p>
-<p>立即断电并停止使用,记下机身 SN 联系支持。</p>
+<p class="admonition-title">Odour, smoke, obvious overheating, structural damage or damaged cable insulation</p>
+<p>Cut the power and stop using the device immediately, note the serial number on the body and contact support.</p>
 </div>
-<h2 id="connect">连接与控制台入口<a class="headerlink" href="#connect" title="锚点链接">¶</a></h2>
+<h2 id="connect">Connecting and reaching the console<a class="headerlink" href="#connect" title="锚点链接">¶</a></h2>
 <details class="failure">
-<summary>连上背包热点,但控制台打不开</summary>
-<p><strong>原因</strong>:三种常见情况:连的不是这台背包(现场多台热点前缀都是 <code>xense-</code>);地址没带 <code>http://</code>,iOS / Safari 会把光秃秃的设备名当搜索词丢给搜索引擎,现象像「打不开」,其实没发起访问;部分安卓机解析不了 <code>.local</code> 设备名。</p>
-<p><strong>解决</strong>:核对热点名后 6 位与机身标签的序列号后 6 位一致,密码印在标签上;地址敲全 <code>http://192.168.44.1</code>(热点网关固定,任何时候都能开)或 <code>http://xense-&lt;后 6 位&gt;.local</code>;离背包远、信号弱时先靠近;偶发无响应给背包重新上电。入口一览见<a href="../network/#softap">网络与控制台入口</a>。</p>
+<summary>Joined the backpack hotspot, but the console will not open</summary>
+<p><strong>Cause:</strong> three common ones. You joined a different backpack (every hotspot on site starts with <code>xense-</code>); the address had no <code>http://</code>, and iOS / Safari hands a bare device name to a search engine, which looks like "it will not open" when in fact no request was made; or some Android models cannot resolve <code>.local</code> device names.</p>
+<p><strong>Fix:</strong> check that the last 6 characters of the hotspot name match the last 6 of the serial on the body label, whose password is printed on it too. Type the address in full, <code>http://192.168.44.1</code> (the hotspot gateway is fixed and always works) or <code>http://xense-&lt;last 6&gt;.local</code>. If you are far from the backpack and the signal is weak, move closer; power-cycle the backpack if it becomes unresponsive. The ways in are listed in <a href="../network/#softap">Network and console access</a>.</p>
 </details>
 <details class="failure">
-<summary>平板或手机搜不到背包热点</summary>
-<p><strong>原因</strong>:热点只有 5 GHz 频段,只支持 2.4 GHz 的设备看不到它。</p>
-<p><strong>解决</strong>:换支持 5 GHz WiFi 的平板 / 手机 / 电脑;或把背包接入现场网络后从局域网访问,见<a href="../network/#lan">接入现场 WiFi 与有线</a>。</p>
+<summary>The tablet or phone cannot find the backpack hotspot</summary>
+<p><strong>Cause:</strong> the hotspot is 5 GHz only, so a device that supports only 2.4 GHz cannot see it.</p>
+<p><strong>Fix:</strong> use a tablet / phone / PC that supports 5 GHz WiFi, or put the backpack on the site network and reach it over the LAN, see <a href="../network/#lan">Joining site WiFi and wired</a>.</p>
 </details>
 <details class="failure">
-<summary>电脑打不开 <code>xense-xxx.local</code>,手机却可以</summary>
-<p><strong>原因</strong>:Windows 对 mDNS 名称解析支持不稳定,属已知环境差异。</p>
-<p><strong>解决</strong>:连背包热点时直接用 <code>http://192.168.44.1</code>;在局域网内用 <a href="../network/#scanner">Windows 设备扫描器</a>扫出 IP 后「浏览器打开」。</p>
+<summary>A PC cannot open <code>xense-xxx.local</code> but a phone can</summary>
+<p><strong>Cause:</strong> Windows has unreliable mDNS name resolution; this is a known environment difference.</p>
+<p><strong>Fix:</strong> use <code>http://192.168.44.1</code> directly when joined to the backpack hotspot; on a LAN, find the IP with the <a href="../network/#scanner">Windows device scanner</a> and use "Open in browser".</p>
 </details>
 <details class="failure">
-<summary>采集中控制台突然断连,WiFi 跳到了别的网络</summary>
-<p><strong>原因</strong>:Windows / 平板会自动切到「信号更好」的已保存网络。</p>
-<p><strong>解决</strong>:把其他已保存网络的「自动连接」关掉或直接忘掉它们,只保留背包热点。</p>
+<summary>The console drops mid-collection and the WiFi has hopped to another network</summary>
+<p><strong>Cause:</strong> Windows and tablets switch automatically to a saved network with a "better signal".</p>
+<p><strong>Fix:</strong> turn off "auto-connect" for the other saved networks, or forget them outright, and keep only the backpack hotspot.</p>
 </details>
 <details class="failure">
-<summary>背包的网络页扫不到现场 WiFi</summary>
-<p><strong>原因</strong>:背包只连 5 GHz WiFi,扫描列表只列 5 GHz 网络;只有 2.4 GHz 的路由器看不到也连不上。</p>
-<p><strong>解决</strong>:改用有线,或直接走背包热点。</p>
+<summary>The backpack's network page cannot find the site WiFi</summary>
+<p><strong>Cause:</strong> the backpack only joins 5 GHz WiFi and the scan list shows only 5 GHz networks; a 2.4 GHz-only router is neither visible nor connectable.</p>
+<p><strong>Fix:</strong> use the wired connection instead, or stay on the backpack hotspot.</p>
 </details>
 <details class="failure">
-<summary>背包长时间使用后 WiFi 直接断开、机身很热</summary>
-<p><strong>原因</strong>:过热。</p>
-<p><strong>解决</strong>:重启背包即可恢复;检查风扇出风口是否被遮挡、风扇是否在转,持续出现请报修。</p>
+<summary>After long use the WiFi drops outright and the body is hot</summary>
+<p><strong>Cause:</strong> overheating.</p>
+<p><strong>Fix:</strong> restarting the backpack recovers it; check whether the fan outlet is blocked and whether the fan is turning, and report it if it keeps happening.</p>
 </details>
-<h2 id="power">供电与接口<a class="headerlink" href="#power" title="锚点链接">¶</a></h2>
+<h2 id="power">Power and connectors<a class="headerlink" href="#power" title="锚点链接">¶</a></h2>
 <details class="failure">
-<summary>头显中途掉电关机</summary>
-<p><strong>原因</strong>:头显供电不足,或充电宝在接入第二台设备时停掉了原口的输出。</p>
-<p><strong>解决</strong>:按<a href="../unbox-connect/#powerbank">充电宝供电</a>的接法与选型接线;采集中途不要往充电宝上加设备。</p>
-</details>
-<details class="failure">
-<summary>DC 供电口、PICO 口或 USB 口接触不良</summary>
-<p><strong>原因</strong>:个别设备板卡受力移位,属硬件问题。</p>
-<p><strong>解决</strong>:不要用力掰扯接口;记下机身 SN 联系支持报修。</p>
+<summary>The headset loses power and shuts down part-way</summary>
+<p><strong>Cause:</strong> the headset is underpowered, or the power bank shut down its original output port when a second device was plugged in.</p>
+<p><strong>Fix:</strong> wire and choose the parts as described in <a href="../unbox-connect/#powerbank">Power-bank power</a>; do not add devices to the power bank part-way through a collection run.</p>
 </details>
 <details class="failure">
-<summary>夹爪指示灯不亮,或系统日志反复出现 <code>mcu ... disconnected / reconnected</code></summary>
-<p><strong>原因</strong>:夹爪线束接触不良,或没插到 UMI-L / UMI-R;一只夹爪掉线时,在线的那只会亮红常亮(系统问题)。</p>
-<p><strong>解决</strong>:检查 Type-C 两端是否插紧、旋紧锁紧螺钉;仍频繁断连,记录 SN 与发生时段反馈支持。灯语见<a href="../../common/gripper/#buttons-leds">指示灯</a>。</p>
-</details>
-<h2 id="tracker">头显与追踪器<a class="headerlink" href="#tracker" title="锚点链接">¶</a></h2>
-<details class="failure">
-<summary>监控页位姿卡的状态点是黄的,旁边写「tracker 出视野」或「位姿不新鲜」</summary>
-<p><strong>原因</strong>:头显已连上,但追踪器位姿无效:追踪器出了头显视野、追踪异常,或追踪器没开机 / 没配对。写「Pico 未上线」则是头显没连上背包。追踪器丢失期间录下的位姿不可信,这段数据不要用。</p>
-<p><strong>解决</strong>:让夹爪回到头显视野内;确认两只追踪器亮蓝灯、已<a href="../../common/pico4/#pico-tracker-bind">配对到头显</a>并切到独立追踪模式;「Pico 未上线」时看头显里 XTac-UMI XR 是否已连接,见<a href="../../common/pico4/#pico-toolkit-ui">打开 App 后的界面</a>。</p>
+<summary>Poor contact in the DC, PICO or USB port</summary>
+<p><strong>Cause:</strong> on individual units the board has shifted under load; this is a hardware fault.</p>
+<p><strong>Fix:</strong> do not force or lever the connector; note the serial number on the body and contact support for repair.</p>
 </details>
 <details class="failure">
-<summary>显示位姿在线,3D 模型却不动</summary>
-<p><strong>原因</strong>:头显里的追踪器 App 没有真正开启(当日首次使用、没按追踪器上的按钮),状态徽章仍可能显示在线。</p>
-<p><strong>解决</strong>:开采前动一动夹爪与头显,确认监控页 3D 模型在跟随;不跟随就长按追踪器电源键重新激活,并重启头显里的 App。</p>
+<summary>A gripper's LED is dark, or the system log repeatedly shows <code>mcu ... disconnected / reconnected</code></summary>
+<p><strong>Cause:</strong> poor contact in the gripper's cable, or it is not plugged into UMI-L / UMI-R. When one gripper drops out, the one still online goes solid red (a system problem).</p>
+<p><strong>Fix:</strong> check that both ends of the Type-C cable are seated and the locking screws are tight; if it keeps disconnecting, note the SN and when it happened and report it to support. The LED patterns are in <a href="../../common/gripper/#buttons-leds">LEDs</a>.</p>
+</details>
+<h2 id="tracker">Headset and trackers<a class="headerlink" href="#tracker" title="锚点链接">¶</a></h2>
+<details class="failure">
+<summary>The status dot on the live monitor's pose card is yellow, with \"tracker out of view\" or \"pose stale\" beside it</summary>
+<p><strong>Cause:</strong> the headset is connected but the tracker pose is invalid: the tracker has left the headset's field of view, tracking has gone wrong, or the tracker is not powered on or not paired. "Pico offline" instead means the headset is not connected to the backpack. Poses recorded while tracking was lost cannot be trusted — do not use that stretch of data.</p>
+<p><strong>Fix:</strong> bring the grippers back into the headset's field of view; confirm both trackers show a blue light, are <a href="../../common/pico4/#pico-tracker-bind">paired to the headset</a> and are in standalone tracking mode. For "Pico offline", check whether XTac-UMI XR in the headset is connected, see <a href="../../common/pico4/#pico-toolkit-ui">The app interface</a>.</p>
 </details>
 <details class="failure">
-<summary>左右夹爪的位姿反了</summary>
-<p><strong>原因</strong>:两只追踪器装反,或配对时左右对调。追踪器 SN 规则是左单右双。</p>
-<p><strong>解决</strong>:按<a href="../../common/pico4/#pico-tracker-sn">追踪器序列号</a>核对后换回;录制前在监控页单独动一只夹爪确认。</p>
-</details>
-<h2 id="record">采集与录制<a class="headerlink" href="#record" title="锚点链接">¶</a></h2>
-<details class="failure">
-<summary>录制按钮灰的,或按夹爪按键开录被拒(夹爪黄灯常亮)</summary>
-<p><strong>原因</strong>:开录前的门控没过,浏览器会弹窗给出原因:未选项目 / 任务;Pico 位姿或时钟未就绪;没有在线的夹爪 MCU;任务已达到累计采集目标;录制盘已用达到 80%。</p>
-<p><strong>解决</strong>:按弹窗里的那一条处理:在监控页底部选好<a href="../monitor-record/#project-task">项目与任务</a>;等头显连上、位姿点变绿;盘满见下一条;录满见下面「已达到累计采集目标」那条。</p>
+<summary>It says the pose is online, but the 3D model does not move</summary>
+<p><strong>Cause:</strong> the tracker app inside the headset never really started (first use of the day, the button on the tracker was not pressed), and the status badge can still show online.</p>
+<p><strong>Fix:</strong> before collecting, move a gripper and the headset and confirm the 3D model on the live monitor page follows. If it does not, hold the tracker's power button to reactivate it and restart the app in the headset.</p>
 </details>
 <details class="failure">
-<summary>开录被拒:「任务「…」已达到累计采集目标(N/M)」</summary>
-<p><strong>原因</strong>:0.3.14 起这道拦截按<strong>累计采集</strong>计算:「已就绪」与「已上传」都算进去,归档只删本地文件、不改状态,因此<strong>上传与归档都不再腾出名额</strong>。此前只数尚未上传的那些,上传一批就能多录几条,和任务进度对不上,那个口径已经废弃。</p>
-<p><strong>解决</strong>:提高该任务的目标条数,或在项目页删掉不该计入目标的录制(误触的短条、已判可疑的那些);也可以新建任务重新计数。别再指望「先上传一批再接着录」。口径见<a href="../monitor-record/#project-task">选项目与任务</a>。</p>
+<summary>The left and right gripper poses are swapped</summary>
+<p><strong>Cause:</strong> the two trackers were fitted the wrong way round, or swapped during pairing. The tracker SN rule is odd on the left, even on the right.</p>
+<p><strong>Fix:</strong> check them against <a href="../../common/pico4/#pico-tracker-sn">Tracker serial numbers</a> and swap them back; before recording, move one gripper on its own on the live monitor page to confirm.</p>
+</details>
+<h2 id="record">Collection and recording<a class="headerlink" href="#record" title="锚点链接">¶</a></h2>
+<details class="failure">
+<summary>The record button is greyed out, or the gripper button refuses to start (solid yellow LED)</summary>
+<p><strong>Cause:</strong> a pre-recording gate did not pass, and the browser pops up the reason: no project / task selected; the Pico pose or clock is not ready; no gripper MCU online; the task has reached its cumulative collection target; the recording disk is 80 % used.</p>
+<p><strong>Fix:</strong> deal with whichever one the dialog names: pick a <a href="../monitor-record/#project-task">project and task</a> at the bottom of the live monitor page; wait for the headset to connect and the pose dot to turn green; a full disk is the next entry; a met target is the "cumulative collection target" entry below.</p>
 </details>
 <details class="failure">
-<summary>开录被拒:「录制盘已用 N%,达到 80% 上限」</summary>
-<p><strong>原因</strong>:开录前的容量门控,占用达到 80% 就拒绝,留 20% 给转码中间产物与导出;宁可这一条不开始,也不录一条盘满时截断的残缺 MCAP。</p>
-<p><strong>解决</strong>:先把已采数据导出(下载或上传)后<a href="../projects-export/#archive">归档</a>腾出空间,或在项目页删掉不要的录制条目。注意上传本身不腾空间 —— 上传完成后本地文件默认保留,得再点一次「归档」。删除会连同 MCAP 与 H264 一起删,不可恢复。</p>
+<summary>Recording refused: \"Task '…' has reached its cumulative collection target (N/M)\"</summary>
+<p><strong>Cause:</strong> since 0.3.14 this gate counts <strong>cumulative collection</strong>: both "ready" and "uploaded" count towards it, and archiving only deletes local files without changing the state, so <strong>neither uploading nor archiving frees up room any more</strong>. It used to count only the ones not yet uploaded, so uploading a batch bought you a few more takes and it never matched the task's progress; that basis has been retired.</p>
+<p><strong>Fix:</strong> raise that task's target count, or delete recordings on the Projects page that should not count towards it (misfired short takes, the ones already judged suspect); you can also create a new task and start counting again. Do not expect "upload a batch and keep recording" to work. The basis is in <a href="../monitor-record/#project-task">Picking a project and task</a>.</p>
 </details>
 <details class="failure">
-<summary>录制中夹爪灯变黄常亮</summary>
-<p><strong>原因</strong>:这次录制出了致命问题(某路相机或必需通道中断等),这一条已经废了;灯一直黄到本次录制收尾。</p>
-<p><strong>解决</strong>:停录后到项目页看这一条的质量标注,删掉重录;看监控页哪一路画面断了,检查对应线缆。含义见<a href="../../common/gripper/#buttons-leds">指示灯</a>。</p>
+<summary>Recording refused: \"Recording disk is N% used, at the 80% limit\"</summary>
+<p><strong>Cause:</strong> the capacity gate before recording refuses at 80 %, leaving 20 % for transcode intermediates and exports; better not to start this take than to record a truncated MCAP when the disk fills.</p>
+<p><strong>Fix:</strong> export the data you have (download or upload) and then <a href="../projects-export/#archive">archive</a> to free space, or delete recordings you do not need on the Projects page. Note that uploading by itself frees nothing — local files are kept by default after an upload, and you have to click "Archive" separately. Deleting removes the MCAP and the H264 with it and cannot be undone.</p>
 </details>
 <details class="failure">
-<summary>夹爪灯红常亮</summary>
-<p><strong>原因</strong>:系统问题,由背包侧点亮:夹爪掉线、相机掉线或必需通道缺失,持续到问题解除。红色只表示故障,不表示录制中。</p>
-<p><strong>解决</strong>:看监控页哪一路离线,重插对应线缆;到<a href="../system/#device-info">设备信息</a>看相机清单里哪台标了「离线」、夹爪 MCU 是否都在;不恢复就给背包重新上电。</p>
+<summary>The gripper LED turns solid yellow during recording</summary>
+<p><strong>Cause:</strong> something fatal went wrong in this take (a camera or a required channel dropped, say) and the take is already spoiled; the LED stays yellow until this recording finishes.</p>
+<p><strong>Fix:</strong> after stopping, look at that take's quality annotation on the Projects page, delete it and record again; check which feed dropped on the live monitor page and inspect that cable. The meanings are in <a href="../../common/gripper/#buttons-leds">LEDs</a>.</p>
 </details>
 <details class="failure">
-<summary>夹爪灯红爆闪</summary>
-<p><strong>原因</strong>:夹爪自身的问题,由夹爪 MCU 自检点亮(传感器故障等),故障期间夹爪不响应背包的灯控指令。</p>
-<p><strong>解决</strong>:拔插该夹爪的 Type-C 线或给背包重新上电;反复出现记下夹爪 SN 联系支持。</p>
+<summary>The gripper LED is solid red</summary>
+<p><strong>Cause:</strong> a system problem, lit by the backpack: a gripper dropped out, a camera dropped out, or a required channel is missing; it stays until the problem clears. Red only ever means a fault, not that recording is in progress.</p>
+<p><strong>Fix:</strong> see which feed is offline on the live monitor page and re-seat that cable; check <a href="../system/#device-info">Device info</a> for which camera is marked "(offline)" and whether both gripper MCUs are there; power-cycle the backpack if it does not recover.</p>
 </details>
 <details class="failure">
-<summary>按键没反应:双击被拒(黄快闪)、录制中长按无效</summary>
-<p><strong>原因</strong>:这是状态机的设计:录制中双击与右爪长按静默忽略(防手抖);没有可删条目时双击被拒;删除后 3 秒冷却期内双击无效。</p>
-<p><strong>解决</strong>:对照<a href="../../common/gripper/#buttons">按键</a>的手势表操作;当前生效的绑定在 控制台 → 设置 → <a href="../system/#keybinding">采集设置 › 录制快捷键</a> 查看。</p>
+<summary>The gripper LED flashes red rapidly</summary>
+<p><strong>Cause:</strong> a problem in the gripper itself, lit by its own MCU self-check (a sensor fault, say); while it lasts, the gripper ignores the backpack's LED commands.</p>
+<p><strong>Fix:</strong> unplug and replug that gripper's Type-C cable, or power-cycle the backpack; if it keeps happening, note the gripper's SN and contact support.</p>
 </details>
 <details class="failure">
-<summary>设备不出声,录制开始 / 结束都没有语音播报</summary>
-<p><strong>原因</strong>:先分两种。0.3.12 刚加语音时有一个 bug:设备把声音送到了 HDMI 而不是板载喇叭,试听也没声、还不报错,现场看起来像喇叭坏了 —— 这个已在 <strong>0.3.13 修复</strong>,升到 0.3.16 即可。修复之后仍然没声,基本只剩设置:语音被静音,或音量拉到了 0。</p>
-<p><strong>解决</strong>:先到<a href="../system/#voice">设置 › 采集设置 › 语音播报</a>看开关是不是「已静音」、音量滑块是不是 0,用开关旁的「试听」逐句验一遍;控制台版本以 系统 → 设备信息 页显示的为准,低于 0.3.13 先<a href="../update/">升级</a>。播报的内容与时机是固定值,现场改不了,只有开关和音量能调。</p>
+<summary>The buttons do nothing: a double-click is refused (fast yellow flash), a long press during recording has no effect</summary>
+<p><strong>Cause:</strong> this is how the state machine is designed: during recording a double-click and a long press on the right gripper are silently ignored (to guard against a shaky hand); a double-click is refused when there is nothing to delete; and a double-click does nothing during the 3-second cooldown after a deletion.</p>
+<p><strong>Fix:</strong> follow the gesture table in <a href="../../common/gripper/#buttons">Buttons</a>; the bindings currently in effect are shown at console → Settings → <a href="../system/#keybinding">Capture settings › Recording shortcut</a>.</p>
 </details>
 <details class="failure">
-<summary>鱼眼画面发糊</summary>
-<p><strong>原因</strong>:鱼眼相机的对焦旋钮容易被误碰跑焦。</p>
-<p><strong>解决</strong>:每次开采前先看两路鱼眼画面清晰度,糊了就调回旋钮;镜头脏了用无尘布清洁,见<a href="../../common/maintenance/">维护保养</a>。</p>
+<summary>The device is silent — no voice announcement when recording starts or stops</summary>
+<p><strong>Cause:</strong> two possibilities. When voice was first added in 0.3.12 there was a bug that sent the sound to HDMI instead of the onboard speaker, so the preview was silent too and nothing reported an error, which looked on site like a broken speaker — that was <strong>fixed in 0.3.13</strong>. If it is still silent after that, it is almost always the settings: voice is muted, or the volume is at 0.</p>
+<p><strong>Fix:</strong> go to <a href="../system/#voice">Settings › Capture settings › Voice announcements</a> and check whether the switch says "Muted" and whether the volume slider is at 0, then use "Preview" next to the switch to check each line. Go by the console version shown on System → Device info, and <a href="../update/">upgrade</a> first if it is below 0.3.13. The wording and the timing of the announcements are fixed and cannot be changed on site; only the switch and the volume are adjustable.</p>
 </details>
 <details class="failure">
-<summary>切换采集模式、夹爪标定、固件升级或系统更新被拒,提示「录制进行中」</summary>
-<p><strong>原因</strong>:这些操作在录制进行中都会被设备硬性拒绝。</p>
-<p><strong>解决</strong>:先在监控页停止录制(或左爪长按),再操作。</p>
-</details>
-<h2 id="export">回放、导出与数据<a class="headerlink" href="#export" title="锚点链接">¶</a></h2>
-<details class="failure">
-<summary>点「回放」被拒,提示被相机预览占用</summary>
-<p><strong>原因</strong>:回放与实时预览共用背包的硬件编码器,回放要独占;别的标签页或别的设备上开着实时监控就会被拒。相机刚断开后最多 15 秒仍会被算作占用。回放开始后再打开监控页,预览会正常起来,回放不会被抢掉。</p>
-<p><strong>解决</strong>:关掉其他标签页与其他平板 / 手机上的监控页,等几秒再点回放。见<a href="../playback/">回放</a>。</p>
+<summary>The fisheye view is blurred</summary>
+<p><strong>Cause:</strong> the fisheye camera's focus ring is easy to knock out of place.</p>
+<p><strong>Fix:</strong> check both fisheye views for sharpness before every collection run and turn the ring back if one is blurred; clean a dirty lens with a lint-free cloth, see <a href="../../common/maintenance/">Maintenance</a>.</p>
 </details>
 <details class="failure">
-<summary>预检 / 导出报「时间戳不重叠」或 <code>timestamps are not monotonic</code></summary>
-<p><strong>原因</strong>:录制期间系统时钟被对时跳变(典型:背包断电放置多日后开机,NTP 把系统时间一次跳走几小时,先开的相机与后开的相机分属两条时间轴)。0.3.3 起录制期间时间基准冻结、硬件已加 RTC 电池,新录数据不会再出现。</p>
-<p><strong>解决</strong>:受影响的历史数据无法导出属预期,删掉对应 episode 即可;升级后仍复现,记下报错中的 <code>episode_id</code> 反馈。</p>
+<summary>Switching the capture mode, gripper calibration, a firmware upgrade or a system update is refused with \"Recording in progress\"</summary>
+<p><strong>Cause:</strong> the device refuses all of these outright while a recording is in progress.</p>
+<p><strong>Fix:</strong> stop the recording on the live monitor page first (or long-press the left gripper), then try again.</p>
+</details>
+<h2 id="export">Replay, export and data<a class="headerlink" href="#export" title="锚点链接">¶</a></h2>
+<details class="failure">
+<summary>\"Replay\" is refused, saying the camera preview is holding it</summary>
+<p><strong>Cause:</strong> replay and live preview share the backpack's hardware encoder and replay needs it exclusively, so it is refused while the live monitor is open in another tab or on another device. For up to 15 seconds after a camera disconnects it still counts as held. Opening the monitor page after replay has started is fine — the preview comes up and replay is not taken away.</p>
+<p><strong>Fix:</strong> close the monitor page in other tabs and on other tablets / phones, wait a few seconds and click replay again. See <a href="../playback/">Replay</a>.</p>
 </details>
 <details class="failure">
-<summary>导出报「相机集合与首个 episode 不一致」</summary>
-<p><strong>原因</strong>:同一任务里混采了不同采集模式(先按 6 路录、又切成 8 路继续录)。</p>
-<p><strong>解决</strong>:同一任务从头到尾用同一采集模式;已混采的,删掉与首个 episode 通道不一致的条目后重新导出,或分开建任务。</p>
+<summary>The pre-check or export reports \"timestamps do not overlap\" or <code>timestamps are not monotonic</code></summary>
+<p><strong>Cause:</strong> the system clock jumped during recording (typically: the backpack sat unpowered for days, and on boot NTP moved the system time by hours in one step, so cameras that started before and after ended up on two timelines). Since 0.3.3 the time base is frozen during recording and the hardware has an RTC battery, so newly recorded data will not hit this.</p>
+<p><strong>Fix:</strong> the affected historical data cannot be exported, which is expected — delete those episodes. If it recurs after upgrading, note the <code>episode_id</code> in the error and report it.</p>
 </details>
 <details class="failure">
-<summary>仅头显模式录的数据预检被拒,报 <code>capture_mode_unsupported</code></summary>
-<p><strong>原因</strong>:LeRobot 导出按双臂布局(20 维 state)组织,仅头显数据进不了双臂数据集,属预期,不是数据损坏。</p>
-<p><strong>解决</strong>:仅头显的数据在<a href="../projects-export/#export">导出对话框</a>里选 <code>mcap</code> 格式、下载到设备留档;要进 LeRobot 数据集就按双爪模式录。</p>
+<summary>The export reports \"the camera set does not match the first episode\"</summary>
+<p><strong>Cause:</strong> capture modes were mixed within one task (recorded at 6 feeds, then switched to 8 and carried on).</p>
+<p><strong>Fix:</strong> keep one capture mode from start to finish within a task; for data that is already mixed, delete the entries whose channels differ from the first episode and export again, or split them into separate tasks.</p>
 </details>
 <details class="failure">
-<summary>归档之后这些录制回放不了、也导不出另一种格式</summary>
-<p><strong>原因</strong>:预期行为,不是故障。归档就是删掉本地原始文件、只保留目录里的记录,回放与导出都要读原始文件,所以两件事都做不了;项目页里这些条目的「回放」按钮会置灰并写明「已归档,本地源已删除」。若某条只用一种格式上传过,归档后另一种格式也就永远导不出来了 —— 归档确认框会先把这几条列出来。</p>
-<p><strong>解决</strong>:归档前想清楚要哪几种格式,把要的都先导出;数据以上传到的远端仓库那份为准。没上传过的录制也能归档,但那种情况下数据不再有任何副本,确认框会给更醒目的提示。归档的入口与判据见<a href="../projects-export/#archive">归档</a>,状态口径见<a href="../monitor-record/#episode-state">条目状态</a>。</p>
+<summary>Data recorded in headset-only mode fails the pre-check with <code>capture_mode_unsupported</code></summary>
+<p><strong>Cause:</strong> the LeRobot export is organised around the bimanual layout (20-dimension state), and headset-only data cannot go into a bimanual dataset. This is expected, not corruption.</p>
+<p><strong>Fix:</strong> for headset-only data, pick the <code>mcap</code> format in the <a href="../projects-export/#export">export dialog</a> and download it to the device to keep; to get into a LeRobot dataset, record in a dual-gripper mode.</p>
 </details>
 <details class="failure">
-<summary>上传完成了,录制盘却没腾出空间</summary>
-<p><strong>原因</strong>:预期行为(0.3.10 起的行为变化)。上传成功后<strong>默认不再自动删除本地文件</strong>,不勾就只上传、文件全部保留;此前 0.3.5 的默认是传完即清盘,那个说法已经过时。</p>
-<p><strong>解决</strong>:要腾空间就在上传前勾「上传完成后自动归档(删除本地源,只留元数据)」,或事后在任务导出窗口点「归档」。清理时会保护还没用过的格式:只清「所有用过的格式都已上传」的那些,只传过一种格式的原始录制会被保留,界面会说明保留了多少条。</p>
+<summary>After archiving, those recordings cannot be replayed or exported in the other format</summary>
+<p><strong>Cause:</strong> expected behaviour, not a fault. Archiving deletes the local raw file and keeps only the catalogue record, and both replay and export need the raw file, so neither is possible; on the Projects page those entries' "Replay" buttons are greyed out and say "Archived, the local source has been deleted". If a take had been uploaded in only one format, the other format can never be exported after archiving — the archive confirmation lists those takes first.</p>
+<p><strong>Fix:</strong> decide which formats you want before archiving and export them all; after that, the copy in the remote repository you uploaded to is the one that counts. A recording that was never uploaded can also be archived, but then the data has no copy at all, and the confirmation gives a more emphatic warning. The entry point and the criteria are in <a href="../projects-export/#archive">Archive</a>, and the state definitions are in <a href="../monitor-record/#episode-state">Entry states</a>.</p>
 </details>
 <details class="failure">
-<summary>NFS / FTP 上传失败,或「检测读写」没有通过</summary>
-<p><strong>原因</strong>:常见的是目标位置不合要求 —— 目标目录还不存在;账号或设备账户没有写入、重命名或删除权限;NFS 的协议版本与服务器对不上;FTPS 的服务器地址与证书不匹配,或私有 CA 没填、填错;目标路径或端口填错。不是所有上传失败都出自这几条,页面上的检测提示才是判据。</p>
-<p><strong>解决</strong>:到 控制台 → 系统 → <a href="../system/#upload">上传配置</a> 打开对应那一档,按检测提示逐条查:目标目录(NFS 的目标子目录同理)是否已经存在,设备不会替你创建;NAS 或 FTP / FTPS 服务是否允许该账户写入、读回、重命名与删除;NFS 再看协议版本与 UID / GID;FTPS 再看服务器地址是否与证书匹配、需不需要填私有 CA。改完保存,再点一次「检测读写」。仍不通就带上检测提示的原文、设备 SN、控制台版本与这一档的后端种类联系支持。</p>
+<summary>The upload finished but the recording disk has no more free space</summary>
+<p><strong>Cause:</strong> expected behaviour (a change since 0.3.10). After a successful upload the local files are <strong>no longer deleted automatically</strong>; without ticking the box it only uploads and keeps every file. The old 0.3.5 default of clearing the disk on upload is out of date.</p>
+<p><strong>Fix:</strong> to free space, tick "Archive automatically after uploading (delete the local source, keep only the metadata)" before uploading, or click "Archive" in the task's export dialog afterwards. The clean-up protects formats you have not used yet: it only clears takes where every format used has been uploaded, so a recording uploaded in just one format is kept, and the interface says how many were kept.</p>
 </details>
 <details class="failure">
-<summary>LeRobot 数据集比想象的大</summary>
-<p><strong>原因</strong>:多路视频同录,3 分钟量级的任务导出 1.5 GB 属正常范围;受硬件编码能力限制不会特别小。</p>
-<p><strong>解决</strong>:传输与存储按此量级预留。</p>
-</details>
-<h2 id="update">升级<a class="headerlink" href="#update" title="锚点链接">¶</a></h2>
-<details class="failure">
-<summary>升级中断电了 / 应用更新后控制台一直连不上</summary>
-<p><strong>原因</strong>:应用更新时服务重启,页面最多等 90 秒;新版本要通过启动自检才算提交,起不来会自动回到上一版。任何时刻磁盘上都有一份完整可运行的程序,断电不会变砖。</p>
-<p><strong>解决</strong>:先刷新页面;仍连不上就给背包重新上电,再到系统更新页看当前版本与「上次操作 / 上次错误」,回滚了就重新导入包,见 <a href="../update/#rollback">A/B 双槽与回滚</a>。</p>
+<summary>An NFS / FTP upload fails, or \"Check read/write\" does not pass</summary>
+<p><strong>Cause:</strong> usually the target does not meet the requirements — the target directory does not exist yet; the account or the device account lacks write, rename or delete permission; the NFS protocol version does not match the server; the FTPS server address does not match the certificate, or the private CA is missing or wrong; or the target path or port is wrong. Not every upload failure comes from these, and the hints shown by the check are what to go by.</p>
+<p><strong>Fix:</strong> open that entry at console → System → <a href="../system/#upload">Upload configuration</a> and work through the hints: whether the target directory (and the NFS target subdirectory) already exists, because the device will not create it for you; whether the NAS or the FTP / FTPS service allows that account to write, read back, rename and delete; for NFS, also the protocol version and UID / GID; for FTPS, also whether the server address matches the certificate and whether a private CA is needed. Save the changes and click "Check read/write" again. If it still fails, contact support with the exact text of the check's message, the device SN, the console version and that entry's backend kind.</p>
 </details>
 <details class="failure">
-<summary>上传升级包校验失败</summary>
-<p><strong>原因</strong>:包损坏或传输不完整(<code>sha256</code> 不符)、不是这台设备架构的包(背包是 <code>aarch64</code>)、或当前版本低于包要求的最低起始版本。</p>
-<p><strong>解决</strong>:看「上次错误」的那一句;重新下载后再传,跨版本升级向技术支持要中间版本的包。拒收不影响当前版本运行。</p>
+<summary>The LeRobot dataset is bigger than expected</summary>
+<p><strong>Cause:</strong> several video feeds are recorded at once; 1.5 GB for a task of around 3 minutes is within the normal range, and the hardware encoder's capability means it will not be much smaller.</p>
+<p><strong>Fix:</strong> budget transfer and storage at that scale.</p>
+</details>
+<h2 id="update">Upgrades<a class="headerlink" href="#update" title="锚点链接">¶</a></h2>
+<details class="failure">
+<summary>The power went out mid-upgrade / the console will not connect after applying an update</summary>
+<p><strong>Cause:</strong> the service restarts when an update is applied and the page waits at most 90 seconds; a new version has to pass its start-up self-check before it counts as committed, and one that does not come up falls back to the previous version automatically. There is a complete, runnable program on disk at every moment, so a power cut cannot brick it.</p>
+<p><strong>Fix:</strong> refresh the page first; if it still will not connect, power-cycle the backpack, then open the System update page to see the current version and "Last operation / Last error". If it rolled back, import the bundle again, see <a href="../update/#rollback">A/B slots and rollback</a>.</p>
 </details>
 <details class="failure">
-<summary>右下角卡片显示「更新准备失败」</summary>
-<p><strong>原因</strong>:远端下发的升级包下载或校验失败。</p>
-<p><strong>解决</strong>:不用手动重试,设备下一轮自动重投;持续失败先确认背包能上外网(有线或现场 WiFi)。见<a href="../update/#remote">远程强制更新</a>。</p>
+<summary>The upgrade bundle fails verification on upload</summary>
+<p><strong>Cause:</strong> the bundle is corrupt or the transfer was incomplete (<code>sha256</code> mismatch), it is not a bundle for this device's architecture (the backpack is <code>aarch64</code>), or the current version is below the minimum starting version the bundle requires.</p>
+<p><strong>Fix:</strong> read the line in "Last error"; download the bundle again and re-upload, and for an upgrade that skips versions, ask technical support for the intermediate bundles. A refusal does not affect the version currently running.</p>
 </details>
 <details class="failure">
-<summary>刷完夹爪固件后夹爪时好时坏、数据里悄悄丢帧</summary>
-<p><strong>原因</strong>:刷后的重启是软复位,夹爪的 USB 转串口芯片没断过电,停在降级状态。</p>
-<p><strong>解决</strong>:给背包断电再上电(或拔插该夹爪的 Type-C 线),再到设备信息核对固件版本,见<a href="../update/#gripper-firmware">夹爪固件</a>。</p>
+<summary>The card at the bottom right says \"Update preparation failed\"</summary>
+<p><strong>Cause:</strong> the bundle pushed from the remote end failed to download or verify.</p>
+<p><strong>Fix:</strong> there is no need to retry by hand — the device re-attempts on its next round. If it keeps failing, first confirm the backpack can reach the internet (by cable or site WiFi). See <a href="../update/#remote">Remote forced updates</a>.</p>
+</details>
+<details class="failure">
+<summary>After flashing the gripper firmware the gripper works intermittently and frames go missing quietly</summary>
+<p><strong>Cause:</strong> the restart after flashing is a soft reset, so the gripper's USB-to-serial chip never lost power and sits in a degraded state.</p>
+<p><strong>Fix:</strong> power the backpack off and on again (or unplug and replug that gripper's Type-C cable), then check the firmware version on Device info, see <a href="../update/#gripper-firmware">Gripper firmware</a>.</p>
 </details>
 <hr>
-<p>仍未解决?先在控制台里把报错取下来:顶栏右上角那块田字读数可以点开「系统日志」,出现错误时它会带红色角标和错误条数。这个面板只能看,导不出日志文件,所以<strong>截图就够,不用去设备上找日志</strong>。</p>
-<p>按<a href="../../common/reference/#support">支持与反馈</a>的渠道反馈时带上:</p>
+<p>Still stuck? First get the error out of the console: the block of readings at the top right of the top bar opens the "system log", and it carries a red badge with the error count when there are errors. That panel can only be viewed — it does not export a log file — so <strong>a screenshot is enough and there is no log file to look for on the device</strong>.</p>
+<p>Report it through the channels in <a href="../../common/reference/#support">Support and feedback</a>, with:</p>
 <ul>
-<li>系统日志面板的截图,以及报错出现的大致时间;</li>
-<li>界面上能看到的完整报错原文;</li>
-<li>设备 SN 与控制台版本,都在 系统 → <a href="../system/#device-info">设备信息</a> 页;</li>
-<li>出问题时你正在做的操作;</li>
-<li>涉及录制时,附项目 / 任务 / episode 编号;</li>
-<li>与夹爪或采集画面相关时,附夹爪灯态与监控页截图。</li>
+<li>A screenshot of the system-log panel, and roughly when the error appeared;</li>
+<li>The complete error text as shown on screen;</li>
+<li>The device SN and the console version, both on the System → <a href="../system/#device-info">Device info</a> page;</li>
+<li>What you were doing when it happened;</li>
+<li>The project / task / episode number, if a recording was involved;</li>
+<li>The gripper LED state and a screenshot of the live monitor page, if it involves a gripper or the views.</li>
 </ul>
 
 
