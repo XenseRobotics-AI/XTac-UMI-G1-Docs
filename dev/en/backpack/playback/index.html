@@ -3,7 +3,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="在控制台里在线回放单条录制:多路画面、位姿与开合度同步播放,查看质量标记、录制统计与 MCAP 通道明细">
+        <meta name="description" content="XTac-UMI 手持式多模态数据采集系统:XTac-UMI G1 视触觉夹爪、数采背包与 PC 开发套件的产品介绍与使用手册">
       
       
         <meta name="author" content="XenseRobotics">
@@ -93,7 +93,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#回放" class="md-skip">
+        <a href="#description-replay-a-single-recording-in-the-console-views-poses-and-gripper-opening-play-back-in-sync-with-quality-marks-per-take-statistics-and-the-mcap-channel-list" class="md-skip">
           Skip to content
         </a>
       
@@ -843,8 +843,6 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
-        
-      
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
           
@@ -887,8 +885,6 @@
   
   
   
-    
-  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -897,10 +893,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
       
         <li class="md-nav__item">
-  <a href="#controls" class="md-nav__link">
+  <a href="#description-replay-a-single-recording-in-the-console-views-poses-and-gripper-opening-play-back-in-sync-with-quality-marks-per-take-statistics-and-the-mcap-channel-list" class="md-nav__link">
     <span class="md-ellipsis">
       
-        播放控制
+        description: Replay a single recording in the console: views, poses and gripper opening play back in sync, with quality marks, per-take statistics and the MCAP channel list
       
     </span>
   </a>
@@ -908,13 +904,41 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#quality" class="md-nav__link">
+  <a href="#replay" class="md-nav__link">
     <span class="md-ellipsis">
       
-        质量标记与每条统计
+        Replay
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Replay">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#controls" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Playback controls
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quality" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quality marks and per-take statistics
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1592,8 +1616,6 @@
   
   
   
-    
-  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -1602,10 +1624,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
       
         <li class="md-nav__item">
-  <a href="#controls" class="md-nav__link">
+  <a href="#description-replay-a-single-recording-in-the-console-views-poses-and-gripper-opening-play-back-in-sync-with-quality-marks-per-take-statistics-and-the-mcap-channel-list" class="md-nav__link">
     <span class="md-ellipsis">
       
-        播放控制
+        description: Replay a single recording in the console: views, poses and gripper opening play back in sync, with quality marks, per-take statistics and the MCAP channel list
       
     </span>
   </a>
@@ -1613,13 +1635,41 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#quality" class="md-nav__link">
+  <a href="#replay" class="md-nav__link">
     <span class="md-ellipsis">
       
-        质量标记与每条统计
+        Replay
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Replay">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#controls" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Playback controls
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quality" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quality marks and per-take statistics
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1640,36 +1690,35 @@
 
 
 
-<h1 id="回放">回放<a class="headerlink" href="#回放" title="锚点链接">¶</a></h1>
-<p>录完的条目不用下载,在 XTac-UMI Collector 控制台(下称控制台)里就能逐条回放,画面、位姿与开合度按录制节奏同步播出。用它复查一条数据能不能要,再决定删还是留。</p>
-<p>在<a href="../projects-export/">项目页</a>找到录制条目,点行尾的「回放」进入回放页;顶栏的「回放」标签只在选过条目后才有内容,地址栏带着条目 id,刷新页面不会丢。手机版界面没有回放页,用平板或电脑打开控制台。</p>
-<p>能不能回放只看<strong>原始文件还在不在设备上</strong>,与传没传过无关:<a href="../monitor-record/#episode-state">已就绪与已上传</a>的条目都能正常回放(0.3.11 修复,此前一条只要上传过一次,哪怕文件完好也会提示「未就绪」)。<a href="../monitor-record/#episode-state">已归档</a>的条目原始文件已在归档时清理,项目页里它的「回放」按钮置灰、悬停写明「已归档,本地源已删除」,点不开也导不出;要看这批数据,去上传到的远端仓库取。</p>
-<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/backpack/playback-live.webp" data-desc-position="bottom"><img alt="回放页" src="../../../assets/backpack/playback-live.webp"></a></p>
-<p>布局与<a href="../monitor-record/">实时监控</a>一致:左右两列是两只夹爪的鱼眼与两路视触觉,中列是头显双目与「双臂位姿」3D 视图(顶部一行是 HEAD 在世界系里的坐标,视图下方两张卡是左右爪开合角度),每格底部标着来源通道(<code>fisheye</code> / <code>tactile_1</code> / <code>tactile_2</code> / <code>left</code> / <code>right</code>)与「已录制 / 回放中 / 空位」。页头与底部左侧是这条录制的信息:项目 › 任务、录制时间、落盘路径、时长、帧数、数据量;底部右侧是播放控制卡。</p>
+<hr>
+<h2 id="description-replay-a-single-recording-in-the-console-views-poses-and-gripper-opening-play-back-in-sync-with-quality-marks-per-take-statistics-and-the-mcap-channel-list">description: Replay a single recording in the console: views, poses and gripper opening play back in sync, with quality marks, per-take statistics and the MCAP channel list<a class="headerlink" href="#description-replay-a-single-recording-in-the-console-views-poses-and-gripper-opening-play-back-in-sync-with-quality-marks-per-take-statistics-and-the-mcap-channel-list" title="锚点链接">¶</a></h2>
+<h1 id="replay">Replay<a class="headerlink" href="#replay" title="锚点链接">¶</a></h1>
+<p>You do not have to download a finished take to look at it: the XTac-UMI Collector console (below, "the console") replays them one at a time, with the views, the poses and the gripper opening playing back at the pace they were recorded. Use it to review whether a take is worth keeping before deciding to delete it.</p>
+<p>Find the recording on the <a href="../projects-export/">Projects page</a> and click "Replay" at the end of its row to open the replay page. The "Replay" tab in the top bar only has content once you have picked a take; the address bar carries the entry id, so refreshing does not lose it. The mobile layout has no replay page — open the console on a tablet or a PC.</p>
+<p>Whether a take can be replayed depends only on <strong>whether the raw file is still on the device</strong>, and not on whether it has been uploaded: both <a href="../monitor-record/#episode-state">ready and uploaded</a> entries replay normally (fixed in 0.3.11; before that, a take that had been uploaded once reported "not ready" even with the file intact). An <a href="../monitor-record/#episode-state">archived</a> entry had its raw file cleared at archive time, so its "Replay" button on the Projects page is greyed out and hovering says "Archived, the local source has been deleted"; it can neither be opened nor exported. To see that data, fetch it from the remote repository it was uploaded to.</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/backpack/playback-live.webp" data-desc-position="bottom"><img alt="The replay page" src="../../../assets/backpack/playback-live.webp"></a></p>
+<p>The layout matches the <a href="../monitor-record/">Live monitor</a>: the left and right columns hold each gripper's fisheye view and its two visuotactile feeds, and the centre column holds the headset's stereo pair and the "arms pose" 3D view (the top row is HEAD's coordinates in the world frame, and the two cards below the view are the left and right gripper opening angles). The bottom of each tile is labelled with its source channel (<code>fisheye</code> / <code>tactile_1</code> / <code>tactile_2</code> / <code>left</code> / <code>right</code>) and "recorded / replaying / empty". The page header and the bottom left hold this take's details: project › task, recording time, path on disk, duration, frame count and data size; the bottom right is the playback control card.</p>
 <div class="admonition warning">
-<p class="admonition-title">回放与实时预览不能同时进行</p>
-<p>回放独占背包的硬件编码器(MPP)。只要还有任何一台平板或浏览器在看实时预览,或有导出正在转码,点「在线播放」就会被拒,状态行显示「资源占用:MPP 正被占用,暂不能开始回放(…)」并写出占用方。先到实时监控页点「关闭推流」(每一台连着的设备都要关),等导出转码结束,再回来播放。回放开始后别人打开预览不会打断回放。</p>
+<p class="admonition-title">Replay and live preview cannot run at the same time</p>
+<p>Replay takes exclusive use of the backpack's hardware encoder (MPP). As long as any tablet or browser is still watching the live preview, or an export is transcoding, clicking "Play online" is refused and the status line shows "Resource busy: MPP is in use, cannot start replay right now (…)" naming what is holding it. Go to the live monitor page and click "Stop streaming" (on every connected device), wait for the export transcode to finish, then come back and play. Once replay has started, someone else opening the preview will not interrupt it.</p>
 </div>
-<h2 id="controls">播放控制<a class="headerlink" href="#controls" title="锚点链接">¶</a></h2>
+<h2 id="controls">Playback controls<a class="headerlink" href="#controls" title="锚点链接">¶</a></h2>
 <ul>
-<li><strong>在线播放</strong>:流式回放,不下载整段文件。起播后按钮变成「播放 / 暂停」,状态行显示「在线播放中 · N 路」;进度条可以拖拽跳转,画面与位姿共用一个时钟,一起停、一起跳。播完显示「播放结束」,把进度条拖回去可以重播。回放帧率上限 30 fps(MCAP 里触觉归档是 120 fps),触觉画面与实时监看一样是矫正后的差分图;弱网下码率自适应,不需要手动调。</li>
-<li><strong>位姿卡</strong>:回放时位姿与开合角度跟着画面走。卡片右上角据实标出状态:静态(未起播)/ 等待起播 / 跟随画面 / 本条未录位姿;没录位姿的旧条目保持静态模型并注明。</li>
-<li><strong>录制信息</strong>:弹出这条 MCAP 的元数据:大小、消息数、通道数、分片数、时长、有无 Summary,以及完整的数据通道列表。</li>
-<li><strong>返回项目</strong>:回到项目页,回放会话随之结束。</li>
+<li><strong>Play online</strong>: streamed replay, without downloading the whole file. Once it starts the button becomes "Play / Pause" and the status line shows "Playing online · N feeds"; the progress bar can be dragged to seek, and the views and the poses share one clock, so they stop and seek together. At the end it shows "Playback finished", and dragging the progress bar back replays it. Replay is capped at 30 fps (the tactile archive in the MCAP is 120 fps), and the tactile view is the rectified difference image, the same as in live monitoring; the bitrate adapts on a weak network, with nothing to adjust by hand.</li>
+<li><strong>Pose card</strong>: during replay the poses and opening angles follow the video. The top right of the card states the actual status: static (not started) / waiting to start / following the video / no pose recorded in this take; older entries with no pose keep a static model and say so.</li>
+<li><strong>Recording info</strong>: pops up this MCAP's metadata — size, message count, channel count, chunk count, duration, whether there is a Summary, and the complete list of data channels.</li>
+<li><strong>Back to projects</strong>: returns to the Projects page and ends the replay session.</li>
 </ul>
-<p>回放页上没有下载按钮:单条下载的两个入口(回放页的「下载 H264」、导出窗口里按条勾选下载)在 0.3.10 已一并移除,取回文件统一走任务级导出 —— 在<a href="../projects-export/#export">导出对话框</a>里选去向「下载到设备」与格式,设备打好压缩包后一次取回。</p>
-<h2 id="quality">质量标记与每条统计<a class="headerlink" href="#quality" title="锚点链接">¶</a></h2>
-<p>回放页页头的时长、帧数、数据量与项目页条目行的统计是同一份数据。项目页每条还有一列「质量」:正常显示「—」,否则用 <code>·</code> 串起几项:<code>lag N</code> 是采集侧滞后丢帧数,<code>断 N</code> 是设备掉线次数,<code>坏 N</code> 是坏帧数(采集侧与转码侧各检一次,取较大值),后面跟停录质检写下的问题,例如「缺 Pico tracker」、相机通道无帧、追踪器追踪失效占比、触觉矫正配方缺失。停录时被判「数据可疑」、夹爪黄脉冲的那一条,就是这列有标记的那一条,判据见<a href="../monitor-record/#record-stop">停止后</a>。</p>
-<p>有标记的条目先回放看一遍:追踪器出视野的那段,位姿卡会明显不跟画面;缺路或零帧的条目在 LeRobot 导出预检时会被拦下,留着也导不出去,直接在项目页删掉。追踪置信度会逐帧写进 LeRobot 数据集的 <code>observation.tracker_confidence</code>,剔除或掩码留给训练侧,见<a href="../projects-export/#lerobot">导出</a>。</p>
+<p>There is no download button on the replay page: both single-take download entry points (the replay page's "Download H264" and ticking individual takes in the export dialog) were removed in 0.3.10, and fetching files now goes through the task-level export — pick the destination "Download to device" and a format in the <a href="../projects-export/#export">export dialog</a>, and collect the archive once the device has packed it.</p>
+<h2 id="quality">Quality marks and per-take statistics<a class="headerlink" href="#quality" title="锚点链接">¶</a></h2>
+<p>The duration, frame count and data size in the replay page header are the same data as the statistics on the Projects page row. Each row on the Projects page also has a "Quality" column: normal shows "—", otherwise several items are joined with <code>·</code>: <code>lag N</code> is the number of frames dropped to lag on the collection side, <code>断 N</code> is the number of device dropouts, <code>坏 N</code> is the bad-frame count (checked once on the collection side and once on the transcode side, taking the larger), followed by whatever the stop-recording quality check wrote down — for example "Pico tracker missing", a camera channel with no frames, the share of the take in which tracking was lost, or a missing tactile rectification recipe. The take that was judged "data suspect" at stop time, with the gripper pulsing yellow, is the one with a mark in this column; the criteria are in <a href="../monitor-record/#record-stop">After stopping</a>.</p>
+<p>Replay a marked entry before doing anything else: where a tracker left the field of view, the pose card visibly stops following the video; an entry with missing feeds or zero frames will be blocked by the LeRobot export pre-check anyway, so keeping it gains nothing — delete it on the Projects page. Tracking confidence is written frame by frame into the LeRobot dataset's <code>observation.tracker_confidence</code>, leaving it to the training side to drop or mask those samples, see <a href="../projects-export/#lerobot">Export</a>.</p>
 
 
 
 
 
 
-
-  
-  
 
 
 

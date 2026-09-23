@@ -1012,7 +1012,7 @@
   <a href="#capture-mode" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Capture mode
+        Current project capture config
       
     </span>
   </a>
@@ -1023,7 +1023,7 @@
   <a href="#undistort" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Wrist fisheye undistortion
+        Wrist fisheye rectification and tactile orientation
       
     </span>
   </a>
@@ -1894,7 +1894,7 @@
   <a href="#capture-mode" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Capture mode
+        Current project capture config
       
     </span>
   </a>
@@ -1905,7 +1905,7 @@
   <a href="#undistort" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Wrist fisheye undistortion
+        Wrist fisheye rectification and tactile orientation
       
     </span>
   </a>
@@ -2079,13 +2079,13 @@
 <tr>
 <td><a href="#capture-settings">Capture settings</a></td>
 <td><code>/system/capture-settings</code></td>
-<td>Capture mode, wrist undistortion, recording shortcut, voice announcements, LED and button reference</td>
+<td>Current project capture config (read-only), recording shortcut, voice announcements, LED and button reference</td>
 <td>First deployment, changed wiring, adjusting on-site feedback</td>
 </tr>
 <tr>
 <td><a href="#upload">Upload configuration</a></td>
 <td><code>/system/upload</code></td>
-<td>Remote upload credentials (ModelScope / S3 / STS)</td>
+<td>Remote upload credentials (ModelScope / S3 / FTP / NFS / STS)</td>
 <td>Before uploading any data</td>
 </tr>
 <tr>
@@ -2161,16 +2161,16 @@
 <h3 id="gripper-firmware-upgrade">Gripper firmware upgrade<a class="headerlink" href="#gripper-firmware-upgrade" title="锚点链接">¶</a></h3>
 <p>The "Gripper firmware upgrade" panel at the bottom of the same page: pick the target gripper, pick the <code>.bin</code>, "Upload and flash", and once it is done wait for the gripper to restart and then power the backpack off and on again. The steps, the rule for picking an image by role, and why you must power-cycle afterwards are in <a href="../update/#gripper-firmware">Gripper firmware</a>.</p>
 <h2 id="capture-settings">Capture settings<a class="headerlink" href="#capture-settings" title="锚点链接">¶</a></h2>
-<p>This page gathers the device-level configuration of the "which feeds get recorded / how they get exported / how things are triggered and fed back on site" kind. Top to bottom it has five blocks: capture mode, wrist fisheye undistortion, recording shortcut, voice announcements, and the LED and device-button reference. What they have in common is that you set them once before starting work, and they all affect only subsequent new recordings.</p>
-<p>Since 0.3.14 this page combines what used to be the separate "Capture mode" and "Button binding" pages; the old direct links are retired and everything goes through <code>/system/capture-settings</code>.</p>
-<h3 id="capture-mode">Capture mode<a class="headerlink" href="#capture-mode" title="锚点链接">¶</a></h3>
-<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/backpack/capture-mode.webp" data-desc-position="bottom"><img alt="Capture mode" src="../../../assets/backpack/capture-mode.webp"></a></p>
-<p>The capture mode is this backpack's device-level channel preset: how many grippers are being used right now and whether the headset's stereo pair is included. It determines the Live monitor layout, what gets recorded and the channel contract of the offline export. It is a fixed set of five presets rather than free-form checkboxes, so that the export side can verify how many camera feeds each episode should have.</p>
+<p>This page covers <strong>how recording is triggered on site and how the device reports back</strong>: the recording shortcut, voice announcements, and the LED and device-button reference. At the top of the page there is also a "current project capture config" block, which shows read-only which feeds this project records and how they are exported.</p>
+<p><strong>Which feeds get recorded and how they get exported are not changed here</strong> — those are properties of the project, chosen when you <a href="../monitor-record/#project-task">create the project</a> and frozen once it exists. This page only lets you check which set the current project is using.</p>
+<h3 id="capture-mode">Current project capture config<a class="headerlink" href="#capture-mode" title="锚点链接">¶</a></h3>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/backpack/capture-mode.webp" data-desc-position="bottom"><img alt="Current project capture config" src="../../../assets/backpack/capture-mode.webp"></a></p>
+<p>This block at the top of the page shows, read-only, the four capture and export parameters of the current project. They are chosen when the project is created and cannot be changed afterwards, so there is nothing clickable here — to use a different set, create a new project.</p>
+<p>The <strong>project capture mode</strong> decides how many grippers are recorded and whether the headset is included, and with it the Live monitor layout, what gets recorded and the channel contract of the export. There are six presets:</p>
 <table>
 <thead>
 <tr>
 <th>Mode</th>
-<th>Identifier</th>
 <th>Grippers</th>
 <th>Headset</th>
 <th>Camera feeds</th>
@@ -2179,102 +2179,55 @@
 <tbody>
 <tr>
 <td>Dual gripper</td>
-<td><code>dual_claw</code></td>
 <td>2 grippers</td>
 <td>No headset</td>
 <td>6</td>
 </tr>
 <tr>
-<td>Dual gripper + headset</td>
-<td><code>dual_claw_head</code></td>
+<td>Dual gripper + headset stereo</td>
 <td>2 grippers</td>
 <td>PICO stereo pair</td>
 <td>8</td>
 </tr>
 <tr>
+<td>Dual gripper + headset right eye</td>
+<td>2 grippers</td>
+<td>PICO right eye</td>
+<td>7</td>
+</tr>
+<tr>
 <td>Single gripper</td>
-<td><code>single_claw</code></td>
 <td>1 gripper</td>
 <td>No headset</td>
 <td>3</td>
 </tr>
 <tr>
-<td>Single gripper + headset</td>
-<td><code>single_claw_head</code></td>
+<td>Single gripper + headset stereo</td>
 <td>1 gripper</td>
 <td>PICO stereo pair</td>
 <td>5</td>
 </tr>
 <tr>
-<td>Headset only</td>
-<td><code>head_only</code></td>
+<td>Headset stereo only</td>
 <td>No gripper</td>
 <td>PICO stereo pair</td>
 <td>2</td>
 </tr>
 </tbody>
 </table>
-<p>"Dual gripper" is the factory default. For "single gripper" you do not choose the side here: the device works it out from which side the MCU is actually plugged into, so changing grippers needs no configuration change. "Headset only" is pure visual collection with no gripper data.</p>
-<p>When to change it: pick once at first deployment according to what is actually connected; after that you only need to touch it when the wiring changes (one gripper fewer, no headset). Keep the same mode from start to finish within a task.</p>
-<p>How to change it:</p>
-<ol>
-<li>To pick a mode that includes the headset, first check that the PICO indicator at the top right of this block reads "PICO ready"; if it says "PICO online but not ready" or "PICO offline", sort out the headset connection first.</li>
-<li>Click the target mode card. A single click switches, taking effect immediately, with no confirmation dialog.</li>
-<li>Go back to the Live monitor page and check that the number of feeds matches what you expect.</li>
-</ol>
+<p>For "single gripper" you do not choose the side: the device works it out from which side the gripper is actually plugged into, so changing grippers needs no configuration change.</p>
+<p>The other three: the <strong>project PICO resolution</strong> (<code>640x480</code> or <code>1024x768</code> per eye, only for modes that include the headset), the <strong>project tactile export orientation</strong> (<code>700 × 400 · current orientation</code>, or <code>400 × 700 · rotated 90° counter-clockwise · SDK orientation</code>), and the <strong>PICO image source</strong> (the raw fisheye frame or the undistorted one) together with the wrist fisheye rectification switch. Think these through before creating the project, because you cannot change them afterwards.</p>
 <div class="admonition warning">
-<p class="admonition-title">Switching to the wrong mode leaves its mark in the data</p>
-<p>Switching affects only subsequent new recordings; historical episodes keep the mode and channels frozen at the time they were recorded. Pick too few and later recordings will have fewer channels, and the export pre-check will block them by profile (for example <code>head_only</code> data will not pass the bimanual profile's LeRobot pre-check). Mix modes within one task and the export reports "the camera set does not match the first episode", leaving you to delete the entries that differ from the first one or split the task in two. The options are greyed out while recording and cannot be switched.</p>
+<p class="admonition-title">The capture config freezes when the project is created; getting it wrong means creating a new project</p>
+<p>These four cannot be changed once the project exists, and the device will not change them for you during recording. Pick too few channels and every later recording in this project has fewer channels, and the export pre-check will block them by profile (for example "headset stereo only" data will not pass the bimanual profile's LeRobot pre-check). Historical projects keep whatever they had for fields they never specified, and can still be viewed, exported and uploaded; to use the new parameters, create a new project.</p>
 </div>
-<h3 id="undistort">Wrist fisheye undistortion<a class="headerlink" href="#undistort" title="锚点链接">¶</a></h3>
-<p>The wrist camera has a wide-angle lens, so the edges of the frame are visibly stretched. Turn this switch on and the wrist view <strong>in the exported dataset</strong> is rectified to something close to a rectilinear perspective. It is off by default.</p>
-<p>The key point is that this is an <strong>export</strong> option, not a recording option:</p>
-<ul>
-<li>What is stored in the recording file is always the camera's raw fisheye image; the rectification happens only at export.</li>
-<li>The switch affects only subsequent new recordings; re-exporting a historical episode still gives you the framing frozen at the time it was recorded.</li>
-<li>It cannot be changed while recording, because the current episode's rectification recipe was frozen when recording started.</li>
-</ul>
-<p>Turning it on reveals two groups of options:</p>
-<table>
-<thead>
-<tr>
-<th>Group</th>
-<th>Option</th>
-<th>Meaning</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Field of view</td>
-<td>Crop to no black edges (recommended)</td>
-<td>Natural focal length, invalid regions cropped away</td>
-</tr>
-<tr>
-<td></td>
-<td>Balanced</td>
-<td>A compromise between field of view and black edges</td>
-</tr>
-<tr>
-<td></td>
-<td>Maximum field of view</td>
-<td>Wide field of view, keeping the black corners</td>
-</tr>
-<tr>
-<td>Edge projection</td>
-<td>Standard rectilinear</td>
-<td>Straight lines stay straight</td>
-</tr>
-<tr>
-<td></td>
-<td>Compressed edges</td>
-<td>Progressive compression at the edges, fitting a wider view into the same frame</td>
-</tr>
-</tbody>
-</table>
-<p>The rectification parameters are read from the gripper MCU's flash (written during production calibration). Each gripper has a row showing its status: "Calibrated · reference W×H", "Not calibrated · rectified with default intrinsics", "Not calibrated" or "MCU offline"; "Re-read calibration" re-fetches by hand.</p>
+<h3 id="undistort">Wrist fisheye rectification and tactile orientation<a class="headerlink" href="#undistort" title="锚点链接">¶</a></h3>
+<p>Both belong to the project capture config, chosen along with the mode when the project is created; this page only displays them.</p>
+<p><strong>Wrist fisheye rectification</strong>: the wrist camera has a wide-angle lens, so the edges of the frame are visibly stretched. With it on, the wrist view <strong>in the exported dataset</strong> is rectified to something close to a rectilinear perspective. It is an <strong>export</strong> option, not a recording option — what is stored in the recording file is always the camera's raw fisheye image, and the rectification happens only at export; re-exporting a historical episode still gives you the framing frozen at the time it was recorded.</p>
+<p>The rectification parameters are read from the gripper MCU's flash (written during production calibration). Each gripper has a row showing its status: "Calibrated · reference W×H", "Not calibrated · rectified with default intrinsics", "Not calibrated" or "MCU offline".</p>
 <div class="admonition warning">
 <p class="admonition-title">\"Not calibrated · rectified with default intrinsics\" does not mean it is calibrated</p>
-<p>Since 0.3.15 an uncalibrated side is also rectified, using generic parameters for that lens model, and its exported wrist view is likewise close to a rectilinear perspective. But generic parameters do not capture an individual lens's variation, so they are less accurate than per-unit calibration, and that side's status still reads "Not calibrated" as a hint that this device is worth calibrating once. Once that is done it automatically switches to the device's own parameters, with nothing to do on site. Being uncalibrated does not block collection.</p>
+<p>An uncalibrated side is also rectified, using generic parameters for that lens model, and its exported wrist view is likewise close to a rectilinear perspective. But generic parameters do not capture an individual lens's variation, so they are less accurate than per-unit calibration, and that side's status still reads "Not calibrated" as a hint that this device is worth calibrating once. Once that is done it automatically switches to the device's own parameters, with nothing to do on site. Being uncalibrated does not block collection.</p>
 </div>
 <h3 id="keybinding">Recording shortcut<a class="headerlink" href="#keybinding" title="锚点链接">¶</a></h3>
 <p>A keyboard shortcut for "start / stop recording" in the browser, so you do not have to go back to the interface and click a button on site. When you would use it: a tablet or PC with a keyboard attached.</p>
@@ -2322,7 +2275,7 @@
 <h2 id="upload">Upload configuration<a class="headerlink" href="#upload" title="锚点链接">¶</a></h2>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/backpack/upload.webp" data-desc-position="bottom"><img alt="Upload configuration page" src="../../../assets/backpack/upload.webp"></a></p>
 <p>An upload configuration holds the account credentials used to send data to a remote end. You can configure several, each with a name (a named slot), and bind one of them when you create a project, after which that project's uploads use it by default. When one backpack collects data for different customers or projects that go to different destinations, create one configuration for each. The credentials are entered here once, and the export dialog no longer asks for a repository or a token.</p>
-<p>There are three kinds of backend, and the fields change with the kind (their credentials have no field in common):</p>
+<p>There are five kinds of backend, and the fields change with the kind (their credentials have no field in common):</p>
 <table>
 <thead>
 <tr>
@@ -2343,29 +2296,52 @@
 <td>Bucket, Endpoint, Region (may be left blank), Access Key, Secret Key</td>
 </tr>
 <tr>
+<td>FTP / FTPS</td>
+<td>LeRobot datasets and exported MCAP</td>
+<td>FTP server, port, username, password, target directory, connection security; with FTPS you may also supply a private CA</td>
+</tr>
+<tr>
+<td>NFS network storage</td>
+<td>LeRobot datasets and exported MCAP</td>
+<td>Server, export path, protocol version; subdirectory, UID / GID and ports as needed</td>
+</tr>
+<tr>
 <td>STS (exported MCAP)</td>
 <td>Offline-exported <code>*.train.mcap</code></td>
 <td>Server, Account / OpenID, Project, Project Type, Task ID (may be left blank)</td>
 </tr>
 </tbody>
 </table>
+<p>Whether this device offers FTP / FTPS and NFS depends on whether those options appear on its own System → Upload configuration page; if they are not there, contact technical support to confirm the device version.</p>
 <p>Each row in the list shows the name, a kind badge and the destination (owner / bucket / project), plus the last four characters of the credential masked, and "Verify / Edit / Delete".</p>
+<p>All five kinds name their directories the same way: <strong><code>&lt;root&gt;/ project name / mode prefix-task name-date /</code></strong>, where the "root" is the Owner, the bucket or the target root directory depending on the kind. The project directory uses <strong>the name you gave the project when you created it</strong>, and you do not add the mode prefix or the date to the task name yourself — the device does that. A task that has already uploaded keeps its original directory and is not renamed by this rule.</p>
 <p>What to know about each kind:</p>
 <ul>
 <li><strong>ModelScope</strong>: the dataset repository is created under the Owner (<code>&lt;owner&gt;/&lt;repo&gt;</code>). Visibility, private (recommended) or public, applies only when the repository is first created; changing it here does not touch an existing repository. To get a token: log in to <a href="https://www.modelscope.cn/my/overview">ModelScope</a>, click your avatar → Account settings → Access tokens → Create access token.</li>
-<li><strong>S3</strong>: the bucket must already exist — the device only writes into it, does not create buckets, and has no control over the bucket's access policy (which is why there is no visibility option); datasets go under <code>bucket / project-task /</code>.</li>
+<li><strong>S3</strong>: the bucket must already exist — the device only writes into it, does not create buckets, and has no control over the bucket's access policy (which is why there is no visibility option).</li>
+<li><strong>FTP / FTPS</strong>: use FTPS (explicit TLS) where you can; with plain FTP the account, the password and the data are all unencrypted. The target directory must <strong>already exist</strong> and must start with <code>/</code>, taken from the root you see after logging in over FTP. When the NAS uses a private certificate, put the CA that issued it into "Private CA certificate", and the server address must match the certificate. After changing the server, the port, the account, or switching connection security from FTPS back to plain, the password has to be entered again.</li>
+<li><strong>NFS</strong>: the protocol version defaults to "automatic" (v4.1 first, then v3), and can be pinned to v3 or v4.1; v4.0 is experimental support only, and v4.2 and Kerberos are not supported. The target subdirectory must <strong>already exist</strong> — the device will not create it for you — and leaving UID / GID blank writes as the device account.</li>
 <li><strong>STS</strong>: it uploads only offline-exported training MCAP files and does not accept LeRobot. Short-lived credentials are issued by the Server before each file is uploaded, and the device SN is always this backpack's own and cannot be overridden in the configuration.</li>
 </ul>
 <p>How to configure one:</p>
 <ol>
 <li>"New configuration", fill in the name, choose the backend kind, fill in that kind's fields, and save.</li>
-<li>Click "Verify". ModelScope validates the token and checks that the online account matches the owner you entered; S3 checks that the bucket is readable and writable; STS only checks that the configuration is complete, with account authentication happening when each MCAP is uploaded.</li>
+<li>Check the configuration from its own button: ModelScope, S3 and STS show "Verify", while NFS and FTP / FTPS show "Check read/write".<ul>
+<li>"Verify": ModelScope validates the token and checks that the online account matches the owner you entered; S3 checks that the bucket is readable and writable; STS only checks that the configuration is complete, with account authentication happening when each MCAP is uploaded.</li>
+<li>"Check read/write": it actually runs a create, write, read-back, rename and delete at the target to confirm the permissions are all there. On success the entry shows as usable (for NFS it also reports the free space on the export); on failure, work through the hints on the page — the directory, the permissions, the protocol version or the certificate.</li>
+<li>Saving a configuration does <strong>not</strong> require the check to pass first, and a failed check does <strong>not</strong> block uploads by itself — it only tells you whether that target is writable right now. After you change a configuration the previous check result no longer applies and you have to run it again.</li>
+</ul>
+</li>
 <li>Select this configuration under "Upload backend" when you create a project; for an existing project, bind it from "Upload backend" on the project's row. When a project has no binding, the export dialog lets you pick one from a drop-down for that occasion.</li>
 </ol>
 <p>The upload steps themselves are in <a href="../projects-export/#export">Export and upload</a>.</p>
 <div class="admonition warning">
 <p class="admonition-title">Binding the wrong configuration cannot be undone</p>
 <p>Once customer A's data has gone into customer B's account, ModelScope's programmatic deletion is limited and withdrawing it means going through their web console; publishing publicly is equally irreversible. Check which configuration you are binding when you create a project. Once a project has uploaded once, the repository coordinates are recorded in its cursor, and rebinding it to a configuration that would change the repository is refused by the device.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Do not roll back to an older version after configuring NFS or FTP / FTPS</p>
+<p>An older version that does not know these two kinds may fail to read the whole upload configuration, taking your existing ModelScope, S3 and STS entries down with it. If you do need to roll back, delete the newly created entries first, or ask technical support to back the configuration up.</p>
 </div>
 <p>Other things to know: credentials are stored on the device's state disk (permissions 0600) and are not shown again after saving — leaving a field blank when editing means keeping the copy already on the device. If you change the backend kind while editing, the credentials must be re-entered, because there is no field to carry over. Deleting a configuration does not affect data already uploaded; a project bound to it will prompt you to rebind when it next uploads.</p>
 <h2 id="wifi">Network<a class="headerlink" href="#wifi" title="锚点链接">¶</a></h2>
