@@ -81,7 +81,7 @@
 
 ### 当前项目采集配置 {#capture-mode}
 
-![采集模式](../assets/backpack/capture-mode.webp)
+![当前项目采集配置](../assets/backpack/capture-mode.webp)
 
 页首这一块只读展示当前项目的四项采集与导出参数。它们在建项目时选定、之后不可更改,所以这里没有任何可点的开关 —— 要换一套参数,新建一个项目。
 
