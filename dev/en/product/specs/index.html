@@ -93,7 +93,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#技术参数" class="md-skip">
+        <a href="#technical-specifications" class="md-skip">
           Skip to content
         </a>
       
@@ -646,22 +646,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#数采背包" class="md-nav__link">
+  <a href="#the-backpack" class="md-nav__link">
     <span class="md-ellipsis">
       
-        数采背包
+        The backpack
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="数采背包">
+    <nav class="md-nav" aria-label="The backpack">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#接口" class="md-nav__link">
+  <a href="#connectors" class="md-nav__link">
     <span class="md-ellipsis">
       
-        接口
+        Connectors
       
     </span>
   </a>
@@ -669,10 +669,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#机身标签" class="md-nav__link">
+  <a href="#the-body-label" class="md-nav__link">
     <span class="md-ellipsis">
       
-        机身标签
+        The body label
       
     </span>
   </a>
@@ -1641,22 +1641,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#数采背包" class="md-nav__link">
+  <a href="#the-backpack" class="md-nav__link">
     <span class="md-ellipsis">
       
-        数采背包
+        The backpack
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="数采背包">
+    <nav class="md-nav" aria-label="The backpack">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#接口" class="md-nav__link">
+  <a href="#connectors" class="md-nav__link">
     <span class="md-ellipsis">
       
-        接口
+        Connectors
       
     </span>
   </a>
@@ -1664,10 +1664,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#机身标签" class="md-nav__link">
+  <a href="#the-body-label" class="md-nav__link">
     <span class="md-ellipsis">
       
-        机身标签
+        The body label
       
     </span>
   </a>
@@ -1696,105 +1696,105 @@
 
 
 
-<h1 id="技术参数">技术参数<a class="headerlink" href="#技术参数" title="锚点链接">¶</a></h1>
-<p>本页是 XTac-UMI G1 夹爪与数采背包的规格表,选型、写方案、核对接口时查这里;接线步骤见<a href="../../common/gripper/#install">夹爪按键、指示灯与序列号</a>,背包与 PC 两种配置的取舍见<a href="../editions/">产品线与配置对比</a>。</p>
+<h1 id="technical-specifications">Technical specifications<a class="headerlink" href="#technical-specifications" title="锚点链接">¶</a></h1>
+<p>This page is the specification table for the XTac-UMI G1 gripper and the backpack — look here when choosing a configuration, writing a proposal or checking a connector. The wiring steps are in <a href="../../common/gripper/#install">Gripper buttons, LEDs and serial numbers</a>, and the trade-off between the Backpack Kit and the Developer Kit is in <a href="../editions/">Product line and configuration comparison</a>.</p>
 <h2 id="specs">XTac-UMI G1<a class="headerlink" href="#specs" title="锚点链接">¶</a></h2>
-<p>电气与接口见<a href="../../common/gripper/#install">供电与连接要求</a>。下表是传感器与整机规格;采集时实际速率可按需配置(如 PC 版触觉以较低帧率录制),不改变传感器规格。</p>
+<p>The electrical and connector requirements are in <a href="../../common/gripper/#install">Power and connection requirements</a>. The table below is the sensor and whole-unit specification; the actual rates during collection can be configured as needed (the Developer Kit, for example, records tactile data at a lower frame rate) without changing the sensor specification.</p>
 <table>
 <thead>
 <tr>
-<th>参数项</th>
-<th>规格</th>
+<th>Item</th>
+<th>Specification</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>夹爪类型 / 外形</td>
-<td>二指结构;145 × 186 × 170 mm</td>
+<td>Gripper type / dimensions</td>
+<td>Two-finger design; 145 × 186 × 170 mm</td>
 </tr>
 <tr>
-<td>重量(主爪)/ 负载</td>
-<td>约 370 g;最大 2.5 kg</td>
+<td>Weight (leader) / payload</td>
+<td>About 370 g; 2.5 kg maximum</td>
 </tr>
 <tr>
-<td>开合行程 / 角度</td>
-<td>0–150 mm;角度行程每台各异,以标定写入固件的实测值为准(背包版在控制台 系统 → 夹爪配置 页标定,PC 版见<a href="../../pc/calibration/#41">夹爪标定</a>)</td>
+<td>Opening travel / angle</td>
+<td>0–150 mm; the angular travel differs from unit to unit, and the measured value written to the firmware by calibration is authoritative (on the Backpack Kit you calibrate on the console's System → Gripper page; on the Developer Kit see <a href="../../pc/calibration/#41">Gripper calibration</a>)</td>
 </tr>
 <tr>
-<td>供电</td>
-<td>主夹爪无内置电池,由 USB Type-C 总线供电(DC 5V/500mA);从夹爪 24V 适配器供电</td>
+<td>Power</td>
+<td>The leader gripper has no internal battery and is bus-powered over USB Type-C (DC 5 V / 500 mA); the follower gripper is powered by a 24 V adapter</td>
 </tr>
 <tr>
-<td>多设备时间同步 / 定位</td>
-<td>5 ms;&lt; 3 mm</td>
+<td>Multi-device time sync / positioning</td>
+<td>5 ms; &lt; 3 mm</td>
 </tr>
 <tr>
-<td>视触觉</td>
-<td>2 × 三色光,量程 0–25 N,120 FPS(640×480 MJPG)</td>
+<td>Visuotactile</td>
+<td>2 × tri-colour illumination, 0–25 N range, 120 FPS (640×480 MJPG)</td>
 </tr>
 <tr>
 <td>IMU</td>
-<td>9 轴,100 Hz</td>
+<td>9-axis, 100 Hz</td>
 </tr>
 <tr>
-<td>腕部鱼眼相机</td>
-<td>FOV 190°;640×480 @ 30 FPS MJPG</td>
+<td>Wrist fisheye camera</td>
+<td>190° FOV; 640×480 @ 30 FPS MJPG</td>
 </tr>
 <tr>
-<td>位姿</td>
-<td>Pico4 Ultra 运动追踪器,6-DoF,坐标系定义见<a href="../../common/coordinates/">坐标系</a></td>
+<td>Pose</td>
+<td>Pico4 Ultra motion tracker, 6-DoF; the frame definition is in <a href="../../common/coordinates/">Coordinate frames</a></td>
 </tr>
 <tr>
-<td>输出数据</td>
-<td>RGB、多模态触觉、夹爪开口角度、IMU、空间定位轨迹</td>
+<td>Output data</td>
+<td>RGB, multimodal tactile, gripper opening angle, IMU, spatial trajectory</td>
 </tr>
 </tbody>
 </table>
-<p>内部通信:对外接口为 USB Type-C;内部 MCU 串口经 CH343(<code>1a86:55d2</code>)桥接,枚举为 <code>/dev/ttyACM*</code>,USART3 @ 3 Mbps;视触觉与腕相机为 UVC(<code>/dev/video*</code>);从爪经 FDCAN1 @ 1 Mbps 透传灵足电机。</p>
-<h2 id="数采背包">数采背包<a class="headerlink" href="#数采背包" title="锚点链接">¶</a></h2>
-<p>数采背包是背包版的采集单元:夹爪、头显都接到它上面,XTac-UMI Collector 在它上面运行,控制台通过浏览器打开。产品定位与使用方式见<a href="../backpack/">认识数采背包</a>。</p>
+<p>Internal communication: the external interface is USB Type-C; the internal MCU serial port is bridged by a CH343 (<code>1a86:55d2</code>) and enumerates as <code>/dev/ttyACM*</code>, USART3 @ 3 Mbps; the visuotactile sensors and the wrist camera are UVC (<code>/dev/video*</code>); the follower gripper passes through to a Lingzu motor over FDCAN1 @ 1 Mbps.</p>
+<h2 id="the-backpack">The backpack<a class="headerlink" href="#the-backpack" title="锚点链接">¶</a></h2>
+<p>The backpack is the Backpack Kit's collection unit: the grippers and the headset plug into it, XTac-UMI Collector runs on it, and the console is opened in a browser. The product positioning and how it is used are in <a href="../backpack/">The Backpack</a>.</p>
 <table>
 <thead>
 <tr>
-<th>参数项</th>
-<th>规格</th>
+<th>Item</th>
+<th>Specification</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>计算节点</td>
-<td>RK3588(Xense-3588Q)</td>
+<td>Compute node</td>
+<td>RK3588 (Xense-3588Q)</td>
 </tr>
 <tr>
-<td>存储</td>
-<td>eMMC 系统盘 + NVMe 数据盘,episode 记录与导出都落在数据盘</td>
+<td>Storage</td>
+<td>eMMC system disk + NVMe data disk; episode records and exports both land on the data disk</td>
 </tr>
 <tr>
-<td>供电输入</td>
-<td><code>DC</code> 口,随货 12V 3A 36W 适配器,或 Type-C 输出 12V3A 的充电宝</td>
+<td>Power input</td>
+<td>The <code>DC</code> port, with the supplied 12 V 3 A 36 W adapter, or a power bank whose Type-C output is 12 V 3 A</td>
 </tr>
 <tr>
-<td>网络</td>
-<td>有线网口(DHCP,可改静态);WiFi 客户端,只连 5 GHz;自建热点 SoftAP <code>xense-&lt;序列号后 6 位&gt;</code>,同样只有 5 GHz,网关固定 <code>192.168.44.1</code></td>
+<td>Networking</td>
+<td>Wired Ethernet (DHCP, can be set static); WiFi client, 5 GHz only; its own SoftAP hotspot <code>xense-&lt;last 6 of the serial&gt;</code>, likewise 5 GHz only, with the gateway fixed at <code>192.168.44.1</code></td>
 </tr>
 <tr>
-<td>电池 / 续航</td>
-<td>待补</td>
+<td>Battery / runtime</td>
+<td>To be added</td>
 </tr>
 <tr>
-<td>整机功耗</td>
-<td>待补</td>
+<td>Whole-unit power draw</td>
+<td>To be added</td>
 </tr>
 <tr>
-<td>防护等级</td>
-<td>待补</td>
+<td>Ingress protection rating</td>
+<td>To be added</td>
 </tr>
 </tbody>
 </table>
-<h3 id="接口">接口<a class="headerlink" href="#接口" title="锚点链接">¶</a></h3>
-<p>前面板 <code>PICO</code> / <code>HEAD</code> / <code>USB</code>、两侧 <code>UMI-L</code> / <code>UMI-R</code>、后面板 <code>DC</code>、网口、SD 卡槽、<code>HDMI</code>、耳机各接什么,连同接口照片,见<a href="../backpack/#ports">认识数采背包</a>。</p>
-<h3 id="机身标签">机身标签<a class="headerlink" href="#机身标签" title="锚点链接">¶</a></h3>
-<p>标签上的 SN、热点名、密码、热点 IP 与 mDNS 设备名各是什么、认机为什么看标签不记 IP,见<a href="../../backpack/network/#label">认机看标签</a>;本手册出现的序列号只是示例。</p>
+<h3 id="connectors">Connectors<a class="headerlink" href="#connectors" title="锚点链接">¶</a></h3>
+<p>What goes into <code>PICO</code> / <code>HEAD</code> / <code>USB</code> on the front panel, <code>UMI-L</code> / <code>UMI-R</code> on the sides, and <code>DC</code>, Ethernet, the SD card slot, <code>HDMI</code> and the headphone jack on the rear panel, together with photographs of the connectors, is in <a href="../backpack/#ports">The Backpack</a>.</p>
+<h3 id="the-body-label">The body label<a class="headerlink" href="#the-body-label" title="锚点链接">¶</a></h3>
+<p>What the SN, hotspot name, password, hotspot IP and mDNS device name on the label are, and why you identify a unit by its label rather than remembering an IP, are in <a href="../../backpack/network/#label">Identify the unit by its label</a>; the serial numbers in this manual are only examples.</p>
 
 
 
