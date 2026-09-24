@@ -1914,19 +1914,20 @@
 <li><strong>Live monitor</strong>: the two fisheye views, the headset stereo pair, the arms / head pose and the left and right opening angles, and the four visuotactile feeds all on one screen; pick the project / task at the bottom and start or stop recording.</li>
 <li><strong>Projects</strong>: manage recorded data by project → task → recording — replay, delete, export (destination first, then format: download an archive or upload to a remote end) and archive.</li>
 <li><strong>Replay</strong>: stream any recording online, with the same layout as the live monitor and a draggable progress bar.</li>
-<li><strong>System</strong>: device info, gripper configuration (travel calibration and MCU firmware), capture settings (capture mode, wrist undistortion, recording shortcut, voice announcements, and the LED and device-button reference), upload configuration, network, camera profiles, system update; the fleet management page is reserved for multi-device management and needs no configuration at present.</li>
+<li><strong>System</strong>: device info, gripper configuration (travel calibration and MCU firmware), capture settings (a read-only view of the current project's capture config, plus the recording shortcut, voice announcements, and the LED and device-button reference), upload configuration, network, camera profiles, system update; the fleet management page is reserved for multi-device management and needs no configuration at present.</li>
 </ul>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/backpack/monitor-live.webp" data-desc-position="bottom"><img alt="The live monitor page: fisheye, headset stereo, pose and opening angles, and tactile feeds on one screen" src="../../../assets/backpack/monitor-live.webp"></a></p>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/backpack/project-list-live.webp" data-desc-position="bottom"><img alt="The Projects page: project → task → recording" src="../../../assets/backpack/project-list-live.webp"></a></p>
 <p>The right of the top bar permanently shows video bandwidth, camera count, CPU, memory, disk, monitoring / recording time and system status, and opens the system log. The gripper's physical buttons are handled by the device, so you can record with no browser online: long-press the right gripper to start and the left to stop, with the LED patterns in <a href="../../common/gripper/#buttons-leds">Gripper buttons, LEDs and serial numbers</a>; the backpack's speaker also gives a <a href="../../common/gripper/#voice-cues">voice announcement</a> when recording starts, when a take finishes and when something drops out.</p>
 <h2 id="capture-modes">Capture modes<a class="headerlink" href="#capture-modes" title="锚点链接">¶</a></h2>
-<p>System → Capture settings → Capture mode is where you pick this device's channel preset, which determines the live layout, what is recorded and what is exported:</p>
+<p>The capture mode is a <strong>property of the project</strong>, chosen when the project is created and unchangeable afterwards, and it determines the live layout, what is recorded and what is exported. System → Capture settings only displays it, read-only. Six presets:</p>
 <table>
 <thead>
 <tr>
 <th>Mode</th>
 <th>Grippers</th>
-<th>Headset stereo</th>
+<th>Headset</th>
+<th>Camera feeds</th>
 </tr>
 </thead>
 <tbody>
@@ -1934,30 +1935,41 @@
 <td>Dual gripper</td>
 <td>Left + right</td>
 <td>—</td>
+<td>6</td>
 </tr>
 <tr>
-<td>Dual gripper + headset</td>
+<td>Dual gripper + headset stereo</td>
 <td>Left + right</td>
-<td>Recorded</td>
+<td>Stereo</td>
+<td>8</td>
+</tr>
+<tr>
+<td>Dual gripper + headset right eye</td>
+<td>Left + right</td>
+<td>Right eye</td>
+<td>7</td>
 </tr>
 <tr>
 <td>Single gripper</td>
 <td>One, with the side decided automatically by which gripper is connected</td>
 <td>—</td>
+<td>3</td>
 </tr>
 <tr>
-<td>Single gripper + headset</td>
+<td>Single gripper + headset stereo</td>
 <td>One</td>
-<td>Recorded</td>
+<td>Stereo</td>
+<td>5</td>
 </tr>
 <tr>
-<td>Headset only</td>
+<td>Headset stereo only</td>
 <td>—</td>
-<td>Recorded</td>
+<td>Stereo</td>
+<td>2</td>
 </tr>
 </tbody>
 </table>
-<p>"+ headset" only decides whether the headset's stereo views are recorded; the 6-DoF pose always comes from the headset and the trackers. It cannot be switched while recording, and switching affects only subsequent new recordings; use one mode from start to finish within a task, or the export pre-check will block it. Headset-only data cannot go into a bimanual LeRobot dataset.</p>
+<p>"+ headset" only decides whether the headset's views are recorded; the 6-DoF pose always comes from the headset and the trackers. Because the mode follows the project, one task naturally keeps the same mode from start to finish; to use a different set of parameters, create a new project. Headset-only data cannot go into a bimanual LeRobot dataset.</p>
 <h2 id="data">Data<a class="headerlink" href="#data" title="锚点链接">¶</a></h2>
 <p>The backpack uses MCAP as its raw recording: one <code>.mcap</code> file per episode, with camera frames and the encoder, IMU, pose and device events each on their own topic, in a layout aligned with Foxglove so it can be replayed directly in Foxglove Studio. The raw recordings stay on the device and are not downloaded individually.</p>
 <p>Everything you hand out is an <strong>offline export</strong>, not produced during recording, and it is <strong>per task</strong>: click "Export" on a task on the Projects page and the device pre-checks first (complete channels, consistent capture mode), then transcodes and builds in the format you chose. The two formats are equals and not mutually exclusive: <code>LeRobot dataset</code> is LeRobotDataset v3, whose root is <code>meta/</code>, <code>data/</code> and <code>videos/</code>, with all video resampled to 30 fps and <code>meta/</code> carrying per-episode <code>taccap_extrinsics.json</code> and <code>xumi_collection_devices.json</code>; <code>mcap</code> comes from the same source with the same 30 Hz state / action, six video feeds and sensor data, only packaged one file per episode so it opens directly in a general-purpose visualiser. The same task can produce one now and the other later, and both outputs are kept.</p>
@@ -1985,7 +1997,7 @@
 <tbody>
 <tr>
 <td>Collector (collection unit)</td>
-<td>0.3.16</td>
+<td>0.4.1</td>
 </tr>
 <tr>
 <td>Backpack OS firmware</td>
