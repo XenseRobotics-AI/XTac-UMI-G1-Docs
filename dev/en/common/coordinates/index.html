@@ -93,7 +93,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#坐标系" class="md-skip">
+        <a href="#coordinate-frames" class="md-skip">
           Skip to content
         </a>
       
@@ -1482,10 +1482,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
       
         <li class="md-nav__item">
-  <a href="#世界坐标系" class="md-nav__link">
+  <a href="#the-world-frame" class="md-nav__link">
     <span class="md-ellipsis">
       
-        世界坐标系
+        The world frame
       
     </span>
   </a>
@@ -1496,7 +1496,7 @@
   <a href="#world-view" class="md-nav__link">
     <span class="md-ellipsis">
       
-        采集时的位姿视图
+        The pose view during collection
       
     </span>
   </a>
@@ -1504,10 +1504,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#局部坐标系" class="md-nav__link">
+  <a href="#local-frames" class="md-nav__link">
     <span class="md-ellipsis">
       
-        局部坐标系
+        Local frames
       
     </span>
   </a>
@@ -1613,10 +1613,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
       
         <li class="md-nav__item">
-  <a href="#世界坐标系" class="md-nav__link">
+  <a href="#the-world-frame" class="md-nav__link">
     <span class="md-ellipsis">
       
-        世界坐标系
+        The world frame
       
     </span>
   </a>
@@ -1627,7 +1627,7 @@
   <a href="#world-view" class="md-nav__link">
     <span class="md-ellipsis">
       
-        采集时的位姿视图
+        The pose view during collection
       
     </span>
   </a>
@@ -1635,10 +1635,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#局部坐标系" class="md-nav__link">
+  <a href="#local-frames" class="md-nav__link">
     <span class="md-ellipsis">
       
-        局部坐标系
+        Local frames
       
     </span>
   </a>
@@ -1662,61 +1662,61 @@
 
 
 
-<h1 id="坐标系">坐标系<a class="headerlink" href="#坐标系" title="锚点链接">¶</a></h1>
-<p>本页定义位姿数据所在的坐标系:世界坐标系在哪、朝哪,以及采集时怎么看位姿是否正确。两种形态的位姿都来自同一套 Pico4 头显与追踪器,坐标系定义相同;查看位姿的界面不同,那一段用「背包版 / PC 版」标签页分开写。</p>
-<h2 id="世界坐标系">世界坐标系<a class="headerlink" href="#世界坐标系" title="锚点链接">¶</a></h2>
-<p>世界坐标系由头显上的 XTac-UMI XR 在启动瞬间建立并冻结,是右手系,重力对齐:</p>
+<h1 id="coordinate-frames">Coordinate frames<a class="headerlink" href="#coordinate-frames" title="锚点链接">¶</a></h1>
+<p>This page defines the frame the pose data lives in: where the world frame is, which way it points, and how to tell during collection whether the poses are right. Both configurations take their poses from the same Pico4 headset and trackers, so the frame definition is identical; only the interface for looking at poses differs, and that part is split into "Backpack Kit" / "Developer Kit" tabs.</p>
+<h2 id="the-world-frame">The world frame<a class="headerlink" href="#the-world-frame" title="锚点链接">¶</a></h2>
+<p>The world frame is established and frozen by XTac-UMI XR on the headset at the moment it starts. It is right-handed and gravity-aligned:</p>
 <table>
 <thead>
 <tr>
-<th>轴</th>
-<th>方向</th>
+<th>Axis</th>
+<th>Direction</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>原点</td>
-<td>首次启动 XTac-UMI XR 那一刻头显所在的位置</td>
+<td>Origin</td>
+<td>Where the headset was at the moment XTac-UMI XR first started</td>
 </tr>
 <tr>
-<td>X 轴(红)</td>
-<td>设备前向,沿头显前部相机安装面法线指向前方</td>
+<td>X axis (red)</td>
+<td>The device's forward direction, along the normal of the headset's front camera mounting face</td>
 </tr>
 <tr>
-<td>Y 轴(绿)</td>
-<td>设备左向,与 X 轴正交,按右手坐标系约定确定</td>
+<td>Y axis (green)</td>
+<td>The device's left, orthogonal to X, fixed by the right-handed convention</td>
 </tr>
 <tr>
-<td>Z 轴(蓝)</td>
-<td>设备上向,与 X、Y 均正交,由右手定则唯一确定</td>
+<td>Z axis (blue)</td>
+<td>The device's up, orthogonal to both X and Y, determined uniquely by the right-hand rule</td>
 </tr>
 </tbody>
 </table>
-<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/pico4/world-frame-origin.webp" data-desc-position="bottom"><img alt="启动瞬间冻结的世界坐标系" src="../../../assets/pico4/world-frame-origin.webp" width="420"></a></p>
-<p>坐标系只在启动瞬间跟着头显,冻结后就固定在空间里,转头、走动都不会带着它动;重启 XTac-UMI XR 会重新建系,原点和方向都会变。所以启动时要面朝机器人正前方,让 X 轴对齐机器人正前方,而且同一个数据集采集期间不要重启它,操作步骤见<a href="../pico4/#pico-frame">启动与坐标系对齐</a>。</p>
-<p>数据集里所有位姿都以这个世界系为参考:PC 版落盘的是末端 TCP 位姿 <code>tcp.x/y/z</code> 加 6D 旋转 <code>r1..r6</code>(旋转矩阵前两列,约定见<a href="../../pc/recording/#53">每帧记录内容</a>);背包版 MCAP 里记录头显与追踪器的位姿。</p>
-<h2 id="world-view">采集时的位姿视图<a class="headerlink" href="#world-view" title="锚点链接">¶</a></h2>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">背包版</label><label for="__tabbed_1_2">PC 版</label></div>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/pico4/world-frame-origin.webp" data-desc-position="bottom"><img alt="The world frame frozen at start-up" src="../../../assets/pico4/world-frame-origin.webp" width="420"></a></p>
+<p>The frame follows the headset only at the instant it starts; once frozen it is fixed in space, and turning your head or walking around does not carry it along. Restarting XTac-UMI XR establishes a new frame, changing both the origin and the orientation. So face the robot squarely when you start it, so that the X axis lines up with the robot's forward direction, and do not restart it while collecting one dataset; the steps are in <a href="../pico4/#pico-frame">Start-up and frame alignment</a>.</p>
+<p>Every pose in a dataset is referenced to this world frame: the Developer Kit writes the end-effector TCP pose <code>tcp.x/y/z</code> plus the 6-D rotation <code>r1..r6</code> (the first two columns of the rotation matrix, with the convention in <a href="../../pc/recording/#53">What each frame holds</a>); the Backpack Kit records the headset's and the trackers' poses in the MCAP.</p>
+<h2 id="world-view">The pose view during collection<a class="headerlink" href="#world-view" title="锚点链接">¶</a></h2>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">Backpack Kit</label><label for="__tabbed_1_2">Developer Kit</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<p>控制台「实时监控」页的位姿视图实时显示左右爪与头显的位姿,下方是左右爪开合角度(rad / deg / 开合百分比)。夹爪闭合时角度约 0.02 rad,再施加一定的力可以到零。开录前逐个摇晃夹爪,确认左右位姿各自跟着动;不动或跳变先查<a href="../pico4/#pico-tracker-bind">追踪器绑定</a>与视野遮挡。</p>
+<p>The pose view on the console's "Live monitor" page shows the left and right grippers' and the headset's poses live, with the left and right gripper opening angles below it (rad / deg / percentage open). A closed gripper reads about 0.02 rad, and a little more force brings it to zero. Before recording, shake each gripper in turn and confirm that the left and right poses each follow it; if one does not move or jumps around, check the <a href="../pico4/#pico-tracker-bind">tracker binding</a> and whether the view is obstructed.</p>
 </div>
 <div class="tabbed-block">
-<p><code>--display_data=true</code> 会在 Rerun 里开出 <code>/world</code> 3D 视图:夹爪以带标签的椭球 + 三轴画在实时 <code>tcp.*</code> 处,拖出一条轨迹面包屑。</p>
+<p><code>--display_data=true</code> opens a <code>/world</code> 3D view in Rerun: each gripper is drawn as a labelled ellipsoid with a triad at its live <code>tcp.*</code>, trailing a breadcrumb trajectory.</p>
 <ul>
-<li>场景按 <code>FLU</code> 声明,初始视角朝 +X,世界轴标 <code>+X forward / +Y left / +Z up</code>。</li>
-<li>面包屑保留最近 90 个采样点(30 fps 下约 3 秒),越旧越淡。</li>
-<li>头显相机开启时,头显以更小的琥珀色 <code>HEAD</code> 标记画进同一个 <code>/world</code>,不带轨迹。</li>
-<li><code>--show_trajectory</code> 默认开启,<code>false</code> 关闭;<code>--robot.enable_tracker=false</code> 时自动跳过。</li>
-<li>夹爪平放时 EE 标记应在两指中点、三轴呈 X 前 / Y 左 / Z 上,否则追踪器装错了。</li>
-<li>标量面板里的 <code>tracker pose</code> 是追踪器原始位姿,仅供查看;落盘的是 <code>tcp.*</code>。</li>
+<li>The scene is declared <code>FLU</code>, the initial viewpoint faces +X, and the world axes are labelled <code>+X forward / +Y left / +Z up</code>.</li>
+<li>The breadcrumb keeps the most recent 90 samples (about 3 seconds at 30 fps), fading with age.</li>
+<li>With the headset camera on, the headset is drawn into the same <code>/world</code> as a smaller amber <code>HEAD</code> marker, without a trajectory.</li>
+<li><code>--show_trajectory</code> is on by default and <code>false</code> turns it off; it is skipped automatically when <code>--robot.enable_tracker=false</code>.</li>
+<li>With the gripper lying flat, the EE marker should sit at the midpoint between the fingers with the triad reading X forward / Y left / Z up; if not, the tracker is fitted wrong.</li>
+<li>The <code>tracker pose</code> in the scalar panel is the tracker's raw pose, for inspection only; what is written to disk is <code>tcp.*</code>.</li>
 </ul>
 </div>
 </div>
 </div>
-<h2 id="局部坐标系">局部坐标系<a class="headerlink" href="#局部坐标系" title="锚点链接">¶</a></h2>
-<p>头显本体坐标系的三轴与世界系同一约定:X 前(前部相机安装面法线方向)、Y 左、Z 上,右手系;原点定义待补。</p>
-<p>夹爪局部坐标系定义待补。目前已知的是 PC 版落盘的 <code>tcp.*</code> 由追踪器位姿经每侧内置的实测 tracker→EE 变换得到,可用 <code>robot.tracker_to_ee_pos</code> / <code>robot.tracker_to_ee_quat</code> 覆盖,见 <a href="../../pc/reference/#robotconfig">RobotConfig 配置项</a>。</p>
+<h2 id="local-frames">Local frames<a class="headerlink" href="#local-frames" title="锚点链接">¶</a></h2>
+<p>The three axes of the headset's own body frame follow the same convention as the world frame: X forward (along the normal of the front camera mounting face), Y left, Z up, right-handed; the origin definition is to be added.</p>
+<p>The gripper's local frame definition is to be added. What is known so far is that the <code>tcp.*</code> the Developer Kit writes is derived from the tracker pose through the measured tracker→EE transform built in for each side, which can be overridden with <code>robot.tracker_to_ee_pos</code> / <code>robot.tracker_to_ee_quat</code>, see <a href="../../pc/reference/#robotconfig">RobotConfig options</a>.</p>
 
 
 
