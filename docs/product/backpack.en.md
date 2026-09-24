@@ -54,7 +54,7 @@ The console runs on the backpack, and any browser opening `http://192.168.44.1` 
 - **Live monitor**: the two fisheye views, the headset stereo pair, the arms / head pose and the left and right opening angles, and the four visuotactile feeds all on one screen; pick the project / task at the bottom and start or stop recording.
 - **Projects**: manage recorded data by project → task → recording — replay, delete, export (destination first, then format: download an archive or upload to a remote end) and archive.
 - **Replay**: stream any recording online, with the same layout as the live monitor and a draggable progress bar.
-- **System**: device info, gripper configuration (travel calibration and MCU firmware), capture settings (capture mode, wrist undistortion, recording shortcut, voice announcements, and the LED and device-button reference), upload configuration, network, camera profiles, system update; the fleet management page is reserved for multi-device management and needs no configuration at present.
+- **System**: device info, gripper configuration (travel calibration and MCU firmware), capture settings (a read-only view of the current project's capture config, plus the recording shortcut, voice announcements, and the LED and device-button reference), upload configuration, network, camera profiles, system update; the fleet management page is reserved for multi-device management and needs no configuration at present.
 
 ![The live monitor page: fisheye, headset stereo, pose and opening angles, and tactile feeds on one screen](../assets/backpack/monitor-live.webp)
 
@@ -64,17 +64,18 @@ The right of the top bar permanently shows video bandwidth, camera count, CPU, m
 
 ## Capture modes
 
-System → Capture settings → Capture mode is where you pick this device's channel preset, which determines the live layout, what is recorded and what is exported:
+The capture mode is a **property of the project**, chosen when the project is created and unchangeable afterwards, and it determines the live layout, what is recorded and what is exported. System → Capture settings only displays it, read-only. Six presets:
 
-| Mode | Grippers | Headset stereo |
-|---|---|---|
-| Dual gripper | Left + right | — |
-| Dual gripper + headset | Left + right | Recorded |
-| Single gripper | One, with the side decided automatically by which gripper is connected | — |
-| Single gripper + headset | One | Recorded |
-| Headset only | — | Recorded |
+| Mode | Grippers | Headset | Camera feeds |
+|---|---|---|---|
+| Dual gripper | Left + right | — | 6 |
+| Dual gripper + headset stereo | Left + right | Stereo | 8 |
+| Dual gripper + headset right eye | Left + right | Right eye | 7 |
+| Single gripper | One, with the side decided automatically by which gripper is connected | — | 3 |
+| Single gripper + headset stereo | One | Stereo | 5 |
+| Headset stereo only | — | Stereo | 2 |
 
-"+ headset" only decides whether the headset's stereo views are recorded; the 6-DoF pose always comes from the headset and the trackers. It cannot be switched while recording, and switching affects only subsequent new recordings; use one mode from start to finish within a task, or the export pre-check will block it. Headset-only data cannot go into a bimanual LeRobot dataset.
+"+ headset" only decides whether the headset's views are recorded; the 6-DoF pose always comes from the headset and the trackers. Because the mode follows the project, one task naturally keeps the same mode from start to finish; to use a different set of parameters, create a new project. Headset-only data cannot go into a bimanual LeRobot dataset.
 
 ## Data
 
@@ -105,7 +106,7 @@ Both configurations use the same XTac-UMI G1 leader grippers and Pico4 Ultra hea
 
 | Part | Version |
 |---|---|
-| Collector (collection unit) | 0.3.16 |
+| Collector (collection unit) | 0.4.1 |
 | Backpack OS firmware | V1.2.0 |
 | Leader gripper firmware | V1.2.2 |
 | XTac-UMI XR (headset APK) | 0.2.5 |
