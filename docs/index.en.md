@@ -6,31 +6,27 @@ hide:
 
 <div class="tc-hero" markdown>
 
-<span class="tc-eyebrow">XenseRobotics · XTac-UMI G1</span>
+<div class="tc-hero__text" markdown>
 
 # Handheld tactile data collection, from unboxing to a dataset
 
-<p class="tc-sub">XTac-UMI G1 handheld tactile gripper × Pico4 Ultra Enterprise Edition headset and tracker<br>capture synchronized vision · tactile · first-person stereo · hand and head pose with lerobot, straight to a training-ready <code>LeRobotDataset</code></p>
+<p class="tc-sub">XTac-UMI G1 works with the Pico4 Ultra Enterprise headset to record vision, touch and hand and head pose in sync with lerobot, giving you a training-ready <code>LeRobotDataset</code>.</p>
 
-[Quickstart :material-arrow-right-bold:](quickstart.md){ .md-button .md-button--primary }
-[Installation](02-environment.md){ .md-button }
+[Quickstart](quickstart.md){ .md-button .md-button--primary }
 [About the device](01-overview.md){ .md-button }
 
-<div class="tc-gallery" markdown>
+</div>
 
-<figure class="tc-tile tc-tile--tall" markdown>
-![The full system: leader, follower and backpack](assets/product/g1-family-scene.webp)
-<figcaption markdown>[The full system: leader, follower and backpack :octicons-arrow-right-24:](highlights.md)</figcaption>
+<div class="tc-stage" markdown>
+
+<figure class="tc-tile tc-tile--leader" markdown>
+![Leader gripper](assets/product/leader-front-open-cutout.webp)
+<figcaption markdown>[Leader: hand-held capture](hardware.md)</figcaption>
 </figure>
 
-<figure class="tc-tile tc-tile--contain" markdown>
-![Leader gripper · hand-held capture](assets/product/leader-front-open.webp)
-<figcaption markdown>[Leader gripper · hand-held capture :octicons-arrow-right-24:](hardware.md)</figcaption>
-</figure>
-
-<figure class="tc-tile" markdown>
-![Follower gripper · on the robot](assets/product/follower-scene-front.webp)
-<figcaption markdown>[Follower gripper · on the robot :octicons-arrow-right-24:](follower-overview.md)</figcaption>
+<figure class="tc-tile tc-tile--follower" markdown>
+![Follower gripper](assets/product/follower-rear-ports.webp)
+<figcaption markdown>[Follower: on the robot](follower-overview.md)</figcaption>
 </figure>
 
 </div>
@@ -63,7 +59,7 @@ This is the **xense-taccap-lerobot data-collection quickstart**. Three parts: **
 
     Know your hardware → connect & power it on → set up the software environment and host/device config.
 
-    [:octicons-arrow-right-24: Hardware](hardware.md) · [Environment Setup](02-environment.md)
+    [Hardware](hardware.md), [Environment Setup](02-environment.md)
 
 -   :material-record-circle-outline: __② Software Usage__
 
@@ -71,7 +67,7 @@ This is the **xense-taccap-lerobot data-collection quickstart**. Three parts: **
 
     Calibration → preview the streams with `lerobot-teleoperate` → record with `lerobot-record`. The core data-collection workflow.
 
-    [:octicons-arrow-right-24: Calibration](04-calibration.md) · [Data Collection](05-data-collection.md)
+    [Calibration](04-calibration.md), [Data Collection](05-data-collection.md)
 
 -   :material-database-outline: __③ Data__
 
@@ -79,7 +75,7 @@ This is the **xense-taccap-lerobot data-collection quickstart**. Three parts: **
 
     What a `LeRobotDataset` looks like, what's recorded per frame, checking & upload.
 
-    [:octicons-arrow-right-24: Dataset & Examples](06-dataset.md)
+    [Dataset & Examples](06-dataset.md)
 
 </div>
 

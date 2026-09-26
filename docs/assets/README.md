@@ -33,6 +33,7 @@
 | `g1-family-scene.webp` | 整套产品合影:两只主夹爪、一只从夹爪、数采背包,白色台阶场景 |
 | `leader-five-views.webp` | 主夹爪五视图 |
 | `leader-front-open.webp` | 主夹爪前斜视,手指张开,可见腕部相机 |
+| `leader-front-open-cutout.webp` | 同上,去掉柔光阴影并裁到主体,首页首屏用 |
 | `leader-side-camera.webp` | 主夹爪侧视,腕部相机一侧,手指闭合 |
 | `leader-side-port.webp` | 主夹爪侧视,Type-C 接口与手部绑带一侧 |
 | `leader-rear-tracker.webp` | 主夹爪后斜视,追踪器与手柄 |

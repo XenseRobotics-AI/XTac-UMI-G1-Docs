@@ -6,31 +6,27 @@ hide:
 
 <div class="tc-hero" markdown>
 
-<span class="tc-eyebrow">XenseRobotics · XTac-UMI G1</span>
+<div class="tc-hero__text" markdown>
 
-# 手持触觉数采,从开箱到数据集
+# 手持触觉数采,<span class="tc-nowrap">从开箱到数据集</span>
 
-<p class="tc-sub">XTac-UMI G1 手持触觉数采夹爪 × Pico4 Ultra 企业版头显与追踪器<br>基于 lerobot 同步采集视觉 · 触觉 · 第一视角双目 · 手部与头部位姿,直出可训练的标准 <code>LeRobotDataset</code></p>
+<p class="tc-sub">XTac-UMI G1 配合 Pico4 Ultra 企业版,用 lerobot 同步录下视觉、触觉和手部与头部位姿,直接得到可训练的 <code>LeRobotDataset</code>。</p>
 
-[一页速通 :material-arrow-right-bold:](quickstart.md){ .md-button .md-button--primary }
-[环境安装](02-environment.md){ .md-button }
+[一页速通](quickstart.md){ .md-button .md-button--primary }
 [了解设备](01-overview.md){ .md-button }
 
-<div class="tc-gallery" markdown>
+</div>
 
-<figure class="tc-tile tc-tile--tall" markdown>
-![整套系统:主夹爪、从夹爪与数采背包](assets/product/g1-family-scene.webp)
-<figcaption markdown>[整套系统:主夹爪、从夹爪与数采背包 :octicons-arrow-right-24:](highlights.md)</figcaption>
+<div class="tc-stage" markdown>
+
+<figure class="tc-tile tc-tile--leader" markdown>
+![主夹爪](assets/product/leader-front-open-cutout.webp)
+<figcaption markdown>[主夹爪:手持采集](hardware.md)</figcaption>
 </figure>
 
-<figure class="tc-tile tc-tile--contain" markdown>
-![主夹爪 · 手持采集](assets/product/leader-front-open.webp)
-<figcaption markdown>[主夹爪 · 手持采集 :octicons-arrow-right-24:](hardware.md)</figcaption>
-</figure>
-
-<figure class="tc-tile" markdown>
-![从夹爪 · 机器人执行](assets/product/follower-scene-front.webp)
-<figcaption markdown>[从夹爪 · 机器人执行 :octicons-arrow-right-24:](follower-overview.md)</figcaption>
+<figure class="tc-tile tc-tile--follower" markdown>
+![从夹爪](assets/product/follower-rear-ports.webp)
+<figcaption markdown>[从夹爪:装在机器人上](follower-overview.md)</figcaption>
 </figure>
 
 </div>
@@ -60,7 +56,7 @@ flowchart LR
 
     认识拿到的硬件 → 连接硬件、上电 → 装好软件环境与主机/设备配置。这三件是采集前的前提。
 
-    [:octicons-arrow-right-24: 硬件介绍](hardware.md) · [环境安装](02-environment.md)
+    [硬件介绍](hardware.md)、[环境安装](02-environment.md)
 
 -   :material-record-circle-outline: __② 软件使用__
 
@@ -68,7 +64,7 @@ flowchart LR
 
     标定自检 → `lerobot-teleoperate` 预览确认数据流 → `lerobot-record` 录制。数采的核心操作。
 
-    [:octicons-arrow-right-24: 标定与自检](04-calibration.md) · [数据采集](05-data-collection.md)
+    [标定与自检](04-calibration.md)、[数据采集](05-data-collection.md)
 
 -   :material-database-outline: __③ 数据介绍__
 
@@ -76,7 +72,7 @@ flowchart LR
 
     `LeRobotDataset` 长什么样、每帧记录了什么、如何校验与上传。
 
-    [:octicons-arrow-right-24: 数据集与示例](06-dataset.md)
+    [数据集与示例](06-dataset.md)
 
 </div>
 
