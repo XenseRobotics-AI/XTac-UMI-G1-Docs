@@ -8,9 +8,11 @@ hide:
 
 <div class="tc-hero__text" markdown>
 
-# 手持触觉数采,<span class="tc-nowrap">从开箱到数据集</span>
+# 手持触觉数采<br>从开箱到数据集
 
-<p class="tc-sub">XTac-UMI G1 配合 Pico4 Ultra 企业版,用 lerobot 同步录下视觉、触觉和手部与头部位姿,直接得到可训练的 <code>LeRobotDataset</code>。</p>
+<p class="tc-sub">同步录下视觉、触觉、手部与头部位姿<br>直接生成可训练的 <code>LeRobotDataset</code></p>
+
+<p class="tc-note">XTac-UMI&nbsp;G1 夹爪配合 Pico4&nbsp;Ultra&nbsp;企业版头显与追踪器<br>基于 lerobot 采集</p>
 
 [一页速通](quickstart.md){ .md-button .md-button--primary }
 [了解设备](01-overview.md){ .md-button }

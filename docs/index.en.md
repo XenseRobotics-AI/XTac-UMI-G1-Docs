@@ -8,9 +8,11 @@ hide:
 
 <div class="tc-hero__text" markdown>
 
-# Handheld tactile data collection, from unboxing to a dataset
+# Handheld tactile capture<br>from unboxing to dataset
 
-<p class="tc-sub">XTac-UMI G1 works with the Pico4 Ultra Enterprise headset to record vision, touch and hand and head pose in sync with lerobot, giving you a training-ready <code>LeRobotDataset</code>.</p>
+<p class="tc-sub">Record vision, touch and pose in sync<br>straight into a training-ready <code>LeRobotDataset</code></p>
+
+<p class="tc-note">XTac-UMI&nbsp;G1 grippers with Pico4&nbsp;Ultra&nbsp;Enterprise<br>headset and trackers, built on lerobot</p>
 
 [Quickstart](quickstart.md){ .md-button .md-button--primary }
 [About the device](01-overview.md){ .md-button }

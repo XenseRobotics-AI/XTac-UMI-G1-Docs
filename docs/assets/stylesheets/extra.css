@@ -17,26 +17,49 @@
   letter-spacing: -.01em;
   color: var(--md-default-fg-color);
 }
-.md-typeset .tc-nowrap {
-  white-space: nowrap;   /* 标题固定在逗号后折行 */
+/* 英文标题更长,字号小一档,保证每个短语一行 */
+html[lang="en"] .md-typeset .tc-hero h1 {
+  font-size: 1.9rem;
+}
+/* 首屏标题的 ¶ 锚点用不上 */
+.md-typeset .tc-hero h1 .headerlink {
+  display: none;
+}
+/* 说明文字两层:主句说能得到什么,小字交代设备。行已在文案里手动断好;
+   中文只在标点、空格处折行,产品名内部用 &nbsp; 连住 */
+.md-typeset .tc-hero .tc-sub,
+.md-typeset .tc-hero .tc-note {
+  word-break: keep-all;
 }
 .md-typeset .tc-hero .tc-sub {
-  max-width: 26em;
-  margin: 0 0 1.4rem;
-  font-size: .95rem;
-  line-height: 1.7;
+  margin: 0 0 .5rem;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--md-default-fg-color);
+}
+.md-typeset .tc-hero .tc-note {
+  margin: 0 0 1.5rem;
+  font-size: .8rem;
+  line-height: 1.6;
   color: var(--md-default-fg-color--light);
 }
 .md-typeset .tc-hero .md-button {
   margin: 0 .5rem .5rem 0;
 }
 
-/* 右栏:主夹爪、从夹爪两张透明底渲染图并排,底边对齐,图注在图下 */
+/* 右栏:主夹爪、从夹爪两张透明底渲染图并排,图注在同一行。
+   两栏宽度按宽高比分配:主夹爪 1400×1365 → 1.026;从夹爪 1400×781 → 1.793,
+   再乘 k = 0.65,让从夹爪显示为主夹爪高度的 65%。
+   从夹爪图下方留白 (1-k)/(2×1.793×k) = 15% 栏宽,使它与主夹爪上下居中对齐。
+   换图或改 k 时同步改这几个数 */
 .md-typeset .tc-stage {
   display: grid;
-  grid-template-columns: 1fr 1.25fr;
-  gap: 1.2rem;
+  grid-template-columns: 1.026fr 1.165fr;
+  gap: 1.6rem;
   align-items: end;
+}
+.md-typeset .tc-tile--follower img {
+  margin-bottom: 15%;
 }
 .md-typeset .tc-tile {
   margin: 0;
@@ -72,6 +95,9 @@
 @media screen and (max-width: 30em) {
   .md-typeset .tc-hero h1 {
     font-size: 1.9rem;
+  }
+  html[lang="en"] .md-typeset .tc-hero h1 {
+    font-size: 1.5rem;
   }
 }
 
