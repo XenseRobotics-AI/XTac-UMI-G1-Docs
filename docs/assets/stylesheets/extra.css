@@ -32,8 +32,68 @@
   max-width: min(760px, 100%);
   height: auto;
   margin: 1.4rem auto 0;
+}
+
+/* 首页首屏三格产品图:左边整套合影占两行,右边主夹爪、从夹爪上下叠放 */
+.md-typeset .tc-gallery {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .8rem;
+  max-width: 900px;
+  margin: 1.4rem auto 0;
+}
+.md-typeset .tc-tile {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  overflow: hidden;
   border-radius: .6rem;
-  box-shadow: 0 8px 28px rgba(0, 0, 0, .14);
+}
+.md-typeset .tc-tile--tall {
+  grid-row: span 2;
+}
+.md-typeset .tc-tile > a,
+.md-typeset .tc-tile > p {
+  flex: 1;
+  display: block;
+  min-height: 0;
+  margin: 0;
+}
+.md-typeset .tc-tile > p {
+  background: #e9e9eb;   /* 透明背景的渲染图垫一层与其他两张相近的浅灰 */
+}
+.md-typeset .tc-tile > p > a {
+  display: block;
+  height: 100%;
+}
+.md-typeset .tc-tile figcaption p {
+  margin: 0;
+}
+.md-typeset .tc-tile img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.md-typeset .tc-tile--contain img {
+  object-fit: contain;
+}
+.md-typeset .tc-tile figcaption {
+  max-width: none;
+  margin: 0;
+  padding: .45rem .7rem;
+  font-size: .72rem;
+  font-style: normal;
+  text-align: left;
+  background: var(--md-default-bg-color);
+}
+@media screen and (max-width: 600px) {
+  .md-typeset .tc-gallery {
+    grid-template-columns: 1fr;
+  }
+  .md-typeset .tc-tile--tall {
+    grid-row: auto;
+  }
 }
 
 /* 预留:市场部宣传横幅占位(暂未使用) */

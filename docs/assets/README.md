@@ -15,12 +15,32 @@
 | `hardware/` | 设备/串口/接线/发现规则示意 | §3 |
 | `record/` | 录制终端/界面、Rerun 截图 | §4 / §5 |
 | `dataset/` | 数据集结构、校验、可视化 | §6 |
+| `product/` | 产品渲染图(主夹爪、从夹爪、整套合影) | 首页、硬件介绍、从夹爪 |
 
 ## 命名约定
 
 - 全小写、连字符分隔、带章节前缀,便于定位:
   `pico4/3-4-pair-tracker.png`、`bringup/3-6-step2-unity-client.png`
 - 优先 `.png`(截图)/`.svg`(矢量图示);大图控制在合理体积(建议 < 500 KB)。
+
+## product/ 渲染图
+
+原图(高分辨率 PNG)在 `materials/product-renders-orig/`,同名不同后缀;这里是发布用的 webp,
+最长边 1400 px(五视图 2000 px),保留透明背景。
+
+| 文件 | 内容 |
+|---|---|
+| `g1-family-scene.webp` | 整套产品合影:两只主夹爪、一只从夹爪、数采背包,白色台阶场景 |
+| `leader-five-views.webp` | 主夹爪五视图 |
+| `leader-front-open.webp` | 主夹爪前斜视,手指张开,可见腕部相机 |
+| `leader-side-camera.webp` | 主夹爪侧视,腕部相机一侧,手指闭合 |
+| `leader-side-port.webp` | 主夹爪侧视,Type-C 接口与手部绑带一侧 |
+| `leader-rear-tracker.webp` | 主夹爪后斜视,追踪器与手柄 |
+| `follower-five-views.webp` | 从夹爪五视图 |
+| `follower-rear-ports.webp` | 从夹爪后斜视,Type-C 与 24V 电源口、法兰电机 |
+| `follower-scene-front.webp` | 从夹爪场景图,前斜视,手指张开 |
+| `follower-scene-side.webp` | 从夹爪场景图,侧视,可见接口(4:3) |
+| `follower-scene-pedestal.webp` | 从夹爪场景图,置于台面,侧视(16:9) |
 
 ## 在文档里引用
 

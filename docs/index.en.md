@@ -16,7 +16,24 @@ hide:
 [Installation](02-environment.md){ .md-button }
 [About the device](01-overview.md){ .md-button }
 
-![XTac-UMI G1 product](assets/product/xtac-umi-g1-hero.jpg){ .tc-hero-img }
+<div class="tc-gallery" markdown>
+
+<figure class="tc-tile tc-tile--tall" markdown>
+![The full system: leader, follower and backpack](assets/product/g1-family-scene.webp)
+<figcaption markdown>[The full system: leader, follower and backpack :octicons-arrow-right-24:](highlights.md)</figcaption>
+</figure>
+
+<figure class="tc-tile tc-tile--contain" markdown>
+![Leader gripper · hand-held capture](assets/product/leader-front-open.webp)
+<figcaption markdown>[Leader gripper · hand-held capture :octicons-arrow-right-24:](hardware.md)</figcaption>
+</figure>
+
+<figure class="tc-tile" markdown>
+![Follower gripper · on the robot](assets/product/follower-scene-front.webp)
+<figcaption markdown>[Follower gripper · on the robot :octicons-arrow-right-24:](follower-overview.md)</figcaption>
+</figure>
+
+</div>
 
 </div>
 

@@ -16,7 +16,24 @@ hide:
 [环境安装](02-environment.md){ .md-button }
 [了解设备](01-overview.md){ .md-button }
 
-![XTac-UMI G1 产品外观](assets/product/xtac-umi-g1-hero.jpg){ .tc-hero-img }
+<div class="tc-gallery" markdown>
+
+<figure class="tc-tile tc-tile--tall" markdown>
+![整套系统:主夹爪、从夹爪与数采背包](assets/product/g1-family-scene.webp)
+<figcaption markdown>[整套系统:主夹爪、从夹爪与数采背包 :octicons-arrow-right-24:](highlights.md)</figcaption>
+</figure>
+
+<figure class="tc-tile tc-tile--contain" markdown>
+![主夹爪 · 手持采集](assets/product/leader-front-open.webp)
+<figcaption markdown>[主夹爪 · 手持采集 :octicons-arrow-right-24:](hardware.md)</figcaption>
+</figure>
+
+<figure class="tc-tile" markdown>
+![从夹爪 · 机器人执行](assets/product/follower-scene-front.webp)
+<figcaption markdown>[从夹爪 · 机器人执行 :octicons-arrow-right-24:](follower-overview.md)</figcaption>
+</figure>
+
+</div>
 
 </div>
 

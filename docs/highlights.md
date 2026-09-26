@@ -5,7 +5,7 @@
 高精度位姿传感单元与 IMU,可同步采集 RGB 图像、视触觉、空间位姿、夹爪状态与惯性数据,服务于
 模仿学习、VLA / VTLA 模型训练与触觉世界模型研究。
 
-![XTac-UMI G1 产品外观](assets/product/xtac-umi-g1-hero.jpg){ width="720" }
+![XTac-UMI G1 主夹爪](assets/product/leader-front-open.webp){ width="720" }
 
 ## 核心价值
 
@@ -86,7 +86,15 @@
 
 ## 产品外观
 
-![XTac-UMI G1 多角度与采集单元](assets/product/xtac-umi-g1-group.jpg)
+![XTac-UMI G1 整套产品:主夹爪、从夹爪与数采背包](assets/product/g1-family-scene.webp){ width="560" }
+
+=== "主夹爪五视图"
+
+    ![主夹爪五视图](assets/product/leader-five-views.webp){ width="720" }
+
+=== "从夹爪五视图"
+
+    ![从夹爪五视图](assets/product/follower-five-views.webp){ width="720" }
 
 ## 应用场景
 

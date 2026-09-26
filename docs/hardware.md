@@ -40,9 +40,27 @@ XTac-UMI G1 的机械、电气与操作说明,面向数采使用的
 
 ![主夹爪操作部件示意图(接口 / 按键 / 指示灯)](assets/hardware/master-controls.png){ width="480" }
 
+=== "相机一侧"
+
+    ![主夹爪侧视:腕部相机一侧](assets/product/leader-side-camera.webp){ width="560" }
+
+=== "接口一侧"
+
+    ![主夹爪侧视:Type-C 接口与手部绑带一侧](assets/product/leader-side-port.webp){ width="560" }
+
+=== "背面"
+
+    ![主夹爪后斜视:追踪器与手柄](assets/product/leader-rear-tracker.webp){ width="560" }
+
 ### 从夹爪(不区分左右)
 
-![从夹爪示意图](assets/hardware/follower-gripper.png){ width="360" }
+=== "示意图"
+
+    ![从夹爪示意图](assets/hardware/follower-gripper.png){ width="360" }
+
+=== "外观"
+
+    ![从夹爪后斜视:Type-C 与 24V 电源接口](assets/product/follower-rear-ports.webp){ width="560" }
 
 从夹爪安装在机器人末端,当前硬件不区分左右;安装时注意法兰方向、线缆走线与机器人运动空间。
 
