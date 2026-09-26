@@ -54,26 +54,20 @@ python python/examples/follower_status.py left
     刷完固件没断电重启的夹爪也会丢帧,但丢得很少(每 60 秒几十帧),自检里看不出来。
     所以刷完一律断电重启,不要靠自检判断,见 [刷完必须断电重启](follower-firmware.md#power-cycle)。
 
-??? failure "RS00 从夹爪 `get_model()` 显示 EL05 或 `COMPILE-TIME DEFAULT`"
-    **原因**:夹爪没有记录 RS00 型号,按 EL05 的量程换算每一帧命令。实际输出的力矩是命令值的约 **2.3 倍**
-    (命令 1.1 N·m,实际约 2.57 N·m),而反馈读数只有实际值的约 0.43 倍,所以软件里看起来一切正常,
-    电脑上的力矩检查也不会触发。**夹软的、易碎的东西会被夹坏。**
-    **解决**:停止使用,按 [RS00 从夹爪的额外步骤](follower-firmware.md#rs00) 记录型号、调整启动上限、重写包络。
-
-??? failure "RS00 从夹爪已记录型号,但夹持力很小"
-    **原因**:运动安全包络还是按 EL05 写的,把力矩限在 EL05 的数值上。
-    **解决**:按 [写入运动安全包络](follower-setup.md#envelope) 重新写一次,SDK 会按 RS00 的数值改写。
+??? failure "`get_spec()` 显示的不是 EL05"
+    **原因**:夹爪里记录的电机规格与实际不符。这时每一帧命令的力矩都会按错误的比例换算,软件里看不出异常。
+    **解决**:停止使用,联系[技术支持](versions.md#support)。不要自己调用 `set_model()` 修改。
 
 ## 启动控制器时报错 {#start-errors}
 
 ??? failure "`start()` 报 `ValueError: ... exceeds the <型号>'s continuous stall rating ...` 或 `... exceeds the <型号>'s rated torque ...`"
     **原因**:配置里的力矩超过了这台电机的额定值,多半是没用 `for_spec()`,或手动把 `grasp_torque_nm` 设得太大。
-    **解决**:配置一律从 `t.ForcePositionConfig.for_spec(g.motor.get_spec())`(位置跟随用 `ImpedanceConfig.for_spec`)生成;
-    夹持力不能超过持续堵转额定(EL05 1.1 N·m,RS00 3.6 N·m)。
+    **解决**:配置一律从 `t.ImpedanceConfig.for_spec(g.motor.get_spec())`(力位控制用 `ForcePositionConfig.for_spec`)生成;
+    夹持力不能超过持续堵转额定 1.1 N·m。
 
 ??? failure "`start()` 报 `RuntimeError: ... stored motor startup torque limit is <x> Nm, but motion_torque_limit_nm is <y> Nm ...`"
-    **原因**:配置和电机里存的启动力矩上限不是同一个型号的。典型情况是 RS00 从夹爪用了裸配置(EL05 的 6.0),而电机存的是 14。
-    **解决**:用 `for_spec()` 生成配置。如果 RS00 电机里存的反而是 6.0,按 [RS00 从夹爪的额外步骤](follower-firmware.md#rs00) 改成 14.0。
+    **原因**:控制器配置与电机里存的启动力矩上限(EL05 为 6.0 N·m)不一致,多半是手动改了配置里的力矩上限。
+    **解决**:用 `for_spec()` 生成配置,不要改其中的力矩上限。仍然报错时,记下完整报错联系[技术支持](versions.md#support)。
 
 ??? failure "使能报 `NACK: SysBusy`,或刚上电时命令没反应"
     **原因**:上电后约 10 秒内固件在做自动标定,这段时间拒绝控制命令。

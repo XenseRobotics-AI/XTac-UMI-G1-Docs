@@ -24,25 +24,26 @@ python python/examples/gripper_console.py left
 | `f` | 清除故障 |
 | `q` 或 `Esc` | 退出(先卸力再失能,夹着的东西会掉) |
 
-默认是位置跟随模式;加 `--mode force-position` 切到力位控制,`--grasp-torque 0.8` 设夹持力(N·m)。
+控制台默认用阻抗控制;夹东西时加 `--mode force-position` 切到力位控制,`--grasp-torque 0.8` 设夹持力(N·m)。
 
 确认开合正常后,可以用两个验收脚本各跑一遍,它们会自动走一组开度并检查结果,失败时退出码非零:
 
 ```bash
-python python/examples/force_position_control.py left          # 夹持
-python python/examples/impedance_control.py left               # 位置跟随
+python python/examples/impedance_control.py left               # 阻抗控制(默认)
+python python/examples/force_position_control.py left          # 力位控制:夹持
 ```
 
 ## 两种控制器怎么选 {#choose}
 
-所有运动都通过控制器下发。两种控制器接口相同,都只有两个非阻塞调用:`set_target(开度)` 与 `snapshot()`。
+所有运动都通过控制器下发。**默认用阻抗控制**;需要以设定的力夹住物体、并知道是否夹住时,改用力位控制。
+两种控制器接口相同,都只有两个非阻塞调用:`set_target(开度)` 与 `snapshot()`,换控制器不用改程序结构。
 
-| | `ForcePositionController`(力位控制) | `ImpedanceController`(位置跟随) |
+| | `ImpedanceController`(阻抗控制,默认) | `ForcePositionController`(力位控制) |
 |---|---|---|
-| 适合 | **夹东西**:闭合到物体上,以设定的力保持 | **跟随一个开度**:遥操作、跟随主夹爪、轨迹 |
-| 要调的参数 | 夹持力 `grasp_torque_nm`、闭合速度 `close_speed_radps` | 一般不用调 |
-| 被物体挡住时 | 以设定的夹持力保持,报告 `holding` | 命令力矩停在持续堵转额定,状态仍是 `TRACKING`,不算故障 |
-| 松开 | `release()`,以受控速度张开 | `set_target(1.0)` |
+| 适合 | **跟随一个开度**:遥操作、跟随主夹爪、轨迹、策略输出 | **夹东西**:闭合到物体上,以设定的力保持 |
+| 要调的参数 | 一般不用调 | 夹持力 `grasp_torque_nm`、闭合速度 `close_speed_radps` |
+| 被物体挡住时 | 命令力矩停在持续堵转额定并保持,状态仍是 `TRACKING`,不算故障 | 以设定的夹持力保持,报告 `holding` |
+| 松开 | `set_target(1.0)` | `release()`,以受控速度张开 |
 
 ## 开度与方向 {#convention}
 
@@ -54,7 +55,7 @@ python python/examples/impedance_control.py left               # 位置跟随
 
 ## 基本写法 {#basic}
 
-以力位控制为例,完整流程是:建配置 → 清故障 → 启动控制器 → 使能电机 → 下发目标 → 停止。
+以默认的阻抗控制为例,完整流程是:建配置 → 清故障 → 启动控制器 → 使能电机 → 下发目标 → 停止。
 
 ```python
 import time
@@ -64,12 +65,12 @@ ep = next(e for e in t.scan_grippers()
           if e.side == t.Side.Left and e.role == t.Role.Follower)
 g = t.FollowerGripper(ep.mcu_device)
 
-cfg = t.ForcePositionConfig.for_spec(g.motor.get_spec())   # 按这只夹爪的电机型号生成配置
-c = t.ForcePositionController(g, cfg)
+cfg = t.ImpedanceConfig.for_spec(g.motor.get_spec())   # 按这只夹爪的电机规格生成配置
+c = t.ImpedanceController(g, cfg)
 
 
-def move_to(target, timeout_s=8.0):
-    """下发目标,等它被接下,再等到夹住、到位或故障。返回最后一次 snapshot。"""
+def move_to(target, timeout_s=3.0):
+    """下发目标,等它被接下,再等爪子停下来。返回最后一次 snapshot。"""
     c.set_target(target)
     t0 = time.monotonic()
     # set_target() 是排队的,下一帧电机状态到来时才生效;在那之前读到的还是上一个目标的结果
@@ -77,10 +78,13 @@ def move_to(target, timeout_s=8.0):
         if time.monotonic() - t0 > 1.0:
             raise RuntimeError("控制器没有接下目标")
         time.sleep(0.005)
+    time.sleep(0.05)                       # 给电机起步的时间
     while time.monotonic() - t0 < timeout_s:
         s = c.snapshot()
-        if s.state == t.ForcePositionState.FAULT or s.holding or s.arrived:
-            return s
+        if s.state == t.ImpedanceState.FAULT:
+            raise RuntimeError(s.fault_reason)
+        if s.observation.valid and abs(s.observation.velocity) < 0.02:
+            return s                       # 停下来了:到位,或者被挡住
         time.sleep(0.01)
     return c.snapshot()
 
@@ -89,24 +93,30 @@ g.motor.clear_fault()
 c.start()              # 先启动控制器:它会先检查配置与电机上限是否匹配
 g.motor.enable()       # 再使能电机
 try:
-    s = move_to(0.0)   # 闭合
-    print(s.state, s.observation.position, s.holding, s.arrived, s.fault_reason)
-    # s.holding:夹住了东西;s.arrived:到位了,中间没有东西
+    for target in (0.5, 0.0, 1.0):
+        s = move_to(target)
+        err = target - s.observation.position
+        blocked = s.commanded_torque_nm >= cfg.max_position_torque_nm - 0.05
+        print(f"目标 {target:.2f} -> 开度 {s.observation.position:.3f},"
+              f"{'到位' if abs(err) <= 0.03 else '被挡住' if blocked else '未到位'}")
 finally:
     c.stop()           # 卸力并失能电机:夹着的东西会掉
 ```
 
+阻抗控制停在"刚度 × 误差"抵住摩擦的地方,不是数学上的零误差,所以判断到位时留 0.03 左右的余量。
+停在目标外、而命令力矩已经用到持续堵转额定(`cfg.max_position_torque_nm`),就是被物体挡住了,并会一直以这个力保持。
+
 四条规则:
 
-1. **配置一律用 `for_spec(g.motor.get_spec())` 生成。** 直接写 `ForcePositionConfig()` 得到的是 EL05 的数值:
-   在 RS00 上夹持力会被限在 1.1 N·m,而且 `start()` 可能直接报错。
+1. **配置一律用 `for_spec(g.motor.get_spec())` 生成。** 它按夹爪报告的电机额定值给出力矩预算与阻尼;
+   手写配置或用裸构造的 `ImpedanceConfig()` / `ForcePositionConfig()`,数值与设备不符时 `start()` 会报错。
 2. **先 `start()`,再 `enable()`。** `start()` 会检查配置是否超过电机的额定与上限,不合格就报错,此时电机还没使能。
    控制器以夹爪当前位置作为初始目标,启动时爪子不会跳动。
 3. **结束一定调 `stop()`。** 它先下发零力矩,再让电机失能。上面的 `try/finally` 保证出错时也会执行;
-   也可以写成 `with t.ForcePositionController(g, cfg) as c:`,进入时自动 `start()`,退出时自动 `stop()`,
+   也可以写成 `with t.ImpedanceController(g, cfg) as c:`,进入时自动 `start()`,退出时自动 `stop()`,
    `enable()` 仍要在 `with` 里面自己调。关闭 `FollowerGripper` 本身**不会**让电机失能。
    **判断移动结果前,先等控制器接下新目标**(`snapshot().target_position` 等于刚下发的值),
-   否则会读到上一个目标的 `arrived`,以为已经到位。控制器刚 `start()` 时 `arrived` 就是真。
+   否则读到的还是上一个目标的结果。
 4. **一只夹爪同时只能有一个控制器。** 两个控制器(或控制器加上直接的电机命令)会在同一条串口上互相覆盖。
 
 !!! danger "停止控制或断链时夹爪会松手"
@@ -114,14 +124,33 @@ finally:
     固件在 300 ms 后只保留约 0.35 N·m 的零速保持力,30 s 后失能。机器人上夹持物体时,
     要保证在这些情况下物体掉落不会造成损失,或者先把物体放到支撑面上再停止控制。
 
+## 阻抗控制:跟随开度 {#impedance}
+
+遥操作、跟随主夹爪或执行策略时,每个控制周期把目标开度交给 `set_target()` 即可,不需要等待:
+
+```python
+try:
+    while running:
+        s = c.snapshot()
+        if s.state == t.ImpedanceState.FAULT:
+            break                               # s.fault_reason 给出原因
+        c.set_target(policy(s.observation))     # 你的目标开度,0..1
+        time.sleep(0.01)
+finally:
+    c.stop()
+```
+
+- 爪子被挡住时,命令力矩停在持续堵转额定 1.1 N·m 并保持,状态仍是 `TRACKING`,**不算故障**。
+  这时的夹持力就是持续堵转额定;要更小的夹持力,或需要知道是否夹住,改用[力位控制](#force-position)。
+- 目标开度超出 `[0, 1]` 会被截到范围内。
+- 运行中可以用 `c.set_gains(kp, kd)` 修改刚度和阻尼。它只做基本的范围检查:
+  **`kd` 调低会提高接近速度**,实测过快时会把物体撞飞,不要低于 `for_spec()` 给的值。一般不需要调。
+- 状态 `state` 可能是 `IDLE`、`TRACKING`、`TORQUE_CAPPED`、`FAULT`。`TORQUE_CAPPED` 是实测力矩超过额定力矩时的兜底保护,
+  正常运行(包括被挡住)不会进入。
+
 ## 力位控制:夹持 {#force-position}
 
-只有两个参数需要按任务调整,其余参数是按这款硬件实测定下的,不对外开放:
-
-| 参数 | `for_spec()` 给的值 | 含义 |
-|---|---|---|
-| `grasp_torque_nm` | 电机的持续堵转额定:EL05 **1.1**,RS00 **3.6** N·m | 夹持力。空行程不用它;爪子被挡住时就停在这个力上 |
-| `close_speed_radps` | 1.1 rad/s | 行进速度 |
+要以设定的力夹住物体、并知道是否夹住时,把上面的配置和控制器换成力位控制,其余流程不变:
 
 ```python
 cfg = t.ForcePositionConfig.for_spec(g.motor.get_spec())
@@ -129,13 +158,20 @@ cfg.grasp_torque_nm = 0.4          # 夹软的东西,力小一些
 c = t.ForcePositionController(g, cfg)
 ```
 
+只有两个参数需要按任务调整,其余参数是按这款硬件实测定下的,不对外开放:
+
+| 参数 | `for_spec()` 给的值 | 含义 |
+|---|---|---|
+| `grasp_torque_nm` | 电机的持续堵转额定 **1.1** N·m | 夹持力。空行程不用它;爪子被挡住时就停在这个力上 |
+| `close_speed_radps` | 1.1 rad/s | 行进速度 |
+
 夹持力**不能超过**持续堵转额定,超过时 `start()` 报 `ValueError`。单次移动也可以临时换一个力:
 `c.set_target(0.0, grasp_torque_nm=0.6)`。
 
 !!! warning "单次覆盖的夹持力不受持续堵转额定检查"
-    `set_target()` 里临时给的夹持力只检查不超过额定力矩(EL05 1.8 N·m,RS00 5.0 N·m),
+    `set_target()` 里临时给的夹持力只检查不超过额定力矩 1.8 N·m,
     **不检查持续堵转额定**。超过持续堵转额定长时间夹持会让电机过热降额,严重时把 24V 拉垮。
-    临时给的力同样不要超过 EL05 1.1 N·m / RS00 3.6 N·m。
+    临时给的力同样不要超过 1.1 N·m。
 
 其他调用:
 
@@ -150,37 +186,16 @@ c = t.ForcePositionController(g, cfg)
 - `holding`:爪子被挡住、力已经用到设定值,也就是**夹住了**。
 - `arrived`:到达了目标开度(误差 0.010 rad 以内),中间没有东西。
 
+判断时同样要先等控制器接下新目标:控制器刚 `start()` 时 `arrived` 就是真,不等的话会误以为已经到位。
+等待写法与[基本写法](#basic)相同,停下的条件换成 `s.holding or s.arrived`。
+
 状态 `state` 依次可能是 `IDLE`、`HOLDING_POSITION`、`CLOSING`、`HOLDING_FORCE`、`OPENING`、`FAULT`。
 
 !!! warning "夹持力会随温度降低"
-    `grasp_torque_nm` 是你要求的力。电机发热后,固件的降额与温度墙会把实际输出降下来,所以长时间夹持时力不是恒定的。
+    设定的夹持力是你要求的力。电机发热后,固件的降额与温度墙会把实际输出降下来,所以长时间夹持时力不是恒定的。
     EL05 在 24V 下实测:1.1 N·m 持续夹 600 秒,电机从 36 °C 升到 70 °C 并趋于平稳;0.6 N·m 稳定在 49 °C。
     夹几秒到几分钟没有问题;要持续夹几十分钟,或者机柜内温度高,把夹持力降下来。
-
-## 位置跟随 {#impedance}
-
-```python
-cfg = t.ImpedanceConfig.for_spec(g.motor.get_spec())
-c = t.ImpedanceController(g, cfg)
-g.motor.clear_fault()
-c.start()
-g.motor.enable()
-try:
-    while running:
-        s = c.snapshot()
-        if s.state == t.ImpedanceState.FAULT:
-            break                        # s.fault_reason 给出原因
-        c.set_target(policy(s.observation))   # 你的目标开度,0..1
-finally:
-    c.stop()
-```
-
-- 爪子被挡住时,命令力矩停在持续堵转额定(EL05 1.1 N·m,RS00 3.6 N·m)并保持,状态仍是 `TRACKING`,**不算故障**。
-- 目标开度超出 `[0, 1]` 会被截到范围内。
-- 运行中可以用 `c.set_gains(kp, kd)` 修改刚度和阻尼。它只做基本的范围检查:
-  **`kd` 调低会提高接近速度**,实测过快时会把物体撞飞,不要低于 `for_spec()` 给的值。一般不需要调。
-- 状态 `state` 可能是 `IDLE`、`TRACKING`、`TORQUE_CAPPED`、`FAULT`。`TORQUE_CAPPED` 是实测力矩超过额定力矩时的兜底保护,
-  正常运行(包括被挡住)不会进入。
+    阻抗控制被挡住时同样以持续堵转额定一直顶着,也适用这条。
 
 ## 控制时怎么读状态 {#read-while-control}
 
@@ -219,6 +234,6 @@ finally:
 
 - **不要用 `g.motor.submit_*` 直接下发电机命令。** 这些是底层原语,不经过控制器的任何保护,
   只剩固件包络一层;而且不按节奏发送会和状态帧冲突丢帧。需要时见 [SDK 附录 → API 要点](sdk-api.md#motor-primitives)。
-- **不要手写配置数值或用裸配置。** 一律从 `for_spec()` 出发,只改夹持力和速度。
+- **不要手写配置数值或用裸配置。** 一律从 `for_spec()` 出发;力位控制只改夹持力和速度。
 - **不要在包络未生效时运动。** 见 [写入运动安全包络](follower-setup.md#envelope)。
 - **不要在上电自动标定期间发命令。** 上电后约 10 秒内电机拒绝使能,等爪子停下来再开始。

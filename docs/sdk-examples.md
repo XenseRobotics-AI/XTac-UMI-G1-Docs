@@ -29,7 +29,7 @@ python python/examples/follower_status.py          # 只接了一只夹爪时可
 | 脚本 | 用途 | 对设备的影响 |
 |---|---|---|
 | `follower_status.py` | 从夹爪状态自检:版本、开度、故障、数据流是否在更新 | 只读 |
-| `impedance_control.py` | 位置跟随控制器验收;`--show-envelope` / `--set-envelope` 查看、写入运动安全包络 | **驱动电机**;`--set-envelope` 写 flash |
+| `impedance_control.py` | 阻抗控制器(默认)验收;`--show-envelope` / `--set-envelope` 查看、写入运动安全包络 | **驱动电机**;`--set-envelope` 写 flash |
 | `force_position_control.py` | 力位控制器验收:走一组开度并夹持 | **驱动电机并施加夹持力** |
 | `gripper_console.py` | 键盘控制台,两种控制器都能用 | **驱动电机**;`--set-envelope` 写 flash |
 | `control_and_read.py` | 控制过程中怎样读状态 | **驱动电机** |
@@ -55,9 +55,9 @@ python python/examples/follower_status.py left                          # 只读
 python python/examples/impedance_control.py left --show-envelope        # 只读:查看包络
 python python/examples/impedance_control.py left --set-envelope --show-envelope   # 写入包络后退出,不运动
 python python/examples/gripper_console.py left                          # 键盘控制,第一次运动用它
+python python/examples/impedance_control.py left --targets 1.0,0.5,0.0    # 阻抗控制(默认)验收
 python python/examples/gripper_console.py left --mode force-position --grasp-torque 0.8
-python python/examples/force_position_control.py left --grasp-torque 1.1   # 夹持验收
-python python/examples/impedance_control.py left --targets 1.0,0.5,0.0    # 位置跟随验收
+python python/examples/force_position_control.py left --grasp-torque 1.1   # 力位控制:夹持验收
 python python/examples/control_and_read.py left                         # 控制中读状态
 python python/examples/control_ripple.py left --controller both         # 测平稳度
 ```
@@ -89,7 +89,7 @@ python python/examples/read_intrinsics.py right --out cal.json # 导出内参;�
 python python/examples/ota_update.py --get-status right   # 只读:固件 OTA 状态
 python python/examples/ota_update.py slave left           # 从夹爪固件;主夹爪用 master
 python python/examples/ota_update.py --all                # 所有连着的夹爪,各按角色选镜像
-python python/examples/motor_ota_update.py rs00-0.0.3.32.bin left   # 从夹爪电机固件
+python python/examples/motor_ota_update.py el05-1.0.5.0.4.bin left --model EL05   # 从夹爪电机固件
 ```
 
 刷写前后的完整步骤,尤其是**刷完必须断电重启**,见 [固件与电机升级](follower-firmware.md)。
@@ -103,7 +103,7 @@ python python/examples/motor_ota_update.py rs00-0.0.3.32.bin left   # 从夹爪�
 |---|---|
 | `leader_demo` | 主夹爪 IMU 与编码器数据流,5 秒速率报告;不接受选择参数,只能接一只夹爪 |
 | `follower_status` | 从夹爪状态读取 |
-| `follower_impedance` | 位置跟随控制器 |
+| `follower_impedance` | 阻抗控制器 |
 | `follower_force_position` | 力位控制器 |
 
 ```bash
@@ -111,8 +111,7 @@ python python/examples/motor_ota_update.py rs00-0.0.3.32.bin left   # 从夹爪�
 ```
 
 !!! warning "C++ 从夹爪控制示例还没跟上 0.3.2 的流程"
-    `follower_impedance` 与 `follower_force_position` 用的是裸配置(EL05 的数值),也没有使能电机,所以电机不会动;
-    在 RS00 上 `follower_force_position` 还会在 `start()` 报错,`follower_impedance` 能启动但按 EL05 的数值运行。自己写 C++ 程序时按 Python 的流程:
+    `follower_impedance` 与 `follower_force_position` 用的是裸配置,也没有使能电机,所以电机不会动。自己写 C++ 程序时按 Python 的流程:
     配置用 `ForcePositionConfig::for_spec(motor.get_spec())` 生成,`start()` 之后调用 `motor().enable()`,见 [运动控制](follower-control.md#basic)。
 
 ## 从旧版本迁移 {#migrate}

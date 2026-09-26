@@ -143,21 +143,20 @@ python python/examples/follower_status.py left
 | `[开流读]` 帧率 | 约 100 Hz | 明显偏低:检查 USB 线与接口;其他程序是否在读同一个串口 |
 | 时间戳推进 | 与墙钟一致,显示 `OK` | 不推进说明读到的是旧状态,断电重启 |
 
-**RS00 从夹爪**:还要确认夹爪记录的电机型号。
+再确认电机规格:
 
 ```bash
 python -c "import xense.taccap as t
 g = t.FollowerGripper(t.find_follower().mcu_device)
-print(g.motor.get_model())"
+print(g.motor.get_spec())"
 ```
 
-输出里是 `EL05` 而你的电机是 RS00,或者带 `COMPILE-TIME DEFAULT` 字样(夹爪还没记录型号,按 EL05 处理),
-先做 [RS00 从夹爪的额外步骤](follower-firmware.md#rs00),再往下。EL05 从夹爪显示 `COMPILE-TIME DEFAULT` 不影响使用。
+应显示 `MotorSpec(EL05, rated=1.800000, peak=6.000000)`。显示的不是 EL05 时停止使用,联系[技术支持](versions.md#support)。
 
 ## 4. 写入运动安全包络 {#envelope}
 
 包络是固件里的力矩与温度保护,**出厂时是关的**,每台需要写一次,掉电保留。数值不需要你填:
-SDK 从夹爪读出电机型号的额定值,按它生成。
+SDK 从夹爪读出电机的额定值,按它生成。
 
 先看当前状态(只读):
 
@@ -170,8 +169,8 @@ python python/examples/impedance_control.py left --show-envelope
 [envelope] effective GripperEnvelope(cont=1.100 Nm, peak=1.800 Nm, temp=0/0C, flags=0x2003 ENFORCE)
 ```
 
-`flags=0x2003 ENFORCE`、`effective` 有值,**并且没有打印 `[warn]` 行**,说明包络已生效且数值与电机型号相符,这一步可以跳过。
-`effective` 一行显示 `*** 固件什么都不执行 ***`,或者打印了 `[warn]`(例如 RS00 从夹爪还带着 EL05 的包络数值),就需要写入:
+`flags=0x2003 ENFORCE`、`effective` 有值,**并且没有打印 `[warn]` 行**,说明包络已生效且数值与电机规格相符,这一步可以跳过。
+`effective` 一行显示 `*** 固件什么都不执行 ***`,或者打印了 `[warn]`,就需要写入:
 
 ```bash
 python python/examples/impedance_control.py left --set-envelope --show-envelope
@@ -185,14 +184,10 @@ python python/examples/impedance_control.py left --set-envelope --show-envelope
 
 写入的数值:
 
-| 字段 | EL05 | RS00 | 含义 |
-|---|---|---|---|
-| `peak` | 1.8 N·m | 5.0 N·m | 运动中的瞬时力矩上限(电机额定力矩) |
-| `cont` | 1.1 N·m | 3.6 N·m | 顶住物体时可以一直保持的力矩(持续堵转额定) |
-| 温度 | 0 → 固件默认 | 同左 | 90 °C 开始降额,100 °C 以上只保留 0.30 N·m |
-
-!!! warning "RS00 要先写型号再写包络"
-    包络按夹爪记录的电机型号生成。RS00 从夹爪还没记录型号时写入,会按 EL05 的数值写,夹持力被限得很低。
-    已经这样写过的,记录型号并断电重启后再执行一次上面的写入命令,SDK 会按 RS00 的数值改写。
+| 字段 | 数值 | 含义 |
+|---|---|---|
+| `peak` | 1.8 N·m | 运动中的瞬时力矩上限(电机额定力矩) |
+| `cont` | 1.1 N·m | 顶住物体时可以一直保持的力矩(持续堵转额定) |
+| 温度 | 0 → 固件默认 | 90 °C 开始降额,100 °C 以上只保留 0.30 N·m |
 
 包络写好后就可以开始[运动控制](follower-control.md)了。

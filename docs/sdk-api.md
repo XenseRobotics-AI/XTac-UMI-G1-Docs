@@ -71,13 +71,14 @@ g = t.FollowerGripper(ep.mcu_device)
 **两种控制器**,接口相同:`start()`、`stop()`、`set_target(开度)`、`snapshot()`、`reset()`,
 支持 `with` 语句(进入时 `start()`,退出时 `stop()`)。
 
-| | `ForcePositionController` | `ImpedanceController` |
+| | `ImpedanceController`(默认) | `ForcePositionController` |
 |---|---|---|
-| 配置 | `ForcePositionConfig.for_spec(g.motor.get_spec())` | `ImpedanceConfig.for_spec(g.motor.get_spec())` |
-| 可调参数 | `grasp_torque_nm`、`close_speed_radps` | `kp`、`kd`(运行中用 `set_gains()`) |
-| 独有调用 | `release()`、`hold_position()`、`set_target(p, grasp_torque_nm=...)` | `set_gains(kp, kd, feedforward_torque=0)` |
-| 状态 | `IDLE`、`HOLDING_POSITION`、`CLOSING`、`HOLDING_FORCE`、`OPENING`、`FAULT` | `IDLE`、`TRACKING`、`TORQUE_CAPPED`、`FAULT` |
-| `snapshot()` 常用字段 | `state`、`observation`、`holding`、`arrived`、`commanded_torque_nm`、`fault_reason` | `state`、`observation`、`torque_capped`、`commanded_torque_nm`、`fault_reason` |
+| 用途 | 跟随开度 | 以设定的力夹持 |
+| 配置 | `ImpedanceConfig.for_spec(g.motor.get_spec())` | `ForcePositionConfig.for_spec(g.motor.get_spec())` |
+| 可调参数 | `kp`、`kd`(运行中用 `set_gains()`) | `grasp_torque_nm`、`close_speed_radps` |
+| 独有调用 | `set_gains(kp, kd, feedforward_torque=0)` | `release()`、`hold_position()`、`set_target(p, grasp_torque_nm=...)` |
+| 状态 | `IDLE`、`TRACKING`、`TORQUE_CAPPED`、`FAULT` | `IDLE`、`HOLDING_POSITION`、`CLOSING`、`HOLDING_FORCE`、`OPENING`、`FAULT` |
+| `snapshot()` 常用字段 | `state`、`observation`、`torque_capped`、`commanded_torque_nm`、`fault_reason` | `state`、`observation`、`holding`、`arrived`、`commanded_torque_nm`、`fault_reason` |
 
 `snapshot().observation` 的字段:`position`(0..1)、`velocity`、`torque`(正 = 往闭合方向)、`raw_pos`(电机原始弧度)、
 `motor_temp_c`、`status`、`age_ms`、`valid`。
@@ -121,7 +122,7 @@ g.motor.on_status(cb); g.start_streaming(motor_hz=100)   # 流式读取,固件�
   也没有 `FollowerGripper.set_position`,这些只在 C++ 里有。
 
 以下接口会改变电机或夹爪的持久配置,**只在技术支持指导下使用**:
-`set_model()`(见 [RS00 从夹爪的额外步骤](follower-firmware.md#rs00))、`set_startup_limit_torque()`、
+`set_model()`(写错会让每一帧命令的力矩按错误比例换算)、`set_startup_limit_torque()`、
 `switch_protocol()`(见 [升级电机固件](follower-firmware.md#motor-ota))、`set_can_id()`、`set_private_param()`、`set_zero()`、
 `set_gripper_config()`、`set_envelope()`、`set_auto_cal_config()`。其中 `set_gripper_config()` 若不是先读后改,会清掉运动安全包络。
 
