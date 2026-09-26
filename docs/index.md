@@ -28,23 +28,54 @@ hide:
 
 <figure class="tc-tile tc-tile--follower" markdown>
 ![从夹爪](assets/product/follower-rear-ports.webp)
-<figcaption markdown>[从夹爪:装在机器人上](follower-overview.md)</figcaption>
+<figcaption markdown>[从夹爪:同构末端执行器](follower-overview.md)</figcaption>
 </figure>
 
 </div>
 
 </div>
 
-## 5 分钟看懂全流程
+## 采集全流程
 
-```mermaid
-flowchart LR
-    A[环境部署<br/>setup_env.sh] --> B[主机/硬件配置<br/>串口权限·设备发现]
-    B --> C[标定与自检<br/>编码器零点·tracker]
-    C --> P[预览实时数据<br/>lerobot-teleoperate]
-    P --> D[数据采集<br/>lerobot-record]
-    D --> E[数据集<br/>校验·回放·上传Hub]
-```
+<div class="tc-flow" markdown>
+
+<div class="tc-flow__group" markdown>
+
+### 一次性准备
+
+<p class="tc-flow__lead">每台电脑、每台设备做一次</p>
+
+1. **安装环境**<br>
+   Mamba 路径运行 `setup_env.sh`,或直接用 Docker 镜像。[环境安装](02-environment.md)
+2. **配置主机**<br>
+   串口权限,关闭 ModemManager 对夹爪串口的抢占。[3.1](03-host-hardware.md#31)、[3.2](03-host-hardware.md#32)
+3. **配置 Pico4 Ultra 企业版**<br>
+   开发者模式、安装 XTac-UMI XR、绑定追踪器;出厂已配置的头显可跳过。[3.4](03-host-hardware.md#34)
+4. **标定主夹爪**<br>
+   零点加行程上限,每只主夹爪一次;没标定的主夹爪会被拒绝连接。[4.1](04-calibration.md#41)
+
+</div>
+
+<div class="tc-flow__group" markdown>
+
+### 每次采集
+
+<p class="tc-flow__lead">每次开始采集都按这个顺序</p>
+
+1. **上电与连接**<br>
+   插夹爪 USB,头显接有线网络并关闭电脑 WiFi,短按追踪器电源键。[3.6](03-host-hardware.md#36)
+2. **启动服务与 XR 应用**<br>
+   先启动 XenseVR PC Service,再面朝机器人打开 XTac-UMI XR,点「重连」。[3.5](03-host-hardware.md#35)、[对齐](03-host-hardware.md#pico-frame)
+3. **预览**<br>
+   `lerobot-teleoperate` 打开 Rerun,确认触觉、相机和位姿都在更新。[预览](05-data-collection.md#preview)
+4. **录制**<br>
+   `lerobot-record` 按 episode 录制,期间不要重启 XR 应用。[5.2](05-data-collection.md#52)
+5. **检查与上传**<br>
+   `lerobot-check-dataset` 校验完整性,需要时用 `lerobot-push-dataset-to-hub` 上传。[6.2](06-dataset.md#62)、[6.4](06-dataset.md#64)
+
+</div>
+
+</div>
 
 ## 三步走
 

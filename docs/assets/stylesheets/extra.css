@@ -101,6 +101,48 @@ html[lang="en"] .md-typeset .tc-hero h1 {
   }
 }
 
+/* 首页「采集全流程」:一次性准备与每次采集两组有序步骤,桌面并排、手机上下排 */
+.md-typeset .tc-flow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.4rem;
+  margin-top: 1rem;
+}
+.md-typeset .tc-flow__group h3 {
+  margin: 0;
+  padding-top: .8rem;
+  border-top: 2px solid var(--md-default-fg-color--lightest);
+  font-size: 1rem;
+  font-weight: 700;
+}
+/* 「每次采集」是反复走的主线,顶线用主题色区分 */
+.md-typeset .tc-flow__group + .tc-flow__group h3 {
+  border-top-color: var(--md-primary-fg-color);
+}
+.md-typeset .tc-flow__lead {
+  margin: .2rem 0 .8rem;
+  font-size: .75rem;
+  color: var(--md-default-fg-color--light);
+}
+.md-typeset .tc-flow ol {
+  margin: 0;
+  padding-left: 1.3em;
+}
+.md-typeset .tc-flow li {
+  margin: 0 0 .9em;
+  font-size: .8rem;
+  line-height: 1.65;
+}
+.md-typeset .tc-flow li strong {
+  font-size: .85rem;
+}
+@media screen and (max-width: 59.9375em) {
+  .md-typeset .tc-flow {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+  }
+}
+
 /* 卡片网格里的图标略放大 */
 .md-typeset .grid.cards :is(.twemoji, .emojione, .gemoji) svg {
   height: 1.4rem;

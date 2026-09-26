@@ -28,7 +28,7 @@ hide:
 
 <figure class="tc-tile tc-tile--follower" markdown>
 ![Follower gripper](assets/product/follower-rear-ports.webp)
-<figcaption markdown>[Follower: on the robot](follower-overview.md)</figcaption>
+<figcaption markdown>[Follower: isomorphic end effector](follower-overview.md)</figcaption>
 </figure>
 
 </div>
@@ -38,16 +38,47 @@ hide:
 !!! info "English coverage"
     The Home and Overview pages are available in English. Other navigation entries currently fall back to the Chinese source pages; command examples remain directly usable.
 
-## The whole flow in 5 minutes
+## The collection workflow
 
-```mermaid
-flowchart LR
-    A[Environment<br/>setup_env.sh] --> B[Host/Hardware<br/>serial perms · discovery]
-    B --> C[Calibration<br/>encoder zero · tracker]
-    C --> P[Live preview<br/>lerobot-teleoperate]
-    P --> D[Data collection<br/>lerobot-record]
-    D --> E[Dataset<br/>check · replay · push to Hub]
-```
+<div class="tc-flow" markdown>
+
+<div class="tc-flow__group" markdown>
+
+### One-time setup
+
+<p class="tc-flow__lead">Once per computer and per device</p>
+
+1. **Install the environment**<br>
+   Run `setup_env.sh` for the Mamba path, or use the Docker image. [Installation](02-environment.md)
+2. **Configure the host**<br>
+   Serial permissions, and keep ModemManager off the gripper ports. [3.1](03-host-hardware.md#31), [3.2](03-host-hardware.md#32)
+3. **Set up the Pico4 Ultra Enterprise**<br>
+   Developer mode, install XTac-UMI XR, bind the trackers; skip on a factory-configured headset. [3.4](03-host-hardware.md#34)
+4. **Calibrate the leader grippers**<br>
+   Zero and travel span, once per leader; an uncalibrated leader is refused. [4.1](04-calibration.md#41)
+
+</div>
+
+<div class="tc-flow__group" markdown>
+
+### Every session
+
+<p class="tc-flow__lead">In this order, each time you collect</p>
+
+1. **Power on and connect**<br>
+   Plug in the grippers, wire the headset network with the PC's WiFi off, short-press the trackers. [3.6](03-host-hardware.md#36)
+2. **Start the service and the XR app**<br>
+   Start the XenseVR PC Service first, then open XTac-UMI XR facing the robot and tap Reconnect. [3.5](03-host-hardware.md#35), [Alignment](03-host-hardware.md#pico-frame)
+3. **Preview**<br>
+   `lerobot-teleoperate` opens Rerun; check that touch, cameras and pose all update. [Preview](05-data-collection.md#preview)
+4. **Record**<br>
+   `lerobot-record` records episode by episode; do not restart the XR app meanwhile. [5.2](05-data-collection.md#52)
+5. **Check and upload**<br>
+   `lerobot-check-dataset` verifies the data; `lerobot-push-dataset-to-hub` uploads when needed. [6.2](06-dataset.md#62), [6.4](06-dataset.md#64)
+
+</div>
+
+</div>
 
 ## Three steps
 
