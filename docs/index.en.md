@@ -44,73 +44,58 @@ hide:
 
 <div class="tc-flow__group" markdown>
 
-### One-time setup
+### ① Getting ready
 
 <p class="tc-flow__lead">Once per computer and per device</p>
 
-1. **[Install the environment](02-environment.md)**<br>
-   `setup_env.sh` (Mamba) or the Docker image
-2. **[Configure the host](03-host-hardware.md#31)**<br>
-   Serial permissions, ModemManager off the ports
-3. **[Set up the Pico4 Ultra Enterprise](03-host-hardware.md#34)**<br>
-   Developer mode, the XR app, tracker binding
-4. **[Calibrate the leader grippers](04-calibration.md#41)**<br>
-   Zero and travel span, once each; required to connect
+1. **[Know the hardware](hardware.md)**<br>
+   Parts, wiring and power-on order
+2. **[Install the environment](02-environment.md)**<br>
+   `setup_env.sh` or the Docker image
+3. **[Configure the host](03-host-hardware.md#31)**<br>
+   Serial access, ModemManager off
+4. **[Set up the Pico4 Ultra Enterprise](03-host-hardware.md#34)**<br>
+   Developer mode, XR app, trackers
+5. **[Calibrate the leaders](04-calibration.md#41)**<br>
+   Zero and travel span, once each
 
 </div>
 
 <div class="tc-flow__group" markdown>
 
-### Every session
+### ② Collecting
 
-<p class="tc-flow__lead">In this order, each time you collect</p>
+<p class="tc-flow__lead">In this order, every session</p>
 
 1. **[Power on and connect](03-host-hardware.md#36)**<br>
-   Grippers in, trackers on, wired headset, PC WiFi off
-2. **[Start the service and the XR app](03-host-hardware.md#35)**<br>
-   PC Service first, then the XR app facing the robot
+   Grippers in, trackers on, PC WiFi off
+2. **[Start the service and XR app](03-host-hardware.md#35)**<br>
+   PC Service, then the XR app
 3. **[Preview](05-data-collection.md#preview)**<br>
-   `lerobot-teleoperate`, check the streams in Rerun
+   `lerobot-teleoperate` in Rerun
 4. **[Record](05-data-collection.md#52)**<br>
-   `lerobot-record`; keep the XR app running throughout
-5. **[Check and upload](06-dataset.md#62)**<br>
-   `lerobot-check-dataset`, optional Hub upload
+   `lerobot-record`, keep XR running
+
+</div>
+
+<div class="tc-flow__group" markdown>
+
+### ③ The data
+
+<p class="tc-flow__lead">After recording</p>
+
+1. **[Check completeness](06-dataset.md#62)**<br>
+   `lerobot-check-dataset`
+2. **[Upload to the Hub (optional)](06-dataset.md#64)**<br>
+   `lerobot-push-dataset-to-hub`
+3. **[Understand the format](06-dataset.md#61)**<br>
+   What each frame records
 
 </div>
 
 </div>
 
-## Three steps
-
-This is the **xense-taccap-lerobot data-collection quickstart**. Three parts: **get ready → record → understand the data**.
-
-<div class="grid cards" markdown>
-
--   :material-check-decagram-outline: __① Getting Ready (prerequisites)__
-
-    ---
-
-    Know your hardware → connect & power it on → set up the software environment and host/device config.
-
-    [Hardware](hardware.md), [Environment Setup](02-environment.md)
-
--   :material-record-circle-outline: __② Software Usage__
-
-    ---
-
-    Calibration → preview the streams with `lerobot-teleoperate` → record with `lerobot-record`. The core data-collection workflow.
-
-    [Calibration](04-calibration.md), [Data Collection](05-data-collection.md)
-
--   :material-database-outline: __③ Data__
-
-    ---
-
-    What a `LeRobotDataset` looks like, what's recorded per frame, checking & upload.
-
-    [Dataset & Examples](06-dataset.md)
-
-</div>
+<p class="tc-flow__more" markdown>To mount the follower gripper on a robot and drive it from code, see [Follower gripper](follower-overview.md); to call the gripper SDK directly, see [Appendix: SDK](sdk-overview.md).</p>
 
 ## Related repositories
 

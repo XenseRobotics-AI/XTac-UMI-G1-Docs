@@ -41,77 +41,58 @@ hide:
 
 <div class="tc-flow__group" markdown>
 
-### 一次性准备
+### ① 准备工作
 
 <p class="tc-flow__lead">每台电脑、每台设备做一次</p>
 
-1. **[安装环境](02-environment.md)**<br>
-   `setup_env.sh`(Mamba)或 Docker 镜像
-2. **[配置主机](03-host-hardware.md#31)**<br>
-   串口权限,关闭 ModemManager 抢占
-3. **[配置 Pico4 Ultra 企业版](03-host-hardware.md#34)**<br>
-   开发者模式、安装 XR 应用、绑定追踪器
-4. **[标定主夹爪](04-calibration.md#41)**<br>
-   零点与行程上限,每只一次,不标定无法连接
+1. **[认识硬件](hardware.md)**<br>
+   部件、接线与上电顺序
+2. **[安装环境](02-environment.md)**<br>
+   `setup_env.sh` 或 Docker 镜像
+3. **[配置主机](03-host-hardware.md#31)**<br>
+   串口权限、关闭 ModemManager
+4. **[配置 Pico4 Ultra 企业版](03-host-hardware.md#34)**<br>
+   开发者模式、XR 应用、追踪器
+5. **[标定主夹爪](04-calibration.md#41)**<br>
+   零点与行程上限,每只一次
 
 </div>
 
 <div class="tc-flow__group" markdown>
 
-### 每次采集
+### ② 采集
 
-<p class="tc-flow__lead">每次开始采集都按这个顺序</p>
+<p class="tc-flow__lead">每次采集按这个顺序</p>
 
 1. **[上电与连接](03-host-hardware.md#36)**<br>
-   插夹爪、开追踪器,头显走有线并关电脑 WiFi
+   插夹爪、开追踪器,关电脑 WiFi
 2. **[启动服务与 XR 应用](03-host-hardware.md#35)**<br>
-   先启 PC Service,再面朝机器人打开 XR 应用
+   先启 PC Service,再开 XR 应用
 3. **[预览](05-data-collection.md#preview)**<br>
-   `lerobot-teleoperate`,在 Rerun 里确认数据流
+   `lerobot-teleoperate` 看数据流
 4. **[录制](05-data-collection.md#52)**<br>
-   `lerobot-record`,录制期间不要重启 XR 应用
-5. **[检查与上传](06-dataset.md#62)**<br>
-   `lerobot-check-dataset` 校验,按需上传 Hub
+   `lerobot-record`,中途不重启 XR
+
+</div>
+
+<div class="tc-flow__group" markdown>
+
+### ③ 数据
+
+<p class="tc-flow__lead">录完之后</p>
+
+1. **[检查完整性](06-dataset.md#62)**<br>
+   `lerobot-check-dataset`
+2. **[上传 Hub(可选)](06-dataset.md#64)**<br>
+   `lerobot-push-dataset-to-hub`
+3. **[了解数据格式](06-dataset.md#61)**<br>
+   每帧记录了什么、怎么读取
 
 </div>
 
 </div>
 
-## 三步走
-
-本手册是 **xense-taccap-lerobot 数采快速使用文档**,主线三块:**准备就绪 → 采集数据 → 认识数据**。
-
-<div class="grid cards" markdown>
-
--   :material-check-decagram-outline: __① 准备工作(前提)__
-
-    ---
-
-    认识拿到的硬件 → 连接硬件、上电 → 装好软件环境与主机/设备配置。这三件是采集前的前提。
-
-    [硬件介绍](hardware.md)、[环境安装](02-environment.md)
-
--   :material-record-circle-outline: __② 软件使用__
-
-    ---
-
-    标定自检 → `lerobot-teleoperate` 预览确认数据流 → `lerobot-record` 录制。数采的核心操作。
-
-    [标定与自检](04-calibration.md)、[数据采集](05-data-collection.md)
-
--   :material-database-outline: __③ 数据介绍__
-
-    ---
-
-    `LeRobotDataset` 长什么样、每帧记录了什么、如何校验与上传。
-
-    [数据集与示例](06-dataset.md)
-
-</div>
-
-!!! note "从夹爪与二次开发"
-    把从夹爪装到机器人上、用程序控制开合与夹持,见 [从夹爪](follower-overview.md)。
-    需要直接调 `xense.taccap` SDK 的,见 [参考 → 附录:SDK 与二次开发](sdk-overview.md)。
+<p class="tc-flow__more" markdown>把从夹爪装到机器人上、用程序控制开合与夹持,见 [从夹爪](follower-overview.md);直接调用夹爪 SDK,见 [附录:SDK 与二次开发](sdk-overview.md)。</p>
 
 ## 相关仓库
 

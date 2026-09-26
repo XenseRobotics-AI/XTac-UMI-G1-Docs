@@ -101,11 +101,12 @@ html[lang="en"] .md-typeset .tc-hero h1 {
   }
 }
 
-/* 首页「采集全流程」:一次性准备与每次采集两组有序步骤,桌面并排、手机上下排 */
+/* 首页「采集全流程」:准备工作、采集、数据三段,对应左侧导航的三组。
+   桌面三栏并排,窄屏上下排;每步「标题链接一行 + 说明一行」 */
 .md-typeset .tc-flow {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2.4rem;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
   margin-top: 1rem;
 }
 .md-typeset .tc-flow__group h3 {
@@ -115,8 +116,8 @@ html[lang="en"] .md-typeset .tc-hero h1 {
   font-size: 1rem;
   font-weight: 700;
 }
-/* 「每次采集」是反复走的主线,顶线用主题色区分 */
-.md-typeset .tc-flow__group + .tc-flow__group h3 {
+/* 「采集」是每次都要走的主线,顶线用主题色区分 */
+.md-typeset .tc-flow__group:nth-child(2) h3 {
   border-top-color: var(--md-primary-fg-color);
 }
 .md-typeset .tc-flow__lead {
@@ -129,14 +130,19 @@ html[lang="en"] .md-typeset .tc-hero h1 {
   padding-left: 1.3em;
 }
 .md-typeset .tc-flow li {
-  margin: 0 0 .9em;
-  font-size: .8rem;
-  line-height: 1.65;
+  margin: 0 0 .8em;
+  font-size: .78rem;
+  line-height: 1.6;
 }
 .md-typeset .tc-flow li strong {
-  font-size: .85rem;
+  font-size: .82rem;
 }
-@media screen and (max-width: 59.9375em) {
+.md-typeset .tc-flow__more {
+  margin-top: .6rem;
+  font-size: .78rem;
+  color: var(--md-default-fg-color--light);
+}
+@media screen and (max-width: 63.9375em) {
   .md-typeset .tc-flow {
     grid-template-columns: 1fr;
     gap: 1.2rem;
