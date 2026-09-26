@@ -1,32 +1,32 @@
 # SDK 概览
 
-`xense.taccap`(仓库 [TacCap-Gripper](https://github.com/XenseRobotics-AI/TacCap-Gripper))是 XTac-UMI G1
-夹爪的开发包,提供 Python 与 C++ 两种接口,用于自己编写程序读取主夹爪、控制从夹爪。
+`xense.taccap`（仓库 [TacCap-Gripper](https://github.com/XenseRobotics-AI/TacCap-Gripper)）是 XTac-UMI G1
+夹爪的开发包，提供 Python 与 C++ 两种接口，用于自己编写程序读取主夹爪、控制从夹爪。
 
 !!! warning "本附录按 SDK 0.3.2 编写"
-    数采仓库 `xense-taccap-lerobot` 自带的是旧版 SDK(0.1.9 系列),接口差别很大。只做数采的,按
-    [环境安装](02-environment.md) 走即可;需要自己写程序或使用[从夹爪](follower-overview.md)的,按
-    [安装与构建](sdk-install.md) 单独安装 0.3.2,不要和数采环境混用。
+    数采仓库 `xense-taccap-lerobot` 自带的是旧版 SDK（0.1.9 系列），接口差别很大。只做数采的，按
+    [环境安装](02-environment.md) 走即可；需要自己写程序或使用[从夹爪](follower-overview.md)的，按
+    [安装与构建](sdk-install.md) 单独安装 0.3.2，不要和数采环境混用。
 
 ## 能做什么 {#scope}
 
 | | 主夹爪 | 从夹爪 |
 |---|---|---|
-| 读开合 | 编码器,0..1 开度 | 电机位置,0..1 开度 |
+| 读开合 | 编码器，0..1 开度 | 电机位置，0..1 开度 |
 | 其他数据 | IMU、按键 | 电机速度、力矩、温度 |
-| 控制 | — | 阻抗控制(默认)、力位控制 |
-| 共有 | LED、腕部相机、鱼眼内参、固件升级 | 同左;另有电机固件升级 |
+| 控制 | — | 阻抗控制（默认）、力位控制 |
+| 共有 | LED、腕部相机、鱼眼内参、固件升级 | 同左；另有电机固件升级 |
 
-视触觉图像由 `xensesdk` 采集,不在本 SDK 里。遥操作、抓取策略、数据录制属于上层应用。
+视触觉图像由 `xensesdk` 采集，不在本 SDK 里。遥操作、抓取策略、数据录制属于上层应用。
 
 ## 使用须知 {#notes}
 
-- 电脑不直接控制电机,所有命令都经夹爪主控板转发,主控板上的保护(运动安全包络)任何程序都绕不过去。
+- 电脑不直接控制电机，所有命令都经夹爪主控板转发，主控板上的保护（运动安全包络）任何程序都绕不过去。
 - 一只夹爪同时只由一个程序、一个控制器使用。扫描设备会中断其他正在使用夹爪的程序。
-- 日志写在 `~/.taccaplogs/`(可用环境变量 `TACCAP_LOG_DIR` 修改),每次运行一个文件。反馈问题时附上对应的日志。
+- 日志写在 `~/.taccaplogs/`（可用环境变量 `TACCAP_LOG_DIR` 修改），每次运行一个文件。反馈问题时附上对应的日志。
 
 ## 本附录的其他页 {#pages}
 
-- [安装与构建](sdk-install.md):Python 安装,以及集成到 C++ / ROS 2 工程。
-- [API 要点](sdk-api.md):设备发现、主夹爪读取、从夹爪控制、标定与腕部相机。
-- [示例](sdk-examples.md):示例脚本一览,以及从旧版本迁移。
+- [安装与构建](sdk-install.md)：Python 安装，以及集成到 C++ / ROS 2 工程。
+- [API 要点](sdk-api.md)：设备发现、主夹爪读取、从夹爪控制、标定与腕部相机。
+- [示例](sdk-examples.md)：示例脚本一览，以及从旧版本迁移。
