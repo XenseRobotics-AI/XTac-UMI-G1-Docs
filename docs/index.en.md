@@ -6,76 +6,81 @@ hide:
 
 <div class="tc-hero" markdown>
 
-<span class="tc-eyebrow">XenseRobotics · XTac-UMI G1</span>
+<span class="tc-eyebrow">XTac-UMI · Handheld multimodal data collection system</span>
 
-# Handheld tactile data collection, from unboxing to a dataset
+# Give robot datasets a sense of touch
 
-<p class="tc-sub">XTac-UMI G1 handheld tactile gripper × Pico4 Ultra Enterprise Edition headset and tracker<br>capture synchronized vision · tactile · first-person stereo · hand and head pose with lerobot, straight to a training-ready <code>LeRobotDataset</code></p>
+<p class="tc-sub">Visuotactile sensing on both grippers, a wrist fisheye, the headset's first-person view and 6DoF pose, all recorded in sync. One handheld demonstration, one training-ready dataset.</p>
 
-[Quickstart :material-arrow-right-bold:](quickstart.md){ .md-button .md-button--primary }
-[Installation](02-environment.md){ .md-button }
-[About the device](01-overview.md){ .md-button }
+[Choose a kit](product/editions.md){ .md-button .md-button--primary }
+[See what the data looks like](pc/dataset.md#61){ .md-button }
 
-![XTac-UMI G1 product](assets/product/xtac-umi-g1-hero.jpg){ .tc-hero-img }
+![XTac-UMI G1 product photo](assets/product/xtac-umi-g1-hero.webp){ .tc-hero-img }
+
+</div>
+
+<div class="xu-stats" markdown>
+
+**3 streams / gripper** 1 fisheye + 2 visuotactile
+
+**6DoF** headset and dual-tracker pose
+
+**30 Hz** synchronized multi-source recording
+
+**MCAP · LeRobot v3** raw and training formats
 
 </div>
 
-!!! info "English coverage"
-    The Home and Overview pages are available in English. Other navigation entries currently fall back to the Chinese source pages; command examples remain directly usable.
+## Two kits, one gripper
 
-## The whole flow in 5 minutes
+Pick one to start. Hardware, calibration and data definitions are the same on both sides; the only differences are where the compute lives and what you operate it with.
 
-```mermaid
-flowchart LR
-    A[Environment<br/>setup_env.sh] --> B[Host/Hardware<br/>serial perms · discovery]
-    B --> C[Calibration<br/>encoder zero · tracker]
-    C --> P[Live preview<br/>lerobot-teleoperate]
-    P --> D[Data collection<br/>lerobot-record]
-    D --> E[Dataset<br/>check · replay · push to Hub]
-```
+<div class="grid cards xu-cards" markdown>
 
-## Three steps
+-   ![Front ports of the XTac-UMI data collection backpack](assets/product/backpack-ports-front.webp){ .xu-card__img }
 
-This is the **xense-taccap-lerobot data-collection quickstart**. Three parts: **get ready → record → understand the data**.
+    <span class="xu-tag xu-tag--backpack">Backpack Kit</span>
 
-<div class="grid cards" markdown>
-
--   :material-check-decagram-outline: __① Getting Ready (prerequisites)__
+    **XTac-UMI Data Collection Backpack**{ .xu-card__title }
 
     ---
 
-    Know your hardware → connect & power it on → set up the software environment and host/device config.
+    - The backpack is the host and a tablet is the console; no PC needed
+    - Start recording from the gripper button with LED feedback; one person can run it
+    - Raw MCAP recording, one-click LeRobot publishing to ModelScope
 
-    [:octicons-arrow-right-24: Hardware](hardware.md) · [Environment Setup](02-environment.md)
+    For: data-collection factories and collection teams; closed-source software with light customization
+    { .xu-card__fit }
 
--   :material-record-circle-outline: __② Software Usage__
+    [Quick start](backpack/index.md){ .md-button .md-button--primary }
+    [About the backpack](product/backpack.md){ .md-button }
+    { .xu-card__actions }
+
+-   ![XTac-UMI G1 visuotactile gripper](assets/product/g1-render-hero.webp){ .xu-card__img }
+
+    <span class="xu-tag xu-tag--pc">Developer Kit</span>
+
+    **XTac-UMI G1 Developer Kit**{ .xu-card__title }
 
     ---
 
-    Calibration → preview the streams with `lerobot-teleoperate` → record with `lerobot-record`. The core data-collection workflow.
+    - Plugs into your own x86 workstation and runs entirely on the LeRobot framework
+    - `lerobot-record` writes a LeRobotDataset directly
+    - Built on the open-source lerobot ecosystem, fully open to customization
 
-    [:octicons-arrow-right-24: Calibration](04-calibration.md) · [Data Collection](05-data-collection.md)
+    For: research and algorithm teams, self-hosted training pipelines
+    { .xu-card__fit }
 
--   :material-database-outline: __③ Data__
-
-    ---
-
-    What a `LeRobotDataset` looks like, what's recorded per frame, checking & upload.
-
-    [:octicons-arrow-right-24: Dataset & Examples](06-dataset.md)
+    [Quick start](pc/index.md){ .md-button .md-button--primary }
+    [Compare the two kits](product/editions.md){ .md-button }
+    { .xu-card__actions }
 
 </div>
+
+## See it before you record
+
+The console's live monitor is a Backpack Kit capability; the main text is in the [Backpack Kit entry point](backpack/index.md#overview).
 
 ## Related repositories
 
-| Repo / package | Role |
-|---|---|
-| [`xense-taccap-lerobot`](https://github.com/XenseRobotics-AI/xense-taccap-lerobot) | Data-collection repo (lerobot 0.5.1 customized branch, providing the `taccap_gripper` robot type) |
-| [`xense.taccap`](https://github.com/XenseRobotics-AI/TacCap-Gripper) | Gripper SDK (repo `TacCap-Gripper`, submodule `third_party/taccap-gripper`): IMU, encoder, keys, protocol, and follower-only motor control |
-| [`xensevr_pc_service_sdk`](https://github.com/XenseRobotics-AI/XenseVR-PC-Service) | Pico4 Ultra tracker PC service (installed as a `.deb`, **not a submodule**); from v0.2.0 it also carries the [headset camera](05-data-collection.md#56) frames |
-| [`xensesdk`](https://github.com/XenseRobotics/xensesdk) | Visuotactile sensor SDK, provided by the install script ([docs](https://xensedoc.readthedocs.io/en/latest/)) |
-
-!!! note "Versions this manual is written against"
-    `xense.taccap 0.1.9`, and `xense-taccap-lerobot` customized from **lerobot 0.5.1**.
-    Go by the device notes shipped with your own checkout of the main repo for commands and
-    field names.
+The Developer Kit builds on the open-source lerobot ecosystem; the full list of the data-collection repo, the gripper SDK and the tracker service is in [References](common/reference.md#references). The Backpack Kit is delivered as an integrated system with the collection software preinstalled, so you do not have to install any of those repositories yourself.
