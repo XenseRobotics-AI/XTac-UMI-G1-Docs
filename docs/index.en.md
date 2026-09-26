@@ -99,14 +99,13 @@ hide:
 
 ## Related repositories
 
-| Repo / package | Role |
+| Repo / package | Notes |
 |---|---|
-| [`xense-taccap-lerobot`](https://github.com/XenseRobotics-AI/xense-taccap-lerobot) | Data-collection repo (lerobot 0.5.1 customized branch, providing the `taccap_gripper` robot type) |
-| [`xense.taccap`](https://github.com/XenseRobotics-AI/TacCap-Gripper) | Gripper SDK (repo `TacCap-Gripper`, submodule `third_party/taccap-gripper`): IMU, encoder, keys, protocol, and follower-only motor control |
-| [`xensevr_pc_service_sdk`](https://github.com/XenseRobotics-AI/XenseVR-PC-Service) | Pico4 Ultra tracker PC service (installed as a `.deb`, **not a submodule**); from v0.2.0 it also carries the [headset camera](05-data-collection.md#56) frames |
-| [`xensesdk`](https://github.com/XenseRobotics/xensesdk) | Visuotactile sensor SDK, provided by the install script ([docs](https://xensedoc.readthedocs.io/en/latest/)) |
+| [`xense-taccap-lerobot`](https://github.com/XenseRobotics-AI/xense-taccap-lerobot) | Data-collection repo, customized from lerobot 0.5.1 |
+| [`xense.taccap`](https://github.com/XenseRobotics-AI/TacCap-Gripper) | Gripper SDK, included in the data-collection repo as a submodule; [developer docs](sdk-overview.md) |
+| [`xensevr_pc_service_sdk`](https://github.com/XenseRobotics-AI/XenseVR-PC-Service) | Pico4 Ultra Enterprise PC service, installed as a `.deb` |
+| [`xensesdk`](https://github.com/XenseRobotics/xensesdk) | Visuotactile sensor SDK, installed by the setup script; [developer docs](https://docs.xenserobotics.com/) |
 
-!!! note "Versions this manual is written against"
-    `xense.taccap 0.1.9`, and `xense-taccap-lerobot` customized from **lerobot 0.5.1**.
-    Go by the device notes shipped with your own checkout of the main repo for commands and
-    field names.
+!!! note "Versions"
+    Data collection is written against `xense-taccap-lerobot` `0.5.1+xtac.0.0.6` and `xense.taccap` 0.1.9;
+    the follower chapter and the SDK appendix against `xense.taccap` 0.3.2. Full baseline in [Versions & Support](versions.md).

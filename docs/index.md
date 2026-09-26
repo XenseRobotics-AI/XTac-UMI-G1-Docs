@@ -96,13 +96,13 @@ hide:
 
 ## 相关仓库
 
-| 仓库 / 包 | 作用 |
+| 仓库 / 包 | 备注 |
 |---|---|
-| [`xense-taccap-lerobot`](https://github.com/XenseRobotics-AI/xense-taccap-lerobot) | 数采主仓库（lerobot 0.5.1 定制分支，提供 `taccap_gripper` 设备类型） |
-| [`xense.taccap`](https://github.com/XenseRobotics-AI/TacCap-Gripper) | 夹爪 SDK（仓库 `TacCap-Gripper`，子模块 `third_party/taccap-gripper`）：IMU、编码器、按键、协议及仅从夹爪具备的电机控制 |
-| [`xensevr_pc_service_sdk`](https://github.com/XenseRobotics-AI/XenseVR-PC-Service) | Pico4 Ultra 追踪器 PC 服务（以 `.deb` 安装，**不是子模块**）；v0.2.0 起也承载[头显相机](05-data-collection.md#56)画面 |
-| [`xensesdk`](https://github.com/XenseRobotics/xensesdk) | 视触觉传感器 SDK，由安装脚本提供（[文档站](https://xensedoc.readthedocs.io/en/latest/)） |
+| [`xense-taccap-lerobot`](https://github.com/XenseRobotics-AI/xense-taccap-lerobot) | 数采主仓库，基于 lerobot 0.5.1 定制 |
+| [`xense.taccap`](https://github.com/XenseRobotics-AI/TacCap-Gripper) | 夹爪 SDK，数采仓库以子模块引入；[开发文档](sdk-overview.md) |
+| [`xensevr_pc_service_sdk`](https://github.com/XenseRobotics-AI/XenseVR-PC-Service) | Pico4 Ultra 企业版 PC 服务，以 `.deb` 安装 |
+| [`xensesdk`](https://github.com/XenseRobotics/xensesdk) | 视触觉传感器 SDK，由安装脚本安装；[开发文档](https://docs.xenserobotics.com/) |
 
 !!! note "适用版本"
-    本手册对应 `xense.taccap 0.1.9`、`xense-taccap-lerobot` 基于 **lerobot 0.5.1** 定制。
-    命令与字段以你本地这一版主仓库附带的设备说明为准。
+    数采部分对应 `xense-taccap-lerobot` `0.5.1+xtac.0.0.6` 与 `xense.taccap` 0.1.9；从夹爪章节与 SDK 附录对应
+    `xense.taccap` 0.3.2。完整版本基线见[版本与支持](versions.md)。
