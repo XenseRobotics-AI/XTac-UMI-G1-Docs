@@ -107,5 +107,5 @@ hide:
 | [`xensesdk`](https://github.com/XenseRobotics/xensesdk) | Visuotactile sensor SDK, installed by the setup script; [developer docs](https://docs.xenserobotics.com/) |
 
 !!! note "Versions"
-    Data collection is written against `xense-taccap-lerobot` `0.5.1+xtac.0.0.6` and `xense.taccap` 0.1.9;
-    the follower chapter and the SDK appendix against `xense.taccap` 0.3.2. Full baseline in [Versions & Support](versions.md).
+    Data collection uses the SDK bundled with `xense-taccap-lerobot` (the 0.1.9 series); the follower chapter
+    and the SDK appendix use a separately installed `xense.taccap` 0.3.2. Component baselines are in [Versions & Support](versions.md).

@@ -104,5 +104,5 @@ hide:
 | [`xensesdk`](https://github.com/XenseRobotics/xensesdk) | 视触觉传感器 SDK，由安装脚本安装；[开发文档](https://docs.xenserobotics.com/) |
 
 !!! note "适用版本"
-    数采部分对应 `xense-taccap-lerobot` `0.5.1+xtac.0.0.6` 与 `xense.taccap` 0.1.9；从夹爪章节与 SDK 附录对应
-    `xense.taccap` 0.3.2。完整版本基线见[版本与支持](versions.md)。
+    数采部分使用 `xense-taccap-lerobot` 自带的 SDK（0.1.9 系列）；从夹爪章节与 SDK 附录使用单独安装的
+    `xense.taccap` 0.3.2。各组件的版本基线见[版本与支持](versions.md)。
