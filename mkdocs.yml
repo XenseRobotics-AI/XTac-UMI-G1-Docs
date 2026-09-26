@@ -107,6 +107,13 @@ plugins:
             SDK 概览: SDK Overview
             安装与构建: Install & Build
             示例: Examples
+            API 要点: API Essentials
+            从夹爪: Follower Gripper
+            从夹爪概览: Follower Overview
+            准备与自检: Setup & Self-check
+            运动控制: Motion Control
+            固件与电机升级: Firmware & Motor Updates
+            从夹爪故障排查: Follower Troubleshooting
 
 markdown_extensions:
   - abbr
@@ -171,6 +178,12 @@ nav:
       - 标定与自检: 04-calibration.md
       - 数据预览与采集: 05-data-collection.md
       - 采集规范与最佳实践: best-practices.md
+  - 从夹爪:
+      - 从夹爪概览: follower-overview.md
+      - 准备与自检: follower-setup.md
+      - 运动控制: follower-control.md
+      - 固件与电机升级: follower-firmware.md
+      - 从夹爪故障排查: follower-troubleshooting.md
   - 数据介绍:
       - 数据集与示例: 06-dataset.md
       - 数据管理与命名: data-management.md
@@ -182,4 +195,5 @@ nav:
       - 附录:SDK 与二次开发:
           - SDK 概览: sdk-overview.md
           - 安装与构建: sdk-install.md
+          - API 要点: sdk-api.md
           - 示例: sdk-examples.md

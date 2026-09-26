@@ -806,7 +806,7 @@ exits at **command-line parse time**, before any device is touched.
     centre, and undistortion is built around the **principal point**, not the middle of
     the frame. Raw fisheye hides this by compressing the periphery; rectification only
     reveals it. See
-    [SDK appendix → what happens when the fisheye calibration cannot be read](sdk-overview.md#fisheye-fallback)
+    [SDK appendix → what happens when the fisheye calibration cannot be read](sdk-api.md#fisheye-fallback)
     (Chinese).
 
     **Do not "correct" `cx` yourself.** Measured: forcing it to the frame centre pushed

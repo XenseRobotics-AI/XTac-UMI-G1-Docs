@@ -723,7 +723,7 @@ python third_party/taccap-gripper/python/examples/fisheye_cal.py set-fisheye
     矫正后画面可能偏向一侧、甚至略微倾斜,**而标定是对的**:传感器未必装在镜头光心上,
     而去畸变绕的是**主点**,不是画幅中心。原始鱼眼把这件事藏起来了(周边被压缩),
     矫正只是把它显现出来。详见
-    [SDK 附录 → 鱼眼标定读不到时会怎样](sdk-overview.md#fisheye-fallback)。
+    [SDK 附录 → 鱼眼标定读不到时会怎样](sdk-api.md#fisheye-fallback)。
 
     **不要自己去改 `cx`。**实测把它改成画幅中心,画面反而偏得更远。
 

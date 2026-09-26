@@ -18,6 +18,9 @@
 | 夹爪固件 | **命令集 V2.1**,即构建 leader **≥ 1.2.0** / follower **≥ 1.1.0**([区别](#v21)) | 跑 [`calibrate.py`](04-calibration.md#41),版本不够会打印当前版本并退出;想直接读版本见[下面这条命令](#v21) |
 | 每台 leader 的编码器标定 | 零点 + 行程上限已写入 flash | [4.1 夹爪标定](04-calibration.md#41) |
 
+上表是**数采**的要求。[从夹爪](follower-overview.md)章节用的是单独安装的 SDK 0.3.2,从夹爪固件需要 ≥ 1.2.5,
+见 [固件与电机升级](follower-firmware.md)。
+
 ### 三套编号:V2.1 是命令集,不是固件版本 {#v21}
 
 夹爪固件涉及**三套互不相干的编号**,长得像但含义完全不同:
@@ -113,6 +116,7 @@ flowchart LR
 | NumPy | `>=1.26.4` | 2.2.6 |
 | `xense-taccap-lerobot` | 基于 lerobot 0.5.1 定制;版本号 `0.5.1+xtac.0.0.6`(与文档版本同步) | `main@d1b9e79a` |
 | `xense.taccap`(`taccap-gripper` SDK) | 与主仓库子模块版本配套 | 0.1.9(子模块 `a3382db`) |
+| `xense.taccap`,[从夹爪](follower-overview.md)与 [SDK 附录](sdk-overview.md)用 | 单独克隆、单独环境安装,**不要与数采环境混用** | **0.3.2**(tag `v0.3.2`,`2437db5`);附带固件 leader **1.2.5** / follower **1.2.9** |
 | 夹爪固件命令集 | **V2.1**(帧格式另计,为 V1.8;区别见[三套编号](#v21)) | 命令集 V2.1 |
 | 夹爪固件构建 | leader **≥ 1.2.0** / follower **≥ 1.1.0** 即支持命令集 V2.1 | 当前基线附带 leader **1.2.2** / follower **1.1.5**(固件源码分支 `hw_v1.1.0`),两版都修掉了[三个已知缺陷](#ota-when)并已过硬件验证;镜像版本随 SDK 走,以 `firmware/manifest.json` 为准,见 [固件 OTA 升级](#ota) |
 | `xensesdk` | 由安装脚本提供 | 2.1.1 |

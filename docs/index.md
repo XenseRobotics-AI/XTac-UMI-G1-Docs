@@ -63,7 +63,8 @@ flowchart LR
 
 </div>
 
-!!! note "二次开发?"
+!!! note "从夹爪与二次开发"
+    把从夹爪装到机器人上、用程序控制开合与夹持,见 [从夹爪](follower-overview.md)。
     需要直接调 `xense.taccap` SDK 的,见 [参考 → 附录:SDK 与二次开发](sdk-overview.md)。
 
 ## 相关仓库
