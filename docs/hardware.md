@@ -64,6 +64,21 @@ XTac-UMI G1 的机械、电气与操作说明,面向数采使用的
 
 从夹爪安装在机器人末端,当前硬件不区分左右;安装时注意法兰方向、线缆走线与机器人运动空间。
 
+### Pico4 Ultra 企业版 {#pico4}
+
+头显建立世界坐标系,运动追踪器装在主夹爪顶部,把主夹爪的 6-DoF 位姿传给采集电脑。
+配置步骤见 [3.4 Pico4 Ultra 企业版配置](03-host-hardware.md#34)。
+
+=== "头显与手柄"
+
+    ![Pico4 Ultra 企业版头显与手柄](assets/pico4/pico4-ultra-enterprise.webp){ width="560" }
+
+=== "运动追踪器"
+
+    ![Pico4 Ultra 运动追踪器](assets/pico4/pico4-motion-trackers.webp){ width="420" }
+
+    图中是出厂的腕带形态;数采时追踪器装在主夹爪顶部,不戴在手腕上。
+
 ## 主夹爪连接与使用 {#install}
 
 ### 连接前检查

@@ -43,6 +43,15 @@
 | `follower-scene-side.webp` | 从夹爪场景图,侧视,可见接口(4:3) |
 | `follower-scene-pedestal.webp` | 从夹爪场景图,置于台面,侧视(16:9) |
 
+## pico4/ 产品图
+
+| 文件 | 内容 | 来源 |
+|---|---|---|
+| `pico4-ultra-enterprise.webp` | Pico4 Ultra 企业版头显与手柄,已去背景 | PICO 官方产品图,原图与抠图在 `materials/pico4-orig/` |
+| `pico4-motion-trackers.webp` | Pico4 Ultra 运动追踪器(出厂腕带形态),已去背景 | 同上 |
+
+这两张是第三方官方图片,不是我们自己拍摄或渲染的;替换或新增同类图片时注意来源与使用授权。
+
 ## 在文档里引用
 
 Markdown 里用**相对 docs 根**的路径。例如在 `docs/03-host-hardware.md` 中:

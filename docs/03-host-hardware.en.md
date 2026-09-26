@@ -143,6 +143,16 @@ and the pose reaches collection via the [XenseVR PC Service](#35). This section 
 **configuring a new Pico from scratch**, in the order **unbox and update → system settings →
 install the app → network → bind the tracker → tracking mode and UI → startup alignment**.
 
+=== "Headset and controllers"
+
+    ![Pico4 Ultra Enterprise headset and controllers](assets/pico4/pico4-ultra-enterprise.webp){ width="560" }
+
+=== "Motion trackers"
+
+    ![Pico4 Ultra motion trackers](assets/pico4/pico4-motion-trackers.webp){ width="420" }
+
+    Shown with the wrist straps they ship with; for data collection the tracker mounts on top of the leader gripper, not on the wrist.
+
 !!! tip "Given a factory-configured headset? Skip ahead"
     Developer mode, the power policy, the app, the tracker binding and the tracking mode are all
     set at the factory and stored on the headset — anything marked **"skip on a pre-configured
