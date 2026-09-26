@@ -23,12 +23,12 @@ hide:
 
 <figure class="tc-tile tc-tile--leader" markdown>
 ![主夹爪](assets/product/leader-front-open-cutout.webp)
-<figcaption markdown>[主夹爪:手持采集](hardware.md)</figcaption>
+<figcaption markdown>[主夹爪：手持采集](hardware.md)</figcaption>
 </figure>
 
 <figure class="tc-tile tc-tile--follower" markdown>
 ![从夹爪](assets/product/follower-rear-ports.webp)
-<figcaption markdown>[从夹爪:同构末端执行器](follower-overview.md)</figcaption>
+<figcaption markdown>[从夹爪：同构末端执行器](follower-overview.md)</figcaption>
 </figure>
 
 </div>
@@ -54,7 +54,7 @@ hide:
 4. **[配置 Pico4 Ultra 企业版](03-host-hardware.md#34)**<br>
    开发者模式、XR 应用、追踪器
 5. **[标定主夹爪](04-calibration.md#41)**<br>
-   零点与行程上限,每只一次
+   零点与行程上限，每只一次
 
 </div>
 
@@ -65,13 +65,13 @@ hide:
 <p class="tc-flow__lead">每次采集按这个顺序</p>
 
 1. **[上电与连接](03-host-hardware.md#36)**<br>
-   插夹爪、开追踪器,关电脑 WiFi
+   插夹爪、开追踪器，关电脑 WiFi
 2. **[启动服务与 XR 应用](03-host-hardware.md#35)**<br>
-   先启 PC Service,再开 XR 应用
+   先启 PC Service，再开 XR 应用
 3. **[预览检查](05-data-collection.md#preview)**<br>
    `lerobot-teleoperate` 确认数据流
 4. **[正式录制](05-data-collection.md#52)**<br>
-   `lerobot-record`,中途不重启 XR
+   `lerobot-record`，中途不重启 XR
 
 </div>
 
@@ -83,7 +83,7 @@ hide:
 
 1. **[检查完整性](06-dataset.md#62)**<br>
    `lerobot-check-dataset`
-2. **[上传 Hub(可选)](06-dataset.md#64)**<br>
+2. **[上传 Hub（可选）](06-dataset.md#64)**<br>
    `lerobot-push-dataset-to-hub`
 3. **[了解数据格式](06-dataset.md#61)**<br>
    每帧记录了什么、怎么读取
@@ -92,16 +92,16 @@ hide:
 
 </div>
 
-<p class="tc-flow__more" markdown>把从夹爪装到机器人上、用程序控制开合与夹持,见 [从夹爪](follower-overview.md);直接调用夹爪 SDK,见 [附录:SDK 与二次开发](sdk-overview.md)。</p>
+<p class="tc-flow__more" markdown>把从夹爪装到机器人上、用程序控制开合与夹持，见[从夹爪](follower-overview.md)；直接调用夹爪 SDK，见[附录：SDK 与二次开发](sdk-overview.md)。</p>
 
 ## 相关仓库
 
 | 仓库 / 包 | 作用 |
 |---|---|
-| [`xense-taccap-lerobot`](https://github.com/XenseRobotics-AI/xense-taccap-lerobot) | 数采主仓库(lerobot 0.5.1 定制分支,提供 `taccap_gripper` 设备类型) |
-| [`xense.taccap`](https://github.com/XenseRobotics-AI/TacCap-Gripper) | 夹爪 SDK(仓库 `TacCap-Gripper`,子模块 `third_party/taccap-gripper`):IMU、编码器、按键、协议及仅从夹爪具备的电机控制 |
-| [`xensevr_pc_service_sdk`](https://github.com/XenseRobotics-AI/XenseVR-PC-Service) | Pico4 Ultra 追踪器 PC 服务(以 `.deb` 安装,**不是子模块**);v0.2.0 起也承载[头显相机](05-data-collection.md#56)画面 |
-| [`xensesdk`](https://github.com/XenseRobotics/xensesdk) | 视触觉传感器 SDK,由安装脚本提供([文档站](https://xensedoc.readthedocs.io/en/latest/)) |
+| [`xense-taccap-lerobot`](https://github.com/XenseRobotics-AI/xense-taccap-lerobot) | 数采主仓库（lerobot 0.5.1 定制分支，提供 `taccap_gripper` 设备类型） |
+| [`xense.taccap`](https://github.com/XenseRobotics-AI/TacCap-Gripper) | 夹爪 SDK（仓库 `TacCap-Gripper`，子模块 `third_party/taccap-gripper`）：IMU、编码器、按键、协议及仅从夹爪具备的电机控制 |
+| [`xensevr_pc_service_sdk`](https://github.com/XenseRobotics-AI/XenseVR-PC-Service) | Pico4 Ultra 追踪器 PC 服务（以 `.deb` 安装，**不是子模块**）；v0.2.0 起也承载[头显相机](05-data-collection.md#56)画面 |
+| [`xensesdk`](https://github.com/XenseRobotics/xensesdk) | 视触觉传感器 SDK，由安装脚本提供（[文档站](https://xensedoc.readthedocs.io/en/latest/)） |
 
 !!! note "适用版本"
     本手册对应 `xense.taccap 0.1.9`、`xense-taccap-lerobot` 基于 **lerobot 0.5.1** 定制。
