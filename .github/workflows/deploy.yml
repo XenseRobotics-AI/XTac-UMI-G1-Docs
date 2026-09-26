@@ -13,7 +13,6 @@ on:
       - dev
     paths:
       - "docs/**"
-      - "overrides/**"
       - "mkdocs.yml"
       - "requirements.txt"
       - ".github/workflows/deploy.yml"

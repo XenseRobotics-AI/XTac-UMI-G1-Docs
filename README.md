@@ -26,9 +26,8 @@ mkdocs build --strict
 .
 ├── mkdocs.yml                # 站点配置(主题/顶栏标签/i18n/重定向/链接校验/导航)
 ├── requirements.txt          # 构建依赖
-├── overrides/home.html       # 首页模板:通栏首屏,文字取自 index.md 的 hero_* 字段
 ├── docs/
-│   ├── index.md              # 首页(产品介绍)
+│   ├── index.md              # 首页(产品介绍,首屏样式在 assets/stylesheets/extra.css)
 │   ├── product/              # 「产品」标签:给评估者看
 │   │   ├── editions.md       #   产品线与配置对比(背包版 / PC 版)
 │   │   ├── g1.md             #   认识 XTac-UMI G1
@@ -63,7 +62,7 @@ mkdocs build --strict
 │   │   ├── maintenance.md    #   维护保养
 │   │   └── reference.md      #   术语表与支持
 │   ├── **/*.en.md            # 每页的英文版
-│   └── assets/               # product/ 渲染图与接口照片,backpack/ 控制台截图,brand/ logo
+│   └── assets/               # 图片按主题分目录(product/ backpack/ pico4/ …),brand/ logo,stylesheets/ 自定义样式
 └── .github/workflows/deploy.yml   # GitHub Pages 自动发布
 ```
 
@@ -92,7 +91,7 @@ SDK 的开发文档放在
   `mkdocs-static-i18n` 自动挂到 `/en/` 路径。两种语言的页面结构、锚点
   `{#id}`、代码块和链接目标必须一致,只翻译正文。
 - 缺失的英文页会**自动回落**到中文版(`fallback_to_default: true`),
-  不会导致构建失败——但目前 12 页都有英文版,改中文时请同步改英文。
+  不会导致构建失败——但目前每一页都有英文版,改中文时请同步改英文。
 
 ## 写作约定
 
@@ -106,7 +105,8 @@ SDK 的开发文档放在
 
 ## 素材待补
 
-- 站点 logo 与 favicon → `docs/assets/brand/logo.png` / `docs/assets/brand/favicon.png`
+- 正式方形标志与 favicon → 放 `docs/assets/brand/`,到位后启用 `mkdocs.yml` 里注释掉的 `logo` / `favicon`
+  (千觉 wordmark 已有 `logo.svg` / `logo-light.svg`)
 
 ## 开发流程
 
