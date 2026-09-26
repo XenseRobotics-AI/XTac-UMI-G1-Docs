@@ -178,15 +178,15 @@ nav:
       - 标定与自检: 04-calibration.md
       - 数据预览与采集: 05-data-collection.md
       - 采集规范与最佳实践: best-practices.md
+  - 数据介绍:
+      - 数据集与示例: 06-dataset.md
+      - 数据管理与命名: data-management.md
   - 从夹爪:
       - 从夹爪概览: follower-overview.md
       - 准备与自检: follower-setup.md
       - 运动控制: follower-control.md
       - 固件与电机升级: follower-firmware.md
       - 从夹爪故障排查: follower-troubleshooting.md
-  - 数据介绍:
-      - 数据集与示例: 06-dataset.md
-      - 数据管理与命名: data-management.md
   - 参考:
       - 故障排查: troubleshooting.md
       - 维护保养: maintenance.md
