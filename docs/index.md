@@ -68,9 +68,9 @@ hide:
    插夹爪、开追踪器,关电脑 WiFi
 2. **[启动服务与 XR 应用](03-host-hardware.md#35)**<br>
    先启 PC Service,再开 XR 应用
-3. **[预览](05-data-collection.md#preview)**<br>
-   `lerobot-teleoperate` 看数据流
-4. **[录制](05-data-collection.md#52)**<br>
+3. **[预览检查](05-data-collection.md#preview)**<br>
+   `lerobot-teleoperate` 确认数据流
+4. **[正式录制](05-data-collection.md#52)**<br>
    `lerobot-record`,中途不重启 XR
 
 </div>

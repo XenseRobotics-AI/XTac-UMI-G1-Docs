@@ -71,9 +71,9 @@ hide:
    Grippers in, trackers on, PC WiFi off
 2. **[Start the service and XR app](03-host-hardware.md#35)**<br>
    PC Service, then the XR app
-3. **[Preview](05-data-collection.md#preview)**<br>
+3. **[Preview check](05-data-collection.md#preview)**<br>
    `lerobot-teleoperate` in Rerun
-4. **[Record](05-data-collection.md#52)**<br>
+4. **[Full recording](05-data-collection.md#52)**<br>
    `lerobot-record`, keep XR running
 
 </div>
