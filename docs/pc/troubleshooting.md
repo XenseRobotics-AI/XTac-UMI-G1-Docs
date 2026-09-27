@@ -4,7 +4,7 @@
 
 ## 反馈问题请附上完整日志 {#logs}
 
-完整日志在 `~/xenselogs/session_<时间戳>.log`，每次运行一份。屏幕上只留下值得看的那几行，而这个文件里是全的——采集程序、`xensesdk` 和视频编码库的日志都汇在一起，还带按键操作的时间戳。请直接附上这个文件，不要只贴屏幕上的最后几行。目录可用 `XENSE_LOG_DIR` 环境变量改。
+完整日志在 `~/xenselogs/session_<时间戳>.log`，每次运行一份。屏幕上只留下值得看的那几行，而这个文件里是全的——采集程序、`xensesdk` 和视频编码库的日志都汇在一起，还带按键操作的时间戳。请直接附上这个文件，不要只贴屏幕上的最后几行。文件开头的 `[session]` 行记着主机、编码与相机配置；只保留最近 15 份。目录可用 `XENSE_LOG_DIR` 环境变量改，屏幕日志的详细程度用 `XENSE_LOG_LEVEL` 调。
 
 ## 环境与安装
 
@@ -107,6 +107,17 @@
     **原因**：从夹爪供电走 24V 适配器、通信走 Type-C。不上电是 24V 未连或适配器异常；通信异常是 Type-C 未连、未识别，或线缆被机器人运动拉扯。
 
     **解决**：检查 24V 适配器、插座、电源接口与规格，先连 24V 再连 Type-C 并锁紧（见[上电顺序](index.md#power-on)）；重连 Type-C 并旋紧锁紧螺钉，走线避开关节与夹爪运动区，首次运行前低速测试。
+
+??? failure "绑定从夹爪时报 `从爪固件版本过低,必须升级后才能使用本 SDK` / `Follower firmware too old`"
+    **原因**：从夹爪固件低于 1.1.6。1.1.6 起才有运动安全包络，`--robot.role=follower` 和 SDK 都会拒绝更早的固件。
+
+    **解决**：刷随 SDK 附带的从夹爪镜像，然后 **USB 线和电源线同时拔下再插回**：
+
+    ```bash
+    python third_party/taccap-gripper/python/examples/ota_update.py slave
+    ```
+
+    接着多只夹爪时，指定要刷的那一只：`ota_update.py tc-gu-01-slave.bin left`（或 `right`、完整序列号），见[固件 OTA 升级](versions.md#ota)。
 
 ??? failure "OTA 升级时蓝灯亮得过久"
     **原因**：升级未完成或流程异常。
@@ -268,25 +279,41 @@
 
     **解决**：补上工位号，填数字即可（`0` / `1`…，一套设备一个，双夹爪算一套；前缀按 `--robot.type` 自动补成 `taccap_0` / `bi_taccap_0`），例如 `lerobot-record --robot.type=bi_taccap_gripper --robot.id=0 ...`。它标的是工位不是硬件，换夹爪不用改；设备身份记在数据集的 `meta/hardware.json` 里，见 [`--robot.id` 与硬件清单](recording.md#robot-id)。
 
-??? failure "续录时告警：数据集里已有的 `meta/hardware.json` 和当前硬件对不上"
-    **原因**：用 `--resume` 续录时换了夹爪或触觉传感器，程序保留原文件并告警。
+??? failure "续录时硬件和数据集里记的对不上"
+    **原因**：用 `--resume` 续录时换了夹爪或触觉传感器。这不是错误：清单会在当前集数处另起一个 epoch，日志打一行 `... recorded as a new epoch in .../hardware.json`。只有 `--robot.type` 对不上时才保留原文件并告警。
 
-    **解决**：告警不阻断录制。有意换硬件就继续，这条告警就是数据集跨了两套硬件的记录；不是有意的（比如插错了一只夹爪），先停下把设备换回去。
+    **解决**：有意换硬件就继续；不是有意的（比如插错了一只夹爪），先停下把设备换回去。
+
+??? failure "续录报 `refusing to resume it`"
+    **原因**：`--robot.id` 和数据集里记的工位号不一致。一个数据集只属于一个工位，在连接任何设备之前就会拒绝。
+
+    **解决**：回原工位、用原来的 `--robot.id` 续录；或者换一个 `--dataset.repo_id`，录成新数据集。
 
 ??? failure "录到一半突然崩掉，报 `ValueError: You must add one or several frames`"
     **原因**：两条 episode 之间有约 2 秒没人读键盘事件（存盘 + 编码器预热），这个空档里按下的**方向右键**会一直挂着——最常见的触发是上一集 reset 刚好自己超时结束，而你正伸手去按。下一条 episode 于是一帧未录就退出，reset 照常跑满，最后在存盘时抛这个错，把整场采集打死。发作时间比按键晚两分多钟，中间还夹着一段看起来完全正常的 reset，所以很难联想到那次按键。
 
     **解决**：升级到 `0.0.7` 及以上，这个空档里的按键会被丢弃。停在更早版本时，两集之间不要提前按方向键，等下一集的提示打印出来再按。键盘监听是全局钩子，**任何窗口**里的方向右键都会结束 episode（包括 Rerun，它的时间轴正是用左右键翻帧）；[会话日志](#logs)里的按键时间戳是排查"我没按它自己就退了"的第一手证据。
 
-??? failure "每条 episode 结束时打印 `[stale_frames]`，或出现相机采集卡顿告警"
-    **原因**：某路相机的后台采集卡住了一小会儿。采集回路取帧**不会被它阻塞**（拿到的是缓存的上一帧），所以帧率看着一切正常，代价落在数据上：这段时间里录进去的是**重复的旧图**。`[stale_frames]` 那行给出这一集有多少帧是重复的、分几段、最长一段多少帧。
+??? failure "每集复位后打印 `[stale_frames]`，或出现相机采集卡顿告警"
+    **原因**：某路相机的后台采集卡住了一小会儿。采集回路取帧**不会被它阻塞**（拿到的是缓存的上一帧），所以帧率看着一切正常，代价落在数据上：这段时间里录进去的是**重复的旧图**。每集复位结束后打印一行，给出这一集有多少帧是重复的、分几段、最长一段多少帧，重录掉的那一集带 ` (discarded take)`：
+
+    ```text
+    [stale_frames] episode 3 [left_tactile_left] 45/1800 frames served stale (2.5%): 25 gap(s), longest 21 frame(s)
+    ```
 
     **解决**：先看比例。一定量的重复是预期内的——传感器后台采集和录制回路各自自由跑在同一标称帧率上，相位会漂，偶尔会在新帧落地前采到两次，这类是大量的**单帧**重复，不用管。值得追的是**长连续段**，那才是真卡顿，多见于 8 路相机同时编码时 GPU 编码器把触觉线程饿住 0.3~0.9 秒。个位数百分比且都是短段就照常用；某一集里有很长的连续段，这一集的那一段实际上是静止画面，建议弃用。持续出现按 [USB 带宽不够](#usb-bandwidth) 排查，或减少同时录制的相机路数。
 
-??? failure "开了 `--display_data=true` 后日志频繁出现 `[slow_frame]`"
-    **原因**：Rerun 显示占掉了帧预算。双夹爪 + 头显（四路触觉、两路腕相机、两只眼）实测 JPEG 压缩每帧 13.2 ms、不压缩 3.1 ms，而 30 fps 的预算只有 33.3 ms。先看 `[slow_frame]` 行末的 `top_obs=`，分清是传感器慢还是显示贵，两者解法相反。
+    同一时刻还会打印一行 `[loop_summary]`，给出这一集的实际帧率，例如 `= 29.0 fps (nominal 30; dataset timestamps assume nominal)`：实际帧率低于标称时，数据集里的时间戳仍按标称帧率写。
 
-    **解决**：确认 `--display_compressed_images=false`、`--display_image_every_n=1` 这两个默认值没被改过；仍超时再调大 `--display_image_every_n`，相机画面刷新变稀，`tcp.*`、`gripper.pos` 等标量仍全速，这是最后手段。
+??? failure "日志出现 `[slow_frame] ... overrun=`"
+    **原因**：某一帧的处理超出了帧预算（30 fps 为 33.3 ms）。0.0.8 起 Rerun 显示在独立线程上运行，**不再是原因**；显示跟不上时丢的只是屏幕上的帧。
+
+    **解决**：看这一行的两段信息：
+
+    - ` | phases obs=… build=… add=… display=…`：各阶段耗时，看哪一段最大；
+    - 行末的 `top_obs=`：读得最慢的那几路传感器。
+
+    每集只有前 5 条 `[slow_frame]` 打在屏幕上，其余写进[会话日志](#logs)，屏幕上改为每 5 秒一条 `[slow_frame_summary]` 汇总。偶发几条不影响数据；持续出现且总指向同一路相机时，按 [USB 带宽不够](#usb-bandwidth) 排查。没有 NVIDIA 显卡的机器见[没有 NVIDIA GPU 的主机怎么录](recording.md#no-gpu)。
 
 ??? failure "录制中途停下，提示 `Device lost mid-recording`"
     **原因**：某路相机或夹爪编码器掉线：线松、锁紧螺钉没拧紧、线缆受力、hub 掉电、供电不稳或 USB 口接触不良。采集主动停止，已录部分会存盘。
@@ -299,7 +326,7 @@
     **解决**：改用 CPU 编码器并关掉流式编码：`lerobot-record ... --dataset.vcodec=libsvtav1 --dataset.streaming_encoding=false`，原因见[没有 NVIDIA GPU 的主机怎么录](recording.md#no-gpu)。
 
 ??? failure "编码器跟不上、日志出现丢帧告警"
-    **原因**：实时编码队列满时会丢最旧帧（不阻塞采集循环）。
+    **原因**：实时编码队列满时最多等 0.1 秒，仍满就丢弃当前帧并告警 `Encoder queue full … dropped N frame(s)`（不阻塞采集循环）。
 
     **解决**：增大 `--dataset.encoder_threads`、用 `--dataset.vcodec=auto` 硬件编码，或调 `--dataset.encoder_queue_maxsize`，见[录制选项](recording.md#54)。
 

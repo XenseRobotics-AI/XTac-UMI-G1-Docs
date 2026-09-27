@@ -18,7 +18,8 @@ Before you start, confirm:
   runs to completion and writes to disk; only `gripper.pos` ends up on a scale that does not match
   anyone else's, and nothing in the data shows it afterwards. The firmware requirement is command set
   V2.1, which means leader ≥ 1.2.0 / follower ≥ 1.1.0; a higher build does not need to be flashed
-  back ([the difference between the two](versions.md#v21)).
+  back ([the difference between the two](versions.md#v21)); with a follower gripper (`--robot.role=follower`) the follower
+  firmware must also be ≥ 1.1.6.
 - The [serial permissions and ModemManager](host-setup.md#31) one-off host setup is done; on a
   bimanual rig, the [USB bandwidth budget](host-setup.md#usb-budget) has been checked.
 - Every leader gripper has been through [gripper calibration](calibration.md#41): an uncalibrated
@@ -115,8 +116,8 @@ lerobot-record \
 `--robot.id` is the required station number. Pass a bare number, one per rig (a bimanual rig counts
 as one); leaving it out fails at command-line parse time
 ([`--robot.id` and the hardware manifest](recording.md#robot-id)). Keep `--robot.enable_tracker` and
-`--robot.enable_head_camera` the same as the stage you previewed; `--display_data` is on to preview,
-off to record. The commands for all three stages and every parameter are in [Record](recording.md#52).
+`--robot.enable_head_camera` the same as the stage you previewed; `--display_data` is off by default;
+since 0.0.8 leaving it on while recording costs no frame budget, so turn it on if you want to watch. The commands for all three stages and every parameter are in [Record](recording.md#52).
 
 ## Check the local dataset
 

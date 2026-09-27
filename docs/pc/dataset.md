@@ -28,7 +28,12 @@ sample = ds[0]          # 单帧:观测 + 动作,均为 torch tensor
 
 每帧记录了哪些观测与动作键，见 [每帧记录内容](recording.md#53)。
 
-标准 LeRobotDataset 只在 `info` 里记 `robot_type`，所以录制时额外写两样独立文件（都不动上游的 `info` 结构）：`meta/hardware.json` 记这批数据是哪套硬件采的（工位号、夹爪与触觉 SN、腕相机是否去畸变，按 `epochs` 分段，中途换硬件会另起一段）；`meta/runtimes/` 记每枚触觉传感器采集时的 runtime bundle，从 `rectify` 流重建 depth / force / difference 要用它。字段含义、续录行为与重建注意事项见 [`--robot.id` 与硬件清单](recording.md#robot-id)。
+标准 LeRobotDataset 只在 `info` 里记 `robot_type`，所以录制时额外写两样独立文件（都不动上游的 `info` 结构）：`meta/hardware.json` 记这批数据是哪套硬件采的（工位号、夹爪与触觉 SN、腕相机是否去畸变，按 `epochs` 分段，中途换硬件会另起一段）；`meta/runtimes/` 记每枚触觉传感器采集时的 runtime bundle，从 `rectify` 流重建 depth / force / difference 要用它。字段含义、续录行为与重建注意事项见 [`--robot.id` 与硬件清单](recording.md#robot-id)。用 `lerobot-edit-dataset` 删集、拆分、去特征、8 → 6 相机转换得到的新数据集会把这两样一起带上；**合并（`merge`）会直接报错拒绝**，因为合并后没有一份清单能对应到每一集真实的传感器。
+
+<span id="stats-std"></span>
+
+!!! warning "0.0.8 之前录的数据集：图像的 `std` 统计量是 0"
+    0.0.8 之前录的数据集，`meta/stats.json` 里图像和视频特征的 `std` 恒为 0（`mean`、`min`、`max` 和分位数不受影响）。训练时如果按 `std` 对图像做归一化，需要先重新计算统计量。
 
 ## 落盘位置与命名规范
 
@@ -65,7 +70,13 @@ lerobot-check-dataset --repo-id <your_org>/<your_dataset> --episode-index 0 2 4
 | `root` | 本地根目录（默认 `~/.cache/huggingface/lerobot`） |
 | `episode-index` | 只检查指定集（可多值，如 `0 2 4`） |
 
-检查项包括 `meta/` 是否齐全、集数是否对得上、parquet 的行数与索引是否连续、有没有 NaN、视频文件是否存在且帧数与 parquet 对齐，以及**相机格式**——双臂数据集会被判为 6 相机（四路触觉 + 两路腕相机）还是 8 相机（再加头显两只眼），两种格式训练时的输入维度不同。
+检查项包括 `meta/` 是否齐全、集数是否对得上、parquet 的行数与索引是否连续、有没有 NaN、视频文件是否存在且帧数与 parquet 对齐，以及**相机格式**——双臂数据集会被判为 6 相机（四路触觉 + 两路腕相机）还是 8 相机（再加头显两只眼），两种格式训练时的输入维度不同。结果汇总在最后一行：
+
+```text
+Summary: 0 error(s), 0 warning(s) | Camera format: 6-camera (no headset)
+```
+
+单夹爪数据集、关了腕相机或只录一只眼的数据集，相机格式会显示 `not recognized` 并给一条告警；这项检查只针对标准的双臂格式，不影响其余检查项。
 
 ### 双臂 8 相机 → 6 相机 {#8to6}
 
@@ -75,14 +86,13 @@ lerobot-check-dataset --repo-id <your_org>/<your_dataset> --episode-index 0 2 4
 lerobot-edit-dataset \
     --repo_id <your_org>/<dataset_8cam> \
     --new_repo_id <your_org>/<dataset_6cam> \
-    --operation.type convert_8_to_6_cameras \
-    --local_files_only
+    --operation.type convert_8_to_6_cameras
 ```
 
 它丢掉头显两只眼的图像键，以及 `action` / `observation.state` 里的 `head_camera.*` 维度，**原数据集不动**，结果写到 `--new_repo_id`。源数据集本来就是 6 相机、或者相机键对不上预期时，命令直接报错拒绝转换，而不是转出一个说不清格式的数据集。
 
-!!! tip "本地数据集加 `--local_files_only`"
-    `lerobot-edit-dataset` 的各项操作默认允许在本地找不到时去 Hugging Face Hub 取；带上 `--local_files_only` 就只读本地，避免手滑打错 `repo_id` 时静悄悄从网上拉一份下来。
+!!! warning "先确认 `--repo_id` 拼对了"
+    这项转换在本地找不到数据集时会去 Hugging Face Hub 取，`--local_files_only` 对它不起作用。务必确认 `--repo_id` 拼写正确，或者用 `--root` 直接指向本地数据集目录。
 
 ## 回放与可视化
 
@@ -136,6 +146,9 @@ lerobot-push-dataset-to-hub \
     ```
 
 成功后数据集地址为 `https://huggingface.co/datasets/<repo_id>`。
+
+- 上传时会自动生成数据集卡片（README），并先在本地数据集目录里写一个 `assets/`，放卡片用的三张图（共约 12 MB），与数据一起上传；加了 `--no-videos` 也照样上传这几张图。
+- `--dataset-path` 只读本地，路径不对会报 `Cannot find dataset metadata in local directory`，不会从 Hub 下载。
 
 ## 磁盘规划与估算 {#storage-planning}
 

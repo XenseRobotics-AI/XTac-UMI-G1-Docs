@@ -4,7 +4,7 @@ This page is organised by symptom; each entry gives the cause and the fix. Most 
 
 ## Attach the full log when reporting a problem {#logs}
 
-The full log is at `~/xenselogs/session_<timestamp>.log`, one file per run. The screen keeps only the few lines worth watching; this file has everything, with the collection program, `xensesdk` and the video encoding library all in one place, plus timestamps for key presses. Attach this file rather than the last few lines off the screen. The directory can be changed with the `XENSE_LOG_DIR` environment variable.
+The full log is at `~/xenselogs/session_<timestamp>.log`, one file per run. The screen keeps only the few lines worth watching; this file has everything, with the collection program, `xensesdk` and the video encoding library all in one place, plus timestamps for key presses. Attach this file rather than the last few lines off the screen. The `[session]` line at the top records the host, encoding and camera configuration; only the latest 15 files are kept. The directory can be changed with the `XENSE_LOG_DIR` environment variable, and how much is shown on screen with `XENSE_LOG_LEVEL`.
 
 ## Environment and installation
 
@@ -107,6 +107,17 @@ First note down the device number, how it is connected, the indicator light stat
     **Cause:** the follower gripper takes power from the 24V adapter and communicates over Type-C. No power means the 24V is not connected or the adapter is faulty; communication errors mean the Type-C is not connected or not recognised, or the cable is being pulled by the robot's motion.
 
     **Fix:** check the 24V adapter, the outlet, the power connector and its rating; connect the 24V first, then the Type-C, and lock it (see [Power-on sequence](index.md#power-on)). Reconnect the Type-C and tighten the locking screws, route the cable away from the joints and the gripper's range of motion, and test at low speed before the first run.
+
+??? failure "Binding the follower fails with `从爪固件版本过低,必须升级后才能使用本 SDK` / `Follower firmware too old`"
+    **Cause:** the follower firmware is older than 1.1.6. The motion-safety envelope arrived in 1.1.6, and both `--robot.role=follower` and the SDK refuse older firmware.
+
+    **Fix:** flash the follower image bundled with the SDK, then **unplug the USB cable and the power cable together** and plug them back in:
+
+    ```bash
+    python third_party/taccap-gripper/python/examples/ota_update.py slave
+    ```
+
+    With several grippers connected, name the one to flash: `ota_update.py tc-gu-01-slave.bin left` (or `right`, or a full SN), see [Firmware OTA](versions.md#ota).
 
 ??? failure "The blue light stays on too long during an OTA upgrade"
     **Cause:** the upgrade has not finished, or the procedure went wrong.
@@ -268,25 +279,41 @@ First note down the device number, how it is connected, the indicator light stat
 
     **Fix:** add the station number; a bare number is enough (`0` / `1`…, one per rig, and a bimanual rig counts as one; the prefix is filled in from `--robot.type`, giving `taccap_0` / `bi_taccap_0`), for example `lerobot-record --robot.type=bi_taccap_gripper --robot.id=0 ...`. It names the station, not the hardware, so swapping a gripper does not change it; the devices' identity is recorded in the dataset's `meta/hardware.json`, see [`--robot.id` and the hardware manifest](recording.md#robot-id).
 
-??? failure "Resuming warns that the dataset's existing `meta/hardware.json` does not match the current hardware"
-    **Cause:** the gripper or tactile sensors were swapped when resuming with `--resume`; the program keeps the original file and warns.
+??? failure "On resume, the hardware does not match what the dataset recorded"
+    **Cause:** the gripper or tactile sensors were swapped when resuming with `--resume`. This is not an error: the manifest opens a new epoch at the current episode count and logs `... recorded as a new epoch in .../hardware.json`. Only a `--robot.type` mismatch keeps the original file with a warning.
 
-    **Fix:** the warning does not stop recording. If the hardware change was intentional, carry on; the warning is the record that this dataset spans two sets of hardware. If it was not intentional (a gripper plugged into the wrong place, say), stop and put the original device back.
+    **Fix:** if the change was intentional, carry on; if not (a gripper plugged into the wrong place, say), stop and put the original device back.
+
+??? failure "Resume fails with `refusing to resume it`"
+    **Cause:** `--robot.id` differs from the station recorded in the dataset. One dataset belongs to one station, and this is refused before any device is connected.
+
+    **Fix:** resume on the original station with the original `--robot.id`, or record into a new `--dataset.repo_id`.
 
 ??? failure "Recording dies partway through with `ValueError: You must add one or several frames`"
     **Cause:** for about 2 s between two episodes nobody reads keyboard events (saving plus encoder warm-up), and a **right arrow** pressed in that gap stays pending. The usual trigger is the previous episode's reset timing out on its own just as you reach for the key. The next episode then exits with zero frames recorded, the reset still runs in full, and saving raises this error, killing the whole session. It surfaces more than two minutes after the keypress, with a perfectly normal-looking reset in between, so it is hard to connect to that key.
 
     **Fix:** upgrade to `0.0.7` or newer, where key presses in that gap are discarded. On an earlier version, do not press the arrow keys early between episodes; wait until the next episode's prompt is printed. The keyboard hook is global, so a right arrow in **any** window ends the episode (Rerun included, whose timeline scrubs with the arrow keys); the keypress timestamps in the [session log](#logs) are the first evidence to check for "it exited on its own".
 
-??? failure "`[stale_frames]` is printed at the end of every episode, or a camera capture stall warning appears"
-    **Cause:** one camera's background capture stalled briefly. The collection loop is **not blocked** by it (it gets the cached previous frame), so the frame rate looks entirely normal and the cost lands in the data instead: what was recorded during that window is a **repeat of the old image**. The `[stale_frames]` line gives how many frames in that episode were duplicates, in how many runs, and the longest run.
+??? failure "`[stale_frames]` is printed after each reset phase, or a camera capture stall warning appears"
+    **Cause:** one camera's background capture stalled briefly. The collection loop is **not blocked** by it (it gets the cached previous frame), so the frame rate looks entirely normal and the cost lands in the data instead: what was recorded during that window is a **repeat of the old image**. After each reset phase a line gives how many frames in that episode were duplicates, in how many runs, and the longest run; a re-recorded episode is marked ` (discarded take)`:
+
+    ```text
+    [stale_frames] episode 3 [left_tactile_left] 45/1800 frames served stale (2.5%): 25 gap(s), longest 21 frame(s)
+    ```
 
     **Fix:** look at the proportion first. Some duplication is expected: the sensor's background capture and the recording loop each run freely at the same nominal rate, the phase drifts, and occasionally a frame is sampled twice before a new one lands. That produces many **single-frame** duplicates and needs no action. What is worth chasing is a **long contiguous run**, which is a real stall, most often the GPU encoder starving the tactile threads for 0.3 to 0.9 s while 8 cameras encode at once. A few percent in short runs is fine to use; an episode with a very long run is a still image for that stretch and is better discarded. If it persists, work through [Not enough USB bandwidth](#usb-bandwidth) or record fewer cameras at once.
 
-??? failure "`[slow_frame]` appears constantly in the log after enabling `--display_data=true`"
-    **Cause:** the Rerun display is eating the frame budget. Measured on a bimanual rig with the headset (four tactile streams, two wrist cameras, two eyes): 13.2 ms per frame with JPEG compression, 3.1 ms without, while the whole budget at 30 fps is 33.3 ms. Look at `top_obs=` at the end of the `[slow_frame]` line first to tell a slow sensor from an expensive display; the two have opposite fixes.
+    At the same time a `[loop_summary]` line gives the episode's actual frame rate, e.g. `= 29.0 fps (nominal 30; dataset timestamps assume nominal)`: when the real rate is below nominal, the dataset timestamps are still written at the nominal rate.
 
-    **Fix:** confirm the two defaults `--display_compressed_images=false` and `--display_image_every_n=1` have not been changed. If it still overruns, raise `--display_image_every_n`: camera images refresh less often while scalars like `tcp.*` and `gripper.pos` stay at full rate. This is the last resort.
+??? failure "The log shows `[slow_frame] ... overrun=`"
+    **Cause:** one frame took longer than the frame budget (33.3 ms at 30 fps). Since 0.0.8 the Rerun display runs on its own thread and is **no longer a cause**; if it falls behind, only on-screen frames are dropped.
+
+    **Fix:** read the two parts of the line:
+
+    - ` | phases obs=… build=… add=… display=…`: time per phase; look for the largest;
+    - `top_obs=` at the end: the slowest sensors.
+
+    Only the first 5 `[slow_frame]` lines of an episode reach the screen; the rest go to the [session log](#logs), and the screen shows a `[slow_frame_summary]` every 5 s instead. A few now and then do not affect the data; if they persist and keep pointing at the same camera, work through [Not enough USB bandwidth](#usb-bandwidth). For machines without an NVIDIA card see [Recording on a host without an NVIDIA GPU](recording.md#no-gpu).
 
 ??? failure "Recording stops partway through with `Device lost mid-recording`"
     **Cause:** a camera or the gripper encoder dropped off: a loose cable, locking screws not tightened, strain on the cable, a hub losing power, unstable power or a bad USB port. Collection stops on purpose, and what was recorded so far is saved.
@@ -299,7 +326,7 @@ First note down the device number, how it is connected, the indicator light stat
     **Fix:** switch to a CPU encoder and turn streaming encoding off: `lerobot-record ... --dataset.vcodec=libsvtav1 --dataset.streaming_encoding=false`. The reasoning is in [Recording on a host with no NVIDIA GPU](recording.md#no-gpu).
 
 ??? failure "The encoder cannot keep up and dropped-frame warnings appear in the log"
-    **Cause:** when the real-time encoding queue is full, the oldest frame is dropped (rather than blocking the collection loop).
+    **Cause:** when the real-time encoding queue is full it waits up to 0.1 s, then drops the current frame and warns `Encoder queue full … dropped N frame(s)` (rather than blocking the collection loop).
 
     **Fix:** raise `--dataset.encoder_threads`, use hardware encoding with `--dataset.vcodec=auto`, or adjust `--dataset.encoder_queue_maxsize`, see [Recording options](recording.md#54).
 

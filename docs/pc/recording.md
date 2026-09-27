@@ -67,7 +67,7 @@ lerobot-record \
     --dataset.single_task='Pick up the object'
 ```
 
-- 正式录制保持 `--display_data=false`（默认值）：Rerun 显示要在采集主循环上压缩并推送每一路画面，明显占用帧预算；录制中要盯画面用 [`--display_image_every_n`](#params)。
+- `--display_data` 默认是 `false`。0.0.8 起 Rerun 显示在独立线程上做，录制时开着也不占采集循环的帧预算：查看器跟不上时只丢屏幕上的帧，结束时打印一行 `Rerun display: N/M frames dropped …`，录进数据集的内容不受影响。
 - 显式写出 `fps=30`、`episode_time_s=120`、`reset_time_s=60`、`push_to_hub=false`，避免不同 checkout 的默认值变化影响采集。
 - 相机或夹爪编码器中途掉线（线松、hub 掉电）时，采集主动停下并把已录部分存盘，打印 `Device lost mid-recording`，不写编造的值。短暂读取失败会沿用上一帧好值（相机约 2 秒、编码器约 1 秒）才判掉线，所以那一集末尾一两秒可能是重复旧值，建议弃用。检查线缆与 USB 口（见[故障排查](troubleshooting.md)），再用 `--resume` 续录。
 
@@ -93,7 +93,7 @@ lerobot-record \
 | `streaming_encoding` | `true` | 实时流式编码，见[流式编码](#54) |
 | `vcodec` | `auto` | `h264`/`hevc`/`libsvtav1`/`auto`/硬件编码器 |
 | `encoder_threads` | 自动 | 每个编码器实例的线程数 |
-| `encoder_queue_maxsize` | `30` | 每相机缓冲帧数（~1s@30fps），编码跟不上时反压丢旧帧 |
+| `encoder_queue_maxsize` | `30` | 每相机缓冲帧数（~1s@30fps）；队列满时最多等 0.1 秒，仍满则丢弃当前帧并告警 |
 | `video_encoding_batch_size` | `1` | 批量编码前累计的集数（1=即时编码） |
 
 **录制控制（顶层参数）**
@@ -105,10 +105,10 @@ lerobot-record \
 | `fps` | `30` | 主循环帧率，与 `--dataset.fps`（落盘采样率）是两个参数，通常相同 |
 | `display_data` | `false` | Rerun 显示相机画面与 3D 视图 |
 | `show_trajectory` | `true` | Rerun 叠加 3D 位姿 + 轨迹（需 `display_data` 且有 `tcp.*`） |
-| `display_compressed_images` | `false` | Rerun 里 JPEG 压缩后显示，吃帧预算；只在查看器在另一台机器（`--display_ip`）时划算 |
-| `display_image_every_n` | `1` | 每 N 帧刷新一次画面（标量始终全速）；最后手段 |
+| `display_compressed_images` | `false` | Rerun 里 JPEG 压缩后显示；压缩在显示线程上做，不占录制循环，只在查看器在另一台机器（`--display_ip`）时划算 |
+| `display_image_every_n` | `1` | 每 N 帧刷新一次相机画面（标量始终全速）；显示丢帧很多、又想自己决定丢哪些帧时再用 |
 | `play_sounds` | `true` | 语音播报；容器里没有语音合成器，一律静音，要听到就在宿主机上跑 |
-| `resume` | `false` | 在已有数据集上续录 |
+| `resume` | `false` | 在已有数据集上续录；只在本地找，找不到直接报错，不会从 Hub 下载；`--robot.id` 须与数据集一致，见 [`--robot.id`](#robot-id) |
 
 **设备参数 `--robot.*`（XTac-UMI G1 专属）**
 
@@ -117,6 +117,8 @@ lerobot-record \
 | 参数 | 默认 | 含义 |
 |---|---|---|
 | `robot.side` | 自动 | `left`/`right`，单夹爪模式下两只都接着时必填 |
+| `robot.role` | `leader` | 填 `follower` 绑定从夹爪；从夹爪固件须 ≥ 1.1.6，见[固件 OTA](versions.md#ota) |
+| `robot.gripper_stream_hz` | `100` | 主夹爪固件主动推送编码器（开启时含 IMU）读数的频率；`0` 为每帧轮询。推流起不来时自动回退轮询并告警，不影响录制。双夹爪两侧共用，不带前缀 |
 | `robot.enable_tracker` | `true` | 关闭则无位姿 |
 | `robot.enable_head_camera` | `false` | 录头显相机，见[头显相机](#56) |
 | `robot.head_camera_eyes` | `both` | `both` 两只眼（两个键），`left` / `right` 只录一只 |
@@ -158,6 +160,7 @@ ValueError: --robot.id is required: the station label for this rig, e.g. --robot
 ```json
 {
   "robot_type": "bi_taccap_gripper",
+  "robot_id": "bi_taccap_0",
   "epochs": [
     {
       "from_episode": 0,
@@ -189,7 +192,9 @@ ValueError: --robot.id is required: the station label for this rig, e.g. --robot
 - 独立文件，不是 `meta/info.json` 的键；追踪器和腕相机是配件，不在清单里。
 - `wrist_undistort` 记腕相机帧是否矫正过、用哪份内参，没矫正记 `{"applied": false}`，见[鱼眼矫正](#57)。
 
-`epochs` 让一个数据集跨几套硬件：每段记 `from_episode` / `to_episode`（左闭右开，同 `dataset_from_index` / `dataset_to_index`）和 `recorded_at`，正在录的段 `to_episode` 为 `null`。`--resume` 续录时同一套设备什么都不记；换了夹爪或传感器，旧段在当前集数处封口、新段接上；`--robot.id` 变了也开新段（消费端认 `units`）；`--robot.type` 对不上是换数据集不是换硬件，保留原文件并告警。老数据集（扁平 `units`）读成一个开口 epoch，只说明"没有证据换过硬件"。
+`epochs` 让一个数据集跨几套硬件：每段记 `from_episode` / `to_episode`（左闭右开，同 `dataset_from_index` / `dataset_to_index`）和 `recorded_at`，正在录的段 `to_episode` 为 `null`。`--resume` 续录时同一套设备什么都不记；换了夹爪或传感器，旧段在当前集数处封口、新段接上；`--robot.type` 对不上是换数据集不是换硬件，保留原文件并告警。
+
+**一个数据集只属于一个工位**：`--resume` 时 `--robot.id` 和数据集里记的不一致，会在连接任何设备之前直接报错拒绝续录（报错里带 `refusing to resume it`）。要么回原工位续录，要么换个 `--dataset.repo_id` 录成新数据集；没有记工位号的老数据集不受这条限制。老数据集（扁平 `units`）读成一个开口 epoch，只说明"没有证据换过硬件"。
 
 !!! danger "`meta/runtimes/`：重建触觉的衍生通道必须用这一份 bundle"
     落盘的是 `rectify` 流，depth / force / difference 从它算出，要用那枚传感器上电时拍的参考图（runtime 配置）。每次采集会话把每枚的 bundle 写进 `meta/runtimes/<SN>-<时间>.bin`（每枚约 841 KB），epoch 各指向自己那份。拿错 bundle 不报错：用另一枚的、或重标后的 bundle，没被碰过的胶体照样解出看似合理的 depth 和 force；老数据集没有 `meta/runtimes/` 就跳过重建。同一枚拆下维护再装回，参考图变了，会单独开 epoch。文件名里的时间是北京时间、不带时区，只当标签；计算用 `recorded_at`。
@@ -247,7 +252,8 @@ lerobot-record \
     --dataset.vcodec=auto
 ```
 
-- 每个相机一个 `_CameraEncoderThread`，经有界队列（`--dataset.encoder_queue_maxsize`，约 1 秒帧量）喂原始帧；跟不上时丢弃最旧帧并告警，不阻塞采集。
+- 每个相机一个编码线程，经有界队列（`--dataset.encoder_queue_maxsize`，约 1 秒帧量）喂原始帧；队列满时最多等 0.1 秒，仍满则丢弃当前帧并告警 `Encoder queue full … dropped N frame(s)`，不阻塞采集。
+- 保存一集是事务式的：存盘失败或存盘中途按 Ctrl+C，数据集回滚到上一集的完整状态，不会留下半条 episode，直接 `--resume` 续录即可。
 - `--dataset.vcodec=auto` 优先启用可用的硬件编码；推荐采集主机配 NVIDIA GPU，用 GPU H.264 编码器降低多路实时编码的 CPU 压力。
 - 编码器预热是自动的：每集开录前先把编码器准备好，不占第一帧的时间预算。
 
@@ -255,6 +261,8 @@ lerobot-record \
 
 !!! warning "这是给不达标机器的临时办法，不是推荐做法"
     [采集主机最低要求](install.md#host-spec)是 NVIDIA RTX 3060 / 8 GB 显存及以上。纯 CPU 服务器、虚拟机或无 NVIDIA 显卡的笔记本用下面这条能把数据录下来，但存盘慢、更容易掉帧；正式采集请换达标主机。
+
+0.0.8 修掉了无显卡路径上的内存增长（此前 `libsvtav1` 每集多占约 1.3 GB，长时间录制会耗尽内存），这类机器请先升级到 0.0.8。
 
 `--dataset.vcodec=auto` + `--dataset.streaming_encoding=true` 这两个默认值是按装了 NVIDIA 显卡配的。没有显卡时关掉流式编码：
 
@@ -279,7 +287,15 @@ lerobot-record \
 - 集间是被动复位：在 `--dataset.reset_time_s` 内重新摆放物体/场景，无需遥操。
 - 每条 episode 是一次完整演示，不要把多次尝试塞进一集。
 - `--dataset.episode_time_s` 给够但别过长，过长会产生大量无效尾帧。
-- 录制中可用 lerobot 的键盘控制（重录当前集、提前结束等）。
+- 录制中的键盘控制：
+
+    | 按键 | 作用 |
+    |---|---|
+    | → | 提前结束当前集；复位阶段按则提前结束复位 |
+    | ← | 放弃这一集并重录；录制中或随后的复位阶段按都行，之后照常给出复位时间 |
+    | Esc | 当前集照常存盘后停止录制 |
+
+    键盘监听是全局的：在 Rerun 等**任何窗口**里按方向键都会生效（Rerun 的时间轴正是用左右键翻帧）。
 
 ## 采集规范
 
@@ -309,7 +325,7 @@ lerobot-record \
 - 走有线时关闭数采电脑 WiFi，有线共享网络会与 WiFi 冲突，见[网络连接](../common/pico4.md#pico-network)。
 - 准备场景：光照稳定、目标清晰可见，清理会遮挡腕相机的线缆/杂物。
 - 预留磁盘：满负荷出流可达 ~280 MB/s（双夹爪），见[存储规划](dataset.md#storage-planning)。
-- 开录前[预览](#preview)一遍，看轨迹、`gripper.pos` 与触觉图是否都有信号；确认完再以 `--display_data=false` 开录。
+- 开录前[预览](#preview)一遍，看轨迹、`gripper.pos` 与触觉图是否都有信号；录制时想边录边看可以开着 `--display_data`，不影响采集。
 
 ### 演示动作规范
 
@@ -398,6 +414,6 @@ lerobot-record \
 
 从未标定（`read_fisheye()` 返回 `None`）、固件回了全零记录（固件 1.1.1 与 1.2.2 都会，判断要用 `is_usable_fisheye_cal()` 而不是 `is None`，否则 `fx = fy = 0` 建出的重映射表得到纯黑图且不抛异常）、或固件早于命令集 V2.0 时，矫正不会失败，而是回退到 SDK 内置参考内参（`Calibration::resolve_fisheye()` 返回 `(calibration, is_reference, reason)`，优先用它而不是 `read_fisheye()`），连接时告警 `Wrist undistortion is using the SDK's REFERENCE intrinsics ... Rectification will be approximate`，清单里记 `"calibration": "reference"`。
 
-参考值够看画面，但主点逐台会漂（实测一台差 37.7 像素）；要在矫正图上按像素测量（视觉伺服、手眼标定、尺寸估计）就先给这台存自己的标定：`python third_party/taccap-gripper/python/examples/fisheye_cal.py set-fisheye`。
+参考值够看画面，但主点逐台会漂（实测一台差 37.7 像素）；要在矫正图上按像素测量（视觉伺服、手眼标定、尺寸估计）就先给这台存自己的标定：`python third_party/taccap-gripper/python/examples/fisheye_cal.py set-fisheye right`（接着两只夹爪时用 `left` / `right` 或完整 SN 指定；只接一只可省略）。
 
 矫正后画面偏心、略微倾斜不代表标定错了：去畸变绕主点而非画幅中心，传感器未必装在镜头光心上，原始鱼眼的桶形畸变把周边压缩才藏住了它（实测一台 `cx = 359.1`，爪尖中点在 x = 360.1，仅差约 1 像素）；不要自己改 `cx`，改回 320 反而偏得更远并引入倾斜。

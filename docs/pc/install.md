@@ -76,10 +76,18 @@
 
     ### 克隆仓库与子模块 {#22}
 
-    仓库用 `third_party/` 子模块管理硬件 SDK，必须递归克隆：
+    仓库用 `third_party/` 子模块管理硬件 SDK，必须递归克隆，并指定发布版的 tag：
+
+    !!! warning "没有 GitHub SSH key 的机器，克隆前先执行一次"
+        子模块地址是 `git@github.com:` 形式，没配 SSH key 时主仓库能克隆、拉子模块会失败。先改走 HTTPS，原因见[子模块地址是 SSH 形式](versions.md#submodule-ssh)：
+
+        ```bash
+        git config --global url."https://github.com/".insteadOf "git@github.com:"
+        ```
 
     ```bash
     git clone \
+      --branch v0.0.8 \
       --recurse-submodules \
       https://github.com/XenseRobotics-AI/xense-taccap-lerobot.git
     cd xense-taccap-lerobot
@@ -94,7 +102,7 @@
     子模块只有一个：[`third_party/taccap-gripper`](https://github.com/XenseRobotics-AI/TacCap-Gripper)，装出来的包是 `xense.taccap`（触觉夹爪 SDK）。`xensesdk`（视触觉传感器 SDK）由 `setup_env.sh --install` 自动安装；`xensevr_pc_service_sdk`（Pico4）的 Python 绑定在主仓库里，要链接的 C SDK（`PXREARobotSDK.h` + `libPXREARobotSDK.so`）取自下一步安装的 [XenseVR PC Service `.deb`](#24)，这个 C SDK 今后随新版 `.deb` 更新，不是重跑 `--install`。
 
     !!! warning "更新子模块后必须重新编译 `xense.taccap`"
-        `taccap-gripper` 的 Python 包带一份编译产物，`git submodule update` 只更新文件不重新编译，之后 `import xense.taccap` 会报 `AttributeError: module 'xense.taccap._taccap_native' has no attribute 'GripperAutoCalConfig'` 一类错误。拉取含 `cpp/` 或 `python/bindings/` 改动的更新后重新构建（不需要 sudo），或直接 `bash setup_env.sh --install`：
+        `taccap-gripper` 的 Python 包带一份编译产物，`git submodule update` 只更新文件不重新编译，之后 `import xense.taccap` 会报 `AttributeError: module 'xense.taccap._taccap_native' has no attribute 'GripperAutoCalConfig'` 一类错误。SDK 版本号相同时也可能含这类改动，所以每次拉子模块后都重新构建（不需要 sudo），或直接 `bash setup_env.sh --install`：
 
         ```bash
         cd ~/xense-taccap-lerobot
@@ -171,7 +179,7 @@
     用普通用户（不要用 root）执行：
 
     ```bash
-    git clone https://github.com/XenseRobotics-AI/xense-taccap-lerobot.git
+    git clone --branch v0.0.8 https://github.com/XenseRobotics-AI/xense-taccap-lerobot.git
     cd xense-taccap-lerobot
     ./docker/install_customer.sh
     ```
@@ -187,17 +195,17 @@
     完全离线的机器向交付渠道要镜像 `.tar` 包，放进仓库根目录或作为第一个参数传给脚本，脚本会改为校验并导入：
 
     ```bash
-    ./docker/install_customer.sh xense-taccap-lerobot-0.0.7-linux-amd64.tar
+    ./docker/install_customer.sh xense-taccap-lerobot-0.0.8-linux-amd64.tar
     ```
 
     在线拉取仍是默认：镜像二十多 GB 大部分是不常变的依赖层，升级只拉变动的几层。
 
     ### 录数据前先把版本钉死 {#docker-pin}
 
-    默认拉的 `latest` 是浮动的，下次发布会指向新镜像。正式采集前在仓库根目录的 `.env` 里钉死版本；`compose.yaml` 默认镜像已是 `ghcr.io/xenserobotics-ai/xense-taccap-lerobot`，不需要再写 `LEROBOT_IMAGE`（只在换镜像名时用）：
+    默认拉的 `latest` 是浮动的，下次发布会指向新镜像。正式采集前在仓库根目录的 `.env` 里钉死版本；`compose.yaml` 已默认指向官方 GHCR 镜像，只需要写 tag 这一行，不需要再写 `LEROBOT_IMAGE`（只在换镜像名时用）：`docker compose config --images` 显示的仓库名可能和上文的不同，按 tag 核对即可，两者是同一个镜像：
 
     ```dotenv
-    LEROBOT_IMAGE_TAG=0.0.7
+    LEROBOT_IMAGE_TAG=0.0.8
     ```
 
     改完确认解析到的是这一版，再拉：
@@ -207,7 +215,7 @@
     docker compose pull
     ```
 
-    钉在 `0.0.5` 及更早时有两条已知问题（`0.0.6` 已修，不影响录到的数据）：录制要加 `--play_sounds=false`（镜像里没有 `spd-say`，见[故障排查](troubleshooting.md#docker)）；导出要以 root 拷再 `chown`，见[数据放在哪](#docker-data)。
+    钉 `0.0.6` 或更新的版本就不必管下面这两条；钉在 `0.0.5` 及更早时有两条已知问题（不影响录到的数据）：录制要加 `--play_sounds=false`（镜像里没有 `spd-say`，见[故障排查](troubleshooting.md#docker)）；导出要以 root 拷再 `chown`，见[数据放在哪](#docker-data)。
 
     ### 安装后的主机设置 {#docker-host}
 

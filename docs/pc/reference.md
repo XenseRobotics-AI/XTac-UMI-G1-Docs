@@ -8,7 +8,7 @@
 |---|---|---|
 | `robot.id` | **必填** | 这套设备的工位号，填数字即可（`0` / `1`…），前缀按 `robot.type` 自动补成 `taccap_0` / `bi_taccap_0`；漏填在解析命令行时即报错 → [`--robot.id` 与硬件清单](recording.md#robot-id) |
 | `robot.side` | 自动 | `left`/`right`，**单夹爪模式**下两只都接着时必填；只接一只则自动选中 |
-| `robot.role` | `leader` | 填 `follower` 绑定从夹爪 |
+| `robot.role` | `leader` | 填 `follower` 绑定从夹爪；从夹爪固件须 ≥ 1.1.6，见[固件 OTA](versions.md#ota) |
 | `robot.enable_tracker` | `true` | 关闭则只录触觉 + 夹爪 |
 | `robot.tracker_serial` | 未设 | 钉住追踪器 SN，绕过侧别规则；逐字使用、不校验，打错 connect 时报找不到 |
 | `robot.enable_wrist_camera` | `true` | 关闭腕相机 |
@@ -29,6 +29,7 @@
 | `robot.tactile_diff_gain` | `1.0` | `difference` 图的线性增益；**默认不请求 `difference`，故不起作用**；`None` = 用传感器出厂值 |
 | `robot.expected_tactiles_per_side` | `2` | 每侧应有几枚触觉；数量对不上直接报错 |
 | `robot.enable_gripper` / `robot.enable_imu` | `true` / `false` | 夹爪本体读数 / IMU 通道 |
+| `robot.gripper_stream_hz` | `100` | 主夹爪固件主动推送编码器（开启时含 IMU）读数的频率；`0` 为每帧轮询；推流起不来时自动回退轮询并告警。双夹爪两侧共用 |
 | `robot.gripper_open_rad` | `1.7` | **仅从夹爪用**。主夹爪一律用自己固件里实测的行程上限，本项对它没有任何作用——没标定的主夹爪会被拒绝连接，而不是退回这个常量。见[夹爪标定](calibration.md#41) |
 | `robot.tracker_to_ee_pos` | `None` | 覆盖 tracker→EE 平移；`None` = 用该侧**内置实测值** |
 | `robot.tracker_to_ee_quat` | `None` | 覆盖 tracker→EE 旋转（同上，两者可独立覆盖） |

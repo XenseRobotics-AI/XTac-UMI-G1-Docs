@@ -76,10 +76,18 @@ Both paths need internet access: Mamba fetches conda-forge and PyPI packages, cl
 
     ### Clone the repo and its submodules {#22}
 
-    The repo keeps the hardware SDKs in `third_party/` submodules, so the clone must be recursive:
+    The repo keeps the hardware SDKs in `third_party/` submodules, so the clone must be recursive, at the release tag:
+
+    !!! warning "On a machine without a GitHub SSH key, run this once before cloning"
+        The submodule is addressed as `git@github.com:`; without an SSH key the main repo clones but fetching the submodule fails. Switch to HTTPS first, see [The submodule URL is SSH](versions.md#submodule-ssh):
+
+        ```bash
+        git config --global url."https://github.com/".insteadOf "git@github.com:"
+        ```
 
     ```bash
     git clone \
+      --branch v0.0.8 \
       --recurse-submodules \
       https://github.com/XenseRobotics-AI/xense-taccap-lerobot.git
     cd xense-taccap-lerobot
@@ -94,7 +102,7 @@ Both paths need internet access: Mamba fetches conda-forge and PyPI packages, cl
     There is only one submodule, [`third_party/taccap-gripper`](https://github.com/XenseRobotics-AI/TacCap-Gripper), which installs the package `xense.taccap` (the tactile gripper SDK). `xensesdk` (the visuotactile sensor SDK) is installed automatically by `setup_env.sh --install`. The Python bindings of `xensevr_pc_service_sdk` (Pico4) live in the main repo, and the C SDK they link against (`PXREARobotSDK.h` + `libPXREARobotSDK.so`) comes out of the [XenseVR PC Service `.deb`](#24) installed in the next step; from now on that C SDK is updated through a new `.deb` release, not by re-running `--install`.
 
     !!! warning "Rebuild `xense.taccap` after updating the submodule"
-        The `taccap-gripper` Python package ships a compiled build artefact. `git submodule update` only updates the files and does not rebuild, after which `import xense.taccap` fails with an error like `AttributeError: module 'xense.taccap._taccap_native' has no attribute 'GripperAutoCalConfig'`. After pulling an update that touches `cpp/` or `python/bindings/`, rebuild (no sudo needed), or just run `bash setup_env.sh --install`:
+        The `taccap-gripper` Python package ships a compiled build artefact. `git submodule update` only updates the files and does not rebuild, after which `import xense.taccap` fails with an error like `AttributeError: module 'xense.taccap._taccap_native' has no attribute 'GripperAutoCalConfig'`. Such changes can arrive even when the SDK version number stays the same, so rebuild after every submodule pull (no sudo needed), or just run `bash setup_env.sh --install`:
 
         ```bash
         cd ~/xense-taccap-lerobot
@@ -171,7 +179,7 @@ Both paths need internet access: Mamba fetches conda-forge and PyPI packages, cl
     Run as a normal user (not root):
 
     ```bash
-    git clone https://github.com/XenseRobotics-AI/xense-taccap-lerobot.git
+    git clone --branch v0.0.8 https://github.com/XenseRobotics-AI/xense-taccap-lerobot.git
     cd xense-taccap-lerobot
     ./docker/install_customer.sh
     ```
@@ -187,17 +195,17 @@ Both paths need internet access: Mamba fetches conda-forge and PyPI packages, cl
     For a fully offline machine, ask your delivery channel for the image `.tar` bundle, drop it in the repo root or pass it as the first argument, and the script verifies and imports it instead:
 
     ```bash
-    ./docker/install_customer.sh xense-taccap-lerobot-0.0.7-linux-amd64.tar
+    ./docker/install_customer.sh xense-taccap-lerobot-0.0.8-linux-amd64.tar
     ```
 
     Pulling online is still the default: most of the image's twenty-odd GB is dependency layers that rarely change, so an upgrade fetches only the few layers that moved.
 
     ### Pin a version before you record {#docker-pin}
 
-    The default `latest` tag floats: the next release repoints it to a new image. Before real collection, pin a version in the repo root's `.env`. `compose.yaml` already defaults to `ghcr.io/xenserobotics-ai/xense-taccap-lerobot`, so there is no need to set `LEROBOT_IMAGE` (only for a different image name):
+    The default `latest` tag floats: the next release repoints it to a new image. Before real collection, pin a version in the repo root's `.env`. `compose.yaml` already points at the official GHCR image, so only the tag line is needed and there is no need to set `LEROBOT_IMAGE` (only for a different image name). The repository name shown by `docker compose config --images` may differ from the one above; check the tag, it is the same image:
 
     ```dotenv
-    LEROBOT_IMAGE_TAG=0.0.7
+    LEROBOT_IMAGE_TAG=0.0.8
     ```
 
     Confirm that this is the version that resolves, then pull:
@@ -207,7 +215,7 @@ Both paths need internet access: Mamba fetches conda-forge and PyPI packages, cl
     docker compose pull
     ```
 
-    Pinning `0.0.5` or earlier has two known issues (fixed in `0.0.6`; neither affects the recorded data): record with `--play_sounds=false` (the image has no `spd-say`, see [Troubleshooting](troubleshooting.md#docker)), and export by copying as root and then `chown`, see [Where the data lives](#docker-data).
+    Pin `0.0.6` or newer and neither of these applies; pinning `0.0.5` or earlier has two known issues (neither affects the recorded data): record with `--play_sounds=false` (the image has no `spd-say`, see [Troubleshooting](troubleshooting.md#docker)), and export by copying as root and then `chown`, see [Where the data lives](#docker-data).
 
     ### Host setup after installing {#docker-host}
 

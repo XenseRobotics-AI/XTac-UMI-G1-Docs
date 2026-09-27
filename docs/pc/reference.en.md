@@ -8,7 +8,7 @@ A lookup appendix: `RobotConfig` options and the SDK entry point. The collection
 |---|---|---|
 | `robot.id` | **required** | The station number for this rig; pass a bare number (`0` / `1` ...) and the prefix is filled in from `robot.type` to give `taccap_0` / `bi_taccap_0`. Leaving it out fails at command-line parse time → [`--robot.id` and the hardware manifest](recording.md#robot-id) |
 | `robot.side` | auto | `left`/`right`; required in **single-gripper mode** when both grippers are plugged in, picked automatically when only one is |
-| `robot.role` | `leader` | Set `follower` to bind the follower gripper |
+| `robot.role` | `leader` | Set `follower` to bind the follower gripper; the follower firmware must be ≥ 1.1.6, see [Firmware OTA](versions.md#ota) |
 | `robot.enable_tracker` | `true` | Off records tactile + gripper only |
 | `robot.tracker_serial` | unset | Pin a tracker by SN, bypassing the side rule; used verbatim and not validated, so a typo reports not found at connect |
 | `robot.enable_wrist_camera` | `true` | Turns the wrist camera off |
@@ -29,6 +29,7 @@ A lookup appendix: `RobotConfig` options and the SDK entry point. The collection
 | `robot.tactile_diff_gain` | `1.0` | Linear gain on the `difference` image; **inert by default**, since `difference` is not requested; `None` = the sensor's factory value |
 | `robot.expected_tactiles_per_side` | `2` | How many tactile sensors each side should have; a mismatch is an error |
 | `robot.enable_gripper` / `robot.enable_imu` | `true` / `false` | The gripper's own readings / the IMU channel |
+| `robot.gripper_stream_hz` | `100` | Rate at which the leader's firmware pushes encoder (and, when enabled, IMU) readings; `0` polls every frame; falls back to polling with a warning if the stream cannot start. Shared by both sides |
 | `robot.gripper_open_rad` | `1.7` | **Follower only.** A leader always uses the measured travel limit in its own firmware, and this option does nothing for it: an uncalibrated leader is refused a connection rather than falling back to this constant. See [Gripper calibration](calibration.md#41) |
 | `robot.tracker_to_ee_pos` | `None` | Override the tracker→EE translation; `None` = that side's **built-in measured value** |
 | `robot.tracker_to_ee_quat` | `None` | Override the tracker→EE rotation (same idea; the two can be overridden independently) |

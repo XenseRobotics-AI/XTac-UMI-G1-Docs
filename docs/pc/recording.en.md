@@ -67,7 +67,7 @@ lerobot-record \
     --dataset.single_task='Pick up the object'
 ```
 
-- Keep `--display_data=false` (the default) for real recordings: Rerun's display compresses and pushes every stream on the collection loop and eats a visible share of the frame budget. If you must watch during a recording, use [`--display_image_every_n`](#params).
+- `--display_data` defaults to `false`. Since 0.0.8 the Rerun display runs on its own thread, so leaving it on while recording costs the collection loop nothing: if the viewer falls behind only on-screen frames are dropped, and a line `Rerun display: N/M frames dropped …` is printed at the end. Nothing recorded is affected.
 - Spell out `fps=30`, `episode_time_s=120`, `reset_time_s=60` and `push_to_hub=false` explicitly, so a different checkout's defaults cannot change what you collect.
 - If a camera or the gripper encoder is lost mid-recording (a cable works loose, a hub browns out), collection stops on its own and saves what it already recorded, printing `Device lost mid-recording`; it does not write invented values. A brief read failure carries the last good value (about 2 s for a camera, about 1 s for the encoder) before loss is declared, so the last second or two of that episode may be repeated stale values; discard that episode. Check the cabling and the USB ports (see [Troubleshooting](troubleshooting.md)), then continue with `--resume`.
 
@@ -93,7 +93,7 @@ Three groups: dataset (`--dataset.*`), recording control (top level) and device 
 | `streaming_encoding` | `true` | Live streaming encoding, see [streaming encoding](#54) |
 | `vcodec` | `auto` | `h264`/`hevc`/`libsvtav1`/`auto`/a hardware encoder |
 | `encoder_threads` | auto | Threads per encoder instance |
-| `encoder_queue_maxsize` | `30` | Buffered frames per camera (~1s@30fps); back-pressure drops the oldest when encoding falls behind |
+| `encoder_queue_maxsize` | `30` | Buffered frames per camera (~1s@30fps); when full it waits up to 0.1 s, then drops the current frame and warns |
 | `video_encoding_batch_size` | `1` | Episodes accumulated before batch encoding (1=encode immediately) |
 
 **Recording control (top-level parameters)**
@@ -108,7 +108,7 @@ Three groups: dataset (`--dataset.*`), recording control (top level) and device 
 | `display_compressed_images` | `false` | JPEG-compress images before showing them in Rerun; eats frame budget, only pays off when the viewer is on another machine (`--display_ip`) |
 | `display_image_every_n` | `1` | Refresh the camera tiles only every N frames (scalars always stay at full rate); a last resort |
 | `play_sounds` | `true` | Spoken announcements; the container has no speech synthesiser, so they are always silent there. Record on the host to hear them |
-| `resume` | `false` | Continue recording into an existing dataset |
+| `resume` | `false` | Continue recording into an existing dataset; looks only locally and errors out rather than downloading from the Hub; `--robot.id` must match the dataset, see [`--robot.id`](#robot-id) |
 
 **Device parameters `--robot.*` (XTac-UMI G1 specific)**
 
@@ -117,6 +117,8 @@ Only the items used by this page's commands and optional features are listed; fo
 | Parameter | Default | Meaning |
 |---|---|---|
 | `robot.side` | auto | `left`/`right`; required in single-gripper mode when both are connected |
+| `robot.role` | `leader` | Set `follower` to bind the follower gripper; the follower firmware must be ≥ 1.1.6, see [Firmware OTA](versions.md#ota) |
+| `robot.gripper_stream_hz` | `100` | Rate at which the leader's firmware pushes encoder (and, when enabled, IMU) readings; `0` polls every frame. If the stream cannot start it falls back to polling with a warning and recording continues. Shared by both sides on a bimanual rig, no prefix |
 | `robot.enable_tracker` | `true` | Off means no pose |
 | `robot.enable_head_camera` | `false` | Record the head camera, see [head camera](#56) |
 | `robot.head_camera_eyes` | `both` | `both` records both eyes (two keys), `left` / `right` records one |
@@ -158,6 +160,7 @@ The hardware manifest is the identity: `lerobot-record` writes `meta/hardware.js
 ```json
 {
   "robot_type": "bi_taccap_gripper",
+  "robot_id": "bi_taccap_0",
   "epochs": [
     {
       "from_episode": 0,
@@ -189,7 +192,9 @@ The hardware manifest is the identity: `lerobot-record` writes `meta/hardware.js
 - It is a file of its own, not a key in `meta/info.json`. Trackers and wrist cameras are accessories and are not in the manifest.
 - `wrist_undistort` records whether the wrist frames were undistorted and from which intrinsics; not undistorted is recorded as `{"applied": false}`. See [fisheye undistortion](#57).
 
-`epochs` lets one dataset span several rigs: each epoch records `from_episode` / `to_episode` (half-open, matching `dataset_from_index` / `dataset_to_index`) and `recorded_at`; the epoch being recorded has `to_episode` `null`. On `--resume` with the same rig nothing is recorded. If a gripper or sensor was swapped, the old epoch is closed at the current episode count and a new one starts. A changed `--robot.id` also opens a new epoch (consumers key on `units`). A `--robot.type` mismatch is a different dataset, not a hardware swap: the original file is kept and a warning is logged. Older datasets (flat `units`) read back as one open epoch, which only says "nothing indicates the hardware changed".
+`epochs` lets one dataset span several rigs: each epoch records `from_episode` / `to_episode` (half-open, matching `dataset_from_index` / `dataset_to_index`) and `recorded_at`; the epoch being recorded has `to_episode` `null`. On `--resume` with the same rig nothing is recorded. If a gripper or sensor was swapped, the old epoch is closed at the current episode count and a new one starts. A `--robot.type` mismatch is a different dataset, not a hardware swap: the original file is kept and a warning is logged. Older datasets (flat `units`) read back as one open epoch, which only says "nothing indicates the hardware changed".
+
+**One dataset belongs to one station**: on `--resume`, a `--robot.id` that differs from the one recorded in the dataset is refused before any device is connected (the error contains `refusing to resume it`). Resume on the original station, or record into a new `--dataset.repo_id`. Older datasets with no recorded station are not affected.
 
 !!! danger "`meta/runtimes/`: rebuilding the derived tactile channels needs this bundle"
     What is recorded is the `rectify` stream; depth / force / difference are computed from it, and that needs the reference image captured when that sensor came up (the runtime config). Every capture session writes each sensor's bundle to `meta/runtimes/<SN>-<timestamp>.bin` (about 841 KB each), and each epoch points at its own. Using the wrong bundle does not fail: solve against another sensor's bundle, or one from after a recalibration, and an untouched gel still yields plausible-looking depth and force. An older dataset with no `meta/runtimes/` skips reconstruction. A sensor pulled for maintenance and refitted comes back with a new reference image and opens its own epoch. The timestamp in the filename is Beijing time with no offset; read it as a label and compute with `recorded_at`.
@@ -247,7 +252,8 @@ lerobot-record \
     --dataset.vcodec=auto
 ```
 
-- One `_CameraEncoderThread` per camera, fed raw frames through a bounded queue (`--dataset.encoder_queue_maxsize`, roughly one second of frames). When it falls behind it drops the oldest frame and warns rather than blocking collection.
+- One encoder thread per camera, fed raw frames through a bounded queue (`--dataset.encoder_queue_maxsize`, roughly one second of frames). When the queue is full it waits up to 0.1 s, then drops the current frame and warns `Encoder queue full … dropped N frame(s)` rather than blocking collection.
+- Saving an episode is transactional: if the save fails or is interrupted with Ctrl+C, the dataset rolls back to the last complete episode with no half-written episode left behind, and `--resume` carries on from there.
 - `--dataset.vcodec=auto` prefers hardware encoding where available. An NVIDIA GPU on the data-collection host is recommended so the GPU H.264 encoder can take the CPU load off encoding several live streams.
 - Encoder warm-up is automatic: encoders are made ready before each episode starts, so the first frame does not pay for it.
 
@@ -255,6 +261,8 @@ lerobot-record \
 
 !!! warning "This is a workaround for an underspecified machine, not a recommendation"
     The [data-collection host minimum](install.md#host-spec) is an NVIDIA RTX 3060 / 8 GB VRAM or better. A CPU-only server, a VM or a laptop with no NVIDIA card can get data recorded with the command below, but saves are slow and frames drop sooner. For real collection, use a host that meets the minimum.
+
+0.0.8 fixed the memory growth on this path (with `libsvtav1` each episode used to hold about 1.3 GB more, so long sessions ran out of memory); upgrade such machines to 0.0.8 first.
 
 The two defaults `--dataset.vcodec=auto` + `--dataset.streaming_encoding=true` assume an NVIDIA card. Without one, turn streaming encoding off:
 
@@ -279,7 +287,15 @@ The reason: with `libsvtav1` the CPU both encodes and captures. A bimanual rig h
 - Between episodes the reset is passive: reposition the object and scene within `--dataset.reset_time_s`, no teleoperation.
 - Each episode is one complete demonstration; do not pack several attempts into one.
 - Give `--dataset.episode_time_s` enough room but not too much; an over-long episode produces a lot of dead tail frames.
-- lerobot's keyboard controls work while recording (re-record the current episode, end it early, and so on).
+- Keyboard controls while recording:
+
+    | Key | Effect |
+    |---|---|
+    | → | End the current episode early; during the reset phase, end the reset early |
+    | ← | Discard this episode and re-record it; works during recording or the reset phase that follows, and the reset time is still given afterwards |
+    | Esc | Save the current episode, then stop recording |
+
+    The keyboard listener is global: arrow keys pressed in **any window**, Rerun included, take effect (Rerun's timeline uses left/right to step frames).
 
 ## Collection standards
 
@@ -309,7 +325,7 @@ Never restart XTac-UMI XR during collection; see [frame alignment](../common/pic
 - When using the wired link, turn the data-collection host's WiFi off; wired network sharing conflicts with WiFi. See [network](../common/pico4.md#pico-network).
 - Prepare the scene: stable lighting, the target clearly visible; clear away cables and clutter that would block the wrist camera.
 - Leave disk headroom: at full load the stream can reach ~280 MB/s (bimanual), see [storage planning](dataset.md#storage-planning).
-- Run the [preview](#preview) once before recording and check that the trajectory, `gripper.pos` and the tactile images all carry signal; once confirmed, record with `--display_data=false`.
+- Run the [preview](#preview) once before recording and check that the trajectory, `gripper.pos` and the tactile images all carry signal; you can leave `--display_data` on while recording if you want to watch; it does not affect collection.
 
 ### How to perform the demonstration
 
@@ -398,6 +414,6 @@ The wrist camera is a 190° fisheye, and the raw fisheye frame is recorded by de
 
 When the lens has never been calibrated (`read_fisheye()` returns `None`), the firmware returns an all-zero record (both firmware 1.1.1 and 1.2.2 do; test with `is_usable_fisheye_cal()` rather than `is None`, otherwise the remap table built from `fx = fy = 0` yields a pure black image without raising), or the firmware predates command set V2.0, undistortion does not fail. It falls back to the SDK's built-in reference intrinsics (`Calibration::resolve_fisheye()` returns `(calibration, is_reference, reason)`; prefer it over `read_fisheye()`), warns at connect with `Wrist undistortion is using the SDK's REFERENCE intrinsics ... Rectification will be approximate`, and records `"calibration": "reference"` in the manifest.
 
-The reference values are good enough to look at, but the principal point drifts from unit to unit (measured 37.7 px off on one unit). If you need to measure in pixels on the rectified image (visual servoing, hand-eye calibration, size estimation), store this unit's own calibration first: `python third_party/taccap-gripper/python/examples/fisheye_cal.py set-fisheye`.
+The reference values are good enough to look at, but the principal point drifts from unit to unit (measured 37.7 px off on one unit). If you need to measure in pixels on the rectified image (visual servoing, hand-eye calibration, size estimation), store this unit's own calibration first: `python third_party/taccap-gripper/python/examples/fisheye_cal.py set-fisheye right` (with two grippers connected, pick one with `left` / `right` or a full SN; with one gripper it can be omitted).
 
 A rectified frame that sits off-centre or looks slightly tilted does not mean the calibration is wrong: undistortion is built around the principal point, not the middle of the frame, the sensor is not always mounted at the lens's optical centre, and the raw fisheye's barrel distortion hides this by compressing the periphery (measured on one unit: `cx = 359.1`, with the fingertip midpoint at x = 360.1, only about 1 px apart). Do not change `cx` yourself; forcing it back to 320 pushes the picture further off and introduces a tilt.

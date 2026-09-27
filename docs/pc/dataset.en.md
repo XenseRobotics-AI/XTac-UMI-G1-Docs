@@ -28,7 +28,12 @@ How it is serialised:
 
 For the observation and action keys recorded in each frame, see [What each frame records](recording.md#53).
 
-A standard LeRobotDataset records only `robot_type` in `info`, so recording writes two extra, separate files (neither touches the upstream `info` structure): `meta/hardware.json` records which rig produced the data (station number, gripper and tactile SNs, whether the wrist camera was undistorted; split into `epochs`, and a hardware swap part-way through starts a new epoch), and `meta/runtimes/` records each tactile sensor's runtime bundle at the time of collection, which rebuilding depth / force / difference from the `rectify` stream needs. Field meanings, resume behaviour and what to watch out for when reconstructing are in [`--robot.id` and the hardware manifest](recording.md#robot-id).
+A standard LeRobotDataset records only `robot_type` in `info`, so recording writes two extra, separate files (neither touches the upstream `info` structure): `meta/hardware.json` records which rig produced the data (station number, gripper and tactile SNs, whether the wrist camera was undistorted; split into `epochs`, and a hardware swap part-way through starts a new epoch), and `meta/runtimes/` records each tactile sensor's runtime bundle at the time of collection, which rebuilding depth / force / difference from the `rectify` stream needs. Field meanings, resume behaviour and what to watch out for when reconstructing are in [`--robot.id` and the hardware manifest](recording.md#robot-id). Datasets derived with `lerobot-edit-dataset` (deleting or splitting episodes, removing features, 8 → 6 camera conversion) carry both along; **`merge` refuses outright**, because no single manifest could describe every episode's real sensors after a merge.
+
+<span id="stats-std"></span>
+
+!!! warning "Datasets recorded before 0.0.8: the image `std` statistic is 0"
+    In datasets recorded before 0.0.8, the `std` of image and video features in `meta/stats.json` is always 0 (`mean`, `min`, `max` and quantiles are unaffected). If you normalise images by `std` during training, recompute the statistics first.
 
 ## Where it lands and naming convention
 
@@ -65,7 +70,13 @@ lerobot-check-dataset --repo-id <your_org>/<your_dataset> --episode-index 0 2 4
 | `root` | Local root directory (default `~/.cache/huggingface/lerobot`) |
 | `episode-index` | Check only these episodes (accepts several, e.g. `0 2 4`) |
 
-It checks that `meta/` is complete, that the episode count agrees, that the parquet row counts and indices are contiguous, that there are no NaNs, that the video files exist and their frame counts line up with the parquet, and the **camera format**: a bimanual dataset is classified as 6 cameras (four tactile streams plus two wrist cameras) or 8 (plus the headset's two eyes), and the two formats have different input dimensions at training time.
+It checks that `meta/` is complete, that the episode count agrees, that the parquet row counts and indices are contiguous, that there are no NaNs, that the video files exist and their frame counts line up with the parquet, and the **camera format**: a bimanual dataset is classified as 6 cameras (four tactile streams plus two wrist cameras) or 8 (plus the headset's two eyes), and the two formats have different input dimensions at training time. The result is summarised on the last line:
+
+```text
+Summary: 0 error(s), 0 warning(s) | Camera format: 6-camera (no headset)
+```
+
+Single-gripper datasets, and datasets with the wrist camera off or only one eye recorded, show `not recognized` with a warning; this check only targets the standard bimanual formats and does not affect the other checks.
 
 ### Bimanual 8 cameras → 6 cameras {#8to6}
 
@@ -75,14 +86,13 @@ A bimanual dataset recorded with the [head camera](recording.md#56) on is in the
 lerobot-edit-dataset \
     --repo_id <your_org>/<dataset_8cam> \
     --new_repo_id <your_org>/<dataset_6cam> \
-    --operation.type convert_8_to_6_cameras \
-    --local_files_only
+    --operation.type convert_8_to_6_cameras
 ```
 
 It drops the two headset eye image keys and the `head_camera.*` dimensions from `action` / `observation.state`. **The source dataset is left untouched** and the result is written to `--new_repo_id`. If the source is already 6-camera, or the camera keys do not match what is expected, the command errors out and refuses rather than producing a dataset of unclear format.
 
-!!! tip "Add `--local_files_only` for local datasets"
-    By default the `lerobot-edit-dataset` operations are allowed to fetch from the Hugging Face Hub when a dataset is not found locally. `--local_files_only` reads only local files, so a mistyped `repo_id` cannot quietly pull a copy off the network.
+!!! warning "Double-check `--repo_id`"
+    If the dataset is not found locally this conversion fetches it from the Hugging Face Hub, and `--local_files_only` has no effect on it. Make sure `--repo_id` is spelled correctly, or point `--root` straight at the local dataset folder.
 
 ## Replay and visualisation
 
@@ -136,6 +146,9 @@ Common variants:
     ```
 
 On success the dataset lives at `https://huggingface.co/datasets/<repo_id>`.
+
+- The upload also generates a dataset card (README): it first writes an `assets/` folder with three images for the card (about 12 MB in total) into the local dataset folder and uploads it with the data, even with `--no-videos`.
+- `--dataset-path` reads local files only; a wrong path fails with `Cannot find dataset metadata in local directory` rather than downloading from the Hub.
 
 ## Planning and estimating disk usage {#storage-planning}
 

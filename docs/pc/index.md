@@ -14,7 +14,7 @@ PC 版把计算放在你自己的 x86 工作站上（推荐 NVIDIA GPU，Mamba �
 
 - 仓库、子模块、SDK 与夹爪固件都已按[必须升级到最新版本](versions.md#required)升级。版本不配套时采集
   照样能跑完并落盘，只是 `gripper.pos` 的刻度和别人对不上，事后从数据里看不出来。固件要求命令集
-  V2.1，对应主夹爪 ≥ 1.2.0 / 从夹爪 ≥ 1.1.0，更高版本不必回刷（[两者的区别](versions.md#v21)）。
+  V2.1，对应主夹爪 ≥ 1.2.0 / 从夹爪 ≥ 1.1.0，更高版本不必回刷（[两者的区别](versions.md#v21)）；用从夹爪（`--robot.role=follower`）时从夹爪固件还要 ≥ 1.1.6。
 - 已做[串口权限与 ModemManager](host-setup.md#31) 一次性主机配置；双夹爪已查过
   [USB 带宽预算](host-setup.md#usb-budget)。
 - 每台主夹爪已做过[夹爪标定](calibration.md#41)：没标定的主夹爪会被拒绝连接；双夹爪两侧都要标，
@@ -106,7 +106,7 @@ lerobot-record \
 
 `--robot.id` 是必填的工位号，直接填数字，一套设备一个（双夹爪算一套），漏了会在解析命令行时就报错退出
 （[`--robot.id` 与硬件清单](recording.md#robot-id)）。`--robot.enable_tracker` 与
-`--robot.enable_head_camera` 和预览用的那一档保持一致；`--display_data` 预览时开、录制时关。
+`--robot.enable_head_camera` 和预览用的那一档保持一致；`--display_data` 默认关，0.0.8 起录制时开着也不占帧预算，想边录边看就开。
 三档命令与全部参数见[录制](recording.md#52)。
 
 ## 检查本地数据

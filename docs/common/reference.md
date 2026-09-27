@@ -52,7 +52,7 @@
 | 数采主仓库 `xense-taccap-lerobot` | <https://github.com/XenseRobotics-AI/xense-taccap-lerobot> | PC 版采集软件，附带设备说明与 CHANGELOG |
 | 夹爪 SDK `TacCap-Gripper` | <https://github.com/XenseRobotics-AI/TacCap-Gripper> | 子模块 `third_party/taccap-gripper/`；SDK 文档在 `docs/` |
 | 追踪器 PC 服务 `XenseVR-PC-Service` | <https://github.com/XenseRobotics-AI/XenseVR-PC-Service> | 不是子模块，以 `.deb` 安装到 `/opt/apps/roboticsservice`，见[一键安装](../pc/install.md#24) |
-| 视触觉传感器 SDK `xensesdk` | <https://github.com/XenseRobotics/xensesdk> | [文档站](https://xensedoc.readthedocs.io/en/latest/) |
+| 视触觉传感器 SDK `xensesdk` | <https://github.com/XenseRobotics/xensesdk> | [文档站](https://docs.xenserobotics.com/) |
 | 本手册源码 | <https://github.com/XenseRobotics-AI/XTac-UMI-G1-Docs> | Issues 见上节 |
 
 ## 本手册范围

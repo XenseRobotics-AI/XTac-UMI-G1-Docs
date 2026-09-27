@@ -9,9 +9,9 @@
 
 | 组件 | 最低要求 | 怎么查 |
 |---|---|---|
-| `xense-taccap-lerobot` | `0.5.1+xtac.0.0.7` | `pip show lerobot` 或看 `pyproject.toml` |
+| `xense-taccap-lerobot` | `0.5.1+xtac.0.0.8` | `pip show lerobot` 或看 `pyproject.toml` |
 | `xense.taccap` SDK | **0.1.9** | `python -c "import xense.taccap as t; print(t.__version__)"` |
-| 夹爪固件 | **命令集 V2.1**，即 leader ≥ 1.2.0 / follower ≥ 1.1.0 | 跑 [`calibrate.py`](calibration.md#41)，版本不够会打印当前版本并退出；或[直接读](#check-versions) |
+| 夹爪固件 | **命令集 V2.1**，即 leader ≥ 1.2.0 / follower ≥ 1.1.0；用从夹爪（`--robot.role=follower`）时 follower 须 ≥ 1.1.6 | 跑 [`calibrate.py`](calibration.md#41)，版本不够会打印当前版本并退出；或[直接读](#check-versions) |
 | 每台 leader 的编码器标定 | 零点 + 行程上限已写入 flash | [夹爪标定](calibration.md#41) |
 
 升级顺序不能乱：先[拉仓库与子模块](#repo-update)并重编 SDK（否则 `import xense.taccap` 失败），再[刷固件](#ota)，最后[夹爪标定](calibration.md#41)，升级本身不产生标定值。
@@ -40,9 +40,9 @@ flowchart LR
 | `rerun-sdk` | `>=0.24.0,<0.27.0` | 0.26.2 |
 | `opencv-python` | `==4.12.0.88` | 4.12.0.88 |
 | NumPy | `>=1.26.4` | 2.2.6 |
-| `xense-taccap-lerobot` | 基于 lerobot 0.5.1，版本号 `0.5.1+xtac.0.0.7` | `main@31efb9b6` |
+| `xense-taccap-lerobot` | 基于 lerobot 0.5.1，版本号 `0.5.1+xtac.0.0.8` | `v0.0.8`（`da5c3eff`） |
 | `xense.taccap` SDK | 与主仓库子模块配套 | 0.1.9（子模块 `3d44440`） |
-| 夹爪固件 | 命令集 V2.1（帧格式 V1.8），leader ≥ 1.2.0 / follower ≥ 1.1.0 | leader 1.2.2 / follower 1.1.6，随 SDK 走，以 `firmware/manifest.json` 为准，见 [OTA](#ota) |
+| 夹爪固件 | 命令集 V2.1（帧格式 V1.8），leader ≥ 1.2.0 / follower ≥ 1.1.0 | leader 1.2.2 / follower 1.1.6，随 SDK 走，以 `firmware/manifest.json` 为准，见 [OTA](#ota)；从夹爪低于 1.1.6 时 SDK 拒绝连接 |
 | `xensesdk` | 由安装脚本提供 | 2.1.2 |
 | XenseVR PC Service(`.deb`) | ≥ v0.2.0，装机直接用 v0.2.1 | v0.2.1 |
 | `xensevr_pc_service_sdk` | 绑定在主仓库内，链接 `.deb` 里的 C SDK | 0.2.1，版本号取自 `.deb` |
@@ -66,11 +66,10 @@ flowchart LR
 ```bash
 python - <<'EOF'
 import xense.taccap as t
-from xense.taccap import scan_grippers, LeaderGripper, FollowerGripper, Cmd
+from xense.taccap import scan_grippers, LeaderGripper, Cmd
 print("xense.taccap", t.__version__, "(需要 >= 0.1.9)")
 for ep in scan_grippers():
-    cls = LeaderGripper if ep.firmware_sn.endswith("m") else FollowerGripper
-    g = cls(mcu_device=ep.mcu_device)          # 只开 MCU
+    g = LeaderGripper(mcu_device=ep.mcu_device)   # 只读版本,主从夹爪通用
     ack = g.transport.send_cmd(Cmd.GetVersion, b"", 500)
     print(f"  {ep.firmware_sn}  {ep.side.name:5}  fw={ack.data[0]}.{ack.data[1]}.{ack.data[2]}")
 EOF
@@ -84,7 +83,7 @@ xense.taccap 0.1.9 (需要 >= 0.1.9)
   TCGU01A28Z0024m  Right  fw=1.2.1
 ```
 
-只传 `mcu_device`、`normalize_position` 保持默认 `False`，没做行程标定的夹爪也能读到版本。SN 只看末位：`m` 主夹爪，`s` 从夹爪，决定刷哪个镜像。ACK 第 4 个字节 `build` 恒为 0，版本按 `MAJOR.MINOR.PATCH` 三段比较。
+主从夹爪都用 `LeaderGripper` 打开：它只读版本，而 `FollowerGripper` 会拒绝打开固件低于 1.1.6 的从夹爪。只传 `mcu_device`、`normalize_position` 保持默认 `False`，没做行程标定的夹爪也能读到版本。SN 只看末位：`m` 主夹爪，`s` 从夹爪，决定刷哪个镜像。ACK 第 4 个字节 `build` 恒为 0，版本按 `MAJOR.MINOR.PATCH` 三段比较。
 
 其余组件：
 
@@ -105,23 +104,40 @@ python -c "import xensevr_pc_service_sdk as xrt; print('pico camera API:', hasat
 
 `pip show xensevr-pc-service-sdk` 显示的是构建时从 `dpkg` 读到的 `.deb` 版本；头显相机接口看 `has_pico_camera_frame`；夹爪 SN 与角色用[快速开始](index.md#self-check)的自检命令看。
 
+## 0.0.8 更新要点 {#whats-new}
+
+- **没有 NVIDIA 显卡的机器必须升级**：软件编码不再每条 episode 多占约 1.3 GB 内存，长时间录制不会再耗尽内存。
+- 数据集 `meta/stats.json` 里图像/视频特征的 `std` 此前恒为 0；训练时若按 `std` 归一化图像，旧数据集需要重算统计量，见[数据集](dataset.md#stats-std)。
+- Rerun 显示移出了录制循环，开着 `--display_data` 录制也不再拖慢采集，见[录制](recording.md#52)。
+- 重录（←）之后照常进入复位阶段；`--resume` 时 `--robot.id` 与数据集不一致会直接拒绝续录。
+- 主夹爪编码器改为固件主动推流（`--robot.gripper_stream_hz`，默认 100）；会话日志可单独定位问题。
+- 拉到 v0.0.8 后**必须重跑 `./setup_env.sh --install`**。
+
 ## 仓库与子模块更新 {#repo-update}
 
+按发布版的 tag 更新，不要直接拉 `main`（`main` 上可能是未发布的改动）：
+
 ```bash
-git pull --recurse-submodules
+git fetch --tags
+git checkout v0.0.8
 git submodule update --init --recursive --progress
 ./setup_env.sh --install     # 对齐依赖并重编 xense.taccap
+git submodule status         # 子模块应显示 3d44440…
 ```
 
 !!! warning "拉完子模块必须重新编译 `xense.taccap`"
-    `git submodule update` 只更新文件；不重跑 `./setup_env.sh --install`，`import xense.taccap` 直接失败。
+    `git submodule update` 只更新文件；不重跑 `./setup_env.sh --install`，`import xense.taccap` 直接失败。SDK 版本号相同（都是 0.1.9）时子模块也可能含 C++ 改动，每次拉子模块都要重跑。
 
-子模块 URL 已改为 `https://`，但老 clone 的 `.git/config` 还记着 `git@github.com:`；拉子模块仍要 SSH key 时同步一次：
+<span id="submodule-ssh"></span>
 
-```bash
-git submodule sync --recursive
-git submodule update --init --recursive --progress
-```
+!!! warning "子模块地址是 SSH 形式：没有 GitHub SSH key 的机器先改写一次地址"
+    `third_party/taccap-gripper` 的地址写成 `git@github.com:` 形式。机器上没配 GitHub SSH key 时，主仓库能克隆，拉子模块会失败。子模块仓库是公开的，改走 HTTPS 即可，克隆或更新前执行一次：
+
+    ```bash
+    git config --global url."https://github.com/".insteadOf "git@github.com:"
+    ```
+
+    已经克隆好、子模块能正常更新的机器不必处理，**也不要执行 `git submodule sync`**，否则会被切到 SSH 地址。[Docker 路径](install.md#docker)不拉子模块，不受影响。
 
 ## 固件 OTA 升级 {#ota}
 
@@ -160,9 +176,9 @@ SDK 自 0.1.7 起随仓库附带固件镜像，路径 `third_party/taccap-grippe
 python -c "from xense.taccap import scan_grippers
 for g in scan_grippers(): print(g.firmware_sn, '->', 'master' if g.firmware_sn.endswith('m') else 'slave')"
 
-# 2. 刷写,镜像只写文件名
+# 2. 刷写,镜像只写文件名,后面跟 left / right 或完整 SN
 python third_party/taccap-gripper/python/examples/ota_update.py \
-    tc-gu-01-master.bin --side left
+    tc-gu-01-master.bin left
 
 # 3. 断电重插后确认实际刷上的版本
 python -c "
@@ -174,7 +190,7 @@ for ep in scan_grippers():
 "
 ```
 
-镜像名按给的路径、SDK 根目录、SDK `firmware/` 依次解析，在哪运行都行，连接设备前就检查。`--target-version 1.2.2` 可选，只给校验日志和分区元数据打标记，不影响刷的内容。约 1 秒写完，夹爪重启约 1–3 秒；新固件写在备用分区，校验通过前不覆盖运行中的那份，传输失败不会刷坏。第 3 步读回的号必须不低于 leader 1.2.0 / follower 1.1.0，刷当前基线附带的镜像时读回 1.2.2 / 1.1.6；刷从夹爪时把 `LeaderGripper` 换成 `FollowerGripper`。
+也可以只给角色，让脚本自己挑镜像：`ota_update.py master` / `ota_update.py slave`；`ota_update.py --all` 给插着的每只夹爪各刷对应镜像。镜像名按给的路径、SDK 根目录、SDK `firmware/` 依次解析，在哪运行都行，连接设备前就检查。`--target-version 1.2.2` 可选，只给校验日志和分区元数据打标记，不影响刷的内容。约 1 秒写完，夹爪重启约 1–3 秒；新固件写在备用分区，校验通过前不覆盖运行中的那份，传输失败不会刷坏。第 3 步读回的号必须不低于 leader 1.2.0 / follower 1.1.0，刷当前基线附带的镜像时读回 1.2.2 / 1.1.6。主从夹爪都用 `LeaderGripper` 读版本，`FollowerGripper` 会拒绝打开低于 1.1.6 的从夹爪。
 
 !!! danger "刷错角色会导致夹爪无法启动，需返厂恢复"
     `ota_update.py` 按 CRC32 与 `manifest.json` 比对识别镜像，角色不匹配时直接拒绝，`--force` 才能强制；手工编译的镜像识别不出来，带提示放行。升级期间（[指示灯](../common/gripper.md#buttons-leds)蓝色闪烁）不要断电或拔线。

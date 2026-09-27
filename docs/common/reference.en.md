@@ -52,7 +52,7 @@ Please include:
 | Data-collection main repo `xense-taccap-lerobot` | <https://github.com/XenseRobotics-AI/xense-taccap-lerobot> | The Developer Kit's collection software; ships the device notes and the CHANGELOG |
 | Gripper SDK `TacCap-Gripper` | <https://github.com/XenseRobotics-AI/TacCap-Gripper> | Submodule `third_party/taccap-gripper/`; SDK docs in `docs/` |
 | Tracker PC service `XenseVR-PC-Service` | <https://github.com/XenseRobotics-AI/XenseVR-PC-Service> | Not a submodule; installed as a `.deb` into `/opt/apps/roboticsservice`, see [One-shot install](../pc/install.md#24) |
-| Visuotactile sensor SDK `xensesdk` | <https://github.com/XenseRobotics/xensesdk> | [Docs site](https://xensedoc.readthedocs.io/en/latest/) |
+| Visuotactile sensor SDK `xensesdk` | <https://github.com/XenseRobotics/xensesdk> | [Docs site](https://docs.xenserobotics.com/) |
 | This manual's source | <https://github.com/XenseRobotics-AI/XTac-UMI-G1-Docs> | Issues: see the section above |
 
 ## What this manual covers
