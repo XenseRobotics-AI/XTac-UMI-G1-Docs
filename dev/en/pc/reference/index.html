@@ -1665,7 +1665,7 @@
 <tr>
 <td><code>robot.role</code></td>
 <td><code>leader</code></td>
-<td>Set <code>follower</code> to bind the follower gripper</td>
+<td>Set <code>follower</code> to bind the follower gripper; the follower firmware must be ≥ 1.1.6, see <a href="../versions/#ota">Firmware OTA</a></td>
 </tr>
 <tr>
 <td><code>robot.enable_tracker</code></td>
@@ -1766,6 +1766,11 @@
 <td><code>robot.enable_gripper</code> / <code>robot.enable_imu</code></td>
 <td><code>true</code> / <code>false</code></td>
 <td>The gripper's own readings / the IMU channel</td>
+</tr>
+<tr>
+<td><code>robot.gripper_stream_hz</code></td>
+<td><code>100</code></td>
+<td>Rate at which the leader's firmware pushes encoder (and, when enabled, IMU) readings; <code>0</code> polls every frame; falls back to polling with a warning if the stream cannot start. Shared by both sides</td>
 </tr>
 <tr>
 <td><code>robot.gripper_open_rad</code></td>

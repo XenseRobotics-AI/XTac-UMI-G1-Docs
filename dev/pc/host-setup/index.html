@@ -1160,7 +1160,7 @@
   <a href="#31" class="md-nav__link">
     <span class="md-ellipsis">
       
-        串口权限(dialout)
+        串口权限（dialout）
       
     </span>
   </a>
@@ -1171,7 +1171,7 @@
   <a href="#32" class="md-nav__link">
     <span class="md-ellipsis">
       
-        关闭 ModemManager 抢占(udev)
+        关闭 ModemManager 抢占（udev）
       
     </span>
   </a>
@@ -1688,7 +1688,7 @@
   <a href="#31" class="md-nav__link">
     <span class="md-ellipsis">
       
-        串口权限(dialout)
+        串口权限（dialout）
       
     </span>
   </a>
@@ -1699,7 +1699,7 @@
   <a href="#32" class="md-nav__link">
     <span class="md-ellipsis">
       
-        关闭 ModemManager 抢占(udev)
+        关闭 ModemManager 抢占（udev）
       
     </span>
   </a>
@@ -1807,44 +1807,44 @@
 
 
 <h1 id="主机配置">主机配置<a class="headerlink" href="#主机配置" title="锚点链接">¶</a></h1>
-<p>夹爪能被列出不等于能被打开。本页做完主机侧两项一次性配置(串口权限、ModemManager),讲清设备按序列号自动分左右,再启动 XenseVR PC Service,之后就能进入标定与采集;头显与追踪器的配置两种形态共用,在<a href="../../common/pico4/">Pico4 头显与追踪器</a>。</p>
-<h2 id="31">串口权限(dialout)<a class="headerlink" href="#31" title="锚点链接">¶</a></h2>
-<p>夹爪 MCU 枚举为 <code>/dev/ttyACM*</code>,属 <code>dialout</code> 组。用户不在该组时,SDK 能列出夹爪但打不开串口读固件序列号,<code>scan_grippers()</code> 报 <code>role=Unknown</code>、<code>firmware_sn</code> 为空:</p>
+<p>夹爪能被列出不等于能被打开。本页做完主机侧两项一次性配置（串口权限、ModemManager），讲清设备按序列号自动分左右，再启动 XenseVR PC Service，之后就能进入标定与采集；头显与追踪器的配置两种形态共用，在<a href="../../common/pico4/">Pico4 头显与追踪器</a>。</p>
+<h2 id="31">串口权限（dialout）<a class="headerlink" href="#31" title="锚点链接">¶</a></h2>
+<p>夹爪 MCU 枚举为 <code>/dev/ttyACM*</code>，属 <code>dialout</code> 组。用户不在该组时，SDK 能列出夹爪但打不开串口读固件序列号，<code>scan_grippers()</code> 报 <code>role=Unknown</code>、<code>firmware_sn</code> 为空：</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>RuntimeError: No leader gripper discovered for the left side.
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a># 底层实为: IoError: SerialBus: open(/dev/serial/by-id/...): Permission denied
 </span></code></pre></div>
-<p>一次性加入组:</p>
+<p>一次性加入组：</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sudo<span class="w"> </span>usermod<span class="w"> </span>-aG<span class="w"> </span>dialout<span class="w"> </span><span class="s2">"</span><span class="nv">$USER</span><span class="s2">"</span>
 </span></code></pre></div>
 <div class="admonition warning">
-<p class="admonition-title">改完组必须重登,否则等于没做</p>
-<p>组权限只对新建的登录会话生效,当前终端仍是旧权限,照样报 <code>role=Unknown</code>。注销重登(或执行 <code>newgrp dialout</code>),重新插拔夹爪,再验证。</p>
+<p class="admonition-title">改完组必须重登，否则等于没做</p>
+<p>组权限只对新建的登录会话生效，当前终端仍是旧权限，照样报 <code>role=Unknown</code>。注销重登（或执行 <code>newgrp dialout</code>），重新插拔夹爪，再验证。</p>
 </div>
-<p>验证:<code>role</code> 必须是 <code>Leader</code>/<code>Follower</code>(不是 <code>Unknown</code>),<code>firmware_sn</code> 非空:</p>
+<p>验证：<code>role</code> 必须是 <code>Leader</code>/<code>Follower</code>（不是 <code>Unknown</code>），<code>firmware_sn</code> 非空：</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"from xense.taccap import scan_grippers</span>
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="s2">for g in scan_grippers(): print(g.side.name, g.role.name, repr(g.firmware_sn))"</span>
 </span></code></pre></div>
-<p>修好权限后 <code>firmware_sn</code> 仍为空,可能是 SN 未烧录、串口读取仍失败或固件通信异常,不能只凭空 SN 推断固件版本;保存完整报错,换线、换口复测,仍异常时联系设备或固件团队。</p>
-<h2 id="32">关闭 ModemManager 抢占(udev)<a class="headerlink" href="#32" title="锚点链接">¶</a></h2>
-<p>用 <a href="../install/#docker">Docker 交付镜像</a>时,<code>install_customer.sh</code> 已把这条 udev 规则装到主机上(容器管不了主机的热插拔规则),不用重做。</p>
-<p>夹爪 MCU 是 CH343 USB 串口(<code>1a86:55d2</code>,CDC-ACM)。每次热插拔,ModemManager(Ubuntu/GNOME 默认的蜂窝调制解调器服务)会用 AT 指令探测新端口并占用几秒,此时连接失败:</p>
+<p>修好权限后 <code>firmware_sn</code> 仍为空，可能是 SN 未烧录、串口读取仍失败或固件通信异常，不能只凭空 SN 推断固件版本；保存完整报错，换线、换口复测，仍异常时联系设备或固件团队。</p>
+<h2 id="32">关闭 ModemManager 抢占（udev）<a class="headerlink" href="#32" title="锚点链接">¶</a></h2>
+<p>用 <a href="../install/#docker">Docker 交付镜像</a>时，<code>install_customer.sh</code> 已把这条 udev 规则装到主机上（容器管不了主机的热插拔规则），不用重做。</p>
+<p>夹爪 MCU 是 CH343 USB 串口（<code>1a86:55d2</code>，CDC-ACM）。每次热插拔，ModemManager（Ubuntu/GNOME 默认的蜂窝调制解调器服务）会用 AT 指令探测新端口并占用几秒，此时连接失败：</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>IoError: SerialBus: open(/dev/serial/by-id/usb-1a86_USB_Dual_Serial_..-if02): Device or resource busy
 </span></code></pre></div>
-<p>典型症状:第一次启动正常,拔下换个口立即重启就 busy;不是触觉、相机或带宽问题。盲文驱动 <code>brltty</code> 也会抢占 <code>1a86</code>。临时办法:插好后等约 3 秒再启动。</p>
-<p>永久修复,让 ModemManager 忽略这类设备(不影响真正的调制解调器):</p>
+<p>典型症状：第一次启动正常，拔下换个口立即重启就 busy；不是触觉、相机或带宽问题。盲文驱动 <code>brltty</code> 也会抢占 <code>1a86</code>。临时办法：插好后等约 3 秒再启动。</p>
+<p>永久修复，让 ModemManager 忽略这类设备（不影响真正的调制解调器）：</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/udev/rules.d/99-taccap-ignore-modemmanager.rules<span class="w"> </span>&gt;/dev/null<span class="w"> </span><span class="s">&lt;&lt;'EOF'</span>
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="s"># XTac-UMI G1 MCUs are CH343 USB-serial (1a86:55d2) — keep ModemManager off them</span>
 </span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="s">ACTION=="add|change", SUBSYSTEMS=="usb", ATTRS{idVendor}=="1a86", ENV{ID_MM_DEVICE_IGNORE}="1"</span>
 </span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="s">EOF</span>
 </span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>sudo<span class="w"> </span>udevadm<span class="w"> </span>control<span class="w"> </span>--reload-rules<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>udevadm<span class="w"> </span>trigger
 </span></code></pre></div>
-<p>验证:</p>
+<p>验证：</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>udevadm<span class="w"> </span>info<span class="w"> </span>-q<span class="w"> </span>property<span class="w"> </span>-n<span class="w"> </span>/dev/ttyACM0<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>ID_MM_DEVICE_IGNORE<span class="w">   </span><span class="c1"># -&gt; ID_MM_DEVICE_IGNORE=1</span>
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>mmcli<span class="w"> </span>-L<span class="w">                                                               </span><span class="c1"># 夹爪不再被列出</span>
 </span></code></pre></div>
-<p>删除规则文件并重载即可还原;专用主机若无蜂窝模块,也可 <code>sudo systemctl disable --now ModemManager</code>。</p>
+<p>删除规则文件并重载即可还原；专用主机若无蜂窝模块，也可 <code>sudo systemctl disable --now ModemManager</code>。</p>
 <h2 id="33">设备自动发现与"单左双右"<a class="headerlink" href="#33" title="锚点链接">¶</a></h2>
-<p>所有设备按序列号 + USB 拓扑自动发现并分到 <code>left</code>/<code>right</code>,不手写序列号。</p>
+<p>所有设备按序列号 + USB 拓扑自动发现并分到 <code>left</code>/<code>right</code>，不手写序列号。</p>
 <h3 id="序列号语法">序列号语法<a class="headerlink" href="#序列号语法" title="锚点链接">¶</a></h3>
 <table>
 <thead>
@@ -1872,31 +1872,31 @@
 </tr>
 </tbody>
 </table>
-<p><code>&lt;seq&gt;</code> 为 4 位;<code>m</code> → leader(主夹爪),<code>s</code> → follower(从夹爪)。</p>
+<p><code>&lt;seq&gt;</code> 为 4 位；<code>m</code> → leader（主夹爪），<code>s</code> → follower（从夹爪）。</p>
 <h3 id="侧别规则">侧别规则<a class="headerlink" href="#侧别规则" title="锚点链接">¶</a></h3>
-<p>4 位序列号的最后一位:奇数 → 左,偶数 → 右。适用于夹爪、腕相机,以及同一只夹爪上两枚指尖触觉的左右。</p>
-<p>触觉映射到 <code>{side}_tactile_{left,right}</code>:共享同一夹爪 USB hub 的两枚 GSPS 就是该夹爪的一对,夹爪侧别读自其固件 SN(<code>scan_grippers()</code> 输出里的 side),不是 CH343 的 <code>mcu_serial</code>,即 hub → 夹爪 → 侧别;两枚里哪枚是 left/right,看 GSPS 序列号最后一位。</p>
-<p>Pico4 Ultra 企业版追踪器是另一套序列号,形如 <code>PC2310MLL3200496G</code>,按末尾字母 <code>G</code> 前那个数字判断单左双右:此例是 <code>6</code>,在右侧。这个 SN 头显上看不到,见<a href="../../common/pico4/#pico-tracker-sn">读取追踪器 SN</a>。</p>
-<p>不合规序列号、每侧数量不对、两枚指尖触觉映射到同一侧、两只夹爪抢同一触觉侧别、触觉 hub 找不到对应夹爪,设备发现都会直接报错并指明 hub/序列号。先报重复、再报缺失:某侧为空通常是它的设备把自己算到了另一侧,先复核挤了两个的那一侧。</p>
+<p>4 位序列号的最后一位：奇数 → 左，偶数 → 右。适用于夹爪、腕相机，以及同一只夹爪上两枚指尖触觉的左右。</p>
+<p>触觉映射到 <code>{side}_tactile_{left,right}</code>：共享同一夹爪 USB hub 的两枚 GSPS 就是该夹爪的一对，夹爪侧别读自其固件 SN（<code>scan_grippers()</code> 输出里的 side），不是 CH343 的 <code>mcu_serial</code>，即 hub → 夹爪 → 侧别；两枚里哪枚是 left/right，看 GSPS 序列号最后一位。</p>
+<p>Pico4 Ultra 企业版追踪器是另一套序列号，形如 <code>PC2310MLL3200496G</code>，按末尾字母 <code>G</code> 前那个数字判断单左双右：此例是 <code>6</code>，在右侧。这个 SN 头显上看不到，见<a href="../../common/pico4/#pico-tracker-sn">读取追踪器 SN</a>。</p>
+<p>不合规序列号、每侧数量不对、两枚指尖触觉映射到同一侧、两只夹爪抢同一触觉侧别、触觉 hub 找不到对应夹爪，设备发现都会直接报错并指明 hub/序列号。先报重复、再报缺失：某侧为空通常是它的设备把自己算到了另一侧，先复核挤了两个的那一侧。</p>
 <h3 id="usb-budget">USB 带宽预算<a class="headerlink" href="#usb-budget" title="锚点链接">¶</a></h3>
-<p>某一路相机能不能打开,在插线那一刻就由带宽决定了;相机打不开先量这一步。</p>
-<p>每个 UVC 相机打开期间都独占预留一份等时带宽,按 USB 2.0 总线算:一条总线 480 Mbit/s,约 384 Mbit/s 给等时传输。双夹爪共六个相机(四路触觉 + 两路腕相机),再加笔记本自带摄像头。</p>
+<p>某一路相机能不能打开，在插线那一刻就由带宽决定了；相机打不开先量这一步。</p>
+<p>每个 UVC 相机打开期间都独占预留一份等时带宽，按 USB 2.0 总线算：一条总线 480 Mbit/s，约 384 Mbit/s 给等时传输。双夹爪共六个相机（四路触觉 + 两路腕相机），再加笔记本自带摄像头。</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>lsusb<span class="w"> </span>-t
 </span></code></pre></div>
-<p>每一行 <code>480M</code> 的 <code>root_hub</code> 是一份预算,数每份上挂了几个相机:两条各挂三个是宽裕的;六个挤在一条上就得实测,各批次传感器申请量不同。触觉和腕相机都是 USB 2.0 设备,插蓝色 USB 3 口仍落在该控制器的 USB 2.0 总线上,要分开得插到另一个主控制器(Thunderbolt / USB4 扩展坞自带一个,普通 hub 不带)。</p>
+<p>每一行 <code>480M</code> 的 <code>root_hub</code> 是一份预算，数每份上挂了几个相机：两条各挂三个是宽裕的；六个挤在一条上就得实测，各批次传感器申请量不同。触觉和腕相机都是 USB 2.0 设备，插蓝色 USB 3 口仍落在该控制器的 USB 2.0 总线上，要分开得插到另一个主控制器（Thunderbolt / USB4 扩展坞自带一个，普通 hub 不带）。</p>
 <p>启动采集时内核日志出现 <code>Not enough bandwidth for altsetting N</code> 就是它。怎么盯日志、完整判定、实测数字与三条看着像解法其实没用的办法见<a href="../troubleshooting/#usb-bandwidth">故障排查 · USB 带宽不够</a>。</p>
 <h2 id="pico4-头显与追踪器">Pico4 头显与追踪器<a class="headerlink" href="#pico4-头显与追踪器" title="锚点链接">¶</a></h2>
-<p>Pico4 Ultra 企业版配套的独立运动追踪器装在夹爪顶部提供 6-DoF 位姿,头显上运行 XTac-UMI XR,位姿经下面的 <a href="#35">XenseVR PC Service</a> 送到采集单元。头显的开箱与系统设置、安装 XTac-UMI XR、网络连接、追踪器绑定、追踪模式与启动对齐两种形态共用,写在<a href="../../common/pico4/">Pico4 头显与追踪器</a>;出厂已配置的头显直接从<a href="../../common/pico4/#pico-network">网络连接</a>开始,每次采集前只需接 USB、短按追踪器电源键到蓝灯亮、<a href="../../common/pico4/#pico-toolkit-ui">点「重连」</a>、<a href="../../common/pico4/#pico-frame">启动对齐</a>。</p>
+<p>Pico4 Ultra 企业版配套的独立运动追踪器装在夹爪顶部提供 6-DoF 位姿，头显上运行 XTac-UMI XR，位姿经下面的 <a href="#35">XenseVR PC Service</a> 送到采集单元。头显的开箱与系统设置、安装 XTac-UMI XR、网络连接、追踪器绑定、追踪模式与启动对齐两种形态共用，写在<a href="../../common/pico4/">Pico4 头显与追踪器</a>；出厂已配置的头显直接从<a href="../../common/pico4/#pico-network">网络连接</a>开始，每次采集前只需接 USB、短按追踪器电源键到蓝灯亮、<a href="../../common/pico4/#pico-toolkit-ui">点「重连」</a>、<a href="../../common/pico4/#pico-frame">启动对齐</a>。</p>
 <h2 id="35">启动 XenseVR PC Service<a class="headerlink" href="#35" title="锚点链接">¶</a></h2>
-<p>追踪器与主机的 XenseVR PC Service(RoboticsService)守护进程通信,它负责设备发现、状态监控与实时追踪数据分发,采集单元从它读位姿。<a href="../install/#docker">Docker 交付镜像</a>的容器启动时会自动拉起它;只处理数据、不用追踪器时可用 <code>START_XENSEVR_SERVICE=0</code> 关掉。</p>
+<p>追踪器与主机的 XenseVR PC Service（RoboticsService）守护进程通信，它负责设备发现、状态监控与实时追踪数据分发，采集单元从它读位姿。<a href="../install/#docker">Docker 交付镜像</a>的容器启动时会自动拉起它；只处理数据、不用追踪器时可用 <code>START_XENSEVR_SERVICE=0</code> 关掉。</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>/opt/apps/roboticsservice/runService.sh
 </span></code></pre></div>
-<p>两端的名字不对称,不要混:头显上的 APP 叫 <strong>XTac-UMI XR</strong>(原名 XenseVR-Toolkit),电脑端这个服务仍叫 <strong>XenseVR PC Service</strong>。安装包 <code>XenseVR-PC-Service_&lt;版本&gt;_amd64.deb</code> 装到 <code>/opt/apps/roboticsservice/</code>,Python 包是 <code>xensevr_pc_service_sdk</code>。</p>
-<p>同一时间只能运行一个实例,重复启动会失败或冲突。</p>
-<p>服务可提供 Head / 手柄 / 手势 / 全身动捕 / Tracker 独立追踪多类数据,数采用两类:Tracker 独立追踪位姿(夹爪位姿,带 <code>sn</code> 区分追踪器)和头部位姿(头显自己的位姿,和<a href="../recording/#56">头显双目画面</a>配套)。头显把每只眼的画面和自己的位姿发给 PC Service 再转给采集单元,和追踪器共用同一条连接,服务没起来两者都没有;走这一路服务要 ≥ v0.2.0(见<a href="../versions/#required">版本基线</a>),只用追踪器则版本无所谓。</p>
-<p>服务目录 <code>/opt/apps/roboticsservice/</code> 附带 <code>ConsoleDemo</code> / <code>RobotDemoQt</code> 演示程序,可确认头显已被发现、追踪数据正常(需与服务相同的运行环境)。</p>
+<p>两端的名字不对称，不要混：头显上的 APP 叫 <strong>XTac-UMI XR</strong>（原名 XenseVR-Toolkit），电脑端这个服务仍叫 <strong>XenseVR PC Service</strong>。安装包 <code>XenseVR-PC-Service_&lt;版本&gt;_amd64.deb</code> 装到 <code>/opt/apps/roboticsservice/</code>，Python 包是 <code>xensevr_pc_service_sdk</code>。</p>
+<p>同一时间只能运行一个实例，重复启动会失败或冲突。</p>
+<p>服务可提供 Head / 手柄 / 手势 / 全身动捕 / Tracker 独立追踪多类数据，数采用两类：Tracker 独立追踪位姿（夹爪位姿，带 <code>sn</code> 区分追踪器）和头部位姿（头显自己的位姿，和<a href="../recording/#56">头显双目画面</a>配套）。头显把每只眼的画面和自己的位姿发给 PC Service 再转给采集单元，和追踪器共用同一条连接，服务没起来两者都没有；走这一路服务要 ≥ v0.2.0（见<a href="../versions/#required">版本基线</a>），只用追踪器则版本无所谓。</p>
+<p>服务目录 <code>/opt/apps/roboticsservice/</code> 附带 <code>ConsoleDemo</code> / <code>RobotDemoQt</code> 演示程序，可确认头显已被发现、追踪数据正常（需与服务相同的运行环境）。</p>
 <h2 id="36">上电顺序<a class="headerlink" href="#36" title="锚点链接">¶</a></h2>
-<p>上电与下电顺序只在<a href="../#power-on">快速开始 · 上电与下电顺序</a>讲一次,上电按那里的 7 步执行;双夹爪插线前先看<a href="#usb-budget">USB 带宽预算</a>。</p>
+<p>上电与下电顺序只在<a href="../#power-on">快速开始 · 上电与下电顺序</a>讲一次，上电按那里的 7 步执行；双夹爪插线前先看<a href="#usb-budget">USB 带宽预算</a>。</p>
 <p>下一步 → <a href="../calibration/">标定与自检</a></p>
 
 

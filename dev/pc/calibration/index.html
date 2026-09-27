@@ -1188,12 +1188,12 @@
   <a href="#41" class="md-nav__link">
     <span class="md-ellipsis">
       
-        夹爪标定(零点 + 行程)
+        夹爪标定（零点 + 行程）
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="夹爪标定(零点 + 行程)">
+    <nav class="md-nav" aria-label="夹爪标定（零点 + 行程）">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1655,12 +1655,12 @@
   <a href="#41" class="md-nav__link">
     <span class="md-ellipsis">
       
-        夹爪标定(零点 + 行程)
+        夹爪标定（零点 + 行程）
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="夹爪标定(零点 + 行程)">
+    <nav class="md-nav" aria-label="夹爪标定（零点 + 行程）">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1741,10 +1741,10 @@
 
 
 <h1 id="标定与自检">标定与自检<a class="headerlink" href="#标定与自检" title="锚点链接">¶</a></h1>
-<p>本页做两件一次性的事:给主夹爪标零点和行程,再确认 Pico4 Ultra 追踪器链路通了。整条链路是否凑齐,开录前用<a href="../recording/#preview">预览</a>确认。</p>
-<h2 id="41">夹爪标定(零点 + 行程)<a class="headerlink" href="#41" title="锚点链接">¶</a></h2>
+<p>本页做两件一次性的事：给主夹爪标零点和行程，再确认 Pico4 Ultra 追踪器链路通了。整条链路是否凑齐，开录前用<a href="../recording/#preview">预览</a>确认。</p>
+<h2 id="41">夹爪标定（零点 + 行程）<a class="headerlink" href="#41" title="锚点链接">¶</a></h2>
 <h3 id="什么时候需要标">什么时候需要标<a class="headerlink" href="#什么时候需要标" title="锚点链接">¶</a></h3>
-<p>数据集里的 <code>gripper.pos</code> 是归一化开度:<code>0.0</code> 完全闭合,来自标定第 1 步锁存的编码器零点;<code>1.0</code> 完全张开,来自第 2 步写入的行程上限(命令集 ≥ V2.1)。两个值都写在 MCU flash 里,断电不丢、换主机不用重标,一台标一次就够。只有两种情况要标:</p>
+<p>数据集里的 <code>gripper.pos</code> 是归一化开度：<code>0.0</code> 完全闭合，来自标定第 1 步锁存的编码器零点；<code>1.0</code> 完全张开，来自第 2 步写入的行程上限（命令集 ≥ V2.1）。两个值都写在 MCU flash 里，断电不丢、换主机不用重标，一台标一次就够。只有两种情况要标：</p>
 <table>
 <thead>
 <tr>
@@ -1756,17 +1756,17 @@
 <tbody>
 <tr>
 <td>从没标过</td>
-<td>采集程序<strong>拒绝连接</strong>主夹爪,报错里直接带标定命令</td>
-<td>程序,漏不掉</td>
+<td>采集程序<strong>拒绝连接</strong>主夹爪，报错里直接带标定命令</td>
+<td>程序，漏不掉</td>
 </tr>
 <tr>
-<td>标过,但值和实际行程对不上(拆装过编码器、动过机械限位、擦除过固件)</td>
-<td>能连上,但张到机械极限时 <code>gripper.pos</code> 顶不到 <code>1.0</code>(例如停在 <code>0.8</code>)</td>
-<td>只能你在预览里看出来,见<a href="#413">确认标定生效</a></td>
+<td>标过，但值和实际行程对不上（拆装过编码器、动过机械限位、擦除过固件）</td>
+<td>能连上，但张到机械极限时 <code>gripper.pos</code> 顶不到 <code>1.0</code>（例如停在 <code>0.8</code>）</td>
+<td>只能你在预览里看出来，见<a href="#413">确认标定生效</a></td>
 </tr>
 </tbody>
 </table>
-<p>第二种程序不报错——它只知道存过值,不知道准不准。第一种的报错如下,按下面「怎么标」做完再回来:</p>
+<p>第二种程序不报错——它只知道存过值，不知道准不准。第一种的报错如下，按下面「怎么标」做完再回来：</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>This leader gripper has no encoder-max calibration, so its jaw travel is unknown
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>and gripper.pos cannot be computed (...).
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
@@ -1775,30 +1775,30 @@
 </span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    python third_party/taccap-gripper/python/examples/calibrate.py &lt;left|right&gt;
 </span></code></pre></div>
 <div class="admonition danger">
-<p class="admonition-title">双夹爪只标一侧,比两侧都不标更糟</p>
-<p>两侧都没标时刻度至少一致;只标一侧会让 <code>left_gripper.pos</code> 和 <code>right_gripper.pos</code> 落在不同刻度上,同一个握持动作左右读数不同,而数据里看不出异常。要标就两侧都标。</p>
+<p class="admonition-title">双夹爪只标一侧，比两侧都不标更糟</p>
+<p>两侧都没标时刻度至少一致；只标一侧会让 <code>left_gripper.pos</code> 和 <code>right_gripper.pos</code> 落在不同刻度上，同一个握持动作左右读数不同，而数据里看不出异常。要标就两侧都标。</p>
 </div>
 <h3 id="怎么标">怎么标<a class="headerlink" href="#怎么标" title="锚点链接">¶</a></h3>
-<p>按左右指定,两台各跑一次(路径以 xense-taccap-lerobot 工作区为准,SDK 仓库里即 <code>python/examples/calibrate.py</code>):</p>
+<p>按左右指定，两台各跑一次（路径以 xense-taccap-lerobot 工作区为准，SDK 仓库里即 <code>python/examples/calibrate.py</code>）：</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>python<span class="w"> </span>third_party/taccap-gripper/python/examples/calibrate.py<span class="w"> </span>left
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>python<span class="w"> </span>third_party/taccap-gripper/python/examples/calibrate.py<span class="w"> </span>right
 </span></code></pre></div>
-<p>左右由固件烧录的 SN 判定(<code>Cmd::GetSn</code> 读回,不是 CH343 芯片序列号),和采集时 <code>left_gripper.pos</code> 同一条规则,所以 <code>calibrate.py left</code> 标的一定是 <code>left</code> 那台。脚本会打印解析出的固件 SN 和扫到的全部夹爪,写 flash 前可确认没选错;同一侧扫到两台会报错并列出两个 SN,不替你猜。要锁定某台可直接传固件 SN(<code>calibrate.py TCGU01A28Z0024m</code>,SN 为示例)。</p>
-<p>脚本先验固件版本,不够就原样退出、什么都不改:</p>
+<p>左右由固件烧录的 SN 判定（<code>Cmd::GetSn</code> 读回，不是 CH343 芯片序列号），和采集时 <code>left_gripper.pos</code> 同一条规则，所以 <code>calibrate.py left</code> 标的一定是 <code>left</code> 那台。脚本会打印解析出的固件 SN 和扫到的全部夹爪，写 flash 前可确认没选错；同一侧扫到两台会报错并列出两个 SN，不替你猜。要锁定某台可直接传固件 SN（<code>calibrate.py TCGU01A28Z0024m</code>，SN 为示例）。</p>
+<p>脚本先验固件版本，不够就原样退出、什么都不改：</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>✗ encoder-max calibration needs command set &gt;= V2.1 (leader &gt;= 1.2.0); this gripper reports 1.1.0.
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>  Nothing was changed. Flash it first: ...
 </span></code></pre></div>
-<p>见到这条先按<a href="../versions/#ota">固件 OTA 升级</a>刷固件再回来:镜像按角色选,先升 SDK 再刷固件。</p>
-<p>版本通过后一条命令走完两步,脚本先打印当前读数(raw 与钳位),再按提示操作:</p>
+<p>见到这条先按<a href="../versions/#ota">固件 OTA 升级</a>刷固件再回来：镜像按角色选，先升 SDK 再刷固件。</p>
+<p>版本通过后一条命令走完两步，脚本先打印当前读数（raw 与钳位），再按提示操作：</p>
 <ol>
-<li>保持夹爪完全闭合 → 回车。发送 <code>SetEncoderZero</code> 锁存零点,随后复读校验残差(容差 ±0.01 rad)。</li>
-<li>完全张开(顶到机械极限)→ 回车。采样此时角度写入 <code>EncoderMaxCal</code>——直接写 MCU flash,没有二次确认——随后进入 10 Hz 实时读数供目视核对。</li>
+<li>保持夹爪完全闭合 → 回车。发送 <code>SetEncoderZero</code> 锁存零点，随后复读校验残差（容差 ±0.01 rad）。</li>
+<li>完全张开（顶到机械极限）→ 回车。采样此时角度写入 <code>EncoderMaxCal</code>——直接写 MCU flash，没有二次确认——随后进入 10 Hz 实时读数供目视核对。</li>
 </ol>
 <div class="admonition warning">
-<p class="admonition-title">先夹到位,再按 Enter</p>
-<p>固件在收到命令的瞬间锁存当时的原始计数,按 Enter 前夹爪必须已经在目标位置,中途再动就白标了。</p>
+<p class="admonition-title">先夹到位，再按 Enter</p>
+<p>固件在收到命令的瞬间锁存当时的原始计数，按 Enter 前夹爪必须已经在目标位置，中途再动就白标了。</p>
 </div>
-<p>输出形如:</p>
+<p>输出形如：</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>================================================================
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>  TacCap leader-gripper encoder calibration
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>================================================================
@@ -1819,14 +1819,14 @@
 </span><span id="__span-3-18"><a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a>  fully-open reading: +1.1486 rad  (+65.81°)
 </span><span id="__span-3-19"><a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a>  ✓ stored: max_rad = 1.1486 rad (65.81°)
 </span></code></pre></div>
-<p>之前标过的,抬头会多一行 <code>existing span: … — will be overwritten</code>。</p>
-<p>零点写在固件里,没有 <code>gripper_closed_rad</code> 配置,闭合恒为 0:负向漂移被钳到 0(原始值保留在 <code>raw_position_rad</code>),raw 负漂超过 -0.1 rad 会限频告警。<code>position_rad</code> 仍是原始弧度,归一化只新增 <code>position</code> 字段。</p>
+<p>之前标过的，抬头会多一行 <code>existing span: … — will be overwritten</code>。</p>
+<p>零点写在固件里，没有 <code>gripper_closed_rad</code> 配置，闭合恒为 0：负向漂移被钳到 0（原始值保留在 <code>raw_position_rad</code>），raw 负漂超过 -0.1 rad 会限频告警。<code>position_rad</code> 仍是原始弧度，归一化只新增 <code>position</code> 字段。</p>
 <h3 id="413">确认标定生效<a class="headerlink" href="#413" title="锚点链接">¶</a></h3>
-<p>一看启动日志,标定生效时采集程序连接每侧会打印:</p>
+<p>一看启动日志，标定生效时采集程序连接每侧会打印：</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>[left]  Jaw normalised by the firmware's encoder-max calibration
 </span></code></pre></div>
-<p>没这一行就不用往下看:未标定的主夹爪根本连不上,程序会带着标定命令报错退出。</p>
-<p>二看 Rerun 曲线。开 <code>--display_data=true</code>,标量面板里找 <code>gripper.pos</code>:</p>
+<p>没这一行就不用往下看：未标定的主夹爪根本连不上，程序会带着标定命令报错退出。</p>
+<p>二看 Rerun 曲线。开 <code>--display_data=true</code>，标量面板里找 <code>gripper.pos</code>：</p>
 <table>
 <thead>
 <tr>
@@ -1845,33 +1845,33 @@
 </tr>
 </tbody>
 </table>
-<p>能连上说明行程上限已生效,这一步查的是值还准不准。</p>
+<p>能连上说明行程上限已生效，这一步查的是值还准不准。</p>
 <div class="admonition warning">
 <p class="admonition-title">张到底明显够不到 1.0 → 重新标定这一台</p>
-<p>完全张开只到 <code>0.8</code> 上下,说明 flash 里的行程上限已和实际行程对不上,程序不会为此报错。重跑一遍标定即可,命令和第一次完全一样。</p>
+<p>完全张开只到 <code>0.8</code> 上下，说明 flash 里的行程上限已和实际行程对不上，程序不会为此报错。重跑一遍标定即可，命令和第一次完全一样。</p>
 </div>
 <h3 id="适用范围">适用范围<a class="headerlink" href="#适用范围" title="锚点链接">¶</a></h3>
 <ul>
-<li>手动标定仅 leader(主夹爪)。从夹爪不接受该命令:它自 V1.9 起走固件的上电自动标定(闭合到堵转取零点、张开到堵转取行程上限),采集时其 <code>gripper.pos</code> 仍按 <code>gripper_open_rad</code> 归一化。主夹爪没有自动标定,而采集用的正是主夹爪,手动标定不能省。</li>
-<li>需要固件命令集 ≥ V2.1(即 leader ≥ 1.2.0 / follower ≥ 1.1.0,<a href="../versions/#v21">区别</a>);更低版本采集时主夹爪也直接报错退出并提示先做 OTA。刷固件见<a href="../versions/#ota">固件 OTA 升级</a>。</li>
+<li>手动标定仅 leader（主夹爪）。从夹爪不接受该命令：它自 V1.9 起走固件的上电自动标定（闭合到堵转取零点、张开到堵转取行程上限），采集时其 <code>gripper.pos</code> 仍按 <code>gripper_open_rad</code> 归一化。主夹爪没有自动标定，而采集用的正是主夹爪，手动标定不能省。</li>
+<li>需要固件命令集 ≥ V2.1（即 leader ≥ 1.2.0 / follower ≥ 1.1.0，<a href="../versions/#v21">区别</a>）；更低版本采集时主夹爪也直接报错退出并提示先做 OTA。刷固件见<a href="../versions/#ota">固件 OTA 升级</a>。</li>
 </ul>
 <h2 id="pico4-ultra-追踪器自检">Pico4 Ultra 追踪器自检<a class="headerlink" href="#pico4-ultra-追踪器自检" title="锚点链接">¶</a></h2>
-<p>追踪器不需要标定:安装变换内置,左右侧别由 SN 自动匹配。追踪器与夹爪的绑定在<a href="../../common/pico4/#pico-tracker-bind">Pico4 头显与追踪器</a>里做完;本页这条命令只读不写,只打印位姿,用来确认链路通了、装配没错。</p>
+<p>追踪器不需要标定：安装变换内置，左右侧别由 SN 自动匹配。追踪器与夹爪的绑定在<a href="../../common/pico4/#pico-tracker-bind">Pico4 头显与追踪器</a>里做完；本页这条命令只读不写，只打印位姿，用来确认链路通了、装配没错。</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>python<span class="w"> </span>-m<span class="w"> </span>lerobot.robots.taccap_gripper.check_tracker
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="c1"># 指定某个 tracker SN(形如 PC2310MLL3200496G):</span>
 </span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>python<span class="w"> </span>-m<span class="w"> </span>lerobot.robots.taccap_gripper.check_tracker<span class="w"> </span>&lt;tracker<span class="w"> </span>SN&gt;
 </span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="c1"># 应用该侧内置的 tracker→TCP 安装变换:</span>
 </span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>python<span class="w"> </span>-m<span class="w"> </span>lerobot.robots.taccap_gripper.check_tracker<span class="w"> </span>--side<span class="w"> </span>right
 </span></code></pre></div>
-<p>以 10 Hz 打印 <code>raw</code>(追踪器自身位姿)与 <code>ee</code>(经刚性安装变换后的 TCP)。挥动夹爪,<code>raw xyz</code> 应平滑变化、SN 与预期一致(<a href="../../common/pico4/#pico-tracker-sn">读取追踪器 SN</a>)。</p>
-<p>安装变换不需要你测:追踪器到 TCP 的刚性偏移由 <code>ee_transform.tracker_to_tcp</code> 内置(取自 CAD 装配实测),左右各自实测,接近镜像但不完全相同(旋转差 0.03°、平移差 1.27 mm)。<code>--side</code> 决定套用哪一侧;不带 <code>--side</code> 时变换是单位阵,<code>ee</code> 完全跟随 <code>raw</code>。只有重新加工过安装座之类才需覆盖,设 <code>--robot.tracker_to_ee_pos</code> / <code>--robot.tracker_to_ee_quat</code>,两者独立,可只钉平移、旋转仍用内置值。</p>
-<p>支点检查不需额外硬件:把两指中点抵在一个固定点上,握着手柄尽量多变换姿态摆动。<code>ee xyz</code> 应基本不动而 <code>raw xyz</code> 大幅摆动,看到的漂移量即该变换的误差。左右都要测;左侧镜像方向错了,表现为 <code>ee</code> 摆动幅度约为应有的两倍。</p>
-<p>要在 Rerun 单视图里看双夹爪 IMU/编码器和追踪器 6-DoF 位姿,用 SDK 示例 <code>rerun_dual_with_tracker.py</code>(需 <code>xensevr_pc_service_sdk</code> 与 XenseVR PC Service 运行)。它不走 LeRobot 的 SN 自动匹配,必须显式传 SN;SN 属于具体机台,换机要换成你那台报出的,并逐个摇晃夹爪验证左右:</p>
+<p>以 10 Hz 打印 <code>raw</code>（追踪器自身位姿）与 <code>ee</code>（经刚性安装变换后的 TCP）。挥动夹爪，<code>raw xyz</code> 应平滑变化、SN 与预期一致（<a href="../../common/pico4/#pico-tracker-sn">读取追踪器 SN</a>）。</p>
+<p>安装变换不需要你测：追踪器到 TCP 的刚性偏移由 <code>ee_transform.tracker_to_tcp</code> 内置（取自 CAD 装配实测），左右各自实测，接近镜像但不完全相同（旋转差 0.03°、平移差 1.27 mm）。<code>--side</code> 决定套用哪一侧；不带 <code>--side</code> 时变换是单位阵，<code>ee</code> 完全跟随 <code>raw</code>。只有重新加工过安装座之类才需覆盖，设 <code>--robot.tracker_to_ee_pos</code> / <code>--robot.tracker_to_ee_quat</code>，两者独立，可只钉平移、旋转仍用内置值。</p>
+<p>支点检查不需额外硬件：把两指中点抵在一个固定点上，握着手柄尽量多变换姿态摆动。<code>ee xyz</code> 应基本不动而 <code>raw xyz</code> 大幅摆动，看到的漂移量即该变换的误差。左右都要测；左侧镜像方向错了，表现为 <code>ee</code> 摆动幅度约为应有的两倍。</p>
+<p>要在 Rerun 单视图里看双夹爪 IMU/编码器和追踪器 6-DoF 位姿，用 SDK 示例 <code>rerun_dual_with_tracker.py</code>（需 <code>xensevr_pc_service_sdk</code> 与 XenseVR PC Service 运行）。它不走 LeRobot 的 SN 自动匹配，必须显式传 SN；SN 属于具体机台，换机要换成你那台报出的，并逐个摇晃夹爪验证左右：</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>python<span class="w"> </span>third_party/taccap-gripper/python/examples/rerun_dual_with_tracker.py<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">    </span>--left-tracker-sn<span class="w">  </span>&lt;左追踪器SN&gt;<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span>--right-tracker-sn<span class="w"> </span>&lt;右追踪器SN&gt;
 </span></code></pre></div>
-<p>四元数半球翻转(符号跳变)在位姿读取内部已有连续性修正,仍看到跳变请报 bug。</p>
+<p>四元数半球翻转（符号跳变）在位姿读取内部已有连续性修正，仍看到跳变请报 bug。</p>
 <p>下一步 → <a href="../recording/">数据采集</a>。</p>
 
 

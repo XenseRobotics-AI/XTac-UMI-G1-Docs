@@ -1683,7 +1683,7 @@
 
 
 <h1 id="术语表与支持">术语表与支持<a class="headerlink" href="#术语表与支持" title="锚点链接">¶</a></h1>
-<p>查表用的附录:两种形态共用的术语、反馈渠道与相关仓库。PC 版的 <code>RobotConfig</code> 配置项与 SDK 入口在 <a href="../../pc/reference/">RobotConfig 与 SDK</a>;报错见 PC 版的<a href="../../pc/troubleshooting/">故障排查</a>或<a href="../../backpack/troubleshooting/">背包版的故障排查</a>。</p>
+<p>查表用的附录：两种形态共用的术语、反馈渠道与相关仓库。PC 版的 <code>RobotConfig</code> 配置项与 SDK 入口在 <a href="../../pc/reference/">RobotConfig 与 SDK</a>；报错见 PC 版的<a href="../../pc/troubleshooting/">故障排查</a>或<a href="../../backpack/troubleshooting/">背包版的故障排查</a>。</p>
 <h2 id="glossary">术语表<a class="headerlink" href="#glossary" title="锚点链接">¶</a></h2>
 <table>
 <thead>
@@ -1695,107 +1695,107 @@
 <tbody>
 <tr>
 <td><strong>XTac-UMI G1</strong></td>
-<td>手持式 UMI 数采夹爪,两种形态共用的传感器载体;见<a href="../../product/g1/">认识 XTac-UMI G1</a></td>
+<td>手持式 UMI 数采夹爪，两种形态共用的传感器载体；见<a href="../../product/g1/">认识 XTac-UMI G1</a></td>
 </tr>
 <tr>
 <td><strong>数采背包</strong></td>
-<td>背包版的采集单元:RK3588 计算节点,夹爪与头显都接到它上面,XTac-UMI Collector 在它上面运行;正式名 XTac-UMI 数采背包,见<a href="../../product/backpack/">认识数采背包</a></td>
+<td>背包版的采集单元：RK3588 计算节点，夹爪与头显都接到它上面，XTac-UMI Collector 在它上面运行；正式名 XTac-UMI 数采背包，见<a href="../../product/backpack/">认识数采背包</a></td>
 </tr>
 <tr>
 <td><strong>XTac-UMI Collector</strong></td>
-<td>跑在数采背包上的采集软件,接入相机、夹爪 MCU 与头显位姿,负责录制、回放、导出与设备管理;版本基线 0.4.1,以设备系统页显示为准</td>
+<td>跑在数采背包上的采集软件，接入相机、夹爪 MCU 与头显位姿，负责录制、回放、导出与设备管理；版本基线 0.4.1，以设备系统页显示为准</td>
 </tr>
 <tr>
 <td><strong>控制台</strong></td>
-<td>Collector 的浏览器界面,平板、手机、电脑连上背包后打开;实时监控、项目、系统等页面都在里面</td>
+<td>Collector 的浏览器界面，平板、手机、电脑连上背包后打开；实时监控、项目、系统等页面都在里面</td>
 </tr>
 <tr>
 <td><strong>项目 / 任务 / episode</strong></td>
-<td>背包版的数据组织层级:项目下建任务,任务带 LeRobot 语言指令,每次开录到停录是一条 episode</td>
+<td>背包版的数据组织层级：项目下建任务，任务带 LeRobot 语言指令，每次开录到停录是一条 episode</td>
 </tr>
 <tr>
 <td><strong>MCAP</strong></td>
-<td>背包版每条 episode 的原始记录格式,按 topic 存相机、编码器、IMU、位姿与事件;导出 LeRobot 时从它转换</td>
+<td>背包版每条 episode 的原始记录格式，按 topic 存相机、编码器、IMU、位姿与事件；导出 LeRobot 时从它转换</td>
 </tr>
 <tr>
 <td><strong>OTA bundle</strong></td>
-<td>背包版 Collector 的升级包(<code>.tar.zst</code>),在控制台 系统 → 系统更新 页上传、校验、应用并重启,可回滚到上一版本;PC 版夹爪固件的 OTA 见<a href="../../pc/versions/#ota">固件升级</a></td>
+<td>背包版 Collector 的升级包（<code>.tar.zst</code>），在控制台 系统 → 系统更新 页上传、校验、应用并重启，可回滚到上一版本；PC 版夹爪固件的 OTA 见<a href="../../pc/versions/#ota">固件升级</a></td>
 </tr>
 <tr>
 <td><strong>SoftAP</strong></td>
-<td>数采背包自建的常驻 WiFi 热点,SSID <code>xense-&lt;序列号后 6 位&gt;</code>,只有 5 GHz,网关固定 <code>192.168.44.1</code>;不依赖现场网络的兜底入口</td>
+<td>数采背包自建的常驻 WiFi 热点，SSID <code>xense-&lt;序列号后 6 位&gt;</code>，只有 5 GHz，网关固定 <code>192.168.44.1</code>；不依赖现场网络的兜底入口</td>
 </tr>
 <tr>
 <td><strong>TacCap</strong></td>
-<td>包名 <code>xense.taccap</code>、设备类型 <code>taccap_gripper</code> 与背包机身标签里的名字(Tactile Capture);产品名为 XTac-UMI G1</td>
+<td>包名 <code>xense.taccap</code>、设备类型 <code>taccap_gripper</code> 与背包机身标签里的名字（Tactile Capture）；产品名为 XTac-UMI G1</td>
 </tr>
 <tr>
 <td><strong>UMI</strong></td>
-<td>Universal Manipulation Interface,手持式主夹爪数采范式</td>
+<td>Universal Manipulation Interface，手持式主夹爪数采范式</td>
 </tr>
 <tr>
 <td><strong>Leader / Follower</strong></td>
-<td>主夹爪 / 从夹爪;序列号 patch <code>m</code> = leader,<code>s</code> = follower</td>
+<td>主夹爪 / 从夹爪；序列号 patch <code>m</code> = leader，<code>s</code> = follower</td>
 </tr>
 <tr>
-<td><strong>V2.1</strong>(固件)</td>
-<td>固件的<strong>命令集</strong>版本——实现了哪些命令,不是构建号(构建号是 leader <code>≥ 1.2.0</code> / follower <code>≥ 1.1.0</code>,更高版本同样支持),也不是帧格式(帧格式为 V1.8)。行程标定命令由 V2.1 引入 → <a href="../../pc/versions/#v21">三套编号</a></td>
+<td><strong>V2.1</strong>（固件）</td>
+<td>固件的<strong>命令集</strong>版本——实现了哪些命令，不是构建号（构建号是 leader <code>≥ 1.2.0</code> / follower <code>≥ 1.1.0</code>，更高版本同样支持），也不是帧格式（帧格式为 V1.8）。行程标定命令由 V2.1 引入 → <a href="../../pc/versions/#v21">三套编号</a></td>
 </tr>
 <tr>
 <td><strong>单左双右</strong></td>
-<td>4 位序列号最后一位:奇→左,偶→右;夹爪、传感器与追踪器都按这条规则,见<a href="../gripper/#sn">序列号与左右识别</a></td>
+<td>4 位序列号最后一位：奇→左，偶→右；夹爪、传感器与追踪器都按这条规则，见<a href="../gripper/#sn">序列号与左右识别</a></td>
 </tr>
 <tr>
 <td><strong>GSPS</strong></td>
-<td>视触觉传感器(左右指各一),序列号 <code>GSPS01...</code></td>
+<td>视触觉传感器（左右指各一），序列号 <code>GSPS01...</code></td>
 </tr>
 <tr>
 <td><strong>XC</strong></td>
-<td>腕部 UVC 相机,序列号 <code>XC...</code></td>
+<td>腕部 UVC 相机，序列号 <code>XC...</code></td>
 </tr>
 <tr>
 <td><strong>XTac-UMI XR</strong></td>
-<td>装在 Pico4 头显上的 VR 客户端 APP(原名 XenseVR-Toolkit),把头显与追踪器位姿送到采集单元,启动瞬间建立世界坐标系;见 <a href="../pico4/">Pico4 头显与追踪器配置</a></td>
+<td>装在 Pico4 头显上的 VR 客户端 APP（原名 XenseVR-Toolkit），把头显与追踪器位姿送到采集单元，启动瞬间建立世界坐标系；见 <a href="../pico4/">Pico4 头显与追踪器配置</a></td>
 </tr>
 <tr>
 <td><strong>XenseVR PC Service / 运行时</strong></td>
-<td>接收头显位姿的服务,是 XTac-UMI XR 在采集单元这一端的对端(服务名没跟着 APP 一起改):PC 版是数采主机上的守护进程,要手动启动;背包版内置在 Collector 里</td>
+<td>接收头显位姿的服务，是 XTac-UMI XR 在采集单元这一端的对端（服务名没跟着 APP 一起改）：PC 版是数采主机上的守护进程，要手动启动；背包版内置在 Collector 里</td>
 </tr>
 <tr>
 <td><strong>tcp</strong></td>
-<td>Tool Center Point,末端执行器位姿(<code>tcp.x/y/z</code> + 6D 旋转 <code>r1..r6</code>),坐标系见<a href="../coordinates/">坐标系</a></td>
+<td>Tool Center Point，末端执行器位姿（<code>tcp.x/y/z</code> + 6D 旋转 <code>r1..r6</code>），坐标系见<a href="../coordinates/">坐标系</a></td>
 </tr>
 <tr>
 <td><strong>6D rotation</strong></td>
-<td>旋转矩阵 R(世界 ← 本体)的<strong>前两列</strong>:<code>r1..r3</code> = 第一列 = 本体 X 轴在世界系下的方向,<code>r4..r6</code> = 第二列 = Y 轴;第三列为叉积,可算回 → <a href="../../pc/recording/#53">约定详解</a></td>
+<td>旋转矩阵 R（世界 ← 本体）的<strong>前两列</strong>：<code>r1..r3</code> = 第一列 = 本体 X 轴在世界系下的方向，<code>r4..r6</code> = 第二列 = Y 轴；第三列为叉积，可算回 → <a href="../../pc/recording/#53">约定详解</a></td>
 </tr>
 <tr>
 <td><strong>shifted-frame</strong></td>
-<td>移位帧配对:t-1 观测配 t 动作</td>
+<td>移位帧配对：t-1 观测配 t 动作</td>
 </tr>
 <tr>
 <td><strong>self-driven</strong></td>
-<td>自驱动:设备自身产出观测与演示动作,无独立遥操端</td>
+<td>自驱动：设备自身产出观测与演示动作，无独立遥操端</td>
 </tr>
 </tbody>
 </table>
 <h2 id="support">支持与反馈<a class="headerlink" href="#support" title="锚点链接">¶</a></h2>
-<p>遇到问题:</p>
+<p>遇到问题：</p>
 <ol>
-<li>先查故障排查:PC 版见<a href="../../pc/troubleshooting/">故障排查</a>(含常见问题),背包版见<a href="../../backpack/troubleshooting/">背包版故障排查</a>。</li>
+<li>先查故障排查：PC 版见<a href="../../pc/troubleshooting/">故障排查</a>（含常见问题），背包版见<a href="../../backpack/troubleshooting/">背包版故障排查</a>。</li>
 <li>文档内容、链接或示例问题提交到<a href="https://github.com/XenseRobotics-AI/XTac-UMI-G1-Docs/issues">文档仓库 Issues</a>。</li>
-<li>硬件、固件、标定材料或返修问题走设备交付 / 售后渠道,并提供设备 SN。</li>
+<li>硬件、固件、标定材料或返修问题走设备交付 / 售后渠道，并提供设备 SN。</li>
 </ol>
-<p>反馈时请附带:</p>
+<p>反馈时请附带：</p>
 <ul>
-<li>完整报错原文,以及对应的日志:<ul>
-<li>PC 版:附那次运行的完整日志文件 <code>~/xenselogs/session_&lt;时间戳&gt;.log</code>,整份附上,不要只贴屏幕上最后几行,见 <a href="../../pc/troubleshooting/#logs">PC 版故障排查</a>。</li>
-<li>背包版:附控制台系统日志面板的截图,并注明报错出现的大致时间;该面板不导出日志文件,不用去设备上找。</li>
+<li>完整报错原文，以及对应的日志：<ul>
+<li>PC 版：附那次运行的完整日志文件 <code>~/xenselogs/session_&lt;时间戳&gt;.log</code>，整份附上，不要只贴屏幕上最后几行，见 <a href="../../pc/troubleshooting/#logs">PC 版故障排查</a>。</li>
+<li>背包版：附控制台系统日志面板的截图，并注明报错出现的大致时间；该面板不导出日志文件，不用去设备上找。</li>
 </ul>
 </li>
-<li>设备身份:背包版抄控制台 系统 → 设备信息 页的设备 SN、采集单元版本与每只夹爪的 SN / 固件版本;PC 版给 <code>scan_grippers</code> 的 side / role / firmware_sn 输出和<a href="../../pc/versions/#check-versions">如何查版本</a>里那条命令的输出。</li>
+<li>设备身份：背包版抄控制台 系统 → 设备信息 页的设备 SN、采集单元版本与每只夹爪的 SN / 固件版本；PC 版给 <code>scan_grippers</code> 的 side / role / firmware_sn 输出和<a href="../../pc/versions/#check-versions">如何查版本</a>里那条命令的输出。</li>
 <li>复现步骤、完整命令或控制台操作、单夹爪 / 双夹爪、是否启用追踪器。</li>
-<li>涉及相机或硬件装配时,附设备连接和异常画面照片。</li>
+<li>涉及相机或硬件装配时，附设备连接和异常画面照片。</li>
 </ul>
 <h2 id="references">参考资料<a class="headerlink" href="#references" title="锚点链接">¶</a></h2>
 <table>
@@ -1810,22 +1810,22 @@
 <tr>
 <td>数采主仓库 <code>xense-taccap-lerobot</code></td>
 <td><a href="https://github.com/XenseRobotics-AI/xense-taccap-lerobot">https://github.com/XenseRobotics-AI/xense-taccap-lerobot</a></td>
-<td>PC 版采集软件,附带设备说明与 CHANGELOG</td>
+<td>PC 版采集软件，附带设备说明与 CHANGELOG</td>
 </tr>
 <tr>
 <td>夹爪 SDK <code>TacCap-Gripper</code></td>
 <td><a href="https://github.com/XenseRobotics-AI/TacCap-Gripper">https://github.com/XenseRobotics-AI/TacCap-Gripper</a></td>
-<td>子模块 <code>third_party/taccap-gripper/</code>;SDK 文档在 <code>docs/</code></td>
+<td>子模块 <code>third_party/taccap-gripper/</code>；SDK 文档在 <code>docs/</code></td>
 </tr>
 <tr>
 <td>追踪器 PC 服务 <code>XenseVR-PC-Service</code></td>
 <td><a href="https://github.com/XenseRobotics-AI/XenseVR-PC-Service">https://github.com/XenseRobotics-AI/XenseVR-PC-Service</a></td>
-<td>不是子模块,以 <code>.deb</code> 安装到 <code>/opt/apps/roboticsservice</code>,见<a href="../../pc/install/#24">一键安装</a></td>
+<td>不是子模块，以 <code>.deb</code> 安装到 <code>/opt/apps/roboticsservice</code>，见<a href="../../pc/install/#24">一键安装</a></td>
 </tr>
 <tr>
 <td>视触觉传感器 SDK <code>xensesdk</code></td>
 <td><a href="https://github.com/XenseRobotics/xensesdk">https://github.com/XenseRobotics/xensesdk</a></td>
-<td><a href="https://xensedoc.readthedocs.io/en/latest/">文档站</a></td>
+<td><a href="https://docs.xenserobotics.com/">文档站</a></td>
 </tr>
 <tr>
 <td>本手册源码</td>
@@ -1835,7 +1835,7 @@
 </tbody>
 </table>
 <h2 id="本手册范围">本手册范围<a class="headerlink" href="#本手册范围" title="锚点链接">¶</a></h2>
-<p>本手册覆盖从数采夹爪硬件到数据落盘的链路:背包版到 MCAP 记录与 LeRobot 导出,PC 版到 <code>LeRobotDataset</code>;模型训练、推理、部署不在范围内,见对应工程的独立文档。</p>
+<p>本手册覆盖从数采夹爪硬件到数据落盘的链路：背包版到 MCAP 记录与 LeRobot 导出，PC 版到 <code>LeRobotDataset</code>；模型训练、推理、部署不在范围内，见对应工程的独立文档。</p>
 
 
 

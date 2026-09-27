@@ -1663,9 +1663,9 @@
 
 
 <h1 id="坐标系">坐标系<a class="headerlink" href="#坐标系" title="锚点链接">¶</a></h1>
-<p>本页定义位姿数据所在的坐标系:世界坐标系在哪、朝哪,以及采集时怎么看位姿是否正确。两种形态的位姿都来自同一套 Pico4 头显与追踪器,坐标系定义相同;查看位姿的界面不同,那一段用「背包版 / PC 版」标签页分开写。</p>
+<p>本页定义位姿数据所在的坐标系：世界坐标系在哪、朝哪，以及采集时怎么看位姿是否正确。两种形态的位姿都来自同一套 Pico4 头显与追踪器，坐标系定义相同；查看位姿的界面不同，那一段用「背包版 / PC 版」标签页分开写。</p>
 <h2 id="世界坐标系">世界坐标系<a class="headerlink" href="#世界坐标系" title="锚点链接">¶</a></h2>
-<p>世界坐标系由头显上的 XTac-UMI XR 在启动瞬间建立并冻结,是右手系,重力对齐:</p>
+<p>世界坐标系由头显上的 XTac-UMI XR 在启动瞬间建立并冻结，是右手系，重力对齐：</p>
 <table>
 <thead>
 <tr>
@@ -1679,44 +1679,44 @@
 <td>首次启动 XTac-UMI XR 那一刻头显所在的位置</td>
 </tr>
 <tr>
-<td>X 轴(红)</td>
-<td>设备前向,沿头显前部相机安装面法线指向前方</td>
+<td>X 轴（红）</td>
+<td>设备前向，沿头显前部相机安装面法线指向前方</td>
 </tr>
 <tr>
-<td>Y 轴(绿)</td>
-<td>设备左向,与 X 轴正交,按右手坐标系约定确定</td>
+<td>Y 轴（绿）</td>
+<td>设备左向，与 X 轴正交，按右手坐标系约定确定</td>
 </tr>
 <tr>
-<td>Z 轴(蓝)</td>
-<td>设备上向,与 X、Y 均正交,由右手定则唯一确定</td>
+<td>Z 轴（蓝）</td>
+<td>设备上向，与 X、Y 均正交，由右手定则唯一确定</td>
 </tr>
 </tbody>
 </table>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/pico4/world-frame-origin.webp" data-desc-position="bottom"><img alt="启动瞬间冻结的世界坐标系" src="../../assets/pico4/world-frame-origin.webp" width="420"></a></p>
-<p>坐标系只在启动瞬间跟着头显,冻结后就固定在空间里,转头、走动都不会带着它动;重启 XTac-UMI XR 会重新建系,原点和方向都会变。所以启动时要面朝机器人正前方,让 X 轴对齐机器人正前方,而且同一个数据集采集期间不要重启它,操作步骤见<a href="../pico4/#pico-frame">启动与坐标系对齐</a>。</p>
-<p>数据集里所有位姿都以这个世界系为参考:PC 版落盘的是末端 TCP 位姿 <code>tcp.x/y/z</code> 加 6D 旋转 <code>r1..r6</code>(旋转矩阵前两列,约定见<a href="../../pc/recording/#53">每帧记录内容</a>);背包版 MCAP 里记录头显与追踪器的位姿。</p>
+<p>坐标系只在启动瞬间跟着头显，冻结后就固定在空间里，转头、走动都不会带着它动；重启 XTac-UMI XR 会重新建系，原点和方向都会变。所以启动时要面朝机器人正前方，让 X 轴对齐机器人正前方，而且同一个数据集采集期间不要重启它，操作步骤见<a href="../pico4/#pico-frame">启动与坐标系对齐</a>。</p>
+<p>数据集里所有位姿都以这个世界系为参考：PC 版落盘的是末端 TCP 位姿 <code>tcp.x/y/z</code> 加 6D 旋转 <code>r1..r6</code>（旋转矩阵前两列，约定见<a href="../../pc/recording/#53">每帧记录内容</a>）；背包版 MCAP 里记录头显与追踪器的位姿。</p>
 <h2 id="world-view">采集时的位姿视图<a class="headerlink" href="#world-view" title="锚点链接">¶</a></h2>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">背包版</label><label for="__tabbed_1_2">PC 版</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<p>控制台「实时监控」页的位姿视图实时显示左右爪与头显的位姿,下方是左右爪开合角度(rad / deg / 开合百分比)。夹爪闭合时角度约 0.02 rad,再施加一定的力可以到零。开录前逐个摇晃夹爪,确认左右位姿各自跟着动;不动或跳变先查<a href="../pico4/#pico-tracker-bind">追踪器绑定</a>与视野遮挡。</p>
+<p>控制台「实时监控」页的位姿视图实时显示左右爪与头显的位姿，下方是左右爪开合角度（rad / deg / 开合百分比）。夹爪闭合时角度约 0.02 rad，再施加一定的力可以到零。开录前逐个摇晃夹爪，确认左右位姿各自跟着动；不动或跳变先查<a href="../pico4/#pico-tracker-bind">追踪器绑定</a>与视野遮挡。</p>
 </div>
 <div class="tabbed-block">
-<p><code>--display_data=true</code> 会在 Rerun 里开出 <code>/world</code> 3D 视图:夹爪以带标签的椭球 + 三轴画在实时 <code>tcp.*</code> 处,拖出一条轨迹面包屑。</p>
+<p><code>--display_data=true</code> 会在 Rerun 里开出 <code>/world</code> 3D 视图：夹爪以带标签的椭球 + 三轴画在实时 <code>tcp.*</code> 处，拖出一条轨迹面包屑。</p>
 <ul>
-<li>场景按 <code>FLU</code> 声明,初始视角朝 +X,世界轴标 <code>+X forward / +Y left / +Z up</code>。</li>
-<li>面包屑保留最近 90 个采样点(30 fps 下约 3 秒),越旧越淡。</li>
-<li>头显相机开启时,头显以更小的琥珀色 <code>HEAD</code> 标记画进同一个 <code>/world</code>,不带轨迹。</li>
-<li><code>--show_trajectory</code> 默认开启,<code>false</code> 关闭;<code>--robot.enable_tracker=false</code> 时自动跳过。</li>
-<li>夹爪平放时 EE 标记应在两指中点、三轴呈 X 前 / Y 左 / Z 上,否则追踪器装错了。</li>
-<li>标量面板里的 <code>tracker pose</code> 是追踪器原始位姿,仅供查看;落盘的是 <code>tcp.*</code>。</li>
+<li>场景按 <code>FLU</code> 声明，初始视角朝 +X，世界轴标 <code>+X forward / +Y left / +Z up</code>。</li>
+<li>面包屑保留最近 90 个采样点（30 fps 下约 3 秒），越旧越淡。</li>
+<li>头显相机开启时，头显以更小的琥珀色 <code>HEAD</code> 标记画进同一个 <code>/world</code>，不带轨迹。</li>
+<li><code>--show_trajectory</code> 默认开启，<code>false</code> 关闭；<code>--robot.enable_tracker=false</code> 时自动跳过。</li>
+<li>夹爪平放时 EE 标记应在两指中点、三轴呈 X 前 / Y 左 / Z 上，否则追踪器装错了。</li>
+<li>标量面板里的 <code>tracker pose</code> 是追踪器原始位姿，仅供查看；落盘的是 <code>tcp.*</code>。</li>
 </ul>
 </div>
 </div>
 </div>
 <h2 id="局部坐标系">局部坐标系<a class="headerlink" href="#局部坐标系" title="锚点链接">¶</a></h2>
-<p>头显本体坐标系的三轴与世界系同一约定:X 前(前部相机安装面法线方向)、Y 左、Z 上,右手系;原点定义待补。</p>
-<p>夹爪局部坐标系定义待补。目前已知的是 PC 版落盘的 <code>tcp.*</code> 由追踪器位姿经每侧内置的实测 tracker→EE 变换得到,可用 <code>robot.tracker_to_ee_pos</code> / <code>robot.tracker_to_ee_quat</code> 覆盖,见 <a href="../../pc/reference/#robotconfig">RobotConfig 配置项</a>。</p>
+<p>头显本体坐标系的三轴与世界系同一约定：X 前（前部相机安装面法线方向）、Y 左、Z 上，右手系；原点定义待补。</p>
+<p>夹爪局部坐标系定义待补。目前已知的是 PC 版落盘的 <code>tcp.*</code> 由追踪器位姿经每侧内置的实测 tracker→EE 变换得到，可用 <code>robot.tracker_to_ee_pos</code> / <code>robot.tracker_to_ee_quat</code> 覆盖，见 <a href="../../pc/reference/#robotconfig">RobotConfig 配置项</a>。</p>
 
 
 

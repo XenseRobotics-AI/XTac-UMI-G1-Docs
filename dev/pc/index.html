@@ -30,7 +30,7 @@
     
     
       
-        <title>PC 版:XTac-UMI G1 开发套件 - XTac-UMI 文档 (预览)</title>
+        <title>PC 版：XTac-UMI G1 开发套件 - XTac-UMI 文档 (预览)</title>
       
     
     
@@ -129,7 +129,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              PC 版:XTac-UMI G1 开发套件
+              PC 版：XTac-UMI G1 开发套件
             
           </span>
         </div>
@@ -1591,7 +1591,7 @@
   <a href="#上传-hub可选" class="md-nav__link">
     <span class="md-ellipsis">
       
-        上传 Hub(可选)
+        上传 Hub（可选）
       
     </span>
   </a>
@@ -1615,42 +1615,42 @@
 
 
 
-<h1 id="pc-版xtac-umi-g1-开发套件">PC 版:XTac-UMI G1 开发套件<a class="headerlink" href="#pc-版xtac-umi-g1-开发套件" title="锚点链接">¶</a></h1>
-<p>PC 版把计算放在你自己的 x86 工作站上(推荐 NVIDIA GPU,Mamba 源码安装或 Docker 镜像二选一):夹爪 USB 直连主机,Pico4 Ultra 企业版头显也用 Type-C 线直连主机走有线共享网络(默认有线,WiFi 仅供临时调试),位姿经主机上的 XenseVR PC Service 接入,整条链路走 LeRobot 框架。
-需要的硬件是 XTac-UMI G1 主夹爪(单只或一对)、Pico4 Ultra 企业版加追踪器,以及这台工作站。
-操作界面是终端命令加 Rerun 预览窗口,<code>lerobot-record</code> 直接落盘 LeRobotDataset v3,可推到 Hugging Face Hub。
-基于 lerobot 开源生态,适合研究与算法团队、自建训练管线;完全开放二次开发,改 Python 代码或接自定义机器人都可以。
-不需要 PC、由采集团队在现场用平板和夹爪按键操作的是<a href="../backpack/">背包版</a>;两种配置的对比见<a href="../product/editions/">产品线与配置对比</a>。</p>
-<p>硬件已连好、环境已装好、主夹爪已标定?下面从上电到出第一条数据,照抄即可。第一次用请先走
+<h1 id="pc-版xtac-umi-g1-开发套件">PC 版：XTac-UMI G1 开发套件<a class="headerlink" href="#pc-版xtac-umi-g1-开发套件" title="锚点链接">¶</a></h1>
+<p>PC 版把计算放在你自己的 x86 工作站上（推荐 NVIDIA GPU，Mamba 源码安装或 Docker 镜像二选一）：夹爪 USB 直连主机，Pico4 Ultra 企业版头显也用 Type-C 线直连主机走有线共享网络（默认有线，WiFi 仅供临时调试），位姿经主机上的 XenseVR PC Service 接入，整条链路走 LeRobot 框架。
+需要的硬件是 XTac-UMI G1 主夹爪（单只或一对）、Pico4 Ultra 企业版加追踪器，以及这台工作站。
+操作界面是终端命令加 Rerun 预览窗口，<code>lerobot-record</code> 直接落盘 LeRobotDataset v3，可推到 Hugging Face Hub。
+基于 lerobot 开源生态，适合研究与算法团队、自建训练管线；完全开放二次开发，改 Python 代码或接自定义机器人都可以。
+不需要 PC、由采集团队在现场用平板和夹爪按键操作的是<a href="../backpack/">背包版</a>；两种配置的对比见<a href="../product/editions/">产品线与配置对比</a>。</p>
+<p>硬件已连好、环境已装好、主夹爪已标定？下面从上电到出第一条数据，照抄即可。第一次用请先走
 <a href="../product/g1/">认识 XTac-UMI G1</a> → <a href="install/">安装</a> → <a href="host-setup/">主机配置</a> →
-<a href="../common/pico4/">Pico4 头显与追踪器</a> → <a href="calibration/">标定与自检</a>,再回来。</p>
-<p>开始前确认:</p>
+<a href="../common/pico4/">Pico4 头显与追踪器</a> → <a href="calibration/">标定与自检</a>，再回来。</p>
+<p>开始前确认：</p>
 <ul>
 <li>仓库、子模块、SDK 与夹爪固件都已按<a href="versions/#required">必须升级到最新版本</a>升级。版本不配套时采集
-  照样能跑完并落盘,只是 <code>gripper.pos</code> 的刻度和别人对不上,事后从数据里看不出来。固件要求命令集
-  V2.1,对应主夹爪 ≥ 1.2.0 / 从夹爪 ≥ 1.1.0,更高版本不必回刷(<a href="versions/#v21">两者的区别</a>)。</li>
-<li>已做<a href="host-setup/#31">串口权限与 ModemManager</a> 一次性主机配置;双夹爪已查过
+  照样能跑完并落盘，只是 <code>gripper.pos</code> 的刻度和别人对不上，事后从数据里看不出来。固件要求命令集
+  V2.1，对应主夹爪 ≥ 1.2.0 / 从夹爪 ≥ 1.1.0，更高版本不必回刷（<a href="versions/#v21">两者的区别</a>）；用从夹爪（<code>--robot.role=follower</code>）时从夹爪固件还要 ≥ 1.1.6。</li>
+<li>已做<a href="host-setup/#31">串口权限与 ModemManager</a> 一次性主机配置；双夹爪已查过
   <a href="host-setup/#usb-budget">USB 带宽预算</a>。</li>
-<li>每台主夹爪已做过<a href="calibration/#41">夹爪标定</a>:没标定的主夹爪会被拒绝连接;双夹爪两侧都要标,
+<li>每台主夹爪已做过<a href="calibration/#41">夹爪标定</a>：没标定的主夹爪会被拒绝连接；双夹爪两侧都要标，
   只标一侧会让左右刻度不一致。</li>
-<li>已进入采集环境:Mamba 路径执行 <code>mamba activate xense-taccap</code>;Docker 路径执行
+<li>已进入采集环境：Mamba 路径执行 <code>mamba activate xense-taccap</code>；Docker 路径执行
   <code>docker compose run --rm xense-taccap</code> 进容器。</li>
 </ul>
 <h2 id="power-on">上电与下电顺序<a class="headerlink" href="#power-on" title="锚点链接">¶</a></h2>
 <ol>
-<li>将 XTac-UMI G1 插入主机(USB)。</li>
-<li>双夹爪:先查 <a href="host-setup/#usb-budget">USB 带宽预算</a>,再往后走。</li>
-<li>接好 Pico4 Ultra 企业版的有线共享网络,并关闭数采电脑的 WiFi——有线共享网络会与电脑 WiFi
-   冲突,导致追踪不稳或连不上。头显也支持 WiFi,但会有网络波动与位姿延迟,只用于临时调试,见
+<li>将 XTac-UMI G1 插入主机（USB）。</li>
+<li>双夹爪：先查 <a href="host-setup/#usb-budget">USB 带宽预算</a>，再往后走。</li>
+<li>接好 Pico4 Ultra 企业版的有线共享网络，并关闭数采电脑的 WiFi——有线共享网络会与电脑 WiFi
+   冲突，导致追踪不稳或连不上。头显也支持 WiFi，但会有网络波动与位姿延迟，只用于临时调试，见
    <a href="../common/pico4/#pico-network">网络连接</a>。</li>
-<li>开启 Pico4 Ultra 企业版,短按追踪器电源键至蓝灯亮起(首次使用需先<a href="../common/pico4/#pico-tracker-bind">绑定</a>)。</li>
+<li>开启 Pico4 Ultra 企业版，短按追踪器电源键至蓝灯亮起（首次使用需先<a href="../common/pico4/#pico-tracker-bind">绑定</a>）。</li>
 <li>
-<p>启动主机的 XenseVR PC Service:</p>
+<p>启动主机的 XenseVR PC Service：</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>/opt/apps/roboticsservice/runService.sh<span class="w">    </span><span class="c1"># 要在打开 APP 之前</span>
 </span></code></pre></div>
 </li>
 <li>
-<p>面朝机器人正前方,启动 XTac-UMI XR APP(冻结世界系原点与方向,见<a href="../common/pico4/#pico-frame">坐标系</a>),
+<p>面朝机器人正前方，启动 XTac-UMI XR APP（冻结世界系原点与方向，见<a href="../common/pico4/#pico-frame">坐标系</a>），
    点「重连」使<a href="../common/pico4/#pico-toolkit-ui">状态变为「已连接」</a>。</p>
 </li>
 <li>运行标定 / 自检 / 录制脚本。</li>
@@ -1663,11 +1663,11 @@
     D --&gt; C[启动 XTac-UMI XR&lt;br/&gt;冻结原点、显示已连接]
     C --&gt; E[跑标定/录制]</code></pre>
 <div class="admonition warning">
-<p class="admonition-title">第 5 步必须在第 6 步之前:服务先起,再打开 APP</p>
-<p>APP 去连的就是这个服务。服务没起来,APP 只会停在「未连接」;重启 APP 重连还会把世界系原点重设一次。</p>
+<p class="admonition-title">第 5 步必须在第 6 步之前：服务先起，再打开 APP</p>
+<p>APP 去连的就是这个服务。服务没起来，APP 只会停在「未连接」；重启 APP 重连还会把世界系原点重设一次。</p>
 </div>
-<p>采集全程不要重启 XTac-UMI XR:重启会重设世界原点,同一数据集内位姿参考系就不一致了,见<a href="../common/pico4/#pico-frame">启动与坐标系对齐</a>。</p>
-<p>下电按相反顺序:先停止录制 / 回放并等当前集存盘,再退出 XTac-UMI XR、停掉 XenseVR PC Service,最后按<a href="../common/gripper/#power">供电与连接要求</a>里的拔线顺序拔线:先拔数采终端端,再松螺钉拔夹爪端,从夹爪拔夹爪端前先断 24V。</p>
+<p>采集全程不要重启 XTac-UMI XR：重启会重设世界原点，同一数据集内位姿参考系就不一致了，见<a href="../common/pico4/#pico-frame">启动与坐标系对齐</a>。</p>
+<p>下电按相反顺序：先停止录制 / 回放并等当前集存盘，再退出 XTac-UMI XR、停掉 XenseVR PC Service，最后按<a href="../common/gripper/#power">供电与连接要求</a>里的拔线顺序拔线：先拔数采终端端，再松螺钉拔夹爪端，从夹爪拔夹爪端前先断 24V。</p>
 <h2 id="self-check">自检<a class="headerlink" href="#self-check" title="锚点链接">¶</a></h2>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># 夹爪可读:role 应为 Leader/Follower,firmware_sn 非空</span>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"from xense.taccap import scan_grippers</span>
@@ -1675,7 +1675,7 @@
 </span></code></pre></div>
 <p>出问题看<a href="troubleshooting/">故障排查</a>。</p>
 <h2 id="预览">预览<a class="headerlink" href="#预览" title="锚点链接">¶</a></h2>
-<p>录制前先用 <code>lerobot-teleoperate</code> 打开 Rerun 确认数据流,它只读设备不写数据:</p>
+<p>录制前先用 <code>lerobot-teleoperate</code> 打开 Rerun 确认数据流，它只读设备不写数据：</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>lerobot-teleoperate<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">    </span>--robot.type<span class="o">=</span>bi_taccap_gripper<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span>--robot.id<span class="o">=</span><span class="m">0</span><span class="w"> </span><span class="se">\</span>
@@ -1686,8 +1686,8 @@
 </span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">    </span>--show_trajectory<span class="o">=</span><span class="nb">true</span>
 </span></code></pre></div>
 <p>Rerun 里应看到左右触觉与腕相机画面、<code>gripper.pos</code> 张到 1.0 / 闭到 0.0、<code>/world</code> 里的 EE 标记随夹爪
-平滑移动;确认后 <code>Ctrl+C</code> 退出。单夹爪换成 <code>--robot.type=taccap_gripper</code>,两只都接着时再加
-<code>--robot.side=left|right</code>。只有夹爪、或加头显相机的另外两档,见<a href="recording/#preview">预览</a>。</p>
+平滑移动；确认后 <code>Ctrl+C</code> 退出。单夹爪换成 <code>--robot.type=taccap_gripper</code>，两只都接着时再加
+<code>--robot.side=left|right</code>。只有夹爪、或加头显相机的另外两档，见<a href="recording/#preview">预览</a>。</p>
 <h2 id="录制">录制<a class="headerlink" href="#录制" title="锚点链接">¶</a></h2>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>lerobot-record<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">    </span>--robot.type<span class="o">=</span>bi_taccap_gripper<span class="w"> </span><span class="se">\</span>
@@ -1703,23 +1703,23 @@
 </span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="w">    </span>--dataset.reset_time_s<span class="o">=</span><span class="m">60</span><span class="w"> </span><span class="se">\</span>
 </span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="w">    </span>--dataset.single_task<span class="o">=</span><span class="s1">'Pick up the object'</span>
 </span></code></pre></div>
-<p><code>--robot.id</code> 是必填的工位号,直接填数字,一套设备一个(双夹爪算一套),漏了会在解析命令行时就报错退出
-(<a href="recording/#robot-id"><code>--robot.id</code> 与硬件清单</a>)。<code>--robot.enable_tracker</code> 与
-<code>--robot.enable_head_camera</code> 和预览用的那一档保持一致;<code>--display_data</code> 预览时开、录制时关。
+<p><code>--robot.id</code> 是必填的工位号，直接填数字，一套设备一个（双夹爪算一套），漏了会在解析命令行时就报错退出
+（<a href="recording/#robot-id"><code>--robot.id</code> 与硬件清单</a>）。<code>--robot.enable_tracker</code> 与
+<code>--robot.enable_head_camera</code> 和预览用的那一档保持一致；<code>--display_data</code> 默认关，0.0.8 起录制时开着也不占帧预算，想边录边看就开。
 三档命令与全部参数见<a href="recording/#52">录制</a>。</p>
 <h2 id="检查本地数据">检查本地数据<a class="headerlink" href="#检查本地数据" title="锚点链接">¶</a></h2>
-<p>用录制时相同的 <code>repo_id</code> 检查本地数据集结构与内容是否完整:</p>
+<p>用录制时相同的 <code>repo_id</code> 检查本地数据集结构与内容是否完整：</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>lerobot-check-dataset<span class="w"> </span>--repo-id<span class="w"> </span>&lt;your_org&gt;/&lt;your_dataset&gt;
 </span></code></pre></div>
 <p>只查某几集等用法见<a href="dataset/#62">数据校验</a>。</p>
-<h2 id="上传-hub可选">上传 Hub(可选)<a class="headerlink" href="#上传-hub可选" title="锚点链接">¶</a></h2>
-<p>先 <code>hf auth login</code> 或设置 <code>HF_TOKEN</code>,再推送:</p>
+<h2 id="上传-hub可选">上传 Hub（可选）<a class="headerlink" href="#上传-hub可选" title="锚点链接">¶</a></h2>
+<p>先 <code>hf auth login</code> 或设置 <code>HF_TOKEN</code>，再推送：</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>lerobot-push-dataset-to-hub<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">    </span>--repo-id<span class="w"> </span>&lt;your_org&gt;/&lt;your_dataset&gt;<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span>--dataset-path<span class="w"> </span>~/.cache/huggingface/lerobot/&lt;your_org&gt;/&lt;your_dataset&gt;<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">    </span>--upload-large-folder
 </span></code></pre></div>
-<p>私有仓库、不传视频等变体见<a href="dataset/#64">上传 Hub</a>;数据集长什么样、每帧记录了什么见<a href="dataset/">数据集</a>。</p>
+<p>私有仓库、不传视频等变体见<a href="dataset/#64">上传 Hub</a>；数据集长什么样、每帧记录了什么见<a href="dataset/">数据集</a>。</p>
 
 
 

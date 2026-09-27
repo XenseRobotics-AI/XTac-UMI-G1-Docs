@@ -2182,7 +2182,7 @@
 </span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="w">    </span>--dataset.single_task<span class="o">=</span><span class="s1">'Pick up the object'</span>
 </span></code></pre></div>
 <ul>
-<li>Keep <code>--display_data=false</code> (the default) for real recordings: Rerun's display compresses and pushes every stream on the collection loop and eats a visible share of the frame budget. If you must watch during a recording, use <a href="#params"><code>--display_image_every_n</code></a>.</li>
+<li><code>--display_data</code> defaults to <code>false</code>. Since 0.0.8 the Rerun display runs on its own thread, so leaving it on while recording costs the collection loop nothing: if the viewer falls behind only on-screen frames are dropped, and a line <code>Rerun display: N/M frames dropped …</code> is printed at the end. Nothing recorded is affected.</li>
 <li>Spell out <code>fps=30</code>, <code>episode_time_s=120</code>, <code>reset_time_s=60</code> and <code>push_to_hub=false</code> explicitly, so a different checkout's defaults cannot change what you collect.</li>
 <li>If a camera or the gripper encoder is lost mid-recording (a cable works loose, a hub browns out), collection stops on its own and saves what it already recorded, printing <code>Device lost mid-recording</code>; it does not write invented values. A brief read failure carries the last good value (about 2 s for a camera, about 1 s for the encoder) before loss is declared, so the last second or two of that episode may be repeated stale values; discard that episode. Check the cabling and the USB ports (see <a href="../troubleshooting/">Troubleshooting</a>), then continue with <code>--resume</code>.</li>
 </ul>
@@ -2271,7 +2271,7 @@
 <tr>
 <td><code>encoder_queue_maxsize</code></td>
 <td><code>30</code></td>
-<td>Buffered frames per camera (~1s@30fps); back-pressure drops the oldest when encoding falls behind</td>
+<td>Buffered frames per camera (~1s@30fps); when full it waits up to 0.1 s, then drops the current frame and warns</td>
 </tr>
 <tr>
 <td><code>video_encoding_batch_size</code></td>
@@ -2333,7 +2333,7 @@
 <tr>
 <td><code>resume</code></td>
 <td><code>false</code></td>
-<td>Continue recording into an existing dataset</td>
+<td>Continue recording into an existing dataset; looks only locally and errors out rather than downloading from the Hub; <code>--robot.id</code> must match the dataset, see <a href="#robot-id"><code>--robot.id</code></a></td>
 </tr>
 </tbody>
 </table>
@@ -2352,6 +2352,16 @@
 <td><code>robot.side</code></td>
 <td>auto</td>
 <td><code>left</code>/<code>right</code>; required in single-gripper mode when both are connected</td>
+</tr>
+<tr>
+<td><code>robot.role</code></td>
+<td><code>leader</code></td>
+<td>Set <code>follower</code> to bind the follower gripper; the follower firmware must be ≥ 1.1.6, see <a href="../versions/#ota">Firmware OTA</a></td>
+</tr>
+<tr>
+<td><code>robot.gripper_stream_hz</code></td>
+<td><code>100</code></td>
+<td>Rate at which the leader's firmware pushes encoder (and, when enabled, IMU) readings; <code>0</code> polls every frame. If the stream cannot start it falls back to polling with a warning and recording continues. Shared by both sides on a bimanual rig, no prefix</td>
 </tr>
 <tr>
 <td><code>robot.enable_tracker</code></td>
@@ -2446,29 +2456,30 @@
 <p>The hardware manifest is the identity: <code>lerobot-record</code> writes <code>meta/hardware.json</code> into the dataset right after <code>connect()</code>, recording each gripper's firmware SN and the SNs of its two visuotactile sensors, each carrying its observation key.</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="p">{</span>
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="nt">"robot_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bi_taccap_gripper"</span><span class="p">,</span>
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span><span class="nt">"epochs"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">    </span><span class="p">{</span>
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">      </span><span class="nt">"from_episode"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
-</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">      </span><span class="nt">"to_episode"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
-</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">      </span><span class="nt">"recorded_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-08-22T16:03:09+08:00"</span><span class="p">,</span>
-</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">      </span><span class="nt">"robot_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bi_taccap_0"</span><span class="p">,</span>
-</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="w">      </span><span class="nt">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"leader"</span><span class="p">,</span>
-</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="w">      </span><span class="nt">"units"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="w">        </span><span class="p">{</span>
-</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="w">          </span><span class="nt">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"left"</span><span class="p">,</span>
-</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="w">          </span><span class="nt">"gripper_sn"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TCGU01A24Z0001m"</span><span class="p">,</span>
-</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="w">          </span><span class="nt">"tactile_sensors"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a><span class="w">            </span><span class="p">{</span><span class="w"> </span><span class="nt">"finger"</span><span class="p">:</span><span class="w"> </span><span class="s2">"left"</span><span class="p">,</span><span class="w">  </span><span class="nt">"observation_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"left_tactile_left"</span><span class="p">,</span><span class="w">  </span><span class="nt">"serial"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GSPS01A25Z0011"</span><span class="p">,</span>
-</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a><span class="w">              </span><span class="nt">"runtime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"meta/runtimes/GSPS01A25Z0011-20260822T160309.bin"</span><span class="w"> </span><span class="p">},</span>
-</span><span id="__span-3-17"><a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a><span class="w">            </span><span class="p">{</span><span class="w"> </span><span class="nt">"finger"</span><span class="p">:</span><span class="w"> </span><span class="s2">"right"</span><span class="p">,</span><span class="w"> </span><span class="nt">"observation_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"left_tactile_right"</span><span class="p">,</span><span class="w"> </span><span class="nt">"serial"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GSPS01A25Z0012"</span><span class="p">,</span>
-</span><span id="__span-3-18"><a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a><span class="w">              </span><span class="nt">"runtime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"meta/runtimes/GSPS01A25Z0012-20260822T160309.bin"</span><span class="w"> </span><span class="p">}</span>
-</span><span id="__span-3-19"><a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a><span class="w">          </span><span class="p">],</span>
-</span><span id="__span-3-20"><a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a><span class="w">          </span><span class="nt">"wrist_undistort"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"applied"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w"> </span><span class="p">}</span>
-</span><span id="__span-3-21"><a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a><span class="w">        </span><span class="p">}</span>
-</span><span id="__span-3-22"><a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a><span class="w">      </span><span class="p">]</span>
-</span><span id="__span-3-23"><a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a><span class="w">    </span><span class="p">}</span>
-</span><span id="__span-3-24"><a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a><span class="w">  </span><span class="p">]</span>
-</span><span id="__span-3-25"><a id="__codelineno-3-25" name="__codelineno-3-25" href="#__codelineno-3-25"></a><span class="p">}</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span><span class="nt">"robot_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bi_taccap_0"</span><span class="p">,</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">  </span><span class="nt">"epochs"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">    </span><span class="p">{</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">      </span><span class="nt">"from_episode"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">      </span><span class="nt">"to_episode"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">      </span><span class="nt">"recorded_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-08-22T16:03:09+08:00"</span><span class="p">,</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="w">      </span><span class="nt">"robot_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bi_taccap_0"</span><span class="p">,</span>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="w">      </span><span class="nt">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"leader"</span><span class="p">,</span>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="w">      </span><span class="nt">"units"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="w">        </span><span class="p">{</span>
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="w">          </span><span class="nt">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"left"</span><span class="p">,</span>
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="w">          </span><span class="nt">"gripper_sn"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TCGU01A24Z0001m"</span><span class="p">,</span>
+</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a><span class="w">          </span><span class="nt">"tactile_sensors"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a><span class="w">            </span><span class="p">{</span><span class="w"> </span><span class="nt">"finger"</span><span class="p">:</span><span class="w"> </span><span class="s2">"left"</span><span class="p">,</span><span class="w">  </span><span class="nt">"observation_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"left_tactile_left"</span><span class="p">,</span><span class="w">  </span><span class="nt">"serial"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GSPS01A25Z0011"</span><span class="p">,</span>
+</span><span id="__span-3-17"><a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a><span class="w">              </span><span class="nt">"runtime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"meta/runtimes/GSPS01A25Z0011-20260822T160309.bin"</span><span class="w"> </span><span class="p">},</span>
+</span><span id="__span-3-18"><a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a><span class="w">            </span><span class="p">{</span><span class="w"> </span><span class="nt">"finger"</span><span class="p">:</span><span class="w"> </span><span class="s2">"right"</span><span class="p">,</span><span class="w"> </span><span class="nt">"observation_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"left_tactile_right"</span><span class="p">,</span><span class="w"> </span><span class="nt">"serial"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GSPS01A25Z0012"</span><span class="p">,</span>
+</span><span id="__span-3-19"><a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a><span class="w">              </span><span class="nt">"runtime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"meta/runtimes/GSPS01A25Z0012-20260822T160309.bin"</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-3-20"><a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a><span class="w">          </span><span class="p">],</span>
+</span><span id="__span-3-21"><a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a><span class="w">          </span><span class="nt">"wrist_undistort"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"applied"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-3-22"><a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-3-23"><a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a><span class="w">      </span><span class="p">]</span>
+</span><span id="__span-3-24"><a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-3-25"><a id="__codelineno-3-25" name="__codelineno-3-25" href="#__codelineno-3-25"></a><span class="w">  </span><span class="p">]</span>
+</span><span id="__span-3-26"><a id="__codelineno-3-26" name="__codelineno-3-26" href="#__codelineno-3-26"></a><span class="p">}</span>
 </span></code></pre></div>
 <ul>
 <li><code>side</code> is which gripper, <code>finger</code> is which tactile sensor on it; the two are independent (<a href="../host-setup/#33">odd-left / even-right</a> is applied to each separately). <code>observation_key</code> lets a dataset column trace straight back to a physical sensor.</li>
@@ -2477,7 +2488,8 @@
 <li>It is a file of its own, not a key in <code>meta/info.json</code>. Trackers and wrist cameras are accessories and are not in the manifest.</li>
 <li><code>wrist_undistort</code> records whether the wrist frames were undistorted and from which intrinsics; not undistorted is recorded as <code>{"applied": false}</code>. See <a href="#57">fisheye undistortion</a>.</li>
 </ul>
-<p><code>epochs</code> lets one dataset span several rigs: each epoch records <code>from_episode</code> / <code>to_episode</code> (half-open, matching <code>dataset_from_index</code> / <code>dataset_to_index</code>) and <code>recorded_at</code>; the epoch being recorded has <code>to_episode</code> <code>null</code>. On <code>--resume</code> with the same rig nothing is recorded. If a gripper or sensor was swapped, the old epoch is closed at the current episode count and a new one starts. A changed <code>--robot.id</code> also opens a new epoch (consumers key on <code>units</code>). A <code>--robot.type</code> mismatch is a different dataset, not a hardware swap: the original file is kept and a warning is logged. Older datasets (flat <code>units</code>) read back as one open epoch, which only says "nothing indicates the hardware changed".</p>
+<p><code>epochs</code> lets one dataset span several rigs: each epoch records <code>from_episode</code> / <code>to_episode</code> (half-open, matching <code>dataset_from_index</code> / <code>dataset_to_index</code>) and <code>recorded_at</code>; the epoch being recorded has <code>to_episode</code> <code>null</code>. On <code>--resume</code> with the same rig nothing is recorded. If a gripper or sensor was swapped, the old epoch is closed at the current episode count and a new one starts. A <code>--robot.type</code> mismatch is a different dataset, not a hardware swap: the original file is kept and a warning is logged. Older datasets (flat <code>units</code>) read back as one open epoch, which only says "nothing indicates the hardware changed".</p>
+<p><strong>One dataset belongs to one station</strong>: on <code>--resume</code>, a <code>--robot.id</code> that differs from the one recorded in the dataset is refused before any device is connected (the error contains <code>refusing to resume it</code>). Resume on the original station, or record into a new <code>--dataset.repo_id</code>. Older datasets with no recorded station are not affected.</p>
 <div class="admonition danger">
 <p class="admonition-title"><code>meta/runtimes/</code>: rebuilding the derived tactile channels needs this bundle</p>
 <p>What is recorded is the <code>rectify</code> stream; depth / force / difference are computed from it, and that needs the reference image captured when that sensor came up (the runtime config). Every capture session writes each sensor's bundle to <code>meta/runtimes/&lt;SN&gt;-&lt;timestamp&gt;.bin</code> (about 841 KB each), and each epoch points at its own. Using the wrong bundle does not fail: solve against another sensor's bundle, or one from after a recalibration, and an untouched gel still yields plausible-looking depth and force. An older dataset with no <code>meta/runtimes/</code> skips reconstruction. A sensor pulled for maintenance and refitted comes back with a new reference image and opens its own epoch. The timestamp in the filename is Beijing time with no offset; read it as a label and compute with <code>recorded_at</code>.</p>
@@ -2592,7 +2604,8 @@
 </span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="w">    </span>--dataset.vcodec<span class="o">=</span>auto
 </span></code></pre></div>
 <ul>
-<li>One <code>_CameraEncoderThread</code> per camera, fed raw frames through a bounded queue (<code>--dataset.encoder_queue_maxsize</code>, roughly one second of frames). When it falls behind it drops the oldest frame and warns rather than blocking collection.</li>
+<li>One encoder thread per camera, fed raw frames through a bounded queue (<code>--dataset.encoder_queue_maxsize</code>, roughly one second of frames). When the queue is full it waits up to 0.1 s, then drops the current frame and warns <code>Encoder queue full … dropped N frame(s)</code> rather than blocking collection.</li>
+<li>Saving an episode is transactional: if the save fails or is interrupted with Ctrl+C, the dataset rolls back to the last complete episode with no half-written episode left behind, and <code>--resume</code> carries on from there.</li>
 <li><code>--dataset.vcodec=auto</code> prefers hardware encoding where available. An NVIDIA GPU on the data-collection host is recommended so the GPU H.264 encoder can take the CPU load off encoding several live streams.</li>
 <li>Encoder warm-up is automatic: encoders are made ready before each episode starts, so the first frame does not pay for it.</li>
 </ul>
@@ -2601,6 +2614,7 @@
 <p class="admonition-title">This is a workaround for an underspecified machine, not a recommendation</p>
 <p>The <a href="../install/#host-spec">data-collection host minimum</a> is an NVIDIA RTX 3060 / 8 GB VRAM or better. A CPU-only server, a VM or a laptop with no NVIDIA card can get data recorded with the command below, but saves are slow and frames drop sooner. For real collection, use a host that meets the minimum.</p>
 </div>
+<p>0.0.8 fixed the memory growth on this path (with <code>libsvtav1</code> each episode used to hold about 1.3 GB more, so long sessions ran out of memory); upgrade such machines to 0.0.8 first.</p>
 <p>The two defaults <code>--dataset.vcodec=auto</code> + <code>--dataset.streaming_encoding=true</code> assume an NVIDIA card. Without one, turn streaming encoding off:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>lerobot-record<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">    </span>...<span class="w"> </span><span class="se">\</span>
@@ -2635,7 +2649,32 @@
 <li>Between episodes the reset is passive: reposition the object and scene within <code>--dataset.reset_time_s</code>, no teleoperation.</li>
 <li>Each episode is one complete demonstration; do not pack several attempts into one.</li>
 <li>Give <code>--dataset.episode_time_s</code> enough room but not too much; an over-long episode produces a lot of dead tail frames.</li>
-<li>lerobot's keyboard controls work while recording (re-record the current episode, end it early, and so on).</li>
+<li>
+<p>Keyboard controls while recording:</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>→</td>
+<td>End the current episode early; during the reset phase, end the reset early</td>
+</tr>
+<tr>
+<td>←</td>
+<td>Discard this episode and re-record it; works during recording or the reset phase that follows, and the reset time is still given afterwards</td>
+</tr>
+<tr>
+<td>Esc</td>
+<td>Save the current episode, then stop recording</td>
+</tr>
+</tbody>
+</table>
+<p>The keyboard listener is global: arrow keys pressed in <strong>any window</strong>, Rerun included, take effect (Rerun's timeline uses left/right to step frames).</p>
+</li>
 </ul>
 <h2 id="collection-standards">Collection standards<a class="headerlink" href="#collection-standards" title="锚点链接">¶</a></h2>
 <p>The whole thing in one sentence: every episode is one complete, steady demonstration with real signal on the sensors, and the whole dataset shares one coordinate origin.</p>
@@ -2709,7 +2748,7 @@
 <li>When using the wired link, turn the data-collection host's WiFi off; wired network sharing conflicts with WiFi. See <a href="../../common/pico4/#pico-network">network</a>.</li>
 <li>Prepare the scene: stable lighting, the target clearly visible; clear away cables and clutter that would block the wrist camera.</li>
 <li>Leave disk headroom: at full load the stream can reach ~280 MB/s (bimanual), see <a href="../dataset/#storage-planning">storage planning</a>.</li>
-<li>Run the <a href="#preview">preview</a> once before recording and check that the trajectory, <code>gripper.pos</code> and the tactile images all carry signal; once confirmed, record with <code>--display_data=false</code>.</li>
+<li>Run the <a href="#preview">preview</a> once before recording and check that the trajectory, <code>gripper.pos</code> and the tactile images all carry signal; you can leave <code>--display_data</code> on while recording if you want to watch; it does not affect collection.</li>
 </ul>
 <h3 id="how-to-perform-the-demonstration">How to perform the demonstration<a class="headerlink" href="#how-to-perform-the-demonstration" title="锚点链接">¶</a></h3>
 <p>Keep the pace of the motion similar across demonstrations of the same task, which makes it easier to learn from. Tactile is the core modality, and a demonstration with an empty grasp is worth very little. Shifted-frame pairing drops each episode's first frame, so do not put the key action in frame 0.</p>
@@ -2773,7 +2812,7 @@
 </div>
 <h3 id="fisheye-fallback">What happens when the fisheye calibration cannot be read<a class="headerlink" href="#fisheye-fallback" title="锚点链接">¶</a></h3>
 <p>When the lens has never been calibrated (<code>read_fisheye()</code> returns <code>None</code>), the firmware returns an all-zero record (both firmware 1.1.1 and 1.2.2 do; test with <code>is_usable_fisheye_cal()</code> rather than <code>is None</code>, otherwise the remap table built from <code>fx = fy = 0</code> yields a pure black image without raising), or the firmware predates command set V2.0, undistortion does not fail. It falls back to the SDK's built-in reference intrinsics (<code>Calibration::resolve_fisheye()</code> returns <code>(calibration, is_reference, reason)</code>; prefer it over <code>read_fisheye()</code>), warns at connect with <code>Wrist undistortion is using the SDK's REFERENCE intrinsics ... Rectification will be approximate</code>, and records <code>"calibration": "reference"</code> in the manifest.</p>
-<p>The reference values are good enough to look at, but the principal point drifts from unit to unit (measured 37.7 px off on one unit). If you need to measure in pixels on the rectified image (visual servoing, hand-eye calibration, size estimation), store this unit's own calibration first: <code>python third_party/taccap-gripper/python/examples/fisheye_cal.py set-fisheye</code>.</p>
+<p>The reference values are good enough to look at, but the principal point drifts from unit to unit (measured 37.7 px off on one unit). If you need to measure in pixels on the rectified image (visual servoing, hand-eye calibration, size estimation), store this unit's own calibration first: <code>python third_party/taccap-gripper/python/examples/fisheye_cal.py set-fisheye right</code> (with two grippers connected, pick one with <code>left</code> / <code>right</code> or a full SN; with one gripper it can be omitted).</p>
 <p>A rectified frame that sits off-centre or looks slightly tilted does not mean the calibration is wrong: undistortion is built around the principal point, not the middle of the frame, the sensor is not always mounted at the lens's optical centre, and the raw fisheye's barrel distortion hides this by compressing the periphery (measured on one unit: <code>cx = 359.1</code>, with the fingertip midpoint at x = 360.1, only about 1 px apart). Do not change <code>cx</code> yourself; forcing it back to 320 pushes the picture further off and introduces a tilt.</p>
 
 

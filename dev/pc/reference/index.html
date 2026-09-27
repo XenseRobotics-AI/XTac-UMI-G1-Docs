@@ -1641,7 +1641,7 @@
 
 
 <h1 id="robotconfig-与-sdk">RobotConfig 与 SDK<a class="headerlink" href="#robotconfig-与-sdk" title="锚点链接">¶</a></h1>
-<p>查表用的附录:<code>RobotConfig</code> 配置项与 SDK 入口;采集流程见<a href="../recording/">数据采集</a>,报错见<a href="../troubleshooting/">故障排查</a>。</p>
+<p>查表用的附录：<code>RobotConfig</code> 配置项与 SDK 入口；采集流程见<a href="../recording/">数据采集</a>，报错见<a href="../troubleshooting/">故障排查</a>。</p>
 <h2 id="robotconfig"><code>RobotConfig</code> 常用配置项<a class="headerlink" href="#robotconfig" title="锚点链接">¶</a></h2>
 <table>
 <thead>
@@ -1655,17 +1655,17 @@
 <tr>
 <td><code>robot.id</code></td>
 <td><strong>必填</strong></td>
-<td>这套设备的工位号,填数字即可(<code>0</code> / <code>1</code>…),前缀按 <code>robot.type</code> 自动补成 <code>taccap_0</code> / <code>bi_taccap_0</code>;漏填在解析命令行时即报错 → <a href="../recording/#robot-id"><code>--robot.id</code> 与硬件清单</a></td>
+<td>这套设备的工位号，填数字即可（<code>0</code> / <code>1</code>…），前缀按 <code>robot.type</code> 自动补成 <code>taccap_0</code> / <code>bi_taccap_0</code>；漏填在解析命令行时即报错 → <a href="../recording/#robot-id"><code>--robot.id</code> 与硬件清单</a></td>
 </tr>
 <tr>
 <td><code>robot.side</code></td>
 <td>自动</td>
-<td><code>left</code>/<code>right</code>,<strong>单夹爪模式</strong>下两只都接着时必填;只接一只则自动选中</td>
+<td><code>left</code>/<code>right</code>，<strong>单夹爪模式</strong>下两只都接着时必填；只接一只则自动选中</td>
 </tr>
 <tr>
 <td><code>robot.role</code></td>
 <td><code>leader</code></td>
-<td>填 <code>follower</code> 绑定从夹爪</td>
+<td>填 <code>follower</code> 绑定从夹爪；从夹爪固件须 ≥ 1.1.6，见<a href="../versions/#ota">固件 OTA</a></td>
 </tr>
 <tr>
 <td><code>robot.enable_tracker</code></td>
@@ -1675,7 +1675,7 @@
 <tr>
 <td><code>robot.tracker_serial</code></td>
 <td>未设</td>
-<td>钉住追踪器 SN,绕过侧别规则;逐字使用、不校验,打错 connect 时报找不到</td>
+<td>钉住追踪器 SN，绕过侧别规则；逐字使用、不校验，打错 connect 时报找不到</td>
 </tr>
 <tr>
 <td><code>robot.enable_wrist_camera</code></td>
@@ -1690,27 +1690,27 @@
 <tr>
 <td><code>robot.wrist_camera_fourcc</code></td>
 <td><code>MJPG</code></td>
-<td>腕相机像素格式;默认 MJPG 是为同 hub 的触觉让出 USB 带宽,<code>YUYV</code> 无压缩,带宽够时才用</td>
+<td>腕相机像素格式；默认 MJPG 是为同 hub 的触觉让出 USB 带宽，<code>YUYV</code> 无压缩，带宽够时才用</td>
 </tr>
 <tr>
 <td><code>robot.wrist_undistort</code> / <code>_balance</code></td>
 <td><code>false</code> / <code>0.0</code></td>
-<td>落盘前矫正腕相机鱼眼及其视野档位,见<a href="../recording/#57">鱼眼矫正</a></td>
+<td>落盘前矫正腕相机鱼眼及其视野档位，见<a href="../recording/#57">鱼眼矫正</a></td>
 </tr>
 <tr>
 <td><code>robot.enable_head_camera</code></td>
 <td><code>false</code></td>
-<td>头显相机(第一视角 + 头显位姿),见<a href="../recording/#56">头显相机</a></td>
+<td>头显相机（第一视角 + 头显位姿），见<a href="../recording/#56">头显相机</a></td>
 </tr>
 <tr>
 <td><code>robot.head_camera_eyes</code></td>
 <td><code>both</code></td>
-<td><code>both</code> = 左右眼各一个键;<code>left</code> / <code>right</code> 只录一只</td>
+<td><code>both</code> = 左右眼各一个键；<code>left</code> / <code>right</code> 只录一只</td>
 </tr>
 <tr>
 <td><code>robot.head_camera_width/_height</code></td>
 <td><code>640</code> / <code>480</code></td>
-<td><strong>每只眼</strong>尺寸,只接受 <code>640x480</code> / <code>1024x768</code> / <code>1280x960</code>,要与头显里的「分辨率」一致</td>
+<td><strong>每只眼</strong>尺寸，只接受 <code>640x480</code> / <code>1024x768</code> / <code>1280x960</code>，要与头显里的「分辨率」一致</td>
 </tr>
 <tr>
 <td><code>robot.head_camera_fps</code></td>
@@ -1720,7 +1720,7 @@
 <tr>
 <td><code>robot.head_camera_pair_max_skew_ms</code></td>
 <td><code>20.0</code></td>
-<td>左右眼帧序号不同时,判为同一次曝光的最大时间差</td>
+<td>左右眼帧序号不同时，判为同一次曝光的最大时间差</td>
 </tr>
 <tr>
 <td><code>robot.head_camera_startup_timeout_s</code></td>
@@ -1735,7 +1735,7 @@
 <tr>
 <td><code>robot.enable_tactile</code></td>
 <td><code>true</code></td>
-<td>关闭则整条触觉链路都不接入(不发现、不落盘)。<strong>排查用,不是录制模式</strong></td>
+<td>关闭则整条触觉链路都不接入（不发现、不落盘）。<strong>排查用，不是录制模式</strong></td>
 </tr>
 <tr>
 <td><code>robot.tactile_fps</code></td>
@@ -1745,22 +1745,22 @@
 <tr>
 <td><code>robot.tactile_output_types</code></td>
 <td><code>["rectify"]</code></td>
-<td><strong>落盘</strong>的触觉流,<strong>只能填一个</strong>;填多个直接报错</td>
+<td><strong>落盘</strong>的触觉流，<strong>只能填一个</strong>；填多个直接报错</td>
 </tr>
 <tr>
 <td><code>robot.tactile_display_output_types</code></td>
 <td><code>["rectify"]</code></td>
-<td>Rerun 显示哪一路触觉,<strong>默认与落盘同一路</strong>(空列表等价);填 <code>["difference"]</code> 才多出一路仅显示、不落盘的流</td>
+<td>Rerun 显示哪一路触觉，<strong>默认与落盘同一路</strong>（空列表等价）；填 <code>["difference"]</code> 才多出一路仅显示、不落盘的流</td>
 </tr>
 <tr>
 <td><code>robot.tactile_diff_gain</code></td>
 <td><code>1.0</code></td>
-<td><code>difference</code> 图的线性增益;<strong>默认不请求 <code>difference</code>,故不起作用</strong>;<code>None</code> = 用传感器出厂值</td>
+<td><code>difference</code> 图的线性增益；<strong>默认不请求 <code>difference</code>，故不起作用</strong>；<code>None</code> = 用传感器出厂值</td>
 </tr>
 <tr>
 <td><code>robot.expected_tactiles_per_side</code></td>
 <td><code>2</code></td>
-<td>每侧应有几枚触觉;数量对不上直接报错</td>
+<td>每侧应有几枚触觉；数量对不上直接报错</td>
 </tr>
 <tr>
 <td><code>robot.enable_gripper</code> / <code>robot.enable_imu</code></td>
@@ -1768,19 +1768,24 @@
 <td>夹爪本体读数 / IMU 通道</td>
 </tr>
 <tr>
+<td><code>robot.gripper_stream_hz</code></td>
+<td><code>100</code></td>
+<td>主夹爪固件主动推送编码器（开启时含 IMU）读数的频率；<code>0</code> 为每帧轮询；推流起不来时自动回退轮询并告警。双夹爪两侧共用</td>
+</tr>
+<tr>
 <td><code>robot.gripper_open_rad</code></td>
 <td><code>1.7</code></td>
-<td><strong>仅从夹爪用</strong>。主夹爪一律用自己固件里实测的行程上限,本项对它没有任何作用——没标定的主夹爪会被拒绝连接,而不是退回这个常量。见<a href="../calibration/#41">夹爪标定</a></td>
+<td><strong>仅从夹爪用</strong>。主夹爪一律用自己固件里实测的行程上限，本项对它没有任何作用——没标定的主夹爪会被拒绝连接，而不是退回这个常量。见<a href="../calibration/#41">夹爪标定</a></td>
 </tr>
 <tr>
 <td><code>robot.tracker_to_ee_pos</code></td>
 <td><code>None</code></td>
-<td>覆盖 tracker→EE 平移;<code>None</code> = 用该侧<strong>内置实测值</strong></td>
+<td>覆盖 tracker→EE 平移；<code>None</code> = 用该侧<strong>内置实测值</strong></td>
 </tr>
 <tr>
 <td><code>robot.tracker_to_ee_quat</code></td>
 <td><code>None</code></td>
-<td>覆盖 tracker→EE 旋转(同上,两者可独立覆盖)</td>
+<td>覆盖 tracker→EE 旋转（同上，两者可独立覆盖）</td>
 </tr>
 <tr>
 <td><code>robot.tracker_wait_timeout</code></td>
@@ -1789,11 +1794,11 @@
 </tr>
 </tbody>
 </table>
-<p>上表是常用项,完整字段以主仓库附带的设备说明为准。</p>
-<p>上表按单夹爪写;<code>bi_taccap_gripper</code> 上 <code>enable_wrist_camera</code>、<code>tracker_serial</code>、<code>enable_gripper</code>、<code>enable_imu</code>、<code>gripper_open_rad</code>、<code>tracker_to_ee_pos/_quat</code> 每侧一个,要带 <code>left_</code> / <code>right_</code> 前缀(如 <code>--robot.left_enable_wrist_camera</code>),其余两侧共用,见<a href="../recording/#params">参数</a>。</p>
+<p>上表是常用项，完整字段以主仓库附带的设备说明为准。</p>
+<p>上表按单夹爪写；<code>bi_taccap_gripper</code> 上 <code>enable_wrist_camera</code>、<code>tracker_serial</code>、<code>enable_gripper</code>、<code>enable_imu</code>、<code>gripper_open_rad</code>、<code>tracker_to_ee_pos/_quat</code> 每侧一个，要带 <code>left_</code> / <code>right_</code> 前缀（如 <code>--robot.left_enable_wrist_camera</code>），其余两侧共用，见<a href="../recording/#params">参数</a>。</p>
 <h2 id="sdk-与二次开发">SDK 与二次开发<a class="headerlink" href="#sdk-与二次开发" title="锚点链接">¶</a></h2>
-<p><code>xense.taccap</code>(<code>taccap-gripper</code> SDK)是 XTac-UMI G1 的 C++17 / Python 设备访问层:通过串口协议访问夹爪 MCU,提供 IMU、编码器、按键、LED、传感器错误、标定、OTA,以及仅从夹爪具备的电机控制;另有可选的腕部 UVC <code>Camera</code> 类。两个可消费面:<code>taccap_core</code> CMake target(<code>libtaccap_core.so</code>,供 ROS2 / CMake 工程以 <code>add_subdirectory()</code> 集成)和 <code>xense.taccap</code> Python 扩展,数采主仓库通过 <code>third_party/taccap-gripper</code> 子模块消费后者。数据集录制、时间对齐、分集、lerobot 适配都在上层仓库,不在 SDK 内。安装构建、示例、鱼眼标定与 API 说明见 <a href="https://github.com/XenseRobotics-AI/TacCap-Gripper/tree/main/docs">TacCap-Gripper 仓库 docs</a>。</p>
-<p>术语见<a href="../../common/reference/#glossary">术语表</a>;反馈渠道与相关仓库见<a href="../../common/reference/#support">支持与反馈</a>。</p>
+<p><code>xense.taccap</code>（<code>taccap-gripper</code> SDK）是 XTac-UMI G1 的 C++17 / Python 设备访问层：通过串口协议访问夹爪 MCU，提供 IMU、编码器、按键、LED、传感器错误、标定、OTA，以及仅从夹爪具备的电机控制；另有可选的腕部 UVC <code>Camera</code> 类。两个可消费面：<code>taccap_core</code> CMake target（<code>libtaccap_core.so</code>，供 ROS2 / CMake 工程以 <code>add_subdirectory()</code> 集成）和 <code>xense.taccap</code> Python 扩展，数采主仓库通过 <code>third_party/taccap-gripper</code> 子模块消费后者。数据集录制、时间对齐、分集、lerobot 适配都在上层仓库，不在 SDK 内。安装构建、示例、鱼眼标定与 API 说明见 <a href="https://github.com/XenseRobotics-AI/TacCap-Gripper/tree/main/docs">TacCap-Gripper 仓库 docs</a>。</p>
+<p>术语见<a href="../../common/reference/#glossary">术语表</a>；反馈渠道与相关仓库见<a href="../../common/reference/#support">支持与反馈</a>。</p>
 
 
 

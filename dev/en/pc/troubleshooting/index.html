@@ -1831,7 +1831,7 @@
 <h1 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="锚点链接">¶</a></h1>
 <p>This page is organised by symptom; each entry gives the cause and the fix. Most problems come down to serial permissions and ModemManager grabbing the port, so read "Serial permissions and device discovery" below first. Before touching anything, run the self-check in <a href="../">Quickstart</a>, then match against the symptoms.</p>
 <h2 id="logs">Attach the full log when reporting a problem<a class="headerlink" href="#logs" title="锚点链接">¶</a></h2>
-<p>The full log is at <code>~/xenselogs/session_&lt;timestamp&gt;.log</code>, one file per run. The screen keeps only the few lines worth watching; this file has everything, with the collection program, <code>xensesdk</code> and the video encoding library all in one place, plus timestamps for key presses. Attach this file rather than the last few lines off the screen. The directory can be changed with the <code>XENSE_LOG_DIR</code> environment variable.</p>
+<p>The full log is at <code>~/xenselogs/session_&lt;timestamp&gt;.log</code>, one file per run. The screen keeps only the few lines worth watching; this file has everything, with the collection program, <code>xensesdk</code> and the video encoding library all in one place, plus timestamps for key presses. Attach this file rather than the last few lines off the screen. The <code>[session]</code> line at the top records the host, encoding and camera configuration; only the latest 15 files are kept. The directory can be changed with the <code>XENSE_LOG_DIR</code> environment variable, and how much is shown on screen with <code>XENSE_LOG_LEVEL</code>.</p>
 <h2 id="environment-and-installation">Environment and installation<a class="headerlink" href="#environment-and-installation" title="锚点链接">¶</a></h2>
 <details class="failure">
 <summary><code>setup_env.sh --install</code> stops immediately with <code>needs system packages that are not installed</code></summary>
@@ -1930,6 +1930,14 @@
 <p><strong>Fix:</strong> check the 24V adapter, the outlet, the power connector and its rating; connect the 24V first, then the Type-C, and lock it (see <a href="../#power-on">Power-on sequence</a>). Reconnect the Type-C and tighten the locking screws, route the cable away from the joints and the gripper's range of motion, and test at low speed before the first run.</p>
 </details>
 <details class="failure">
+<summary>Binding the follower fails with <code>从爪固件版本过低,必须升级后才能使用本 SDK</code> / <code>Follower firmware too old</code></summary>
+<p><strong>Cause:</strong> the follower firmware is older than 1.1.6. The motion-safety envelope arrived in 1.1.6, and both <code>--robot.role=follower</code> and the SDK refuse older firmware.</p>
+<p><strong>Fix:</strong> flash the follower image bundled with the SDK, then <strong>unplug the USB cable and the power cable together</strong> and plug them back in:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>python<span class="w"> </span>third_party/taccap-gripper/python/examples/ota_update.py<span class="w"> </span>slave
+</span></code></pre></div>
+<p>With several grippers connected, name the one to flash: <code>ota_update.py tc-gu-01-slave.bin left</code> (or <code>right</code>, or a full SN), see <a href="../versions/#ota">Firmware OTA</a>.</p>
+</details>
+<details class="failure">
 <summary>The blue light stays on too long during an OTA upgrade</summary>
 <p><strong>Cause:</strong> the upgrade has not finished, or the procedure went wrong.</p>
 <p><strong>Fix:</strong> do not cut the power during the upgrade. If nothing changes for a long time, follow <a href="../versions/#ota">Firmware OTA upgrade</a> and contact support.</p>
@@ -1969,18 +1977,18 @@
 <summary>One camera will not open (<code>Cannot open camera N</code>), and it is a different one each time</summary>
 <p><strong>Cause:</strong> not enough USB bandwidth; nothing is broken. Every UVC camera exclusively reserves a share of isochronous bandwidth when it opens, and once the bus budget (about 384 Mbit/s) is exceeded, whichever camera opened last fails. Which one that is differs every time, which is why the fault appears to wander. Using a blue USB 3 port does not help: the tactile sensors and wrist cameras still land on the same controller's USB 2.0 bus.</p>
 <p><strong>First confirm it is bandwidth:</strong> with <code>lsusb -t</code>, count how many cameras hang off each <code>480M</code> bus; six on one bus on a bimanual rig is very likely over. Watch the kernel log in another terminal while starting up:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sudo<span class="w"> </span>dmesg<span class="w"> </span>-w<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>--line-buffered<span class="w"> </span>-iE<span class="w"> </span><span class="s2">"uvcvideo|bandwidth|disconnect"</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sudo<span class="w"> </span>dmesg<span class="w"> </span>-w<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>--line-buffered<span class="w"> </span>-iE<span class="w"> </span><span class="s2">"uvcvideo|bandwidth|disconnect"</span>
 </span></code></pre></div>
 <p><code>--line-buffered</code> is not optional; without it <code>grep</code> keeps buffering and looks like it has hung. If <code>Not enough bandwidth for altsetting N</code> is printed the moment a camera fails to open, that is the diagnosis. You can also run the two halves separately:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># tactile only (wrist cameras off)</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>lerobot-teleoperate<span class="w"> </span>--robot.type<span class="o">=</span>bi_taccap_gripper<span class="w"> </span>--robot.id<span class="o">=</span><span class="m">0</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span>--robot.left_enable_wrist_camera<span class="o">=</span><span class="nb">false</span><span class="w"> </span>--robot.right_enable_wrist_camera<span class="o">=</span><span class="nb">false</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">    </span>--robot.enable_tracker<span class="o">=</span><span class="nb">false</span><span class="w"> </span>--fps<span class="o">=</span><span class="m">30</span><span class="w"> </span>--display_data<span class="o">=</span><span class="nb">true</span>
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>
-</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="c1"># wrist cameras only (tactile off)</span>
-</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>lerobot-teleoperate<span class="w"> </span>--robot.type<span class="o">=</span>bi_taccap_gripper<span class="w"> </span>--robot.id<span class="o">=</span><span class="m">0</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">    </span>--robot.enable_tactile<span class="o">=</span><span class="nb">false</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">    </span>--robot.enable_tracker<span class="o">=</span><span class="nb">false</span><span class="w"> </span>--fps<span class="o">=</span><span class="m">30</span><span class="w"> </span>--display_data<span class="o">=</span><span class="nb">true</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># tactile only (wrist cameras off)</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>lerobot-teleoperate<span class="w"> </span>--robot.type<span class="o">=</span>bi_taccap_gripper<span class="w"> </span>--robot.id<span class="o">=</span><span class="m">0</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span>--robot.left_enable_wrist_camera<span class="o">=</span><span class="nb">false</span><span class="w"> </span>--robot.right_enable_wrist_camera<span class="o">=</span><span class="nb">false</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">    </span>--robot.enable_tracker<span class="o">=</span><span class="nb">false</span><span class="w"> </span>--fps<span class="o">=</span><span class="m">30</span><span class="w"> </span>--display_data<span class="o">=</span><span class="nb">true</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="c1"># wrist cameras only (tactile off)</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>lerobot-teleoperate<span class="w"> </span>--robot.type<span class="o">=</span>bi_taccap_gripper<span class="w"> </span>--robot.id<span class="o">=</span><span class="m">0</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">    </span>--robot.enable_tactile<span class="o">=</span><span class="nb">false</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="w">    </span>--robot.enable_tracker<span class="o">=</span><span class="nb">false</span><span class="w"> </span>--fps<span class="o">=</span><span class="m">30</span><span class="w"> </span>--display_data<span class="o">=</span><span class="nb">true</span>
 </span></code></pre></div>
 <p>If each half works and the combination fails, it is bandwidth. <code>enable_tactile=false</code> is only for this diagnostic; never record data with it.</p>
 <p><strong>Fix:</strong> first confirm the wrist cameras were not switched from the default <code>MJPG</code> to <code>YUYV</code> (<code>--robot.wrist_camera_fourcc</code>); <code>MJPG</code> is the default precisely to save bandwidth. If it is still over budget, the only fix is to add a USB host controller, not a hub (a Thunderbolt / USB4 dock brings its own xHCI controller, an ordinary hub does not). After moving one gripper onto it, <code>lsusb -t</code> should show one more <code>480M</code> root_hub line. Until the second controller is in place you can record with the wrist cameras off; the dataset will then have no <code>{side}_wrist</code> key. Decide this before you start recording, not half with and half without.</p>
@@ -2015,8 +2023,8 @@
 </tbody>
 </table>
 <p><code>altsetting 6</code> is 944 bytes per microframe, i.e. 60.4 Mbit/s per tactile sensor, while 320x240 YUYV@30 is only about 37 Mbit/s of actual data; the wrist cameras request more still. 362 against about 384 is right on the edge. To read the numbers yourself:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># I:* is the active altsetting; the class name is lower-case (video) in this file</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>sudo<span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s2">"^(T:|I:\*.*video|E:.*Isoc)"</span><span class="w"> </span>/sys/kernel/debug/usb/devices
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># I:* is the active altsetting; the class name is lower-case (video) in this file</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>sudo<span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s2">"^(T:|I:\*.*video|E:.*Isoc)"</span><span class="w"> </span>/sys/kernel/debug/usb/devices
 </span></code></pre></div>
 <p>Each video interface's <code>Alt=</code> and the <code>MxPS=</code> on its <code>E:</code> line give the reservation (<code>MxPS × 8000 × 8</code> bit/s); sum per bus and compare against about 384 Mbit/s. How much a device requests is set by the firmware's UVC descriptors, and the collection program cannot change it.</p>
 </details>
@@ -2065,10 +2073,10 @@
 <summary>With <code>--robot.enable_head_camera=true</code> it hangs waiting for the first frame</summary>
 <p><strong>Cause:</strong> the frames are relayed by PC Service, and any broken link in that chain means no frames: a service older than v0.2.0 (v0.1.0 does not relay head camera frames), or the headset app is not streaming.</p>
 <p><strong>Fix:</strong> check in this order:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># 1) the service deb version: needs ≥ 0.2.0</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>dpkg<span class="w"> </span>-s<span class="w"> </span>xensevr-pc-service<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s1">'^(Version|Architecture):'</span>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="c1"># 2) does it expose the camera interface</span>
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"import xensevr_pc_service_sdk as xrt; print(hasattr(xrt, 'has_pico_camera_frame'))"</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># 1) the service deb version: needs ≥ 0.2.0</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>dpkg<span class="w"> </span>-s<span class="w"> </span>xensevr-pc-service<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s1">'^(Version|Architecture):'</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="c1"># 2) does it expose the camera interface</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"import xensevr_pc_service_sdk as xrt; print(hasattr(xrt, 'has_pico_camera_frame'))"</span>
 </span></code></pre></div>
 <p>Then confirm the headset is connected to PC Service and the app is streaming (the camera and the tracker share one connection). Prerequisites are in <a href="../recording/#56">Head camera</a>.</p>
 </details>
@@ -2094,9 +2102,14 @@
 <p><strong>Fix:</strong> add the station number; a bare number is enough (<code>0</code> / <code>1</code>…, one per rig, and a bimanual rig counts as one; the prefix is filled in from <code>--robot.type</code>, giving <code>taccap_0</code> / <code>bi_taccap_0</code>), for example <code>lerobot-record --robot.type=bi_taccap_gripper --robot.id=0 ...</code>. It names the station, not the hardware, so swapping a gripper does not change it; the devices' identity is recorded in the dataset's <code>meta/hardware.json</code>, see <a href="../recording/#robot-id"><code>--robot.id</code> and the hardware manifest</a>.</p>
 </details>
 <details class="failure">
-<summary>Resuming warns that the dataset's existing <code>meta/hardware.json</code> does not match the current hardware</summary>
-<p><strong>Cause:</strong> the gripper or tactile sensors were swapped when resuming with <code>--resume</code>; the program keeps the original file and warns.</p>
-<p><strong>Fix:</strong> the warning does not stop recording. If the hardware change was intentional, carry on; the warning is the record that this dataset spans two sets of hardware. If it was not intentional (a gripper plugged into the wrong place, say), stop and put the original device back.</p>
+<summary>On resume, the hardware does not match what the dataset recorded</summary>
+<p><strong>Cause:</strong> the gripper or tactile sensors were swapped when resuming with <code>--resume</code>. This is not an error: the manifest opens a new epoch at the current episode count and logs <code>... recorded as a new epoch in .../hardware.json</code>. Only a <code>--robot.type</code> mismatch keeps the original file with a warning.</p>
+<p><strong>Fix:</strong> if the change was intentional, carry on; if not (a gripper plugged into the wrong place, say), stop and put the original device back.</p>
+</details>
+<details class="failure">
+<summary>Resume fails with <code>refusing to resume it</code></summary>
+<p><strong>Cause:</strong> <code>--robot.id</code> differs from the station recorded in the dataset. One dataset belongs to one station, and this is refused before any device is connected.</p>
+<p><strong>Fix:</strong> resume on the original station with the original <code>--robot.id</code>, or record into a new <code>--dataset.repo_id</code>.</p>
 </details>
 <details class="failure">
 <summary>Recording dies partway through with <code>ValueError: You must add one or several frames</code></summary>
@@ -2104,14 +2117,22 @@
 <p><strong>Fix:</strong> upgrade to <code>0.0.7</code> or newer, where key presses in that gap are discarded. On an earlier version, do not press the arrow keys early between episodes; wait until the next episode's prompt is printed. The keyboard hook is global, so a right arrow in <strong>any</strong> window ends the episode (Rerun included, whose timeline scrubs with the arrow keys); the keypress timestamps in the <a href="#logs">session log</a> are the first evidence to check for "it exited on its own".</p>
 </details>
 <details class="failure">
-<summary><code>[stale_frames]</code> is printed at the end of every episode, or a camera capture stall warning appears</summary>
-<p><strong>Cause:</strong> one camera's background capture stalled briefly. The collection loop is <strong>not blocked</strong> by it (it gets the cached previous frame), so the frame rate looks entirely normal and the cost lands in the data instead: what was recorded during that window is a <strong>repeat of the old image</strong>. The <code>[stale_frames]</code> line gives how many frames in that episode were duplicates, in how many runs, and the longest run.</p>
+<summary><code>[stale_frames]</code> is printed after each reset phase, or a camera capture stall warning appears</summary>
+<p><strong>Cause:</strong> one camera's background capture stalled briefly. The collection loop is <strong>not blocked</strong> by it (it gets the cached previous frame), so the frame rate looks entirely normal and the cost lands in the data instead: what was recorded during that window is a <strong>repeat of the old image</strong>. After each reset phase a line gives how many frames in that episode were duplicates, in how many runs, and the longest run; a re-recorded episode is marked <code>(discarded take)</code>:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>[stale_frames] episode 3 [left_tactile_left] 45/1800 frames served stale (2.5%): 25 gap(s), longest 21 frame(s)
+</span></code></pre></div>
 <p><strong>Fix:</strong> look at the proportion first. Some duplication is expected: the sensor's background capture and the recording loop each run freely at the same nominal rate, the phase drifts, and occasionally a frame is sampled twice before a new one lands. That produces many <strong>single-frame</strong> duplicates and needs no action. What is worth chasing is a <strong>long contiguous run</strong>, which is a real stall, most often the GPU encoder starving the tactile threads for 0.3 to 0.9 s while 8 cameras encode at once. A few percent in short runs is fine to use; an episode with a very long run is a still image for that stretch and is better discarded. If it persists, work through <a href="#usb-bandwidth">Not enough USB bandwidth</a> or record fewer cameras at once.</p>
+<p>At the same time a <code>[loop_summary]</code> line gives the episode's actual frame rate, e.g. <code>= 29.0 fps (nominal 30; dataset timestamps assume nominal)</code>: when the real rate is below nominal, the dataset timestamps are still written at the nominal rate.</p>
 </details>
 <details class="failure">
-<summary><code>[slow_frame]</code> appears constantly in the log after enabling <code>--display_data=true</code></summary>
-<p><strong>Cause:</strong> the Rerun display is eating the frame budget. Measured on a bimanual rig with the headset (four tactile streams, two wrist cameras, two eyes): 13.2 ms per frame with JPEG compression, 3.1 ms without, while the whole budget at 30 fps is 33.3 ms. Look at <code>top_obs=</code> at the end of the <code>[slow_frame]</code> line first to tell a slow sensor from an expensive display; the two have opposite fixes.</p>
-<p><strong>Fix:</strong> confirm the two defaults <code>--display_compressed_images=false</code> and <code>--display_image_every_n=1</code> have not been changed. If it still overruns, raise <code>--display_image_every_n</code>: camera images refresh less often while scalars like <code>tcp.*</code> and <code>gripper.pos</code> stay at full rate. This is the last resort.</p>
+<summary>The log shows <code>[slow_frame] ... overrun=</code></summary>
+<p><strong>Cause:</strong> one frame took longer than the frame budget (33.3 ms at 30 fps). Since 0.0.8 the Rerun display runs on its own thread and is <strong>no longer a cause</strong>; if it falls behind, only on-screen frames are dropped.</p>
+<p><strong>Fix:</strong> read the two parts of the line:</p>
+<ul>
+<li><code>| phases obs=… build=… add=… display=…</code>: time per phase; look for the largest;</li>
+<li><code>top_obs=</code> at the end: the slowest sensors.</li>
+</ul>
+<p>Only the first 5 <code>[slow_frame]</code> lines of an episode reach the screen; the rest go to the <a href="#logs">session log</a>, and the screen shows a <code>[slow_frame_summary]</code> every 5 s instead. A few now and then do not affect the data; if they persist and keep pointing at the same camera, work through <a href="#usb-bandwidth">Not enough USB bandwidth</a>. For machines without an NVIDIA card see <a href="../recording/#no-gpu">Recording on a host without an NVIDIA GPU</a>.</p>
 </details>
 <details class="failure">
 <summary>Recording stops partway through with <code>Device lost mid-recording</code></summary>
@@ -2125,7 +2146,7 @@
 </details>
 <details class="failure">
 <summary>The encoder cannot keep up and dropped-frame warnings appear in the log</summary>
-<p><strong>Cause:</strong> when the real-time encoding queue is full, the oldest frame is dropped (rather than blocking the collection loop).</p>
+<p><strong>Cause:</strong> when the real-time encoding queue is full it waits up to 0.1 s, then drops the current frame and warns <code>Encoder queue full … dropped N frame(s)</code> (rather than blocking the collection loop).</p>
 <p><strong>Fix:</strong> raise <code>--dataset.encoder_threads</code>, use hardware encoding with <code>--dataset.vcodec=auto</code>, or adjust <code>--dataset.encoder_queue_maxsize</code>, see <a href="../recording/#54">Recording options</a>.</p>
 </details>
 <details class="failure">

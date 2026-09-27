@@ -1632,7 +1632,8 @@ power-on to your first episode; copy it as-is. First time through, go through
   runs to completion and writes to disk; only <code>gripper.pos</code> ends up on a scale that does not match
   anyone else's, and nothing in the data shows it afterwards. The firmware requirement is command set
   V2.1, which means leader ≥ 1.2.0 / follower ≥ 1.1.0; a higher build does not need to be flashed
-  back (<a href="versions/#v21">the difference between the two</a>).</li>
+  back (<a href="versions/#v21">the difference between the two</a>); with a follower gripper (<code>--robot.role=follower</code>) the follower
+  firmware must also be ≥ 1.1.6.</li>
 <li>The <a href="host-setup/#31">serial permissions and ModemManager</a> one-off host setup is done; on a
   bimanual rig, the <a href="host-setup/#usb-budget">USB bandwidth budget</a> has been checked.</li>
 <li>Every leader gripper has been through <a href="calibration/#41">gripper calibration</a>: an uncalibrated
@@ -1714,8 +1715,8 @@ with the head camera added, see <a href="recording/#preview">Preview</a>.</p>
 <p><code>--robot.id</code> is the required station number. Pass a bare number, one per rig (a bimanual rig counts
 as one); leaving it out fails at command-line parse time
 (<a href="recording/#robot-id"><code>--robot.id</code> and the hardware manifest</a>). Keep <code>--robot.enable_tracker</code> and
-<code>--robot.enable_head_camera</code> the same as the stage you previewed; <code>--display_data</code> is on to preview,
-off to record. The commands for all three stages and every parameter are in <a href="recording/#52">Record</a>.</p>
+<code>--robot.enable_head_camera</code> the same as the stage you previewed; <code>--display_data</code> is off by default;
+since 0.0.8 leaving it on while recording costs no frame budget, so turn it on if you want to watch. The commands for all three stages and every parameter are in <a href="recording/#52">Record</a>.</p>
 <h2 id="check-the-local-dataset">Check the local dataset<a class="headerlink" href="#check-the-local-dataset" title="锚点链接">¶</a></h2>
 <p>Use the same <code>repo_id</code> you recorded with to verify the local dataset's structure and contents:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>lerobot-check-dataset<span class="w"> </span>--repo-id<span class="w"> </span>&lt;your_org&gt;/&lt;your_dataset&gt;

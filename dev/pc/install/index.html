@@ -1961,10 +1961,10 @@
 
 
 <h1 id="安装">安装<a class="headerlink" href="#安装" title="锚点链接">¶</a></h1>
-<p>本页把 <code>xense-taccap-lerobot</code> 与三个硬件 SDK 装到 <strong>Ubuntu 22.04 / 24.04 LTS(amd64)</strong> 采集主机上并验证,装完就能跑 <code>lerobot-info</code>;串口权限与设备发现见下一页<a href="../host-setup/">主机配置</a>。</p>
-<p>已验证环境:Ubuntu 22.04.5 / 24.04.4 LTS,内核 6.8 / 6.14 / 7.0 系列均可,<code>x86_64</code>,Python <code>3.12.13</code>(要求 ≥ 3.12),mamba 环境名 <code>xense-taccap</code>;仓库 commit 与各包版本以<a href="../versions/">版本与升级</a>为准。其它发行版或架构需另行验证驱动、UVC、串口权限和 <code>.deb</code> 支持。</p>
+<p>本页把 <code>xense-taccap-lerobot</code> 与三个硬件 SDK 装到 <strong>Ubuntu 22.04 / 24.04 LTS（amd64）</strong> 采集主机上并验证，装完就能跑 <code>lerobot-info</code>；串口权限与设备发现见下一页<a href="../host-setup/">主机配置</a>。</p>
+<p>已验证环境：Ubuntu 22.04.5 / 24.04.4 LTS，内核 6.8 / 6.14 / 7.0 系列均可，<code>x86_64</code>，Python <code>3.12.13</code>（要求 ≥ 3.12），mamba 环境名 <code>xense-taccap</code>；仓库 commit 与各包版本以<a href="../versions/">版本与升级</a>为准。其它发行版或架构需另行验证驱动、UVC、串口权限和 <code>.deb</code> 支持。</p>
 <h2 id="host-spec">采集主机配置要求<a class="headerlink" href="#host-spec" title="锚点链接">¶</a></h2>
-<p>采集是实时的:双夹爪六路相机边取流边编码,一帧只有 33.3 ms 预算(30 fps)。配低了的表现是丢帧和效率低而不是报错。</p>
+<p>采集是实时的：双夹爪六路相机边取流边编码，一帧只有 33.3 ms 预算（30 fps）。配低了的表现是丢帧和效率低而不是报错。</p>
 <table>
 <thead>
 <tr>
@@ -1976,8 +1976,8 @@
 <tbody>
 <tr>
 <td>CPU</td>
-<td>Intel <strong>12 代 i7</strong> 及以上(或同级 AMD)</td>
-<td><strong>13 / 14 代 i7 / i9</strong> 或同级(≥ 8 性能核)</td>
+<td>Intel <strong>12 代 i7</strong> 及以上（或同级 AMD）</td>
+<td><strong>13 / 14 代 i7 / i9</strong> 或同级（≥ 8 性能核）</td>
 </tr>
 <tr>
 <td>内存</td>
@@ -2001,26 +2001,26 @@
 </tr>
 <tr>
 <td>USB</td>
-<td><strong>单夹爪</strong>(3 路相机)同一条 USB 2.0 总线即可</td>
-<td><strong>双夹爪</strong>(6 路相机)分挂<strong>两条 USB 2.0 总线</strong>(两个独立主控制器)</td>
+<td><strong>单夹爪</strong>（3 路相机）同一条 USB 2.0 总线即可</td>
+<td><strong>双夹爪</strong>（6 路相机）分挂<strong>两条 USB 2.0 总线</strong>（两个独立主控制器）</td>
 </tr>
 <tr>
 <td>系统</td>
-<td>Ubuntu 22.04 / 24.04 LTS,<strong>amd64</strong></td>
+<td>Ubuntu 22.04 / 24.04 LTS，<strong>amd64</strong></td>
 <td>同左</td>
 </tr>
 </tbody>
 </table>
-<p>各项的依据:</p>
+<p>各项的依据：</p>
 <ul>
-<li><strong>CPU</strong>:主循环、触觉解码、喂帧都在 CPU 上,双夹爪一帧要处理六到八张图,12 代 i7 是实测稳住 30 fps 的下限。</li>
-<li><strong>GPU</strong>:<code>--dataset.vcodec=auto</code> 把 H.264 编码交给显卡的编码芯片;没有 NVIDIA 显卡只能改用 CPU 编码,能录但存盘变慢、更容易 <code>[slow_frame]</code>,见<a href="../recording/#no-gpu">没有 NVIDIA GPU 怎么录</a>。Docker 镜像则必须有 NVIDIA 显卡,驱动版本用 <code>nvidia-smi --query-gpu=driver_version,name --format=csv,noheader</code> 查。</li>
-<li><strong>内存</strong>:8 GB 只够跑采集;开 <code>--display_data</code> 看 Rerun 实时数据或边采边处理时推荐 32 GB。</li>
-<li><strong>硬盘</strong>:满负荷时原始视频出流约 280 MB/s(双夹爪),落盘量见<a href="../dataset/#storage-planning">磁盘规划</a>;机械硬盘和 USB 移动硬盘不要直接录。</li>
-<li><strong>USB</strong>:触觉与腕相机都是 USB 2.0 设备,双夹爪 6 路相机要分挂两条 480M 总线,见 <a href="../host-setup/#usb-budget">USB 带宽预算</a>。</li>
+<li><strong>CPU</strong>：主循环、触觉解码、喂帧都在 CPU 上，双夹爪一帧要处理六到八张图，12 代 i7 是实测稳住 30 fps 的下限。</li>
+<li><strong>GPU</strong>：<code>--dataset.vcodec=auto</code> 把 H.264 编码交给显卡的编码芯片；没有 NVIDIA 显卡只能改用 CPU 编码，能录但存盘变慢、更容易 <code>[slow_frame]</code>，见<a href="../recording/#no-gpu">没有 NVIDIA GPU 怎么录</a>。Docker 镜像则必须有 NVIDIA 显卡，驱动版本用 <code>nvidia-smi --query-gpu=driver_version,name --format=csv,noheader</code> 查。</li>
+<li><strong>内存</strong>：8 GB 只够跑采集；开 <code>--display_data</code> 看 Rerun 实时数据或边采边处理时推荐 32 GB。</li>
+<li><strong>硬盘</strong>：满负荷时原始视频出流约 280 MB/s（双夹爪），落盘量见<a href="../dataset/#storage-planning">磁盘规划</a>；机械硬盘和 USB 移动硬盘不要直接录。</li>
+<li><strong>USB</strong>：触觉与腕相机都是 USB 2.0 设备，双夹爪 6 路相机要分挂两条 480M 总线，见 <a href="../host-setup/#usb-budget">USB 带宽预算</a>。</li>
 </ul>
 <h2 id="choose">选择安装方式<a class="headerlink" href="#choose" title="锚点链接">¶</a></h2>
-<p>两条路径装出来的采集环境相同,选一条走完即可。</p>
+<p>两条路径装出来的采集环境相同，选一条走完即可。</p>
 <table>
 <thead>
 <tr>
@@ -2032,23 +2032,23 @@
 <tbody>
 <tr>
 <td>拿到的东西</td>
-<td>源码仓库,自己建环境</td>
-<td>拉一个现成镜像,跑一个脚本</td>
+<td>源码仓库，自己建环境</td>
+<td>拉一个现成镜像，跑一个脚本</td>
 </tr>
 <tr>
 <td>耗时</td>
-<td>较长,夹爪 SDK 与 Pico4 绑定要现编译</td>
-<td>几分钟到几十分钟,看拉镜像(约 21 GB)的网速</td>
+<td>较长，夹爪 SDK 与 Pico4 绑定要现编译</td>
+<td>几分钟到几十分钟，看拉镜像（约 21 GB）的网速</td>
 </tr>
 <tr>
 <td>NVIDIA GPU</td>
-<td>非必需,没有时只能<a href="../recording/#no-gpu">降级录制</a></td>
-<td><strong>必需</strong>,驱动 ≥ 570.144</td>
+<td>非必需，没有时只能<a href="../recording/#no-gpu">降级录制</a></td>
+<td><strong>必需</strong>，驱动 ≥ 570.144</td>
 </tr>
 <tr>
 <td>环境隔离</td>
 <td>主机的 Mamba 环境</td>
-<td>容器里,不污染主机</td>
+<td>容器里，不污染主机</td>
 </tr>
 <tr>
 <td>改代码</td>
@@ -2057,147 +2057,154 @@
 </tr>
 </tbody>
 </table>
-<p>默认走 Mamba:对显卡驱动没有额外要求,改采集程序也方便,后续各页命令都按这条路径书写;有 NVIDIA 驱动又不想自己建环境时选 Docker。</p>
-<p>两条路径都要能访问外网:Mamba 要拉 conda-forge 与 PyPI 包、克隆 GitHub 仓库与子模块、下载 XenseVR PC Service 的 <code>.deb</code>;Docker 要装 Docker Engine 与 NVIDIA Container Toolkit 并拉镜像。离线机器 Mamba 走不通,Docker 只能靠 <code>.tar</code> 交付包。受限网络先配好代理,Docker 脚本支持 <code>XENSE_PROXY_URL</code>。</p>
+<p>默认走 Mamba：对显卡驱动没有额外要求，改采集程序也方便，后续各页命令都按这条路径书写；有 NVIDIA 驱动又不想自己建环境时选 Docker。</p>
+<p>两条路径都要能访问外网：Mamba 要拉 conda-forge 与 PyPI 包、克隆 GitHub 仓库与子模块、下载 XenseVR PC Service 的 <code>.deb</code>；Docker 要装 Docker Engine 与 NVIDIA Container Toolkit 并拉镜像。离线机器 Mamba 走不通，Docker 只能靠 <code>.tar</code> 交付包。受限网络先配好代理，Docker 脚本支持 <code>XENSE_PROXY_URL</code>。</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">Mamba 源码安装</label><label for="__tabbed_1_2">Docker 交付镜像</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <h3 id="apt">系统依赖包<a class="headerlink" href="#apt" title="锚点链接">¶</a></h3>
-<p>硬件 SDK 在 <code>setup_env.sh --install</code> 时现编译,新装的 Ubuntu 连编译器都没有,先装上:</p>
+<p>硬件 SDK 在 <code>setup_env.sh --install</code> 时现编译，新装的 Ubuntu 连编译器都没有，先装上：</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>build-essential<span class="w"> </span>cmake<span class="w"> </span>pkg-config<span class="w"> </span>git<span class="w"> </span>curl
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>libusb-dev<span class="w">    </span><span class="c1"># libusb 不够新,相机就是连不上 —— 见下面这条</span>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>v4l-utils<span class="w">     </span><span class="c1"># 采集用不到,但排查相机全靠它</span>
 </span></code></pre></div>
-<p><code>setup_env.sh</code> 开跑前会检查这几个命令,缺了直接停下并打印该敲哪行 apt;<code>v4l-utils</code> 缺了只告警,但 <code>v4l2-ctl --list-formats-ext</code> 是<a href="../troubleshooting/#usb-bandwidth">相机打不开</a>时最趁手的尺子。不需要系统 <code>ffmpeg</code>(<code>torchcodec</code> 用 conda 环境里的 FFmpeg 动态库),也不需要 <code>libudev-dev</code>(运行期用 Ubuntu 自带的 <code>libudev1</code>)。</p>
+<p><code>setup_env.sh</code> 开跑前会检查这几个命令，缺了直接停下并打印该敲哪行 apt；<code>v4l-utils</code> 缺了只告警，但 <code>v4l2-ctl --list-formats-ext</code> 是<a href="../troubleshooting/#usb-bandwidth">相机打不开</a>时最趁手的尺子。不需要系统 <code>ffmpeg</code>（<code>torchcodec</code> 用 conda 环境里的 FFmpeg 动态库），也不需要 <code>libudev-dev</code>（运行期用 Ubuntu 自带的 <code>libudev1</code>）。</p>
 <div class="admonition warning">
-<p class="admonition-title"><code>libusb-dev</code> 要装,而且要跟着内核一起更新</p>
-<p>近期 Linux 内核更新要求配套更新 libusb;libusb 落后或缺失时相机连不上,且报错里不会提到 libusb。<code>sudo apt install -y libusb-dev</code> 会连带装上 <code>libusb-0.1-4</code> 运行库(<code>libusb-0.1.so.4</code>),预编译的相机栈加载的正是它。内核升级后再升一次并重启:</p>
+<p class="admonition-title"><code>libusb-dev</code> 要装，而且要跟着内核一起更新</p>
+<p>近期 Linux 内核更新要求配套更新 libusb；libusb 落后或缺失时相机连不上，且报错里不会提到 libusb。<code>sudo apt install -y libusb-dev</code> 会连带装上 <code>libusb-0.1-4</code> 运行库（<code>libusb-0.1.so.4</code>），预编译的相机栈加载的正是它。内核升级后再升一次并重启：</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>update<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>--only-upgrade<span class="w"> </span>libusb-dev<span class="w"> </span>libusb-1.0-0
 </span></code></pre></div>
-<p><code>setup_env.sh</code> 只对它告警不中断,因为它是运行期依赖,缺了要到 <code>connect()</code> 才失败。</p>
+<p><code>setup_env.sh</code> 只对它告警不中断，因为它是运行期依赖，缺了要到 <code>connect()</code> 才失败。</p>
 </div>
 <h3 id="安装-miniforge">安装 Miniforge<a class="headerlink" href="#安装-miniforge" title="锚点链接">¶</a></h3>
-<p>Mamba 依赖求解比原生 conda 快约 10×:</p>
+<p>Mamba 依赖求解比原生 conda 快约 10×：</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>curl<span class="w"> </span>-L<span class="w"> </span>-O<span class="w"> </span><span class="s2">"https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-</span><span class="k">$(</span>uname<span class="k">)</span><span class="s2">-</span><span class="k">$(</span>uname<span class="w"> </span>-m<span class="k">)</span><span class="s2">.sh"</span>
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>bash<span class="w"> </span>Miniforge3-<span class="k">$(</span>uname<span class="k">)</span>-<span class="k">$(</span>uname<span class="w"> </span>-m<span class="k">)</span>.sh
 </span></code></pre></div>
 <h3 id="22">克隆仓库与子模块<a class="headerlink" href="#22" title="锚点链接">¶</a></h3>
-<p>仓库用 <code>third_party/</code> 子模块管理硬件 SDK,必须递归克隆:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>git<span class="w"> </span>clone<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span>--recurse-submodules<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span>https://github.com/XenseRobotics-AI/xense-taccap-lerobot.git
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="nb">cd</span><span class="w"> </span>xense-taccap-lerobot
+<p>仓库用 <code>third_party/</code> 子模块管理硬件 SDK，必须递归克隆，并指定发布版的 tag：</p>
+<div class="admonition warning">
+<p class="admonition-title">没有 GitHub SSH key 的机器，克隆前先执行一次</p>
+<p>子模块地址是 <code>git@github.com:</code> 形式，没配 SSH key 时主仓库能克隆、拉子模块会失败。先改走 HTTPS，原因见<a href="../versions/#submodule-ssh">子模块地址是 SSH 形式</a>：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>url.<span class="s2">"https://github.com/"</span>.insteadOf<span class="w"> </span><span class="s2">"git@github.com:"</span>
 </span></code></pre></div>
-<p>已克隆但漏了子模块:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>git<span class="w"> </span>submodule<span class="w"> </span>update<span class="w"> </span>--init<span class="w"> </span>--recursive<span class="w"> </span>--progress
+</div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>git<span class="w"> </span>clone<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span>--branch<span class="w"> </span>v0.0.8<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">  </span>--recurse-submodules<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">  </span>https://github.com/XenseRobotics-AI/xense-taccap-lerobot.git
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="nb">cd</span><span class="w"> </span>xense-taccap-lerobot
 </span></code></pre></div>
-<p>子模块只有一个:<a href="https://github.com/XenseRobotics-AI/TacCap-Gripper"><code>third_party/taccap-gripper</code></a>,装出来的包是 <code>xense.taccap</code>(触觉夹爪 SDK)。<code>xensesdk</code>(视触觉传感器 SDK)由 <code>setup_env.sh --install</code> 自动安装;<code>xensevr_pc_service_sdk</code>(Pico4)的 Python 绑定在主仓库里,要链接的 C SDK(<code>PXREARobotSDK.h</code> + <code>libPXREARobotSDK.so</code>)取自下一步安装的 <a href="#24">XenseVR PC Service <code>.deb</code></a>,这个 C SDK 今后随新版 <code>.deb</code> 更新,不是重跑 <code>--install</code>。</p>
+<p>已克隆但漏了子模块：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>git<span class="w"> </span>submodule<span class="w"> </span>update<span class="w"> </span>--init<span class="w"> </span>--recursive<span class="w"> </span>--progress
+</span></code></pre></div>
+<p>子模块只有一个：<a href="https://github.com/XenseRobotics-AI/TacCap-Gripper"><code>third_party/taccap-gripper</code></a>，装出来的包是 <code>xense.taccap</code>（触觉夹爪 SDK）。<code>xensesdk</code>（视触觉传感器 SDK）由 <code>setup_env.sh --install</code> 自动安装；<code>xensevr_pc_service_sdk</code>（Pico4）的 Python 绑定在主仓库里，要链接的 C SDK（<code>PXREARobotSDK.h</code> + <code>libPXREARobotSDK.so</code>）取自下一步安装的 <a href="#24">XenseVR PC Service <code>.deb</code></a>，这个 C SDK 今后随新版 <code>.deb</code> 更新，不是重跑 <code>--install</code>。</p>
 <div class="admonition warning">
 <p class="admonition-title">更新子模块后必须重新编译 <code>xense.taccap</code></p>
-<p><code>taccap-gripper</code> 的 Python 包带一份编译产物,<code>git submodule update</code> 只更新文件不重新编译,之后 <code>import xense.taccap</code> 会报 <code>AttributeError: module 'xense.taccap._taccap_native' has no attribute 'GripperAutoCalConfig'</code> 一类错误。拉取含 <code>cpp/</code> 或 <code>python/bindings/</code> 改动的更新后重新构建(不需要 sudo),或直接 <code>bash setup_env.sh --install</code>:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nb">cd</span><span class="w"> </span>~/xense-taccap-lerobot
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="nv">LIBRARY_PATH</span><span class="o">=</span><span class="s2">"</span><span class="si">${</span><span class="nv">CONDA_PREFIX</span><span class="si">}</span><span class="s2">/lib"</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>third_party/taccap-gripper<span class="w"> </span>--no-deps<span class="w"> </span>--no-build-isolation
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"import xense.taccap as t; print(t.__version__)"</span>
+<p><code>taccap-gripper</code> 的 Python 包带一份编译产物，<code>git submodule update</code> 只更新文件不重新编译，之后 <code>import xense.taccap</code> 会报 <code>AttributeError: module 'xense.taccap._taccap_native' has no attribute 'GripperAutoCalConfig'</code> 一类错误。SDK 版本号相同时也可能含这类改动，所以每次拉子模块后都重新构建（不需要 sudo），或直接 <code>bash setup_env.sh --install</code>：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nb">cd</span><span class="w"> </span>~/xense-taccap-lerobot
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="nv">LIBRARY_PATH</span><span class="o">=</span><span class="s2">"</span><span class="si">${</span><span class="nv">CONDA_PREFIX</span><span class="si">}</span><span class="s2">/lib"</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">  </span>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>third_party/taccap-gripper<span class="w"> </span>--no-deps<span class="w"> </span>--no-build-isolation
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"import xense.taccap as t; print(t.__version__)"</span>
 </span></code></pre></div>
 </div>
 <h3 id="创建并激活环境">创建并激活环境<a class="headerlink" href="#创建并激活环境" title="锚点链接">¶</a></h3>
-<p><code>--mamba</code> 默认创建 <code>xense-taccap</code> 环境,要自定义环境名就在 <code>--mamba</code> 后追加:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>./setup_env.sh<span class="w"> </span>--mamba
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>mamba<span class="w"> </span>activate<span class="w"> </span>xense-taccap
+<p><code>--mamba</code> 默认创建 <code>xense-taccap</code> 环境，要自定义环境名就在 <code>--mamba</code> 后追加：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>./setup_env.sh<span class="w"> </span>--mamba
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>mamba<span class="w"> </span>activate<span class="w"> </span>xense-taccap
 </span></code></pre></div>
 <h3 id="24">一键安装<a class="headerlink" href="#24" title="锚点链接">¶</a></h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>./setup_env.sh<span class="w"> </span>--install
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>./setup_env.sh<span class="w"> </span>--install
 </span></code></pre></div>
-<p>这一步用 <code>conda_environment.yaml</code> 更新环境,从 <code>pyproject.toml</code> 装主包,装 <code>xensesdk</code> 与 XenseVR PC Service 守护进程,再编译 <code>xensevr_pc_service_sdk</code>(Pico4,链接 <code>.deb</code> 里的 C SDK)与 <code>xense.taccap</code>(夹爪,来自子模块)。</p>
-<p>XenseVR PC Service 是约 110 MB 的 <code>.deb</code>,脚本从 <a href="https://github.com/XenseRobotics-AI/XenseVR-PC-Service/releases/tag/v0.2.1">v0.2.1 release</a> 下载当前架构的包(<code>$XENSEVR_DEB_URL</code> 可覆盖下载地址),再 <code>sudo dpkg -i</code> 装到 <code>/opt/apps/roboticsservice</code>;已装同一版本时跳过,下了一半的文件也复用。Pico4 绑定要链接的 C SDK 就在这个包里,下载失败时 <code>--install</code> 会直接停下,离线或打过补丁的包用 <code>$XENSEVR_DEB</code> 指向本地文件。基线定在 v0.2.1 是因为它重新编译过 C SDK,v0.2.0 会拿旧 SDK 编 Pico4 绑定;<a href="../recording/#56">头显双目与头部位姿</a>需要 PC Service ≥ v0.2.0,追踪器不受影响。</p>
+<p>这一步用 <code>conda_environment.yaml</code> 更新环境，从 <code>pyproject.toml</code> 装主包，装 <code>xensesdk</code> 与 XenseVR PC Service 守护进程，再编译 <code>xensevr_pc_service_sdk</code>（Pico4，链接 <code>.deb</code> 里的 C SDK）与 <code>xense.taccap</code>（夹爪，来自子模块）。</p>
+<p>XenseVR PC Service 是约 110 MB 的 <code>.deb</code>，脚本从 <a href="https://github.com/XenseRobotics-AI/XenseVR-PC-Service/releases/tag/v0.2.1">v0.2.1 release</a> 下载当前架构的包（<code>$XENSEVR_DEB_URL</code> 可覆盖下载地址），再 <code>sudo dpkg -i</code> 装到 <code>/opt/apps/roboticsservice</code>；已装同一版本时跳过，下了一半的文件也复用。Pico4 绑定要链接的 C SDK 就在这个包里，下载失败时 <code>--install</code> 会直接停下，离线或打过补丁的包用 <code>$XENSEVR_DEB</code> 指向本地文件。基线定在 v0.2.1 是因为它重新编译过 C SDK，v0.2.0 会拿旧 SDK 编 Pico4 绑定；<a href="../recording/#56">头显双目与头部位姿</a>需要 PC Service ≥ v0.2.0，追踪器不受影响。</p>
 <h3 id="25">验证安装<a class="headerlink" href="#25" title="锚点链接">¶</a></h3>
-<p>三个包全部能 import 即成功:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">'import xensevr_pc_service_sdk; print("xensevr_pc_service_sdk OK -&gt;", xensevr_pc_service_sdk.__file__)'</span>
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">'import xensesdk; print("xensesdk OK -&gt;", xensesdk.__file__)'</span>
-</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">'import xense.taccap; print("xense.taccap OK -&gt;", xense.taccap.__file__)'</span>
+<p>三个包全部能 import 即成功：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">'import xensevr_pc_service_sdk; print("xensevr_pc_service_sdk OK -&gt;", xensevr_pc_service_sdk.__file__)'</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">'import xensesdk; print("xensesdk OK -&gt;", xensesdk.__file__)'</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">'import xense.taccap; print("xense.taccap OK -&gt;", xense.taccap.__file__)'</span>
 </span></code></pre></div>
-<p>再确认采集程序可用、设备能被发现:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>lerobot-find-cameras
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>lerobot-info
+<p>再确认采集程序可用、设备能被发现：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>lerobot-find-cameras
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>lerobot-info
 </span></code></pre></div>
-<p>用<a href="../recording/#56">头显相机</a>时再补一条,返回 <code>False</code> 说明加载的还是旧版本,重跑 <code>./setup_env.sh --install</code>:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">'import xensevr_pc_service_sdk as xrt; print("pico camera API:", hasattr(xrt, "has_pico_camera_frame"))'</span>
+<p>用<a href="../recording/#56">头显相机</a>时再补一条，返回 <code>False</code> 说明加载的还是旧版本，重跑 <code>./setup_env.sh --install</code>：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">'import xensevr_pc_service_sdk as xrt; print("pico camera API:", hasattr(xrt, "has_pico_camera_frame"))'</span>
 </span></code></pre></div>
-<p>可选:确认视频编解码依赖可加载。<code>torchcodec</code> 按 PyTorch 兼容矩阵固定,PyAV 固定为 <code>15.1.0</code>,FFmpeg 不参与 conda 求解;需要带 <code>libsvtav1</code> 的系统 ffmpeg 请单独装,默认编码路径不依赖它:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">'import torchcodec; print("torchcodec OK -&gt;", torchcodec.__version__)'</span>
-</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">'import av; print("PyAV OK -&gt;", av.__version__)'</span>
+<p>可选：确认视频编解码依赖可加载。<code>torchcodec</code> 按 PyTorch 兼容矩阵固定，PyAV 固定为 <code>15.1.0</code>，FFmpeg 不参与 conda 求解；需要带 <code>libsvtav1</code> 的系统 ffmpeg 请单独装，默认编码路径不依赖它：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">'import torchcodec; print("torchcodec OK -&gt;", torchcodec.__version__)'</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">'import av; print("PyAV OK -&gt;", av.__version__)'</span>
 </span></code></pre></div>
 </div>
 <div class="tabbed-block">
 <h3 id="docker">镜像内容与主机要求<a class="headerlink" href="#docker" title="锚点链接">¶</a></h3>
-<p>镜像已包含完整的 <code>xense-taccap</code> 环境、CUDA 用户态库、采集程序和三个硬件 SDK(XenseSDK、TacCap-Gripper、Pico4 绑定),容器启动时自动拉起 XenseVR PC Service,不需要子模块或主机环境。为支持采集中热插拔触觉传感器、腕相机、夹爪串口和 Pico4,容器以<strong>特权模式</strong>运行并共享主机网络与 IPC,只在信任的采集主机上运行。</p>
-<p>主机要求:Ubuntu 22.04 / 24.04 <strong>amd64</strong>,<strong>NVIDIA 驱动 ≥ 570.144</strong>(<code>nvidia-smi --query-gpu=driver_version --format=csv,noheader</code> 可查)。脚本不会替你装或升级显卡驱动(涉及显卡型号、Secure Boot 和重启),不满足会直接停下;Docker Engine、Compose 插件和 NVIDIA Container Toolkit 缺了则自动装。</p>
+<p>镜像已包含完整的 <code>xense-taccap</code> 环境、CUDA 用户态库、采集程序和三个硬件 SDK（XenseSDK、TacCap-Gripper、Pico4 绑定），容器启动时自动拉起 XenseVR PC Service，不需要子模块或主机环境。为支持采集中热插拔触觉传感器、腕相机、夹爪串口和 Pico4，容器以<strong>特权模式</strong>运行并共享主机网络与 IPC，只在信任的采集主机上运行。</p>
+<p>主机要求：Ubuntu 22.04 / 24.04 <strong>amd64</strong>，<strong>NVIDIA 驱动 ≥ 570.144</strong>（<code>nvidia-smi --query-gpu=driver_version --format=csv,noheader</code> 可查）。脚本不会替你装或升级显卡驱动（涉及显卡型号、Secure Boot 和重启），不满足会直接停下；Docker Engine、Compose 插件和 NVIDIA Container Toolkit 缺了则自动装。</p>
 <h3 id="ghcr">一键安装<a class="headerlink" href="#ghcr" title="锚点链接">¶</a></h3>
-<p>镜像发布在 GitHub Container Registry,公开,拉取不需要登录:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>ghcr.io/xenserobotics-ai/xense-taccap-lerobot
+<p>镜像发布在 GitHub Container Registry，公开，拉取不需要登录：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>ghcr.io/xenserobotics-ai/xense-taccap-lerobot
 </span></code></pre></div>
-<p>用普通用户(不要用 root)执行:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/XenseRobotics-AI/xense-taccap-lerobot.git
-</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="nb">cd</span><span class="w"> </span>xense-taccap-lerobot
-</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>./docker/install_customer.sh
+<p>用普通用户（不要用 root）执行：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>git<span class="w"> </span>clone<span class="w"> </span>--branch<span class="w"> </span>v0.0.8<span class="w"> </span>https://github.com/XenseRobotics-AI/xense-taccap-lerobot.git
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="nb">cd</span><span class="w"> </span>xense-taccap-lerobot
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>./docker/install_customer.sh
 </span></code></pre></div>
-<p>脚本依次:检查系统与显卡驱动 → 按需安装 Docker 与 NVIDIA Container Toolkit(并把 NVIDIA runtime 注册进 Docker)→ 安装夹爪串口 udev 规则(即<a href="../host-setup/#32">串口权限</a>的 ModemManager 屏蔽规则)→ 拉取镜像 → CUDA 与图形能力冒烟测试。克隆仓库只为拿 <code>compose.yaml</code> 和脚本。</p>
-<p>需要走代理时:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="nv">XENSE_PROXY_URL</span><span class="o">=</span>http://127.0.0.1:7897<span class="w"> </span>./docker/install_customer.sh
+<p>脚本依次：检查系统与显卡驱动 → 按需安装 Docker 与 NVIDIA Container Toolkit（并把 NVIDIA runtime 注册进 Docker）→ 安装夹爪串口 udev 规则（即<a href="../host-setup/#32">串口权限</a>的 ModemManager 屏蔽规则）→ 拉取镜像 → CUDA 与图形能力冒烟测试。克隆仓库只为拿 <code>compose.yaml</code> 和脚本。</p>
+<p>需要走代理时：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="nv">XENSE_PROXY_URL</span><span class="o">=</span>http://127.0.0.1:7897<span class="w"> </span>./docker/install_customer.sh
 </span></code></pre></div>
-<p>完全离线的机器向交付渠道要镜像 <code>.tar</code> 包,放进仓库根目录或作为第一个参数传给脚本,脚本会改为校验并导入:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>./docker/install_customer.sh<span class="w"> </span>xense-taccap-lerobot-0.0.7-linux-amd64.tar
+<p>完全离线的机器向交付渠道要镜像 <code>.tar</code> 包，放进仓库根目录或作为第一个参数传给脚本，脚本会改为校验并导入：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>./docker/install_customer.sh<span class="w"> </span>xense-taccap-lerobot-0.0.8-linux-amd64.tar
 </span></code></pre></div>
-<p>在线拉取仍是默认:镜像二十多 GB 大部分是不常变的依赖层,升级只拉变动的几层。</p>
+<p>在线拉取仍是默认：镜像二十多 GB 大部分是不常变的依赖层，升级只拉变动的几层。</p>
 <h3 id="docker-pin">录数据前先把版本钉死<a class="headerlink" href="#docker-pin" title="锚点链接">¶</a></h3>
-<p>默认拉的 <code>latest</code> 是浮动的,下次发布会指向新镜像。正式采集前在仓库根目录的 <code>.env</code> 里钉死版本;<code>compose.yaml</code> 默认镜像已是 <code>ghcr.io/xenserobotics-ai/xense-taccap-lerobot</code>,不需要再写 <code>LEROBOT_IMAGE</code>(只在换镜像名时用):</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>LEROBOT_IMAGE_TAG=0.0.7
+<p>默认拉的 <code>latest</code> 是浮动的，下次发布会指向新镜像。正式采集前在仓库根目录的 <code>.env</code> 里钉死版本；<code>compose.yaml</code> 已默认指向官方 GHCR 镜像，只需要写 tag 这一行，不需要再写 <code>LEROBOT_IMAGE</code>（只在换镜像名时用）：<code>docker compose config --images</code> 显示的仓库名可能和上文的不同，按 tag 核对即可，两者是同一个镜像：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>LEROBOT_IMAGE_TAG=0.0.8
 </span></code></pre></div>
-<p>改完确认解析到的是这一版,再拉:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>config<span class="w"> </span>--images
-</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>docker<span class="w"> </span>compose<span class="w"> </span>pull
+<p>改完确认解析到的是这一版，再拉：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>config<span class="w"> </span>--images
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>docker<span class="w"> </span>compose<span class="w"> </span>pull
 </span></code></pre></div>
-<p>钉在 <code>0.0.5</code> 及更早时有两条已知问题(<code>0.0.6</code> 已修,不影响录到的数据):录制要加 <code>--play_sounds=false</code>(镜像里没有 <code>spd-say</code>,见<a href="../troubleshooting/#docker">故障排查</a>);导出要以 root 拷再 <code>chown</code>,见<a href="#docker-data">数据放在哪</a>。</p>
+<p>钉 <code>0.0.6</code> 或更新的版本就不必管下面这两条；钉在 <code>0.0.5</code> 及更早时有两条已知问题（不影响录到的数据）：录制要加 <code>--play_sounds=false</code>（镜像里没有 <code>spd-say</code>，见<a href="../troubleshooting/#docker">故障排查</a>）；导出要以 root 拷再 <code>chown</code>，见<a href="#docker-data">数据放在哪</a>。</p>
 <h3 id="docker-host">安装后的主机设置<a class="headerlink" href="#docker-host" title="锚点链接">¶</a></h3>
-<p>脚本已把你加进 <code>docker</code> 组,但当前终端不会自动生效。这两条在宿主机上敲:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>newgrp<span class="w"> </span>docker<span class="w">                    </span><span class="c1"># 让 docker 组权限在当前终端生效</span>
-</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>xhost<span class="w"> </span>+si:localuser:root<span class="w">         </span><span class="c1"># 要在容器里显示 Rerun 等窗口</span>
+<p>脚本已把你加进 <code>docker</code> 组，但当前终端不会自动生效。这两条在宿主机上敲：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>newgrp<span class="w"> </span>docker<span class="w">                    </span><span class="c1"># 让 docker 组权限在当前终端生效</span>
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>xhost<span class="w"> </span>+si:localuser:root<span class="w">         </span><span class="c1"># 要在容器里显示 Rerun 等窗口</span>
 </span></code></pre></div>
 <div class="admonition warning">
-<p class="admonition-title">逐条敲,不要整块粘贴</p>
-<p><code>newgrp</code> 会开一个子 shell,整块粘贴时后面的命令会被它吃掉,<code>xhost</code> 必须等 <code>newgrp</code> 之后再单独敲;不执行 <code>newgrp docker</code> 就进容器会得到 <code>permission denied</code>。注销重登更干净,没有 <code>newgrp</code> 后新建文件属组变 <code>docker</code> 的副作用。</p>
+<p class="admonition-title">逐条敲，不要整块粘贴</p>
+<p><code>newgrp</code> 会开一个子 shell，整块粘贴时后面的命令会被它吃掉，<code>xhost</code> 必须等 <code>newgrp</code> 之后再单独敲；不执行 <code>newgrp docker</code> 就进容器会得到 <code>permission denied</code>。注销重登更干净，没有 <code>newgrp</code> 后新建文件属组变 <code>docker</code> 的副作用。</p>
 </div>
-<p><code>docker</code> 组权限接近 root,只把需要采集的用户加进去。<code>xhost</code> 授权用完可撤销:<code>xhost -si:localuser:root</code>。</p>
+<p><code>docker</code> 组权限接近 root，只把需要采集的用户加进去。<code>xhost</code> 授权用完可撤销：<code>xhost -si:localuser:root</code>。</p>
 <h3 id="进入容器与验证">进入容器与验证<a class="headerlink" href="#进入容器与验证" title="锚点链接">¶</a></h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>xense-taccap
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>xense-taccap
 </span></code></pre></div>
-<p>容器里确认四个 import 全过、GPU 可见:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">'import torch; print(torch.__version__, torch.cuda.is_available())'</span>
-</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">'import xensesdk; print("xensesdk -&gt;", xensesdk.__file__)'</span>
-</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">'import xense.taccap; print("taccap -&gt;", xense.taccap.__file__)'</span>
-</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">'import xensevr_pc_service_sdk; print("pico4 -&gt;", xensevr_pc_service_sdk.__file__)'</span>
+<p>容器里确认四个 import 全过、GPU 可见：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">'import torch; print(torch.__version__, torch.cuda.is_available())'</span>
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">'import xensesdk; print("xensesdk -&gt;", xensesdk.__file__)'</span>
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">'import xense.taccap; print("taccap -&gt;", xense.taccap.__file__)'</span>
+</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">'import xensevr_pc_service_sdk; print("pico4 -&gt;", xensevr_pc_service_sdk.__file__)'</span>
 </span></code></pre></div>
-<p>再确认 Pico4 绑定和守护进程是同一个版本:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">'import importlib.metadata as M; print("pico4 -&gt;", M.version("xensevr_pc_service_sdk"))'</span>
-</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>dpkg-query<span class="w"> </span>-W<span class="w"> </span>-f<span class="o">=</span><span class="s1">'daemon -&gt; ${Version}\n'</span><span class="w"> </span>xensevr-pc-service
+<p>再确认 Pico4 绑定和守护进程是同一个版本：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">'import importlib.metadata as M; print("pico4 -&gt;", M.version("xensevr_pc_service_sdk"))'</span>
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>dpkg-query<span class="w"> </span>-W<span class="w"> </span>-f<span class="o">=</span><span class="s1">'daemon -&gt; ${Version}\n'</span><span class="w"> </span>xensevr-pc-service
 </span></code></pre></div>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>pico4 -&gt; 0.2.1
-</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>daemon -&gt; 0.2.1
+<div class="language-text highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>pico4 -&gt; 0.2.1
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>daemon -&gt; 0.2.1
 </span></code></pre></div>
 <div class="admonition warning">
-<p class="admonition-title">这两行必须一致,不一致就别拿这个镜像录数据</p>
-<p>Pico4 绑定链接的 C SDK 取自那个 <code>.deb</code>,对不上说明镜像是半新不旧的构建,追踪器数据可能不对。换一个 tag 重新 <code>docker compose pull</code>,或联系交付渠道。</p>
+<p class="admonition-title">这两行必须一致，不一致就别拿这个镜像录数据</p>
+<p>Pico4 绑定链接的 C SDK 取自那个 <code>.deb</code>，对不上说明镜像是半新不旧的构建，追踪器数据可能不对。换一个 tag 重新 <code>docker compose pull</code>，或联系交付渠道。</p>
 </div>
-<p>最后确认设备能被发现:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>lerobot-find-cameras
-</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>lerobot-info
+<p>最后确认设备能被发现：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>lerobot-find-cameras
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>lerobot-info
 </span></code></pre></div>
-<p>不进交互 shell 也可以直接跑:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>xense-taccap<span class="w"> </span>lerobot-info
+<p>不进交互 shell 也可以直接跑：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>xense-taccap<span class="w"> </span>lerobot-info
 </span></code></pre></div>
 <h3 id="docker-data">数据放在哪、为什么删容器不丢<a class="headerlink" href="#docker-data" title="锚点链接">¶</a></h3>
-<p>容器里的四个目录都挂在 Docker volume 上,<code>--rm</code> 删掉临时容器不影响它们:</p>
+<p>容器里的四个目录都挂在 Docker volume 上，<code>--rm</code> 删掉临时容器不影响它们：</p>
 <table>
 <thead>
 <tr>
@@ -2210,12 +2217,12 @@
 <tr>
 <td><code>/data</code></td>
 <td><code>lerobot-data</code></td>
-<td>数据集(<code>HF_LEROBOT_HOME=/data/lerobot</code>)</td>
+<td>数据集（<code>HF_LEROBOT_HOME=/data/lerobot</code>）</td>
 </tr>
 <tr>
 <td><code>/root/.xensesdk</code></td>
 <td><code>xensesdk-cache</code></td>
-<td>传感器按序列号缓存的配置,别删:留着它容器重启不必重读 flash、不触发 USB 重新枚举</td>
+<td>传感器按序列号缓存的配置，别删：留着它容器重启不必重读 flash、不触发 USB 重新枚举</td>
 </tr>
 <tr>
 <td><code>/root/.cache/huggingface</code></td>
@@ -2229,60 +2236,60 @@
 </tr>
 </tbody>
 </table>
-<p>卷在宿主机上位于 <code>/var/lib/docker/volumes/xense-taccap-lerobot_&lt;卷名&gt;/_data</code>,属 root,直接 <code>ls</code> 要 sudo;走容器看更省事:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>xense-taccap<span class="w"> </span>bash<span class="w"> </span>-lc<span class="w"> </span><span class="s1">'ls -la /data/lerobot'</span>
+<p>卷在宿主机上位于 <code>/var/lib/docker/volumes/xense-taccap-lerobot_&lt;卷名&gt;/_data</code>，属 root，直接 <code>ls</code> 要 sudo；走容器看更省事：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>xense-taccap<span class="w"> </span>bash<span class="w"> </span>-lc<span class="w"> </span><span class="s1">'ls -la /data/lerobot'</span>
 </span></code></pre></div>
 <div class="admonition danger">
 <p class="admonition-title">不要用 <code>docker volume prune</code></p>
-<p>它删"当前没有容器在用"的卷,而数据卷平时正是这个状态(容器是 <code>--rm</code> 的),录好的数据会被删且不可恢复。清理镜像用 <code>docker image prune</code>,清理构建缓存用 <code>docker builder prune</code>,都不碰卷。</p>
+<p>它删"当前没有容器在用"的卷，而数据卷平时正是这个状态（容器是 <code>--rm</code> 的），录好的数据会被删且不可恢复。清理镜像用 <code>docker image prune</code>，清理构建缓存用 <code>docker builder prune</code>，都不碰卷。</p>
 </div>
-<p>导出到宿主机:以 root 读、拷完在同一条命令里交还属主:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>mkdir<span class="w"> </span>-p<span class="w"> </span><span class="nb">export</span>
-</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>docker<span class="w"> </span>compose<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>--no-deps<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a><span class="w">    </span>--entrypoint<span class="w"> </span>/bin/bash<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-26-4"><a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a><span class="w">    </span>-v<span class="w"> </span><span class="s2">"</span><span class="nv">$PWD</span><span class="s2">/export:/export"</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-26-5"><a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a><span class="w">    </span>xense-taccap<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-26-6"><a id="__codelineno-26-6" name="__codelineno-26-6" href="#__codelineno-26-6"></a><span class="w">    </span>-lc<span class="w"> </span><span class="s2">"cp -a /data/lerobot /export/ &amp;&amp; chown -R </span><span class="k">$(</span>id<span class="w"> </span>-u<span class="k">)</span><span class="s2">:</span><span class="k">$(</span>id<span class="w"> </span>-g<span class="k">)</span><span class="s2"> /export"</span>
+<p>导出到宿主机：以 root 读、拷完在同一条命令里交还属主：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>mkdir<span class="w"> </span>-p<span class="w"> </span><span class="nb">export</span>
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>docker<span class="w"> </span>compose<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>--no-deps<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-27-3"><a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a><span class="w">    </span>--entrypoint<span class="w"> </span>/bin/bash<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-27-4"><a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a><span class="w">    </span>-v<span class="w"> </span><span class="s2">"</span><span class="nv">$PWD</span><span class="s2">/export:/export"</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-27-5"><a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a><span class="w">    </span>xense-taccap<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-27-6"><a id="__codelineno-27-6" name="__codelineno-27-6" href="#__codelineno-27-6"></a><span class="w">    </span>-lc<span class="w"> </span><span class="s2">"cp -a /data/lerobot /export/ &amp;&amp; chown -R </span><span class="k">$(</span>id<span class="w"> </span>-u<span class="k">)</span><span class="s2">:</span><span class="k">$(</span>id<span class="w"> </span>-g<span class="k">)</span><span class="s2"> /export"</span>
 </span></code></pre></div>
-<p>三处都不能省:<code>--entrypoint /bin/bash</code> 跳过默认启动脚本(它会 <code>chmod 0700</code> 运行目录);<code>chown</code> 在同一条命令里,否则导出文件属主是 root,宿主机上改不了;先 <code>mkdir -p export</code>,Docker 自动创建的挂载点归 root,非 root 写不进去。<code>cp -a</code> 会带上权限,<code>0.0.5</code> 及更早录的数据导出后仍是 <code>0600</code>,要让其他用户也能读,在上面那条末尾再接:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="w">    </span><span class="o">&amp;&amp;</span><span class="w"> </span>chmod<span class="w"> </span>-R<span class="w"> </span>u+rwX,go+rX<span class="w"> </span>/export
+<p>三处都不能省：<code>--entrypoint /bin/bash</code> 跳过默认启动脚本（它会 <code>chmod 0700</code> 运行目录）；<code>chown</code> 在同一条命令里，否则导出文件属主是 root，宿主机上改不了；先 <code>mkdir -p export</code>，Docker 自动创建的挂载点归 root，非 root 写不进去。<code>cp -a</code> 会带上权限，<code>0.0.5</code> 及更早录的数据导出后仍是 <code>0600</code>，要让其他用户也能读，在上面那条末尾再接：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a><span class="w">    </span><span class="o">&amp;&amp;</span><span class="w"> </span>chmod<span class="w"> </span>-R<span class="w"> </span>u+rwX,go+rX<span class="w"> </span>/export
 </span></code></pre></div>
 <div class="admonition warning">
 <p class="admonition-title">不要改成用 <code>--user</code> 以自己的身份拷</p>
-<p><code>docker compose run --user ...</code> 仍会跑启动脚本,非 root 改不动运行目录权限,报 <code>chmod: changing permissions of '/tmp/xdg-runtime': Operation not permitted</code>;<code>0.0.5</code> 及更早的镜像录出的视频是 <code>-rw------- root</code>,非 root 拷贝会在每个 <code>.mp4</code> 上报 <code>Permission denied</code>(元数据 <code>0644</code> 拷得动,像个别文件损坏)。<code>0.0.6</code> 起视频落盘即为 <code>0644</code>,但升级不改写已录文件。</p>
+<p><code>docker compose run --user ...</code> 仍会跑启动脚本，非 root 改不动运行目录权限，报 <code>chmod: changing permissions of '/tmp/xdg-runtime': Operation not permitted</code>；<code>0.0.5</code> 及更早的镜像录出的视频是 <code>-rw------- root</code>，非 root 拷贝会在每个 <code>.mp4</code> 上报 <code>Permission denied</code>（元数据 <code>0644</code> 拷得动，像个别文件损坏）。<code>0.0.6</code> 起视频落盘即为 <code>0644</code>，但升级不改写已录文件。</p>
 </div>
 <h3 id="docker-data-dir">让数据直接落在宿主机目录<a class="headerlink" href="#docker-data-dir" title="锚点链接">¶</a></h3>
-<p>频繁看、删数据或另挂了大盘时,这比每次拷出来省事。在 <code>.env</code> 里指定,不要改 <code>compose.yaml</code>(仓库跟踪的文件,写进绝对路径下次 <code>git pull</code> 会冲突;<code>.env</code> 不会被提交):</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>LEROBOT_DATA_DIR=/home/&lt;user&gt;/.cache/huggingface/docker_data
+<p>频繁看、删数据或另挂了大盘时，这比每次拷出来省事。在 <code>.env</code> 里指定，不要改 <code>compose.yaml</code>（仓库跟踪的文件，写进绝对路径下次 <code>git pull</code> 会冲突；<code>.env</code> 不会被提交）：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>LEROBOT_DATA_DIR=/home/&lt;user&gt;/.cache/huggingface/docker_data
 </span></code></pre></div>
-<p>带 <code>/</code> 的值按 bind mount 处理,不带的当具名卷,不设就是默认的 <code>lerobot-data</code>。改完用 <code>docker compose config</code> 确认再录,数据出现在 <code>&lt;那个目录&gt;/lerobot/</code>。</p>
+<p>带 <code>/</code> 的值按 bind mount 处理，不带的当具名卷，不设就是默认的 <code>lerobot-data</code>。改完用 <code>docker compose config</code> 确认再录，数据出现在 <code>&lt;那个目录&gt;/lerobot/</code>。</p>
 <div class="admonition warning">
-<p class="admonition-title">bind mount 解决了位置,但不解决属主</p>
-<p>录制仍以 root 运行,文件属主还是 root。录完交还给自己,或在宿主机 <code>sudo chown -R "$(id -u):$(id -g)" ~/.cache/huggingface/docker_data</code>;<code>ls -ln</code> 显示数字 uid/gid,能看出 chown 是否生效:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>--no-deps<span class="w"> </span>--entrypoint<span class="w"> </span>/bin/bash<span class="w"> </span>--user<span class="w"> </span><span class="m">0</span>:0<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a><span class="w">    </span>xense-taccap<span class="w"> </span>-lc<span class="w"> </span><span class="s2">"chown -R </span><span class="k">$(</span>id<span class="w"> </span>-u<span class="k">)</span><span class="s2">:</span><span class="k">$(</span>id<span class="w"> </span>-g<span class="k">)</span><span class="s2"> /data"</span>
-</span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a>ls<span class="w"> </span>-ln<span class="w"> </span>~/.cache/huggingface/docker_data/lerobot
+<p class="admonition-title">bind mount 解决了位置，但不解决属主</p>
+<p>录制仍以 root 运行，文件属主还是 root。录完交还给自己，或在宿主机 <code>sudo chown -R "$(id -u):$(id -g)" ~/.cache/huggingface/docker_data</code>；<code>ls -ln</code> 显示数字 uid/gid，能看出 chown 是否生效：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>--no-deps<span class="w"> </span>--entrypoint<span class="w"> </span>/bin/bash<span class="w"> </span>--user<span class="w"> </span><span class="m">0</span>:0<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-30-2"><a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a><span class="w">    </span>xense-taccap<span class="w"> </span>-lc<span class="w"> </span><span class="s2">"chown -R </span><span class="k">$(</span>id<span class="w"> </span>-u<span class="k">)</span><span class="s2">:</span><span class="k">$(</span>id<span class="w"> </span>-g<span class="k">)</span><span class="s2"> /data"</span>
+</span><span id="__span-30-3"><a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a>ls<span class="w"> </span>-ln<span class="w"> </span>~/.cache/huggingface/docker_data/lerobot
 </span></code></pre></div>
 </div>
-<p>Compose 透传了宿主机的 <code>/dev</code> 和 <code>/run/udev</code>,容器里同样能读到 <code>/dev/v4l/by-id</code>、<code>/dev/v4l/by-path</code> 和 <code>/dev/serial/by-path</code>,<a href="../host-setup/#33">设备自动发现</a>靠的就是它们。</p>
-<p>要在容器里<a href="../dataset/#64">上传 Hub</a>,把 token 写进同一个 <code>.env</code>,它会作为 <code>HF_TOKEN</code> 带进容器;否则容器是 <code>--rm</code> 的,每次都得重新 <code>hf auth login</code>:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>HF_TOKEN=hf_xxxxxxxxxxxxxxxx
+<p>Compose 透传了宿主机的 <code>/dev</code> 和 <code>/run/udev</code>，容器里同样能读到 <code>/dev/v4l/by-id</code>、<code>/dev/v4l/by-path</code> 和 <code>/dev/serial/by-path</code>，<a href="../host-setup/#33">设备自动发现</a>靠的就是它们。</p>
+<p>要在容器里<a href="../dataset/#64">上传 Hub</a>，把 token 写进同一个 <code>.env</code>，它会作为 <code>HF_TOKEN</code> 带进容器；否则容器是 <code>--rm</code> 的，每次都得重新 <code>hf auth login</code>：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>HF_TOKEN=hf_xxxxxxxxxxxxxxxx
 </span></code></pre></div>
 <h3 id="docker-gui">容器里的图形界面<a class="headerlink" href="#docker-gui" title="锚点链接">¶</a></h3>
-<p>镜像已带 Rerun 需要的 XKB / Vulkan / XDG 运行库,默认 <code>WGPU_BACKEND=vulkan</code>,Compose 也透传了 <code>DISPLAY</code> 和 X11 socket。窗口出不来时,先做 <a href="#docker-host"><code>xhost</code> 授权</a>,再在容器里确认显卡可见:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>vulkaninfo<span class="w"> </span>--summary
+<p>镜像已带 Rerun 需要的 XKB / Vulkan / XDG 运行库，默认 <code>WGPU_BACKEND=vulkan</code>，Compose 也透传了 <code>DISPLAY</code> 和 X11 socket。窗口出不来时，先做 <a href="#docker-host"><code>xhost</code> 授权</a>，再在容器里确认显卡可见：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>vulkaninfo<span class="w"> </span>--summary
 </span></code></pre></div>
 <div class="admonition warning">
 <p class="admonition-title">别把 <code>compose.yaml</code> 里的 <code>runtime: nvidia</code> 改成 <code>gpus: all</code></p>
-<p><code>gpus: all</code> 只申请到 compute + utility,容器能跑 CUDA、<code>nvidia-smi</code> 也正常,但 NVIDIA 的 Vulkan ICD 不会注入,Rerun 报 <code>WGPU error: Failed to create surface for any enabled backend</code>。<code>runtime: nvidia</code> 要求 NVIDIA runtime 已注册进 Docker(<code>install_customer.sh</code> 会做),没注册时 Compose 报 <code>Unknown runtime specified nvidia</code>,见<a href="../troubleshooting/#docker">故障排查</a>。</p>
+<p><code>gpus: all</code> 只申请到 compute + utility，容器能跑 CUDA、<code>nvidia-smi</code> 也正常，但 NVIDIA 的 Vulkan ICD 不会注入，Rerun 报 <code>WGPU error: Failed to create surface for any enabled backend</code>。<code>runtime: nvidia</code> 要求 NVIDIA runtime 已注册进 Docker（<code>install_customer.sh</code> 会做），没注册时 Compose 报 <code>Unknown runtime specified nvidia</code>，见<a href="../troubleshooting/#docker">故障排查</a>。</p>
 </div>
-<p>只处理数据、不接 Pico4 时可以不启动 XenseVR PC Service,服务日志在容器内 <code>/tmp/xensevr-service.log</code>:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a><span class="nv">START_XENSEVR_SERVICE</span><span class="o">=</span><span class="m">0</span><span class="w"> </span>docker<span class="w"> </span>compose<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>xense-taccap
+<p>只处理数据、不接 Pico4 时可以不启动 XenseVR PC Service，服务日志在容器内 <code>/tmp/xensevr-service.log</code>：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a><span class="nv">START_XENSEVR_SERVICE</span><span class="o">=</span><span class="m">0</span><span class="w"> </span>docker<span class="w"> </span>compose<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>xense-taccap
 </span></code></pre></div>
 </div>
 </div>
 </div>
-<p>环境装好后,先做<a href="../host-setup/">主机配置</a>(串口权限、设备发现),否则夹爪能被列出却打不开。</p>
+<p>环境装好后，先做<a href="../host-setup/">主机配置</a>（串口权限、设备发现），否则夹爪能被列出却打不开。</p>
 
 
 
@@ -2320,7 +2327,7 @@
       <nav class="md-footer__inner md-grid" aria-label="页脚">
         
           
-          <a href="../" class="md-footer__link md-footer__link--prev" aria-label="上一页: PC 版:XTac-UMI G1 开发套件">
+          <a href="../" class="md-footer__link md-footer__link--prev" aria-label="上一页: PC 版：XTac-UMI G1 开发套件">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
@@ -2330,7 +2337,7 @@
                 上一页
               </span>
               <div class="md-ellipsis">
-                PC 版:XTac-UMI G1 开发套件
+                PC 版：XTac-UMI G1 开发套件
               </div>
             </div>
           </a>

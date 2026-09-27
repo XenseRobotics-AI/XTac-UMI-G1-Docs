@@ -605,7 +605,7 @@
   <a href="#背包版xtac-umi-collector" class="md-nav__link">
     <span class="md-ellipsis">
       
-        背包版:XTac-UMI Collector
+        背包版：XTac-UMI Collector
       
     </span>
   </a>
@@ -616,7 +616,7 @@
   <a href="#pc-版xense-taccap-lerobot" class="md-nav__link">
     <span class="md-ellipsis">
       
-        PC 版:xense-taccap-lerobot
+        PC 版：xense-taccap-lerobot
       
     </span>
   </a>
@@ -1678,7 +1678,7 @@
   <a href="#背包版xtac-umi-collector" class="md-nav__link">
     <span class="md-ellipsis">
       
-        背包版:XTac-UMI Collector
+        背包版：XTac-UMI Collector
       
     </span>
   </a>
@@ -1689,7 +1689,7 @@
   <a href="#pc-版xense-taccap-lerobot" class="md-nav__link">
     <span class="md-ellipsis">
       
-        PC 版:xense-taccap-lerobot
+        PC 版：xense-taccap-lerobot
       
     </span>
   </a>
@@ -1741,9 +1741,9 @@
 
 
 <h1 id="认识-xtac-umi-g1">认识 XTac-UMI G1<a class="headerlink" href="#认识-xtac-umi-g1" title="锚点链接">¶</a></h1>
-<p>XTac-UMI G1 是千觉机器人面向机器人操作学习的手持式 UMI 数采夹爪:主夹爪集成双视触觉传感器、腕部鱼眼相机、编码器与 IMU,配合 Pico4 Ultra 追踪器同步采集 RGB、触觉图像、6-DoF 位姿与夹爪开度;从夹爪装在机器人末端,用于执行或回放。本页讲清三件事:整套数采系统由哪些部件组成、数据从传感器到数据集经过哪些环节、两种配置从哪一步起不同。</p>
+<p>XTac-UMI G1 是千觉机器人面向机器人操作学习的手持式 UMI 数采夹爪：主夹爪集成双视触觉传感器、腕部鱼眼相机、编码器与 IMU，配合 Pico4 Ultra 追踪器同步采集 RGB、触觉图像、6-DoF 位姿与夹爪开度；从夹爪装在机器人末端，用于执行或回放。本页讲清三件事：整套数采系统由哪些部件组成、数据从传感器到数据集经过哪些环节、两种配置从哪一步起不同。</p>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/product/xtac-umi-g1-hero.webp" data-desc-position="bottom"><img alt="XTac-UMI G1 产品外观" src="../../assets/product/xtac-umi-g1-hero.webp" width="720"></a></p>
-<p>采集时<strong>不驱动电机</strong>(电机始终不使能),操作员手持主夹爪机械地完成演示动作,因此没有独立遥操作端。同一套夹爪与头显可以接两种采集单元:<a href="../backpack/">数采背包</a>(背包版,控制台在浏览器里)或你自己的 x86 工作站(PC 版,完全走 LeRobot 框架),两种配置的取舍见<a href="../editions/">产品线与配置对比</a>。</p>
+<p>采集时<strong>不驱动电机</strong>（电机始终不使能），操作员手持主夹爪机械地完成演示动作，因此没有独立遥操作端。同一套夹爪与头显可以接两种采集单元：<a href="../backpack/">数采背包</a>（背包版，控制台在浏览器里）或你自己的 x86 工作站（PC 版，完全走 LeRobot 框架），两种配置的取舍见<a href="../editions/">产品线与配置对比</a>。</p>
 <h2 id="数采系统组成">数采系统组成<a class="headerlink" href="#数采系统组成" title="锚点链接">¶</a></h2>
 <table>
 <thead>
@@ -1756,22 +1756,22 @@
 </thead>
 <tbody>
 <tr>
-<td>主夹爪<br>(区分左右)</td>
-<td>人手侧操作与采集;主控 MCU 为 STM32;左右按标识区分,按键与指示灯见<a href="../../common/gripper/">夹爪按键、指示灯与序列号</a></td>
+<td>主夹爪<br>（区分左右）</td>
+<td>人手侧操作与采集；主控 MCU 为 STM32；左右按标识区分，按键与指示灯见<a href="../../common/gripper/">夹爪按键、指示灯与序列号</a></td>
 <td>USB Type-C 统一供电 + 通信</td>
-<td>相同;按键与灯语由采集单元决定,背包版有完整的按键状态机</td>
+<td>相同；按键与灯语由采集单元决定，背包版有完整的按键状态机</td>
 </tr>
 <tr>
-<td>从夹爪<br>(不区分左右)</td>
-<td>装在机器人末端,带电机夹爪(motor jaw),用于执行端操作或回放</td>
+<td>从夹爪<br>（不区分左右）</td>
+<td>装在机器人末端，带电机夹爪（motor jaw），用于执行端操作或回放</td>
 <td>24V 供电 + Type-C 通信</td>
-<td>相同,可选</td>
+<td>相同，可选</td>
 </tr>
 <tr>
 <td>编码器</td>
-<td>夹爪开合角度;标定后归一化为闭合 = 0、张开 = 1,真实行程每台各异</td>
+<td>夹爪开合角度；标定后归一化为闭合 = 0、张开 = 1，真实行程每台各异</td>
 <td>100 Hz</td>
-<td>相同;标定入口不同:背包版在控制台 系统 → 夹爪配置,PC 版见<a href="../../pc/calibration/#41">夹爪标定</a></td>
+<td>相同；标定入口不同：背包版在控制台 系统 → 夹爪配置，PC 版见<a href="../../pc/calibration/#41">夹爪标定</a></td>
 </tr>
 <tr>
 <td>IMU</td>
@@ -1781,41 +1781,41 @@
 </tr>
 <tr>
 <td>视触觉传感器 ×2</td>
-<td>左右指各一,三色光视触觉成像;矫正图的导出方向由项目选定,默认 700 × 400(横图),也可选再逆时针 90° 的 400 × 700(与 SDK 对齐)</td>
-<td>传感器 120 Hz,UVC</td>
-<td>相同;背包版按 120 fps 记录,PC 版默认按 30 fps 录制</td>
+<td>左右指各一，三色光视触觉成像；矫正图的导出方向由项目选定，默认 700 × 400（横图），也可选再逆时针 90° 的 400 × 700（与 SDK 对齐）</td>
+<td>传感器 120 Hz，UVC</td>
+<td>相同；背包版按 120 fps 记录，PC 版默认按 30 fps 录制</td>
 </tr>
 <tr>
 <td>腕部鱼眼相机</td>
-<td>手腕视角 RGB,超大视场角</td>
-<td>~30 Hz,UVC</td>
+<td>手腕视角 RGB，超大视场角</td>
+<td>~30 Hz，UVC</td>
 <td>相同</td>
 </tr>
 <tr>
 <td>Pico4 Ultra<br>运动追踪器</td>
-<td>装在主夹爪顶部,无线连头显</td>
+<td>装在主夹爪顶部，无线连头显</td>
 <td>—</td>
 <td>相同</td>
 </tr>
 <tr>
 <td>Pico4 Ultra<br>企业版头显</td>
-<td>配对追踪器、建立世界坐标系,经 Type-C 有线把 6-DoF 位姿送到采集单元(默认有线,WiFi 仅供临时调试);配置见 <a href="../../common/pico4/">Pico4 头显与追踪器配置</a></td>
+<td>配对追踪器、建立世界坐标系，经 Type-C 有线把 6-DoF 位姿送到采集单元（默认有线，WiFi 仅供临时调试）；配置见 <a href="../../common/pico4/">Pico4 头显与追踪器配置</a></td>
 <td>—</td>
-<td>相同;只有接法不同,背包版接背包 <code>PICO</code> 口,PC 版接数采主机,见<a href="../../common/pico4/#pico-network">网络连接</a></td>
+<td>相同；只有接法不同，背包版接背包 <code>PICO</code> 口，PC 版接数采主机，见<a href="../../common/pico4/#pico-network">网络连接</a></td>
 </tr>
 <tr>
 <td>采集单元</td>
-<td>背包版:数采背包(RK3588 计算节点)+ XTac-UMI Collector;PC 版:x86 数采主机 + <code>xense-taccap-lerobot</code>。采集单元往后的软件栈两边完全不同,见下节</td>
+<td>背包版：数采背包（RK3588 计算节点）+ XTac-UMI Collector；PC 版：x86 数采主机 + <code>xense-taccap-lerobot</code>。采集单元往后的软件栈两边完全不同，见下节</td>
 <td>—</td>
 <td>不同</td>
 </tr>
 </tbody>
 </table>
-<p>线缆、电源适配器、采集终端等以合同配置及随货清单为准,缺件时联系项目负责人或技术支持,勿自行替代。PC 版支持的平台与依赖版本见<a href="../../pc/versions/#required">必须升级到最新版本</a>。</p>
+<p>线缆、电源适配器、采集终端等以合同配置及随货清单为准，缺件时联系项目负责人或技术支持，勿自行替代。PC 版支持的平台与依赖版本见<a href="../../pc/versions/#required">必须升级到最新版本</a>。</p>
 <h2 id="系统架构与数据流">系统架构与数据流<a class="headerlink" href="#系统架构与数据流" title="锚点链接">¶</a></h2>
-<p>传感器侧两种形态完全一样:每只主夹爪出一路 MCU 串口(编码器、IMU、按键)和三路 UVC 图像(1 路腕部鱼眼 + 2 路视触觉),Pico4 头显把 6-DoF 位姿送进来。<strong>采集单元往后是两套独立的软件栈</strong>,落盘格式、预览方式和录制控制都不同,下面分开看。</p>
-<h3 id="背包版xtac-umi-collector">背包版:XTac-UMI Collector<a class="headerlink" href="#背包版xtac-umi-collector" title="锚点链接">¶</a></h3>
-<p>数据进背包后由采集软件统一处理:图像在背包上硬件编码,一次编码同时供预览和落盘;录制由夹爪按键触发,结果写成 MCAP 原始记录。<strong>原始记录是源格式,对外产物都是按任务离线导出的</strong>:<code>LeRobot 数据集</code> 与 <code>mcap</code> 两种格式平级、互不排斥,导出时先选去向(下载到设备取回压缩包,或上传到事先配置好的远端后端)、再选格式。</p>
+<p>传感器侧两种形态完全一样：每只主夹爪出一路 MCU 串口（编码器、IMU、按键）和三路 UVC 图像（1 路腕部鱼眼 + 2 路视触觉），Pico4 头显把 6-DoF 位姿送进来。<strong>采集单元往后是两套独立的软件栈</strong>，落盘格式、预览方式和录制控制都不同，下面分开看。</p>
+<h3 id="背包版xtac-umi-collector">背包版：XTac-UMI Collector<a class="headerlink" href="#背包版xtac-umi-collector" title="锚点链接">¶</a></h3>
+<p>数据进背包后由采集软件统一处理：图像在背包上硬件编码，一次编码同时供预览和落盘；录制由夹爪按键触发，结果写成 MCAP 原始记录。<strong>原始记录是源格式，对外产物都是按任务离线导出的</strong>：<code>LeRobot 数据集</code> 与 <code>mcap</code> 两种格式平级、互不排斥，导出时先选去向（下载到设备取回压缩包，或上传到事先配置好的远端后端）、再选格式。</p>
 <pre class="mermaid"><code>flowchart LR
     subgraph DEV["设备"]
         G["主夹爪 ×1-2&lt;br/&gt;MCU + 3 路相机/爪"]
@@ -1843,8 +1843,8 @@
     EXP --&gt; DL["下载到设备&lt;br/&gt;打包后取回压缩包"]
     EXP --&gt; LR["上传到远端&lt;br/&gt;事先配置的上传后端"]</code></pre>
 <p>细节见<a href="../../backpack/monitor-record/">实时监控与录制</a>与<a href="../../backpack/projects-export/">项目、导出与发布</a>。</p>
-<h3 id="pc-版xense-taccap-lerobot">PC 版:xense-taccap-lerobot<a class="headerlink" href="#pc-版xense-taccap-lerobot" title="锚点链接">¶</a></h3>
-<p>数据由主机上的 Python 进程分三路读入,聚合成 lerobot 的设备类型,再由 <code>lerobot-record</code> 直接写出数据集。<strong>训练格式就是落盘格式,没有中间的原始记录。</strong></p>
+<h3 id="pc-版xense-taccap-lerobot">PC 版：xense-taccap-lerobot<a class="headerlink" href="#pc-版xense-taccap-lerobot" title="锚点链接">¶</a></h3>
+<p>数据由主机上的 Python 进程分三路读入，聚合成 lerobot 的设备类型，再由 <code>lerobot-record</code> 直接写出数据集。<strong>训练格式就是落盘格式，没有中间的原始记录。</strong></p>
 <pre class="mermaid"><code>flowchart LR
     subgraph DEV2["设备"]
         G2["主夹爪 ×1-2&lt;br/&gt;MCU + 3 路相机/爪"]
@@ -1880,18 +1880,18 @@
 <tbody>
 <tr>
 <td>设备访问</td>
-<td>Collector 内部完成,不用装 SDK</td>
+<td>Collector 内部完成，不用装 SDK</td>
 <td><code>xense.taccap</code> 读 MCU、<code>xensesdk</code> 读触觉、<code>xensevr_pc_service_sdk</code> 读位姿</td>
 </tr>
 <tr>
 <td>位姿服务</td>
-<td>XenseVR 运行时内置,随背包启动</td>
-<td>XenseVR PC Service 是独立守护进程,要先起服务再开 App;≥ v0.2.0 还转发<a href="../../pc/recording/#56">头显双目画面</a></td>
+<td>XenseVR 运行时内置，随背包启动</td>
+<td>XenseVR PC Service 是独立守护进程，要先起服务再开 App；≥ v0.2.0 还转发<a href="../../pc/recording/#56">头显双目画面</a></td>
 </tr>
 <tr>
 <td>图像编码</td>
-<td>RK3588 硬件编码 H.264,编码一次分发给预览与录制</td>
-<td>主机 GPU 流式编码,预览与录制各走各的</td>
+<td>RK3588 硬件编码 H.264，编码一次分发给预览与录制</td>
+<td>主机 GPU 流式编码，预览与录制各走各的</td>
 </tr>
 <tr>
 <td>预览</td>
@@ -1900,27 +1900,27 @@
 </tr>
 <tr>
 <td>录制控制</td>
-<td>夹爪按键为主,灯语反馈,控制台也能操作</td>
+<td>夹爪按键为主，灯语反馈，控制台也能操作</td>
 <td><code>lerobot-record</code> 命令行参数</td>
 </tr>
 <tr>
 <td>落盘格式</td>
-<td>MCAP 原始记录(每条 episode 一个文件),LeRobot 是离线导出</td>
+<td>MCAP 原始记录（每条 episode 一个文件），LeRobot 是离线导出</td>
 <td>直接写 LeRobotDataset v3</td>
 </tr>
 <tr>
 <td>数据出口</td>
-<td>任务级导出:下载压缩包,或上传到事先配置好的远端后端</td>
+<td>任务级导出：下载压缩包，或上传到事先配置好的远端后端</td>
 <td>推送到 Hugging Face Hub</td>
 </tr>
 </tbody>
 </table>
-<p>两种形态相同的是:相机数据都不经过夹爪 MCU(腕相机与触觉都是 UVC 设备,采集单元直接读),每帧都记录末端 TCP 位姿、归一化开度、IMU、左右触觉图与腕相机图。字段名以各自的采集单元为准,PC 版见<a href="../../pc/recording/#53">每帧记录内容</a>;位姿所在的坐标系两边一致,见<a href="../../common/coordinates/">坐标系</a>。</p>
+<p>两种形态相同的是：相机数据都不经过夹爪 MCU（腕相机与触觉都是 UVC 设备，采集单元直接读），每帧都记录末端 TCP 位姿、归一化开度、IMU、左右触觉图与腕相机图。字段名以各自的采集单元为准，PC 版见<a href="../../pc/recording/#53">每帧记录内容</a>；位姿所在的坐标系两边一致，见<a href="../../common/coordinates/">坐标系</a>。</p>
 <h2 id="下一步">下一步<a class="headerlink" href="#下一步" title="锚点链接">¶</a></h2>
 <ul>
-<li>接线、按键、指示灯与序列号:<a href="../../common/gripper/">夹爪按键、指示灯与序列号</a></li>
-<li>尺寸、重量、传感器与背包接口:<a href="../specs/">技术参数</a></li>
-<li>供电与操作安全要求:<a href="../safety/">安全与合规</a></li>
+<li>接线、按键、指示灯与序列号：<a href="../../common/gripper/">夹爪按键、指示灯与序列号</a></li>
+<li>尺寸、重量、传感器与背包接口：<a href="../specs/">技术参数</a></li>
+<li>供电与操作安全要求：<a href="../safety/">安全与合规</a></li>
 </ul>
 
 
