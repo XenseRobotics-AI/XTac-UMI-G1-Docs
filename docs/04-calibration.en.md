@@ -160,9 +160,10 @@ value is still *accurate*.
   connect with a pointer to the OTA update. Any gripper
   below V2.1 **must be upgraded**; the images ship with the SDK →
   [Firmware OTA upgrade](versions.md#ota). **Update the SDK before the firmware** — the other
-  order runs into an old bug where a failed update reported success. Reaching leader `1.2.2` /
-  follower `1.1.5`, which fix [three known defects](versions.md#ota-when), needs SDK **0.1.9**:
-  which image ships is decided by the SDK version.
+  order runs into an old bug where a failed update reported success. Reaching the current leader `1.2.2` /
+  follower `1.1.6` images, which fix [three known defects](versions.md#ota-when), needs the submodule at
+  the [version baseline](versions.md#ota): which image ships is decided by the SDK version, see
+  `firmware/manifest.json`.
 - **Calibration is one-off.** The values live in MCU flash: they survive power cycles and moving
   to another host. Only redo it after removing or refitting the encoder, changing the mechanical
   limit, or erasing the firmware.

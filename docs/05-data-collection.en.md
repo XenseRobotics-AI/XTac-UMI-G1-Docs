@@ -198,15 +198,14 @@ serials. Tactile sensors, wrist cameras and trackers each match left/right by th
 connected it is picked automatically. **With both connected and only one being recorded**,
 `--robot.side=left|right` says which — and is required.
 
-!!! tip "Turn `--display_data` off for real recordings"
-    All three commands above pass `--display_data=false`, which is also the default. Rerun's
-    display compresses and pushes every stream **on the collection loop**, so leaving it on eats
-    a visible share of the frame budget — the more so at higher resolutions or with more cameras.
-    Off, that budget goes to capture and encoding instead.
+!!! tip "Rerun no longer costs the recording loop anything"
+    All three commands above pass `--display_data=false`, which is also the default. Set it to
+    `true` if you want to watch while recording: the Rerun display runs on its own thread and does
+    not use the collection loop's frame budget. If the viewer falls behind, only on-screen frames
+    are dropped, and a line `Rerun display: N/M frames dropped ...` is printed at the end;
+    **what goes into the dataset is unaffected**.
 
-    The streams are what the [pre-recording preview](#preview) is for, with `--display_data=true`;
-    turn it off once you have checked. If you really must watch during a recording, see
-    [`--display_image_every_n`](#params).
+    It is still worth checking the streams in the [pre-recording preview](#preview) first.
 
 !!! note "What happens if a device drops mid-recording"
     If a camera or a jaw encoder **is lost mid-episode** (a cable works loose, a hub browns out),
@@ -220,6 +219,10 @@ connected it is picked automatically. **With both connected and only one being r
     Then check the cabling and the USB ports (see
     [a camera that will not open](troubleshooting.md#usb-bandwidth)) and continue into the same
     dataset with `--resume`.
+
+    If **saving itself** fails, or you press Ctrl+C while an episode is being saved, the dataset
+    rolls back to the last complete episode — no half-written episode is left — and `--resume`
+    continues from there.
 
 ### Parameter reference {#params}
 
@@ -246,7 +249,7 @@ official [recording guide](https://huggingface.co/docs/lerobot/v0.5.1/en/il_robo
 | `streaming_encoding` | `true` | Live streaming encode (see [§5.4](#54)) |
 | `vcodec` | `auto` | Video encoder (`h264`/`hevc`/`libsvtav1`/`auto`/a hardware encoder) |
 | `encoder_threads` | auto | Threads per encoder instance |
-| `encoder_queue_maxsize` | `30` | Buffered frames per camera (~1 s @ 30 fps); back-pressure drops the oldest when encoding falls behind |
+| `encoder_queue_maxsize` | `30` | Buffered frames per camera (~1 s @ 30 fps); when full it waits up to 0.1 s, then drops the current frame and warns |
 | `video_encoding_batch_size` | `1` | Episodes accumulated before batch encoding (1 = encode immediately) |
 
 !!! note "Spell out the parameters that matter"
@@ -271,17 +274,18 @@ official [recording guide](https://huggingface.co/docs/lerobot/v0.5.1/en/il_robo
 | `fps` | `30` | **Main loop** rate (device reads and preview). Separate from `--dataset.fps` (the recording sample rate) — two parameters, usually set the same |
 | `display_data` | `false` | Show camera streams and the 3D view in Rerun |
 | `show_trajectory` | `true` | Overlay the 3D pose + trajectory in Rerun (needs `display_data` and a `tcp.*`) |
-| `display_compressed_images` | `false` | Whether to JPEG-compress images before showing them in Rerun. **Off by default** — the encoding happens on the record loop and eats a large share of the frame budget; it only pays off when the Rerun viewer is on another machine (`--display_ip`) |
-| `display_image_every_n` | `1` | Refresh the camera tiles only every N frames (scalars always stay at full rate). **A last resort**, for a loop that still overruns — it is the only option here that changes what the operator sees |
+| `display_compressed_images` | `false` | Whether to JPEG-compress images before showing them in Rerun. Compression runs on the display thread, not the record loop; it only pays off when the Rerun viewer is on another machine (`--display_ip`) |
+| `display_image_every_n` | `1` | Refresh the camera tiles only every N frames (scalars always stay at full rate). Use it when many display frames are dropped and you would rather choose which ones |
 | `play_sounds` | `true` | Spoken announcements of recording events. **The container has no speech synthesiser, so announcements are always silent there** (warned about once, recording unaffected); record on the host to hear them |
-| `resume` | `false` | **Continue recording** into an existing dataset |
+| `resume` | `false` | **Continue recording** into an existing dataset; looks locally only and fails if the dataset is not there, never downloads from the Hub |
 
 #### Device parameters `--robot.*` (XTac-UMI G1 specific)
 
 | Parameter | Default | Meaning |
 |---|---|---|
 | `robot.side` | auto | `left`/`right`, required **in single-gripper mode** when both are connected; a lone unit auto-resolves |
-| `robot.role` | `leader` | `follower` binds the slave gripper |
+| `robot.role` | `leader` | `follower` binds the slave gripper; the follower firmware must be **≥ 1.1.6** or it is refused, see [firmware OTA](versions.md#ota) |
+| `robot.gripper_stream_hz` | `100` | Rate at which the leader firmware pushes encoder (and, with the IMU on, IMU) readings; `0` = poll every frame. If the stream cannot start it falls back to polling with a warning and still records. Leaders only; one shared switch for both sides |
 | `robot.enable_tracker` | `true` | Off records tactile + gripper only (no pose) |
 | `robot.tracker_serial` | unset | Pin the tracker SN, bypassing automatic side matching |
 | `robot.enable_wrist_camera` | `true` | Turn the wrist camera off |
@@ -296,8 +300,8 @@ official [recording guide](https://huggingface.co/docs/lerobot/v0.5.1/en/il_robo
 | `robot.head_camera_pair_max_skew_ms` | `20.0` | Max timestamp gap still counted as one stereo capture when the eyes' sequence numbers differ |
 | `robot.tactile_fps` | `30` | Tactile recording frame rate |
 | `robot.tactile_output_types` | `["rectify"]` | Tactile stream **written to disk**, **exactly one** |
-| `robot.tactile_display_output_types` | `["difference"]` | Extra tactile streams that are **display-only**, never recorded |
-| `robot.tactile_diff_gain` | `1.0` | Gain of the `difference` image (display only) |
+| `robot.tactile_display_output_types` | `["rectify"]` | Which tactile stream Rerun shows: **the recorded one by default** (an empty list means the same); `["difference"]` adds a display-only stream that is never recorded |
+| `robot.tactile_diff_gain` | `1.0` | Gain on the `difference` image; inert by default, since `difference` is not requested |
 | `robot.enable_tactile` | `true` | Off takes the tactile sensors out of the run entirely — no discovery, no keys. **A diagnostic, not a way to record** |
 | `robot.expected_tactiles_per_side` | `2` | How many sensors each side carries; a different count is an error, which is how a mis-installed sensor is caught |
 
@@ -366,6 +370,7 @@ gripper, each carrying the observation key it feeds.
 ```json
 {
   "robot_type": "bi_taccap_gripper",
+  "robot_id": "bi_taccap_0",
   "epochs": [
     {
       "from_episode": 0,
@@ -420,7 +425,7 @@ On `--resume`:
 |---|---|
 | Same rig | Nothing is recorded; the open epoch already covers this run |
 | **A gripper or sensor was swapped** | The open epoch is **closed** at the current episode count and a new one starts. Both stay named |
-| Same devices, different PC (`--robot.id` changed) | Also opens a new epoch. The station label changed while the hardware did not — recorded anyway, because consumers key on `units`, and a boundary with identical `units` is simply the rig moving |
+| `--robot.id` differs from the one in the dataset | **Resuming is refused** before any device is connected, with `... refusing to resume it`. One dataset belongs to one station: resume on the original station, or record into a new `--dataset.repo_id`. Older datasets with no station recorded are not affected |
 | `--robot.type` disagrees (single ↔ bimanual) | **Not a swap — a different dataset**: the observation keys differ. The original file is kept and a warning is logged |
 
 Older datasets (recorded before epochs, with a flat `units`) need no special handling: they read
@@ -534,32 +539,26 @@ format could not express it at all.
     To record **one stream fewer**, use the switch meant for it:
     `--robot.enable_wrist_camera=false` for the wrist, `--robot.enable_tracker=false` for the pose.
 
-!!! danger "What lands on disk is `rectify`, not the image you see in Rerun"
-    The two tactile streams are **deliberately different**:
-
+!!! tip "By default, what you see in Rerun is what lands on disk"
     - **On disk** = `--robot.tactile_output_types`, default `rectify` — the raw image with **no
-      baseline subtraction**, keeping everything the sensor saw. **Exactly one type** (each sensor
-      maps to one video key in the dataset); more than one is an error pointing you at the display
-      stream.
-    - **Display** = `--robot.tactile_display_output_types`, default `difference` — an enhanced
-      difference image against the **baseline captured at sensor init**. Contact is far easier to
-      read there, which is why that is what Rerun shows the operator; the key is shaped
-      `tactile_left_difference` and is **not** in `observation_features`, so it never reaches
-      disk.
+      baseline subtraction**. **Exactly one type** (each sensor maps to one video key in the
+      dataset); more than one is an error.
+    - **Display** = `--robot.tactile_display_output_types`, also `rectify` by default (an empty
+      list means the same), so the screen and the dataset carry the same image. Point it at another
+      type and that becomes a second, display-only stream shaped `tactile_left_difference`, which
+      is **not** in `observation_features`.
 
-    The difference image is **destructive**: the baseline is grabbed when the sensor initialises,
-    so **any force pressing on the gel at connect time is subtracted out of the whole session**.
-    That is why it is display-only — do not switch `--robot.tactile_output_types` to `difference`
-    just because it looks clearer.
-
-    `--robot.tactile_diff_gain` (default `1.0`) only affects the display stream's gain. The
-    factory value of 1.5 is noisy on this gel and clips; it scales signal and noise alike, so it
-    **does not change the signal-to-noise ratio** — it only leaves headroom.
+    To show the difference image again: `--robot.tactile_display_output_types='["difference"]'`.
+    It is **destructive**: the baseline is grabbed at sensor init, so **any force pressing on the
+    gel at connect time is subtracted out of the whole session** — keep all four fingertips
+    unloaded at connect, and never switch `--robot.tactile_output_types` to `difference` just
+    because it looks clearer. `--robot.tactile_diff_gain` (default `1.0`) is only that image's gain.
 - **Wrist camera** → `wrist_cam`; skip it with `--robot.enable_wrist_camera=false`, tune with
   `--robot.wrist_camera_width/_height/_fps`.
 - **Headset camera** → `left_head` / `right_head` plus `head_camera.*`; **off by default**, turn
   it on with `--robot.enable_head_camera=true` — see [§5.6](#56).
-- **Role** → `--robot.role=follower` binds the slave unit (default `leader`).
+- **Role** → `--robot.role=follower` binds the slave unit (default `leader`); the follower
+  firmware must be ≥ 1.1.6, see [firmware OTA](versions.md#ota).
 
 ## 5.4 Recording options: streaming encoding and encoder warm-up {#54}
 
@@ -583,8 +582,9 @@ lerobot-record \
 ```
 
 - One `_CameraEncoderThread` per camera, fed raw frames through a bounded queue
-  (`--dataset.encoder_queue_maxsize`, roughly one second of frames). When an encoder falls behind
-  it **drops the oldest frame and warns** rather than blocking the collection loop.
+  (`--dataset.encoder_queue_maxsize`, roughly one second of frames). When the queue is full it
+  waits up to 0.1 s, then **drops the current frame** and warns
+  `Encoder queue full for <key>, dropped N frame(s)`.
 - `--dataset.vcodec=auto` prefers hardware encoding where available. An NVIDIA GPU on the
   collection host is recommended so the GPU H.264 encoder can take the CPU load off encoding
   several live video streams. **A host without an NVIDIA GPU records fine too**, with one flag
@@ -629,6 +629,10 @@ With it off, frames are written out during capture and encoded in a batch at `sa
 **episode saves become slow and visible, capture stays on time.** That is the right trade — a late
 save costs you patience, a starved capture loop costs you data you cannot re-record.
 
+Before 0.0.8, each episode on this path left about 1.3 GB of extra process memory behind, so long
+sessions ran out of memory and started dropping frames. 0.0.8 fixes it; machines without an NVIDIA
+GPU should upgrade to 0.0.8.
+
 !!! tip "If you want to keep streaming encoding on anyway, e.g. on a many-core server"
     | Flag | Default | Why you would touch it |
     |---|---|---|
@@ -644,8 +648,16 @@ save costs you patience, a starved capture loop costs you data you cannot re-rec
 
 - Record several episodes in one run with `--dataset.num_episodes=N`.
 - Between episodes the reset is **passive**: reposition the setup, no teleoperation.
-- lerobot's keyboard controls work while recording (re-record the current episode, end it early,
-  and so on, following the usual `lerobot-record` conventions).
+- Arrow keys control the recording:
+
+    | Key | Effect |
+    |---|---|
+    | → | End the current episode early; during the reset phase, end the reset early |
+    | ← | Discard this episode and re-record it. Works during the episode or the reset that follows; the reset time is still given afterwards |
+    | Esc | Save the current episode, then stop recording |
+
+    The keyboard listener is global: arrow keys pressed in **any window**, Rerun included, take
+    effect (Rerun's timeline also uses left/right to step frames).
 
 !!! tip "Want to collect *good* data?"
     Running the command is only the first step. Do read
@@ -790,8 +802,11 @@ principal point drifts though (measured 37.7 px off on one unit), so anything me
 in pixels off these frames wants a real calibration first:
 
 ```bash
-python third_party/taccap-gripper/python/examples/fisheye_cal.py set-fisheye
+python third_party/taccap-gripper/python/examples/fisheye_cal.py set-fisheye right
 ```
+
+With two grippers plugged in, name the one to write with `left` / `right` or its full serial
+number; with just one, the argument can be omitted.
 
 ### 640×480 only
 

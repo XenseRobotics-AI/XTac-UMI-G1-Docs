@@ -180,14 +180,12 @@
 **单夹爪**：换成 `--robot.type=taccap_gripper`，其余相同。只接了一只时会自动选中；
 **两只都接着、只录其中一只**时，用 `--robot.side=left|right` 指定录哪一只——这时它是必填的。
 
-!!! tip "正式录制时关掉 `--display_data`"
-    上面三条命令都写了 `--display_data=false`（这也是默认值）。Rerun 显示要在采集主循环上
-    压缩并推送每一路画面，**开着会明显占用帧预算**；关掉能把这部分负载全部让给采集和编码，
-    高分辨率或多相机时尤其明显。
+!!! tip "录制时开着 Rerun 也不占帧预算"
+    上面三条命令都写了 `--display_data=false`（这也是默认值）。需要边录边看时可以改成 `true`：
+    Rerun 显示在独立线程上进行，不占采集循环的帧预算。查看器跟不上时丢的只是屏幕上的帧，
+    结束时打印一行 `Rerun display: N/M frames dropped ...`，**录进数据集的内容不受影响**。
 
-    数据流该在[开录前的预览](#preview)里确认，那时开着 `--display_data=true`；
-    确认完就关掉再开录。录制途中确实要盯画面的话，见
-    [`--display_image_every_n`](#params)。
+    数据流仍建议先在[开录前的预览](#preview)里确认。
 
 !!! note "录到一半设备掉了会怎样"
     某路相机或夹爪编码器**中途掉线**（线松了、hub 掉电）时，采集会**主动停下来，并把已经
@@ -199,6 +197,9 @@
 
     处理：检查线缆与 USB 口（见 [某一路相机打不开](troubleshooting.md#usb-bandwidth)），
     然后用 `--resume` 在同一数据集上续录。
+
+    **存盘本身**失败，或存盘途中按了 Ctrl+C，数据集会回滚到上一集的完整状态，不会留下半条
+    episode，直接 `--resume` 续录即可。
 
 ### 参数详解 {#params}
 
@@ -224,7 +225,7 @@
 | `streaming_encoding` | `true` | 实时流式编码（见 [§5.4](#54)） |
 | `vcodec` | `auto` | 视频编码器（`h264`/`hevc`/`libsvtav1`/`auto`/硬件编码器） |
 | `encoder_threads` | 自动 | 每个编码器实例的线程数 |
-| `encoder_queue_maxsize` | `30` | 每相机缓冲帧数（~1s@30fps），编码跟不上时反压丢旧帧 |
+| `encoder_queue_maxsize` | `30` | 每相机缓冲帧数（约 1 秒 @ 30 fps）；队列满时最多等 0.1 秒，仍满则丢弃当前帧并告警 |
 | `video_encoding_batch_size` | `1` | 批量编码前累计的集数（1=即时编码） |
 
 !!! note "显式写出关键参数"
@@ -246,17 +247,18 @@
 | `fps` | `30` | **主循环**帧率（设备读取与预览）。与 `--dataset.fps`（落盘采样率）是两个参数，通常设成相同值 |
 | `display_data` | `false` | 在 Rerun 中显示相机画面与 3D 视图 |
 | `show_trajectory` | `true` | Rerun 中叠加 3D 位姿 + 轨迹（需 `display_data` 且有 `tcp.*`） |
-| `display_compressed_images` | `false` | Rerun 里是否 JPEG 压缩后再显示。**默认关**——压缩发生在录制主循环上，开着会吃掉大量帧预算；只有 Rerun 查看器在另一台机器上（`--display_ip`）时才划算 |
-| `display_image_every_n` | `1` | 每 N 帧才刷新一次相机画面（标量始终全速）。**最后手段**，只在仍然超时才动它——它是唯一会改变操作员所见内容的选项 |
+| `display_compressed_images` | `false` | Rerun 里是否 JPEG 压缩后再显示。压缩在显示线程上做，不占录制循环；只有 Rerun 查看器在另一台机器上（`--display_ip`）时才划算 |
+| `display_image_every_n` | `1` | 每 N 帧才刷新一次相机画面（标量始终全速）。显示丢帧很多、又想自己决定丢哪些帧时再用 |
 | `play_sounds` | `true` | 语音播报录制事件。**容器里没有语音合成器，播报一律是静音的**（只告警一次，不影响录制）；要听到就在宿主机上跑 |
-| `resume` | `false` | 在已有数据集上**续录** |
+| `resume` | `false` | 在已有数据集上**续录**；只在本地找数据集，找不到直接报错，不会从 Hub 下载 |
 
 #### 设备参数 `--robot.*`（XTac-UMI G1 专属）
 
 | 参数 | 默认 | 含义 |
 |---|---|---|
 | `robot.side` | 自动 | `left`/`right`，**单夹爪模式**下两只都接着时必填；只接一只则自动选中 |
-| `robot.role` | `leader` | 填 `follower` 绑定从夹爪 |
+| `robot.role` | `leader` | 填 `follower` 绑定从夹爪；从夹爪固件需 **≥ 1.1.6**，否则拒绝连接，见 [固件 OTA](versions.md#ota) |
+| `robot.gripper_stream_hz` | `100` | 主夹爪固件主动推送编码器（开启 IMU 时连同 IMU）读数的频率；`0` = 每帧轮询。推流起不来时自动回退轮询并告警，不影响录制。只对主夹爪生效，双夹爪两侧共用 |
 | `robot.enable_tracker` | `true` | 关闭则只录触觉 + 夹爪（无位姿） |
 | `robot.tracker_serial` | 未设 | 钉住追踪器 SN，绕过侧别自动匹配 |
 | `robot.enable_wrist_camera` | `true` | 关闭腕相机 |
@@ -271,8 +273,8 @@
 | `robot.head_camera_pair_max_skew_ms` | `20.0` | 左右眼帧序号不同时，判定为同一次曝光的最大时间差 |
 | `robot.tactile_fps` | `30` | 触觉录制帧率 |
 | `robot.tactile_output_types` | `["rectify"]` | **落盘**的触觉流，**只能填一个** |
-| `robot.tactile_display_output_types` | `["difference"]` | **仅显示**、不落盘的额外触觉流 |
-| `robot.tactile_diff_gain` | `1.0` | `difference` 图的增益（只影响显示） |
+| `robot.tactile_display_output_types` | `["rectify"]` | Rerun 显示哪一路触觉，**默认与落盘同一路**（空列表等价）；填 `["difference"]` 才多出一路仅显示、不落盘的流 |
+| `robot.tactile_diff_gain` | `1.0` | `difference` 图的增益；默认不请求 `difference`，故不起作用 |
 | `robot.enable_tactile` | `true` | 关闭则整条触觉链路都不接入（不发现、不落盘）。**排查用，不是录制模式** |
 | `robot.expected_tactiles_per_side` | `2` | 每侧应有几枚触觉；数量对不上会直接报错，用于抓装配/烧录错误 |
 
@@ -336,6 +338,7 @@ ValueError: --robot.id is required: the station label for this rig, e.g. --robot
 ```json
 {
   "robot_type": "bi_taccap_gripper",
+  "robot_id": "bi_taccap_0",
   "epochs": [
     {
       "from_episode": 0,
@@ -385,7 +388,7 @@ ValueError: --robot.id is required: the station label for this rig, e.g. --robot
 |---|---|
 | 同一套设备 | 什么都不记，当前这段本来就覆盖得到 |
 | **换了夹爪或传感器** | 旧段在当前集数处**封口**，新段接上，两段都留着名字 |
-| 同一套设备换了台电脑（`--robot.id` 变了） | 也开新段。工位标签变了而硬件没变，照记不误——消费端认 `units`，`units` 一样的分段边界就只是"这套设备挪了个地方" |
+| `--robot.id` 和数据集里记的不一致 | **直接拒绝续录**，在连接任何设备之前就报 `... refusing to resume it`。一个数据集只属于一个工位：回原工位续录，或者换一个 `--dataset.repo_id` 录成新数据集。没有记工位号的老数据集不受这条限制 |
 | `--robot.type` 对不上（单夹爪 ↔ 双夹爪） | **不是换硬件，是换数据集**：观测键都不一样。保留原文件并告警 |
 
 老数据集（换硬件之前录的，只有扁平的 `units`）不需要特殊处理：读出来是**一个开口的 epoch**
@@ -483,27 +486,23 @@ ValueError: --robot.id is required: the station label for this rig, e.g. --robot
     要**少录一路**用别的开关：`--robot.enable_wrist_camera=false` 关腕相机、
     `--robot.enable_tracker=false` 关位姿。
 
-!!! danger "落盘的是 `rectify`，不是你在 Rerun 里看到的那张图"
-    两路触觉流**故意不同**：
+!!! tip "默认情况下，Rerun 里看到的就是落盘的那张图"
+    - **落盘** = `--robot.tactile_output_types`，默认 `rectify`——**未做基线相减**的原图。
+      **只能填一个类型**（每个传感器对应数据集里一个视频键），填多个直接报错。
+    - **显示** = `--robot.tactile_display_output_types`，默认同样是 `rectify`（空列表等价），
+      屏幕上和数据集里是同一张图。改成别的类型，才会多出一路只显示、不落盘的流，
+      键名形如 `tactile_left_difference`，**不在** `observation_features` 里。
 
-    - **落盘** = `--robot.tactile_output_types`，默认 `rectify` ——**未做基线相减**的原图，
-      保留传感器看到的全部信息。**只能填一个类型**（每个传感器对应数据集里一个视频键），
-      填多个会直接报错并提示改用显示流。
-    - **显示** = `--robot.tactile_display_output_types`，默认 `difference` ——相对传感器
-      **初始化时刻基线**的增强差分图。这张图接触更易读，所以 Rerun 里给操作员看的是它；
-      键名形如 `tactile_left_difference`，**不在** `observation_features` 里，不会落盘。
-
-    差分图是**破坏性**的：基线在传感器 init 时抓取，所以**连接时压在胶上的任何力都会被
-    整段采集减掉**。这就是它只用于显示、不进数据集的原因——不要为了"看着清楚"把
-    `--robot.tactile_output_types` 改成 `difference`。
-
-    `--robot.tactile_diff_gain`（默认 `1.0`）只影响显示流的增益。传感器出厂值 1.5 在本胶体上
-    噪声偏大且会削顶；它同时放大信号与噪声，**不改变信噪比**，只是留出余量。
+    需要时可以把显示改回差分图：`--robot.tactile_display_output_types='["difference"]'`。
+    差分图是**破坏性**的：基线在传感器初始化时抓取，**连接时压在胶上的力会被整段减掉**，
+    所以连接时四枚指尖都要空载；也不要为了看着清楚把 `--robot.tactile_output_types` 改成
+    `difference`。`--robot.tactile_diff_gain`（默认 `1.0`）只是这张差分图的增益。
 - **腕相机** → `wrist_cam`；`--robot.enable_wrist_camera=false` 跳过；
   `--robot.wrist_camera_width/_height/_fps` 调。
 - **头显相机** → `left_head` / `right_head` + `head_camera.*`；**默认关闭**，
   `--robot.enable_head_camera=true` 开启，详见 [§5.6](#56)。
-- **角色** → `--robot.role=follower` 绑定从夹爪（默认 `leader`）。
+- **角色** → `--robot.role=follower` 绑定从夹爪（默认 `leader`）；从夹爪固件需 ≥ 1.1.6，
+  见 [固件 OTA](versions.md#ota)。
 
 ## 5.4 录制选项：流式编码与编码器预热 {#54}
 
@@ -526,8 +525,8 @@ lerobot-record \
 ```
 
 - 每个相机一个 `_CameraEncoderThread`，通过有界队列喂原始帧
-  （`--dataset.encoder_queue_maxsize`，约 1 秒帧量）；编码器跟不上时**丢弃最旧帧并告警**，
-  不阻塞采集循环。
+  （`--dataset.encoder_queue_maxsize`，约 1 秒帧量）；队列满时最多等 0.1 秒，仍满则**丢弃当前帧**
+  并告警 `Encoder queue full for <键>, dropped N frame(s)`。
 - `--dataset.vcodec=auto` 会优先启用可用的硬件编码。推荐采集主机配 NVIDIA GPU，
   这样可使用 GPU H.264 硬件编码器，降低多路视频实时编码时的 CPU 压力。
   **没有 NVIDIA GPU 的主机照样能录**，但要改一个参数，见下。
@@ -564,6 +563,9 @@ CPU 只负责喂帧，所以划算；换成 `libsvtav1` 之后，**编码器就�
 关掉之后，帧在采集期间先写出来，到 `save_episode()` 再批量编码：**存盘慢且看得见，
 采集准时**。这个取舍是对的——**存盘慢只是多等一会儿，采集掉帧丢的是补不回来的数据**。
 
+0.0.8 之前，这条路径上每录一集进程内存约多占 1.3 GB，长时间录制会把内存耗尽、开始掉帧；
+0.0.8 已修复，没有 NVIDIA 显卡的机器请务必升级到 0.0.8。
+
 !!! tip "确实想在多核服务器上继续开流式编码"
     两个旋钮值得知道：
 
@@ -580,7 +582,15 @@ CPU 只负责喂帧，所以划算；换成 `libsvtav1` 之后，**编码器就�
 
 - 一次运行采多集：`--dataset.num_episodes=N`。
 - 集与集之间是**被动复位**：重新摆放设备，无需遥操。
-- 录制过程中可用 lerobot 的键盘控制（重录当前集、提前结束等，按 `lerobot-record` 的通用约定）。
+- 录制过程中用方向键控制：
+
+    | 按键 | 作用 |
+    |---|---|
+    | → | 提前结束当前集；在复位阶段按则提前结束复位 |
+    | ← | 放弃这一集并重录。录制中或随后的复位阶段按都可以，之后照常给出复位时间 |
+    | Esc | 当前集照常存盘后停止录制 |
+
+    键盘监听是全局的：在 Rerun 等**任何窗口**里按方向键都会生效（Rerun 的时间轴正是用左右键翻帧）。
 
 !!! tip "想采到"好数据"?"
     会跑命令只是第一步。务必阅读 [采集规范与最佳实践](best-practices.md)——坐标原点纪律、
@@ -710,8 +720,10 @@ has never been calibrated ... Rectification will be approximate
 相差 37.7 像素），要在矫正图上按像素测量就得先标：
 
 ```bash
-python third_party/taccap-gripper/python/examples/fisheye_cal.py set-fisheye
+python third_party/taccap-gripper/python/examples/fisheye_cal.py set-fisheye right
 ```
+
+接着两只夹爪时用 `left` / `right` 或完整序列号指定要写哪一只；只接一只时可以省略。
 
 ### 只支持 640×480
 

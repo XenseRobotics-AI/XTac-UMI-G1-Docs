@@ -11,7 +11,8 @@
 |---|---|---|
 | `robot.id` | **必填** | 这套设备的工位号，填数字即可（`0` / `1`…），前缀按 `robot.type` 自动补成 `taccap_0` / `bi_taccap_0`；漏填在解析命令行时即报错 → [`--robot.id` 与硬件清单](05-data-collection.md#robot-id) |
 | `robot.side` | 自动 | `left`/`right`，**单夹爪模式**下两只都接着时必填；只接一只则自动选中 |
-| `robot.role` | `leader` | 填 `follower` 绑定从夹爪 |
+| `robot.role` | `leader` | 填 `follower` 绑定从夹爪；从夹爪固件需 ≥ 1.1.6，见 [固件 OTA](versions.md#ota) |
+| `robot.gripper_stream_hz` | `100` | 主夹爪固件主动推送编码器（开启 IMU 时连同 IMU）读数的频率；`0` = 每帧轮询；推流起不来时自动回退轮询并告警 |
 | `robot.enable_tracker` | `true` | 关闭则只录触觉 + 夹爪 |
 | `robot.tracker_serial` | 未设 | 钉住追踪器 SN，绕过侧别规则 |
 | `robot.enable_wrist_camera` | `true` | 关闭腕相机 |
@@ -27,8 +28,8 @@
 | `robot.enable_tactile` | `true` | 关闭则整条触觉链路都不接入。**排查用，不是录制模式** |
 | `robot.tactile_fps` | `30` | 触觉帧率 |
 | `robot.tactile_output_types` | `["rectify"]` | **落盘**的触觉流，**只能填一个**；填多个直接报错 |
-| `robot.tactile_display_output_types` | `["difference"]` | **仅供 Rerun 显示**、不落盘的额外触觉流；设为空列表则关闭 |
-| `robot.tactile_diff_gain` | `1.0` | `difference` 图的线性增益（只影响显示流）；`None` = 用传感器出厂值 |
+| `robot.tactile_display_output_types` | `["rectify"]` | Rerun 显示哪一路触觉，**默认与落盘同一路**（空列表等价）；填 `["difference"]` 才多出一路仅显示、不落盘的流 |
+| `robot.tactile_diff_gain` | `1.0` | `difference` 图的线性增益；**默认不请求 `difference`，故不起作用**；`None` = 用传感器出厂值 |
 | `robot.expected_tactiles_per_side` | `2` | 每侧应有几枚触觉；数量对不上直接报错 |
 | `robot.enable_gripper` / `robot.enable_imu` | `true` / `false` | 夹爪本体读数 / IMU 通道 |
 | `robot.gripper_open_rad` | `1.7` | **仅从夹爪用**。主夹爪一律用自己固件里实测的行程上限，本项对它没有任何作用——没标定的主夹爪会被拒绝连接，而不是退回这个常量。见 [4.1](04-calibration.md#41) |

@@ -47,8 +47,8 @@ while you do.
     **Before** each recording run the [preview](05-data-collection.md#preview) once
     (`--display_data=true`) and look at the gripper trajectory, `gripper.pos` and the tactile
     images to confirm all of them carry signal. That is how you catch an empty grasp, drift or
-    dropped frames immediately. Then close it — **record with `--display_data=false`** and leave
-    the frame budget to collection and encoding.
+    dropped frames immediately. Since 0.0.8 the Rerun display no longer costs the collection loop
+    anything, so you can keep it on while recording too.
 
 ## How to perform the demonstration
 

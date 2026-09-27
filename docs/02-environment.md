@@ -149,14 +149,25 @@ bash Miniforge3-$(uname)-$(uname -m).sh
 
 ## 2.2 克隆仓库与子模块 {#22}
 
-仓库用 `third_party/` 子模块管理硬件 SDK，**必须**递归克隆：
+仓库用 `third_party/` 子模块管理硬件 SDK，**必须**递归克隆，并用 `--branch` 固定到发布版本：
 
 ```bash
 git clone \
+  --branch v0.0.8 \
   --recurse-submodules \
   https://github.com/XenseRobotics-AI/xense-taccap-lerobot.git
 cd xense-taccap-lerobot
 ```
+
+!!! warning "没有配 GitHub SSH key 的机器，克隆前先执行一次"
+    子模块地址是 `git@github.com:` 形式，没有 SSH key 时主仓库能克隆，拉子模块会失败。
+    子模块仓库是公开的，改走 HTTPS 即可：
+
+    ```bash
+    git config --global url."https://github.com/".insteadOf "git@github.com:"
+    ```
+
+    详见[版本与支持 → 子模块地址](versions.md#submodule-ssh)。
 
 若已经克隆但漏了子模块：
 
@@ -190,7 +201,8 @@ git submodule update --init --recursive --progress
     AttributeError: module 'xense.taccap._taccap_native' has no attribute 'GripperAutoCalConfig'
     ```
 
-    拉取任何含 `cpp/` 或 `python/bindings/` 改动的子模块更新后，重新构建：
+    版本号相同（例如都是 0.1.9）的子模块也可能含 C++ 改动，所以**每次拉子模块都重跑一次
+    `./setup_env.sh --install`**。只想单独重编 `xense.taccap` 时：
 
     ```bash
     cd ~/xense-taccap-lerobot
@@ -311,7 +323,7 @@ ghcr.io/xenserobotics-ai/xense-taccap-lerobot
 用**普通用户**（不要用 root）执行：
 
 ```bash
-git clone https://github.com/XenseRobotics-AI/xense-taccap-lerobot.git
+git clone --branch v0.0.8 https://github.com/XenseRobotics-AI/xense-taccap-lerobot.git
 cd xense-taccap-lerobot
 ./docker/install_customer.sh
 ```
@@ -334,7 +346,7 @@ cd xense-taccap-lerobot
     校验并导入它，不走网络：
 
     ```bash
-    ./docker/install_customer.sh xense-taccap-lerobot-0.0.6-linux-amd64.tar
+    ./docker/install_customer.sh xense-taccap-lerobot-0.0.8-linux-amd64.tar
     ```
 
     在线拉取是默认路径，原因是**后续升级更省事**——镜像二十多 GB，绝大部分是不常变的
@@ -346,7 +358,7 @@ cd xense-taccap-lerobot
 情况下变。正式采集前在仓库根目录的 `.env` 里钉死一个版本：
 
 ```dotenv
-LEROBOT_IMAGE_TAG=0.0.6
+LEROBOT_IMAGE_TAG=0.0.8
 ```
 
 改完确认解析到的确实是这一版，再拉：
@@ -357,11 +369,12 @@ docker compose pull
 ```
 
 !!! note "只需要写 tag 这一行"
-    `compose.yaml` 的默认镜像已经是 `ghcr.io/xenserobotics-ai/xense-taccap-lerobot`，
-    **不需要再写 `LEROBOT_IMAGE`**；它只在你要换一个镜像名（比如本机自建）时才用得上。
+    `compose.yaml` 已默认指向官方 GHCR 镜像，**不需要再写 `LEROBOT_IMAGE`**；它只在你要换一个
+    镜像名（比如本机自建）时才用得上。`docker compose config --images` 显示的仓库名可能与上面
+    写的 `xenserobotics-ai` 不同，两者是同一个镜像，按 tag 核对即可。
 
 !!! warning "钉在 `0.0.5` 及更早的话，有两条已知问题要绕一下"
-    **`0.0.6` 两条都已修好**，钉这一版就不必管；仍然停在 `0.0.5` 及更早的机器要注意：
+    **`0.0.6` 起两条都已修好**，钉 `0.0.6` 或更新的版本就不必管；仍然停在 `0.0.5` 及更早的机器要注意：
 
     - **录制要加 `--play_sounds=false`**，否则第一集语音播报就会让程序崩掉
       （镜像里没有 `spd-say`）→ [故障排查](troubleshooting.md#docker)。

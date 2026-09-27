@@ -7,6 +7,15 @@ buckets — **serial permissions** and **ModemManager stealing the port** — so
     Run the self-check commands in [Quickstart §2](quickstart.md) first, then match against the
     symptoms below.
 
+## Attach the full log when reporting a problem {#logs}
+
+The full log is at `~/xenselogs/session_<YYYYMMDD_HHMMSS>.log`, one per run, with the latest 15
+kept. The screen shows only the lines worth reading; this file has everything — the collection
+program, `xensesdk` and the video encoding library, with a `[session]` line at the top recording the
+host, encoder and camera setup, plus timestamps for key presses. Attach the file itself rather
+than the last few lines on screen. Change the directory with the `XENSE_LOG_DIR` environment
+variable and the on-screen verbosity with `XENSE_LOG_LEVEL`.
+
 ## Environment and installation
 
 ??? failure "`setup_env.sh --install` stops immediately with `needs system packages that are not installed`"
@@ -386,30 +395,67 @@ Only relevant on [the Docker path](02-environment.md#docker).
     identity is recorded in the dataset's `meta/hardware.json` — see
     [`--robot.id` and the hardware manifest](05-data-collection.md#robot-id).
 
-??? failure "Resuming warns that the dataset's existing `meta/hardware.json` does not match the current hardware"
-    **Cause**: you resumed into a dataset with `--resume` but **the hardware changed** (a different
-    gripper or different tactile sensors). The program **keeps the original file** and warns — the
-    episodes already recorded really did come from the original devices, and overwriting the file
-    would misattribute them.
-    **Fix**: the warning does not stop recording. If the hardware change was intentional, carry
-    on — the warning is precisely the record that "this dataset spans two sets of hardware". If it
-    was not intentional (a gripper plugged into the wrong place, say), stop and put the original
-    hardware back.
+??? failure "Resuming prints `recorded as a new epoch`: the dataset now spans two sets of hardware"
+    **Cause**: you resumed with `--resume` after swapping a gripper or tactile sensor. This is not an
+    error: in `meta/hardware.json` the old epoch is closed at the current episode count and a new one
+    starts, so every episode still points at the devices that recorded it (see
+    [the hardware manifest](05-data-collection.md#robot-id)).
+    **Fix**: if the swap was intentional, carry on; if not (a gripper plugged in by mistake, say),
+    stop and put the original hardware back.
 
-??? failure "`[slow_frame]` appears constantly in the log after enabling `--display_data=true`"
-    **Cause**: the Rerun display is itself eating the frame budget. Measured on a bimanual rig with
-    the headset (four tactile streams, two wrist cameras, two eyes): 13.2 ms per frame with JPEG
-    compression, 3.1 ms without. At 30 fps the whole budget is 33.3 ms, so compression alone takes
-    40% — before camera reads and pose computation.
+    Only a `--robot.type` mismatch (single ↔ bimanual) **keeps the original file and warns** — that
+    amounts to a different dataset.
 
-    **Look at `top_obs=` at the end of the `[slow_frame]` line first**: a slow sensor and an
-    expensive display look identical in the timeout number but have opposite fixes.
+??? failure "Resuming fails with `refusing to resume it`"
+    **Cause**: `--robot.id` differs from the station recorded in the dataset. One dataset belongs to
+    one station, and this is refused before any device is connected.
+    **Fix**: resume on the original station with the original `--robot.id`, or record into a new
+    `--dataset.repo_id`.
 
-    **Fix**: both defaults are already the fast ones (`--display_compressed_images=false`,
-    `--display_image_every_n=1`) — first confirm nobody changed them. If it still overruns, raise
-    `--display_image_every_n`: camera images refresh less often while scalars like `tcp.*` and
-    `gripper.pos` stay at full rate. Treat it as a last resort, since it is the only option that
-    changes what the operator sees.
+??? failure "Recording crashes midway with `ValueError: You must add one or several frames`"
+    **Cause**: a **right-arrow** press in the ~2 s between episodes (saving and encoder warm-up) was
+    left pending, so the next episode ended before recording a single frame and the save then threw
+    this error.
+    **Fix**: upgrade to 0.0.7 or later, which discards key presses in that gap. On older versions,
+    do not press arrow keys between episodes; wait for the next episode's prompt. The keyboard
+    listener is global, so arrow keys in **any window** count (Rerun included); the
+    [session log](#logs) has key-press timestamps to check against.
+
+??? failure "`[stale_frames]` is printed after each reset, or a camera capture-stall warning appears"
+    **Cause**: a camera's background capture stalled briefly. The recording loop is not blocked by
+    it (it gets the cached previous frame), so the frame rate looks normal, but for that stretch the
+    dataset receives **repeated old images**. One line is printed after each episode's reset, with
+    ` (discarded take)` on an episode that was re-recorded:
+
+    ```text
+    [stale_frames] episode 3  [left_tactile_left] 45/1800 frames served stale (2.5%): 25 gap(s), longest 21 frame(s)
+    ```
+
+    **Fix**: look at the share and the longest run. Lots of **single-frame** repeats are expected
+    (the sensor and the recording loop run at the same nominal rate but drift in phase) and can be
+    ignored; what matters is a **long consecutive run**, which is effectively a still image — discard
+    that episode. If it keeps happening, work through [Not enough USB bandwidth](#usb-bandwidth) or
+    record fewer cameras at once.
+
+    A `[loop_summary]` line is printed at the same time with the episode's actual frame rate, e.g.
+    `= 29.0 fps (nominal 30; dataset timestamps assume nominal)`: when the actual rate is below
+    nominal, the dataset timestamps are still written at the nominal rate.
+
+??? failure "`[slow_frame] ... overrun=` appears in the log"
+    **Cause**: a frame took longer than the frame budget (33.3 ms at 30 fps). Since 0.0.8 the Rerun
+    display runs on its own thread and is **no longer the cause**; if the viewer falls behind, only
+    on-screen frames are dropped.
+
+    **Fix**: read the two parts of the line:
+
+    - ` | phases obs=… build=… add=… display=…`: time per phase — see which is largest;
+    - `top_obs=` at the end: the slowest sensors to read.
+
+    Only the first 5 `[slow_frame]` lines of an episode reach the screen; the rest go to the
+    [session log](#logs), and the screen gets a `[slow_frame_summary]` every 5 s instead. A few now
+    and then do not affect the data; if they persist and keep pointing at the same camera, work
+    through [Not enough USB bandwidth](#usb-bandwidth). Machines without an NVIDIA GPU: see
+    [Recording on a machine with no NVIDIA GPU](05-data-collection.md#no-gpu).
 
 ??? failure "Recording stops partway through with `Device lost mid-recording`"
     **Cause**: a camera or the gripper encoder **dropped off the bus** (a loose cable, a hub losing
@@ -433,8 +479,8 @@ Only relevant on [the Docker path](02-environment.md#docker).
     [Recording on a machine with no NVIDIA GPU](05-data-collection.md#no-gpu).
 
 ??? failure "The encoder cannot keep up and dropped-frame warnings appear"
-    **Cause**: when the real-time encoding queue is full the oldest frame is dropped (rather than
-    blocking the collection loop).
+    **Cause**: when the real-time encoding queue is full it waits up to 0.1 s, then drops the
+    current frame and warns `Encoder queue full for <key>, dropped N frame(s)`.
     **Fix**: raise `--dataset.encoder_threads`, use hardware encoding with
     `--dataset.vcodec=auto`, or adjust `--dataset.encoder_queue_maxsize`. See
     [5.4 Recording options](05-data-collection.md#54).
@@ -456,11 +502,25 @@ Only relevant on [the Docker path](02-environment.md#docker).
     `third_party/taccap-gripper/firmware/`, so the firmware sources are no longer needed:
     ```bash
     python third_party/taccap-gripper/python/examples/ota_update.py \
-        tc-gu-01-master.bin --side left
+        tc-gu-01-master.bin left
     ```
     **Upgrade the SDK before flashing** (flashing requires SDK 0.1.7 or newer), and pick the image
     **by role** — by the trailing `m`/`s` of the firmware SN, not by left or right. Full procedure
     and risks: [Firmware OTA upgrade](versions.md#ota). Re-run `calibrate.py` afterwards.
+
+??? failure "Binding the follower fails with `Follower firmware too old -- upgrade required`"
+    **Cause**: the follower firmware is below 1.1.6. The motion safety envelope arrived in 1.1.6, and
+    both `--robot.role=follower` and the SDK refuse older firmware.
+    **Fix**: flash the follower image that ships with the SDK, then **unplug the USB cable and the
+    power cable together** and plug them back in:
+
+    ```bash
+    python third_party/taccap-gripper/python/examples/ota_update.py slave
+    ```
+
+    With several grippers plugged in, name the one to flash:
+    `ota_update.py tc-gu-01-slave.bin left` (or `right`, or its full serial number); see
+    [Firmware OTA upgrade](versions.md#ota).
 
 ??? failure "Flashing says it is looking for the `.bin` under some directory that does not exist"
     **Cause**: the image path was written the wrong way. The images ship with the SDK under

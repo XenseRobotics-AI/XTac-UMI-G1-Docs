@@ -43,6 +43,11 @@ How it is serialised:
 The metadata that matters in `info`: `fps`, `features`, `total_episodes`, `total_frames`,
 `robot_type`, `data_path`, `video_path`.
 
+!!! note "Datasets recorded before 0.0.8: the image `std` statistic is 0"
+    In datasets recorded before 0.0.8, the `std` of image and video features in `meta/stats.json`
+    is always 0 (`mean`, `min`, `max` and the quantiles are unaffected). If training normalises
+    images by `std`, recompute the statistics first.
+
 !!! info "Two things the XTac-UMI G1 adds: `meta/hardware.json` and `meta/runtimes/`"
     A standard LeRobotDataset records only `robot_type` in `info`, which cannot say **which
     physical rig** produced the data — let alone what that sensor's calibration was at the time.
@@ -68,6 +73,10 @@ The metadata that matters in `info`: `fps`, `features`, `total_episodes`, `total
     watch out for when reconstructing →
     [`--robot.id` and the hardware manifest](05-data-collection.md#robot-id).
 
+    New datasets produced by `lerobot-edit-dataset` (deleting episodes, splitting, removing
+    features, the 8 → 6 camera conversion) carry both along. **Merging (`merge`) is refused**:
+    no single manifest could match every merged episode to the sensors that recorded it.
+
 ## 6.2 Checking the data {#62}
 
 Use `lerobot-check-dataset` to verify dataset integrity (frame counts, video, field consistency
@@ -86,6 +95,43 @@ lerobot-check-dataset --repo-id <your_org>/<your_dataset> --episode-index 0 2 4
 | `repo-id` | Dataset repository id (`<org>/<name>`) |
 | `root` | Local root directory (default `~/.cache/huggingface/lerobot`) |
 | `episode-index` | Check only these episodes (accepts several, e.g. `0 2 4`) |
+
+The checks cover whether `meta/` is complete, whether episode counts agree, whether parquet row
+counts and indices are contiguous, NaNs, whether each video exists with a frame count matching the
+parquet, and the **camera format**: a bimanual dataset is classified as 6-camera (four tactile +
+two wrist) or 8-camera (plus the two headset eyes), which train with different input shapes. The
+last line sums it up:
+
+```text
+Summary: 0 error(s), 0 warning(s) | Camera format: 6-camera (no headset)
+```
+
+A single-gripper dataset, or one recorded without the wrist cameras or with only one headset eye,
+shows `not recognized` with a warning; the check targets the standard bimanual layouts and does not
+affect the other checks.
+
+### Bimanual 8 cameras → 6 cameras {#8to6}
+
+A bimanual dataset recorded with the [headset camera](05-data-collection.md#56) on is in the
+8-camera format. To reduce it to the 6-camera format (the same shape as one recorded with
+`--robot.enable_head_camera=false`), use `lerobot-edit-dataset`:
+
+```bash
+lerobot-edit-dataset \
+    --repo_id <your_org>/<dataset_8cam> \
+    --new_repo_id <your_org>/<dataset_6cam> \
+    --operation.type convert_8_to_6_cameras
+```
+
+It drops the two headset image keys and the `head_camera.*` dimensions of `action` /
+`observation.state`, **leaves the source dataset untouched**, and writes the result to
+`--new_repo_id`. A source that is already 6-camera, or whose camera keys are not as expected, is
+refused outright.
+
+!!! warning "Double-check `--repo_id` first"
+    If the dataset is not found locally, this conversion fetches it from the Hugging Face Hub;
+    `--local_files_only` has no effect on it. Make sure `--repo_id` is spelled correctly, or point
+    `--root` straight at the local dataset directory.
 
 !!! note "The command is already in your environment"
     `lerobot-check-dataset` is installed along with the collection program and can be typed
@@ -143,6 +189,12 @@ Common variants:
     ```
 
 On success the dataset lives at `https://huggingface.co/datasets/<repo_id>`.
+
+- Pushing also generates a dataset card (README) and first writes an `assets/` folder into the local
+  dataset directory with the card's three images (about 12 MB in total), uploaded along with the
+  data — even with `--no-videos`.
+- `--dataset-path` reads locally only: a wrong path fails with
+  `Cannot find dataset metadata in local directory` rather than downloading from the Hub.
 
 !!! tip "Log in to the Hub first"
     Before uploading, make sure you have run `hf auth login` (older versions also accept

@@ -32,7 +32,7 @@
 !!! note "养成习惯：开录前用 Rerun 自查一遍"
     每次开录**之前**先跑一遍[预览](05-data-collection.md#preview)(`--display_data=true`)，
     看夹爪轨迹、`gripper.pos` 与触觉图是否都有信号，第一时间发现空抓、漂移、丢帧。
-    确认完就关掉——**正式录制时 `--display_data=false`**，把帧预算留给采集和编码。
+    0.0.8 起 Rerun 显示不占采集循环，正式录制时也可以开着边录边看。
 
 ## 演示动作规范
 

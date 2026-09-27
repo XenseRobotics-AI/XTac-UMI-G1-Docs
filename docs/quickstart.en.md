@@ -16,7 +16,8 @@ then come back.
     - Repo, submodules and **gripper firmware** upgraded per
       [Required versions](versions.md#required). The firmware requirement is **command set
       V2.1** — build **leader >= 1.2.0 / follower >= 1.1.0**, and a higher build is fine
-      ([the difference](versions.md#v21)).
+      ([the difference](versions.md#v21)). To use a follower (`--robot.role=follower`), its
+      firmware must also be **>= 1.1.6** or it is refused; see [firmware OTA](versions.md#ota).
     - [Installation](02-environment.md) done — either path, with all three SDK packages importing.
     - [Serial permissions + ModemManager](03-host-hardware.md#31) one-off host setup done.
     - **Bimanual rigs**: the [USB bandwidth budget](03-host-hardware.md#usb-budget) has been checked
@@ -212,8 +213,8 @@ A few that are easy to get wrong:
 - `--fps` is the main loop rate, `--dataset.fps` is the recording sample rate — **two parameters**,
   usually set to the same value.
 - `--robot.enable_tracker` and `--robot.enable_head_camera` are spelled out so they match the preview stage you just ran — record at the stage you previewed.
-- `--display_data` is **on to preview, off to record**: Rerun's display costs frame budget on the
-  collection loop.
+- `--display_data` is off by default; since 0.0.8 the Rerun display costs the collection loop no
+  frame budget, so turn it on if you want to watch while recording.
 
 Every parameter (dataset / recording control / device) → [5.2 Parameter reference](05-data-collection.md#params)
 

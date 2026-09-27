@@ -12,7 +12,8 @@
     - 已了解设备并**连接好硬件、上电**（见 [硬件介绍](hardware.md#install)）。
     - 已按 [版本要求](versions.md#required) 升级仓库、子模块与**夹爪固件**——固件要求的是
       **命令集 V2.1**，对应构建号 **主夹爪 ≥ 1.2.0 / 从夹爪 ≥ 1.1.0**（更高版本同样支持，
-      不必回刷；[两者的区别](versions.md#v21)）。
+      不必回刷；[两者的区别](versions.md#v21)）。用从夹爪（`--robot.role=follower`）时，从夹爪固件还需
+      **≥ 1.1.6**，否则拒绝连接，见 [固件 OTA](versions.md#ota)。
     - 已完成 [环境安装](02-environment.md)——Mamba 或 Docker 任选一条，三个 SDK 包都能 import。
     - 已做 [串口权限 + ModemManager](03-host-hardware.md#31) 一次性主机配置。
     - **双夹爪**：已查过 [USB 带宽预算](03-host-hardware.md#usb-budget)（六个相机挤在一条总线上会打不开）。
@@ -189,7 +190,7 @@ for g in scan_grippers(): print(g.side.name, g.role.name, repr(g.firmware_sn))"
 - `--robot.side` 只在单夹爪模式、且**两只夹爪都接着**时才需要；单只会自动选中。
 - `--fps` 是主循环帧率，`--dataset.fps` 是落盘采样率——**两个参数**，通常设成一样。
 - `--robot.enable_tracker` 和 `--robot.enable_head_camera` 显式写出，和预览时用的那一档保持一致——预览到哪一档就录哪一档。
-- `--display_data` **预览时开、录制时关**：Rerun 显示占采集主循环的帧预算，正式录制关掉更稳。
+- `--display_data` 默认关；0.0.8 起 Rerun 显示不占采集循环的帧预算，想边录边看就打开。
 
 全部参数（数据集 / 录制控制 / 设备三类）→ [5.2 参数详解](05-data-collection.md#params)
 

@@ -5,6 +5,13 @@
 !!! tip "定位思路"
     先跑[一页速通 §2](quickstart.md) 的自检命令，再对照下面的症状。
 
+## 反馈问题请附上完整日志 {#logs}
+
+完整日志在 `~/xenselogs/session_<YYYYMMDD_HHMMSS>.log`，每次运行一份，只保留最近 15 份。屏幕上只留下
+值得看的那几行，这个文件里是全的：采集程序、`xensesdk` 和视频编码库的日志都汇在一起，开头的 `[session]`
+行记着主机、编码与相机配置，还有按键操作的时间戳。反馈问题时请直接附上这个文件，不要只贴屏幕上的
+最后几行。目录可用环境变量 `XENSE_LOG_DIR` 修改，屏幕日志的详细程度用 `XENSE_LOG_LEVEL` 调。
+
 ## 环境与安装
 
 ??? failure "`setup_env.sh --install` 一开始就报 `needs system packages that are not installed`"
@@ -327,24 +334,54 @@
     它标的是工位、不是硬件，换夹爪不用改；设备的身份记在数据集的 `meta/hardware.json` 里，
     见 [`--robot.id` 与硬件清单](05-data-collection.md#robot-id)。
 
-??? failure "续录时告警：数据集里已有的 `meta/hardware.json` 和当前硬件对不上"
-    **原因**：用 `--resume` 往一个数据集里续录，但**换了硬件**（换了夹爪或触觉传感器）。
-    程序**保留原文件**并打告警——已经录好的那些集确实来自原来那批设备，覆盖掉就等于把它们记错了。
-    **解决**：告警本身不阻断录制。确认是有意换硬件就继续，这条告警就是"这个数据集跨了两套硬件"
-    的记录；不是有意的（比如插错了一只夹爪），先停下来把设备换回去。
+??? failure "续录时提示 `recorded as a new epoch`，数据集跨了两套硬件"
+    **原因**：用 `--resume` 续录时换了夹爪或触觉传感器。这不是错误：`meta/hardware.json` 里旧段在当前
+    集数处封口、新段接上，每一集仍指向真正采它的那套设备（见 [硬件清单](05-data-collection.md#robot-id)）。
+    **解决**：有意换硬件就继续；不是有意的（比如插错了一只夹爪），先停下来把设备换回去。
 
-??? failure "开了 `--display_data=true` 后日志频繁出现 `[slow_frame]`"
-    **原因**：Rerun 显示本身占掉了帧预算。实测双夹爪 + 头显（四路触觉、两路腕相机、两只眼），
-    JPEG 压缩后每帧 13.2 ms，不压缩 3.1 ms——30 fps 的预算只有 33.3 ms，压缩就占了 40%，
-    这还没算相机读取和位姿计算。
+    只有 `--robot.type` 对不上（单夹爪 ↔ 双夹爪）时，程序才会**保留原文件并告警**——那等于换了一个数据集。
 
-    **先看 `[slow_frame]` 那行末尾的 `top_obs=`**：是某个传感器慢，还是显示贵，两者在超时
-    数字上看着一样，解法却相反。
+??? failure "续录报 `refusing to resume it`"
+    **原因**：`--robot.id` 和数据集里记的工位号不一致。一个数据集只属于一个工位，在连接任何设备之前就会拒绝。
+    **解决**：回原工位、用原来的 `--robot.id` 续录；或者换一个 `--dataset.repo_id`，录成新数据集。
 
-    **解决**：两个默认值本来就是快的那个（`--display_compressed_images=false`、
-    `--display_image_every_n=1`），先确认没被改过。仍然超时再把 `--display_image_every_n`
-    调大——相机画面刷新变稀，`tcp.*` 和 `gripper.pos` 等标量仍是全速。这是最后手段，
-    因为它是唯一会改变操作员所见内容的选项。
+??? failure "录到一半突然崩掉，报 `ValueError: You must add one or several frames`"
+    **原因**：两集之间约 2 秒（存盘与编码器预热）里按下的**方向右键**被挂住，下一集一帧未录就退出，
+    最后在存盘时抛出这个错。
+    **解决**：升级到 0.0.7 及以上，这段空档里的按键会被丢弃。停在更早版本时，两集之间不要提前按方向键，
+    等下一集的提示出现再按。键盘监听是全局的，**任何窗口**里的方向键都会生效（包括 Rerun）；
+    [会话日志](#logs)里有按键时间戳，可用来核对。
+
+??? failure "每集复位后打印 `[stale_frames]`，或出现相机采集卡顿告警"
+    **原因**：某路相机的后台采集卡住了一小会儿。录制循环不会被它阻塞（拿到的是缓存的上一帧），帧率看着
+    正常，但这段时间录进去的是**重复的旧图**。每集复位结束后会打印一行，重录掉的那一集带
+    ` (discarded take)`：
+
+    ```text
+    [stale_frames] episode 3  [left_tactile_left] 45/1800 frames served stale (2.5%): 25 gap(s), longest 21 frame(s)
+    ```
+
+    **解决**：先看比例和最长一段。大量的**单帧**重复是预期内的（传感器与录制循环各自按同一标称帧率运行，
+    相位会漂），不用管；值得处理的是**很长的连续段**，那一段实际上是静止画面，建议弃用这一集。
+    持续出现按 [USB 带宽不够](#usb-bandwidth) 排查，或减少同时录制的相机路数。
+
+    同一时刻还会打印一行 `[loop_summary]`，给出这一集的实际帧率，例如
+    `= 29.0 fps (nominal 30; dataset timestamps assume nominal)`：实际帧率低于标称时，
+    数据集里的时间戳仍按标称帧率写。
+
+??? failure "日志出现 `[slow_frame] ... overrun=`"
+    **原因**：某一帧的处理超出了帧预算（30 fps 为 33.3 ms）。0.0.8 起 Rerun 显示在独立线程上运行，
+    **不再是原因**；显示跟不上时丢的只是屏幕上的帧。
+
+    **解决**：看这一行的两段信息：
+
+    - ` | phases obs=… build=… add=… display=…`：各阶段耗时，看哪一段最大；
+    - 行末的 `top_obs=`：读得最慢的那几路传感器。
+
+    每集只有前 5 条 `[slow_frame]` 打在屏幕上，其余写进[会话日志](#logs)，屏幕上改为每 5 秒一条
+    `[slow_frame_summary]` 汇总。偶发几条不影响数据；持续出现且总指向同一路相机时，按
+    [USB 带宽不够](#usb-bandwidth) 排查。没有 NVIDIA 显卡的机器见
+    [没有 NVIDIA GPU 的主机怎么录](05-data-collection.md#no-gpu)。
 
 ??? failure "录制中途停下，提示 `Device lost mid-recording`"
     **原因**：某路相机或夹爪编码器**掉线**了（线松、hub 掉电、USB 口接触不良）。
@@ -366,7 +403,8 @@
     [没有 NVIDIA GPU 的主机怎么录](05-data-collection.md#no-gpu)。
 
 ??? failure "编码器跟不上、日志出现丢帧告警"
-    **原因**：实时编码队列满时会丢最旧帧（不阻塞采集循环）。
+    **原因**：实时编码队列满时最多等 0.1 秒，仍满则丢弃当前帧并告警
+    `Encoder queue full for <键>, dropped N frame(s)`。
     **解决**：增大 `--dataset.encoder_threads`、用 `--dataset.vcodec=auto` 硬件编码、
     或调 `--dataset.encoder_queue_maxsize`。见 [5.4 录制选项](05-data-collection.md#54)。
 
@@ -385,11 +423,22 @@
     `third_party/taccap-gripper/firmware/`，不再需要固件源码：
     ```bash
     python third_party/taccap-gripper/python/examples/ota_update.py \
-        tc-gu-01-master.bin --side left
+        tc-gu-01-master.bin left
     ```
     **先升 SDK 再刷固件**（刷写要用 0.1.7 及以上的 SDK），镜像**按角色选**——
     看固件 SN 末位 `m`/`s`，不是看左右手。完整步骤与风险见
     [固件 OTA 升级](versions.md#ota)。刷完回来重跑 `calibrate.py`。
+
+??? failure "绑定从夹爪时报 `从爪固件版本过低,必须升级后才能使用本 SDK` / `Follower firmware too old`"
+    **原因**：从夹爪固件低于 1.1.6。1.1.6 起才有运动安全包络，`--robot.role=follower` 和 SDK 都会拒绝更早的固件。
+    **解决**：刷随 SDK 附带的从夹爪镜像，然后**USB 线和电源线同时拔下再插回**：
+
+    ```bash
+    python third_party/taccap-gripper/python/examples/ota_update.py slave
+    ```
+
+    接着多只夹爪时，指定要刷的那一只：`ota_update.py tc-gu-01-slave.bin left`（或 `right`、完整序列号），见
+    [固件 OTA 升级](versions.md#ota)。
 
 ??? failure "刷固件时提示到某个目录下找 `.bin`，但该目录不存在"
     **原因**：镜像路径写法不对。镜像随 SDK 附带在

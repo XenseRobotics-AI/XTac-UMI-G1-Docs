@@ -12,7 +12,8 @@ This page keeps the configuration options, the glossary and the appendix.
 |---|---|---|
 | `robot.id` | **required** | The station number for this rig — pass a bare number (`0`, `1`, …) and the prefix is filled in from `robot.type`, giving `taccap_0` / `bi_taccap_0`. Leaving it out fails at CLI-parse time → [`--robot.id` and the hardware manifest](05-data-collection.md#robot-id) |
 | `robot.side` | auto | `left` / `right`. Required in **single-gripper mode** when both grippers are plugged in; a lone unit is picked automatically |
-| `robot.role` | `leader` | Set `follower` to bind the follower gripper |
+| `robot.role` | `leader` | Set `follower` to bind the follower gripper; the follower firmware must be ≥ 1.1.6, see [firmware OTA](versions.md#ota) |
+| `robot.gripper_stream_hz` | `100` | Rate at which the leader firmware pushes encoder (and, with the IMU on, IMU) readings; `0` = poll every frame; falls back to polling with a warning if the stream cannot start |
 | `robot.enable_tracker` | `true` | Off records tactile + gripper only |
 | `robot.tracker_serial` | unset | Pin a tracker by SN, bypassing the side rule |
 | `robot.enable_wrist_camera` | `true` | Turns the wrist camera off |
@@ -28,8 +29,8 @@ This page keeps the configuration options, the glossary and the appendix.
 | `robot.enable_tactile` | `true` | Off disconnects the whole tactile chain. **A diagnostic, not a recording mode** |
 | `robot.tactile_fps` | `30` | Tactile frame rate |
 | `robot.tactile_output_types` | `["rectify"]` | The tactile stream that **reaches the dataset**; **exactly one** — more than one is an error |
-| `robot.tactile_display_output_types` | `["difference"]` | Extra tactile streams **for Rerun only**, never recorded; an empty list turns them off |
-| `robot.tactile_diff_gain` | `1.0` | Linear gain on the `difference` image (display stream only); `None` = the sensor's factory value |
+| `robot.tactile_display_output_types` | `["rectify"]` | Which tactile stream Rerun shows: **the recorded one by default** (an empty list means the same); `["difference"]` adds a display-only stream that is never recorded |
+| `robot.tactile_diff_gain` | `1.0` | Linear gain on the `difference` image; **inert by default**, since `difference` is not requested; `None` = the sensor's factory value |
 | `robot.expected_tactiles_per_side` | `2` | How many tactile sensors each side should have; a mismatch is an error |
 | `robot.enable_gripper` / `robot.enable_imu` | `true` / `false` | Gripper's own readings / the IMU channel |
 | `robot.gripper_open_rad` | `1.7` | **Follower only.** A leader always uses the measured travel limit in its own firmware, and this option does nothing for it — an uncalibrated leader is refused a connection rather than falling back to this constant. See [4.1](04-calibration.md#41) |

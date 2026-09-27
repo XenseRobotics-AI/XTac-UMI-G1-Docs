@@ -172,14 +172,25 @@ bash Miniforge3-$(uname)-$(uname -m).sh
 
 ## 2.2 Clone the repo and its submodules {#22}
 
-Hardware SDKs live in `third_party/` submodules, so the clone **must** be recursive:
+Hardware SDKs live in `third_party/` submodules, so the clone **must** be recursive, pinned to a release with `--branch`:
 
 ```bash
 git clone \
+  --branch v0.0.8 \
   --recurse-submodules \
   https://github.com/XenseRobotics-AI/xense-taccap-lerobot.git
 cd xense-taccap-lerobot
 ```
+
+!!! warning "No GitHub SSH key on this machine? Run this once before cloning"
+    The submodule is referenced as `git@github.com:`, so without an SSH key the top-level repo clones but
+    the submodule fetch fails. The submodule repo is public, so switch to HTTPS:
+
+    ```bash
+    git config --global url."https://github.com/".insteadOf "git@github.com:"
+    ```
+
+    Details in [Versions & Support → submodule URL](versions.md#submodule-ssh).
 
 Already cloned without submodules:
 
@@ -217,7 +228,8 @@ Submodules and the packages they install — there is **only one**:
     AttributeError: module 'xense.taccap._taccap_native' has no attribute 'GripperAutoCalConfig'
     ```
 
-    After pulling any submodule update touching `cpp/` or `python/bindings/`, rebuild:
+    A submodule with the same version number (0.1.9, say) can still carry C++ changes, so **rerun
+    `./setup_env.sh --install` every time you pull the submodule**. To rebuild just `xense.taccap`:
 
     ```bash
     cd ~/xense-taccap-lerobot
@@ -348,7 +360,7 @@ ghcr.io/xenserobotics-ai/xense-taccap-lerobot
 Run it as a **normal user**, not root:
 
 ```bash
-git clone https://github.com/XenseRobotics-AI/xense-taccap-lerobot.git
+git clone --branch v0.0.8 https://github.com/XenseRobotics-AI/xense-taccap-lerobot.git
 cd xense-taccap-lerobot
 ./docker/install_customer.sh
 ```
@@ -371,7 +383,7 @@ itself is in the image** — no submodules to fetch, nothing to build on the hos
     argument) and the script verifies and imports it instead of going to the network:
 
     ```bash
-    ./docker/install_customer.sh xense-taccap-lerobot-0.0.6-linux-amd64.tar
+    ./docker/install_customer.sh xense-taccap-lerobot-0.0.8-linux-amd64.tar
     ```
 
     Pulling is the default because **upgrades are much cheaper that way**: the image is tens of GB,
@@ -385,7 +397,7 @@ collection environment changes without you asking. Before real collection, pin a
 repo root's `.env`:
 
 ```dotenv
-LEROBOT_IMAGE_TAG=0.0.6
+LEROBOT_IMAGE_TAG=0.0.8
 ```
 
 Confirm that is what resolves, then pull:
@@ -396,12 +408,13 @@ docker compose pull
 ```
 
 !!! note "The tag line is all you need"
-    `compose.yaml` already defaults to `ghcr.io/xenserobotics-ai/xense-taccap-lerobot`, so **do not set
-    `LEROBOT_IMAGE`** — it is only for running under a different image name, e.g. one you built
-    yourself.
+    `compose.yaml` already defaults to the official GHCR image, so **do not set `LEROBOT_IMAGE`** — it is
+    only for running under a different image name, e.g. one you built yourself. The repository name
+    `docker compose config --images` prints may differ from `xenserobotics-ai` above; both are the same
+    image, so check the tag.
 
 !!! warning "Two known issues to work around if you pin `0.0.5` or earlier"
-    **`0.0.6` fixes both**, so pinning that version means neither applies. Machines still on
+    **`0.0.6` and later fix both**, so pinning `0.0.6` or newer means neither applies. Machines still on
     `0.0.5` or earlier:
 
     - **Record with `--play_sounds=false`**, or the first episode's spoken announcement kills the
