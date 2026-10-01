@@ -56,7 +56,8 @@ g.stop_streaming()
 
 `snapshot().observation` 里有 `position`（开度）、`velocity`、`torque`（正值 = 往闭合方向）、`motor_temp_c`。
 
-不控制时读开度：`g.position()`。
+不控制时读开度：`g.position()`。电机固件版本：`g.motor.motor_version()`，见
+[固件与电机升级](follower-firmware.md#motor-version)。
 
 ## 电机底层接口 {#motor-primitives}
 
@@ -64,7 +65,7 @@ g.stop_streaming()
 
 以下接口会修改夹爪或电机里保存的配置，**只在技术支持指导下使用**：
 `set_model()`、`set_startup_limit_torque()`、`switch_protocol()`、`set_can_id()`、`set_private_param()`、
-`set_zero()`、`set_gripper_config()`、`set_envelope()`、`set_auto_cal_config()`。
+`set_zero()`、`set_gripper_config()`、`set_envelope()`、`set_auto_cal_config()`、`set_motor_fw_version()`。
 
 ## 腕部相机与鱼眼矫正 {#camera}
 

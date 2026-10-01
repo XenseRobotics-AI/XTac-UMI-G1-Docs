@@ -9,9 +9,12 @@
 
 | 夹爪固件版本 | 说明 |
 |---|---|
-| 1.2.9 | 随 SDK 0.3.2 附带，推荐 |
-| 1.2.5 – 1.2.8 | 可以使用，建议升级 |
+| 1.2.14 | 随 SDK 0.4.1 附带，推荐 |
+| 1.2.11 – 1.2.13 | 可以使用，建议升级 |
+| 1.2.5 – 1.2.10 | 能打开，但 SDK 会提示升级：控制串口偶发溢出后，夹爪会收不到命令、夹持力下降，**必须升级** |
 | 低于 1.2.5 | SDK 拒绝打开，必须先升级 |
+
+电机固件版本的查看方法见下面的 [电机固件版本](#motor-version)。
 
 ## 升级夹爪固件 {#mcu-ota}
 
@@ -39,7 +42,8 @@ python python/examples/follower_status.py left
 
 ### 刷完必须断电重启 {#power-cycle}
 
-**USB 线和 24V 电源线同时拔掉，两根都拔出后再插回。** 只拔一根不算。
+**拔下 24V 电源线，等约 2 秒再插回，USB 线不用拔。** 从夹爪的主控板和电机都由 24V 供电，
+只拔 USB 线不会让它重启。
 不断电重启的话，夹爪看起来正常，但会悄悄丢数据。
 
 ## 升级电机固件 {#motor-ota}
@@ -54,16 +58,17 @@ python python/examples/follower_status.py left
     g.motor.switch_protocol(t.MotorProtocol.Private)"
     ```
 
-2. 断电重启（USB 与 24V 同时拔）。
+2. 断电重启（拔插 24V）。
 3. 刷写技术支持提供的固件文件：
 
     ```bash
     python python/examples/motor_ota_update.py el05-1.0.5.0.4.bin left --model EL05
     ```
 
-    提示 `confirm the nameplate` 时，确认电机铭牌是 EL05 即可。
+    按提示输入 `yes` 开始刷写；提示 `confirm the nameplate` 时，确认电机铭牌是 EL05 即可。
 
 4. 断电重启。夹爪上电后能正常自己开合一次，说明升级成功。
+   夹爪固件 1.2.14 及以上时，脚本刷完会把新的电机固件版本记进夹爪，之后随时可以[查看](#motor-version)。
 
 - 如果脚本提示电机仍在升级模式，或断电重启后夹爪不自己开合，运行下面的命令切回，再断电重启；
   不切回的话从夹爪无法控制：
@@ -75,3 +80,19 @@ python python/examples/follower_status.py left
     ```
 
 - 脚本报 `no reply` 时，断电重启后重新刷写。
+
+## 电机固件版本 {#motor-version}
+
+电机固件要求 **1.0.5.0.4 或以上**。低于这个版本时电机的速度反馈不正常，运动会发抖，请联系
+[技术支持](versions.md#support)获取升级文件。
+
+查看版本（不要在控制运行时执行，读取可能让电机停下）：
+
+```bash
+python -c "import xense.taccap as t
+g = t.FollowerGripper(t.find_follower().mcu_device)
+print(g.motor.motor_version())"
+```
+
+输出 `MotorVersion(1.0.5.0.4, flash: ...)` 即为版本号；带 `flash` 字样表示读的是夹爪里保存的记录。
+需要夹爪固件 1.2.14 及以上。显示 `invalid` 表示这台夹爪里还没有记录，请联系技术支持。

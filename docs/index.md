@@ -105,4 +105,4 @@ hide:
 
 !!! note "适用版本"
     数采部分使用 `xense-taccap-lerobot` 自带的 SDK（0.1.9 系列）；从夹爪章节与 SDK 附录使用单独安装的
-    `xense.taccap` 0.3.2。各组件的版本基线见[版本与支持](versions.md)。
+    `xense.taccap` 0.4.1。各组件的版本基线见[版本与支持](versions.md)。

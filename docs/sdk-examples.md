@@ -59,13 +59,21 @@ python python/examples/wrist_camera.py <相机序列号> --undistort   # 矫正�
 
 ## 从旧版本迁移 {#migrate}
 
-照 0.1.x / 0.2.x 写的程序，升级到 0.3.2 时主要有这些变化：
+照 0.1.x / 0.2.x 写的程序，升级到 0.4.1 时主要有这些变化：
 
 - 从夹爪改用控制器：`ImpedanceController` 或 `ForcePositionController`，配置用 `for_spec()` 生成。
   旧的 `ControlLoop`、`set_position()` 等接口已删除。
 - 速度和力矩统一为正值 = 往闭合方向。
-- 从夹爪固件需要 1.2.5 或以上。
+- 从夹爪固件需要 1.2.5 或以上，低于 1.2.11 时会提示升级。
 - 示例脚本改用位置参数 `left` / `right` / 序列号选择夹爪，旧的控制类示例脚本已删除。
 - 夹爪对象给出的腕部相机画面默认改为 RGB。
 
-完整变更见 SDK 的 [CHANGELOG](https://github.com/XenseRobotics-AI/TacCap-Gripper/blob/v0.3.2/CHANGELOG.md)。
+从 0.3.x 升级到 0.4.x 时：
+
+- 力位控制改为单一的力矩受限控制律，夹住时更稳；`snapshot().holding` 会比以前晚约 150 ms 变为真，
+  依赖它的程序请重新验证。
+- 闭合到 0 时，最终状态可能是 `HOLDING_FORCE` 也可能是 `HOLDING_POSITION`，两者都是正常的。
+- 运行中 `set_target(开度, 夹持力)` 的夹持力超过 1.1 N·m 时直接报错，不再静默接受。
+- 新增 `g.motor.motor_version()` 读电机固件版本（夹爪固件 1.2.14 起不受电机通信模式限制）。
+
+完整变更见 SDK 的 [CHANGELOG](https://github.com/XenseRobotics-AI/TacCap-Gripper/blob/v0.4.1/CHANGELOG.md)。

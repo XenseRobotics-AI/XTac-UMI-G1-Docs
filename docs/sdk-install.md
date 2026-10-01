@@ -7,7 +7,7 @@
 需要 Ubuntu 22.04 及以上，以及 `mamba` 或 `conda`。SDK 从源码编译，示例脚本也在源码目录里，装完请保留。
 
 ```bash
-git clone --branch v0.3.2 https://github.com/XenseRobotics-AI/TacCap-Gripper.git
+git clone --branch v0.4.1 https://github.com/XenseRobotics-AI/TacCap-Gripper.git
 cd TacCap-Gripper
 mamba env create -f environment.yml     # 新建名为 taccap 的环境,包含编译所需的全部依赖
 mamba activate taccap
@@ -21,11 +21,11 @@ sudo usermod -aG dialout,video "$USER"  # 串口与相机权限,注销后重新�
 python -c "import xense.taccap as t; print(t.hello())"
 ```
 
-应输出 `taccap-gripper OK; version 0.3.2`。
+应输出 `taccap-gripper OK; version 0.4.1`。
 
 !!! warning "常见问题"
     - **必须先 `mamba activate taccap` 再安装**，`--no-build-isolation` 也不要省，否则编译会报错。
-    - 版本不是 0.3.2：当前环境加载了别处的旧版 SDK，常见于同时激活了数采环境。换一个干净的终端，
+    - 版本不是 0.4.1：当前环境加载了别处的旧版 SDK，常见于同时激活了数采环境。换一个干净的终端，
       只激活 `taccap` 再试。
 
 ## 硬件自检 {#self-check}

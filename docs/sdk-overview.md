@@ -3,10 +3,10 @@
 `xense.taccap`（仓库 [TacCap-Gripper](https://github.com/XenseRobotics-AI/TacCap-Gripper)）是 XTac-UMI G1
 夹爪的开发包，提供 Python 与 C++ 两种接口，用于自己编写程序读取主夹爪、控制从夹爪。
 
-!!! warning "本附录按 SDK 0.3.2 编写"
+!!! warning "本附录按 SDK 0.4.1 编写"
     数采仓库 `xense-taccap-lerobot` 自带的是旧版 SDK（0.1.9 系列），接口差别很大。只做数采的，按
     [环境安装](02-environment.md) 走即可；需要自己写程序或使用[从夹爪](follower-overview.md)的，按
-    [安装与构建](sdk-install.md) 单独安装 0.3.2，不要和数采环境混用。
+    [安装与构建](sdk-install.md) 单独安装 0.4.1，不要和数采环境混用。
 
 ## 能做什么 {#scope}
 
@@ -15,7 +15,7 @@
 | 读开合 | 编码器，0..1 开度 | 电机位置，0..1 开度 |
 | 其他数据 | IMU、按键 | 电机速度、力矩、温度 |
 | 控制 | — | 阻抗控制（默认）、力位控制 |
-| 共有 | LED、腕部相机、鱼眼内参、固件升级 | 同左；另有电机固件升级 |
+| 共有 | LED、腕部相机、鱼眼内参、固件升级 | 同左；另有电机固件升级与版本查看 |
 
 视触觉图像由 `xensesdk` 采集，不在本 SDK 里。遥操作、抓取策略、数据录制属于上层应用。
 

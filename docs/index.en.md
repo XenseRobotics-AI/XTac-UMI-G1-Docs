@@ -108,4 +108,4 @@ hide:
 
 !!! note "Versions"
     Data collection uses the SDK bundled with `xense-taccap-lerobot` (the 0.1.9 series); the follower chapter
-    and the SDK appendix use a separately installed `xense.taccap` 0.3.2. Component baselines are in [Versions & Support](versions.md).
+    and the SDK appendix use a separately installed `xense.taccap` 0.4.1. Component baselines are in [Versions & Support](versions.md).

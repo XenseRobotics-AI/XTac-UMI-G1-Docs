@@ -8,7 +8,7 @@
 需要 Ubuntu 22.04 及以上，以及 `mamba` 或 `conda`。
 
 ```bash
-git clone --branch v0.3.2 https://github.com/XenseRobotics-AI/TacCap-Gripper.git
+git clone --branch v0.4.1 https://github.com/XenseRobotics-AI/TacCap-Gripper.git
 cd TacCap-Gripper
 mamba env create -f environment.yml     # 新建名为 taccap 的环境
 mamba activate taccap
@@ -22,7 +22,7 @@ sudo usermod -aG dialout,video "$USER"  # 串口权限,注销后重新登录生�
 python -c "import xense.taccap as t; print(t.hello())"
 ```
 
-应输出 `taccap-gripper OK; version 0.3.2`。版本不对说明用错了环境，先 `mamba activate taccap`。
+应输出 `taccap-gripper OK; version 0.4.1`。版本不对说明用错了环境，先 `mamba activate taccap`。
 
 之后的命令都在 `TacCap-Gripper` 目录下、`taccap` 环境里运行。安装问题见 [SDK 附录 → 安装与构建](sdk-install.md)。
 
@@ -59,7 +59,7 @@ python python/examples/follower_status.py left
 这个脚本只读，不会让电机动。正常输出中要看的几行（中间省略）：
 
 ```text
-[fw] FirmwareVersion(1.2.9.0)
+[fw] FirmwareVersion(1.2.14.0)
 ...
 [归一化] g.position() = 0.9183
 ...
@@ -71,14 +71,15 @@ python python/examples/follower_status.py left
 
 | 看哪里 | 正常 | 不正常时 |
 |---|---|---|
-| `[fw]` | 1.2.9 | 低于 1.2.5 会报错退出，先[升级固件](follower-firmware.md#mcu-ota) |
+| `[fw]` | 1.2.14 | 低于 1.2.11 会打印升级提示，低于 1.2.5 会报错退出，都先[升级固件](follower-firmware.md#mcu-ota) |
 | `[归一化]` | 0 到 1 之间 | 报 `not calibrated`：清空爪子周围，断电重启 |
 | `[故障]` | 全 0 | 见[故障排查](follower-troubleshooting.md#fault) |
 | `[开流读]` | 约 100 Hz，显示 `OK` | 断电重启后再试，仍不正常见[故障排查](follower-troubleshooting.md#self-check) |
 
 ## 4. 写入运动安全包络 {#envelope}
 
-包络是固件里的力矩与过热保护，**出厂时是关的**，每只从夹爪写一次，掉电保留。数值由 SDK 自动生成，不用填。
+包络是固件里的力矩与过热保护，每只从夹爪写一次，掉电保留。数值由 SDK 按电机自动生成，不用填。
+夹爪固件 1.2.12 起，没写过包络时固件会执行一套默认包络，更旧的固件则完全不保护；两种情况都要写一次。
 
 先查看：
 
@@ -86,7 +87,8 @@ python python/examples/follower_status.py left
 python python/examples/impedance_control.py left --show-envelope
 ```
 
-`effective` 一行有 `flags=0x2003 ENFORCE`，且没有 `[warn]` 行，说明已经生效，可以跳过。否则写入：
+`effective` 一行有 `flags=0x2003 ENFORCE`，且没有 `[warn]` 行，说明已经写过，可以跳过。否则写入：
+（没写过包络的 1.2.12 及以上固件，`effective` 一行同样有 `ENFORCE`，但会多一行 `[warn]`，这时仍要写入。）
 
 ```bash
 python python/examples/impedance_control.py left --set-envelope --show-envelope

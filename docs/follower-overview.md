@@ -5,8 +5,8 @@
 
 ![XTac-UMI G1 从夹爪](assets/product/follower-scene-front.webp){ width="720" }
 
-!!! warning "本章使用单独安装的 SDK 0.3.2"
-    本章按 [TacCap-Gripper](https://github.com/XenseRobotics-AI/TacCap-Gripper) **v0.3.2** 编写，
+!!! warning "本章使用单独安装的 SDK 0.4.1"
+    本章按 [TacCap-Gripper](https://github.com/XenseRobotics-AI/TacCap-Gripper) **v0.4.1** 编写，
     需要按 [准备与自检](follower-setup.md#install) 单独安装。数采环境里自带的是旧版 SDK，不要混用。
 
 ## 和主夹爪的区别 {#vs-leader}
@@ -19,7 +19,7 @@
 | IMU / 编码器 / 按键 | 有 | 无 |
 | 行程标定 | 手动标定 | 上电自动标定 |
 | 序列号末位字母 | `m` | `s` |
-| 随 SDK 0.3.2 附带的固件 | 1.2.5 | 1.2.9 |
+| 随 SDK 0.4.1 附带的固件 | 1.2.6 | 1.2.14 |
 
 主夹爪和从夹爪的固件各自编号，两边版本号不同是正常的。
 
@@ -43,8 +43,9 @@
 ## 安全须知 {#safety-model}
 
 - 夹爪固件内置**运动安全包络**（力矩上限、过热降额），任何程序都绕不过去。
-  **它出厂时是关的**，第一次运动前必须按 [写入运动安全包络](follower-setup.md#envelope) 打开。
-  不打开的话，爪子顶住硬物时会把 24V 电源拉垮，**夹爪松手、USB 断开**。
+  夹爪固件 1.2.12 起，没写过包络的从夹爪会自动执行一套默认包络；**更旧的固件不写就没有保护**，
+  爪子顶住硬物时会把 24V 电源拉垮，**夹爪松手、USB 断开**。不论哪个版本，第一次运动前都按
+  [写入运动安全包络](follower-setup.md#envelope) 写一次。
 - 停止控制、程序退出或 USB 断开时，夹爪会松开，夹着的东西会掉。
 - 上电后夹爪会自己开合一次做标定（约 10 秒），期间不要放东西、不要发命令。
 
