@@ -295,7 +295,7 @@ official [recording guide](https://huggingface.co/docs/lerobot/v0.5.1/en/il_robo
 | `robot.wrist_undistort_balance` | `0.0` | Field of view after rectification: `0` keeps the calibrated focal length, `1` is widest but with more black border |
 | `robot.enable_head_camera` | `false` | Record the Pico4 Ultra Enterprise **headset camera** — see [§5.6](#56) |
 | `robot.head_camera_eyes` | `both` | `both` records each eye as its own key; `left` / `right` records one |
-| `robot.head_camera_width/_height` | `640` / `480` | **Per-eye** size; only `640x480`, `1024x768` or `1280x960` are accepted, and it must match the headset's "Resolution" |
+| `robot.head_camera_width/_height` | `640` / `480` | **Per-eye** size; only `640x480`, `1024x768` or `1280x960` are accepted, and it must match the resolution the headset outputs (both default to 640x480) |
 | `robot.head_camera_fps` | `30` | Head camera recording frame rate |
 | `robot.head_camera_pair_max_skew_ms` | `20.0` | Max timestamp gap still counted as one stereo capture when the eyes' sequence numbers differ |
 | `robot.tactile_fps` | `30` | Tactile recording frame rate |
@@ -710,29 +710,18 @@ It produces three groups of keys:
 ### Resolution and recording a single eye
 
 `--robot.head_camera_width/_height` accept **only `640x480` (default), `1024x768` and
-`1280x960`** — one for each setting the headset app's Resolution offers. Anything else is an error
+`1280x960`**. Anything else is an error
 rather than a silent downgrade, and so is a first frame whose size disagrees with the config —
 rescaling would quietly change the recorded field of view. All three modes are 4:3, matching the
 sensor (PICO's camera-access API caps a frame at 2328x1748, which is also 4:3, so a 16:9 request
 would be a crop or a stretch rather than more field of view).
 
-!!! warning "The headset's \"Resolution\" and these two must agree"
-    The headset produces the frames, and their size comes from the **Resolution** setting in
-    XTac-UMI XR (default `640`, which is also the one to use); these two flags only **declare what
-    you expect to receive**. If the two disagree, connect fails on the first frame's size.
-
-    Default meets default at 640x480, so out of the box there is nothing to pass. **Raise the
-    headset's setting and the command has to follow**:
-
-    ```bash
-    # headset set to 1024
-    --robot.head_camera_width=1024 \
-    --robot.head_camera_height=768
-
-    # headset set to 1280
-    --robot.head_camera_width=1280 \
-    --robot.head_camera_height=960
-    ```
+!!! warning "The headset's resolution and these two must agree"
+    The headset produces the frames. XTac-UMI XR defaults to 640x480 per eye, the same as the
+    collection side, so there is nothing to pass. These two flags only **declare what you expect
+    to receive**; if the two disagree, connect fails on the first frame's size.
+    If you need a higher resolution, contact [technical support](versions.md#support) to change it
+    on the headset, and change these two flags to match.
 
     Change both, never just one.
 

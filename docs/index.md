@@ -99,6 +99,11 @@ hide:
 <div class="tc-data" markdown>
 
 <figure class="tc-shot" markdown>
+![XTac-UMI XR 控制台：连接成功](assets/pico4/xr-console-connected.webp)
+<figcaption>XTac-UMI XR：头显连上数采电脑后显示「连接成功」</figcaption>
+</figure>
+
+<figure class="tc-shot" markdown>
 ![八路画面与数据键的对应](assets/dataset/sensor-key-map.webp)
 <figcaption>每一帧同步记录八路画面，图中标注了各自在数据集里的键名</figcaption>
 </figure>

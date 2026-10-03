@@ -102,6 +102,11 @@ hide:
 <div class="tc-data" markdown>
 
 <figure class="tc-shot" markdown>
+![XTac-UMI XR console: Connected](assets/pico4/xr-console-connected-en.webp)
+<figcaption>XTac-UMI XR: shows Connected once the headset reaches the PC</figcaption>
+</figure>
+
+<figure class="tc-shot" markdown>
 ![The eight streams and their dataset keys](assets/dataset/sensor-key-map.webp)
 <figcaption>Every frame records eight synchronized streams, each labelled with its key in the dataset</figcaption>
 </figure>

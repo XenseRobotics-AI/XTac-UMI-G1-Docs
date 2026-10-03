@@ -159,7 +159,7 @@ install the app → network → bind the tracker → tracking mode and UI → st
     headset"** does not apply to you.
 
     **Start at [Connect the network](#pico-network)**: plug the USB in, short-press the tracker
-    until the LED is solid blue, [open the app and tap Reconnect](#pico-toolkit-ui), then
+    until the LED is solid blue, [open the app and tap Connect](#pico-toolkit-ui), then
     [align the frame](#pico-frame). Those three are needed **before every session** either way.
 
 ### Unboxing and the system update {#pico-unbox}
@@ -324,15 +324,16 @@ work**:
    to "**File transfer**". **Re-check this after every USB re-plug** — it reverts to the default.
    If you cannot select it, reboot the Pico and try again.
 2. **Start the service on the PC first** (see [§3.5](#35)): `runService.sh`.
-3. Open **XTac-UMI XR**, tap "**Reconnect**", and the status reads "**Connected**" (see
-   [the app's screen](#pico-toolkit-ui)).
+3. Open **XTac-UMI XR**, tick "**USB Network**", tap "**Connect**", and Status reads
+   "**Connected**" (see [the app's screen](#pico-toolkit-ui)). With USB Network ticked the app
+   connects to the collection PC (`192.168.1.58`) by itself — no IP to enter.
 
-Over **WiFi**, put the headset and the collection PC on the **same network**; everything else is
-the same.
+Over **WiFi**, put the headset and the collection PC on the **same network**, leave "USB Network"
+unticked, type the collection PC's IP into "**PC IP**", then tap "Connect".
 
 !!! warning "The service has to be up before you open the app"
-    The app connects to the XenseVR PC Service on the host. **With the service down, the app just
-    sits on "Not connected".** Run `runService.sh` first, then open the app.
+    The app connects to the XenseVR PC Service on the host. **With the service down, the app cannot
+    connect.** Run `runService.sh` first, then open the app.
 
 !!! danger "On the wired link, turn the collection PC's WiFi off"
     The wired shared network **conflicts with other networks on the PC — WiFi above all**
@@ -471,13 +472,17 @@ with `--robot.tracker_serial=<SN>`.
 
 ### The app's screen {#pico-toolkit-ui}
 
-With the headset on, open **XTac-UMI XR** from the **Library**. The screen is small: **Status**,
-**Resolution** and **Reconnect** (plus "Collapse" on the left, which folds the panel away).
-**What you want is Status reading "Connected"** — until then the PC reads no pose at all.
+With the headset on, open **XTac-UMI XR** from the **Library** to reach the "XENSE XR Console".
+Connecting only involves these items on the left:
 
-**There is no PC IP to enter**: once the [wired shared network](#pico-network) is up, the app
-finds the XenseVR PC Service on the host by itself — but **you have to tap "Reconnect"** to
-connect. Opening the app does not connect it.
+| Item | What it means |
+|---|---|
+| Tracker Mode | Should read "**Independent Tracking**"; if not, go back to [tracking mode](#pico-tracker) and set it again |
+| Pico Hardware | Should read "**Enterprise**" |
+| Status | Collection can start only at "**Connected**"; until then the PC reads no pose at all |
+| USB Network | **Tick it for a wired connection**: the app connects to the collection PC on the wired network (`192.168.1.58`) by itself, no IP to enter |
+| PC IP | Over WiFi, type the collection PC's IP here; not needed when wired |
+| Connect / Disconnect | Tap "**Connect**" to start connecting; once connected the button turns into "Disconnect" |
 
 === "Open the app"
 
@@ -485,44 +490,26 @@ connect. Opening the app does not connect it.
 
     ![Library → XTac-UMI XR](assets/pico4/app-step1-open.png){ width="480" }
 
-=== "Status: Not connected"
+=== "Not connected"
 
-    It opens on "**Status: Not connected**". **Tap "Reconnect"** — it does not connect by itself,
-    however long you wait.
+    It opens with Status at "**Not connected**". For a wired connection tick "**USB Network**",
+    then tap "**Connect**".
 
-    ![XTac-UMI XR: status not connected](assets/pico4/app-step2-disconnected.jpg){ width="420" }
+    ![XTac-UMI XR console: not connected](assets/pico4/xr-console-idle-en.webp){ width="560" }
 
-=== "Allow camera access"
+=== "Connected"
 
-    On first launch it asks whether to allow XTac-UMI XR to use the camera. Tap "**Allow**" —
-    the [headset camera](05-data-collection.md#56) needs it, and denying leaves you without
-    headset frames.
+    Once Status reads "**Connected**", you can start collecting.
 
-    ![Allow XTac-UMI XR to use the camera](assets/pico4/app-step3-camera.png){ width="380" }
+    ![XTac-UMI XR console: connected](assets/pico4/xr-console-connected-en.webp){ width="560" }
 
-=== "Status: Connected"
-
-    "**Status: Connected**" is the state you collect from.
-
-    ![XTac-UMI XR: status connected](assets/pico4/app-step4-connected.jpg){ width="420" }
-
-!!! tip "\"Resolution\" is the headset's stereo camera resolution"
-    It sets the capture resolution of the [headset camera](05-data-collection.md#56). There are
-    three settings — `640` / `1024` / `1280` — and it defaults to `640` (640x480 per eye), which
-    is the one to use. It does nothing if you are not using that camera.
-
-    The collection side defaults to 640x480 too, so the two agree out of the box. **Raise it here
-    and the collection command has to follow**: at `1024` pass
-    `--robot.head_camera_width=1024 --robot.head_camera_height=768`, at `1280`
-    `--robot.head_camera_width=1280 --robot.head_camera_height=960`, or connect fails on the first
-    frame's size. See [5.6 Headset camera](05-data-collection.md#56).
-
-!!! note "High-accuracy tracking is always on now"
-    High-accuracy tracking — steadier pose, less jitter — is enabled by default. There is no
-    toggle for it and nothing to set.
+!!! tip "Wired is recommended"
+    A wireless link depends on the site's network (crowded channels, interference) and is prone to
+    stuttering poses or dropped data. Use the cable for real collection — see
+    [Network connection](#pico-network).
 
 !!! warning "Still not connecting?"
-    If Reconnect leaves it on "Not connected", the problem is usually not the app but
+    If it will not connect, the problem is usually not the app but
     [the network](#pico-network): the wired shared network is not up, or the PC's WiFi is
     still on.
 
@@ -535,7 +522,7 @@ connect. Opening the app does not connect it.
 ### Startup and frame alignment {#pico-frame}
 
 **Wear the headset and face straight towards the robot when you launch XTac-UMI XR**, then
-tap "**Reconnect**" to get [Status to "Connected"](#pico-toolkit-ui). The moment it launches, the
+tap "**Connect**" so [Status turns "Connected"](#pico-toolkit-ui). The moment it launches, the
 **world frame's origin and orientation are frozen**.
 
 Recorded poses land in a **gravity-aligned world frame**: **+X = straight ahead, +Y = left,
@@ -614,8 +601,8 @@ full-body mocap / **standalone Tracker**). Collection uses two of them:
    (first use needs [binding](#pico-tracker-bind) first).
 5. Start the host's XenseVR PC Service (`runService.sh`).
 6. **Facing straight towards the robot**, launch the XTac-UMI XR app (this **freezes the world
-   origin and orientation** — see [frames](#pico-frame)), and check that its
-   tap "**Reconnect**" so the [status reads "Connected"](#pico-toolkit-ui).
+   origin and orientation** — see [frames](#pico-frame)), then
+   tap "**Connect**" so the [Status reads "Connected"](#pico-toolkit-ui).
 7. Run the calibration / self-check / recording scripts.
 
 ```mermaid
@@ -629,8 +616,8 @@ flowchart LR
 ```
 
 !!! warning "Step 5 has to come before step 6"
-    The app connects to that service. **With it down, the app sits on "Not connected"** — and
-    restarting the app to retry resets the world origin all over again.
+    The app connects to that service. **With it down, the app cannot connect** — and
+    restarting the app to connect again resets the world origin all over again.
 
 !!! warning "An uncalibrated leader is refused at connect"
     `gripper.pos` in the dataset is a normalised opening (`0.0` closed / `1.0` open), and those two

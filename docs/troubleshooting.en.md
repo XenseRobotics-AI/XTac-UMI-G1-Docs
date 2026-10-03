@@ -290,14 +290,15 @@ Only relevant on [the Docker path](02-environment.md#docker).
     and red**, then tap "Start pairing". See
     [Binding the motion trackers to the headset](03-host-hardware.md#pico-tracker-bind).
 
-??? failure "XTac-UMI XR keeps showing \"not connected\""
+??? failure "XTac-UMI XR will not connect (Not connected or Connection failed)""
     **Cause**: usually not the app at all — the wired network sharing is not connected properly, or
     the collection machine's WiFi is still on.
-    **Fix**: tap "**Reconnect**" first. If that does not help, redo
+    **Fix**: when wired, make sure "**USB Network**" is ticked; over WiFi, make sure "PC IP" holds
+    the collection PC's IP; then tap "**Connect**". If that does not help, redo
     [the network setup](03-host-hardware.md#pico-network) and confirm the computer's WiFi is off.
     See [The app's interface](03-host-hardware.md#pico-toolkit-ui).
 
-??? failure "The headset says \"connected\" but the PC receives no pose at all"
+??? failure "The headset says \"Connected\" but the PC receives no pose at all"
     **Cause**: the headset showing connected only means the app reached the service. If the
     host-side service is not running, or the tracker is off or unbound, there is still no pose.
     **Fix**: confirm the host has started
@@ -359,7 +360,7 @@ Only relevant on [the Docker path](02-environment.md#docker).
 
 ??? failure "`head_camera_width/_height` errors saying the size is unsupported"
     **Cause**: the headset camera **only accepts `640x480` (default), `1024x768` and `1280x960`**
-    (all 4:3, matching the sensor), one per setting in the headset app's Resolution. Anything else
+    (all 4:3, matching the sensor). Anything else
     is an error rather than a silent downgrade — resampling would quietly change the recorded field
     of view.
     **Fix**: go back to one of the three supported sizes. Note that **changing the size means a
@@ -367,15 +368,12 @@ Only relevant on [the Docker path](02-environment.md#docker).
     [5.6 Headset camera](05-data-collection.md#56).
 
 ??? failure "The size is one of the supported values but connect still reports a first-frame size mismatch"
-    **Cause**: the size on the command line does not match the **"Resolution" setting in the
-    headset**. The headset is what produces the image; the parameter only declares what you expect
+    **Cause**: the size on the command line does not match the resolution the headset actually
+    outputs. The headset is what produces the image; the parameter only declares what you expect
     to receive.
-    **The common case**: the headset was raised to `1024` or `1280` while the command line is
-    still on the default 640x480.
-    **Fix**: use the same value on both sides — at the headset's default `640` pass nothing; at
-    `1024` add `--robot.head_camera_width=1024 --robot.head_camera_height=768`; at `1280` add
-    `--robot.head_camera_width=1280 --robot.head_camera_height=960`.
-    The headset-side setting is in [The app's interface](03-host-hardware.md#pico-toolkit-ui).
+    **Fix**: XTac-UMI XR defaults to 640x480 per eye, so leaving both flags out matches it. If the
+    headset has been set to another resolution, contact [technical support](versions.md#support)
+    to confirm the headset's setting, then set these two flags to the same value.
 
 ## Collecting and recording
 

@@ -347,8 +347,7 @@ and fields are still whatever your local checkout says.
     conflicts on the next `git pull`, and any other machine mounts a path that does not exist.
 
 !!! note "The head camera's 640x480 default needs a version after `4b5f5cea`; images from `0.0.7` on include it"
-    The headset app's Resolution setting offers `640` / `1024` / `1280` and defaults to `640`
-    (640x480 per eye) — but the collection side used to accept only `1024x768` and `1280x960`, and
+    The headset app defaults to 640x480 per eye — but the collection side used to accept only `1024x768` and `1280x960`, and
     defaulted to `1024x768`. With the headset on its own default, `--robot.enable_head_camera=true`
     therefore failed on the first frame's size, and `--robot.head_camera_width=640` was rejected
     outright. `4b5f5cea` adds 640x480 to the whitelist and makes it the default, so the two defaults

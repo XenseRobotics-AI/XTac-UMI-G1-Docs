@@ -149,10 +149,11 @@ html[lang="en"] .md-typeset .tc-hero h1 {
   }
 }
 
-/* 首页「采集到的数据」:传感器映射图与 Rerun 预览截图并排 */
+/* 首页「采集到的数据」:XR 控制台、传感器映射图、Rerun 预览三图并排。
+   列宽按三张图的宽高比(1.50 : 1.15 : 1.59)分配,三张图显示高度相同 */
 .md-typeset .tc-data {
   display: grid;
-  grid-template-columns: 3fr 4fr;   /* 近方形映射图与 Rerun 截图高度相近 */
+  grid-template-columns: 1.5fr 1.15fr 1.59fr;
   gap: 1.6rem;
   align-items: center;
   margin-top: 1rem;

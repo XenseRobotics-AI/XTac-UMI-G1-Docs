@@ -143,7 +143,7 @@ Pico4 Ultra 企业版配套的**独立运动追踪器**装在夹爪顶部，提�
     断电不丢——凡是标着「**预配置设备可跳过本节**」的都不用看。
 
     **直接从 [网络连接](#pico-network) 开始**：接上 USB、短按追踪器电源键到蓝灯亮，
-    [打开 APP 点「重连」](#pico-toolkit-ui)、做 [启动对齐](#pico-frame)。这三步
+    [打开 APP 点「连接」](#pico-toolkit-ui)、做 [启动对齐](#pico-frame)。这三步
     **每次采集都要做**，预配置与否都一样。
 
 ### 开箱与系统更新 {#pico-unbox}
@@ -293,13 +293,14 @@ Pico4 Ultra 企业版配套的**独立运动追踪器**装在夹爪顶部，提�
 1. 在 Pico4 Ultra 企业版内打开 设置 → 开发者选项 → 打开「USB 调试」→「USB 连接」选择「**传输文件**」。
    **每次拔插 USB 后都要回来确认这一项**——它会掉回默认值。选不了就重启 Pico 再试。
 2. **电脑端先启动服务**（见 [§3.5](#35)）：`runService.sh`。
-3. 打开 **XTac-UMI XR**，点「**重连**」，状态变成「**已连接**」
-   （见 [打开 App 后的界面](#pico-toolkit-ui)）。
+3. 打开 **XTac-UMI XR**，勾选「**USB网络**」，点「**连接**」，网络状态变成「**连接成功**」
+   （见 [打开 App 后的界面](#pico-toolkit-ui)）。勾选后 APP 自动连接数采电脑（`192.168.1.58`），不用填 IP。
 
-走 **WiFi** 时把头显和数采电脑接进**同一个网络**，其余相同。
+走 **WiFi** 时把头显和数采电脑接进**同一个网络**，不勾选「USB网络」，在「**PC IP**」里填数采电脑的 IP，
+再点「连接」。
 
 !!! warning "服务要在打开 APP 之前起来"
-    **服务没起来，APP 只会停在「未连接」**——先 `runService.sh`，再打开 APP。
+    **服务没起来，APP 连不上**——先 `runService.sh`，再打开 APP。
 
 !!! danger "走有线时，关掉数采电脑的 WiFi"
     有线共享网络会与电脑上的**其他网络（尤其 WiFi）冲突**（路由 / 网卡抢占），导致追踪器
@@ -380,7 +381,7 @@ print(xrt.get_motion_tracker_serial_numbers())   # 例:['PC2310MLL3200496G', ...
 
 !!! warning "读 SN 需要整条链路先跑起来"
     `get_motion_tracker_serial_numbers()` 报的是**服务当前收到数据的**追踪器。
-    所以要先：追踪器已绑定并开机 → XTac-UMI XR 显示[「已连接」](#pico-toolkit-ui)
+    所以要先：追踪器已绑定并开机 → XTac-UMI XR 显示[「连接成功」](#pico-toolkit-ui)
     → 主机已启动 [XenseVR PC Service](#35)。少任一步，返回的会是空列表。
 
 拿到 SN 后可用 `--robot.tracker_serial=<SN>` 直接钉住，跳过自动匹配。
@@ -421,12 +422,16 @@ print(xrt.get_motion_tracker_serial_numbers())   # 例:['PC2310MLL3200496G', ...
 
 ### 打开 App 后的界面 {#pico-toolkit-ui}
 
-戴上头显，从**资源库**打开 **XTac-UMI XR**。界面很简单，只有**状态**、**分辨率**、
-**重连**三项（左边的「折叠」把面板收起来）。**要的就是「状态」显示「已连接」**——
-在那之前 PC 端读不到任何位姿。
+戴上头显，从**资源库**打开 **XTac-UMI XR**，进入「XENSE XR 控制台」。连接只用到左侧这几项：
 
-**不用填 PC 端 IP**：[有线共享网络](#pico-network)接好后，APP 会自动识别主机上的
-XenseVR PC Service——但**要点一下「重连」才会连上**，打开 APP 不会自动连。
+| 项目 | 说明 |
+|---|---|
+| 追踪模式 | 应显示「**独立追踪**」，不是的话回到[追踪模式](#pico-tracker)重新设置 |
+| Pico 硬件版本 | 应显示「**企业版**」 |
+| 网络状态 | 「**连接成功**」才能开始采集，在那之前 PC 端读不到任何位姿 |
+| USB 网络 | **有线连接时勾选**，APP 自动连接有线网络里的数采电脑（`192.168.1.58`），不用填 IP |
+| PC IP | 走 WiFi 时手动填数采电脑的 IP；有线连接不用填 |
+| 连接 / 断开 | 点「**连接**」开始连接，连上后按钮变为「断开」 |
 
 === "打开软件"
 
@@ -434,49 +439,34 @@ XenseVR PC Service——但**要点一下「重连」才会连上**，打开 APP
 
     ![资源库 → XTac-UMI XR](assets/pico4/app-step1-open.png){ width="480" }
 
-=== "状态：未连接"
+=== "未连接"
 
-    刚打开时是「**状态：未连接**」。**点一下「重连」**才会连——它不会自己连上，等多久都没用。
+    刚打开时网络状态是「**未连接**」。有线连接勾选「**USB网络**」，再点「**连接**」。
 
-    ![XTac-UMI XR：状态 未连接](assets/pico4/app-step2-disconnected.jpg){ width="420" }
+    ![XTac-UMI XR 控制台：未连接](assets/pico4/xr-console-idle.webp){ width="560" }
 
-=== "允许相机权限"
+=== "连接成功"
 
-    首次打开会问「允许"XTac-UMI XR"使用相机权限吗？」，点「**允许**」。
-    [头显相机](05-data-collection.md#56)要用到它，点了「不允许」就取不到头显画面。
+    网络状态变为「**连接成功**」，就可以开始采集了。
 
-    ![允许 XTac-UMI XR 使用相机权限](assets/pico4/app-step3-camera.png){ width="380" }
+    ![XTac-UMI XR 控制台：连接成功](assets/pico4/xr-console-connected.webp){ width="560" }
 
-=== "状态：已连接"
-
-    「**状态：已连接**」就是可以开始采集的状态。
-
-    ![XTac-UMI XR：状态 已连接](assets/pico4/app-step4-connected.jpg){ width="420" }
-
-!!! tip "「分辨率」是头显双目相机的分辨率"
-    [头显相机](05-data-collection.md#56)的取流分辨率，三档 `640` / `1024` / `1280`，
-    **默认 `640`（每眼 640x480），推荐就用这一档**。不用头显相机时它不起作用。
-
-    采集端的默认值也是 640x480，两边开箱即对得上。**在这里调高了档位，采集命令要跟着改**：
-    选 `1024` 加 `--robot.head_camera_width=1024 --robot.head_camera_height=768`，选 `1280` 加
-    `--robot.head_camera_width=1280 --robot.head_camera_height=960`，否则 connect 会报首帧尺寸
-    不符。见 [5.6 头显相机](05-data-collection.md#56)。
-
-!!! note "高精度追踪已默认常开"
-    高精度追踪模式（位姿更稳、抖动更小）现在默认开启，界面上没有开关，不需要手动设置。
+!!! tip "推荐有线连接"
+    无线连接受现场网络环境影响（信道拥挤、干扰多），容易出现位姿卡顿或掉数据。正式采集请用有线，
+    见[网络连接](#pico-network)。
 
 !!! warning "一直连不上？先查网络这一步"
     多半不在 APP，而在[网络连接](#pico-network)：有线网没接好，或电脑 WiFi 没关。
 
 !!! tip "自检：PC 端有没有真的收到"
-    显示「已连接」之后，在主机上用 `/opt/apps/roboticsservice/` 的 `ConsoleDemo` 或
+    显示「连接成功」之后，在主机上用 `/opt/apps/roboticsservice/` 的 `ConsoleDemo` 或
     `python -m lerobot.robots.taccap_gripper.check_tracker` 确认能读到带 `sn` 的位姿——
     头显里显示连上，和主机真的收到数据，是两件事。
 
 ### 启动与坐标系对齐 {#pico-frame}
 
 **佩戴 Pico4 Ultra 企业版启动 XTac-UMI XR 时，面朝机器人正前方**，再
-[点「重连」](#pico-toolkit-ui)把状态连成「**已连接**」。启动瞬间**冻结世界系的原点与方向**。
+[点「连接」](#pico-toolkit-ui)，网络状态变为「**连接成功**」。启动瞬间**冻结世界系的原点与方向**。
 
 录制位姿落在**重力对齐的世界系**：**X 正 = 面朝前方，Y 正 = 左，Z 正 = 上**。
 
@@ -540,7 +530,7 @@ XenseVR PC Service——但**要点一下「重连」才会连上**，打开 APP
 4. 开启 Pico4 Ultra 企业版，**短按**追踪器电源键至**蓝灯亮起**（首次使用需先[绑定](#pico-tracker-bind)）。
 5. 启动主机的 XenseVR PC Service(`runService.sh`)。
 6. **面朝机器人正前方**，启动 XTac-UMI XR APP（**冻结世界系原点与方向**，见 [坐标系](#pico-frame)），
-   点「**重连**」使[状态变为「已连接」](#pico-toolkit-ui)。
+   点「**连接**」使[网络状态变为「连接成功」](#pico-toolkit-ui)。
 7. 运行标定 / 自检 / 录制脚本。
 
 ```mermaid
@@ -549,12 +539,12 @@ flowchart LR
     U --> N[接 Pico4 Ultra 企业版<br/>有线网络并关闭 WiFi]
     N --> B[开启 Pico4 Ultra 企业版<br/>配对追踪器]
     B --> D[启动 XenseVR PC Service]
-    D --> C[启动 XTac-UMI XR<br/>冻结原点、显示已连接]
+    D --> C[启动 XTac-UMI XR<br/>冻结原点、连接成功]
     C --> E[跑标定/录制]
 ```
 
 !!! warning "第 5 步必须在第 6 步之前"
-    **服务没起来，APP 只会停在「未连接」**——重启 APP 重连还会把世界系原点重设一次。
+    **服务没起来，APP 连不上**——重启 APP 重新连接还会把世界系原点重设一次。
 
 !!! warning "主夹爪没标定的话，采集程序会拒绝连接"
     数据集里的 `gripper.pos` 是归一化开度（`0.0` 闭合 / `1.0` 张开），这两个端点来自写在
