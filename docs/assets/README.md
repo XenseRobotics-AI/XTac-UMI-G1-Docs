@@ -52,6 +52,15 @@
 
 这两张是第三方官方图片,不是我们自己拍摄或渲染的;替换或新增同类图片时注意来源与使用授权。
 
+## dataset/ 数据示意图
+
+| 文件 | 内容 | 来源 |
+|---|---|---|
+| `sensor-key-map.webp` | 八路画面与数据集键名的对应图 | TacVerse 数据集卡片的 `sensor_key_map.png`（公开于 Hugging Face `TacVerse/TacVerse`，CC BY-SA 4.0；数采仓库 v0.0.8 上传数据集时也附带同一张图） |
+| `example-streams.webp` | 三个任务从接近到放下的八路同步画面拼图 | 同上，`example_streams_head.png` |
+
+原图在 `materials/dataset-card-orig/`。首页「采集到的数据」一节另有一个 Rerun 预览截图的占位框，截图到位后放在本目录并替换占位。
+
 ## 在文档里引用
 
 Markdown 里用**相对 docs 根**的路径。例如在 `docs/03-host-hardware.md` 中:

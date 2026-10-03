@@ -94,6 +94,27 @@ hide:
 
 <p class="tc-flow__more" markdown>把从夹爪装到机器人上、用程序控制开合与夹持，见[从夹爪](follower-overview.md)；直接调用夹爪 SDK，见[附录：SDK 与二次开发](sdk-overview.md)。</p>
 
+## 采集到的数据
+
+<div class="tc-data" markdown>
+
+<figure class="tc-shot tc-shot--placeholder" markdown>
+<div class="tc-shot__slot">Rerun 实时预览截图（待补）</div>
+<figcaption>预览检查：在 Rerun 里实时查看各路画面与位姿</figcaption>
+</figure>
+
+<figure class="tc-shot" markdown>
+![八路画面与数据键的对应](assets/dataset/sensor-key-map.webp)
+<figcaption>每一帧同步记录八路画面，图中标注了各自在数据集里的键名</figcaption>
+</figure>
+
+</div>
+
+<figure class="tc-shot tc-shot--wide" markdown>
+![三个任务从接近到放下的同步画面](assets/dataset/example-streams.webp)
+<figcaption>三个任务从接近到放下的同步画面：头显双目、左右腕部相机与四路视触觉，点击可放大</figcaption>
+</figure>
+
 ## 相关开源仓库
 
 | 仓库 / 包 | 备注 |

@@ -149,6 +149,55 @@ html[lang="en"] .md-typeset .tc-hero h1 {
   }
 }
 
+/* 首页「采集到的数据」:上排 Rerun 预览(占位)与传感器映射图并排,下排整幅多任务拼图 */
+.md-typeset .tc-data {
+  display: grid;
+  grid-template-columns: 4fr 3fr;   /* 16:9 截图与近方形映射图高度相近 */
+  gap: 1.6rem;
+  align-items: center;
+  margin-top: 1rem;
+}
+.md-typeset .tc-shot {
+  display: block;   /* Material 的 figure 是按内容收缩的 flex,这里要撑满所在栏 */
+  width: 100%;
+  margin: 0;
+}
+.md-typeset .tc-shot > p {
+  margin: 0;
+}
+.md-typeset .tc-shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.md-typeset .tc-shot--wide {
+  margin-top: 1.6rem;
+}
+/* 截图未到位前的占位:换成图片时把 slot 换成 ![...](...) 即可 */
+.md-typeset .tc-shot__slot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 16 / 9;
+  border: 2px dashed var(--md-default-fg-color--lighter);
+  border-radius: .3rem;
+  font-size: .8rem;
+  color: var(--md-default-fg-color--light);
+}
+.md-typeset .tc-shot figcaption {
+  max-width: none;
+  margin: .6rem 0 0;
+  font-size: .75rem;
+  font-style: normal;
+  text-align: center;
+  color: var(--md-default-fg-color--light);
+}
+@media screen and (max-width: 59.9375em) {
+  .md-typeset .tc-data {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* 卡片网格里的图标略放大 */
 .md-typeset .grid.cards :is(.twemoji, .emojione, .gemoji) svg {
   height: 1.4rem;

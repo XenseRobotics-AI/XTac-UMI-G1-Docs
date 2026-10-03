@@ -97,6 +97,27 @@ hide:
 
 <p class="tc-flow__more" markdown>To mount the follower gripper on a robot and drive it from code, see [Follower gripper](follower-overview.md); to call the gripper SDK directly, see [Appendix: SDK](sdk-overview.md).</p>
 
+## The data you get
+
+<div class="tc-data" markdown>
+
+<figure class="tc-shot tc-shot--placeholder" markdown>
+<div class="tc-shot__slot">Rerun live preview screenshot (coming soon)</div>
+<figcaption>Preview check: watch every stream and the poses live in Rerun</figcaption>
+</figure>
+
+<figure class="tc-shot" markdown>
+![The eight streams and their dataset keys](assets/dataset/sensor-key-map.webp)
+<figcaption>Every frame records eight synchronized streams, each labelled with its key in the dataset</figcaption>
+</figure>
+
+</div>
+
+<figure class="tc-shot tc-shot--wide" markdown>
+![Synchronized streams across three tasks, from approach to release](assets/dataset/example-streams.webp)
+<figcaption>Three tasks from approach to release: headset stereo, both wrist cameras and four visuotactile streams. Click to enlarge</figcaption>
+</figure>
+
 ## Related open-source repositories
 
 | Repo / package | Notes |
