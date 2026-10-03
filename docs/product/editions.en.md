@@ -71,9 +71,19 @@ This page compares the two and lists each kit's box contents and wiring.
 
     Use the adapter at a fixed workstation and the power bank for mobile collection:
 
-    ![Adapter wiring: the headset to the PICO port, the left and right grippers to UMI-L / UMI-R, the adapter to DC](../assets/product/backpack-wiring-adapter.webp){ width="720" }
+    <div class="tc-pair tc-pair--wiring" markdown>
 
-    ![Power-bank wiring: both leader grippers and the headset to the backpack, the power bank to the backpack's DC port](../assets/product/backpack-wiring-powerbank.webp){ width="720" }
+    <figure class="tc-shot" markdown>
+    ![Adapter wiring: the headset to the PICO port, the left and right grippers to UMI-L / UMI-R, the adapter to DC](../assets/product/backpack-wiring-adapter.webp)
+    <figcaption>Adapter power (fixed workstation)</figcaption>
+    </figure>
+
+    <figure class="tc-shot" markdown>
+    ![Power-bank wiring: both leader grippers and the headset to the backpack, the power bank to the backpack's DC port](../assets/product/backpack-wiring-powerbank.webp)
+    <figcaption>Power-bank power (mobile collection)</figcaption>
+    </figure>
+
+    </div>
 
     The wiring steps are in [Adapter power](../backpack/unbox-connect.md#adapter) and [Power-bank power](../backpack/unbox-connect.md#powerbank); the safety requirements for powering and unplugging in order are in [The backpack and its power](safety.md#backpack-power); connecting to the backpack and opening the console is in [The backpack hotspot](../backpack/network.md#softap).
 

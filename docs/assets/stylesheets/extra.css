@@ -826,3 +826,18 @@ html[lang="en"] .md-typeset .tc-hero h1 {
 .md-typeset table:not([class]) td {
   vertical-align: middle;
 }
+
+/* 标签页内的并排图:md_in_html 在缩进块里会给 figure 套出空 <p>,不让它们占格子 */
+.md-typeset .tc-pair > p:empty {
+  display: none;
+}
+/* 背包版两张接线图:列宽按宽高比(1338×1002 → 1.335,1377×865 → 1.592)分配,两图等高 */
+.md-typeset .tc-pair--wiring {
+  grid-template-columns: 1.335fr 1.592fr;
+  align-items: start;
+}
+@media screen and (max-width: 44.9375em) {
+  .md-typeset .tc-pair--wiring {
+    grid-template-columns: 1fr;
+  }
+}
