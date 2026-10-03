@@ -6,7 +6,7 @@
 <video controls preload="none" playsinline poster="/XTac-UMI-G1-Docs/assets/highlights/video-poster.webp">
 <source src="/XTac-UMI-G1-Docs/assets/video/xtac-umi-g1-market.mp4" type="video/mp4">
 </video>
-<figcaption>XTac-UMI G1 产品视频（1 分 44 秒）</figcaption>
+<figcaption>XTac-UMI G1 产品视频（1 分 46 秒）</figcaption>
 </figure>
 
 ## 核心价值
@@ -43,7 +43,7 @@
 
 <div class="grid cards" markdown>
 
--   ![集成视触觉传感能力](assets/highlights/visuotactile.webp){ .tc-card-img loading=lazy }
+-   ![指尖视触觉传感器特写](assets/highlights/visuotactile.webp){ .tc-card-img loading=lazy }
 
     :material-layers-triple-outline: __视触融合感知，采集真实交互__
 
@@ -59,7 +59,7 @@
 
     穿戴式主端，更轻、易部署；可完成抓取、搬运、整理、插拔、薄片夹取等多类任务，提升长时间、多任务采集的效率与一致性。
 
--   ![主夹爪与采集背包](assets/highlights/system-sync.webp){ .tc-card-img loading=lazy }
+-   ![双手持主夹爪，叠加实时位姿坐标轴](assets/highlights/system-sync.webp){ .tc-card-img loading=lazy }
 
     :material-sync: __高精度同步输出，沉淀高质量数据__
 
@@ -67,7 +67,7 @@
 
     多设备时间同步 **5 ms**、空间定位精度 **< 3 mm**，多模态信息与同一操作事件时序对齐，结果可回放、可验证、可复用。
 
--   ![兼容 MCAP 与 LeRobot](assets/highlights/toolchain.webp){ .tc-card-img loading=lazy }
+-   ![主夹爪、背包、工具链到云端的数据链路](assets/highlights/toolchain.webp){ .tc-card-img loading=lazy }
 
     :material-connection: __打通主流生态，数据即刻可用__
 

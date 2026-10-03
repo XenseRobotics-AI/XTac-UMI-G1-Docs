@@ -57,19 +57,20 @@
 
 ## highlights/ 与 video/ 产品视频
 
-`video/xtac-umi-g1-market.mp4` 是产品宣传视频原片（1280×720、1 分 44 秒、带背景音乐与烧录的中文字幕），原片也备份在 `materials/market-video/`。
-`highlights/` 下的图都从这段视频截帧，裁成 16:9、去掉底部字幕后存为 webp：
+`video/xtac-umi-g1-market.mp4` 是产品宣传视频正式版（原文件 `XTac-UMI-High.qt`，1280×720、1 分 46 秒、带背景音乐与烧录的中文字幕），
+只把封装从 `.qt` 换成带 faststart 的 `.mp4`，未重新编码；原文件备份在 `materials/market-video/`。
+`highlights/` 下的图都从这段视频截帧，裁成 16:9 后存为 webp，场景图去掉了底部字幕：
 
 | 文件 | 内容 | 视频时间 |
 |---|---|---|
-| `video-poster.webp` | 视频封面，主夹爪腕部相机特写 | 0:08 |
-| `visuotactile.webp` | 主夹爪渲染图，配「集成视触觉传感能力」字样 | 0:14 |
-| `system-sync.webp` | 两只主夹爪与采集背包渲染图 | 0:20 |
-| `handheld.webp` | 单手握持主夹爪 | 0:32 |
-| `fingertip.webp` | 指尖夹取包链 | 0:58 |
-| `scene-office.webp` / `scene-workshop.webp` / `scene-retail.webp` | 办公桌面、工具工位、货架取物三个场景 | 1:11 / 1:16 / 1:24 |
-| `backpack.webp` | 背负采集背包、手持主夹爪的背影 | 1:21 |
-| `toolchain.webp` | MCAP 与 LeRobot 工具链画面 | 1:36 |
+| `video-poster.webp` | 视频封面，主夹爪腕部相机特写 | 0:04 |
+| `visuotactile.webp` | 指尖特写，配「集成视触觉传感能力」字样 | 0:06 |
+| `handheld.webp` | 单手握持主夹爪 | 0:28 |
+| `fingertip.webp` | 指尖夹取包链 | 0:54 |
+| `system-sync.webp` | 双手持主夹爪，叠加位姿坐标轴，配「高精度位姿数据」字样 | 1:00 |
+| `scene-office.webp` / `scene-workshop.webp` / `scene-retail.webp` | 办公桌面、工具工位、货架取物三个场景 | 1:06 / 1:11 / 1:20 |
+| `backpack.webp` | 背负采集背包、手持主夹爪的背影 | 1:16 |
+| `toolchain.webp` | 「打通主流生态 数据即刻可用」：主爪 → 背包 → 工具链 → 云端 | 1:38 |
 
 ## dataset/ 数据示意图
 
