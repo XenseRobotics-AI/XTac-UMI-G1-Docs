@@ -19,7 +19,25 @@
 !!! note "手持演示，没有遥操作端"
     操作员手持夹爪完成演示动作，录制时命令行**不需要任何 `--teleop.*` 参数**。
 
-## 1.2 数采系统组成
+## 1.2 平台要求
+
+采集是实时的（30 fps，每帧约 33 ms），主机配置不够时表现为丢帧、录制变慢，而不是报错。
+下表是最低要求，推荐配置及原因见 [采集主机配置要求](02-environment.md#host-spec)。
+
+| 项目 | 最低要求 |
+|---|---|
+| 系统 | Ubuntu 22.04 / 24.04 LTS，amd64；不支持 macOS、Windows |
+| CPU / 内存 | Intel 12 代 i7（或同级 AMD）/ 8 GB |
+| 显卡 | NVIDIA RTX 3060，8 GB 显存，驱动 ≥ 570.144 |
+| 硬盘 | 512 GB SSD；不要直接录到机械硬盘或 USB 移动硬盘 |
+| USB | 双夹爪分接两条独立的 USB 2.0 总线，单夹爪一条即可，见 [USB 带宽预算](03-host-hardware.md#usb-budget) |
+| Python | 3.12 及以上，[环境安装](02-environment.md) 时自动配好 |
+
+- **没有 NVIDIA 显卡**也能录，但效率明显下降，见 [没有 NVIDIA GPU 的主机怎么录](05-data-collection.md#no-gpu)；Docker 交付镜像则必须有 NVIDIA 显卡与驱动。
+- **账户权限**：用户需加入 `dialout`、`video` 组，并关闭 ModemManager 对夹爪串口的抢占，见 [3.1 串口权限](03-host-hardware.md#31)、[3.2](03-host-hardware.md#32)。
+- 仓库、SDK 与固件的具体版本见 [版本与支持](versions.md)。
+
+## 1.3 数采系统组成
 
 整套采集在数采电脑上的一个 `lerobot-record` 进程里完成：各路设备各自独立读取，每一帧取各路的最新值合成一帧，配对后写成数据集。
 把鼠标移到（手机上点按）任一模块，可以看到它的数据从哪来、到哪去；上方按钮切换三档。
@@ -70,7 +88,7 @@
 
 具体命令见 [5. 数据预览与采集](05-data-collection.md)。
 
-## 1.3 每帧记录什么
+## 1.4 每帧记录什么
 
 以双夹爪为例，数据集的每一行由第 t-1 帧的**观测**和第 t 帧的**动作**组成。把鼠标移到（手机上点按）任一数据项、来源或落盘位置，可以看到它从哪来、存到哪；按钮切换三档。
 
@@ -113,16 +131,5 @@
 - 单夹爪（`--robot.type=taccap_gripper`）的键名不带 `left_` / `right_` 前缀，腕部相机叫 `wrist_cam`。
 
 字段明细见 [5.3 每帧记录内容](05-data-collection.md#53)，数据集格式见 [6. 数据集与示例](06-dataset.md)。
-
-## 1.4 平台要求
-
-具体版本号见 [版本与支持](versions.md)。能不能装取决于下面几条：
-
-- **只支持 Linux amd64**，已验证 Ubuntu 22.04 / 24.04；macOS / Windows 不支持。
-- **Python 3.12 及以上**，按 [环境安装](02-environment.md) 装好即可。
-- **采集主机最低配置**：12 代 i7、8 GB 内存、NVIDIA RTX 3060 8 GB 显存，驱动 ≥ 570.144；
-  最低与推荐两档见 [采集主机配置要求](02-environment.md#host-spec)。
-  低于这个配置能装能录，但效率明显下降，见 [没有 NVIDIA GPU 的主机怎么录](05-data-collection.md#no-gpu)。
-- 用户需加入 `dialout`、`video` 用户组，见 [3.1 串口权限](03-host-hardware.md#31)；并关闭 ModemManager 对夹爪串口的抢占，见 [3.2](03-host-hardware.md#32)。
 
 下一步 → [2. 环境部署](02-environment.md)

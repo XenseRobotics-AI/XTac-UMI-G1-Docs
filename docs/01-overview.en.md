@@ -19,7 +19,25 @@ manipulation learning; see [Highlights](highlights.md) for more. Each leader gri
 !!! note "Handheld demonstration, no teleoperator"
     The operator performs the demonstration with the gripper in hand, so the recording command needs **no `--teleop.*` flags**.
 
-## 1.2 System components
+## 1.2 Platform requirements
+
+Collection runs in real time (30 fps, about 33 ms per frame); an underpowered host shows up as dropped frames and slow recording, not as errors.
+The table lists the minimum; the recommended tier and the reasons are in [Collection host requirements](02-environment.md#host-spec).
+
+| Item | Minimum |
+|---|---|
+| OS | Ubuntu 22.04 / 24.04 LTS, amd64; macOS and Windows are not supported |
+| CPU / RAM | Intel 12th-gen i7 (or AMD equivalent) / 8 GB |
+| GPU | NVIDIA RTX 3060 with 8 GB VRAM, driver ≥ 570.144 |
+| Disk | 512 GB SSD; do not record straight to a hard disk or USB external drive |
+| USB | Two grippers on two separate USB 2.0 buses, one bus for a single gripper; see [USB bandwidth budget](03-host-hardware.md#usb-budget) |
+| Python | 3.12 or newer, set up by [Environment Setup](02-environment.md) |
+
+- **Without an NVIDIA GPU** it still records, but noticeably less efficiently; see [Recording on a machine with no NVIDIA GPU](05-data-collection.md#no-gpu). The Docker delivery image requires an NVIDIA GPU and driver.
+- **User permissions**: add the user to the `dialout` and `video` groups and keep ModemManager off the gripper serial port; see [3.1 Serial permissions](03-host-hardware.md#31) and [3.2](03-host-hardware.md#32).
+- Exact repo, SDK and firmware versions are in [Versions & support](versions.md).
+
+## 1.3 System components
 
 Collection runs inside one `lerobot-record` process on the collection PC: each device is read independently, every frame takes the latest value from each stream, and the paired frames are written to the dataset.
 Hover over (or tap) any block to see where its data comes from and where it goes; the buttons above switch between the three tiers.
@@ -70,7 +88,7 @@ Collection comes in three tiers depending on the connected devices, chosen with 
 
 Commands are in [5. Data preview and collection](05-data-collection.md).
 
-## 1.3 What each frame records
+## 1.4 What each frame records
 
 Taking two grippers as the example, each dataset row is the **observation** from frame t-1 plus the **action** from frame t. Hover over (or tap) any data item, source or storage block to see where it comes from and where it is stored; the buttons switch between the three tiers.
 
@@ -113,16 +131,5 @@ Taking two grippers as the example, each dataset row is the **observation** from
 - With a single gripper (`--robot.type=taccap_gripper`) the keys have no `left_` / `right_` prefix and the wrist camera is `wrist_cam`.
 
 Field details are in [5.3 What each frame records](05-data-collection.md#53), the dataset format in [6. Dataset & Examples](06-dataset.md).
-
-## 1.4 Platform requirements
-
-Exact versions are in [Versions & support](versions.md). Whether it installs comes down to:
-
-- **Linux amd64 only**, tested on Ubuntu 22.04 / 24.04; macOS and Windows are not supported.
-- **Python 3.12 or newer**, set up by following [Environment Setup](02-environment.md).
-- **Minimum collection host**: 12th-gen i7, 8 GB RAM, NVIDIA RTX 3060 with 8 GB VRAM, driver ≥ 570.144;
-  both tiers are in [Collection host requirements](02-environment.md#host-spec).
-  Below that it installs and records, but noticeably less efficiently; see [Recording on a machine with no NVIDIA GPU](05-data-collection.md#no-gpu).
-- Your user must be in the `dialout` and `video` groups, see [3.1 Serial permissions](03-host-hardware.md#31); and keep ModemManager off the gripper serial port, see [3.2](03-host-hardware.md#32).
 
 Next → [2. Environment Setup](02-environment.md)
