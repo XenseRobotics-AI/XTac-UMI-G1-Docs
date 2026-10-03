@@ -149,10 +149,10 @@ html[lang="en"] .md-typeset .tc-hero h1 {
   }
 }
 
-/* 首页「采集到的数据」:上排 Rerun 预览(占位)与传感器映射图并排,下排整幅多任务拼图 */
+/* 首页「采集到的数据」:传感器映射图与 Rerun 预览截图并排 */
 .md-typeset .tc-data {
   display: grid;
-  grid-template-columns: 4fr 3fr;   /* Rerun 截图与近方形映射图高度相近 */
+  grid-template-columns: 3fr 4fr;   /* 近方形映射图与 Rerun 截图高度相近 */
   gap: 1.6rem;
   align-items: center;
   margin-top: 1rem;
@@ -169,9 +169,6 @@ html[lang="en"] .md-typeset .tc-hero h1 {
   display: block;
   width: 100%;
   height: auto;
-}
-.md-typeset .tc-shot--wide {
-  margin-top: 1.6rem;
 }
 .md-typeset .tc-shot figcaption {
   max-width: none;

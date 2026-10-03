@@ -58,7 +58,6 @@
 |---|---|---|
 | `sensor-key-map.webp` | 八路画面与数据集键名的对应图 | TacVerse 数据集卡片的 `sensor_key_map.png`（公开于 Hugging Face `TacVerse/TacVerse`，CC BY-SA 4.0；数采仓库 v0.0.8 上传数据集时也附带同一张图） |
 | `rerun-preview.webp` | Rerun 实时预览截图：四路视触觉、头显双目、左右腕部相机与动作 / 状态曲线 | 本公司实机截图 |
-| `example-streams.webp` | 三个任务从接近到放下的八路同步画面拼图 | 同上，`example_streams_head.png` |
 
 原图在 `materials/dataset-card-orig/`。
 

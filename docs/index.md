@@ -99,21 +99,16 @@ hide:
 <div class="tc-data" markdown>
 
 <figure class="tc-shot" markdown>
-![Rerun 实时预览：四路视触觉、头显双目、左右腕部相机与动作曲线](assets/dataset/rerun-preview.webp)
-<figcaption>预览检查：在 Rerun 里实时查看各路画面与位姿</figcaption>
-</figure>
-
-<figure class="tc-shot" markdown>
 ![八路画面与数据键的对应](assets/dataset/sensor-key-map.webp)
 <figcaption>每一帧同步记录八路画面，图中标注了各自在数据集里的键名</figcaption>
 </figure>
 
-</div>
-
-<figure class="tc-shot tc-shot--wide" markdown>
-![三个任务从接近到放下的同步画面](assets/dataset/example-streams.webp)
-<figcaption>三个任务从接近到放下的同步画面：头显双目、左右腕部相机与四路视触觉，点击可放大</figcaption>
+<figure class="tc-shot" markdown>
+![Rerun 实时预览：四路视触觉、头显双目、左右腕部相机与动作曲线](assets/dataset/rerun-preview.webp)
+<figcaption>预览检查：在 Rerun 里实时查看各路画面与位姿</figcaption>
 </figure>
+
+</div>
 
 ## 相关开源仓库
 
