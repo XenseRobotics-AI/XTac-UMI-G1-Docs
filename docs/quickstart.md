@@ -14,7 +14,7 @@
 2. 头显接上有线网络，**关闭电脑 WiFi**。
 3. 打开头显，短按追踪器电源键至蓝灯亮起。
 4. 启动 XenseVR PC Service：`/opt/apps/roboticsservice/runService.sh`
-5. **面朝机器人**打开 XTac-UMI XR，点「重连」，状态变为「已连接」。
+5. **面朝机器人**打开 XTac-UMI XR，点「连接」，网络状态变为「连接成功」。
 
 <div class="tc-pair" markdown>
 
@@ -24,14 +24,14 @@
 </figure>
 
 <figure class="tc-shot" markdown>
-![XTac-UMI XR 显示已连接](assets/pico4/app-connected-crop.webp)
-<figcaption>XTac-UMI XR 状态变为「已连接」</figcaption>
+![XTac-UMI XR 控制台：连接成功](assets/pico4/xr-console-connected.webp)
+<figcaption>XTac-UMI XR 网络状态变为「连接成功」</figcaption>
 </figure>
 
 </div>
 
 !!! warning "三个容易出错的地方"
-    - 先启动 PC Service，再打开 XR 应用，否则应用一直显示「未连接」。
+    - 先启动 PC Service，再打开 XR 应用，否则连不上。
     - 头显走有线时必须关闭电脑 WiFi，否则追踪不稳。见 [网络连接](03-host-hardware.md#pico-network)。
     - 采集期间不要重启 XR 应用：重启会重设世界原点，同一数据集里的位姿就对不上了。
 

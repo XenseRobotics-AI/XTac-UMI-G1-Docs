@@ -14,7 +14,7 @@ From power-on to your first recorded episode. Before you start, make sure these 
 2. Wire the headset network and **turn off the PC's WiFi**.
 3. Turn on the headset and short-press the tracker power button until the LED is solid blue.
 4. Start the XenseVR PC Service: `/opt/apps/roboticsservice/runService.sh`
-5. **Facing the robot**, open XTac-UMI XR and tap Reconnect until it shows Connected.
+5. **Facing the robot**, open XTac-UMI XR and tap Connect; Status turns to Connected.
 
 <div class="tc-pair" markdown>
 
@@ -24,14 +24,14 @@ From power-on to your first recorded episode. Before you start, make sure these 
 </figure>
 
 <figure class="tc-shot" markdown>
-![XTac-UMI XR showing Connected](assets/pico4/app-connected-crop.webp)
-<figcaption>XTac-UMI XR shows Connected</figcaption>
+![XTac-UMI XR console: Connected](assets/pico4/xr-console-connected-en.webp)
+<figcaption>XTac-UMI XR Status turns to Connected</figcaption>
 </figure>
 
 </div>
 
 !!! warning "Three common mistakes"
-    - Start the PC Service before opening the XR app, or the app stays Disconnected.
+    - Start the PC Service before opening the XR app, or it cannot connect.
     - With a wired headset the PC's WiFi must be off, or tracking is unstable. See [Network](03-host-hardware.md#pico-network).
     - Do not restart the XR app during collection: it resets the world origin, so poses within one dataset stop lining up.
 
