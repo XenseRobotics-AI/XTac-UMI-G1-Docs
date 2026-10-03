@@ -47,6 +47,8 @@ Please include:
 
 ## References {#references}
 
+The repositories below belong to the Developer Kit and are all open source; the Backpack Kit's collection software is not open source and is not listed.
+
 | Resource | URL | Notes |
 |---|---|---|
 | Data-collection main repo `xense-taccap-lerobot` | <https://github.com/XenseRobotics-AI/xense-taccap-lerobot> | The Developer Kit's collection software; ships the device notes and the CHANGELOG |

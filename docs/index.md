@@ -145,6 +145,6 @@ hide:
 
 控制台的实时监控属于背包版的能力，正文见[背包版入口](backpack/index.md#overview)。
 
-## 相关仓库
+## PC 版开源仓库
 
-PC 版基于 lerobot 开源生态，数采主仓库、夹爪 SDK 与追踪器服务的完整清单见[参考资料](common/reference.md#references)。背包版是整机交付，采集软件预装在背包里，不需要自行安装这些仓库。
+PC 版完全开源：数采主仓库、夹爪 SDK、追踪器服务与可视化工具都在 GitHub 公开，清单见 [PC 版开源仓库](pc/index.md#repos)。背包版的采集软件不开源，随背包预装交付，不需要安装这些仓库。

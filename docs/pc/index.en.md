@@ -160,7 +160,9 @@ Taking two grippers as the example, each dataset row is the **observation** from
 
 Field details are in [What each frame records](recording.md#53), the dataset format in [Dataset](dataset.md).
 
-## Related open-source repositories {#repos}
+## Developer Kit open-source repositories {#repos}
+
+Everything the Developer Kit runs on is open source; the table lists each repository and what it is for. The Backpack Kit's collection software is not open source and is not listed here.
 
 | Repo / package | Notes |
 |---|---|

@@ -145,6 +145,6 @@ Both kits use the same grippers and headset and produce the same data. The Backp
 
 The console's live monitor is a Backpack Kit capability; the main text is in the [Backpack Kit entry point](backpack/index.md#overview).
 
-## Related repositories
+## Developer Kit open-source repositories
 
-The Developer Kit builds on the open-source lerobot ecosystem; the full list of the data-collection repo, the gripper SDK and the tracker service is in [References](common/reference.md#references). The Backpack Kit is delivered as an integrated system with the collection software preinstalled, so you do not have to install any of those repositories yourself.
+The Developer Kit is fully open source: the data-collection repo, gripper SDK, tracker service and viewer are all public on GitHub; see [Developer Kit open-source repositories](pc/index.md#repos). The Backpack Kit's collection software is not open source and comes preinstalled on the backpack, so none of these repositories need installing.

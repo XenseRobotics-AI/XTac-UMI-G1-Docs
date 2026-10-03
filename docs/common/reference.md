@@ -47,6 +47,8 @@
 
 ## 参考资料 {#references}
 
+下表中的仓库都属于 PC 版，全部开源；背包版的采集软件不开源，不在此列。
+
 | 资源 | 地址 | 说明 |
 |---|---|---|
 | 数采主仓库 `xense-taccap-lerobot` | <https://github.com/XenseRobotics-AI/xense-taccap-lerobot> | PC 版采集软件，附带设备说明与 CHANGELOG |
