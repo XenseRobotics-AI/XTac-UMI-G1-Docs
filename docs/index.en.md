@@ -64,7 +64,7 @@ hide:
 - **Visuotactile fusion**: tri-colour fingertip sensors capture contact location, grasp stability and slip
 - **Close to the hand**: the wearable leader handles grasping, insertion and thin-part picking
 - **Precise sync**: 5 ms multi-device time sync, < 3 mm positioning
-- **Mainstream data ecosystem**: native LeRobot and MCAP output, ready to train
+- **Open formats**: native LeRobot / MCAP output, compatible with mainstream data ecosystems
 
 [More highlights](product/highlights.md){ .md-button .md-button--primary }
 
