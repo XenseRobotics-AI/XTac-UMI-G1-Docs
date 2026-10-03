@@ -30,13 +30,13 @@ it is not easy to spot in the data afterwards.
 
 | | **Minimum** | **Recommended** |
 |---|---|---|
-| CPU | Intel **12th-gen i7** or better (or an AMD equivalent) | **13th / 14th-gen i7 / i9** or equivalent (≥ 8 performance cores) |
+| CPU | Intel **12th-gen i7** or better (or an AMD equivalent) | Intel **Core Ultra 9 275HX** (24 cores) or equivalent |
 | Memory | **8 GB** | **32 GB** |
-| GPU | NVIDIA **RTX 3060 / 8 GB VRAM** or better | NVIDIA **RTX 4070 / 12 GB VRAM** or better |
+| GPU | NVIDIA **RTX 3060 / 8 GB VRAM** or better | NVIDIA **RTX 5060 Laptop / 8 GB VRAM** or better |
 | GPU driver | **≥ 570.144** | Same |
 | Disk | 512 GB SSD | **1 TB NVMe SSD** |
 | USB | **One gripper** (3 cameras) can share a single USB 2.0 bus | **Bimanual** (6 cameras) split across **two USB 2.0 buses**, i.e. two independent USB host controllers |
-| OS | Ubuntu 22.04 / 24.04 LTS, **amd64** | Same |
+| OS | Ubuntu 22.04 / 24.04 LTS, **amd64** | Ubuntu 24.04 LTS |
 
 !!! tip "What the NVIDIA card buys you is recording efficiency"
     `--dataset.vcodec=auto` hands H.264 encoding to the **dedicated encoder chip** on the card,

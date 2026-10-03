@@ -22,17 +22,21 @@
 ## 1.2 平台要求
 
 采集是实时的（30 fps，每帧约 33 ms），主机配置不够时表现为丢帧、录制变慢，而不是报错。
-下表是最低要求，推荐配置及原因见 [采集主机配置要求](02-environment.md#host-spec)。
+推荐配置即我们实际采集用机的配置，各项的原因见 [采集主机配置要求](02-environment.md#host-spec)。
 
-| 项目 | 最低要求 |
-|---|---|
-| 系统 | Ubuntu 22.04 / 24.04 LTS，amd64；不支持 macOS、Windows |
-| CPU / 内存 | Intel 12 代 i7（或同级 AMD）/ 8 GB |
-| 显卡 | NVIDIA RTX 3060，8 GB 显存，驱动 ≥ 570.144 |
-| 硬盘 | 512 GB SSD；不要直接录到机械硬盘或 USB 移动硬盘 |
-| USB | 双夹爪分接两条独立的 USB 2.0 总线，单夹爪一条即可，见 [USB 带宽预算](03-host-hardware.md#usb-budget) |
-| Python | 3.12 及以上，[环境安装](02-environment.md) 时自动配好 |
+| 项目 | 最低要求 | 推荐配置 |
+|---|---|---|
+| 系统 | Ubuntu 22.04 / 24.04 LTS，amd64 | Ubuntu 24.04 LTS |
+| CPU | Intel 12 代 i7（或同级 AMD） | Intel Core Ultra 9 275HX（24 核）或同级 |
+| 内存 | 8 GB | 32 GB |
+| 显卡 | NVIDIA RTX 3060，8 GB 显存 | NVIDIA RTX 5060 Laptop，8 GB 显存及以上 |
+| 显卡驱动 | ≥ 570.144 | 同左 |
+| 硬盘 | 512 GB SSD | 1 TB NVMe SSD |
+| USB | 单夹爪接一条 USB 2.0 总线即可 | 双夹爪分接两条独立的 USB 2.0 总线 |
 
+- **不支持 macOS、Windows**；Python 需 3.12 及以上，按 [环境安装](02-environment.md) 装好即可。
+- **不要直接录到机械硬盘或 USB 移动硬盘**，写盘速度跟不上。
+- **双夹爪务必分接两条 USB 总线**：6 路相机挤在一条总线上会有相机打不开，这与 CPU、显卡多快无关，见 [USB 带宽预算](03-host-hardware.md#usb-budget)。
 - **没有 NVIDIA 显卡**也能录，但效率明显下降，见 [没有 NVIDIA GPU 的主机怎么录](05-data-collection.md#no-gpu)；Docker 交付镜像则必须有 NVIDIA 显卡与驱动。
 - **账户权限**：用户需加入 `dialout`、`video` 组，并关闭 ModemManager 对夹爪串口的抢占，见 [3.1 串口权限](03-host-hardware.md#31)、[3.2](03-host-hardware.md#32)。
 - 仓库、SDK 与固件的具体版本见 [版本与支持](versions.md)。

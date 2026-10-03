@@ -22,17 +22,21 @@ manipulation learning; see [Highlights](highlights.md) for more. Each leader gri
 ## 1.2 Platform requirements
 
 Collection runs in real time (30 fps, about 33 ms per frame); an underpowered host shows up as dropped frames and slow recording, not as errors.
-The table lists the minimum; the recommended tier and the reasons are in [Collection host requirements](02-environment.md#host-spec).
+The recommended column is the machine we actually collect on; the reasons behind each item are in [Collection host requirements](02-environment.md#host-spec).
 
-| Item | Minimum |
-|---|---|
-| OS | Ubuntu 22.04 / 24.04 LTS, amd64; macOS and Windows are not supported |
-| CPU / RAM | Intel 12th-gen i7 (or AMD equivalent) / 8 GB |
-| GPU | NVIDIA RTX 3060 with 8 GB VRAM, driver ≥ 570.144 |
-| Disk | 512 GB SSD; do not record straight to a hard disk or USB external drive |
-| USB | Two grippers on two separate USB 2.0 buses, one bus for a single gripper; see [USB bandwidth budget](03-host-hardware.md#usb-budget) |
-| Python | 3.12 or newer, set up by [Environment Setup](02-environment.md) |
+| Item | Minimum | Recommended |
+|---|---|---|
+| OS | Ubuntu 22.04 / 24.04 LTS, amd64 | Ubuntu 24.04 LTS |
+| CPU | Intel 12th-gen i7 (or AMD equivalent) | Intel Core Ultra 9 275HX (24 cores) or equivalent |
+| RAM | 8 GB | 32 GB |
+| GPU | NVIDIA RTX 3060, 8 GB VRAM | NVIDIA RTX 5060 Laptop, 8 GB VRAM or better |
+| GPU driver | ≥ 570.144 | Same |
+| Disk | 512 GB SSD | 1 TB NVMe SSD |
+| USB | One gripper can share a single USB 2.0 bus | Two grippers on two separate USB 2.0 buses |
 
+- **macOS and Windows are not supported**; Python 3.12 or newer is needed, set up by [Environment Setup](02-environment.md).
+- **Do not record straight to a hard disk or USB external drive**; it cannot keep up with the write rate.
+- **Put two grippers on two USB buses**: six cameras on one bus leave some of them unable to open, however fast the CPU and GPU are; see [USB bandwidth budget](03-host-hardware.md#usb-budget).
 - **Without an NVIDIA GPU** it still records, but noticeably less efficiently; see [Recording on a machine with no NVIDIA GPU](05-data-collection.md#no-gpu). The Docker delivery image requires an NVIDIA GPU and driver.
 - **User permissions**: add the user to the `dialout` and `video` groups and keep ModemManager off the gripper serial port; see [3.1 Serial permissions](03-host-hardware.md#31) and [3.2](03-host-hardware.md#32).
 - Exact repo, SDK and firmware versions are in [Versions & support](versions.md).
