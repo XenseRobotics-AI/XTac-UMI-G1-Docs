@@ -97,7 +97,7 @@ hide:
 
 <p class="tc-flow__more" markdown>To mount the follower gripper on a robot and drive it from code, see [Follower gripper](follower-overview.md); to call the gripper SDK directly, see [Appendix: SDK](sdk-overview.md).</p>
 
-## Related repositories
+## Related open-source repositories
 
 | Repo / package | Notes |
 |---|---|
@@ -105,6 +105,7 @@ hide:
 | [`xense.taccap`](https://github.com/XenseRobotics-AI/TacCap-Gripper) | Gripper SDK, included in the data-collection repo as a submodule; [developer docs](sdk-overview.md) |
 | [`xensevr_pc_service_sdk`](https://github.com/XenseRobotics-AI/XenseVR-PC-Service) | Pico4 Ultra Enterprise PC service, installed as a `.deb` |
 | [`xensesdk`](https://github.com/XenseRobotics/xensesdk) | Visuotactile sensor SDK, installed by the setup script; [developer docs](https://docs.xenserobotics.com/) |
+| [`xense-lerobot-viewer`](https://github.com/XenseRobotics-AI/xense-lerobot-viewer) | Open-source local visualization tool for browsing LeRobot datasets in the browser |
 
 !!! note "Versions"
     Data collection uses the SDK bundled with `xense-taccap-lerobot` (the 0.1.9 series); the follower chapter

@@ -94,7 +94,7 @@ hide:
 
 <p class="tc-flow__more" markdown>把从夹爪装到机器人上、用程序控制开合与夹持，见[从夹爪](follower-overview.md)；直接调用夹爪 SDK，见[附录：SDK 与二次开发](sdk-overview.md)。</p>
 
-## 相关仓库
+## 相关开源仓库
 
 | 仓库 / 包 | 备注 |
 |---|---|
@@ -102,6 +102,7 @@ hide:
 | [`xense.taccap`](https://github.com/XenseRobotics-AI/TacCap-Gripper) | 夹爪 SDK，数采仓库以子模块引入；[开发文档](sdk-overview.md) |
 | [`xensevr_pc_service_sdk`](https://github.com/XenseRobotics-AI/XenseVR-PC-Service) | Pico4 Ultra 企业版 PC 服务，以 `.deb` 安装 |
 | [`xensesdk`](https://github.com/XenseRobotics/xensesdk) | 视触觉传感器 SDK，由安装脚本安装；[开发文档](https://docs.xenserobotics.com/) |
+| [`xense-lerobot-viewer`](https://github.com/XenseRobotics-AI/xense-lerobot-viewer) | 开源的本地可视化工具，在浏览器里查看本地 LeRobot 数据集 |
 
 !!! note "适用版本"
     数采部分使用 `xense-taccap-lerobot` 自带的 SDK（0.1.9 系列）；从夹爪章节与 SDK 附录使用单独安装的
