@@ -109,7 +109,7 @@ Both configurations use the same XTac-UMI G1 leader grippers and Pico4 Ultra hea
 | Collector (collection unit) | 0.4.1 |
 | Backpack OS firmware | V1.2.0 |
 | Leader gripper firmware | V1.2.2 |
-| XTac-UMI XR (headset APK) | 0.2.5 |
+| XTac-UMI XR (headset APK) | 0.3.2 |
 | Pico OS | ≥ 5.15.5.U |
 | Tablet OS (Xiaomi tablet) | ≥ 3.0.303 recommended |
 

@@ -56,6 +56,17 @@
 | 本地可视化工具 `xense-lerobot-viewer` | <https://github.com/XenseRobotics-AI/xense-lerobot-viewer> | 开源，在浏览器里查看本地 LeRobot 数据集 |
 | 本手册源码 | <https://github.com/XenseRobotics-AI/XTac-UMI-G1-Docs> | Issues 见上节 |
 
+## 文档版本与配套软件 {#doc-version}
+
+本手册的版本号独立于各软件，页脚标注的就是当前文档版本。每个文档正式版对应下面四个软件的一组版本，**四者一起定版、一起更新**；
+设备上的版本与这张表不一致时，以这张表为准升级，或使用与设备版本对应的文档版本。
+
+| 文档版本 | xense-taccap-lerobot（PC 版数采） | XTac-UMI XR（头显应用） | XTac-UMI Collector（背包版采集单元） | TacCap-Gripper SDK（夹爪 SDK） |
+|---|---|---|---|---|
+| v0.1.0 | 待发布 | 0.3.2 | 0.4.1 | 0.4.1 |
+
+夹爪固件随 SDK 附带（SDK 0.4.1 附带主夹爪 1.2.6、从夹爪 1.2.14），不单独列。各组件的升级方法见 [PC 版 · 版本与升级](../pc/versions.md) 与 [背包版 · 版本](../backpack/versions.md)。
+
 ## 本手册范围
 
 本手册覆盖从数采夹爪硬件到数据落盘的链路：背包版到 MCAP 记录与 LeRobot 导出，PC 版到 `LeRobotDataset`；模型训练、推理、部署不在范围内，见对应工程的独立文档。

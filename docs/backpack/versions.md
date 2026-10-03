@@ -12,7 +12,7 @@
 | 数采背包 OS 固件 | V1.2.0 | 出厂预装，由技术支持升级 |
 | XTac-UMI Collector（采集单元） | 0.4.1 | 控制台 系统 → [设备信息](system.md#device-info)「采集端版本」；升级见[升级与 OTA](update.md) |
 | Pico OS | 建议 5.15.5.U 及以上 | 头显 设置 → 通用 → 关于；升级见 [Pico4 头显与追踪器](../common/pico4.md#pico-system) |
-| XTac-UMI XR（头显应用） | 0.2.5 | 头显应用库；安装与升级见 [Pico4 头显与追踪器](../common/pico4.md#pico-app) |
+| XTac-UMI XR（头显应用） | 0.3.2 | 头显应用库；安装与升级见 [Pico4 头显与追踪器](../common/pico4.md#pico-app) |
 | 主夹爪固件 | V1.2.2 | 控制台 系统 → [设备信息](system.md#device-info)「夹爪 MCU」；升级在 系统 → [夹爪配置](system.md#gripper) |
 
 背包版的采集单元升级全部在控制台里完成，不需要 PC。PC 版的版本基线是另一套，见 [PC 版 · 版本与升级](../pc/versions.md#required)。

@@ -56,6 +56,17 @@ Please include:
 | Local viewer `xense-lerobot-viewer` | <https://github.com/XenseRobotics-AI/xense-lerobot-viewer> | Open source; browse a local LeRobot dataset in the browser |
 | This manual's source | <https://github.com/XenseRobotics-AI/XTac-UMI-G1-Docs> | Issues: see the section above |
 
+## Documentation version and matching software {#doc-version}
+
+This manual is versioned on its own; the version in the page footer is the current documentation version. Each documentation release matches one set of versions of the four pieces of software below, and **all four are pinned and updated together**.
+If what is on your devices differs from this table, upgrade to match it, or use the documentation version that matches your devices.
+
+| Docs version | xense-taccap-lerobot (Developer Kit collection) | XTac-UMI XR (headset app) | XTac-UMI Collector (Backpack Kit collection unit) | TacCap-Gripper SDK (gripper SDK) |
+|---|---|---|---|---|
+| v0.1.0 | to be released | 0.3.2 | 0.4.1 | 0.4.1 |
+
+The gripper firmware ships with the SDK (SDK 0.4.1 ships leader 1.2.6 and follower 1.2.14) and is not listed separately. How to upgrade each component is in [Developer Kit · Versions & upgrades](../pc/versions.md) and [Backpack Kit · Versions](../backpack/versions.md).
+
 ## What this manual covers
 
 This manual covers the path from the data-collection gripper hardware to data on disk: MCAP recordings and the LeRobot export on the Backpack Kit, a `LeRobotDataset` on the Developer Kit. Model training, inference and deployment are out of scope; see the separate documentation of those projects.
