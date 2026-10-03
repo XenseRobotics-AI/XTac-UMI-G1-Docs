@@ -6,7 +6,7 @@
 <video controls preload="none" playsinline poster="/XTac-UMI-G1-Docs/assets/highlights/video-poster.webp">
 <source src="/XTac-UMI-G1-Docs/assets/video/xtac-umi-g1-market.mp4" type="video/mp4">
 </video>
-<figcaption>XTac-UMI G1 产品视频（1 分 46 秒）</figcaption>
+<figcaption>XTac-UMI G1 产品视频</figcaption>
 </figure>
 
 ## 核心价值
