@@ -54,36 +54,51 @@ This page compares the two and lists each kit's box contents and wiring.
 
 === "Backpack Kit"
 
-    | Item | Qty | Notes |
+    | Item | Qty | Spec and notes |
     |---|---|---|
-    | Pico4 Ultra Enterprise headset + controller | 1 | Comes with two motion trackers, fitted on top of the two leader grippers |
     | XTac-UMI G1 leader gripper | 2 | One left and one right, told apart by the last digit of the serial number: odd is left, even is right |
-    | Type-C cable | 2 | A locking connector at the gripper end, the other end into the backpack's `UMI-L` / `UMI-R` |
-    | Backpack | 1 | RK3588 compute node, with an always-on 5 GHz hotspot |
-    | Power adapter | 1 | 12 V 3 A, 36 W, into the backpack's `DC` port |
-    | Power bank | 2 | Type-C output 5 V 3 A / 12 V 3 A; one for the backpack, one for the headset |
+    | Leader gripper cable | 2 | Type-C to Type-C, 1.5 m, one per side; locking connector at the gripper end, the other end into the backpack's `UMI-L` / `UMI-R` |
+    | Pico4 Ultra Enterprise headset | 1 | With controllers and motion trackers; the trackers mount on top of the two leader grippers |
+    | Tracker charging dock | 1 | Three-way |
+    | Headset cable (Pico → Pack) | 1 | Type-C to Type-C, 1.5 m, headset to the backpack's `PICO` port |
+    | Backpack | 1 | Compute node with an always-on 5 GHz hotspot |
+    | Waist belt | 1 | For wearing the backpack |
+    | 12 V power adapter | 1 | 12 V 3 A, 1.5 m lead, into the backpack's `DC` port |
+    | Power bank | 1 | 20000 mAh, 45 W |
+    | 12 V PD power cable | 1 | 0.3 m, power bank to the backpack's `DC` port |
+    | Tablet | 1 | 6 GB + 128 GB, with case; serves as the console |
+    | Type-C charging plug | 1 | |
 
-    Use the adapter at a fixed workstation and the power banks for mobile collection:
+    Use the adapter at a fixed workstation and the power bank for mobile collection:
 
     ![Adapter wiring: the headset to the PICO port, the left and right grippers to UMI-L / UMI-R, the adapter to DC](../assets/product/backpack-wiring-adapter.webp){ width="720" }
 
-    ![Power-bank wiring: the headset takes the two-in-one cable, its charging leg to a power bank and its data leg to the PICO port; the other power bank feeds the backpack](../assets/product/backpack-wiring-powerbank.webp){ width="720" }
+    ![Power-bank wiring: both leader grippers and the headset to the backpack, the power bank to the backpack's DC port](../assets/product/backpack-wiring-powerbank.webp){ width="720" }
 
     The wiring steps are in [Adapter power](../backpack/unbox-connect.md#adapter) and [Power-bank power](../backpack/unbox-connect.md#powerbank); the safety requirements for powering and unplugging in order are in [The backpack and its power](safety.md#backpack-power); connecting to the backpack and opening the console is in [The backpack hotspot](../backpack/network.md#softap).
 
 === "Developer Kit"
 
-    | Item | Qty | Notes |
+    | Item | Qty | Spec and notes |
     |---|---|---|
     | XTac-UMI G1 leader gripper | 2 | One left and one right, told apart by the last digit of the serial number: odd is left, even is right |
-    | Type-C cable | 2 | A locking connector at the gripper end, with Type-C or Type-A at the other end depending on the host's ports |
-    | Pico4 Ultra Enterprise headset | 1 | Controller included |
-    | Motion tracker | 2 | Fitted on top of the two leader grippers |
+    | Leader gripper cable | 2 | Type-C to Type-A, USB 2.0, 3 m; locking connector at the gripper end |
+    | Pico4 Ultra Enterprise headset | 1 | With controllers and motion trackers; the trackers mount on top of the two leader grippers |
+    | Tracker charging dock | 1 | Three-way |
+    | Headset cable | 1 | Type-C to Type-C, 1.5 m, headset to the host |
+
+    With the optional follower grippers you also get:
+
+    | Item | Qty | Spec and notes |
+    |---|---|---|
+    | XTac-UMI G1 follower gripper | 2 | One left and one right, mounted on the robot's end effector |
+    | 24 V power adapter | 2 | 24 V 2.5 A, 4.5 m lead with ferrite, one per follower |
+    | Cable sleeve | 1 | 3 m, for routing cables along the arm |
 
     You supply the host; the requirements are in [Collection host requirements](../pc/install.md#host-spec). There are only two things to wire:
 
-    - Each gripper connects to the host with its own Type-C cable, and with two grippers the six camera feeds have to be split across two USB buses, see [The USB bandwidth budget](../pc/host-setup.md#usb-budget).
-    - The headset connects to the host with a Type-C cable over wired network sharing, or over WiFi, see [Network connection](../common/pico4.md#pico-network).
+    - Each gripper connects to a USB-A port on the host with its own leader gripper cable, and with two grippers the six camera feeds have to be split across two USB buses, see [The USB bandwidth budget](../pc/host-setup.md#usb-budget).
+    - The headset connects to the host with the headset cable over wired network sharing, or over WiFi, see [Network connection](../common/pico4.md#pico-network).
 
     The power-up order and your first collection run are in [Developer Kit quickstart](../pc/quickstart.md#power-on).
 

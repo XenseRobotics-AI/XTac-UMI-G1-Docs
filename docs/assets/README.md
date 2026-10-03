@@ -94,6 +94,7 @@
 |---|---|---|
 | `viewer-3d-replay.webp` | xense-lerobot-viewer 的 3D REPLAY 页，数据集 `XTac-UMI/xtac-umi-g1-insert-optical-module` | 本公司截图，原图 `materials/dataset-card-orig/XTac-UMI-G1-3D-REPLAY.jpg` |
 | `tacverse-scenes.webp` | TacVerse 三类场景（办公、家庭、工作台）示意图 | 公司公开数据集 `TacVerse/opendata` 卡片的 `assets/scenes.png`（CC BY-SA 4.0），原图 `materials/dataset-card-orig/tacverse-scenes.png` |
+| `../product/backpack-wiring-powerbank.webp` | 背包版充电宝供电接线：左右主夹爪、头显接数采背包，单只充电宝接 DC 口（Leader / Pico / Bank → Pack 标注） | 本公司实拍示意图，原图 `materials/backpack-wiring-powerbank-v2.jpg`，替换了旧的双充电宝、二合一线版本 |
 | `sensor-key-map.webp` | 八路画面与数据集键名的对应图 | TacVerse 数据集卡片的 `sensor_key_map.png`（公开于 Hugging Face `TacVerse/TacVerse`，CC BY-SA 4.0；数采仓库 v0.0.8 上传数据集时也附带同一张图） |
 | `rerun-xtac-umi-g1.webp` | Rerun 实时预览，`xtac_umi_g1`（双夹爪 + 头显）：四路视触觉、头显双目、左右腕部相机与动作 / 状态曲线 | 本公司实机截图 |
 | `rerun-bi-taccap-gripper.webp` | Rerun 实时预览，`bi_taccap_gripper`（双夹爪，不带头显）：四路视触觉、左右腕部相机与状态 / 动作曲线 | 本公司实机截图 |
