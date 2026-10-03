@@ -125,18 +125,18 @@ hide:
 <div class="tc-data" markdown>
 
 <figure class="tc-shot" markdown>
-![xense-lerobot-viewer 3D 回放：夹爪与头显轨迹、腕部与头显画面、四路视触觉](assets/dataset/viewer-3d-replay.webp)
-<figcaption>3D 回放</figcaption>
-</figure>
-
-<figure class="tc-shot" markdown>
-![八路画面与数据键的对应](assets/dataset/sensor-key-map.webp)
-<figcaption>八路画面同步记录</figcaption>
+![八路画面对应的传感器位置及其在数据集里的键名](assets/dataset/sensor-key-map.webp)
+<figcaption>传感器位置与数据键名</figcaption>
 </figure>
 
 <figure class="tc-shot" markdown>
 ![Rerun 实时预览：四路视触觉、头显双目、左右腕部相机与动作曲线](assets/dataset/rerun-xtac-umi-g1.webp)
-<figcaption>Rerun 实时预览</figcaption>
+<figcaption>采集中 Rerun 实时预览（PC 版）</figcaption>
+</figure>
+
+<figure class="tc-shot" markdown>
+![xense-lerobot-viewer 3D 回放：夹爪与头显轨迹、腕部与头显画面、四路视触觉](assets/dataset/viewer-3d-replay.webp)
+<figcaption>录完用 xense-lerobot-viewer 3D 回放</figcaption>
 </figure>
 
 </div>

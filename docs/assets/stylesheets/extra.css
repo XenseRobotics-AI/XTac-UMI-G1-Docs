@@ -364,11 +364,11 @@ html[lang="en"] .md-typeset .tc-hero h1 {
 
 /* ===== 以下来自 docs/follower-gripper 分支 ===== */
 
-/* 首页「采集到的数据」:3D 回放、传感器映射图、Rerun 预览三图并排。
-   列宽按三张图的宽高比(1.74 : 1.15 : 1.59)分配,三张图显示高度相同 */
+/* 首页「采集到的数据」:传感器映射图、Rerun 预览、3D 回放三图并排。
+   列宽按三张图的宽高比(1.15 : 1.59 : 1.74)分配,三张图显示高度相同 */
 .md-typeset .tc-data {
   display: grid;
-  grid-template-columns: 1.74fr 1.15fr 1.59fr;
+  grid-template-columns: 1.15fr 1.59fr 1.74fr;
   gap: 1.6rem;
   align-items: center;
   margin-top: 1rem;

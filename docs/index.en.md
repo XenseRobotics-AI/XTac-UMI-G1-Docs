@@ -125,18 +125,18 @@ Both kits use the same grippers and headset and produce the same data. The Backp
 <div class="tc-data" markdown>
 
 <figure class="tc-shot" markdown>
-![xense-lerobot-viewer 3D replay: gripper and headset tracks, wrist and headset views, four visuotactile streams](assets/dataset/viewer-3d-replay.webp)
-<figcaption>3D replay</figcaption>
-</figure>
-
-<figure class="tc-shot" markdown>
-![The eight streams and their dataset keys](assets/dataset/sensor-key-map.webp)
-<figcaption>Eight streams in sync</figcaption>
+![Where each of the eight streams sits on the hardware, and its dataset key](assets/dataset/sensor-key-map.webp)
+<figcaption>Sensor positions and dataset keys</figcaption>
 </figure>
 
 <figure class="tc-shot" markdown>
 ![Rerun live preview: four visuotactile streams, headset stereo, both wrist cameras and action curves](assets/dataset/rerun-xtac-umi-g1.webp)
-<figcaption>Live preview in Rerun</figcaption>
+<figcaption>Live Rerun preview while recording (Developer Kit)</figcaption>
+</figure>
+
+<figure class="tc-shot" markdown>
+![xense-lerobot-viewer 3D replay: gripper and headset tracks, wrist and headset views, four visuotactile streams](assets/dataset/viewer-3d-replay.webp)
+<figcaption>3D replay in xense-lerobot-viewer</figcaption>
 </figure>
 
 </div>
