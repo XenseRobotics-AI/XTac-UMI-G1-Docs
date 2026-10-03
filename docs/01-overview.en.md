@@ -72,10 +72,47 @@ Commands are in [5. Data preview and collection](05-data-collection.md).
 
 ## 1.3 What each frame records
 
-Each frame combines the latest value of every stream: the observation is the visuotactile images, wrist
-camera and opening (plus the headset images in ③); the action is the next frame's gripper pose and
-opening (plus the head pose in ③). Field details are in [5.3 What each frame records](05-data-collection.md#53),
-the dataset format in [6. Dataset & Examples](06-dataset.md).
+Taking two grippers as the example, each dataset row is the **observation** from frame t-1 plus the **action** from frame t. Hover over (or tap) any data item, source or storage block to see where it comes from and where it is stored; the buttons switch between the three tiers.
+
+<div class="tc-arch" data-diagram="frame"><script type="application/json">
+{
+  "title": "What makes up one XTac-UMI G1 dataset row",
+  "tiers": ["① Grippers only", "② With wrist pose", "③ Full rig"],
+  "cols": {"src": "Source", "obs": "Observation · frame t-1", "act": "Action · frame t", "out": "Stored as"},
+  "groups": {"img": "observation.images · {n} streams", "state": "observation.state · {n}-D", "act": "action · {n}-D"},
+  "timeline": {"caption": "time →", "obs": "obs", "act": "action", "row": "one dataset row"},
+  "hint": "Hover over (or tap) any data item, source or storage block to see where it comes from and where it is stored.",
+  "sep": ": ",
+  "offNote": " (not recorded in the selected tier)",
+  "dims": " {n} dimensions in total.",
+  "obsNote": " The observation holds the value from frame t-1.",
+  "actNote": " The action holds the value from frame t, one step ahead of the observation.",
+  "keys": {
+    "tactile": "The visuotactile image from one finger of this gripper, rectified to about 400 × 700, 30 fps.",
+    "wrist": "This gripper's wrist camera view, 640 × 480 by default.",
+    "headimg": "One eye of the headset camera, 640 × 480 by default; recorded in tier ③ only.",
+    "tcp": "The pose of this gripper's tip (midpoint between the fingers) in the world frame: position x, y, z (metres) plus the 6-D rotation r1–r6, derived from the tracker pose.",
+    "grip": "This gripper's opening, closed = 0, open = 1.",
+    "headpose": "The headset pose in the world frame, same format as tcp.*; recorded in tier ③ only."
+  },
+  "nodes": {
+    "lgrip": {"title": "Left gripper", "sub": "Tactile · wrist · encoder", "desc": "Provides two visuotactile images, the wrist camera view and the opening."},
+    "ltrk": {"title": "Left tracker", "sub": "Via headset + PC Service", "desc": "Its pose is transformed to the left gripper tip as left_tcp.*, stored once in the observation and once in the action. Not recorded in tier ①."},
+    "rgrip": {"title": "Right gripper", "sub": "Tactile · wrist · encoder", "desc": "Provides two visuotactile images, the wrist camera view and the opening."},
+    "rtrk": {"title": "Right tracker", "sub": "Via headset + PC Service", "desc": "Its pose is transformed to the right gripper tip as right_tcp.*, stored once in the observation and once in the action. Not recorded in tier ①."},
+    "head": {"title": "Headset", "sub": "Stereo camera · head pose", "desc": "Provides the left and right eye images and the head pose head_camera.*, which is stored in both the observation and the action. Recorded in tier ③ only."},
+    "mp4": {"title": "MP4 video", "sub": "videos/ · one key each", "desc": "Each image stream is one video key, observation.images.<key>, encoded to MP4 while recording and stored under videos/."},
+    "pq": {"title": "Parquet table", "sub": ["data/ · one row per frame", "state + action + index"], "desc": "One row per frame: the observation.state and action vectors, plus index columns such as timestamp, frame index and episode index, stored under data/."}
+  }
+}
+</script></div>
+
+- The observation comes from frame t-1 and the action from frame t, so the action leads by one step; the first frame of each episode has nothing to pair with, so each episode is one frame shorter.
+- The poses `*_tcp.*` and `head_camera.*` are 9-D each: position x, y, z plus a 6-D rotation, in a world frame of X forward / Y left / Z up.
+- Dimensions per tier: ① state and action 2-D each, 6 image streams; ② 20-D each, 6 streams; ③ 29-D each, 8 streams.
+- With a single gripper (`--robot.type=taccap_gripper`) the keys have no `left_` / `right_` prefix and the wrist camera is `wrist_cam`.
+
+Field details are in [5.3 What each frame records](05-data-collection.md#53), the dataset format in [6. Dataset & Examples](06-dataset.md).
 
 ## 1.4 Platform requirements
 

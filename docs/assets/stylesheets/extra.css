@@ -494,3 +494,58 @@ html[lang="en"] .md-typeset .tc-hero h1 {
 .md-typeset .tc-arch__legend .is-video .tc-arch__line {
   stroke: var(--arch-video);
 }
+
+/* 概述 1.3:每帧记录什么 */
+.md-typeset .tc-frame__group {
+  fill: none;
+  stroke: var(--md-default-fg-color--lighter);
+  stroke-dasharray: 5 4;
+}
+.md-typeset .tc-frame__glabel {
+  font-family: var(--md-code-font-family);
+  font-size: 12px;
+  font-weight: 700;
+  fill: var(--md-default-fg-color--light);
+}
+.md-typeset .tc-frame__key {
+  font-family: var(--md-code-font-family);
+  font-size: 11.5px;
+  text-anchor: middle;
+  fill: var(--md-default-fg-color);
+}
+.md-typeset .tc-frame__chip .tc-arch__box {
+  stroke-width: 1.2;
+}
+/* 来源到数据项的连线平时不画,点亮时才出现 */
+.md-typeset .tc-arch .tc-arch__edge.is-src:not(.is-hit) {
+  opacity: 0;
+}
+.md-typeset .tc-arch__edge.is-src .tc-arch__line {
+  stroke-width: 1.4;
+}
+.md-typeset .tc-frame__slot rect {
+  fill: var(--md-default-bg-color);
+  stroke: var(--arch-line);
+  stroke-width: 1.4;
+  transition: fill .25s, stroke .25s;
+}
+.md-typeset .tc-frame__slot.is-obs rect,
+.md-typeset .tc-frame__slot.is-act rect {
+  stroke: var(--md-primary-fg-color);
+}
+.md-typeset .tc-frame__slot.is-hit rect {
+  fill: var(--md-primary-fg-color);
+}
+.md-typeset .tc-frame__slot.is-hit text {
+  fill: var(--md-primary-bg-color);
+  font-weight: 700;
+}
+.md-typeset .tc-frame__bracket {
+  fill: none;
+  stroke: var(--md-primary-fg-color);
+  stroke-width: 1.4;
+}
+.md-typeset .tc-frame__row {
+  font-weight: 700;
+  fill: var(--md-primary-fg-color);
+}
