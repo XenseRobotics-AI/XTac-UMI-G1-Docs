@@ -79,7 +79,7 @@
 
 | 文件 | 内容 | 视频时间 |
 |---|---|---|
-| `video-poster.webp` | 视频封面，主夹爪腕部相机特写 | 0:04 |
+| `video-poster.webp` | 视频封面，主夹爪张开，配「XTac UMI G1」字样 | 0:02 |
 | `visuotactile.webp` | 指尖特写，配「集成视触觉传感能力」字样 | 0:06 |
 | `handheld.webp` | 单手握持主夹爪 | 0:28 |
 | `fingertip.webp` | 指尖夹取包链 | 0:54 |
