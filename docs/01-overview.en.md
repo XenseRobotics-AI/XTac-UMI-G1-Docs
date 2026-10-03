@@ -1,88 +1,76 @@
 # 1. Overview
 
+!!! abstract "Scope of this manual"
+    Covers the full path from **handheld collection** to **data on disk as a [LeRobotDataset v3.0](06-dataset.md)**:
+    hardware → installation → host setup → calibration → collection → dataset. **Model training, inference and deployment are out of scope.**
+
 ## 1.1 What is the XTac-UMI G1
 
-The **XTac-UMI G1** is XenseRobotics'
-**handheld UMI leader gripper** for multimodal tactile data collection. A single unit
-integrates:
+The **XTac-UMI G1** is XenseRobotics' **handheld visuotactile multimodal data-collection gripper** for robot
+manipulation learning; see [Highlights](highlights.md) for more. Each leader gripper integrates:
 
 | Part | Notes | Rate |
 |---|---|---|
-| Encoder | Jaw opening angle; [calibration](04-calibration.md#41) normalises it to closed = 0, open = 1 (the physical travel differs per unit) | 100 Hz |
-| IMU | Accel / gyro / mag / temperature | 100 Hz |
-| Two visuotactile sensors (GSPS, one per finger) | Rectified image ~`(400, 700, 3)` | ~30 Hz |
-| Wrist camera (XC, UVC) | Wrist-view RGB | ~30 Hz |
-| Motor jaw | **Follower units only**; for robot-side execution or replay | — |
+| Encoder | Jaw opening; [calibration](04-calibration.md#41) normalises it to closed = 0, open = 1 | 100 Hz |
+| Two visuotactile sensors (one per finger) | Visuotactile image, about `(400, 700, 3)` after rectification | ~30 Hz |
+| Wrist camera | Wrist-view RGB | ~30 Hz |
+| IMU | Accel, gyro, magnetometer; reserved, not recorded by default | 100 Hz |
 
-!!! warning "The device is passive / self-driven"
-    During collection the motor is **never driven or enabled**. The operator **mechanically
-    drives the jaw by hand** — so there is **no separate teleoperator**, and **no
-    `--teleop.*` flags** are needed on the CLI.
+!!! note "Handheld demonstration, no teleoperator"
+    The operator performs the demonstration with the gripper in hand, so the recording command needs **no `--teleop.*` flags**.
 
 ## 1.2 System components
-
-A full collection involves four cooperating parts:
 
 ```mermaid
 flowchart TB
     subgraph Hardware
-      G[XTac-UMI G1<br/>gripper+tactile+wrist+IMU]
-      P[Pico4 Ultra Enterprise Edition<br/>independent motion tracker]
+      G[XTac-UMI G1 leader gripper<br/>tactile + wrist camera + encoder]
+      T[Pico4 Ultra<br/>motion tracker]
+      H[Pico4 Ultra Enterprise<br/>headset]
     end
-    subgraph Host
-      PS[XenseVR PC Service<br/>daemon]
-      SDK[xense.taccap SDK<br/>xensesdk visuotactile SDK]
-      LR[lerobot-record<br/>taccap_gripper robot type]
+    subgraph Collection PC
+      PS[XenseVR PC Service]
+      LR[lerobot-record]
     end
-    G -- USB / serial+UVC --> SDK
-    P -- wireless --> PS
-    PS -- pose --> LR
-    PS -. headset camera frames (optional) .-> LR
-    SDK -- observation --> LR
-    LR --> DS[(LeRobotDataset<br/>parquet + mp4)]
+    G -- USB Type-C --> LR
+    T -- wireless --> H
+    H -- wired / WiFi --> PS
+    PS -- gripper pose, head pose --> LR
+    PS -. headset stereo images (full rig) .-> LR
+    LR --> DS[(LeRobotDataset v3.0<br/>Parquet + MP4)]
 ```
 
-The same PC Service connection can also carry the **headset's own stereo camera** — optional, off
-by default, and requiring service ≥ v0.2.0. See
-[5.6 Headset camera](05-data-collection.md#56).
+- The **leader gripper** connects to the PC over USB and provides opening, visuotactile images and the wrist camera.
+- The **motion tracker** sits on top of the gripper and is tracked by the **headset**, giving the gripper's 6-DoF pose.
+- The **headset** connects to the PC over a cable (recommended) or WiFi and hands the pose to the **XenseVR PC Service**; in the full rig it also sends the headset stereo images and head pose.
+- **`lerobot-record`** gathers every stream and writes the dataset frame by frame.
 
-## 1.3 Architecture & data flow
+Collection comes in three tiers depending on the connected devices, chosen with `--robot.type`:
 
-`xense.taccap` is a pure **device-access layer** — it does not record datasets. Recording,
-time alignment and episode handling live in `xense-taccap-lerobot`.
+| Tier | Devices needed | Data recorded |
+|---|---|---|
+| ① Grippers only | Leader grippers | Tactile, wrist cameras, opening |
+| ② With wrist pose | Grippers + trackers + headset | Adds the gripper pose |
+| ③ Full rig | Same as ② | Adds headset stereo images and head pose |
 
-!!! note "Tactile imaging is at the Python level"
-    Since SDK 0.1.4, visuotactile (OG) capture/rectify is **not** in the C++ SDK — it is
-    handled by the `xensesdk` visuotactile sensor SDK. `xense.taccap` is **gripper protocol +
-    wrist camera** only.
+Commands are in [5. Data preview and collection](05-data-collection.md).
 
-## 1.4 Supported platforms & dependency versions
+## 1.3 What each frame records
 
-**Exact version numbers live in [Versions & support](versions.md)** — the single
-source, listing "supported range" and "validated baseline" separately. What
-follows are only the constraints that decide whether, and how, this installs:
+Each frame combines the latest value of every stream: the observation is the visuotactile images, wrist
+camera and opening (plus the headset images in ③); the action is the next frame's gripper pose and
+opening (plus the head pose in ③). Field details are in [5.3 What each frame records](05-data-collection.md#53),
+the dataset format in [6. Dataset & Examples](06-dataset.md).
 
-- **Linux amd64 only.** The capture path is V4L2 + UVC; macOS and Windows cannot run it.
-  Ubuntu 22.04 / 24.04 are tested.
-- **Python 3.12 or newer.** The main repository declares `requires-python = ">=3.12"`
-  and `conda_environment.yaml` pins `python=3.12`; 3.10 and 3.11 will not install —
-  this is a hard floor, not a recommendation.
-- **The collection host has a spec floor.** The minimum is a **12th-gen i7, 8 GB of
-  RAM and an NVIDIA RTX 3060 with 8 GB VRAM**, driver **≥ 570.144**; both tiers are in
-  [Collection host requirements](02-environment.md#host-spec). Anything below that will
-  install and record, but **noticeably less efficiently** — see
-  [Recording on a machine with no NVIDIA GPU](05-data-collection.md#no-gpu).
-- **Mamba / Miniforge strongly recommended** — roughly 10× faster dependency solving
-  than conda.
-- **The gripper SDK is built from source** (`third_party/taccap-gripper`), not
-  installed from PyPI, so it must be [rebuilt](02-environment.md) after a submodule
-  update.
-- **Video codecs come from wheels**: `torchcodec` pinned to the PyTorch compatibility
-  matrix, PyAV pinned, FFmpeg kept out of the conda solve so it cannot fight the ROS
-  stack.
+## 1.4 Platform requirements
 
-!!! danger "Prerequisites"
-    - Your user must be in the `dialout` / `video` groups (see [3.1](03-host-hardware.md#31)).
-    - A udev rule to keep ModemManager off the gripper serial is recommended (see [3.2](03-host-hardware.md#32)).
+Exact versions are in [Versions & support](versions.md). Whether it installs comes down to:
+
+- **Linux amd64 only**, tested on Ubuntu 22.04 / 24.04; macOS and Windows are not supported.
+- **Python 3.12 or newer**, set up by following [Environment Setup](02-environment.md).
+- **Minimum collection host**: 12th-gen i7, 8 GB RAM, NVIDIA RTX 3060 with 8 GB VRAM, driver ≥ 570.144;
+  both tiers are in [Collection host requirements](02-environment.md#host-spec).
+  Below that it installs and records, but noticeably less efficiently; see [Recording on a machine with no NVIDIA GPU](05-data-collection.md#no-gpu).
+- Your user must be in the `dialout` and `video` groups, see [3.1 Serial permissions](03-host-hardware.md#31); and keep ModemManager off the gripper serial port, see [3.2](03-host-hardware.md#32).
 
 Next → [2. Environment Setup](02-environment.md)
