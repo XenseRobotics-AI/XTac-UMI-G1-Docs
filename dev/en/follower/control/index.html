@@ -93,7 +93,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#运动控制" class="md-skip">
+        <a href="#motion-control" class="md-skip">
           Skip to content
         </a>
       
@@ -1749,7 +1749,7 @@
   <a href="#first-motion" class="md-nav__link">
     <span class="md-ellipsis">
       
-        用键盘控制
+        Keyboard control
       
     </span>
   </a>
@@ -1760,7 +1760,7 @@
   <a href="#choose" class="md-nav__link">
     <span class="md-ellipsis">
       
-        两种控制方式
+        Two control modes
       
     </span>
   </a>
@@ -1771,7 +1771,7 @@
   <a href="#basic" class="md-nav__link">
     <span class="md-ellipsis">
       
-        在程序里控制
+        Control from a program
       
     </span>
   </a>
@@ -1782,7 +1782,7 @@
   <a href="#fault" class="md-nav__link">
     <span class="md-ellipsis">
       
-        故障与恢复
+        Faults and recovery
       
     </span>
   </a>
@@ -2104,7 +2104,7 @@
   <a href="#first-motion" class="md-nav__link">
     <span class="md-ellipsis">
       
-        用键盘控制
+        Keyboard control
       
     </span>
   </a>
@@ -2115,7 +2115,7 @@
   <a href="#choose" class="md-nav__link">
     <span class="md-ellipsis">
       
-        两种控制方式
+        Two control modes
       
     </span>
   </a>
@@ -2126,7 +2126,7 @@
   <a href="#basic" class="md-nav__link">
     <span class="md-ellipsis">
       
-        在程序里控制
+        Control from a program
       
     </span>
   </a>
@@ -2137,7 +2137,7 @@
   <a href="#fault" class="md-nav__link">
     <span class="md-ellipsis">
       
-        故障与恢复
+        Faults and recovery
       
     </span>
   </a>
@@ -2161,76 +2161,76 @@
 
 
 
-<h1 id="运动控制">运动控制<a class="headerlink" href="#运动控制" title="锚点链接">¶</a></h1>
-<p>开始前确认已按 <a href="../setup/">准备与自检</a> 做完四步，<strong>尤其是写入运动安全包络</strong>。</p>
+<h1 id="motion-control">Motion control<a class="headerlink" href="#motion-control" title="锚点链接">¶</a></h1>
+<p>Before you start, make sure you have completed the four steps in <a href="../setup/">Setup and self-check</a>, <strong>especially writing the motion safety envelope</strong>.</p>
 <div class="admonition danger">
-<p class="admonition-title">会驱动真实电机</p>
-<p>运行前清空爪子的运动范围，手指远离夹爪，确认可以随时断开 24V。机器人上的从夹爪先在机器人静止时测试。</p>
+<p class="admonition-title">This drives a real motor</p>
+<p>Before running, clear the jaws' range of motion, keep your fingers away from the gripper, and make sure you can cut the 24V at any moment. For a follower gripper on a robot, test first with the robot stationary.</p>
 </div>
-<h2 id="first-motion">用键盘控制<a class="headerlink" href="#first-motion" title="锚点链接">¶</a></h2>
-<p>第一次运动建议用键盘控制台：</p>
+<h2 id="first-motion">Keyboard control<a class="headerlink" href="#first-motion" title="锚点链接">¶</a></h2>
+<p>For the first motion, the keyboard console is recommended:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>python<span class="w"> </span>python/examples/gripper_console.py<span class="w"> </span>left
 </span></code></pre></div>
 <table>
 <thead>
 <tr>
-<th>按键</th>
-<th>作用</th>
+<th>Key</th>
+<th>Action</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>j</code> / <code>k</code></td>
-<td>张开 / 闭合一步</td>
+<td>Open / close one step</td>
 </tr>
 <tr>
 <td><code>o</code> / <code>c</code></td>
-<td>全开 / 全合</td>
+<td>Fully open / fully close</td>
 </tr>
 <tr>
 <td><code>h</code></td>
-<td>停在当前位置</td>
+<td>Hold at the current position</td>
 </tr>
 <tr>
 <td><code>d</code> / <code>e</code></td>
-<td>松开电机 / 恢复控制</td>
+<td>Release the motor / resume control</td>
 </tr>
 <tr>
 <td><code>f</code></td>
-<td>清除故障</td>
+<td>Clear fault</td>
 </tr>
 <tr>
-<td><code>q</code> 或 <code>Esc</code></td>
-<td>退出</td>
+<td><code>q</code> or <code>Esc</code></td>
+<td>Quit</td>
 </tr>
 </tbody>
 </table>
-<p>默认是阻抗控制；要以指定的力夹东西，加 <code>--mode force-position --grasp-torque 0.6</code>（夹持力，单位 N·m，不超过 1.1）。</p>
-<h2 id="choose">两种控制方式<a class="headerlink" href="#choose" title="锚点链接">¶</a></h2>
+<p>The default is impedance control. To grasp with a set force, add <code>--mode force-position --grasp-torque 0.6</code> (grip force in N·m, no more than 1.1).</p>
+<h2 id="choose">Two control modes<a class="headerlink" href="#choose" title="锚点链接">¶</a></h2>
 <table>
 <thead>
 <tr>
 <th></th>
-<th>阻抗控制（默认）</th>
-<th>力位控制</th>
+<th>Impedance control (default)</th>
+<th>Force-position control</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>适合</td>
-<td>跟随一个开度：遥操作、跟随主夹爪、执行策略</td>
-<td>以设定的力夹住物体</td>
+<td>Suited to</td>
+<td>Following an opening: teleoperation, following the leader gripper, running a policy</td>
+<td>Grasping an object with a set force</td>
 </tr>
 <tr>
-<td>被物体挡住时</td>
-<td>以 1.1 N·m 顶住</td>
-<td>以设定的夹持力顶住，并报告已夹住</td>
+<td>When blocked by an object</td>
+<td>Presses with 1.1 N·m</td>
+<td>Presses with the set grip force and reports that it is holding</td>
 </tr>
 </tbody>
 </table>
-<p>开度用 0 到 1 表示：<strong>0 = 闭合，1 = 张开</strong>。</p>
-<h2 id="basic">在程序里控制<a class="headerlink" href="#basic" title="锚点链接">¶</a></h2>
-<p>阻抗控制：</p>
+<p>The opening is expressed from 0 to 1: <strong>0 = closed, 1 = open</strong>.</p>
+<h2 id="basic">Control from a program<a class="headerlink" href="#basic" title="锚点链接">¶</a></h2>
+<p>Impedance control:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">xense.taccap</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">t</span>
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
@@ -2238,50 +2238,50 @@
 </span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="n">cfg</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">ImpedanceConfig</span><span class="o">.</span><span class="n">for_spec</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">motor</span><span class="o">.</span><span class="n">get_spec</span><span class="p">())</span>
 </span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
 </span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="n">g</span><span class="o">.</span><span class="n">motor</span><span class="o">.</span><span class="n">clear_fault</span><span class="p">()</span>
-</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="k">with</span> <span class="n">t</span><span class="o">.</span><span class="n">ImpedanceController</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">cfg</span><span class="p">)</span> <span class="k">as</span> <span class="n">c</span><span class="p">:</span>   <span class="c1"># 退出 with 时自动停止并松开电机</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="k">with</span> <span class="n">t</span><span class="o">.</span><span class="n">ImpedanceController</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">cfg</span><span class="p">)</span> <span class="k">as</span> <span class="n">c</span><span class="p">:</span>   <span class="c1"># stops and releases the motor automatically on leaving the with block</span>
 </span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>    <span class="n">g</span><span class="o">.</span><span class="n">motor</span><span class="o">.</span><span class="n">enable</span><span class="p">()</span>
-</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>    <span class="n">c</span><span class="o">.</span><span class="n">set_target</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>                       <span class="c1"># 闭合</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>    <span class="n">c</span><span class="o">.</span><span class="n">set_target</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>                       <span class="c1"># close</span>
 </span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 </span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">"开度"</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">snapshot</span><span class="p">()</span><span class="o">.</span><span class="n">observation</span><span class="o">.</span><span class="n">position</span><span class="p">)</span>
-</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>    <span class="n">c</span><span class="o">.</span><span class="n">set_target</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>                       <span class="c1"># 张开</span>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>    <span class="n">c</span><span class="o">.</span><span class="n">set_target</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>                       <span class="c1"># open</span>
 </span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 </span></code></pre></div>
-<p>遥操作或执行策略时，在控制循环里每个周期调用一次 <code>c.set_target(开度)</code> 即可，不需要等待。</p>
-<p>力位控制，换一个配置和控制器，其余相同：</p>
+<p>For teleoperation or running a policy, just call <code>c.set_target(opening)</code> once per cycle in your control loop; there is no need to wait.</p>
+<p>Force-position control uses a different config and controller; everything else is the same:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">cfg</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">ForcePositionConfig</span><span class="o">.</span><span class="n">for_spec</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">motor</span><span class="o">.</span><span class="n">get_spec</span><span class="p">())</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">cfg</span><span class="o">.</span><span class="n">grasp_torque_nm</span> <span class="o">=</span> <span class="mf">0.6</span>                   <span class="c1"># 夹持力,不超过 1.1 N·m</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">cfg</span><span class="o">.</span><span class="n">grasp_torque_nm</span> <span class="o">=</span> <span class="mf">0.6</span>                   <span class="c1"># grip force, no more than 1.1 N·m</span>
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
 </span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="n">g</span><span class="o">.</span><span class="n">motor</span><span class="o">.</span><span class="n">clear_fault</span><span class="p">()</span>
 </span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="k">with</span> <span class="n">t</span><span class="o">.</span><span class="n">ForcePositionController</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">cfg</span><span class="p">)</span> <span class="k">as</span> <span class="n">c</span><span class="p">:</span>
 </span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>    <span class="n">g</span><span class="o">.</span><span class="n">motor</span><span class="o">.</span><span class="n">enable</span><span class="p">()</span>
-</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>    <span class="n">c</span><span class="o">.</span><span class="n">set_target</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>                       <span class="c1"># 闭合夹取</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>    <span class="n">c</span><span class="o">.</span><span class="n">set_target</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>                       <span class="c1"># close to grasp</span>
 </span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 </span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">"夹住了"</span> <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">snapshot</span><span class="p">()</span><span class="o">.</span><span class="n">holding</span> <span class="k">else</span> <span class="s2">"没有夹到东西"</span><span class="p">)</span>
-</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>    <span class="n">c</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>                             <span class="c1"># 松开</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>    <span class="n">c</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>                             <span class="c1"># release</span>
 </span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 </span></code></pre></div>
-<p>使用要点：</p>
+<p>Key points:</p>
 <ul>
-<li><strong>配置一律用 <code>for_spec(g.motor.get_spec())</code> 生成</strong>，只按需要改夹持力。</li>
-<li><strong>先启动控制器，再 <code>g.motor.enable()</code></strong>，上面的写法已经是这个顺序。</li>
-<li><strong>一只夹爪同时只运行一个控制器。</strong></li>
-<li>控制过程中读开度、速度、力矩、温度，用 <code>c.snapshot().observation</code>，不要另外去读电机状态。</li>
-<li>接口细节见 <a href="../../sdk/api/#follower">SDK 附录 → API 要点</a>。</li>
+<li><strong>Always generate the config with <code>for_spec(g.motor.get_spec())</code></strong>, and change only the grip force as needed.</li>
+<li><strong>Start the controller first, then <code>g.motor.enable()</code></strong>; the code above already follows this order.</li>
+<li><strong>Run only one controller per gripper at a time.</strong></li>
+<li>While controlling, read opening, velocity, torque and temperature from <code>c.snapshot().observation</code>; do not read the motor state separately.</li>
+<li>For interface details, see <a href="../../sdk/api/#follower">SDK appendix → API essentials</a>.</li>
 </ul>
 <div class="admonition danger">
-<p class="admonition-title">停止控制或断链时夹爪会松开</p>
-<p>控制器停止（退出 <code>with</code>、程序结束）、控制台按 <code>d</code> / <code>q</code>，或者 USB 断开，夹爪都会松开，<strong>夹着的东西会掉</strong>。
-机器人上夹持物体时，先把物体放到安全的位置再停止控制。</p>
+<p class="admonition-title">The gripper releases when control stops or the link drops</p>
+<p>When the controller stops (leaving the <code>with</code> block, program exit), when you press <code>d</code> / <code>q</code> in the console, or when USB disconnects, the gripper releases, and <strong>whatever it is holding will drop</strong>.
+When the robot is holding an object, put the object somewhere safe before stopping control.</p>
 </div>
 <div class="admonition warning">
-<p class="admonition-title">长时间夹持会降低夹持力</p>
-<p>电机发热后，固件会自动降低输出。实测 1.1 N·m 持续夹 10 分钟，电机升到约 70 °C；0.6 N·m 稳定在约 49 °C。
-需要持续夹几十分钟时，把夹持力降到 0.6 N·m 左右。</p>
+<p class="admonition-title">Holding for a long time reduces the grip force</p>
+<p>As the motor heats up, the firmware automatically reduces output. In testing, holding at 1.1 N·m for 10 minutes brought the motor to about 70 °C; at 0.6 N·m it settled at about 49 °C.
+If you need to hold continuously for tens of minutes, lower the grip force to around 0.6 N·m.</p>
 </div>
-<h2 id="fault">故障与恢复<a class="headerlink" href="#fault" title="锚点链接">¶</a></h2>
-<p>控制器检测到异常会停下并卸力，<code>c.snapshot().state</code> 变为 <code>FAULT</code>，原因在 <code>c.snapshot().fault_reason</code>。
-排除原因后依次调用 <code>g.motor.clear_fault()</code> 和 <code>c.reset()</code> 即可继续；不能恢复时断电重启夹爪。
-常见原因见 <a href="../troubleshooting/#fault">故障排查</a>。</p>
+<h2 id="fault">Faults and recovery<a class="headerlink" href="#fault" title="锚点链接">¶</a></h2>
+<p>When the controller detects an anomaly it stops and goes limp; <code>c.snapshot().state</code> becomes <code>FAULT</code>, and the reason is in <code>c.snapshot().fault_reason</code>.
+Once the cause is removed, call <code>g.motor.clear_fault()</code> and then <code>c.reset()</code> to continue; if it cannot recover, power-cycle the gripper.
+For common causes, see <a href="../troubleshooting/#fault">Troubleshooting</a>.</p>
 
 
 

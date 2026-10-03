@@ -93,7 +93,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#api-要点" class="md-skip">
+        <a href="#api-essentials" class="md-skip">
           Skip to content
         </a>
       
@@ -1576,7 +1576,7 @@
   <a href="#discovery" class="md-nav__link">
     <span class="md-ellipsis">
       
-        设备发现
+        Device discovery
       
     </span>
   </a>
@@ -1587,7 +1587,7 @@
   <a href="#leader" class="md-nav__link">
     <span class="md-ellipsis">
       
-        主夹爪：读取
+        Leader gripper: reading
       
     </span>
   </a>
@@ -1598,7 +1598,7 @@
   <a href="#follower" class="md-nav__link">
     <span class="md-ellipsis">
       
-        从夹爪：控制
+        Follower gripper: control
       
     </span>
   </a>
@@ -1609,7 +1609,7 @@
   <a href="#motor-primitives" class="md-nav__link">
     <span class="md-ellipsis">
       
-        电机底层接口
+        Low-level motor interfaces
       
     </span>
   </a>
@@ -1620,19 +1620,19 @@
   <a href="#camera" class="md-nav__link">
     <span class="md-ellipsis">
       
-        腕部相机与鱼眼矫正
+        Wrist camera and fisheye undistortion
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="腕部相机与鱼眼矫正">
+    <nav class="md-nav" aria-label="Wrist camera and fisheye undistortion">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#fisheye-fallback" class="md-nav__link">
     <span class="md-ellipsis">
       
-        鱼眼标定读不到时会怎样
+        What happens when the fisheye calibration cannot be read
       
     </span>
   </a>
@@ -2135,7 +2135,7 @@
   <a href="#discovery" class="md-nav__link">
     <span class="md-ellipsis">
       
-        设备发现
+        Device discovery
       
     </span>
   </a>
@@ -2146,7 +2146,7 @@
   <a href="#leader" class="md-nav__link">
     <span class="md-ellipsis">
       
-        主夹爪：读取
+        Leader gripper: reading
       
     </span>
   </a>
@@ -2157,7 +2157,7 @@
   <a href="#follower" class="md-nav__link">
     <span class="md-ellipsis">
       
-        从夹爪：控制
+        Follower gripper: control
       
     </span>
   </a>
@@ -2168,7 +2168,7 @@
   <a href="#motor-primitives" class="md-nav__link">
     <span class="md-ellipsis">
       
-        电机底层接口
+        Low-level motor interfaces
       
     </span>
   </a>
@@ -2179,19 +2179,19 @@
   <a href="#camera" class="md-nav__link">
     <span class="md-ellipsis">
       
-        腕部相机与鱼眼矫正
+        Wrist camera and fisheye undistortion
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="腕部相机与鱼眼矫正">
+    <nav class="md-nav" aria-label="Wrist camera and fisheye undistortion">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#fisheye-fallback" class="md-nav__link">
     <span class="md-ellipsis">
       
-        鱼眼标定读不到时会怎样
+        What happens when the fisheye calibration cannot be read
       
     </span>
   </a>
@@ -2220,103 +2220,103 @@
 
 
 
-<h1 id="api-要点">API 要点<a class="headerlink" href="#api-要点" title="锚点链接">¶</a></h1>
-<p>最常用的接口。示例为 Python；C++ 接口同名。完整说明可用 <code>help()</code> 查看，例如 <code>help(t.FollowerGripper)</code>。</p>
+<h1 id="api-essentials">API essentials<a class="headerlink" href="#api-essentials" title="锚点链接">¶</a></h1>
+<p>The most commonly used interfaces. Examples are in Python; the C++ interface uses the same names. For full documentation use <code>help()</code>, for example <code>help(t.FollowerGripper)</code>.</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">xense.taccap</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">t</span>
 </span></code></pre></div>
-<h2 id="discovery">设备发现<a class="headerlink" href="#discovery" title="锚点链接">¶</a></h2>
+<h2 id="discovery">Device discovery<a class="headerlink" href="#discovery" title="锚点链接">¶</a></h2>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">t</span><span class="o">.</span><span class="n">scan_grippers</span><span class="p">():</span>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">side</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">role</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">firmware_sn</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">mcu_device</span><span class="p">)</span>
 </span></code></pre></div>
-<p>多只夹爪时，按左右和主从一起挑出要用的那只，再用它的 <code>mcu_device</code> 打开：</p>
+<p>With several grippers attached, pick the one you want by side and by leader/follower role together, then open it with its <code>mcu_device</code>:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">ep</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">e</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">t</span><span class="o">.</span><span class="n">scan_grippers</span><span class="p">()</span>
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>          <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">side</span> <span class="o">==</span> <span class="n">t</span><span class="o">.</span><span class="n">Side</span><span class="o">.</span><span class="n">Left</span> <span class="ow">and</span> <span class="n">e</span><span class="o">.</span><span class="n">role</span> <span class="o">==</span> <span class="n">t</span><span class="o">.</span><span class="n">Role</span><span class="o">.</span><span class="n">Follower</span><span class="p">)</span>
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">g</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">FollowerGripper</span><span class="p">(</span><span class="n">ep</span><span class="o">.</span><span class="n">mcu_device</span><span class="p">)</span>
 </span></code></pre></div>
-<p>只接一只时也可以用 <code>t.find_follower()</code> / <code>t.find_leader()</code>。</p>
+<p>With only one gripper attached you can also use <code>t.find_follower()</code> / <code>t.find_leader()</code>.</p>
 <div class="admonition danger">
-<p class="admonition-title">扫描会中断其他程序</p>
-<p>扫描会停掉其他程序正在使用的夹爪数据流，正在夹持的从夹爪会卸力。在自己的程序里只在启动时扫描一次。</p>
+<p class="admonition-title">Scanning interrupts other programs</p>
+<p>A scan stops the gripper data streams other programs are using, and a follower gripper that is holding an object goes limp. In your own program, scan only once at startup.</p>
 </div>
-<h2 id="leader">主夹爪：读取<a class="headerlink" href="#leader" title="锚点链接">¶</a></h2>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">g</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">LeaderGripper</span><span class="p">(</span><span class="n">ep</span><span class="o">.</span><span class="n">mcu_device</span><span class="p">,</span> <span class="n">normalize_position</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>   <span class="c1"># ep 按上面的方法挑出主夹爪</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">g</span><span class="o">.</span><span class="n">encoder</span><span class="o">.</span><span class="n">on_data</span><span class="p">(</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">position</span><span class="p">))</span>   <span class="c1"># 0 = 闭合,1 = 张开</span>
+<h2 id="leader">Leader gripper: reading<a class="headerlink" href="#leader" title="锚点链接">¶</a></h2>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">g</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">LeaderGripper</span><span class="p">(</span><span class="n">ep</span><span class="o">.</span><span class="n">mcu_device</span><span class="p">,</span> <span class="n">normalize_position</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>   <span class="c1"># ep: pick the leader gripper as shown above</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">g</span><span class="o">.</span><span class="n">encoder</span><span class="o">.</span><span class="n">on_data</span><span class="p">(</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">position</span><span class="p">))</span>   <span class="c1"># 0 = closed, 1 = open</span>
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="n">g</span><span class="o">.</span><span class="n">imu</span><span class="o">.</span><span class="n">on_data</span><span class="p">(</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
 </span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="n">g</span><span class="o">.</span><span class="n">start_streaming</span><span class="p">(</span><span class="n">imu_hz</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">encoder_hz</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
 </span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="c1"># ...</span>
 </span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="n">g</span><span class="o">.</span><span class="n">stop_streaming</span><span class="p">()</span>
 </span></code></pre></div>
-<p><code>normalize_position=True</code> 需要主夹爪已完成行程标定，见 <a href="../../pc/calibration/">标定与自检</a>。</p>
-<h2 id="follower">从夹爪：控制<a class="headerlink" href="#follower" title="锚点链接">¶</a></h2>
-<p>用法与注意事项见 <a href="../../follower/control/">从夹爪 → 运动控制</a>。</p>
+<p><code>normalize_position=True</code> requires the leader gripper's travel calibration to be done; see <a href="../../pc/calibration/">Calibration and self-check</a>.</p>
+<h2 id="follower">Follower gripper: control<a class="headerlink" href="#follower" title="锚点链接">¶</a></h2>
+<p>For usage and precautions see <a href="../../follower/control/">Follower gripper → Motion control</a>.</p>
 <table>
 <thead>
 <tr>
 <th></th>
-<th>阻抗控制（默认）</th>
-<th>力位控制</th>
+<th>Impedance control (default)</th>
+<th>Force-position control</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>控制器</td>
+<td>Controller</td>
 <td><code>ImpedanceController</code></td>
 <td><code>ForcePositionController</code></td>
 </tr>
 <tr>
-<td>配置</td>
+<td>Config</td>
 <td><code>ImpedanceConfig.for_spec(g.motor.get_spec())</code></td>
 <td><code>ForcePositionConfig.for_spec(g.motor.get_spec())</code></td>
 </tr>
 <tr>
-<td>可调参数</td>
-<td>一般不调</td>
-<td><code>grasp_torque_nm</code>（夹持力，≤ 1.1 N·m）</td>
+<td>Tunable parameters</td>
+<td>Usually left alone</td>
+<td><code>grasp_torque_nm</code> (grip force, ≤ 1.1 N·m)</td>
 </tr>
 <tr>
-<td>常用调用</td>
-<td><code>set_target(开度)</code></td>
-<td><code>set_target(开度)</code>、<code>release()</code>、<code>hold_position()</code></td>
+<td>Common calls</td>
+<td><code>set_target(opening)</code></td>
+<td><code>set_target(opening)</code>, <code>release()</code>, <code>hold_position()</code></td>
 </tr>
 <tr>
-<td>是否夹住</td>
+<td>Is it holding</td>
 <td>—</td>
 <td><code>snapshot().holding</code></td>
 </tr>
 </tbody>
 </table>
-<p>两种控制器都有 <code>start()</code> / <code>stop()</code>（或用 <code>with</code>）、<code>snapshot()</code>、<code>reset()</code>。调用顺序：
-<code>g.motor.clear_fault()</code> → 启动控制器 → <code>g.motor.enable()</code> → <code>set_target()</code> → 停止控制器。</p>
-<p><code>snapshot().observation</code> 里有 <code>position</code>（开度）、<code>velocity</code>、<code>torque</code>（正值 = 往闭合方向）、<code>motor_temp_c</code>。</p>
-<p>不控制时读开度：<code>g.position()</code>。电机固件版本：<code>g.motor.motor_version()</code>，见
-<a href="../../follower/firmware/#motor-version">固件与电机升级</a>。</p>
-<h2 id="motor-primitives">电机底层接口<a class="headerlink" href="#motor-primitives" title="锚点链接">¶</a></h2>
-<p><code>g.motor.submit_*</code> 等底层接口直接向电机下发命令，不经过控制器的保护。<strong>请使用控制器</strong>，不要调用它们。</p>
-<p>以下接口会修改夹爪或电机里保存的配置，<strong>只在技术支持指导下使用</strong>：
-<code>set_model()</code>、<code>set_startup_limit_torque()</code>、<code>switch_protocol()</code>、<code>set_can_id()</code>、<code>set_private_param()</code>、
-<code>set_zero()</code>、<code>set_gripper_config()</code>、<code>set_envelope()</code>、<code>set_auto_cal_config()</code>、<code>set_motor_fw_version()</code>。</p>
-<h2 id="camera">腕部相机与鱼眼矫正<a class="headerlink" href="#camera" title="锚点链接">¶</a></h2>
-<p>夹爪对象默认不打开腕部相机。需要时：</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">g</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">FollowerGripper</span><span class="p">(</span><span class="n">ep</span><span class="o">.</span><span class="n">mcu_device</span><span class="p">,</span> <span class="n">wrist_video</span><span class="o">=</span><span class="s2">"/dev/v4l/by-id/&lt;相机&gt;-video-index0"</span><span class="p">,</span>
+<p>Both controllers have <code>start()</code> / <code>stop()</code> (or use <code>with</code>), <code>snapshot()</code> and <code>reset()</code>. Call order:
+<code>g.motor.clear_fault()</code> → start the controller → <code>g.motor.enable()</code> → <code>set_target()</code> → stop the controller.</p>
+<p><code>snapshot().observation</code> contains <code>position</code> (opening), <code>velocity</code>, <code>torque</code> (positive = toward closing) and <code>motor_temp_c</code>.</p>
+<p>To read the opening when not controlling: <code>g.position()</code>. Motor firmware version: <code>g.motor.motor_version()</code>, see
+<a href="../../follower/firmware/#motor-version">Firmware and motor upgrades</a>.</p>
+<h2 id="motor-primitives">Low-level motor interfaces<a class="headerlink" href="#motor-primitives" title="锚点链接">¶</a></h2>
+<p><code>g.motor.submit_*</code> and the other low-level interfaces send commands straight to the motor, bypassing the controller's protection. <strong>Use a controller</strong> and do not call them.</p>
+<p>The following interfaces change configuration stored in the gripper or the motor; <strong>use them only under technical support's guidance</strong>:
+<code>set_model()</code>, <code>set_startup_limit_torque()</code>, <code>switch_protocol()</code>, <code>set_can_id()</code>, <code>set_private_param()</code>,
+<code>set_zero()</code>, <code>set_gripper_config()</code>, <code>set_envelope()</code>, <code>set_auto_cal_config()</code>, <code>set_motor_fw_version()</code>.</p>
+<h2 id="camera">Wrist camera and fisheye undistortion<a class="headerlink" href="#camera" title="锚点链接">¶</a></h2>
+<p>Gripper objects do not open the wrist camera by default. When you need it:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">g</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">FollowerGripper</span><span class="p">(</span><span class="n">ep</span><span class="o">.</span><span class="n">mcu_device</span><span class="p">,</span> <span class="n">wrist_video</span><span class="o">=</span><span class="s2">"/dev/v4l/by-id/&lt;camera&gt;-video-index0"</span><span class="p">,</span>
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>                      <span class="n">open_cameras</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">undistort_wrist</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="n">g</span><span class="o">.</span><span class="n">wrist_camera</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">frame_index</span><span class="p">))</span>
 </span></code></pre></div>
-<p>画面默认是 RGB。查看画面可以直接用示例 <code>wrist_camera.py</code>，见 <a href="../examples/#camera">示例</a>。</p>
-<h3 id="fisheye-fallback">鱼眼标定读不到时会怎样<a class="headerlink" href="#fisheye-fallback" title="锚点链接">¶</a></h3>
-<p>鱼眼内参存在每只夹爪里。没有标定过的夹爪，SDK 会自动改用一组内置的参考内参并打印告警，矫正不会失败。
-读取内参时用：</p>
+<p>Frames are RGB by default. To view the image you can simply use the example <code>wrist_camera.py</code>; see <a href="../examples/#camera">Examples</a>.</p>
+<h3 id="fisheye-fallback">What happens when the fisheye calibration cannot be read<a class="headerlink" href="#fisheye-fallback" title="锚点链接">¶</a></h3>
+<p>Fisheye intrinsics are stored in each gripper. For a gripper that has never been calibrated, the SDK automatically falls back to a set of built-in reference intrinsics and prints a warning; undistortion does not fail.
+To read the intrinsics, use:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">cal</span><span class="p">,</span> <span class="n">is_reference</span><span class="p">,</span> <span class="n">reason</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">calibration</span><span class="o">.</span><span class="n">resolve_fisheye</span><span class="p">()</span>
 </span></code></pre></div>
-<p><code>is_reference</code> 为真表示用的是参考内参。</p>
+<p><code>is_reference</code> being true means the reference intrinsics are in use.</p>
 <div class="admonition warning">
-<p class="admonition-title">参考内参只是近似</p>
-<p>各台镜头的装配位置略有差异，参考内参只适合看画面。需要在矫正图上按像素测量（手眼标定、视觉伺服等）时，
-给这台夹爪写入它自己的标定：<code>python python/examples/fisheye_cal.py set-fisheye right --from-npz cam.npz</code>
-（从夹爪加 <code>--follower</code>）。</p>
+<p class="admonition-title">Reference intrinsics are only an approximation</p>
+<p>Lens mounting varies slightly from unit to unit, so the reference intrinsics are only good for viewing. When you need pixel measurements on the undistorted image (hand-eye calibration, visual servoing and so on),
+write this gripper's own calibration to it: <code>python python/examples/fisheye_cal.py set-fisheye right --from-npz cam.npz</code>
+(add <code>--follower</code> for a follower gripper).</p>
 </div>
 <div class="admonition note">
-<p class="admonition-title">矫正后画面偏心是正常的</p>
-<p>传感器不一定正好装在镜头光心上，矫正后画面可能偏向一侧，而标定是正确的，不要去改内参里的 <code>cx</code>。</p>
+<p class="admonition-title">An off-center image after undistortion is normal</p>
+<p>The sensor is not necessarily mounted exactly on the lens's optical center, so the undistorted image may lean to one side even though the calibration is correct. Do not change <code>cx</code> in the intrinsics.</p>
 </div>
 
 

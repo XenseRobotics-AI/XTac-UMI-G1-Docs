@@ -93,7 +93,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#从夹爪概览" class="md-skip">
+        <a href="#follower-gripper-overview" class="md-skip">
           Skip to content
         </a>
       
@@ -2013,7 +2013,7 @@
   <a href="#vs-leader" class="md-nav__link">
     <span class="md-ellipsis">
       
-        和主夹爪的区别
+        How it differs from the leader gripper
       
     </span>
   </a>
@@ -2024,7 +2024,7 @@
   <a href="#sn" class="md-nav__link">
     <span class="md-ellipsis">
       
-        序列号
+        Serial number
       
     </span>
   </a>
@@ -2035,7 +2035,7 @@
   <a href="#motor-model" class="md-nav__link">
     <span class="md-ellipsis">
       
-        电机
+        Motor
       
     </span>
   </a>
@@ -2046,7 +2046,7 @@
   <a href="#safety-model" class="md-nav__link">
     <span class="md-ellipsis">
       
-        安全须知
+        Safety notes
       
     </span>
   </a>
@@ -2057,7 +2057,7 @@
   <a href="#next" class="md-nav__link">
     <span class="md-ellipsis">
       
-        接下来
+        Next steps
       
     </span>
   </a>
@@ -2081,78 +2081,78 @@
 
 
 
-<h1 id="从夹爪概览">从夹爪概览<a class="headerlink" href="#从夹爪概览" title="锚点链接">¶</a></h1>
-<p>从夹爪（Follower）装在机器人末端，由电机驱动开合。主夹爪拿在手里采集动作，从夹爪在机器人上执行动作。
-本章介绍怎样用 <code>xense.taccap</code> SDK 控制从夹爪。</p>
-<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/product/follower-scene-front.webp" data-desc-position="bottom"><img alt="XTac-UMI G1 从夹爪" src="../../assets/product/follower-scene-front.webp" width="720"></a></p>
+<h1 id="follower-gripper-overview">Follower gripper overview<a class="headerlink" href="#follower-gripper-overview" title="锚点链接">¶</a></h1>
+<p>The follower gripper mounts on the robot's end effector and opens and closes under motor drive. You hold the leader gripper to capture the motion; the follower gripper performs it on the robot.
+This chapter shows how to control the follower gripper with the <code>xense.taccap</code> SDK.</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/product/follower-scene-front.webp" data-desc-position="bottom"><img alt="XTac-UMI G1 follower gripper" src="../../assets/product/follower-scene-front.webp" width="720"></a></p>
 <div class="admonition note">
-<p class="admonition-title">本章使用数采环境自带的 SDK 0.4.1</p>
-<p>本章按 <a href="https://github.com/XenseRobotics-AI/TacCap-Gripper">TacCap-Gripper</a> <strong>v0.4.1</strong> 编写，
-数采环境里自带的就是这一版，见 <a href="setup/#install">准备与自检</a>。</p>
+<p class="admonition-title">This chapter uses SDK 0.4.1, which ships with the collection environment</p>
+<p>This chapter is written against <a href="https://github.com/XenseRobotics-AI/TacCap-Gripper">TacCap-Gripper</a> <strong>v0.4.1</strong>,
+the version bundled with the collection environment; see <a href="setup/#install">Setup and self-check</a>.</p>
 </div>
-<h2 id="vs-leader">和主夹爪的区别<a class="headerlink" href="#vs-leader" title="锚点链接">¶</a></h2>
+<h2 id="vs-leader">How it differs from the leader gripper<a class="headerlink" href="#vs-leader" title="锚点链接">¶</a></h2>
 <table>
 <thead>
 <tr>
 <th></th>
-<th>主夹爪</th>
-<th>从夹爪</th>
+<th>Leader gripper</th>
+<th>Follower gripper</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>用途</td>
-<td>手持采集</td>
-<td>装在机器人末端执行开合与夹持</td>
+<td>Purpose</td>
+<td>Handheld capture</td>
+<td>Mounted on the robot's end effector to open, close and grasp</td>
 </tr>
 <tr>
-<td>电机</td>
-<td>无</td>
+<td>Motor</td>
+<td>None</td>
 <td>RobStride EL05</td>
 </tr>
 <tr>
-<td>供电</td>
+<td>Power</td>
 <td>USB Type-C</td>
 <td>USB Type-C + <strong>24V</strong></td>
 </tr>
 <tr>
-<td>IMU / 编码器 / 按键</td>
-<td>有</td>
-<td>无</td>
+<td>IMU / encoder / buttons</td>
+<td>Yes</td>
+<td>No</td>
 </tr>
 <tr>
-<td>行程标定</td>
-<td>手动标定</td>
-<td>上电自动标定</td>
+<td>Travel calibration</td>
+<td>Manual</td>
+<td>Automatic at power-on</td>
 </tr>
 <tr>
-<td>序列号末位字母</td>
+<td>Last letter of the serial number</td>
 <td><code>m</code></td>
 <td><code>s</code></td>
 </tr>
 <tr>
-<td>随 SDK 0.4.1 附带的固件</td>
+<td>Firmware bundled with SDK 0.4.1</td>
 <td>1.2.6</td>
 <td>1.2.14</td>
 </tr>
 </tbody>
 </table>
-<p>主夹爪和从夹爪的固件各自编号，两边版本号不同是正常的。</p>
-<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/product/follower-five-views.webp" data-desc-position="bottom"><img alt="从夹爪五视图" src="../../assets/product/follower-five-views.webp" width="720"></a></p>
-<h2 id="sn">序列号<a class="headerlink" href="#sn" title="锚点链接">¶</a></h2>
-<p>以 <code>TCGU01A24A0001s</code> 为例：</p>
+<p>Leader and follower firmware are numbered separately, so it is normal for their version numbers to differ.</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/product/follower-five-views.webp" data-desc-position="bottom"><img alt="Follower gripper, five views" src="../../assets/product/follower-five-views.webp" width="720"></a></p>
+<h2 id="sn">Serial number<a class="headerlink" href="#sn" title="锚点链接">¶</a></h2>
+<p>Taking <code>TCGU01A24A0001s</code> as an example:</p>
 <ul>
-<li><strong>最后一个字母</strong>是角色：<code>m</code> = 主夹爪，<code>s</code> = 从夹爪。刷固件时按它选镜像。</li>
-<li><strong>倒数第二位数字</strong>的单双数是侧别：单数 = 左，双数 = 右。从夹爪机械上不分左右，但软件用它区分两只从夹爪。</li>
+<li>The <strong>last letter</strong> is the role: <code>m</code> = leader gripper, <code>s</code> = follower gripper. Use it to pick the image when flashing firmware.</li>
+<li>Whether the <strong>last digit of the running number</strong>, just before the role letter (<code>1</code> here), is odd or even gives the side: odd = left, even = right. The follower gripper is mechanically not side-specific, but the software uses this to tell two follower grippers apart.</li>
 </ul>
-<h2 id="motor-model">电机<a class="headerlink" href="#motor-model" title="锚点链接">¶</a></h2>
+<h2 id="motor-model">Motor<a class="headerlink" href="#motor-model" title="锚点链接">¶</a></h2>
 <table>
 <thead>
 <tr>
-<th>持续堵转额定</th>
-<th>额定力矩</th>
-<th>力矩量程</th>
-<th>速度量程</th>
+<th>Continuous stall rating</th>
+<th>Rated torque</th>
+<th>Torque range</th>
+<th>Speed range</th>
 </tr>
 </thead>
 <tbody>
@@ -2164,23 +2164,23 @@
 </tr>
 </tbody>
 </table>
-<p><strong>持续堵转额定</strong>是爪子顶住物体时可以一直保持的力矩，也是默认的夹持力和上限。</p>
-<h2 id="safety-model">安全须知<a class="headerlink" href="#safety-model" title="锚点链接">¶</a></h2>
+<p>The <strong>continuous stall rating</strong> is the torque the jaws can hold indefinitely while pressing against an object; it is also the default grip force and its upper limit.</p>
+<h2 id="safety-model">Safety notes<a class="headerlink" href="#safety-model" title="锚点链接">¶</a></h2>
 <ul>
-<li>夹爪固件内置<strong>运动安全包络</strong>（力矩上限、过热降额），任何程序都绕不过去。
-  夹爪固件 1.2.12 起，没写过包络的从夹爪会自动执行一套默认包络；<strong>更旧的固件不写就没有保护</strong>，
-  爪子顶住硬物时会把 24V 电源拉垮，<strong>夹爪松手、USB 断开</strong>。不论哪个版本，第一次运动前都按
-  <a href="setup/#envelope">写入运动安全包络</a> 写一次。</li>
-<li>停止控制、程序退出或 USB 断开时，夹爪会松开，夹着的东西会掉。</li>
-<li>上电后夹爪会自己开合一次做标定（约 10 秒），期间不要放东西、不要发命令。</li>
+<li>The gripper firmware has a built-in <strong>motion safety envelope</strong> (torque limit, thermal derating) that no program can bypass.
+  From gripper firmware 1.2.12 on, a follower gripper that has never had an envelope written runs a default one; <strong>older firmware has no protection unless one is written</strong>,
+  and when the jaws press against something hard they can drag down the 24V supply, so <strong>the gripper lets go and USB disconnects</strong>. Whatever the version, before the first motion write the envelope once, following
+  <a href="setup/#envelope">Write the motion safety envelope</a>.</li>
+<li>When control stops, the program exits or USB disconnects, the gripper releases and whatever it is holding will drop.</li>
+<li>After power-on the gripper opens and closes once by itself to calibrate (about 10 seconds). During that time do not put anything in it and do not send commands.</li>
 </ul>
-<h2 id="next">接下来<a class="headerlink" href="#next" title="锚点链接">¶</a></h2>
+<h2 id="next">Next steps<a class="headerlink" href="#next" title="锚点链接">¶</a></h2>
 <ol>
-<li>安装与接线：<a href="../common/gripper/#follower-install">认识 XTac-UMI G1 → 从夹爪安装与连接</a></li>
-<li>安装 SDK、自检、写入包络：<a href="setup/">准备与自检</a></li>
-<li>让它动起来：<a href="control/">运动控制</a></li>
-<li>升级固件：<a href="firmware/">固件与电机升级</a></li>
-<li>出问题时：<a href="troubleshooting/">从夹爪故障排查</a></li>
+<li>Mounting and wiring: <a href="../common/gripper/#follower-install">Gripper connection and serial numbers → Follower gripper mounting and connection</a></li>
+<li>Install the SDK, run the self-check, write the envelope: <a href="setup/">Setup and self-check</a></li>
+<li>Make it move: <a href="control/">Motion control</a></li>
+<li>Upgrade the firmware: <a href="firmware/">Firmware and motor upgrades</a></li>
+<li>When something goes wrong: <a href="troubleshooting/">Follower gripper troubleshooting</a></li>
 </ol>
 
 

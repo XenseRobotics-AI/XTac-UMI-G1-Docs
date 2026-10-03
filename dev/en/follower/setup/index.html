@@ -93,7 +93,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#准备与自检" class="md-skip">
+        <a href="#setup-and-self-check" class="md-skip">
           Skip to content
         </a>
       
@@ -1721,7 +1721,7 @@
   <a href="#install" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1. 安装 SDK
+        1. Install the SDK
       
     </span>
   </a>
@@ -1732,7 +1732,7 @@
   <a href="#discover" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2. 找到设备
+        2. Find the device
       
     </span>
   </a>
@@ -1743,7 +1743,7 @@
   <a href="#self-check" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3. 自检
+        3. Self-check
       
     </span>
   </a>
@@ -1754,7 +1754,7 @@
   <a href="#envelope" class="md-nav__link">
     <span class="md-ellipsis">
       
-        4. 写入运动安全包络
+        4. Write the motion safety envelope
       
     </span>
   </a>
@@ -2104,7 +2104,7 @@
   <a href="#install" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1. 安装 SDK
+        1. Install the SDK
       
     </span>
   </a>
@@ -2115,7 +2115,7 @@
   <a href="#discover" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2. 找到设备
+        2. Find the device
       
     </span>
   </a>
@@ -2126,7 +2126,7 @@
   <a href="#self-check" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3. 自检
+        3. Self-check
       
     </span>
   </a>
@@ -2137,7 +2137,7 @@
   <a href="#envelope" class="md-nav__link">
     <span class="md-ellipsis">
       
-        4. 写入运动安全包络
+        4. Write the motion safety envelope
       
     </span>
   </a>
@@ -2161,42 +2161,42 @@
 
 
 
-<h1 id="准备与自检">准备与自检<a class="headerlink" href="#准备与自检" title="锚点链接">¶</a></h1>
-<p>按顺序做完四步再让从夹爪运动。硬件安装与接线见 <a href="../../common/gripper/#follower-install">夹爪连接与序列号 → 从夹爪安装与连接</a>，
-从夹爪要 <strong>USB Type-C 和 24V 两路都接上</strong>。</p>
-<h2 id="install">1. 安装 SDK<a class="headerlink" href="#install" title="锚点链接">¶</a></h2>
-<p>装好数采环境（<a href="../../pc/install/">安装</a>）就已经带有 SDK 0.4.1，不需要另外安装。示例脚本在数采仓库的
-<code>third_party/taccap-gripper/python/examples/</code> 下。串口权限见 <a href="../../pc/host-setup/#31">串口权限</a>。</p>
-<p>验证（在数采仓库根目录、数采环境里）：</p>
+<h1 id="setup-and-self-check">Setup and self-check<a class="headerlink" href="#setup-and-self-check" title="锚点链接">¶</a></h1>
+<p>Complete these four steps in order before letting the follower gripper move. Hardware mounting and wiring are in <a href="../../common/gripper/#follower-install">Gripper connection and serial numbers → Follower gripper mounting and connection</a>;
+the follower gripper needs <strong>both USB Type-C and 24V connected</strong>.</p>
+<h2 id="install">1. Install the SDK<a class="headerlink" href="#install" title="锚点链接">¶</a></h2>
+<p>Once the collection environment is installed (<a href="../../pc/install/">Installation</a>), SDK 0.4.1 is already included; there is nothing extra to install. The example scripts are in the data-collection repository under
+<code>third_party/taccap-gripper/python/examples/</code>. For serial port permissions, see <a href="../../pc/host-setup/#31">Serial permissions</a>.</p>
+<p>Verify (from the data-collection repository root, inside the collection environment):</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nb">cd</span><span class="w"> </span>third_party/taccap-gripper
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"import xense.taccap as t; print(t.hello())"</span>
 </span></code></pre></div>
-<p>应输出 <code>taccap-gripper OK; version 0.4.1</code>。版本不对说明 SDK 子模块没更新或没重新编译，见
-<a href="../troubleshooting/#connect">从夹爪故障排查</a>。</p>
-<p>之后的命令都在 <code>third_party/taccap-gripper</code> 目录下、数采环境里运行。不使用数采仓库、单独安装 SDK 的方法见
-<a href="../../sdk/install/">SDK 附录 → 安装与构建</a>。</p>
-<h2 id="discover">2. 找到设备<a class="headerlink" href="#discover" title="锚点链接">¶</a></h2>
-<p>上电后等夹爪自己开合一次、停下来（约 10 秒），再运行：</p>
+<p>It should print <code>taccap-gripper OK; version 0.4.1</code>. A different version means the SDK submodule was not updated or not rebuilt; see
+<a href="../troubleshooting/#connect">Follower gripper troubleshooting</a>.</p>
+<p>All subsequent commands are run from the <code>third_party/taccap-gripper</code> directory, inside the collection environment. To install the SDK on its own without the data-collection repository, see
+<a href="../../sdk/install/">SDK appendix → Install and build</a>.</p>
+<h2 id="discover">2. Find the device<a class="headerlink" href="#discover" title="锚点链接">¶</a></h2>
+<p>After power-on, wait for the gripper to open and close once by itself and come to rest (about 10 seconds), then run:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"from xense.taccap import scan_grippers</span>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="s2">for g in scan_grippers(): print(g.side, g.role, g.firmware_sn)"</span>
 </span></code></pre></div>
-<p>每只夹爪一行，从夹爪应显示 <code>Role.Follower</code>，序列号以 <code>s</code> 结尾，例如：</p>
+<p>One line per gripper. A follower gripper should show <code>Role.Follower</code> and a serial number ending in <code>s</code>, for example:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Side.Left Role.Follower TCGU01A24A0001s
 </span></code></pre></div>
-<p>示例脚本都用 <code>left</code>、<code>right</code> 或完整序列号指定夹爪，只接一只时可以省略。</p>
+<p>The example scripts all select a gripper by <code>left</code>, <code>right</code> or the full serial number; with only one connected you can omit it.</p>
 <div class="admonition warning">
-<p class="admonition-title">主从夹爪接在同一台电脑上时，用完整序列号</p>
-<p><code>left</code> / <code>right</code> 只看左右，不看主从。同一侧同时接着主夹爪和从夹爪时，脚本会报错；
-只接了主夹爪时，控制脚本会把它当从夹爪打开。这种接法一律用从夹爪的完整序列号。</p>
+<p class="admonition-title">When leader and follower grippers are on the same PC, use the full serial number</p>
+<p><code>left</code> / <code>right</code> only look at the side, not the role. If a leader and a follower gripper are both connected on the same side, the script reports an error;
+if only the leader gripper is connected, the control scripts will open it as if it were the follower. With this kind of wiring, always use the follower gripper's full serial number.</p>
 </div>
 <div class="admonition danger">
-<p class="admonition-title">不要在数采或控制程序运行时扫描</p>
-<p>扫描设备（包括每个示例脚本启动时）会中断正在运行的其他程序，正在夹持的从夹爪会卸力。先停掉其他程序。</p>
+<p class="admonition-title">Do not scan while a collection or control program is running</p>
+<p>Scanning for devices (which every example script does at startup) interrupts any other program that is running, and a follower gripper that is holding something goes limp. Stop the other programs first.</p>
 </div>
-<h2 id="self-check">3. 自检<a class="headerlink" href="#self-check" title="锚点链接">¶</a></h2>
+<h2 id="self-check">3. Self-check<a class="headerlink" href="#self-check" title="锚点链接">¶</a></h2>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>python<span class="w"> </span>python/examples/follower_status.py<span class="w"> </span>left
 </span></code></pre></div>
-<p>这个脚本只读，不会让电机动。正常输出中要看的几行（中间省略）：</p>
+<p>This script is read-only and does not move the motor. The lines to look at in normal output (with parts omitted):</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>[fw] FirmwareVersion(1.2.14.0)
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>...
 </span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>[归一化] g.position() = 0.9183
@@ -2209,50 +2209,50 @@
 <table>
 <thead>
 <tr>
-<th>看哪里</th>
-<th>正常</th>
-<th>不正常时</th>
+<th>Where to look</th>
+<th>Normal</th>
+<th>If not normal</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>[fw]</code></td>
 <td>1.2.14</td>
-<td>低于 1.2.11 会打印升级提示，低于 1.2.5 会报错退出，都先<a href="../firmware/#mcu-ota">升级固件</a></td>
+<td>Below 1.2.11 prints an upgrade prompt; below 1.2.5 exits with an error. In either case <a href="../firmware/#mcu-ota">upgrade the firmware</a> first</td>
 </tr>
 <tr>
-<td><code>[归一化]</code></td>
-<td>0 到 1 之间</td>
-<td>报 <code>not calibrated</code>：清空爪子周围，断电重启</td>
+<td><code>[归一化]</code> (normalized)</td>
+<td>Between 0 and 1</td>
+<td>Reports <code>not calibrated</code>: clear the area around the jaws and power-cycle</td>
 </tr>
 <tr>
-<td><code>[故障]</code></td>
-<td>全 0</td>
-<td>见<a href="../troubleshooting/#fault">故障排查</a></td>
+<td><code>[故障]</code> (fault)</td>
+<td>All 0</td>
+<td>See <a href="../troubleshooting/#fault">Troubleshooting</a></td>
 </tr>
 <tr>
-<td><code>[开流读]</code></td>
-<td>约 100 Hz，显示 <code>OK</code></td>
-<td>断电重启后再试，仍不正常见<a href="../troubleshooting/#self-check">故障排查</a></td>
+<td><code>[开流读]</code> (stream read)</td>
+<td>About 100 Hz, shows <code>OK</code></td>
+<td>Power-cycle and try again; if still not normal, see <a href="../troubleshooting/#self-check">Troubleshooting</a></td>
 </tr>
 </tbody>
 </table>
-<h2 id="envelope">4. 写入运动安全包络<a class="headerlink" href="#envelope" title="锚点链接">¶</a></h2>
-<p>包络是固件里的力矩与过热保护，每只从夹爪写一次，掉电保留。数值由 SDK 按电机自动生成，不用填。
-夹爪固件 1.2.12 起，没写过包络时固件会执行一套默认包络，更旧的固件则完全不保护；两种情况都要写一次。</p>
-<p>先查看：</p>
+<h2 id="envelope">4. Write the motion safety envelope<a class="headerlink" href="#envelope" title="锚点链接">¶</a></h2>
+<p>The envelope is the torque and overheating protection in the firmware. Write it once per follower gripper; it is retained across power loss. The values are generated automatically by the SDK for the motor, so there is nothing to fill in.
+From gripper firmware 1.2.12 on, the firmware runs a default envelope if none has been written; older firmware has no protection at all. In both cases, write it once.</p>
+<p>Check first:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>python<span class="w"> </span>python/examples/impedance_control.py<span class="w"> </span>left<span class="w"> </span>--show-envelope
 </span></code></pre></div>
-<p><code>effective</code> 一行有 <code>flags=0x2003 ENFORCE</code>，且没有 <code>[warn]</code> 行，说明已经写过，可以跳过。否则写入：
-（没写过包络的 1.2.12 及以上固件，<code>effective</code> 一行同样有 <code>ENFORCE</code>，但会多一行 <code>[warn]</code>，这时仍要写入。）</p>
+<p>If the <code>effective</code> line contains <code>flags=0x2003 ENFORCE</code> and there is no <code>[warn]</code> line, it has already been written and you can skip this step. Otherwise write it:
+(On firmware 1.2.12 or later with no envelope written, the <code>effective</code> line also contains <code>ENFORCE</code>, but there is an extra <code>[warn]</code> line; in that case you still need to write it.)</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>python<span class="w"> </span>python/examples/impedance_control.py<span class="w"> </span>left<span class="w"> </span>--set-envelope<span class="w"> </span>--show-envelope
 </span></code></pre></div>
-<p>显示 <code>已写入</code> 或 <code>已正确,未写入</code> 即完成。</p>
+<p>It is done when it shows <code>已写入</code> (written) or <code>已正确,未写入</code> (already correct, not written).</p>
 <div class="admonition danger">
-<p class="admonition-title"><code>--set-envelope</code> 一定要和 <code>--show-envelope</code> 一起用</p>
-<p>只加 <code>--set-envelope</code> 时，脚本写完后<strong>会接着让电机运动</strong>。</p>
+<p class="admonition-title">Always use <code>--set-envelope</code> together with <code>--show-envelope</code></p>
+<p>With <code>--set-envelope</code> alone, the script <strong>goes on to move the motor</strong> after writing.</p>
 </div>
-<p>完成后就可以开始<a href="../control/">运动控制</a>了。</p>
+<p>Once this is done, you can move on to <a href="../control/">Motion control</a>.</p>
 
 
 

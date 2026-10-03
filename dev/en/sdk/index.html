@@ -93,7 +93,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#sdk-概览" class="md-skip">
+        <a href="#sdk-overview" class="md-skip">
           Skip to content
         </a>
       
@@ -2016,7 +2016,7 @@
   <a href="#scope" class="md-nav__link">
     <span class="md-ellipsis">
       
-        能做什么
+        What it can do
       
     </span>
   </a>
@@ -2027,7 +2027,7 @@
   <a href="#notes" class="md-nav__link">
     <span class="md-ellipsis">
       
-        使用须知
+        Before you start
       
     </span>
   </a>
@@ -2038,7 +2038,7 @@
   <a href="#pages" class="md-nav__link">
     <span class="md-ellipsis">
       
-        本附录的其他页
+        Other pages in this appendix
       
     </span>
   </a>
@@ -2062,58 +2062,58 @@
 
 
 
-<h1 id="sdk-概览">SDK 概览<a class="headerlink" href="#sdk-概览" title="锚点链接">¶</a></h1>
-<p><code>xense.taccap</code>（仓库 <a href="https://github.com/XenseRobotics-AI/TacCap-Gripper">TacCap-Gripper</a>）是 XTac-UMI G1
-夹爪的开发包，提供 Python 与 C++ 两种接口，用于自己编写程序读取主夹爪、控制从夹爪。</p>
+<h1 id="sdk-overview">SDK overview<a class="headerlink" href="#sdk-overview" title="锚点链接">¶</a></h1>
+<p><code>xense.taccap</code> (repository <a href="https://github.com/XenseRobotics-AI/TacCap-Gripper">TacCap-Gripper</a>) is the development kit for the XTac-UMI G1
+grippers. It provides both Python and C++ interfaces, for writing your own programs that read the leader gripper and control the follower gripper.</p>
 <div class="admonition note">
-<p class="admonition-title">本附录按 SDK 0.4.1 编写</p>
-<p>数采仓库 <code>xense-taccap-lerobot</code> 自带的就是 SDK 0.4.1（子模块 <code>third_party/taccap-gripper</code>），
-按 <a href="../pc/install/">安装</a> 装好数采环境即可直接使用，见 <a href="install/">安装与构建</a>。</p>
+<p class="admonition-title">This appendix is written for SDK 0.4.1</p>
+<p>The data-collection repository <code>xense-taccap-lerobot</code> ships SDK 0.4.1 (submodule <code>third_party/taccap-gripper</code>).
+Once the collection environment is set up per <a href="../pc/install/">Installation</a> it is ready to use; see <a href="install/">Install and build</a>.</p>
 </div>
-<h2 id="scope">能做什么<a class="headerlink" href="#scope" title="锚点链接">¶</a></h2>
+<h2 id="scope">What it can do<a class="headerlink" href="#scope" title="锚点链接">¶</a></h2>
 <table>
 <thead>
 <tr>
 <th></th>
-<th>主夹爪</th>
-<th>从夹爪</th>
+<th>Leader gripper</th>
+<th>Follower gripper</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>读开合</td>
-<td>编码器，0..1 开度</td>
-<td>电机位置，0..1 开度</td>
+<td>Opening</td>
+<td>Encoder, 0..1 opening</td>
+<td>Motor position, 0..1 opening</td>
 </tr>
 <tr>
-<td>其他数据</td>
-<td>IMU、按键</td>
-<td>电机速度、力矩、温度</td>
+<td>Other data</td>
+<td>IMU, buttons</td>
+<td>Motor velocity, torque, temperature</td>
 </tr>
 <tr>
-<td>控制</td>
+<td>Control</td>
 <td>—</td>
-<td>阻抗控制（默认）、力位控制</td>
+<td>Impedance control (default), force-position control</td>
 </tr>
 <tr>
-<td>共有</td>
-<td>LED、腕部相机、鱼眼内参、固件升级</td>
-<td>同左；另有电机固件升级与版本查看</td>
+<td>Shared</td>
+<td>LED, wrist camera, fisheye intrinsics, firmware upgrade</td>
+<td>Same as left; plus motor firmware upgrade and version query</td>
 </tr>
 </tbody>
 </table>
-<p>视触觉图像由 <code>xensesdk</code> 采集，不在本 SDK 里。遥操作、抓取策略、数据录制属于上层应用。</p>
-<h2 id="notes">使用须知<a class="headerlink" href="#notes" title="锚点链接">¶</a></h2>
+<p>Visuotactile images are captured by <code>xensesdk</code> and are not part of this SDK. Teleoperation, grasping policies and data recording belong to higher-level applications.</p>
+<h2 id="notes">Before you start<a class="headerlink" href="#notes" title="锚点链接">¶</a></h2>
 <ul>
-<li>电脑不直接控制电机，所有命令都经夹爪主控板转发，主控板上的保护（运动安全包络）任何程序都绕不过去。</li>
-<li>一只夹爪同时只由一个程序、一个控制器使用。扫描设备会中断其他正在使用夹爪的程序。</li>
-<li>日志写在 <code>~/.taccaplogs/</code>（可用环境变量 <code>TACCAP_LOG_DIR</code> 修改），每次运行一个文件。反馈问题时附上对应的日志。</li>
+<li>The computer never drives the motor directly: every command is relayed by the gripper's main control board, and no program can bypass the protection on that board (the motion safety envelope).</li>
+<li>A gripper is used by only one program, and one controller, at a time. Scanning for devices interrupts any other program currently using a gripper.</li>
+<li>Logs are written to <code>~/.taccaplogs/</code> (change it with the environment variable <code>TACCAP_LOG_DIR</code>), one file per run. Attach the matching log when reporting a problem.</li>
 </ul>
-<h2 id="pages">本附录的其他页<a class="headerlink" href="#pages" title="锚点链接">¶</a></h2>
+<h2 id="pages">Other pages in this appendix<a class="headerlink" href="#pages" title="锚点链接">¶</a></h2>
 <ul>
-<li><a href="install/">安装与构建</a>：Python 安装，以及集成到 C++ / ROS 2 工程。</li>
-<li><a href="api/">API 要点</a>：设备发现、主夹爪读取、从夹爪控制、标定与腕部相机。</li>
-<li><a href="examples/">示例</a>：示例脚本一览，以及从旧版本迁移。</li>
+<li><a href="install/">Install and build</a>: installing for Python, and integrating into C++ / ROS 2 projects.</li>
+<li><a href="api/">API essentials</a>: device discovery, reading the leader gripper, controlling the follower gripper, calibration and the wrist camera.</li>
+<li><a href="examples/">Examples</a>: the example scripts at a glance, and migrating from older versions.</li>
 </ul>
 
 

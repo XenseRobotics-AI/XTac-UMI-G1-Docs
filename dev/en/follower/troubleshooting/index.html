@@ -93,7 +93,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#从夹爪故障排查" class="md-skip">
+        <a href="#follower-gripper-troubleshooting" class="md-skip">
           Skip to content
         </a>
       
@@ -1805,7 +1805,7 @@
   <a href="#connect" class="md-nav__link">
     <span class="md-ellipsis">
       
-        找不到设备、打不开
+        Device not found or will not open
       
     </span>
   </a>
@@ -1816,7 +1816,7 @@
   <a href="#self-check" class="md-nav__link">
     <span class="md-ellipsis">
       
-        自检异常
+        Self-check anomalies
       
     </span>
   </a>
@@ -1827,7 +1827,7 @@
   <a href="#start-errors" class="md-nav__link">
     <span class="md-ellipsis">
       
-        启动控制时报错
+        Errors when starting control
       
     </span>
   </a>
@@ -1838,7 +1838,7 @@
   <a href="#fault" class="md-nav__link">
     <span class="md-ellipsis">
       
-        运动中出问题
+        Problems during motion
       
     </span>
   </a>
@@ -2104,7 +2104,7 @@
   <a href="#connect" class="md-nav__link">
     <span class="md-ellipsis">
       
-        找不到设备、打不开
+        Device not found or will not open
       
     </span>
   </a>
@@ -2115,7 +2115,7 @@
   <a href="#self-check" class="md-nav__link">
     <span class="md-ellipsis">
       
-        自检异常
+        Self-check anomalies
       
     </span>
   </a>
@@ -2126,7 +2126,7 @@
   <a href="#start-errors" class="md-nav__link">
     <span class="md-ellipsis">
       
-        启动控制时报错
+        Errors when starting control
       
     </span>
   </a>
@@ -2137,7 +2137,7 @@
   <a href="#fault" class="md-nav__link">
     <span class="md-ellipsis">
       
-        运动中出问题
+        Problems during motion
       
     </span>
   </a>
@@ -2161,93 +2161,93 @@
 
 
 
-<h1 id="从夹爪故障排查">从夹爪故障排查<a class="headerlink" href="#从夹爪故障排查" title="锚点链接">¶</a></h1>
-<p>先跑一遍 <a href="../setup/#self-check">自检</a>，多数问题从它的输出就能看出来。
-本页说的<strong>断电重启</strong>，是指拔下 24V 电源线，等约 2 秒再插回，USB 线不用拔。</p>
-<h2 id="connect">找不到设备、打不开<a class="headerlink" href="#connect" title="锚点链接">¶</a></h2>
+<h1 id="follower-gripper-troubleshooting">Follower gripper troubleshooting<a class="headerlink" href="#follower-gripper-troubleshooting" title="锚点链接">¶</a></h1>
+<p>Run the <a href="../setup/#self-check">self-check</a> first; most problems are apparent from its output.
+On this page, <strong>power-cycle</strong> means unplugging the 24V power cable, waiting about 2 seconds and plugging it back in; you do not need to unplug the USB cable.</p>
+<h2 id="connect">Device not found or will not open<a class="headerlink" href="#connect" title="锚点链接">¶</a></h2>
 <details class="failure">
-<summary>扫描不到从夹爪</summary>
-<p><strong>解决</strong>：</p>
+<summary>The follower gripper is not found by a scan</summary>
+<p><strong>Fix</strong>:</p>
 <ul>
-<li>确认 USB 和 24V 都接好，<code>lsusb</code> 里应有 <code>1a86:55d2</code>；没有就换线或换 USB 口。</li>
-<li>确认已加入 <code>dialout</code> 组并重新登录，见 <a href="../../pc/host-setup/#31">串口权限</a>。</li>
-<li>关掉数采程序和其他用到夹爪的程序，再扫描。</li>
-<li>仍显示 <code>Role.Unknown</code> 或序列号为空，联系<a href="../../common/reference/#support">技术支持</a>。</li>
+<li>Make sure both USB and 24V are connected; <code>lsusb</code> should list <code>1a86:55d2</code>. If it does not, try another cable or USB port.</li>
+<li>Make sure you have been added to the <code>dialout</code> group and have logged in again; see <a href="../../pc/host-setup/#31">Serial permissions</a>.</li>
+<li>Close the collection program and any other program using the gripper, then scan again.</li>
+<li>If it still shows <code>Role.Unknown</code> or an empty serial number, contact <a href="../../common/reference/#support">technical support</a>.</li>
 </ul>
 </details>
 <details class="failure">
-<summary>脚本报 <code>2 plugged-in grippers report side=Left</code></summary>
-<p><strong>原因</strong>：同一侧同时接着主夹爪和从夹爪。
-<strong>解决</strong>：改用从夹爪的完整序列号，例如 <code>follower_status.py TCGU01A24A0001s</code>。</p>
+<summary>The script reports <code>2 plugged-in grippers report side=Left</code></summary>
+<p><strong>Cause</strong>: a leader and a follower gripper are both connected on the same side.
+<strong>Fix</strong>: use the follower gripper's full serial number instead, e.g. <code>follower_status.py TCGU01A24A0001s</code>.</p>
 </details>
 <details class="failure">
-<summary>报 <code>从爪固件版本过低,必须升级后才能使用本 SDK</code></summary>
-<p><strong>解决</strong>：按 <a href="../firmware/#mcu-ota">升级夹爪固件</a> 升级，然后断电重启。</p>
+<summary>It reports <code>从爪固件版本过低,必须升级后才能使用本 SDK</code> (follower firmware too old, must be upgraded to use this SDK)</summary>
+<p><strong>Fix</strong>: upgrade following <a href="../firmware/#mcu-ota">Upgrade the gripper firmware</a>, then power-cycle.</p>
 </details>
 <details class="failure">
-<summary>打开时提示 <code>从爪固件 ... 低于 1.2.11</code>，或控制中夹爪突然不听命令、夹持力变小</summary>
-<p><strong>原因</strong>：1.2.11 以前的夹爪固件在控制串口偶发溢出后会一直收不到命令，数据照常上报，夹持力降下来、手指松开。
-<strong>解决</strong>：按 <a href="../firmware/#mcu-ota">升级夹爪固件</a> 升级到随 SDK 附带的版本，然后断电重启。</p>
+<summary>On opening it warns <code>从爪固件 ... 低于 1.2.11</code> (follower firmware below 1.2.11), or during control the gripper suddenly ignores commands and the grip force drops</summary>
+<p><strong>Cause</strong>: gripper firmware before 1.2.11, after an occasional overflow on the control serial port, stops receiving commands for good while still reporting data as usual, so the grip force drops and the fingers loosen.
+<strong>Fix</strong>: upgrade to the version bundled with the SDK following <a href="../firmware/#mcu-ota">Upgrade the gripper firmware</a>, then power-cycle.</p>
 </details>
 <details class="failure">
-<summary><code>hello()</code> 显示的版本不是 0.4.1，或 <code>import</code> 报错</summary>
-<p><strong>原因</strong>：SDK 子模块没更新，或更新后没有重新编译。
-<strong>解决</strong>：在数采仓库根目录拉子模块并重跑安装脚本：</p>
+<summary><code>hello()</code> shows a version other than 0.4.1, or <code>import</code> fails</summary>
+<p><strong>Cause</strong>: the SDK submodule was not updated, or was not rebuilt after updating.
+<strong>Fix</strong>: from the data-collection repository root, pull the submodules and rerun the install script:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>git<span class="w"> </span>submodule<span class="w"> </span>update<span class="w"> </span>--init<span class="w"> </span>--recursive
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>./setup_env.sh<span class="w"> </span>--install
 </span></code></pre></div>
-<p>见 <a href="../../pc/install/#22">克隆仓库与子模块</a>。</p>
+<p>See <a href="../../pc/install/#22">Clone the repo and its submodules</a>.</p>
 </details>
-<h2 id="self-check">自检异常<a class="headerlink" href="#self-check" title="锚点链接">¶</a></h2>
+<h2 id="self-check">Self-check anomalies<a class="headerlink" href="#self-check" title="锚点链接">¶</a></h2>
 <details class="failure">
-<summary>报 <code>gripper config is not calibrated</code></summary>
-<p><strong>原因</strong>：上电自动标定没有完成，常见于上电时爪子被挡住或 24V 没接。
-<strong>解决</strong>：清空爪子周围，接好 24V，断电重启，等爪子自己开合一次后再试。</p>
-</details>
-<details class="failure">
-<summary>数据帧率明显低于 100 Hz，或没有显示 <code>OK</code></summary>
-<p><strong>解决</strong>：关掉其他用到夹爪的程序，换线或换 USB 口，断电重启后再自检。</p>
+<summary>It reports <code>gripper config is not calibrated</code></summary>
+<p><strong>Cause</strong>: the automatic calibration at power-on did not complete, usually because the jaws were blocked or the 24V was not connected at power-on.
+<strong>Fix</strong>: clear the area around the jaws, connect the 24V, power-cycle, and wait for the jaws to open and close once by themselves before trying again.</p>
 </details>
 <details class="failure">
-<summary><code>get_spec()</code> 显示的不是 EL05</summary>
-<p><strong>解决</strong>：停止使用，联系<a href="../../common/reference/#support">技术支持</a>。</p>
-</details>
-<h2 id="start-errors">启动控制时报错<a class="headerlink" href="#start-errors" title="锚点链接">¶</a></h2>
-<details class="failure">
-<summary>报 <code>ValueError: ... exceeds ...</code> 或 <code>RuntimeError: ... stored motor startup torque limit ...</code></summary>
-<p><strong>原因</strong>：控制器配置里的力矩超出了电机的额定值。
-<strong>解决</strong>：配置用 <code>for_spec(g.motor.get_spec())</code> 生成，夹持力不超过 1.1 N·m。仍然报错时联系<a href="../../common/reference/#support">技术支持</a>。</p>
+<summary>The data frame rate is well below 100 Hz, or <code>OK</code> is not shown</summary>
+<p><strong>Fix</strong>: close other programs using the gripper, try another cable or USB port, power-cycle, and run the self-check again.</p>
 </details>
 <details class="failure">
-<summary>刚上电时报 <code>SysBusy</code>，或电机没反应</summary>
-<p><strong>原因</strong>：上电后约 10 秒夹爪在自动标定。
-<strong>解决</strong>：等爪子自己开合一次停下来再开始。</p>
+<summary><code>get_spec()</code> shows something other than EL05</summary>
+<p><strong>Fix</strong>: stop using it and contact <a href="../../common/reference/#support">technical support</a>.</p>
 </details>
-<h2 id="fault">运动中出问题<a class="headerlink" href="#fault" title="锚点链接">¶</a></h2>
+<h2 id="start-errors">Errors when starting control<a class="headerlink" href="#start-errors" title="锚点链接">¶</a></h2>
 <details class="failure">
-<summary>控制器进入 <code>FAULT</code></summary>
-<p>看 <code>c.snapshot().fault_reason</code>：</p>
+<summary>It reports <code>ValueError: ... exceeds ...</code> or <code>RuntimeError: ... stored motor startup torque limit ...</code></summary>
+<p><strong>Cause</strong>: a torque in the controller config exceeds the motor's rating.
+<strong>Fix</strong>: generate the config with <code>for_spec(g.motor.get_spec())</code> and keep the grip force at or below 1.1 N·m. If it still fails, contact <a href="../../common/reference/#support">technical support</a>.</p>
+</details>
+<details class="failure">
+<summary>It reports <code>SysBusy</code> right after power-on, or the motor does not respond</summary>
+<p><strong>Cause</strong>: for about 10 seconds after power-on the gripper is calibrating automatically.
+<strong>Fix</strong>: wait for the jaws to open and close once by themselves and stop before you start.</p>
+</details>
+<h2 id="fault">Problems during motion<a class="headerlink" href="#fault" title="锚点链接">¶</a></h2>
+<details class="failure">
+<summary>The controller enters <code>FAULT</code></summary>
+<p>Check <code>c.snapshot().fault_reason</code>:</p>
 <ul>
-<li><code>motor status stream stale</code>：夹爪数据中断，多为 USB 断开或 24V 掉电，检查接线后断电重启。</li>
-<li><code>motor status reports a fault</code>：电机报故障，运行 <code>print(g.motor.fault_report())</code> 查看详情。</li>
-<li>其他原因：记下原文。</li>
+<li><code>motor status stream stale</code>: the gripper's data stream was interrupted, usually because USB disconnected or the 24V dropped. Check the wiring, then power-cycle.</li>
+<li><code>motor status reports a fault</code>: the motor reported a fault; run <code>print(g.motor.fault_report())</code> for details.</li>
+<li>Any other reason: note down the exact text.</li>
 </ul>
-<p>排除后调用 <code>g.motor.clear_fault()</code> 和 <code>c.reset()</code> 继续；反复出现时联系<a href="../../common/reference/#support">技术支持</a>，附上 <code>fault_report()</code> 的输出。</p>
+<p>Once the cause is removed, call <code>g.motor.clear_fault()</code> and <code>c.reset()</code> to continue. If it keeps happening, contact <a href="../../common/reference/#support">technical support</a> and include the output of <code>fault_report()</code>.</p>
 </details>
 <details class="failure">
-<summary>夹紧硬物时夹爪突然松开，USB 断开</summary>
-<p><strong>原因</strong>：运动安全包络没有生效，力矩过大把 24V 拉垮。
-<strong>解决</strong>：断电重启，按 <a href="../setup/#envelope">写入运动安全包络</a> 检查并写入；确认 24V 电源适配器符合规格。</p>
+<summary>While clamping something hard, the gripper suddenly lets go and USB disconnects</summary>
+<p><strong>Cause</strong>: the motion safety envelope is not in effect, and excessive torque dragged down the 24V supply.
+<strong>Fix</strong>: power-cycle, then check and write the envelope following <a href="../setup/#envelope">Write the motion safety envelope</a>; make sure the 24V power adapter meets the specification.</p>
 </details>
 <details class="failure">
-<summary>长时间夹持后夹持力变小</summary>
-<p><strong>原因</strong>：电机发热后固件自动降低输出，这是保护，不是故障。
-<strong>解决</strong>：降低夹持力或缩短夹持时间。</p>
+<summary>The grip force drops after holding for a long time</summary>
+<p><strong>Cause</strong>: as the motor heats up, the firmware automatically reduces output. This is protection, not a fault.
+<strong>Fix</strong>: lower the grip force or shorten the holding time.</p>
 </details>
 <details class="failure">
-<summary>启动另一个脚本后，正在控制的夹爪松开</summary>
-<p><strong>原因</strong>：脚本启动时扫描设备，中断了正在运行的控制程序。
-<strong>解决</strong>：控制运行期间不要启动其他夹爪程序或示例脚本。</p>
+<summary>Starting another script makes the gripper under control let go</summary>
+<p><strong>Cause</strong>: the script scans for devices at startup, interrupting the running control program.
+<strong>Fix</strong>: while control is running, do not start any other gripper program or example script.</p>
 </details>
 
 

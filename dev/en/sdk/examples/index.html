@@ -93,7 +93,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#示例" class="md-skip">
+        <a href="#examples" class="md-skip">
           Skip to content
         </a>
       
@@ -1604,7 +1604,7 @@
   <a href="#scripts" class="md-nav__link">
     <span class="md-ellipsis">
       
-        脚本一览
+        Scripts at a glance
       
     </span>
   </a>
@@ -1615,7 +1615,7 @@
   <a href="#follower" class="md-nav__link">
     <span class="md-ellipsis">
       
-        从夹爪
+        Follower gripper
       
     </span>
   </a>
@@ -1626,7 +1626,7 @@
   <a href="#leader" class="md-nav__link">
     <span class="md-ellipsis">
       
-        主夹爪
+        Leader gripper
       
     </span>
   </a>
@@ -1637,7 +1637,7 @@
   <a href="#camera" class="md-nav__link">
     <span class="md-ellipsis">
       
-        腕部相机
+        Wrist camera
       
     </span>
   </a>
@@ -1648,7 +1648,7 @@
   <a href="#firmware" class="md-nav__link">
     <span class="md-ellipsis">
       
-        固件
+        Firmware
       
     </span>
   </a>
@@ -1659,7 +1659,7 @@
   <a href="#migrate" class="md-nav__link">
     <span class="md-ellipsis">
       
-        从旧版本迁移
+        Migrating from older versions
       
     </span>
   </a>
@@ -2129,7 +2129,7 @@
   <a href="#scripts" class="md-nav__link">
     <span class="md-ellipsis">
       
-        脚本一览
+        Scripts at a glance
       
     </span>
   </a>
@@ -2140,7 +2140,7 @@
   <a href="#follower" class="md-nav__link">
     <span class="md-ellipsis">
       
-        从夹爪
+        Follower gripper
       
     </span>
   </a>
@@ -2151,7 +2151,7 @@
   <a href="#leader" class="md-nav__link">
     <span class="md-ellipsis">
       
-        主夹爪
+        Leader gripper
       
     </span>
   </a>
@@ -2162,7 +2162,7 @@
   <a href="#camera" class="md-nav__link">
     <span class="md-ellipsis">
       
-        腕部相机
+        Wrist camera
       
     </span>
   </a>
@@ -2173,7 +2173,7 @@
   <a href="#firmware" class="md-nav__link">
     <span class="md-ellipsis">
       
-        固件
+        Firmware
       
     </span>
   </a>
@@ -2184,7 +2184,7 @@
   <a href="#migrate" class="md-nav__link">
     <span class="md-ellipsis">
       
-        从旧版本迁移
+        Migrating from older versions
       
     </span>
   </a>
@@ -2208,127 +2208,127 @@
 
 
 
-<h1 id="示例">示例<a class="headerlink" href="#示例" title="锚点链接">¶</a></h1>
-<p>SDK 源码的 <code>python/examples/</code> 下有一组可以直接运行的脚本。先跑通脚本，再照着写自己的程序。
-以下命令在 SDK 源码目录下运行：使用数采环境时是数采仓库的 <code>third_party/taccap-gripper</code>，
-单独安装时是 <code>TacCap-Gripper</code>。</p>
-<p>所有脚本都用 <code>left</code>、<code>right</code> 或完整序列号指定夹爪，只接一只时可以省略。同一侧同时接着主从夹爪时用完整序列号。
-<strong>脚本启动时会中断其他正在使用夹爪的程序，数采或控制运行时不要运行示例脚本。</strong></p>
-<h2 id="scripts">脚本一览<a class="headerlink" href="#scripts" title="锚点链接">¶</a></h2>
+<h1 id="examples">Examples<a class="headerlink" href="#examples" title="锚点链接">¶</a></h1>
+<p>The SDK source has a set of ready-to-run scripts under <code>python/examples/</code>. Get the scripts working first, then model your own program on them.
+Run the commands below from the SDK source directory: with the collection environment that is <code>third_party/taccap-gripper</code> in the data-collection repository;
+with a standalone install it is <code>TacCap-Gripper</code>.</p>
+<p>Every script selects a gripper with <code>left</code>, <code>right</code> or a full serial number, which can be omitted when only one gripper is attached. When a leader and a follower gripper are attached on the same side, use the full serial number.
+<strong>A script interrupts any other program using a gripper when it starts, so do not run example scripts while collection or control is running.</strong></p>
+<h2 id="scripts">Scripts at a glance<a class="headerlink" href="#scripts" title="锚点链接">¶</a></h2>
 <table>
 <thead>
 <tr>
-<th>脚本</th>
-<th>用途</th>
-<th>是否会动电机或改写夹爪</th>
+<th>Script</th>
+<th>Purpose</th>
+<th>Moves the motor or rewrites the gripper?</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>follower_status.py</code></td>
-<td>从夹爪自检</td>
-<td>只读</td>
+<td>Follower gripper self-check</td>
+<td>Read-only</td>
 </tr>
 <tr>
 <td><code>gripper_console.py</code></td>
-<td>键盘控制从夹爪</td>
-<td><strong>会动电机</strong></td>
+<td>Keyboard control of the follower gripper</td>
+<td><strong>Moves the motor</strong></td>
 </tr>
 <tr>
 <td><code>impedance_control.py</code></td>
-<td>阻抗控制测试；查看 / 写入运动安全包络</td>
-<td><strong>会动电机</strong>；<code>--set-envelope</code> 改写夹爪</td>
+<td>Impedance control test; view / write the motion safety envelope</td>
+<td><strong>Moves the motor</strong>; <code>--set-envelope</code> rewrites the gripper</td>
 </tr>
 <tr>
 <td><code>force_position_control.py</code></td>
-<td>力位控制夹持测试</td>
-<td><strong>会动电机</strong></td>
+<td>Force-position control grasp test</td>
+<td><strong>Moves the motor</strong></td>
 </tr>
 <tr>
 <td><code>control_and_read.py</code></td>
-<td>控制中读取状态</td>
-<td><strong>会动电机</strong></td>
+<td>Read state while controlling</td>
+<td><strong>Moves the motor</strong></td>
 </tr>
 <tr>
 <td><code>control_ripple.py</code></td>
-<td>测量运动平稳度</td>
-<td><strong>会动电机</strong></td>
+<td>Measure motion smoothness</td>
+<td><strong>Moves the motor</strong></td>
 </tr>
 <tr>
 <td><code>calibrate.py</code></td>
-<td>主夹爪行程标定</td>
-<td>改写夹爪</td>
+<td>Leader gripper travel calibration</td>
+<td>Rewrites the gripper</td>
 </tr>
 <tr>
 <td><code>leader_normalized_position.py</code></td>
-<td>读取主夹爪开度</td>
-<td>只读</td>
+<td>Read the leader gripper's opening</td>
+<td>Read-only</td>
 </tr>
 <tr>
 <td><code>fisheye_cal.py</code></td>
-<td>查看 / 写入鱼眼内参</td>
-<td><code>show</code> 只读，其余改写夹爪</td>
+<td>View / write fisheye intrinsics</td>
+<td><code>show</code> is read-only, the rest rewrite the gripper</td>
 </tr>
 <tr>
 <td><code>read_intrinsics.py</code></td>
-<td>导出腕部相机内参</td>
-<td>只读</td>
+<td>Export the wrist camera intrinsics</td>
+<td>Read-only</td>
 </tr>
 <tr>
 <td><code>wrist_camera.py</code></td>
-<td>腕部相机查看器</td>
-<td>只读</td>
+<td>Wrist camera viewer</td>
+<td>Read-only</td>
 </tr>
 <tr>
 <td><code>ota_update.py</code></td>
-<td>夹爪固件升级</td>
-<td><strong>刷写固件</strong></td>
+<td>Gripper firmware upgrade</td>
+<td><strong>Flashes firmware</strong></td>
 </tr>
 <tr>
 <td><code>motor_ota_update.py</code></td>
-<td>电机固件升级</td>
-<td><strong>刷写固件</strong></td>
+<td>Motor firmware upgrade</td>
+<td><strong>Flashes firmware</strong></td>
 </tr>
 </tbody>
 </table>
-<p>每个脚本都可以用 <code>--help</code> 查看参数。</p>
-<h2 id="follower">从夹爪<a class="headerlink" href="#follower" title="锚点链接">¶</a></h2>
+<p>Every script accepts <code>--help</code> to list its arguments.</p>
+<h2 id="follower">Follower gripper<a class="headerlink" href="#follower" title="锚点链接">¶</a></h2>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>python<span class="w"> </span>python/examples/follower_status.py<span class="w"> </span>left
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>python<span class="w"> </span>python/examples/gripper_console.py<span class="w"> </span>left
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>python<span class="w"> </span>python/examples/impedance_control.py<span class="w"> </span>left
 </span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>python<span class="w"> </span>python/examples/force_position_control.py<span class="w"> </span>left<span class="w"> </span>--grasp-torque<span class="w"> </span><span class="m">0</span>.6
 </span></code></pre></div>
-<p>第一次使用前先按 <a href="../../follower/setup/">准备与自检</a> 写好运动安全包络。</p>
-<h2 id="leader">主夹爪<a class="headerlink" href="#leader" title="锚点链接">¶</a></h2>
+<p>Before first use, write the motion safety envelope per <a href="../../follower/setup/">Setup and self-check</a>.</p>
+<h2 id="leader">Leader gripper<a class="headerlink" href="#leader" title="锚点链接">¶</a></h2>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>python<span class="w"> </span>python/examples/calibrate.py<span class="w"> </span>right
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>python<span class="w"> </span>python/examples/leader_normalized_position.py<span class="w"> </span>right
 </span></code></pre></div>
-<p>标定流程见 <a href="../../pc/calibration/">标定与自检</a>。</p>
-<h2 id="camera">腕部相机<a class="headerlink" href="#camera" title="锚点链接">¶</a></h2>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>python<span class="w"> </span>python/examples/wrist_camera.py<span class="w"> </span>--list<span class="w">                  </span><span class="c1"># 列出相机及其序列号</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>python<span class="w"> </span>python/examples/wrist_camera.py<span class="w"> </span>&lt;相机序列号&gt;<span class="w"> </span>--undistort<span class="w">   </span><span class="c1"># 矫正后的画面</span>
+<p>The calibration procedure is in <a href="../../pc/calibration/">Calibration and self-check</a>.</p>
+<h2 id="camera">Wrist camera<a class="headerlink" href="#camera" title="锚点链接">¶</a></h2>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>python<span class="w"> </span>python/examples/wrist_camera.py<span class="w"> </span>--list<span class="w">                  </span><span class="c1"># list cameras and their serial numbers</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>python<span class="w"> </span>python/examples/wrist_camera.py<span class="w"> </span>&lt;camera<span class="w"> </span>serial&gt;<span class="w"> </span>--undistort<span class="w">   </span><span class="c1"># undistorted image</span>
 </span></code></pre></div>
-<h2 id="firmware">固件<a class="headerlink" href="#firmware" title="锚点链接">¶</a></h2>
-<p>步骤见 <a href="../../follower/firmware/">固件与电机升级</a>，主夹爪升级时把 <code>slave</code> 换成 <code>master</code>。</p>
-<h2 id="migrate">从旧版本迁移<a class="headerlink" href="#migrate" title="锚点链接">¶</a></h2>
-<p>照 0.1.x / 0.2.x 写的程序，升级到 0.4.1 时主要有这些变化：</p>
+<h2 id="firmware">Firmware<a class="headerlink" href="#firmware" title="锚点链接">¶</a></h2>
+<p>For the steps see <a href="../../follower/firmware/">Firmware and motor upgrades</a>; when upgrading a leader gripper, replace <code>slave</code> with <code>master</code>.</p>
+<h2 id="migrate">Migrating from older versions<a class="headerlink" href="#migrate" title="锚点链接">¶</a></h2>
+<p>Programs written against 0.1.x / 0.2.x mainly see these changes when upgrading to 0.4.1:</p>
 <ul>
-<li>从夹爪改用控制器：<code>ImpedanceController</code> 或 <code>ForcePositionController</code>，配置用 <code>for_spec()</code> 生成。
-  旧的 <code>ControlLoop</code>、<code>set_position()</code> 等接口已删除。</li>
-<li>速度和力矩统一为正值 = 往闭合方向。</li>
-<li>从夹爪固件需要 1.2.5 或以上，低于 1.2.11 时会提示升级。</li>
-<li>示例脚本改用位置参数 <code>left</code> / <code>right</code> / 序列号选择夹爪，旧的控制类示例脚本已删除。</li>
-<li>夹爪对象给出的腕部相机画面默认改为 RGB。</li>
+<li>The follower gripper now uses controllers: <code>ImpedanceController</code> or <code>ForcePositionController</code>, configured with <code>for_spec()</code>.
+  The old <code>ControlLoop</code>, <code>set_position()</code> and similar interfaces have been removed.</li>
+<li>Velocity and torque are now uniformly positive = toward closing.</li>
+<li>Follower gripper firmware must be 1.2.5 or later; below 1.2.11 you are prompted to upgrade.</li>
+<li>The example scripts now select a gripper with a positional argument <code>left</code> / <code>right</code> / serial number, and the old control-type example scripts have been removed.</li>
+<li>The wrist camera frames delivered by gripper objects are now RGB by default.</li>
 </ul>
-<p>从 0.3.x 升级到 0.4.x 时：</p>
+<p>When upgrading from 0.3.x to 0.4.x:</p>
 <ul>
-<li>力位控制改为单一的力矩受限控制律，夹住时更稳；<code>snapshot().holding</code> 会比以前晚约 150 ms 变为真，
-  依赖它的程序请重新验证。</li>
-<li>闭合到 0 时，最终状态可能是 <code>HOLDING_FORCE</code> 也可能是 <code>HOLDING_POSITION</code>，两者都是正常的。</li>
-<li>运行中 <code>set_target(开度, 夹持力)</code> 的夹持力超过 1.1 N·m 时直接报错，不再静默接受。</li>
-<li>新增 <code>g.motor.motor_version()</code> 读电机固件版本（夹爪固件 1.2.14 起不受电机通信模式限制）。</li>
+<li>Force-position control now uses a single torque-limited control law, which holds more steadily when grasping; <code>snapshot().holding</code> becomes true about 150 ms later than before,
+  so revalidate any program that relies on it.</li>
+<li>When closing to 0, the final state may be either <code>HOLDING_FORCE</code> or <code>HOLDING_POSITION</code>; both are normal.</li>
+<li>During operation, <code>set_target(opening, grip_force)</code> with a grip force above 1.1 N·m now raises an error instead of being silently accepted.</li>
+<li>New <code>g.motor.motor_version()</code> reads the motor firmware version (from gripper firmware 1.2.14 on, this works regardless of the motor's communication mode).</li>
 </ul>
-<p>完整变更见 SDK 的 <a href="https://github.com/XenseRobotics-AI/TacCap-Gripper/blob/v0.4.1/CHANGELOG.md">CHANGELOG</a>。</p>
+<p>The full list of changes is in the SDK's <a href="https://github.com/XenseRobotics-AI/TacCap-Gripper/blob/v0.4.1/CHANGELOG.md">CHANGELOG</a>.</p>
 
 
 
