@@ -19,7 +19,7 @@ This page keeps the configuration options, the glossary and the appendix.
 | `robot.enable_wrist_camera` | `true` | Turns the wrist camera off |
 | `robot.wrist_camera_width/_height/_fps` | — | Wrist camera resolution / frame rate |
 | `robot.wrist_camera_fourcc` | `MJPG` | Wrist pixel format. MJPG by default so the tactile sensors on the same hub get the USB bandwidth |
-| `robot.enable_head_camera` | `false` | Headset camera (first-person view + headset pose), see [5.6](05-data-collection.md#56) |
+| `robot.enable_head_camera` | `false` | **Single gripper only**: headset camera (first-person view + headset pose); bimanual uses `--robot.type=xtac_umi_g1`, see [5.6](05-data-collection.md#56) |
 | `robot.head_camera_eyes` | `both` | `both` = one key per eye; `left` / `right` records only that one |
 | `robot.head_camera_width/_height` | `640` / `480` | Size **per eye**; only `640x480`, `1024x768` and `1280x960` are accepted, and it must match the resolution the headset outputs (both default to 640x480) |
 | `robot.head_camera_fps` | `30` | Headset camera frame rate |

@@ -316,7 +316,14 @@ Only relevant on [the Docker path](02-environment.md#docker).
 
 ## Headset camera {#head-camera}
 
-??? failure "`--robot.enable_head_camera=true` hangs waiting for the first frame"
+??? failure "`... always records the headset ...` or `... does not record the headset ...`"
+    **Cause**: a bimanual command passes `--robot.enable_head_camera` and it contradicts
+    `--robot.type`. The type decides whether the headset is included: `bi_taccap_gripper` has no
+    headset, `xtac_umi_g1` has the headset.
+    **Fix**: drop `--robot.enable_head_camera`; use `--robot.type=xtac_umi_g1` to record the headset,
+    or `--robot.type=bi_taccap_gripper` not to. See [5.6 Headset camera](05-data-collection.md#56).
+
+??? failure "Recording the headset hangs waiting for the first frame"
     **Cause**: the camera frames are relayed by PC Service, and any broken link in that chain means
     no frames: a service older than v0.2.0 (v0.1.0 does not relay headset camera frames), or the
     headset app not streaming.

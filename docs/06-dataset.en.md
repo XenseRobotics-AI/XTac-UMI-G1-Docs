@@ -114,7 +114,7 @@ affect the other checks.
 
 A bimanual dataset recorded with the [headset camera](05-data-collection.md#56) on is in the
 8-camera format. To reduce it to the 6-camera format (the same shape as one recorded with
-`--robot.enable_head_camera=false`), use `lerobot-edit-dataset`:
+`bi_taccap_gripper`, and the type recorded in the dataset becomes `bi_taccap_gripper` too), use `lerobot-edit-dataset`:
 
 ```bash
 lerobot-edit-dataset \

@@ -36,12 +36,11 @@ so they show different things.
         --robot.type=bi_taccap_gripper \
         --robot.id=0 \
         --robot.enable_tracker=false \
-        --robot.enable_head_camera=false \
         --fps=30 \
         --display_data=true
     ```
 
-=== "② Plus the tracker pose"
+=== "② With wrist pose"
 
     Adds the [`/world` 3D view](#world-view): the gripper's EE marker and the trail behind it.
     Needs the tracker powered on and bound, the headset connected, and the
@@ -51,27 +50,21 @@ so they show different things.
     lerobot-teleoperate \
         --robot.type=bi_taccap_gripper \
         --robot.id=0 \
-        --robot.enable_tracker=true \
-        --robot.enable_head_camera=false \
         --fps=30 \
-        --display_data=true \
-        --show_trajectory=true
+        --display_data=true
     ```
 
-=== "③ Everything (with the headset camera)"
+=== "③ Full rig"
 
-    Adds the headset's stereo frames and head pose. Needs **PC Service ≥ v0.2.0** (see
-    [§5.6](#56)).
+    Switch to `--robot.type=xtac_umi_g1`, which adds the headset's stereo frames and head pose
+    (see [§5.6](#56)).
 
     ```bash
     lerobot-teleoperate \
-        --robot.type=bi_taccap_gripper \
+        --robot.type=xtac_umi_g1 \
         --robot.id=0 \
-        --robot.enable_tracker=true \
-        --robot.enable_head_camera=true \
         --fps=30 \
-        --display_data=true \
-        --show_trajectory=true
+        --display_data=true
     ```
 
 **Single gripper**: use `--robot.type=taccap_gripper`; everything else is the same. With only one
@@ -90,10 +83,12 @@ Check each of these in Rerun (the two pose rows only apply to ② and ③):
 
 `Ctrl+C` once it all looks right, then record below.
 
-!!! note "Why `--robot.enable_head_camera` is spelled out"
-    It already defaults to `false`; writing it keeps the switch **visible in the command** — set
-    it to `true` and the headset's stereo frames and head pose come along for the preview and the
-    recording (see [5.6 Headset camera](#56)). Needs **PC Service ≥ v0.2.0**.
+!!! note "`--robot.type` decides whether the headset is included"
+    Bimanual without the headset is `bi_taccap_gripper`; with the headset it is `xtac_umi_g1`, and
+    the type recorded in the dataset differs accordingly. Bimanual commands no longer carry
+    `--robot.enable_head_camera`; if you pass it and it contradicts the type, the command fails
+    right away and tells you which type to use. The single-gripper `taccap_gripper` has no headset
+    type, so it still turns the headset on with `--robot.enable_head_camera=true`.
 
 !!! tip "Let it stop on its own, and print per-frame timing"
     Add `--teleop_time_s=10` to exit automatically after ten seconds, and `--debug_timing=true`
@@ -141,7 +136,6 @@ serials. Tactile sensors, wrist cameras and trackers each match left/right by th
         --robot.type=bi_taccap_gripper \
         --robot.id=0 \
         --robot.enable_tracker=false \
-        --robot.enable_head_camera=false \
         --display_data=false \
         --dataset.repo_id=<your_org>/<your_dataset> \
         --dataset.num_episodes=1 \
@@ -152,7 +146,7 @@ serials. Tactile sensors, wrist cameras and trackers each match left/right by th
         --dataset.single_task='Pick up the object'
     ```
 
-=== "② Plus the tracker pose"
+=== "② With wrist pose"
 
     Adds `tcp.*` (the EEF TCP pose). **This is the usual one**, and what the rest of this chapter
     assumes.
@@ -161,8 +155,6 @@ serials. Tactile sensors, wrist cameras and trackers each match left/right by th
     lerobot-record \
         --robot.type=bi_taccap_gripper \
         --robot.id=0 \
-        --robot.enable_tracker=true \
-        --robot.enable_head_camera=false \
         --display_data=false \
         --dataset.repo_id=<your_org>/<your_dataset> \
         --dataset.num_episodes=1 \
@@ -173,17 +165,15 @@ serials. Tactile sensors, wrist cameras and trackers each match left/right by th
         --dataset.single_task='Pick up the object'
     ```
 
-=== "③ Everything (with the headset camera)"
+=== "③ Full rig"
 
-    Adds the headset's stereo frames and head pose. Needs **PC Service ≥ v0.2.0** (see
-    [§5.6](#56)).
+    Switch to `--robot.type=xtac_umi_g1`, which adds the headset's stereo frames and head pose
+    (see [§5.6](#56)).
 
     ```bash
     lerobot-record \
-        --robot.type=bi_taccap_gripper \
+        --robot.type=xtac_umi_g1 \
         --robot.id=0 \
-        --robot.enable_tracker=true \
-        --robot.enable_head_camera=true \
         --display_data=false \
         --dataset.repo_id=<your_org>/<your_dataset> \
         --dataset.num_episodes=1 \
@@ -255,10 +245,7 @@ official [recording guide](https://huggingface.co/docs/lerobot/v0.5.1/en/il_robo
 !!! note "Spell out the parameters that matter"
     Always set `fps=30`, `episode_time_s=120`, `reset_time_s=60` and `push_to_hub=false`
     explicitly in your commands, so a different checkout's defaults cannot change what you
-    collect. The examples above spell out `--robot.enable_head_camera=false` for the same reason:
-    `false` is the default, and writing it keeps the switch visible. Set it to `true` to record
-    the headset's stereo view and pose as well (see [§5.6](#56)); that needs **PC Service >=
-    v0.2.0**.
+    collect.
 
 !!! note "`fps` vs. sensor frame rate"
     `fps` is the **recording sample rate**, not a sensor ceiling. The visuotactile sensors
@@ -293,7 +280,7 @@ official [recording guide](https://huggingface.co/docs/lerobot/v0.5.1/en/il_robo
 | `robot.wrist_camera_fourcc` | `MJPG` | Wrist pixel format. MJPG by default so the two tactile sensors on the same hub get the USB bandwidth; `YUYV` is uncompressed and only fits when there is room |
 | `robot.wrist_undistort` | `false` | Rectify the wrist fisheye **before it is recorded**, see [§5.7](#57) |
 | `robot.wrist_undistort_balance` | `0.0` | Field of view after rectification: `0` keeps the calibrated focal length, `1` is widest but with more black border |
-| `robot.enable_head_camera` | `false` | Record the Pico4 Ultra Enterprise **headset camera** — see [§5.6](#56) |
+| `robot.enable_head_camera` | `false` | **Single-gripper `taccap_gripper` only**: record the headset camera; bimanual uses `--robot.type=xtac_umi_g1` instead — see [§5.6](#56) |
 | `robot.head_camera_eyes` | `both` | `both` records each eye as its own key; `left` / `right` records one |
 | `robot.head_camera_width/_height` | `640` / `480` | **Per-eye** size; only `640x480`, `1024x768` or `1280x960` are accepted, and it must match the resolution the headset outputs (both default to 640x480) |
 | `robot.head_camera_fps` | `30` | Head camera recording frame rate |
@@ -469,7 +456,7 @@ format could not express it at all.
 | `gripper.pos` | Jaw encoder | `--robot.enable_gripper` (default `true`) | float ∈ [0, 1] |
 | `tactile_left` / `tactile_right` | The two visuotactile sensors | **always recorded**, no switch | uint8, about `(400, 700, 3)` |
 | `wrist_cam` | Wrist camera | `--robot.enable_wrist_camera` (default `true`) | uint8 `(H, W, 3)` |
-| `left_head` / `right_head` | Headset stereo, **one key per eye** | `--robot.enable_head_camera` (default `false`) | uint8, `(480, 640, 3)` by default |
+| `left_head` / `right_head` | Headset stereo, **one key per eye** | `--robot.type=xtac_umi_g1` (single gripper: `--robot.enable_head_camera=true`) | uint8, `(480, 640, 3)` by default |
 | `head_camera.x/y/z` | Headset position (same frame as `tcp.*`), **also an action** | as above | float (m) |
 | `head_camera.r1..r6` | Headset orientation as a 6-D rotation, **also an action** | as above | float |
 | `imu.accel.{x,y,z}` | Gripper IMU acceleration | `--robot.enable_imu` (default `false`, **reserved, not recorded**) | float (m/s²) |
@@ -555,8 +542,8 @@ format could not express it at all.
     because it looks clearer. `--robot.tactile_diff_gain` (default `1.0`) is only that image's gain.
 - **Wrist camera** → `wrist_cam`; skip it with `--robot.enable_wrist_camera=false`, tune with
   `--robot.wrist_camera_width/_height/_fps`.
-- **Headset camera** → `left_head` / `right_head` plus `head_camera.*`; **off by default**, turn
-  it on with `--robot.enable_head_camera=true` — see [§5.6](#56).
+- **Headset camera** → `left_head` / `right_head` plus `head_camera.*`; bimanual uses
+  `--robot.type=xtac_umi_g1`, single gripper adds `--robot.enable_head_camera=true` — see [§5.6](#56).
 - **Role** → `--robot.role=follower` binds the slave unit (default `leader`); the follower
   firmware must be ≥ 1.1.6, see [firmware OTA](versions.md#ota).
 
@@ -667,16 +654,15 @@ GPU should upgrade to 0.0.8.
 
 ## 5.6 Optional: the headset camera (first-person view) {#56}
 
-**Off by default.** Turning it on records the Pico4 Ultra Enterprise headset's **own stereo
-camera** plus the headset's pose — the operator's first-person view and where they were looking.
-Both `taccap_gripper` (single) and `bi_taccap_gripper` support it, with the same flags.
+Records the Pico4 Ultra Enterprise headset's **own stereo camera** plus the headset's pose — the
+operator's first-person view and where they were looking. Bimanual uses `--robot.type=xtac_umi_g1`
+(`bi_taccap_gripper` never includes the headset); the single-gripper `taccap_gripper` adds
+`--robot.enable_head_camera=true`. The headset parameters below apply to both.
 
 ```bash
 lerobot-record \
-    --robot.type=bi_taccap_gripper \
+    --robot.type=xtac_umi_g1 \
     --robot.id=0 \
-    --robot.enable_tracker=true \
-    --robot.enable_head_camera=true \
     --display_data=false \
     --dataset.repo_id=<your_org>/<your_dataset> \
     --dataset.single_task='Pick up the object' \

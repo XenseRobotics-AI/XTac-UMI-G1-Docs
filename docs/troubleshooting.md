@@ -267,7 +267,13 @@
 
 ## 头显相机 {#head-camera}
 
-??? failure "开了 `--robot.enable_head_camera=true`，一直卡在等待首帧"
+??? failure "报 `... always records the headset ...` 或 `... does not record the headset ...`"
+    **原因**：双夹爪的命令里写了 `--robot.enable_head_camera`，且与 `--robot.type` 矛盾。带不带头显由类型决定：
+    `bi_taccap_gripper` 不带头显，`xtac_umi_g1` 带头显。
+    **解决**：去掉 `--robot.enable_head_camera`，要录头显就用 `--robot.type=xtac_umi_g1`，不录就用
+    `--robot.type=bi_taccap_gripper`。见 [5.6 头显相机](05-data-collection.md#56)。
+
+??? failure "录头显时一直卡在等待首帧"
     **原因**：相机画面由 PC Service 转发，这条路上任何一环没通都收不到帧：
     服务版本低于 v0.2.0（v0.1.0 不转发头显相机画面）、头显 APP 没在推流。
     **解决**：按这个顺序查——

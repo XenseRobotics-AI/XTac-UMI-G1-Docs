@@ -31,12 +31,11 @@
         --robot.type=bi_taccap_gripper \
         --robot.id=0 \
         --robot.enable_tracker=false \
-        --robot.enable_head_camera=false \
         --fps=30 \
         --display_data=true
     ```
 
-=== "② 加上追踪器位姿"
+=== "② 带腕部位姿"
 
     多出 [`/world` 3D 视图](#world-view)：夹爪的 EE 标记和它走过的轨迹。
     需要追踪器已开机绑定、Pico4 已连上、[XenseVR PC Service](03-host-hardware.md#35) 已启动。
@@ -45,26 +44,20 @@
     lerobot-teleoperate \
         --robot.type=bi_taccap_gripper \
         --robot.id=0 \
-        --robot.enable_tracker=true \
-        --robot.enable_head_camera=false \
         --fps=30 \
-        --display_data=true \
-        --show_trajectory=true
+        --display_data=true
     ```
 
-=== "③ 全开（含头显相机）"
+=== "③ 完全体"
 
-    再多出头显双目画面与头部位姿，需要 **PC Service ≥ v0.2.0**（见 [§5.6](#56)）。
+    换成 `--robot.type=xtac_umi_g1`，再多出头显双目画面与头部位姿（见 [§5.6](#56)）。
 
     ```bash
     lerobot-teleoperate \
-        --robot.type=bi_taccap_gripper \
+        --robot.type=xtac_umi_g1 \
         --robot.id=0 \
-        --robot.enable_tracker=true \
-        --robot.enable_head_camera=true \
         --fps=30 \
-        --display_data=true \
-        --show_trajectory=true
+        --display_data=true
     ```
 
 **单夹爪**：换成 `--robot.type=taccap_gripper`，其余相同。只接了一只时会自动选中；
@@ -82,9 +75,10 @@
 
 都正常再 `Ctrl+C` 退出，继续下面的录制。
 
-!!! note "`--robot.enable_head_camera` 为什么显式写出来"
-    它默认就是 `false`，写出来是为了让这个开关**在命令里可见**——改成 `true` 就会连同
-    头显双目画面与头显位姿一起预览/录制（见 [5.6 头显相机](#56)），需要 **PC Service ≥ v0.2.0**。
+!!! note "带不带头显由 `--robot.type` 决定"
+    双夹爪不带头显用 `bi_taccap_gripper`，带头显用 `xtac_umi_g1`，数据集里记录的类型也随之不同。
+    双夹爪命令里不再写 `--robot.enable_head_camera`；写了且与类型矛盾时会直接报错，并提示该用哪个类型。
+    单夹爪 `taccap_gripper` 没有带头显的类型，仍用 `--robot.enable_head_camera=true` 开启头显。
 
 !!! tip "想让它自己停，并打印每帧耗时"
     `--teleop_time_s=10` 跑满 10 秒自动退出，`--debug_timing=true` 打印采样耗时与相机路数。
@@ -126,7 +120,6 @@
         --robot.type=bi_taccap_gripper \
         --robot.id=0 \
         --robot.enable_tracker=false \
-        --robot.enable_head_camera=false \
         --display_data=false \
         --dataset.repo_id=<your_org>/<your_dataset> \
         --dataset.num_episodes=1 \
@@ -137,7 +130,7 @@
         --dataset.single_task='Pick up the object'
     ```
 
-=== "② 加上追踪器位姿"
+=== "② 带腕部位姿"
 
     再加 `tcp.*`（EEF TCP 位姿）。**这是最常用的一档**，本章后面的说明默认按它来。
 
@@ -145,8 +138,6 @@
     lerobot-record \
         --robot.type=bi_taccap_gripper \
         --robot.id=0 \
-        --robot.enable_tracker=true \
-        --robot.enable_head_camera=false \
         --display_data=false \
         --dataset.repo_id=<your_org>/<your_dataset> \
         --dataset.num_episodes=1 \
@@ -157,16 +148,14 @@
         --dataset.single_task='Pick up the object'
     ```
 
-=== "③ 全开（含头显相机）"
+=== "③ 完全体"
 
-    再加头显双目画面与头部位姿，需要 **PC Service ≥ v0.2.0**（见 [§5.6](#56)）。
+    换成 `--robot.type=xtac_umi_g1`，再加头显双目画面与头部位姿（见 [§5.6](#56)）。
 
     ```bash
     lerobot-record \
-        --robot.type=bi_taccap_gripper \
+        --robot.type=xtac_umi_g1 \
         --robot.id=0 \
-        --robot.enable_tracker=true \
-        --robot.enable_head_camera=true \
         --display_data=false \
         --dataset.repo_id=<your_org>/<your_dataset> \
         --dataset.num_episodes=1 \
@@ -230,9 +219,6 @@
 
 !!! note "显式写出关键参数"
     推荐命令始终显式指定 `fps=30`、`episode_time_s=120`、`reset_time_s=60` 和 `push_to_hub=false`，避免不同 checkout 的默认值变化影响采集。
-    上面的示例把 `--robot.enable_head_camera=false` 也写了出来，同样是这个道理——它默认就是
-    `false`，写出来是让这个开关在命令里可见。改成 `true` 即连同头显双目画面与头显位姿一起录
-    （见 [§5.6](#56)）；需要 **PC Service ≥ v0.2.0**。
 
 !!! note "`fps` 与传感器帧率"
     `fps` 是**录制采样率**，不是传感器上限。视触觉传感器本身 120 Hz（[硬件参数](hardware.md#specs)），
@@ -266,7 +252,7 @@
 | `robot.wrist_camera_fourcc` | `MJPG` | 腕相机像素格式。默认 MJPG 是为了给同 hub 的两路触觉让出 USB 带宽；`YUYV` 为无压缩，只在带宽够时用 |
 | `robot.wrist_undistort` | `false` | **落盘前**把腕相机的鱼眼矫正掉，见 [§5.7](#57) |
 | `robot.wrist_undistort_balance` | `0.0` | 矫正后的视野档位，`0` 保持标定焦距，`1` 视野最大但黑边更多 |
-| `robot.enable_head_camera` | `false` | 录制 Pico4 Ultra 企业版**头显相机**，见 [§5.6](#56) |
+| `robot.enable_head_camera` | `false` | **仅单夹爪 `taccap_gripper`**：录制头显相机；双夹爪改用 `--robot.type=xtac_umi_g1`，见 [§5.6](#56) |
 | `robot.head_camera_eyes` | `both` | `both` 录左右两只眼（两个键），`left` / `right` 只录一只 |
 | `robot.head_camera_width/_height` | `640` / `480` | **每只眼**的尺寸，只接受 `640x480`、`1024x768` 或 `1280x960`；要与头显输出的分辨率一致（默认都是 640x480） |
 | `robot.head_camera_fps` | `30` | 头显相机录制帧率 |
@@ -425,7 +411,7 @@ ValueError: --robot.id is required: the station label for this rig, e.g. --robot
 | `gripper.pos` | 夹爪编码器 | `--robot.enable_gripper`（默认 `true`） | float ∈ [0, 1] |
 | `tactile_left` / `tactile_right` | 左右视触觉传感器 | **始终采集**，无开关 | uint8，约 `(400, 700, 3)` |
 | `wrist_cam` | 腕部相机 | `--robot.enable_wrist_camera`（默认 `true`） | uint8 `(H, W, 3)` |
-| `left_head` / `right_head` | 头显双目，**一只眼一个键** | `--robot.enable_head_camera`（默认 `false`） | uint8，默认 `(480, 640, 3)` |
+| `left_head` / `right_head` | 头显双目，**一只眼一个键** | `--robot.type=xtac_umi_g1`（单夹爪为 `--robot.enable_head_camera=true`） | uint8，默认 `(480, 640, 3)` |
 | `head_camera.x/y/z` | 头显位置（同 `tcp.*` 世界系），**也是动作** | 同上 | float(m) |
 | `head_camera.r1..r6` | 头显姿态的 6-D 旋转，**也是动作** | 同上 | float |
 | `imu.accel.{x,y,z}` | 夹爪 IMU 加速度 | `--robot.enable_imu`（默认 `false`，**预留不录**） | float(m/s²) |
@@ -499,8 +485,8 @@ ValueError: --robot.id is required: the station label for this rig, e.g. --robot
     `difference`。`--robot.tactile_diff_gain`（默认 `1.0`）只是这张差分图的增益。
 - **腕相机** → `wrist_cam`；`--robot.enable_wrist_camera=false` 跳过；
   `--robot.wrist_camera_width/_height/_fps` 调。
-- **头显相机** → `left_head` / `right_head` + `head_camera.*`；**默认关闭**，
-  `--robot.enable_head_camera=true` 开启，详见 [§5.6](#56)。
+- **头显相机** → `left_head` / `right_head` + `head_camera.*`；双夹爪用 `--robot.type=xtac_umi_g1`，
+  单夹爪加 `--robot.enable_head_camera=true`，详见 [§5.6](#56)。
 - **角色** → `--robot.role=follower` 绑定从夹爪（默认 `leader`）；从夹爪固件需 ≥ 1.1.6，
   见 [固件 OTA](versions.md#ota)。
 
@@ -598,16 +584,14 @@ CPU 只负责喂帧，所以划算；换成 `libsvtav1` 之后，**编码器就�
 
 ## 5.6 可选：头显相机（第一视角） {#56}
 
-**默认关闭。**打开后录制 Pico4 Ultra 企业版**头显自带的双目相机**，以及头显自身的位姿——
-也就是操作员的第一视角画面和"人在往哪看"。单夹爪（`taccap_gripper`）和双夹爪
-（`bi_taccap_gripper`）都支持，开关和参数完全一样。
+录制 Pico4 Ultra 企业版**头显自带的双目相机**，以及头显自身的位姿——也就是操作员的第一视角画面和
+"人在往哪看"。双夹爪用 `--robot.type=xtac_umi_g1`（`bi_taccap_gripper` 固定不带头显）；单夹爪
+`taccap_gripper` 加 `--robot.enable_head_camera=true`。下面的头显参数两种情况都适用。
 
 ```bash
 lerobot-record \
-    --robot.type=bi_taccap_gripper \
+    --robot.type=xtac_umi_g1 \
     --robot.id=0 \
-    --robot.enable_tracker=true \
-    --robot.enable_head_camera=true \
     --display_data=false \
     --dataset.repo_id=<your_org>/<your_dataset> \
     --dataset.single_task='Pick up the object' \

@@ -100,7 +100,7 @@ Summary: 0 error(s), 0 warning(s) | Camera format: 6-camera (no headset)
 ### 双夹爪 8 相机 → 6 相机 {#8to6}
 
 开了[头显相机](05-data-collection.md#56)录的双夹爪数据集是 8 相机格式。要把它降成 6 相机格式
-（与 `--robot.enable_head_camera=false` 录出来的同构），用 `lerobot-edit-dataset`：
+（与 `bi_taccap_gripper` 录出来的同构，数据集里记录的类型也随之改为 `bi_taccap_gripper`），用 `lerobot-edit-dataset`：
 
 ```bash
 lerobot-edit-dataset \

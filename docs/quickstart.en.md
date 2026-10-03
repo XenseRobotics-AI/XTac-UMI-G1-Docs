@@ -59,13 +59,13 @@ lerobot-teleoperate \
 <figcaption>Move and open/close the grippers, check that every image, tactile stream and pose updates, then press Ctrl+C</figcaption>
 </figure>
 
-That is the standard setup: both grippers plus tracker pose. The tiers are chosen with `--robot.type`; **record with the same tier you previewed**:
+That is the most common tier, "with wrist pose". The tiers are chosen with `--robot.type`; **record with the same tier you previewed**:
 
 | Tier | How | Data included |
 |---|---|---|
 | ① Grippers only | `--robot.type=bi_taccap_gripper --robot.enable_tracker=false` | Tactile, wrist cameras, gripper opening; no PC Service needed |
-| ② Plus tracker (standard) | `--robot.type=bi_taccap_gripper` | Adds the gripper pose `tcp.*` |
-| ③ Plus headset | `--robot.type=xtac_umi_g1` | Adds headset stereo images and head pose |
+| ② With wrist pose (common) | `--robot.type=bi_taccap_gripper` | Adds the gripper pose `tcp.*` |
+| ③ Full rig | `--robot.type=xtac_umi_g1` | Adds headset stereo images and head pose |
 
 Keep the trackers in the headset's view before starting; occlusion loses tracking.
 

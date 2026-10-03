@@ -18,7 +18,7 @@
 | `robot.enable_wrist_camera` | `true` | 关闭腕相机 |
 | `robot.wrist_camera_width/_height/_fps` | — | 腕相机分辨率/帧率 |
 | `robot.wrist_camera_fourcc` | `MJPG` | 腕相机像素格式；默认 MJPG 是为同 hub 的触觉让出 USB 带宽 |
-| `robot.enable_head_camera` | `false` | 头显相机（第一视角 + 头显位姿），见 [5.6](05-data-collection.md#56) |
+| `robot.enable_head_camera` | `false` | **仅单夹爪**：头显相机（第一视角 + 头显位姿）；双夹爪用 `--robot.type=xtac_umi_g1`，见 [5.6](05-data-collection.md#56) |
 | `robot.head_camera_eyes` | `both` | `both` = 左右眼各一个键；`left` / `right` 只录一只 |
 | `robot.head_camera_width/_height` | `640` / `480` | **每只眼**尺寸，只接受 `640x480` / `1024x768` / `1280x960`，要与头显输出的分辨率一致（默认都是 640x480） |
 | `robot.head_camera_fps` | `30` | 头显相机帧率 |

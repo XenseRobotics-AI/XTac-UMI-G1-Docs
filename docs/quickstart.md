@@ -59,13 +59,13 @@ lerobot-teleoperate \
 <figcaption>移动、开合夹爪，确认各路画面、触觉和位姿都在更新，然后按 Ctrl+C 退出</figcaption>
 </figure>
 
-上面是标准配置：双夹爪加追踪器位姿。三档用 `--robot.type` 区分，**预览用哪一档，录制就用哪一档**：
+上面是最常用的「带腕部位姿」一档。三档用 `--robot.type` 区分，**预览用哪一档，录制就用哪一档**：
 
 | 档位 | 写法 | 包含的数据 |
 |---|---|---|
 | ① 只有夹爪 | `--robot.type=bi_taccap_gripper --robot.enable_tracker=false` | 触觉、腕部相机、开合度；不需要 PC Service |
-| ② 加追踪器（标准） | `--robot.type=bi_taccap_gripper` | 再加夹爪位姿 `tcp.*` |
-| ③ 加头显 | `--robot.type=xtac_umi_g1` | 再加头显双目画面与头部位姿 |
+| ② 带腕部位姿（常用） | `--robot.type=bi_taccap_gripper` | 再加夹爪位姿 `tcp.*` |
+| ③ 完全体 | `--robot.type=xtac_umi_g1` | 再加头显双目画面与头部位姿 |
 
 启动前把追踪器放在头显视野内，被遮挡会丢跟踪。
 
