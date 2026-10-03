@@ -71,10 +71,7 @@ If the headset is underpowered it will lose power and shut down (it draws roughl
 
 ## Connecting the headset to the backpack {#pico-link}
 
-Put the headset on and open XTac-UMI XR; there are two ways to connect:
-
-- USB network (the default, and what real collection uses): the headset's Type-C port is already wired to the backpack's PICO port by the steps above. In XR, tick "USB network" and tap "Connect"; the backpack brings the network up on the USB link automatically (address `192.168.58.1`) with nothing to type.
-- WiFi (for quick debugging only; the link fluctuates and poses arrive late): put the headset and the backpack on the same router (the headset on the router's WiFi, the backpack on Ethernet or site WiFi, see [Joining a site network](network.md#lan)), leave "USB network" unticked in XR, enter the backpack's IP and connect. You need to know the backpack's IP beforehand, and its service must already be running.
+Put the headset on and open XTac-UMI XR. The headset and the backpack **connect by cable only**: the headset's Type-C port is already wired to the backpack's PICO port by the steps above. In XR, tick "USB Network" and tap "Connect"; the backpack brings the network up on the USB link automatically (address `192.168.58.1`) with nothing to type.
 
 The fold button is at the top right of XR; when tracking accuracy degrades or a tracker disconnects from the backpack, both XR and the console's live monitor page show an icon. The interface is described in [The XTac-UMI XR interface](../common/pico4.md#pico-toolkit-ui).
 
@@ -90,7 +87,7 @@ In a lab the backpack, a PC and a router are often wired into one local network,
 ![Wiring topology: router ↔ backpack ↔ PC, with the grippers on C-to-C cables](../assets/backpack/hardware-topology.webp)
 
 - The backpack's Ethernet port and the PC's cable both go to the router's LAN ports; the backpack's wired port ships on DHCP and works as soon as you plug it in.
-- The headset still goes over the PICO port's USB network, or joins the router's WiFi with the backpack's IP entered in XR.
+- The headset still connects to the backpack's PICO port by Type-C cable over the USB Network, not through the router.
 - The PC's browser opens the backpack's IP or `http://xense-<last 6 of the serial>.local`. To find the IP, use the [Windows device scanner](network.md#scanner); on an Ubuntu PC remember to tick Wired in the system settings, see [Wired](network.md#wired).
 
 ![The desk setup in the flesh](../assets/backpack/desk-setup.webp)

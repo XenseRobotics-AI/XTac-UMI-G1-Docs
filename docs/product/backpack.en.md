@@ -19,7 +19,7 @@ It is worn on the back: it moves with the operator and depends on neither the si
 
 | Location | Marking | What goes in it |
 |---|---|---|
-| Front panel | `PICO` | The Pico4 Ultra headset, Type-C. Tick "USB network" in XR and tap Connect, and the backpack brings the network up on the USB link automatically (address `192.168.58.1`) with nothing to type |
+| Front panel | `PICO` | The Pico4 Ultra headset, Type-C. Tick "USB Network" in XR and tap Connect, and the backpack brings the network up on the USB link automatically (address `192.168.58.1`) with nothing to type |
 | Front panel | `HEAD` | Type-C. Not used for collection wiring |
 | Front panel | `USB` | Type-C. Not used for collection wiring |
 | Sides | `UMI-L` / `UMI-R` | The left / right leader gripper, Type-C, which also powers the gripper |

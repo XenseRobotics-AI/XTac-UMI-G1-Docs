@@ -15,7 +15,7 @@
 | 接口 | 位置 | 接什么 |
 |---|---|---|
 | UMI-L / UMI-R | 两侧 | 左 / 右夹爪，Type-C 锁紧线 |
-| PICO | 前面板 | 头显，Type-C；走 USB 网络，能否同时给头显供电以随机说明为准 |
+| PICO | 前面板 | 头显，Type-C；走 USB网络，能否同时给头显供电以随机说明为准 |
 | HEAD、USB | 前面板 | 本页流程不用 |
 | DC | 后面板 | 12 V 供电输入，接线图上标为 Type-C，以实物为准；接适配器或充电宝 |
 | 网口 | 后面板 | RJ45，接路由器 LAN 口 |
@@ -43,7 +43,7 @@
 ![适配器供电接线：左右夹爪接背包两侧，头显 Type-C 接 PICO 口，适配器接 DC 口](../assets/product/backpack-wiring-adapter.webp)
 
 1. 左 / 右夹爪分别接 UMI-L / UMI-R。
-2. 头显用 Type-C 线接背包 PICO 口，走 USB 网络；这一根线能否同时给头显供电以随机说明为准。
+2. 头显用 Type-C 线接背包 PICO 口，走 USB网络；这一根线能否同时给头显供电以随机说明为准。
 3. 12V3A 36W 适配器接背包 DC 口，再插市电。
 
 ## 充电宝供电 {#powerbank}
@@ -71,10 +71,7 @@
 
 ## 头显接背包 {#pico-link}
 
-戴上头显打开 XTac-UMI XR，两种连接方式：
-
-- USB 网络（默认，正式采集用这条）：头显 Type-C 口已通过上面的接线连到背包 PICO 口。在 XR 里勾选「USB 网络」点「连接」，背包会自动在 USB 链路上建网（地址 `192.168.58.1`），不用手填。
-- WiFi（仅供临时调试，会有网络波动与位姿延迟）：头显与背包接同一台路由器（头显连路由器 WiFi，背包走网口或现场 WiFi，见[接入现场网络](network.md#lan)），XR 里不勾「USB 网络」，填背包的 IP 再连接。要事先知道背包 IP，且背包服务已开启。
+戴上头显打开 XTac-UMI XR。头显与背包**只能有线连接**：头显 Type-C 口已通过上面的接线连到背包 PICO 口，在 XR 里勾选「USB网络」点「连接」，背包会自动在 USB 链路上建网（地址 `192.168.58.1`），不用手填。
 
 XR 右上角是折叠按钮；追踪器精度不准或与背包断开时，XR 与控制台监控页都有图标提示。界面说明见 [XTac-UMI XR 界面](../common/pico4.md#pico-toolkit-ui)。
 
@@ -90,7 +87,7 @@ XR 右上角是折叠按钮；追踪器精度不准或与背包断开时，XR �
 ![接线拓扑：路由器 ↔ 背包 ↔ PC，夹爪走 C2C](../assets/backpack/hardware-topology.webp)
 
 - 背包网口与 PC 网线都接路由器 LAN 口；背包有线口出厂 DHCP，插上即用。
-- 头显仍走 PICO 口 USB 网络；或连路由器 WiFi，在 XR 里填背包 IP。
+- 头显仍用 Type-C 线接背包 PICO 口，走 USB网络，不走路由器。
 - PC 浏览器打开背包 IP 或 `http://xense-<序列号后 6 位>.local`。找 IP 用 [Windows 设备扫描器](network.md#scanner)；Ubuntu 的 PC 记得在系统设置里勾选 Wired，见[有线](network.md#wired)。
 
 ![桌面实物连接](../assets/backpack/desk-setup.webp)

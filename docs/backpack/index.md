@@ -23,7 +23,7 @@
 1. 头显配置：把 Pico OS 升到 5.15.5.U 以上并[开启开发者模式、把灭屏与休眠设为永不](../common/pico4.md#pico-system)；两只追踪器按「左奇右偶」[配对到头显](../common/pico4.md#pico-tracker-bind)并切到独立追踪模式；[安装 XTac-UMI XR](../common/pico4.md#pico-app)。
 2. 接线与供电：[顺序固定](unbox-connect.md#order)夹爪 → 头显 → 背包上电，左右夹爪分别接 UMI-L / UMI-R。供电二选一：[适配器供电](unbox-connect.md#adapter)时头显用 Type-C 线接背包 PICO 口；[充电宝供电](unbox-connect.md#powerbank)时头显先接二合一 Type-C 线，充电口接充电宝、数据口接背包 PICO 口，另一只充电宝给背包供电。夹爪的连接与供电要求见[夹爪连接与序列号](../common/gripper.md#power)。
 3. 连上背包：平板或手机连[背包热点](network.md#softap) `xense-<序列号后 6 位>`（如 `xense-e3d202`，密码印在机身标签），浏览器打开 `http://192.168.44.1` 或[设备名](network.md#mdns) `http://xense-<序列号后 6 位>.local` 进入控制台。iOS 必须敲全 `http://` 前缀；热点只有 5 GHz 频段，连接的设备要支持 5 GHz。
-4. [头显连背包](unbox-connect.md#pico-link)：戴上头显打开 XTac-UMI XR，勾选 USB 网络点连接，背包会自动在 USB 链路上建网（地址 `192.168.58.1`），不用手填。界面与连接状态见 [Pico4 头显与追踪器](../common/pico4.md#pico-toolkit-ui)。
+4. [头显连背包](unbox-connect.md#pico-link)：戴上头显打开 XTac-UMI XR，勾选「USB网络」点连接，背包会自动在 USB 链路上建网（地址 `192.168.58.1`），不用手填。界面与连接状态见 [Pico4 头显与追踪器](../common/pico4.md#pico-toolkit-ui)。
 5. 选[采集模式](system.md#capture-mode)：控制台 → 系统 → 采集模式，按实际接了什么选 双爪 / 双爪 + 头显 / 单爪 / 单爪 + 头显 / 仅头显。单爪的左右侧由设备按实际连接自动判定；录制中不能切换。
 6. 可选：控制台 → 系统 → [上传配置](system.md#upload)，新建一档上传后端并填好凭据（获取步骤在同一节）。新建项目时可以绑定它，之后该项目导出选「上传到远端」默认走这档配置；凭据只在这一页填一次，导出窗口里不再重复填。
 

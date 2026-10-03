@@ -4,9 +4,9 @@ The standalone motion tracker that ships with the Pico4 Ultra Enterprise mounts 
 
 | | Backpack Kit | Developer Kit |
 |---|---|---|
-| Where the headset plugs in | The backpack's `PICO` port (wired USB), or the same WiFi as the backpack | The collection PC's Type-C port (wired USB shared network), or the same WiFi as the PC |
+| Where the headset plugs in | The backpack's `PICO` port, **wired only** | The collection PC's Type-C port (wired USB shared network), or the same WiFi as the PC |
 | Where the pose service runs | The XenseVR runtime is built into XTac-UMI Collector; it is up as soon as the backpack boots, nothing to start | The [XenseVR PC Service](../pc/host-setup.md#35) on the collection PC, started by hand before every session |
-| How the app connects | Tick "USB Network" → tap "Connect"; over WiFi leave it unticked and enter the backpack IP | Tick "USB Network" → tap "Connect"; over WiFi leave it unticked and enter the collection PC's IP under "PC IP" |
+| How the app connects | Tick "USB Network" → tap "Connect" | Tick "USB Network" → tap "Connect"; over WiFi leave it unticked and enter the collection PC's IP under "PC IP" |
 
 On a factory-configured headset, developer mode, the power policy, the app, the tracker binding and the tracking mode are already set and survive power cycles (redo them only after a factory reset or a headset swap), so start at [Network connection](#pico-network). Plugging in, short-pressing the tracker's power button until the blue light comes on, [connecting in the app](#pico-toolkit-ui) and [startup alignment](#pico-frame) are needed before every session.
 
@@ -42,7 +42,7 @@ If you skip this: once the headset screen-blanks or sleeps between episodes, XTa
 
 ## Installing XTac-UMI XR {#pico-app}
 
-The APK is named `XTac-UMI-XR-<version>.apk` (the Backpack Kit ships with 0.2.5; on the Developer Kit use whichever build you were given). Install it from the headset's file manager:
+The APK is named `XTac-UMI-XR-<version>.apk`; the current version is 0.3.2. Install it from the headset's file manager:
 
 1. On the PC: connect the headset to the PC over USB and copy the APK into the headset's `Download/` directory.
 
@@ -60,14 +60,14 @@ If the PC has adb (Android platform-tools), you can install in one command witho
 
 ```bash
 adb devices                          # the headset should be listed
-adb install XTac-UMI-XR-0.2.5.apk    # substitute the build you were given
+adb install XTac-UMI-XR-0.3.2.apk    # substitute the build you were given
 ```
 
 ## Network connection {#pico-network}
 
-Tracking data has to reach the XenseVR pose service on the collection unit. **Wired is the default**: a Type-C cable gives the link to itself, with stable, predictable latency.
+Tracking data has to reach the XenseVR pose service on the collection unit. **The Backpack Kit is wired only**; the Developer Kit is wired by default too, with WiFi for quick debugging only. A Type-C cable gives the link to itself, with stable, predictable latency.
 
-!!! warning "Wireless is for quick debugging only, never for real collection"
+!!! warning "On the Developer Kit, wireless is for quick debugging only, never for real collection"
     Over WiFi the headset and the collection unit compete for the channel with everything else on site. The link fluctuates and pose data arrives late: at best the pose stutters and jitters, at worst frames are dropped. None of this is visible while recording, and afterwards it is hard to tell apart from other causes, so the whole batch has to be recollected. Use the cable for real collection.
 
 On both editions, set USB up on the headset first: Settings → Developer options → enable "USB debugging" → set "USB connection" to "File transfer". Re-check this after every USB re-plug, as it reverts to the default. If you cannot select it, reboot the Pico.
@@ -82,7 +82,7 @@ On both editions, set USB up on the headset first: Settings → Developer option
     2. Power on the backpack. The XenseVR runtime is built into Collector and starts with it; there is no separate service to launch.
     3. Open XTac-UMI XR, tick "USB Network" and tap "Connect": the backpack brings up its own network on the USB link (address `192.168.58.1`), nothing to enter by hand.
 
-    Over WiFi, put the headset and the backpack on the same network (the same router, say; the backpack only joins 5 GHz WiFi), leave "USB Network" unticked in the app, enter the backpack's IP and tap "Connect". The backpack's IP is in the network drop-down in the console's top bar.
+    The Backpack Kit does not support the headset over WiFi; the headset must be cabled to the backpack.
 
 === "Developer Kit"
 
@@ -162,7 +162,7 @@ With the headset on, open XTac-UMI XR from the Library to reach the "XENSE XR Co
 | Pico Hardware | Should read "Enterprise" |
 | Status | Until it reads "Connected", the collection side reads no pose at all |
 | USB Network | Tick it for a wired connection: the app connects to the collection side at the other end of the cable by itself, no IP to enter |
-| PC IP | Over WiFi, type the collection side's IP here (backpack or collection PC); not needed when wired |
+| PC IP | Only for the Developer Kit over WiFi: the collection PC's IP; not needed when wired |
 | Connect / Disconnect | Tap "Connect" to start connecting; once connected the button turns into "Disconnect" |
 
 === "Not connected"
@@ -181,7 +181,7 @@ How the two editions differ when connecting:
 
 === "Backpack Kit"
 
-    In the panel, tick "USB Network" → tap "Connect" (wired); over WiFi leave it unticked, enter the backpack IP and tap "Connect". When tracker accuracy degrades or the link to the backpack drops, an icon appears on the panel.
+    In the panel, tick "USB Network" → tap "Connect"; the Backpack Kit only connects over the cable. When tracker accuracy degrades or the link to the backpack drops, an icon appears on the panel.
 
     Once connected, open the console's "Live monitor" page: the pose view should show the headset and both gripper poses. When the record button is not ready it states the reason; "Pico pose or clock not ready" means the headset is not connected yet.
 
