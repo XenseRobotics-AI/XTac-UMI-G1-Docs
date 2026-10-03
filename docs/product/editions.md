@@ -17,7 +17,7 @@ XTac-UMI 提供两种配置，使用同一套 XTac-UMI G1 夹爪与 Pico4 Ultra 
 
     ---
 
-    背包即主机、平板即控制台，夹爪按键开始与停止录制，一键发布到 ModelScope。
+    背包即主机、平板即控制台，夹爪按键录制，数据一键发布到 ModelScope。
 
     [快速开始](../backpack/index.md){ .md-button .md-button--primary }
 
@@ -29,7 +29,7 @@ XTac-UMI 提供两种配置，使用同一套 XTac-UMI G1 夹爪与 Pico4 Ultra 
 
     ---
 
-    接入您自己的工作站，录制即得到 LeRobotDataset；采集软件与夹爪 SDK 以 Apache-2.0 开源。
+    直连您的工作站，基于开源 LeRobot 录制，采集软件与夹爪 SDK 均开源。
 
     [快速开始](../pc/quickstart.md){ .md-button .md-button--primary }
 

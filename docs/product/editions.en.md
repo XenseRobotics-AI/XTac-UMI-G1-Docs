@@ -17,7 +17,7 @@ This page compares the two and lists each kit's box contents and wiring.
 
     ---
 
-    The backpack is the host and a tablet the console; gripper buttons start and stop recording, and datasets publish to ModelScope in one click.
+    The backpack is the host and a tablet the console; record with the gripper buttons and publish to ModelScope in one click.
 
     [Quickstart](../backpack/index.md){ .md-button .md-button--primary }
 
@@ -29,7 +29,7 @@ This page compares the two and lists each kit's box contents and wiring.
 
     ---
 
-    Connect it to your own workstation and every recording is a LeRobotDataset; the collection software and gripper SDK are open source under Apache-2.0.
+    Plugs into your workstation and records a LeRobotDataset; the collection software and SDK are open source.
 
     [Quickstart](../pc/quickstart.md){ .md-button .md-button--primary }
 

@@ -820,3 +820,9 @@ html[lang="en"] .md-typeset .tc-hero h1 {
   max-width: 22rem;
   margin: 0 auto;
 }
+
+/* 全站表格:单元格内容上下居中(Material 默认顶对齐) */
+.md-typeset table:not([class]) th,
+.md-typeset table:not([class]) td {
+  vertical-align: middle;
+}
