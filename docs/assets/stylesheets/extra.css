@@ -549,3 +549,44 @@ html[lang="en"] .md-typeset .tc-hero h1 {
   font-weight: 700;
   fill: var(--md-primary-fg-color);
 }
+
+/* =====================================================================
+   产品亮点:页首视频、卡片配图、应用场景三联图
+   ===================================================================== */
+.md-typeset .tc-video {
+  margin: 1.2rem 0 1.6rem;
+}
+.md-typeset .tc-video video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: .5rem;
+  background: #000;
+}
+.md-typeset .grid.cards .tc-card-img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  margin: 0 0 .6rem;
+  border-radius: .3rem;
+}
+.md-typeset .tc-scenes p {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: .6rem;
+}
+.md-typeset .tc-scenes img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: .3rem;
+}
+@media screen and (max-width: 44.9375em) {
+  .md-typeset .tc-scenes p {
+    grid-template-columns: 1fr;
+  }
+}
+.md-typeset .tc-scenes a {
+  display: block;
+}

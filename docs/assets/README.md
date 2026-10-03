@@ -16,6 +16,8 @@
 | `record/` | 录制终端/界面、Rerun 截图 | §4 / §5 |
 | `dataset/` | 数据集结构、校验、可视化 | §6 |
 | `product/` | 产品渲染图(主夹爪、从夹爪、整套合影) | 首页、硬件介绍、从夹爪 |
+| `highlights/` | 产品视频的封面与截帧 | 产品亮点 |
+| `video/` | 产品宣传视频 | 产品亮点 |
 
 ## 命名约定
 
@@ -52,6 +54,22 @@
 | `xr-console-idle.webp` / `xr-console-connected.webp`（及 `-en`） | XTac-UMI XR 0.3.2 控制台主界面，企业版、独立追踪，未连接 / 连接成功 | 用浏览器渲染安装包内的界面网页（`assets/html/index.html`）得到，原图在 `materials/pico4-orig/` |
 
 这两张是第三方官方图片,不是我们自己拍摄或渲染的;替换或新增同类图片时注意来源与使用授权。
+
+## highlights/ 与 video/ 产品视频
+
+`video/xtac-umi-g1-market.mp4` 是产品宣传视频原片（1280×720、1 分 44 秒、带背景音乐与烧录的中文字幕），原片也备份在 `materials/market-video/`。
+`highlights/` 下的图都从这段视频截帧，裁成 16:9、去掉底部字幕后存为 webp：
+
+| 文件 | 内容 | 视频时间 |
+|---|---|---|
+| `video-poster.webp` | 视频封面，主夹爪腕部相机特写 | 0:08 |
+| `visuotactile.webp` | 主夹爪渲染图，配「集成视触觉传感能力」字样 | 0:14 |
+| `system-sync.webp` | 两只主夹爪与采集背包渲染图 | 0:20 |
+| `handheld.webp` | 单手握持主夹爪 | 0:32 |
+| `fingertip.webp` | 指尖夹取包链 | 0:58 |
+| `scene-office.webp` / `scene-workshop.webp` / `scene-retail.webp` | 办公桌面、工具工位、货架取物三个场景 | 1:11 / 1:16 / 1:24 |
+| `backpack.webp` | 背负采集背包、手持主夹爪的背影 | 1:21 |
+| `toolchain.webp` | MCAP 与 LeRobot 工具链画面 | 1:36 |
 
 ## dataset/ 数据示意图
 
