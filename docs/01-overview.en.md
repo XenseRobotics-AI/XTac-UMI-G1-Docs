@@ -19,7 +19,7 @@ manipulation learning; see [Highlights](highlights.md) for more. Each leader gri
 !!! note "Handheld demonstration, no teleoperator"
     The operator performs the demonstration with the gripper in hand, so the recording command needs **no `--teleop.*` flags**.
 
-## 1.2 Platform requirements
+## 1.2 Platform requirements {#platform}
 
 Collection runs in real time (30 fps, about 33 ms per frame); an underpowered host shows up as dropped frames and slow recording, not as errors.
 The recommended column is the machine we actually collect on; the reasons behind each item are in [Collection host requirements](02-environment.md#host-spec).

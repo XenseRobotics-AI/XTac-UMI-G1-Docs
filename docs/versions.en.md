@@ -655,8 +655,7 @@ verifies — so a failed transfer cannot brick the gripper.
     a role mismatch** (it does not merely warn); `--force` is required to override. A hand-built
     image cannot be identified and is let through with a note.
 
-    **Do not cut power or unplug anything during the upgrade** (the gripper's indicator blinks blue
-    while it runs — see [Hardware](hardware.md)).
+    **Do not cut power or unplug anything during the upgrade.**
 
 !!! note "Pass only the file name; the working directory does not matter"
     `ota_update.py` tries, in order: the path you gave → the same name under the SDK root → the same

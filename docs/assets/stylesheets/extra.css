@@ -590,3 +590,17 @@ html[lang="en"] .md-typeset .tc-hero h1 {
 .md-typeset .tc-scenes a {
   display: block;
 }
+
+/* 硬件介绍「产品组成」:主从夹爪抠图并排,高度对齐,从夹爪略小 */
+.md-typeset .tc-pair--products img {
+  display: block;
+  height: 13rem;
+  width: auto;
+  max-width: 100%;
+  margin: 0 auto;
+  object-fit: contain;
+}
+.md-typeset .tc-pair--products figure:last-child img {
+  height: 10.5rem;
+  margin-bottom: 1.2rem;
+}
