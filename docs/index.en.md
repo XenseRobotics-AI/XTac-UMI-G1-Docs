@@ -125,8 +125,8 @@ Both kits use the same grippers and headset and produce the same data. The Backp
 <div class="tc-data" markdown>
 
 <figure class="tc-shot" markdown>
-![XTac-UMI XR console: Connected](assets/pico4/xr-console-connected-en.webp)
-<figcaption>Headset connected</figcaption>
+![xense-lerobot-viewer 3D replay: gripper and headset tracks, wrist and headset views, four visuotactile streams](assets/dataset/viewer-3d-replay.webp)
+<figcaption>3D replay</figcaption>
 </figure>
 
 <figure class="tc-shot" markdown>

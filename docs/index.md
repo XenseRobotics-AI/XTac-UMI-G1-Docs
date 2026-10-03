@@ -125,8 +125,8 @@ hide:
 <div class="tc-data" markdown>
 
 <figure class="tc-shot" markdown>
-![XTac-UMI XR 控制台：连接成功](assets/pico4/xr-console-connected.webp)
-<figcaption>头显连接成功</figcaption>
+![xense-lerobot-viewer 3D 回放：夹爪与头显轨迹、腕部与头显画面、四路视触觉](assets/dataset/viewer-3d-replay.webp)
+<figcaption>3D 回放</figcaption>
 </figure>
 
 <figure class="tc-shot" markdown>
