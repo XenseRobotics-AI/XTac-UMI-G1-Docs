@@ -12,12 +12,12 @@ hide:
 
 # Give robot datasets<br>a sense of touch
 
-<p class="tc-sub">Touch, vision and pose recorded in sync<br>One demonstration, a training-ready dataset</p>
+<p class="tc-sub">Two-handed touch, vision and pose in sync<br>One demonstration, a training-ready dataset</p>
 
-<p class="tc-note">Both kits share the XTac-UMI&nbsp;G1 grippers<br>and the Pico4&nbsp;Ultra&nbsp;Enterprise headset</p>
+<p class="tc-note">XTac-UMI&nbsp;G1 grippers with the Pico4&nbsp;Ultra&nbsp;Enterprise headset<br>in a Backpack Kit or a Developer Kit</p>
 
 [Choose a kit](product/editions.md){ .md-button .md-button--primary }
-[See the data](pc/dataset.md#61){ .md-button }
+[Watch the video](#highlights){ .md-button }
 
 </div>
 
@@ -39,13 +39,36 @@ hide:
 
 <div class="xu-stats" markdown>
 
-**3 streams / gripper** 1 fisheye + 2 visuotactile
+**8 image streams** 4 tactile + 2 wrist + 2 headset
 
-**6DoF** headset and dual-tracker pose
+**3 × 6DoF poses** both grippers + head
 
-**30 Hz** synchronized multi-source recording
+**5 ms sync** positioning < 3 mm
 
 **MCAP · LeRobot v3** raw and training formats
+
+</div>
+
+## Highlights {#highlights}
+
+<div class="tc-feature" markdown>
+
+<figure class="tc-video">
+<video controls preload="none" playsinline poster="../assets/highlights/video-poster.webp">
+<source src="../assets/video/xtac-umi-g1-market.mp4" type="video/mp4">
+</video>
+</figure>
+
+<div class="tc-feature__text" markdown>
+
+- **Visuotactile fusion**: tri-colour fingertip sensors capture contact location, grasp stability and slip
+- **Close to the hand**: the wearable leader handles grasping, insertion and thin-part picking
+- **Precise sync**: 5 ms multi-device time sync, < 3 mm positioning
+- **Ready to train**: native LeRobot and MCAP output
+
+[More highlights](product/highlights.md){ .md-button .md-button--primary }
+
+</div>
 
 </div>
 

@@ -12,12 +12,12 @@ hide:
 
 # 让机器人数据集<br>拥有触觉
 
-<p class="tc-sub">视触觉、腕部鱼眼、头显第一视角与位姿同步记录<br>一次手持示教，直接得到可训练的数据集</p>
+<p class="tc-sub">双手触觉、视觉与位姿同步记录<br>一次手持示教，直接得到可训练的数据集</p>
 
-<p class="tc-note">背包版与 PC 版共用同一套 XTac-UMI&nbsp;G1 夹爪<br>与 Pico4&nbsp;Ultra&nbsp;企业版头显</p>
+<p class="tc-note">XTac-UMI&nbsp;G1 双夹爪配合 Pico4&nbsp;Ultra&nbsp;企业版头显<br>背包版、PC 版两种配置可选</p>
 
 [选择配置](product/editions.md){ .md-button .md-button--primary }
-[看看数据长什么样](pc/dataset.md#61){ .md-button }
+[观看产品视频](#highlights){ .md-button }
 
 </div>
 
@@ -39,13 +39,36 @@ hide:
 
 <div class="xu-stats" markdown>
 
-**3 路 / 爪** 1 鱼眼 + 2 视触觉
+**8 路画面** 4 视触觉 + 2 腕部鱼眼 + 2 头显
 
-**6DoF** 头显与双追踪器位姿
+**3 组 6DoF 位姿** 左右夹爪 + 头部
 
-**30 Hz** 多源同步记录
+**5 ms 同步** 定位精度 < 3 mm
 
 **MCAP · LeRobot v3** 原始与训练格式
+
+</div>
+
+## 产品亮点 {#highlights}
+
+<div class="tc-feature" markdown>
+
+<figure class="tc-video">
+<video controls preload="none" playsinline poster="assets/highlights/video-poster.webp">
+<source src="assets/video/xtac-umi-g1-market.mp4" type="video/mp4">
+</video>
+</figure>
+
+<div class="tc-feature__text" markdown>
+
+- **视触融合**：指尖三色光视触觉，记录接触位置、夹取稳定性与滑移趋势
+- **贴近人手**：穿戴式主夹爪，抓取、插拔、薄片夹取都能完成
+- **精确同步**：多设备时间同步 5 ms，空间定位 < 3 mm
+- **即采即用**：原生输出 LeRobot、MCAP，录完就能训练
+
+[了解产品亮点](product/highlights.md){ .md-button .md-button--primary }
+
+</div>
 
 </div>
 

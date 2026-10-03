@@ -781,3 +781,31 @@ html[lang="en"] .md-typeset .tc-hero h1 {
   height: 10.5rem;
   margin-bottom: 1.2rem;
 }
+
+/* 首页「产品亮点」:左视频右要点,窄屏上下排 */
+.md-typeset .tc-feature {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 1.6rem;
+  align-items: center;
+  margin: 1rem 0 1.6rem;
+}
+.md-typeset .tc-feature .tc-video {
+  margin: 0;
+}
+.md-typeset .tc-feature__text ul {
+  margin: 0 0 1rem;
+  padding: 0;
+  list-style: none;
+}
+.md-typeset .tc-feature__text li {
+  margin: 0 0 .7rem;
+  padding-left: .8rem;
+  border-left: 3px solid var(--md-primary-fg-color);
+  line-height: 1.6;
+}
+@media screen and (max-width: 59.9375em) {
+  .md-typeset .tc-feature {
+    grid-template-columns: 1fr;
+  }
+}
