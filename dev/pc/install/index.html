@@ -2570,7 +2570,7 @@
 </span></code></pre></div>
 </div>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>git<span class="w"> </span>clone<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span>--branch<span class="w"> </span>v0.0.8<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span>--branch<span class="w"> </span>v0.1.0<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">  </span>--recurse-submodules<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">  </span>https://github.com/XenseRobotics-AI/xense-taccap-lerobot.git
 </span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="nb">cd</span><span class="w"> </span>xense-taccap-lerobot
@@ -2625,7 +2625,7 @@
 <div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>ghcr.io/xenserobotics-ai/xense-taccap-lerobot
 </span></code></pre></div>
 <p>用普通用户（不要用 root）执行：</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>git<span class="w"> </span>clone<span class="w"> </span>--branch<span class="w"> </span>v0.0.8<span class="w"> </span>https://github.com/XenseRobotics-AI/xense-taccap-lerobot.git
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>git<span class="w"> </span>clone<span class="w"> </span>--branch<span class="w"> </span>v0.1.0<span class="w"> </span>https://github.com/XenseRobotics-AI/xense-taccap-lerobot.git
 </span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="nb">cd</span><span class="w"> </span>xense-taccap-lerobot
 </span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>./docker/install_customer.sh
 </span></code></pre></div>
@@ -2634,12 +2634,12 @@
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="nv">XENSE_PROXY_URL</span><span class="o">=</span>http://127.0.0.1:7897<span class="w"> </span>./docker/install_customer.sh
 </span></code></pre></div>
 <p>完全离线的机器向交付渠道要镜像 <code>.tar</code> 包，放进仓库根目录或作为第一个参数传给脚本，脚本会改为校验并导入：</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>./docker/install_customer.sh<span class="w"> </span>xense-taccap-lerobot-0.0.8-linux-amd64.tar
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>./docker/install_customer.sh<span class="w"> </span>xense-taccap-lerobot-0.1.0-linux-amd64.tar
 </span></code></pre></div>
 <p>在线拉取仍是默认：镜像二十多 GB 大部分是不常变的依赖层，升级只拉变动的几层。</p>
 <h3 id="docker-pin">录数据前先把版本钉死<a class="headerlink" href="#docker-pin" title="锚点链接">¶</a></h3>
 <p>默认拉的 <code>latest</code> 是浮动的，下次发布会指向新镜像。正式采集前在仓库根目录的 <code>.env</code> 里钉死版本；<code>compose.yaml</code> 已默认指向官方 GHCR 镜像，只需要写 tag 这一行，不需要再写 <code>LEROBOT_IMAGE</code>（只在换镜像名时用）：<code>docker compose config --images</code> 显示的仓库名可能和上文的不同，按 tag 核对即可，两者是同一个镜像：</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>LEROBOT_IMAGE_TAG=0.0.8
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>LEROBOT_IMAGE_TAG=0.1.0
 </span></code></pre></div>
 <p>改完确认解析到的是这一版，再拉：</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>config<span class="w"> </span>--images

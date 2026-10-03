@@ -1458,7 +1458,7 @@
   <a href="#whats-new" class="md-nav__link">
     <span class="md-ellipsis">
       
-        0.0.8 更新要点
+        0.1.0 更新要点
       
     </span>
   </a>
@@ -2212,7 +2212,7 @@
   <a href="#whats-new" class="md-nav__link">
     <span class="md-ellipsis">
       
-        0.0.8 更新要点
+        0.1.0 更新要点
       
     </span>
   </a>
@@ -2304,7 +2304,7 @@
 <tbody>
 <tr>
 <td><code>xense-taccap-lerobot</code></td>
-<td><code>0.5.1+xtac.0.0.8</code></td>
+<td><code>0.5.1+xtac.0.1.0</code></td>
 <td><code>pip show lerobot</code> 或看 <code>pyproject.toml</code></td>
 </tr>
 <tr>
@@ -2396,13 +2396,13 @@
 </tr>
 <tr>
 <td><code>xense-taccap-lerobot</code></td>
-<td>基于 lerobot 0.5.1，版本号 <code>0.5.1+xtac.0.0.8</code></td>
-<td><code>v0.0.8</code>（<code>da5c3eff</code>）</td>
+<td>基于 lerobot 0.5.1，版本号 <code>0.5.1+xtac.0.1.0</code></td>
+<td><code>v0.1.0</code></td>
 </tr>
 <tr>
 <td><code>xense.taccap</code> SDK</td>
 <td>与主仓库子模块 <code>third_party/taccap-gripper</code> 配套</td>
-<td>0.4.1（tag <code>v0.4.1</code>），附带固件 leader 1.2.6 / follower 1.2.14；<code>v0.0.8</code> 标签里的子模块仍是 <code>3d44440</code>（0.1.9），下一版发布时更新</td>
+<td>0.4.1（tag <code>v0.4.1</code>，子模块 <code>afff1b7</code>），附带固件 leader 1.2.6 / follower 1.2.14</td>
 </tr>
 <tr>
 <td>夹爪固件</td>
@@ -2488,22 +2488,23 @@
 </span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"import xensevr_pc_service_sdk as xrt; print('pico camera API:', hasattr(xrt, 'has_pico_camera_frame'))"</span>
 </span></code></pre></div>
 <p><code>pip show xensevr-pc-service-sdk</code> 显示的是构建时从 <code>dpkg</code> 读到的 <code>.deb</code> 版本；头显相机接口看 <code>has_pico_camera_frame</code>；夹爪 SN 与角色用<a href="../quickstart/#self-check">快速开始</a>的自检命令看。</p>
-<h2 id="whats-new">0.0.8 更新要点<a class="headerlink" href="#whats-new" title="锚点链接">¶</a></h2>
+<h2 id="whats-new">0.1.0 更新要点<a class="headerlink" href="#whats-new" title="锚点链接">¶</a></h2>
 <ul>
-<li><strong>没有 NVIDIA 显卡的机器必须升级</strong>：软件编码不再每条 episode 多占约 1.3 GB 内存，长时间录制不会再耗尽内存。</li>
-<li>数据集 <code>meta/stats.json</code> 里图像/视频特征的 <code>std</code> 此前恒为 0；训练时若按 <code>std</code> 归一化图像，旧数据集需要重算统计量，见<a href="../dataset/#stats-std">数据集</a>。</li>
-<li>Rerun 显示移出了录制循环，开着 <code>--display_data</code> 录制也不再拖慢采集，见<a href="../recording/#52">录制</a>。</li>
-<li>重录（←）之后照常进入复位阶段；<code>--resume</code> 时 <code>--robot.id</code> 与数据集不一致会直接拒绝续录。</li>
-<li>主夹爪编码器改为固件主动推流（<code>--robot.gripper_stream_hz</code>，默认 100）；会话日志可单独定位问题。</li>
-<li>拉到 v0.0.8 后<strong>必须重跑 <code>./setup_env.sh --install</code></strong>。</li>
+<li><strong>带不带头显改由 <code>--robot.type</code> 决定</strong>：双夹爪新增 <code>xtac_umi_g1</code>（录头显双目画面与头部位姿），<code>bi_taccap_gripper</code> 不再录头显；双夹爪命令里再写 <code>--robot.enable_head_camera</code> 且与类型矛盾时会直接报错。三档写法见<a href="../recording/#52">录制</a>。</li>
+<li>夹爪 SDK 升到 0.4.1，附带固件主夹爪 1.2.6 / 从夹爪 1.2.14；从夹爪固件低于 1.2.5 拒绝连接，低于 1.2.11 提示升级，见<a href="#ota">固件 OTA</a>。</li>
+<li>不再落盘 <code>meta/runtimes/</code>；<code>meta/info.json</code> 新增 <code>collection_stack</code>，标明数据由哪套采集软件录制，见<a href="../dataset/">数据集</a>。</li>
+<li><code>lerobot-check-dataset</code> 的视频帧数改为严格相等：少帧报错、多帧告警；编辑数据集时重新编码沿用采集的那套编码器。</li>
+<li>Docker 镜像支持在容器内语音播报。</li>
+<li>仓库、子模块与镜像地址迁到 <code>XenseRobotics-AI</code> 组织。</li>
+<li>拉到 v0.1.0 后<strong>必须重跑 <code>./setup_env.sh --install</code></strong>。</li>
 </ul>
 <h2 id="repo-update">仓库与子模块更新<a class="headerlink" href="#repo-update" title="锚点链接">¶</a></h2>
 <p>按发布版的 tag 更新，不要直接拉 <code>main</code>（<code>main</code> 上可能是未发布的改动）：</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>git<span class="w"> </span>fetch<span class="w"> </span>--tags
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>git<span class="w"> </span>checkout<span class="w"> </span>v0.0.8
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>git<span class="w"> </span>checkout<span class="w"> </span>v0.1.0
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>git<span class="w"> </span>submodule<span class="w"> </span>update<span class="w"> </span>--init<span class="w"> </span>--recursive<span class="w"> </span>--progress
 </span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>./setup_env.sh<span class="w"> </span>--install<span class="w">     </span><span class="c1"># 对齐依赖并重编 xense.taccap</span>
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>git<span class="w"> </span>submodule<span class="w"> </span>status<span class="w">         </span><span class="c1"># 子模块应显示 3d44440…</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>git<span class="w"> </span>submodule<span class="w"> </span>status<span class="w">         </span><span class="c1"># 子模块应显示 afff1b7…（v0.4.1）</span>
 </span></code></pre></div>
 <div class="admonition warning">
 <p class="admonition-title">拉完子模块必须重新编译 <code>xense.taccap</code></p>

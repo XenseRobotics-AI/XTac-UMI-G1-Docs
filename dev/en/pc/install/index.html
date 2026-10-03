@@ -2570,7 +2570,7 @@
 </span></code></pre></div>
 </div>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>git<span class="w"> </span>clone<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span>--branch<span class="w"> </span>v0.0.8<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span>--branch<span class="w"> </span>v0.1.0<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">  </span>--recurse-submodules<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">  </span>https://github.com/XenseRobotics-AI/xense-taccap-lerobot.git
 </span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="nb">cd</span><span class="w"> </span>xense-taccap-lerobot
@@ -2625,7 +2625,7 @@
 <div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>ghcr.io/xenserobotics-ai/xense-taccap-lerobot
 </span></code></pre></div>
 <p>Run as a normal user (not root):</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>git<span class="w"> </span>clone<span class="w"> </span>--branch<span class="w"> </span>v0.0.8<span class="w"> </span>https://github.com/XenseRobotics-AI/xense-taccap-lerobot.git
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>git<span class="w"> </span>clone<span class="w"> </span>--branch<span class="w"> </span>v0.1.0<span class="w"> </span>https://github.com/XenseRobotics-AI/xense-taccap-lerobot.git
 </span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="nb">cd</span><span class="w"> </span>xense-taccap-lerobot
 </span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>./docker/install_customer.sh
 </span></code></pre></div>
@@ -2634,12 +2634,12 @@
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="nv">XENSE_PROXY_URL</span><span class="o">=</span>http://127.0.0.1:7897<span class="w"> </span>./docker/install_customer.sh
 </span></code></pre></div>
 <p>For a fully offline machine, ask your delivery channel for the image <code>.tar</code> bundle, drop it in the repo root or pass it as the first argument, and the script verifies and imports it instead:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>./docker/install_customer.sh<span class="w"> </span>xense-taccap-lerobot-0.0.8-linux-amd64.tar
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>./docker/install_customer.sh<span class="w"> </span>xense-taccap-lerobot-0.1.0-linux-amd64.tar
 </span></code></pre></div>
 <p>Pulling online is still the default: most of the image's twenty-odd GB is dependency layers that rarely change, so an upgrade fetches only the few layers that moved.</p>
 <h3 id="docker-pin">Pin a version before you record<a class="headerlink" href="#docker-pin" title="锚点链接">¶</a></h3>
 <p>The default <code>latest</code> tag floats: the next release repoints it to a new image. Before real collection, pin a version in the repo root's <code>.env</code>. <code>compose.yaml</code> already points at the official GHCR image, so only the tag line is needed and there is no need to set <code>LEROBOT_IMAGE</code> (only for a different image name). The repository name shown by <code>docker compose config --images</code> may differ from the one above; check the tag, it is the same image:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>LEROBOT_IMAGE_TAG=0.0.8
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>LEROBOT_IMAGE_TAG=0.1.0
 </span></code></pre></div>
 <p>Confirm that this is the version that resolves, then pull:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>config<span class="w"> </span>--images
