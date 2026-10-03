@@ -29,7 +29,7 @@ The order is fixed: grippers → headset → power up the backpack.
 
 1. Connect the grippers: the end of the Type-C locking cable with the screws goes into the gripper body, and you tighten the locking screws; the other end goes into the side of the backpack, the left gripper to UMI-L and the right to UMI-R. The gripper is bus-powered over this cable and needs no separate supply.
 2. Connect the headset: follow either [Adapter power](#adapter) or [Power-bank power](#powerbank).
-3. Power up the backpack: the DC port takes the adapter or a power bank. The hotspot comes up automatically after boot, and a solid green gripper LED means standby (the LED patterns are in [Gripper buttons, LEDs and serial numbers](../common/gripper.md#buttons-leds)).
+3. Power up the backpack: the DC port takes the adapter or a power bank. The hotspot comes up automatically after boot, and a solid green gripper LED means standby (the LED patterns are in [Gripper buttons, LEDs and voice](gripper.md#buttons-leds)).
 
 Disconnection is the reverse: stop recording first, then unplug the backpack end, and finally loosen the locking screws and unplug the gripper end. Take anti-static precautions when powering up or down and when plugging or unplugging cables.
 

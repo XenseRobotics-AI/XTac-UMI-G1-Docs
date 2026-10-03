@@ -30,7 +30,7 @@ Clean the wrist camera and the tactile optical surfaces with an air blower plus 
 
 - Calibration is one-off: the zero and the travel limit are written to MCU flash, survive power cycles and do not need redoing on another host. Day to day, only confirm that `gripper.pos`≈0 closed and ≈1.0 fully open; to recalibrate, use the console's System → [Gripper](../backpack/system.md#gripper) page on the Backpack Kit, or see [Gripper calibration](../pc/calibration.md#41) on the Developer Kit.
 - Recalibrate when: the mechanics loosen after a drop / hard impact, the encoder or mechanical limit stop has been removed or refitted, or the firmware was erased. Recalibrate the zero and the travel together; when the limit stop changes, the travel limit changes too.
-- Do a quick self-check before every collection batch: on the Backpack Kit, the [views and poses on the console's "Live monitor" page](../backpack/monitor-record.md#checks); on the Developer Kit, the [Quickstart self-check](../pc/index.md#self-check).
+- Do a quick self-check before every collection batch: on the Backpack Kit, the [views and poses on the console's "Live monitor" page](../backpack/monitor-record.md#checks); on the Developer Kit, the [Quickstart self-check](../pc/quickstart.md#self-check).
 
 ## Cables and connectors
 

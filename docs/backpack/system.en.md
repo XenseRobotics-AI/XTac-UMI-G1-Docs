@@ -148,7 +148,7 @@ The wording and the timing of the announcements are fixed values that cannot be 
 
 At the very bottom of the same page is the reference table for the LED patterns and the device buttons, read-only and not configurable. The button column lists the sequences for a long press on the right gripper, a long press on the left gripper, a double-click on the left gripper, and pressing the right gripper during a delete confirmation. In the LED column each pattern is demonstrated with its real shape and rhythm — solid, breathing, blinking, pulsing and fast-blinking are all distinguishable at a glance, so you no longer have to tell "fast blink" from "pulse" by reading a description; the purple light during a delete confirmation is in the table too.
 
-Which gripper does what, the key assignments, the timings and the LED conventions are fixed fleet-wide, cannot be changed on site, and the console offers no way to change them; the values currently in effect are shown in this block. The main text on the gestures and the LED patterns is in [Gripper buttons, LEDs and serial numbers](../common/gripper.md#buttons).
+Which gripper does what, the key assignments, the timings and the LED conventions are fixed fleet-wide, cannot be changed on site, and the console offers no way to change them; the values currently in effect are shown in this block. The main text on the gestures and the LED patterns is in [Gripper buttons, LEDs and voice](gripper.md#buttons).
 
 ## Upload configuration {#upload}
 

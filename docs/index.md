@@ -71,9 +71,30 @@ hide:
     适合：研究与算法团队、自建训练管线
     { .xu-card__fit }
 
-    [快速开始](pc/index.md){ .md-button .md-button--primary }
+    [快速开始](pc/quickstart.md){ .md-button .md-button--primary }
     [对比两种配置](product/editions.md){ .md-button }
     { .xu-card__actions }
+
+</div>
+
+## 采集到的数据
+
+<div class="tc-data" markdown>
+
+<figure class="tc-shot" markdown>
+![XTac-UMI XR 控制台：连接成功](assets/pico4/xr-console-connected.webp)
+<figcaption>XTac-UMI XR：头显连上采集单元后显示「连接成功」</figcaption>
+</figure>
+
+<figure class="tc-shot" markdown>
+![八路画面与数据键的对应](assets/dataset/sensor-key-map.webp)
+<figcaption>每一帧同步记录八路画面，图中标注了各自在数据集里的键名</figcaption>
+</figure>
+
+<figure class="tc-shot" markdown>
+![Rerun 实时预览：四路视触觉、头显双目、左右腕部相机与动作曲线](assets/dataset/rerun-xtac-umi-g1.webp)
+<figcaption>PC 版预览检查：在 Rerun 里实时查看各路画面与位姿</figcaption>
+</figure>
 
 </div>
 

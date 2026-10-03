@@ -39,7 +39,7 @@ A project's **default export format** is chosen only when the project is created
 
 ## Deleting a recording {#delete}
 
-Click "Delete" on a recording row and the confirmation dialog shows that take's number, duration and data size; confirming removes it along with its MCAP and H264 transcode, and it cannot be undone. The take you have just finished can also be deleted with the gripper buttons, see [Gripper buttons](../common/gripper.md#buttons).
+Click "Delete" on a recording row and the confirmation dialog shows that take's number, duration and data size; confirming removes it along with its MCAP and H264 transcode, and it cannot be undone. The take you have just finished can also be deleted with the gripper buttons, see [Gripper buttons](gripper.md#buttons).
 
 Deleting and [archiving](#archive) are different things: archiving only removes the local raw file and keeps the catalogue record, while deleting takes the record with it and the recording disappears from the task.
 

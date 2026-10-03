@@ -100,7 +100,7 @@ Each `480M` `root_hub` line is one budget; count the cameras under each. Two bus
 
 ## Pico4 headset and trackers
 
-The standalone motion tracker that ships with the Pico4 Ultra Enterprise mounts on top of the gripper and provides the 6-DoF pose; XTac-UMI XR runs on the headset, and the pose reaches collection via the [XenseVR PC Service](#35) below. Unboxing and system settings, installing XTac-UMI XR, the network connection, tracker binding, tracking mode and startup alignment are shared by both editions and live in [Pico4 headset and trackers](../common/pico4.md). On a factory-configured headset start at [Network connection](../common/pico4.md#pico-network); before every session you only need to plug in the USB, short-press the tracker's power button until the blue light comes on, [tap "Reconnect"](../common/pico4.md#pico-toolkit-ui) and do the [startup alignment](../common/pico4.md#pico-frame).
+The standalone motion tracker that ships with the Pico4 Ultra Enterprise mounts on top of the gripper and provides the 6-DoF pose; XTac-UMI XR runs on the headset, and the pose reaches collection via the [XenseVR PC Service](#35) below. Unboxing and system settings, installing XTac-UMI XR, the network connection, tracker binding, tracking mode and startup alignment are shared by both editions and live in [Pico4 headset and trackers](../common/pico4.md). On a factory-configured headset start at [Network connection](../common/pico4.md#pico-network); before every session you only need to plug in the USB, short-press the tracker's power button until the blue light comes on, [tap "Connect"](../common/pico4.md#pico-toolkit-ui) and do the [startup alignment](../common/pico4.md#pico-frame).
 
 ## Start the XenseVR PC Service {#35}
 
@@ -118,6 +118,6 @@ The service directory `/opt/apps/roboticsservice/` ships the `ConsoleDemo` / `Ro
 
 ## Power-on sequence {#36}
 
-The power-on and power-off sequence is described once, in [Quickstart · Power-on and power-off sequence](index.md#power-on); follow the 7 steps there. On a bimanual rig, read the [USB bandwidth budget](#usb-budget) before plugging in the cables.
+The power-on and power-off sequence is described once, in [Quickstart · Power-on and power-off sequence](quickstart.md#power-on); follow the 7 steps there. On a bimanual rig, read the [USB bandwidth budget](#usb-budget) before plugging in the cables.
 
 Next → [Calibration and self-check](calibration.md)

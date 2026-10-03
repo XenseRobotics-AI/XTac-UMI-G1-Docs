@@ -30,7 +30,7 @@
 
 - 标定是一次性的：零点与行程上限写在 MCU flash，断电不丢、换主机不用重标。日常只需确认闭合 `gripper.pos`≈0、张到底≈1.0；重标时背包版在控制台 系统 → [夹爪配置](../backpack/system.md#gripper)页做，PC 版见[夹爪标定](../pc/calibration.md#41)。
 - 需要重标：跌落 / 大力冲击后机械松动、拆装过编码器或机械限位、固件擦除。零点和行程要一起重标，限位变了行程上限也变。
-- 每个采集批次前做一次快速自检：背包版看控制台[「实时监控」页的画面与位姿](../backpack/monitor-record.md#checks)，PC 版见[快速开始的自检](../pc/index.md#self-check)。
+- 每个采集批次前做一次快速自检：背包版看控制台[「实时监控」页的画面与位姿](../backpack/monitor-record.md#checks)，PC 版见[一页速通的自检](../pc/quickstart.md#self-check)。
 
 ## 线缆与接口
 

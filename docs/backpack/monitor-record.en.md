@@ -4,7 +4,7 @@ description: Before recording, confirm the views, poses, gripper opening and dis
 
 # Live monitor and recording
 
-This page covers the "Live monitor" page of the XTac-UMI Collector console (below, "the console"): what to confirm on that one screen before recording, how to pick a project and task, how recording starts and stops, and how to delete a bad take on the spot. The gripper button gestures, the LED patterns and the voice announcements are all documented in one place, [Gripper buttons and LEDs](../common/gripper.md#buttons-leds); this page only links to them.
+This page covers the "Live monitor" page of the XTac-UMI Collector console (below, "the console"): what to confirm on that one screen before recording, how to pick a project and task, how recording starts and stops, and how to delete a bad take on the spot. The gripper button gestures, the LED patterns and the voice announcements are all documented in one place, [Gripper buttons and LEDs](gripper.md#buttons-leds); this page only links to them.
 
 ![The live monitor page](../assets/backpack/monitor-live.webp)
 
@@ -53,14 +53,14 @@ The wrist cameras are fixed at 640×480 @ 30 fps and the tactile sensors at 640�
 
 ## Recording {#record}
 
-Day to day the gripper buttons are the main control: long-press the right gripper to start and the left gripper to stop, handled by a state machine on the device with no browser needed. The gesture table, the LED table and how to confirm a deletion are in [Gripper buttons and LEDs](../common/gripper.md#buttons); which gripper does what and the timings are fixed fleet-wide and cannot be changed on site. The "Start recording / Stop recording" buttons at the bottom of the console do the same thing, for someone who is not holding a gripper; to bind a browser shortcut to those two buttons, go to [Settings › Capture settings › Recording shortcut](system.md#keybinding).
+Day to day the gripper buttons are the main control: long-press the right gripper to start and the left gripper to stop, handled by a state machine on the device with no browser needed. The gesture table, the LED table and how to confirm a deletion are in [Gripper buttons and LEDs](gripper.md#buttons); which gripper does what and the timings are fixed fleet-wide and cannot be changed on site. The "Start recording / Stop recording" buttons at the bottom of the console do the same thing, for someone who is not holding a gripper; to bind a browser shortcut to those two buttons, go to [Settings › Capture settings › Recording shortcut](system.md#keybinding).
 
 ### On-site feedback: LEDs and voice {#feedback}
 
 During collection both hands are on the grippers and your eyes are on the scene, so you may well not see the tablet. The device therefore gives two forms of feedback that work without looking at a screen, and they complement each other:
 
-- **LEDs**: the indicator on the gripper, distinguishing states by solid / breathing / blinking / pulsing / fast-blinking — you have to glance up at the gripper. The meanings are in [LEDs](../common/gripper.md#leds).
-- **Voice announcements**: the device speaker speaks out loud, with no tablet needed nearby and independent of the browser. Four moments: recording starts, an episode finishes (prompting you to reset the scene and prepare the next one), a serious problem occurs during recording, and a gripper or the headset drops out during recording. The sentences are in [Voice announcements](../common/gripper.md#voice-cues).
+- **LEDs**: the indicator on the gripper, distinguishing states by solid / breathing / blinking / pulsing / fast-blinking — you have to glance up at the gripper. The meanings are in [LEDs](gripper.md#leds).
+- **Voice announcements**: the device speaker speaks out loud, with no tablet needed nearby and independent of the browser. Four moments: recording starts, an episode finishes (prompting you to reset the scene and prepare the next one), a serious problem occurs during recording, and a gripper or the headset drops out during recording. The sentences are in [Voice announcements](gripper.md#voice-cues).
 
 The wording and the timing of the announcements are fixed values that cannot be changed on site, which keeps a batch of devices behaving identically; only the switch and the volume (a 0–100 slider) are adjustable, with a per-line preview next to the switch for confirming the speaker works. The settings survive a reboot and live in [Settings › Capture settings](system.md#voice).
 
@@ -110,7 +110,7 @@ Once saved, an entry has one of four states, shown the same way on the Projects 
 
 ### Deleting the previous take {#record-delete}
 
-With the buttons: double-click the left gripper to enter delete confirmation (purple flashing, with a 5-second timeout), then double-click again in that state to delete; the gestures are in [Gripper buttons and LEDs](../common/gripper.md#buttons). In the console: click "Delete previous and re-record", which deletes the current task's most recent entry and immediately starts a new recording, with no second confirmation; it is unavailable while recording.
+With the buttons: double-click the left gripper to enter delete confirmation (purple flashing, with a 5-second timeout), then double-click again in that state to delete; the gestures are in [Gripper buttons and LEDs](gripper.md#buttons). In the console: click "Delete previous and re-record", which deletes the current task's most recent entry and immediately starts a new recording, with no second confirmation; it is unavailable while recording.
 
 To delete an earlier entry, find its row on the [Projects page](projects-export.md) and click "Delete". The confirmation dialog states the entry's number, duration and size, and deletes its MCAP and H264 files along with it. This cannot be undone.
 

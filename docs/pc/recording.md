@@ -18,9 +18,9 @@
 
 | 档 | 开关 | 需要 | 多出 |
 |---|---|---|---|
-| ① 只有夹爪 | `--robot.enable_tracker=false --robot.enable_head_camera=false` | 不需要 PC Service | 触觉两路、腕相机、`gripper.pos`，没有 `tcp.*` |
-| ② 加追踪器位姿（最常用，本页默认） | `--robot.enable_tracker=true --robot.enable_head_camera=false` | 追踪器已开机[绑定](../common/pico4.md#pico-tracker-bind)、Pico4 已连上、[PC Service 已启动](host-setup.md#35) | [`/world` 视图](../common/coordinates.md#world-view) / `tcp.*` |
-| ③ 全开 | `--robot.enable_tracker=true --robot.enable_head_camera=true` | PC Service ≥ v0.2.0 | 头显双目与头部位姿，见[头显相机](#56) |
+| ① 只有夹爪 | `--robot.type=bi_taccap_gripper --robot.enable_tracker=false` | 不需要 PC Service | 触觉两路、腕相机、`gripper.pos`，没有 `tcp.*` |
+| ② 带腕部位姿（最常用，本页默认） | `--robot.type=bi_taccap_gripper`（追踪器默认开启） | 追踪器已开机[绑定](../common/pico4.md#pico-tracker-bind)、Pico4 已连上、[PC Service 已启动](host-setup.md#35) | [`/world` 视图](../common/coordinates.md#world-view) / `tcp.*` |
+| ③ 完全体 | `--robot.type=xtac_umi_g1` | 同 ②，PC Service ≥ v0.2.0 | 头显双目与头部位姿，见[头显相机](#56) |
 
 按 ② 档预览：
 
@@ -28,14 +28,11 @@
 lerobot-teleoperate \
     --robot.type=bi_taccap_gripper \
     --robot.id=0 \
-    --robot.enable_tracker=true \
-    --robot.enable_head_camera=false \
     --fps=30 \
-    --display_data=true \
-    --show_trajectory=true
+    --display_data=true
 ```
 
-换档只改表里两个开关；`--robot.enable_head_camera` 默认就是 `false`，写出来是让开关在命令里可见。单夹爪换成 `--robot.type=taccap_gripper`：只接一只时自动选中，两只都接着时加 `--robot.side=left|right`（录制时只录一只则必填）。`--teleop_time_s=10` 跑满 10 秒自动退出，`--debug_timing=true` 打印采样耗时与相机路数。
+换档只改表里的开关。双夹爪带不带头显由 `--robot.type` 决定：不带头显用 `bi_taccap_gripper`，带头显用 `xtac_umi_g1`，数据集里记录的类型也随之不同；双夹爪命令里不再写 `--robot.enable_head_camera`，写了且与类型矛盾时会直接报错，并提示该用哪个类型。单夹爪换成 `--robot.type=taccap_gripper`：只接一只时自动选中，两只都接着时加 `--robot.side=left|right`（录制时只录一只则必填）；单夹爪没有带头显的类型，仍用 `--robot.enable_head_camera=true` 开启头显。`--teleop_time_s=10` 跑满 10 秒自动退出，`--debug_timing=true` 打印采样耗时与相机路数。
 
 逐项确认（②③ 档才有位姿两行），都正常再 `Ctrl+C` 退出：
 
@@ -55,8 +52,6 @@ lerobot-teleoperate \
 lerobot-record \
     --robot.type=bi_taccap_gripper \
     --robot.id=0 \
-    --robot.enable_tracker=true \
-    --robot.enable_head_camera=false \
     --display_data=false \
     --dataset.repo_id=<your_org>/<your_dataset> \
     --dataset.num_episodes=1 \
@@ -100,7 +95,7 @@ lerobot-record \
 
 | 参数 | 默认 | 含义 |
 |---|---|---|
-| `robot.type` | 必填 | `taccap_gripper`（单夹爪）/ `bi_taccap_gripper`（双夹爪） |
+| `robot.type` | 必填 | `taccap_gripper`（单夹爪）/ `bi_taccap_gripper`（双夹爪）/ `xtac_umi_g1`（双夹爪 + 头显） |
 | `robot.id` | 必填 | 工位号，填数字（`0` / `1`…），前缀自动补；漏填直接报错，见 [`--robot.id`](#robot-id) |
 | `fps` | `30` | 主循环帧率，与 `--dataset.fps`（落盘采样率）是两个参数，通常相同 |
 | `display_data` | `false` | Rerun 显示相机画面与 3D 视图 |
@@ -117,12 +112,12 @@ lerobot-record \
 | 参数 | 默认 | 含义 |
 |---|---|---|
 | `robot.side` | 自动 | `left`/`right`，单夹爪模式下两只都接着时必填 |
-| `robot.role` | `leader` | 填 `follower` 绑定从夹爪；从夹爪固件须 ≥ 1.1.6，见[固件 OTA](versions.md#ota) |
+| `robot.role` | `leader` | 填 `follower` 绑定从夹爪；从夹爪固件须 ≥ 1.2.5，否则拒绝连接（低于 1.2.11 会提示升级），见[固件 OTA](versions.md#ota) |
 | `robot.gripper_stream_hz` | `100` | 主夹爪固件主动推送编码器（开启时含 IMU）读数的频率；`0` 为每帧轮询。推流起不来时自动回退轮询并告警，不影响录制。双夹爪两侧共用，不带前缀 |
 | `robot.enable_tracker` | `true` | 关闭则无位姿 |
-| `robot.enable_head_camera` | `false` | 录头显相机，见[头显相机](#56) |
+| `robot.enable_head_camera` | `false` | 仅单夹爪 `taccap_gripper`：录头显相机；双夹爪改用 `--robot.type=xtac_umi_g1`，见[头显相机](#56) |
 | `robot.head_camera_eyes` | `both` | `both` 两只眼（两个键），`left` / `right` 只录一只 |
-| `robot.head_camera_width/_height` | `640` / `480` | 每只眼尺寸，须与头显「分辨率」一致，对应表见[头显相机](#56) |
+| `robot.head_camera_width/_height` | `640` / `480` | 每只眼尺寸，须与头显输出的分辨率一致（默认都是 640x480），见[头显相机](#56) |
 | `robot.wrist_undistort` | `false` | 落盘前矫正鱼眼，见[鱼眼矫正](#57) |
 | `robot.wrist_undistort_balance` | `0.0` | `0` 保持标定焦距，`1` 视野最大但黑边更多 |
 
@@ -148,6 +143,7 @@ lerobot-record \
 |---|---|---|
 | `--robot.id=0` | `taccap_gripper`（单夹爪） | `taccap_0` |
 | `--robot.id=0` | `bi_taccap_gripper`（双夹爪） | `bi_taccap_0` |
+| `--robot.id=0` | `xtac_umi_g1`（双夹爪 + 头显） | `xtac_umi_g1_0` |
 
 不要手敲前缀，双夹爪上写 `--robot.id=taccap_0` 标签就和设备类型对不上；非纯数字原样保留，老命令的 `--robot.id=taccap_0` 仍可用。漏填或填空在解析命令行时就退出：
 
@@ -173,10 +169,8 @@ ValueError: --robot.id is required: the station label for this rig, e.g. --robot
           "side": "left",
           "gripper_sn": "TCGU01A24Z0001m",
           "tactile_sensors": [
-            { "finger": "left",  "observation_key": "left_tactile_left",  "serial": "GSPS01A25Z0011",
-              "runtime": "meta/runtimes/GSPS01A25Z0011-20260822T160309.bin" },
-            { "finger": "right", "observation_key": "left_tactile_right", "serial": "GSPS01A25Z0012",
-              "runtime": "meta/runtimes/GSPS01A25Z0012-20260822T160309.bin" }
+            { "finger": "left",  "observation_key": "left_tactile_left",  "serial": "GSPS01A25Z0011" },
+            { "finger": "right", "observation_key": "left_tactile_right", "serial": "GSPS01A25Z0012" }
           ],
           "wrist_undistort": { "applied": false }
         }
@@ -192,12 +186,12 @@ ValueError: --robot.id is required: the station label for this rig, e.g. --robot
 - 独立文件，不是 `meta/info.json` 的键；追踪器和腕相机是配件，不在清单里。
 - `wrist_undistort` 记腕相机帧是否矫正过、用哪份内参，没矫正记 `{"applied": false}`，见[鱼眼矫正](#57)。
 
-`epochs` 让一个数据集跨几套硬件：每段记 `from_episode` / `to_episode`（左闭右开，同 `dataset_from_index` / `dataset_to_index`）和 `recorded_at`，正在录的段 `to_episode` 为 `null`。`--resume` 续录时同一套设备什么都不记；换了夹爪或传感器，旧段在当前集数处封口、新段接上；`--robot.type` 对不上是换数据集不是换硬件，保留原文件并告警。
+`epochs` 让一个数据集跨几套硬件：每段记 `from_episode` / `to_episode`（左闭右开，同 `dataset_from_index` / `dataset_to_index`）和 `recorded_at`，正在录的段 `to_episode` 为 `null`。`--resume` 续录时同一套设备什么都不记；换了夹爪或传感器，旧段在当前集数处封口、新段接上；`--robot.type` 对不上是换数据集不是换硬件，保留原文件并告警。`bi_taccap_gripper` ↔ `xtac_umi_g1`（加或去掉头显）同样是换数据集，类型、观测键都不同，换一个 `--dataset.repo_id`；更早版本里在 `bi_taccap_gripper` 下开头显录的数据集也续不上（类型、特征和工位号都对不上），请录进新的 `--dataset.repo_id`。
 
 **一个数据集只属于一个工位**：`--resume` 时 `--robot.id` 和数据集里记的不一致，会在连接任何设备之前直接报错拒绝续录（报错里带 `refusing to resume it`）。要么回原工位续录，要么换个 `--dataset.repo_id` 录成新数据集；没有记工位号的老数据集不受这条限制。老数据集（扁平 `units`）读成一个开口 epoch，只说明"没有证据换过硬件"。
 
-!!! danger "`meta/runtimes/`：重建触觉的衍生通道必须用这一份 bundle"
-    落盘的是 `rectify` 流，depth / force / difference 从它算出，要用那枚传感器上电时拍的参考图（runtime 配置）。每次采集会话把每枚的 bundle 写进 `meta/runtimes/<SN>-<时间>.bin`（每枚约 841 KB），epoch 各指向自己那份。拿错 bundle 不报错：用另一枚的、或重标后的 bundle，没被碰过的胶体照样解出看似合理的 depth 和 force；老数据集没有 `meta/runtimes/` 就跳过重建。同一枚拆下维护再装回，参考图变了，会单独开 epoch。文件名里的时间是北京时间、不带时区，只当标签；计算用 `recorded_at`。
+!!! note "触觉的衍生通道只靠数据集本身就能重建"
+    落盘的是 `rectify` 流，depth / force / difference 从它算出。计算要用的参考图就是每个 episode 的第一帧 `rectify`，其余参数由传感器型号决定，所以重建只靠数据集本身就够，不用去找那台实物。更早版本录的数据集里可能还有 `meta/runtimes/` 目录和传感器条目里的 `runtime` 字段，现在都会被忽略，不影响读取。
 
 ## 每帧记录内容 {#53}
 
@@ -208,7 +202,7 @@ ValueError: --robot.id is required: the station label for this rig, e.g. --robot
 | `gripper.pos` | 夹爪编码器 | `--robot.enable_gripper`（默认 `true`） | float ∈ [0, 1] |
 | `tactile_left` / `tactile_right` | 左右视触觉传感器 | 默认采集；`--robot.enable_tactile=false` 只用于排查，见下方警告 | uint8，约 `(400, 700, 3)`，宽高自动推导，别写死 |
 | `wrist_cam` | 腕部相机 | `--robot.enable_wrist_camera`（默认 `true`） | uint8 `(H, W, 3)` |
-| `left_head` / `right_head` | 头显双目，一只眼一个键 | `--robot.enable_head_camera`（默认 `false`） | uint8，默认 `(480, 640, 3)` |
+| `left_head` / `right_head` | 头显双目，一只眼一个键 | `--robot.type=xtac_umi_g1`（单夹爪为 `--robot.enable_head_camera=true`） | uint8，默认 `(480, 640, 3)` |
 | `head_camera.x/y/z` | 头显位置（同 `tcp.*` 世界系），也是动作 | 同上 | float(m) |
 | `head_camera.r1..r6` | 头显姿态的 6-D 旋转，也是动作 | 同上 | float |
 | `imu.accel.{x,y,z}` | 夹爪 IMU 加速度 | `--robot.enable_imu`（默认 `false`，预留不录） | float(m/s²) |
@@ -272,7 +266,7 @@ lerobot-record \
     --dataset.streaming_encoding=false
 ```
 
-编码器不用管：`--dataset.vcodec=auto` 会真的开一次编码会话探测，没有 NVIDIA 驱动时回落到 `libsvtav1`（CPU 上的 AV1，也是离线数据工具的默认编码器）；显式写 `--dataset.vcodec=libsvtav1` 也可以。
+编码器不用管：`--dataset.vcodec=auto` 会真的开一次编码会话探测，没有 NVIDIA 驱动时回落到 `libsvtav1`（CPU 上的 AV1）；离线编辑数据集时重新编码也走同一套选择，有 NVIDIA 用 `h264_nvenc`，否则 `libsvtav1`；显式写 `--dataset.vcodec=libsvtav1` 也可以。
 
 原因：`libsvtav1` 让 CPU 既编码又采集，双夹爪一帧六到八张图而 30 fps 预算只有 33.3 ms，先看到的就是 `[slow_frame] ... overrun=`；关掉后到 `save_episode()` 再批量编码，存盘慢只是多等，掉帧丢的是补不回来的数据。此时"建议把流式编码开回来"的提示忽略即可。多核服务器上仍想开流式编码，两个旋钮：
 
@@ -357,14 +351,12 @@ lerobot-record \
 
 ## 可选：头显相机 {#56}
 
-默认关闭。打开后录制 Pico4 Ultra 企业版头显自带的双目相机与头显位姿——操作员第一视角和"人在往哪看"；产出 `left_head` / `right_head` 与 `head_camera.*`（见[每帧记录内容](#53)），后者同时进 action。单夹爪和双夹爪开关与参数完全一样。
+录制 Pico4 Ultra 企业版头显自带的双目相机与头显位姿——操作员第一视角和"人在往哪看"；产出 `left_head` / `right_head` 与 `head_camera.*`（见[每帧记录内容](#53)），后者同时进 action。双夹爪用 `--robot.type=xtac_umi_g1`（`bi_taccap_gripper` 固定不带头显）；单夹爪 `taccap_gripper` 加 `--robot.enable_head_camera=true`。下面的头显参数两种情况都适用。
 
 ```bash
 lerobot-record \
-    --robot.type=bi_taccap_gripper \
+    --robot.type=xtac_umi_g1 \
     --robot.id=0 \
-    --robot.enable_tracker=true \
-    --robot.enable_head_camera=true \
     --display_data=false \
     --dataset.repo_id=<your_org>/<your_dataset> \
     --dataset.single_task='Pick up the object' \
@@ -376,18 +368,8 @@ lerobot-record \
 
 前置条件：XenseVR PC Service ≥ v0.2.0，更低版本不转发相机画面（见[版本基线](versions.md#required)）；头显 APP 正在推流，相机和追踪器共用同一条 SDK 连接，头显必须已连上 [PC Service](host-setup.md#35)，关掉一个不会断开另一个。
 
-!!! warning "头显里的「分辨率」和 `--robot.head_camera_width/_height` 必须一致"
-    只接受 `640x480`（默认）、`1024x768`、`1280x960` 三档，与头显 APP 的「分辨率」一一对应；尺寸由 XTac-UMI XR 界面决定（默认 `640`，也是推荐档位），命令行参数只是声明预期。填别的直接报错，首帧尺寸与配置不一致也在 connect 时报错，不会悄悄重采样（那会改掉记录下来的视场角）。三档都是 4:3，与传感器一致（PICO 相机接口单帧上限 2328x1748 也是 4:3），按 16:9 要画面只会得到裁剪或拉伸。默认对默认不用加参数；在头显里调高后命令行两处一起改：
-
-    ```bash
-    # 头显选 1024
-    --robot.head_camera_width=1024 \
-    --robot.head_camera_height=768
-
-    # 头显选 1280
-    --robot.head_camera_width=1280 \
-    --robot.head_camera_height=960
-    ```
+!!! warning "头显的分辨率和 `--robot.head_camera_width/_height` 必须一致"
+    只接受 `640x480`（默认）、`1024x768`、`1280x960` 三档。出画面的是头显，XTac-UMI XR 默认每眼 640x480，与采集端默认一致，不用加参数；命令行参数只是声明预期。填别的直接报错，首帧尺寸与配置不一致也在 connect 时报错，不会悄悄重采样（那会改掉记录下来的视场角）。三档都是 4:3，与传感器一致（PICO 相机接口单帧上限 2328x1748 也是 4:3），按 16:9 要画面只会得到裁剪或拉伸。需要更高分辨率时请联系[技术支持](../common/reference.md#support)在头显上调整，并同步修改这两个参数，两处一起改，不要只改一边。
 
 只要一只眼时用 `--robot.head_camera_eyes=left`（或 `right`）：JPEG 解码量和编码器压力减半，数据集里只有一个头部视频键。
 

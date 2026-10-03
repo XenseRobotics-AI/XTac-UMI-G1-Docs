@@ -1,6 +1,6 @@
 # Troubleshooting
 
-This page is organised by symptom, with a cause and a fix for each. The three most common on site are not being able to reach the XTac-UMI Collector console (below, "the console"), recording being refused, and the export pre-check failing. Before touching anything, listen for the device's voice announcement, look at the gripper LEDs and check the status dots on the live monitor page, then match the symptom. The full meaning of the LED patterns is in [Gripper buttons, LEDs and serial numbers](../common/gripper.md#buttons-leds).
+This page is organised by symptom, with a cause and a fix for each. The three most common on site are not being able to reach the XTac-UMI Collector console (below, "the console"), recording being refused, and the export pre-check failing. Before touching anything, listen for the device's voice announcement, look at the gripper LEDs and check the status dots on the live monitor page, then match the symptom. The full meaning of the LED patterns is in [Gripper buttons, LEDs and voice](gripper.md#buttons-leds).
 
 !!! danger "Odour, smoke, obvious overheating, structural damage or damaged cable insulation"
     Cut the power and stop using the device immediately, note the serial number on the body and contact support.
@@ -52,7 +52,7 @@ This page is organised by symptom, with a cause and a fix for each. The three mo
 ??? failure "A gripper's LED is dark, or the system log repeatedly shows `mcu ... disconnected / reconnected`"
     **Cause:** poor contact in the gripper's cable, or it is not plugged into UMI-L / UMI-R. When one gripper drops out, the one still online goes solid red (a system problem).
 
-    **Fix:** check that both ends of the Type-C cable are seated and the locking screws are tight; if it keeps disconnecting, note the SN and when it happened and report it to support. The LED patterns are in [LEDs](../common/gripper.md#buttons-leds).
+    **Fix:** check that both ends of the Type-C cable are seated and the locking screws are tight; if it keeps disconnecting, note the SN and when it happened and report it to support. The LED patterns are in [LEDs](gripper.md#buttons-leds).
 
 ## Headset and trackers {#tracker}
 
@@ -91,7 +91,7 @@ This page is organised by symptom, with a cause and a fix for each. The three mo
 ??? failure "The gripper LED turns solid yellow during recording"
     **Cause:** something fatal went wrong in this take (a camera or a required channel dropped, say) and the take is already spoiled; the LED stays yellow until this recording finishes.
 
-    **Fix:** after stopping, look at that take's quality annotation on the Projects page, delete it and record again; check which feed dropped on the live monitor page and inspect that cable. The meanings are in [LEDs](../common/gripper.md#buttons-leds).
+    **Fix:** after stopping, look at that take's quality annotation on the Projects page, delete it and record again; check which feed dropped on the live monitor page and inspect that cable. The meanings are in [LEDs](gripper.md#buttons-leds).
 
 ??? failure "The gripper LED is solid red"
     **Cause:** a system problem, lit by the backpack: a gripper dropped out, a camera dropped out, or a required channel is missing; it stays until the problem clears. Red only ever means a fault, not that recording is in progress.
@@ -106,7 +106,7 @@ This page is organised by symptom, with a cause and a fix for each. The three mo
 ??? failure "The buttons do nothing: a double-click is refused (fast yellow flash), a long press during recording has no effect"
     **Cause:** this is how the state machine is designed: during recording a double-click and a long press on the right gripper are silently ignored (to guard against a shaky hand); a double-click is refused when there is nothing to delete; and a double-click does nothing during the 3-second cooldown after a deletion.
 
-    **Fix:** follow the gesture table in [Buttons](../common/gripper.md#buttons); the bindings currently in effect are shown at console → Settings → [Capture settings › Recording shortcut](system.md#keybinding).
+    **Fix:** follow the gesture table in [Buttons](gripper.md#buttons); the bindings currently in effect are shown at console → Settings → [Capture settings › Recording shortcut](system.md#keybinding).
 
 ??? failure "The device is silent — no voice announcement when recording starts or stops"
     **Cause:** two possibilities. When voice was first added in 0.3.12 there was a bug that sent the sound to HDMI instead of the onboard speaker, so the preview was silent too and nothing reported an error, which looked on site like a broken speaker — that was **fixed in 0.3.13**. If it is still silent after that, it is almost always the settings: voice is muted, or the volume is at 0.

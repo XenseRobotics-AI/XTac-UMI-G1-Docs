@@ -60,7 +60,7 @@ The console runs on the backpack, and any browser opening `http://192.168.44.1` 
 
 ![The Projects page: project → task → recording](../assets/backpack/project-list-live.webp)
 
-The right of the top bar permanently shows video bandwidth, camera count, CPU, memory, disk, monitoring / recording time and system status, and opens the system log. The gripper's physical buttons are handled by the device, so you can record with no browser online: long-press the right gripper to start and the left to stop, with the LED patterns in [Gripper buttons, LEDs and serial numbers](../common/gripper.md#buttons-leds); the backpack's speaker also gives a [voice announcement](../common/gripper.md#voice-cues) when recording starts, when a take finishes and when something drops out.
+The right of the top bar permanently shows video bandwidth, camera count, CPU, memory, disk, monitoring / recording time and system status, and opens the system log. The gripper's physical buttons are handled by the device, so you can record with no browser online: long-press the right gripper to start and the left to stop, with the LED patterns in [Gripper buttons, LEDs and voice](../backpack/gripper.md#buttons-leds); the backpack's speaker also gives a [voice announcement](../backpack/gripper.md#voice-cues) when recording starts, when a take finishes and when something drops out.
 
 ## Capture modes
 

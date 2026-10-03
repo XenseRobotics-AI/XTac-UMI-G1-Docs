@@ -124,7 +124,7 @@ python -m lerobot.robots.taccap_gripper.check_tracker --side right
 
 以 10 Hz 打印 `raw`（追踪器自身位姿）与 `ee`（经刚性安装变换后的 TCP）。挥动夹爪，`raw xyz` 应平滑变化、SN 与预期一致（[读取追踪器 SN](../common/pico4.md#pico-tracker-sn)）。
 
-安装变换不需要你测：追踪器到 TCP 的刚性偏移由 `ee_transform.tracker_to_tcp` 内置（取自 CAD 装配实测），左右各自实测，接近镜像但不完全相同（旋转差 0.03°、平移差 1.27 mm）。`--side` 决定套用哪一侧；不带 `--side` 时变换是单位阵，`ee` 完全跟随 `raw`。只有重新加工过安装座之类才需覆盖，设 `--robot.tracker_to_ee_pos` / `--robot.tracker_to_ee_quat`，两者独立，可只钉平移、旋转仍用内置值。
+安装变换不需要你测：追踪器到 TCP 的刚性偏移已内置在采集程序里（取自 CAD 装配实测），左右各自实测，接近镜像但不完全相同（旋转差 0.03°、平移差 1.27 mm）。`--side` 决定套用哪一侧；不带 `--side` 时变换是单位阵，`ee` 完全跟随 `raw`。只有重新加工过安装座之类才需覆盖，设 `--robot.tracker_to_ee_pos` / `--robot.tracker_to_ee_quat`，两者独立，可只钉平移、旋转仍用内置值。
 
 支点检查不需额外硬件：把两指中点抵在一个固定点上，握着手柄尽量多变换姿态摆动。`ee xyz` 应基本不动而 `raw xyz` 大幅摆动，看到的漂移量即该变换的误差。左右都要测；左侧镜像方向错了，表现为 `ee` 摆动幅度约为应有的两倍。
 

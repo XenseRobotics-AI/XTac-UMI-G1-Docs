@@ -60,7 +60,7 @@
 
 ![项目页：项目 → 任务 → 录制条目](../assets/backpack/project-list-live.webp)
 
-顶栏右侧常驻视频带宽、相机路数、CPU、内存、硬盘、监控 / 录制时长与系统状态，点开是系统日志。夹爪物理按键由设备端接管，浏览器不在线也能录：右爪长按开始、左爪长按停止，灯语见[夹爪按键、指示灯与序列号](../common/gripper.md#buttons-leds)；背包喇叭还会在开录、录完与掉线时[语音播报](../common/gripper.md#voice-cues)。
+顶栏右侧常驻视频带宽、相机路数、CPU、内存、硬盘、监控 / 录制时长与系统状态，点开是系统日志。夹爪物理按键由设备端接管，浏览器不在线也能录：右爪长按开始、左爪长按停止，灯语见[夹爪按键、指示灯与语音](../backpack/gripper.md#buttons-leds)；背包喇叭还会在开录、录完与掉线时[语音播报](../backpack/gripper.md#voice-cues)。
 
 ## 采集模式
 

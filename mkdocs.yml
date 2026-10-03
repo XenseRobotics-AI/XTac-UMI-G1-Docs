@@ -100,6 +100,7 @@ plugins:
           nav_translations:
             产品: Product
             首页: Home
+            产品亮点: Highlights
             产品线与配置对比: Editions
             认识 XTac-UMI G1: XTac-UMI G1
             认识数采背包: The Backpack
@@ -123,9 +124,21 @@ plugins:
             数据集: Dataset
             故障排查: Troubleshooting
             版本与升级: Versions & Upgrades
-            RobotConfig 与 SDK: RobotConfig & SDK
+            RobotConfig 配置项: RobotConfig Options
             Pico4 头显与追踪器: Pico4 Headset & Trackers
-            夹爪按键、指示灯与序列号: Gripper Buttons, LEDs & Serials
+            夹爪连接与序列号: Gripper Connection & Serials
+            夹爪按键、指示灯与语音: Gripper Buttons, LEDs & Voice
+            一页速通: Quickstart
+            从夹爪: Follower Gripper
+            从夹爪概览: Overview
+            准备与自检: Setup & Self-check
+            运动控制: Motion Control
+            固件与电机升级: Firmware & Motor Upgrades
+            SDK 与二次开发: SDK & Development
+            SDK 概览: SDK Overview
+            安装与构建: Install & Build
+            API 要点: API Essentials
+            示例: Examples
             坐标系: Coordinate Frames
             维护保养: Maintenance
             术语表与支持: Glossary & Support
@@ -135,7 +148,7 @@ plugins:
         # 第一轮重构前的旧文件名(2026-09 之前)
         01-overview.md: product/g1.md
         hardware.md: common/gripper.md
-        highlights.md: product/g1.md
+        highlights.md: product/highlights.md
         02-environment.md: pc/install.md
         03-host-hardware.md: pc/host-setup.md
         04-calibration.md: pc/calibration.md
@@ -144,11 +157,17 @@ plugins:
         06-dataset.md: pc/dataset.md
         data-management.md: pc/dataset.md
         07-faq-reference.md: common/reference.md
-        sdk-overview.md: https://github.com/XenseRobotics-AI/TacCap-Gripper/tree/main/docs
-        sdk-install.md: https://github.com/XenseRobotics-AI/TacCap-Gripper/blob/main/docs/INSTALL.md
-        sdk-examples.md: https://github.com/XenseRobotics-AI/TacCap-Gripper/blob/main/docs/EXAMPLES.md
+        sdk-overview.md: sdk/index.md
+        sdk-install.md: sdk/install.md
+        sdk-api.md: sdk/api.md
+        sdk-examples.md: sdk/examples.md
+        follower-overview.md: follower/index.md
+        follower-setup.md: follower/setup.md
+        follower-control.md: follower/control.md
+        follower-firmware.md: follower/firmware.md
+        follower-troubleshooting.md: follower/troubleshooting.md
         # 第一轮重构的扁平文件名 → 产品线目录(PC 版 / 通用)
-        quickstart.md: pc/index.md
+        quickstart.md: pc/quickstart.md
         install.md: pc/install.md
         host-setup.md: pc/host-setup.md
         calibration.md: pc/calibration.md
@@ -164,7 +183,7 @@ plugins:
         # 当成中文页校验)。
         en/01-overview.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/product/g1/
         en/hardware.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/common/gripper/
-        en/highlights.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/product/g1/
+        en/highlights.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/product/highlights/
         en/02-environment.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/pc/install/
         en/03-host-hardware.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/pc/host-setup/
         en/04-calibration.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/pc/calibration/
@@ -173,10 +192,10 @@ plugins:
         en/06-dataset.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/pc/dataset/
         en/data-management.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/pc/dataset/
         en/07-faq-reference.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/common/reference/
-        en/sdk-overview.md: https://github.com/XenseRobotics-AI/TacCap-Gripper/tree/main/docs
-        en/sdk-install.md: https://github.com/XenseRobotics-AI/TacCap-Gripper/blob/main/docs/INSTALL.md
-        en/sdk-examples.md: https://github.com/XenseRobotics-AI/TacCap-Gripper/blob/main/docs/EXAMPLES.md
-        en/quickstart.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/pc/
+        en/sdk-overview.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/sdk/
+        en/sdk-install.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/sdk/install/
+        en/sdk-examples.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/sdk/examples/
+        en/quickstart.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/pc/quickstart/
         en/install.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/pc/install/
         en/host-setup.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/pc/host-setup/
         en/calibration.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/pc/calibration/
@@ -245,6 +264,7 @@ extra:
 nav:
   - 产品:
       - 首页: index.md
+      - 产品亮点: product/highlights.md
       - 产品线与配置对比: product/editions.md
       - 认识 XTac-UMI G1: product/g1.md
       - 认识数采背包: product/backpack.md
@@ -255,6 +275,7 @@ nav:
       - 开箱、接线与供电: backpack/unbox-connect.md
       - 网络与控制台入口: backpack/network.md
       - 实时监控与录制: backpack/monitor-record.md
+      - 夹爪按键、指示灯与语音: backpack/gripper.md
       - 项目、导出与发布: backpack/projects-export.md
       - 回放: backpack/playback.md
       - 系统设置: backpack/system.md
@@ -263,6 +284,7 @@ nav:
       - 版本: backpack/versions.md
   - PC 版:
       - pc/index.md
+      - 一页速通: pc/quickstart.md
       - 安装: pc/install.md
       - 主机配置: pc/host-setup.md
       - 标定与自检: pc/calibration.md
@@ -270,10 +292,21 @@ nav:
       - 数据集: pc/dataset.md
       - 故障排查: pc/troubleshooting.md
       - 版本与升级: pc/versions.md
-      - RobotConfig 与 SDK: pc/reference.md
+      - RobotConfig 配置项: pc/reference.md
+      - SDK 与二次开发:
+          - SDK 概览: sdk/index.md
+          - 安装与构建: sdk/install.md
+          - API 要点: sdk/api.md
+          - 示例: sdk/examples.md
+  - 从夹爪:
+      - 从夹爪概览: follower/index.md
+      - 准备与自检: follower/setup.md
+      - 运动控制: follower/control.md
+      - 固件与电机升级: follower/firmware.md
+      - 故障排查: follower/troubleshooting.md
   - 通用:
       - Pico4 头显与追踪器: common/pico4.md
-      - 夹爪按键、指示灯与序列号: common/gripper.md
+      - 夹爪连接与序列号: common/gripper.md
       - 坐标系: common/coordinates.md
       - 维护保养: common/maintenance.md
       - 术语表与支持: common/reference.md

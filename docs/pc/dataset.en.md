@@ -23,12 +23,12 @@ How it is serialised:
 
 - `hf_dataset`: Hugging Face datasets → parquet
 - Video (tactile + wrist camera): mp4, to save space
-- Metadata: plain json / jsonl (`info` / `episodes` / `stats` / `tasks`); the fields that matter in `info` are `fps`, `features`, `total_episodes`, `total_frames`, `robot_type`, `data_path`, `video_path`
+- Metadata: plain json / jsonl (`info` / `episodes` / `stats` / `tasks`); the fields that matter in `info` are `fps`, `features`, `total_episodes`, `total_frames`, `robot_type`, `data_path`, `video_path`. `robot_type` is the `--robot.type` used for recording (`taccap_gripper` / `bi_taccap_gripper` / `xtac_umi_g1`); right after it, `collection_stack` is always `"xense-taccap-lerobot"`, marking the data as recorded directly by this collection program
 - Temporal queries: `delta_timestamps = {"observation.image": [-1, -0.5, -0.2, 0]}` returns the current frame plus the ones 1 s, 0.5 s and 0.2 s before it in one call
 
 For the observation and action keys recorded in each frame, see [What each frame records](recording.md#53).
 
-A standard LeRobotDataset records only `robot_type` in `info`, so recording writes two extra, separate files (neither touches the upstream `info` structure): `meta/hardware.json` records which rig produced the data (station number, gripper and tactile SNs, whether the wrist camera was undistorted; split into `epochs`, and a hardware swap part-way through starts a new epoch), and `meta/runtimes/` records each tactile sensor's runtime bundle at the time of collection, which rebuilding depth / force / difference from the `rectify` stream needs. Field meanings, resume behaviour and what to watch out for when reconstructing are in [`--robot.id` and the hardware manifest](recording.md#robot-id). Datasets derived with `lerobot-edit-dataset` (deleting or splitting episodes, removing features, 8 → 6 camera conversion) carry both along; **`merge` refuses outright**, because no single manifest could describe every episode's real sensors after a merge.
+A standard LeRobotDataset records only `robot_type` in `info`, so recording writes an extra, separate hardware manifest, `meta/hardware.json` (it does not touch the upstream `info` structure), recording which rig produced the data (station number, gripper and tactile SNs, whether the wrist camera was undistorted; split into `epochs`, and a hardware swap part-way through starts a new epoch). Rebuilding depth / force / difference from the `rectify` stream needs only the sensor model and the first `rectify` frame of each episode, which the dataset already holds; a `meta/runtimes/` in a dataset recorded on an earlier version is ignored. Field meanings, resume behaviour and what to watch out for when reconstructing are in [`--robot.id` and the hardware manifest](recording.md#robot-id). Datasets derived with `lerobot-edit-dataset` (deleting or splitting episodes, removing features, 8 → 6 camera conversion) carry `hardware.json` along; **`merge` refuses outright**, because no single manifest could describe every episode's real sensors after a merge.
 
 <span id="stats-std"></span>
 
@@ -70,7 +70,7 @@ lerobot-check-dataset --repo-id <your_org>/<your_dataset> --episode-index 0 2 4
 | `root` | Local root directory (default `~/.cache/huggingface/lerobot`) |
 | `episode-index` | Check only these episodes (accepts several, e.g. `0 2 4`) |
 
-It checks that `meta/` is complete, that the episode count agrees, that the parquet row counts and indices are contiguous, that there are no NaNs, that the video files exist and their frame counts line up with the parquet, and the **camera format**: a bimanual dataset is classified as 6 cameras (four tactile streams plus two wrist cameras) or 8 (plus the headset's two eyes), and the two formats have different input dimensions at training time. The result is summarised on the last line:
+It checks that `meta/` is complete, that the episode count agrees, that the parquet row counts and indices are contiguous, that there are no NaNs, that the video files exist and their frame counts **exactly** match what is declared, and the **camera format**: a bimanual dataset is classified as 6 cameras (four tactile streams plus two wrist cameras) or 8 (plus the headset's two eyes), and the two formats have different input dimensions at training time. The result is summarised on the last line:
 
 ```text
 Summary: 0 error(s), 0 warning(s) | Camera format: 6-camera (no headset)
@@ -78,9 +78,16 @@ Summary: 0 error(s), 0 warning(s) | Camera format: 6-camera (no headset)
 
 Single-gripper datasets, and datasets with the wrist camera off or only one eye recorded, show `not recognized` with a warning; this check only targets the standard bimanual formats and does not affect the other checks.
 
+A video frame-count mismatch is graded by direction:
+
+| Case | Result | Meaning |
+|---|---|---|
+| **Fewer** than declared | error (`... frames but episodes declare ... (N missing ...)`) | Episodes reference frames the video does not have; decoding runs past the end of the stream |
+| **More** than declared | warning (`... more than the ... episodes declare -- unreferenced leftover frames`) | Leftover frames no episode refers to (e.g. after deleting episodes); every declared frame is still there, so the data is usable |
+
 ### Bimanual 8 cameras → 6 cameras {#8to6}
 
-A bimanual dataset recorded with the [head camera](recording.md#56) on is in the 8-camera format. To reduce it to the 6-camera format (the same shape as one recorded with `--robot.enable_head_camera=false`), use `lerobot-edit-dataset`:
+A bimanual dataset recorded with the [head camera](recording.md#56) on is in the 8-camera format. To reduce it to the 6-camera format (the same shape as one recorded with `bi_taccap_gripper`, and the type recorded in the dataset becomes `bi_taccap_gripper` too), use `lerobot-edit-dataset`:
 
 ```bash
 lerobot-edit-dataset \

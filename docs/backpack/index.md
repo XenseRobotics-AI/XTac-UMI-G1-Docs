@@ -21,7 +21,7 @@
 开始前读一遍[安全与合规](../product/safety.md)。下面每一步的详细操作在各自的页面里，本页只说做什么、在哪做。
 
 1. 头显配置：把 Pico OS 升到 5.15.5.U 以上并[开启开发者模式、把灭屏与休眠设为永不](../common/pico4.md#pico-system)；两只追踪器按「左奇右偶」[配对到头显](../common/pico4.md#pico-tracker-bind)并切到独立追踪模式；[安装 XTac-UMI XR](../common/pico4.md#pico-app)。
-2. 接线与供电：[顺序固定](unbox-connect.md#order)夹爪 → 头显 → 背包上电，左右夹爪分别接 UMI-L / UMI-R。供电二选一：[适配器供电](unbox-connect.md#adapter)时头显用 Type-C 线接背包 PICO 口；[充电宝供电](unbox-connect.md#powerbank)时头显先接二合一 Type-C 线，充电口接充电宝、数据口接背包 PICO 口，另一只充电宝给背包供电。夹爪的连接与供电要求见[夹爪按键、指示灯与序列号](../common/gripper.md#power)。
+2. 接线与供电：[顺序固定](unbox-connect.md#order)夹爪 → 头显 → 背包上电，左右夹爪分别接 UMI-L / UMI-R。供电二选一：[适配器供电](unbox-connect.md#adapter)时头显用 Type-C 线接背包 PICO 口；[充电宝供电](unbox-connect.md#powerbank)时头显先接二合一 Type-C 线，充电口接充电宝、数据口接背包 PICO 口，另一只充电宝给背包供电。夹爪的连接与供电要求见[夹爪连接与序列号](../common/gripper.md#power)。
 3. 连上背包：平板或手机连[背包热点](network.md#softap) `xense-<序列号后 6 位>`（如 `xense-e3d202`，密码印在机身标签），浏览器打开 `http://192.168.44.1` 或[设备名](network.md#mdns) `http://xense-<序列号后 6 位>.local` 进入控制台。iOS 必须敲全 `http://` 前缀；热点只有 5 GHz 频段，连接的设备要支持 5 GHz。
 4. [头显连背包](unbox-connect.md#pico-link)：戴上头显打开 XTac-UMI XR，勾选 USB 网络点连接，背包会自动在 USB 链路上建网（地址 `192.168.58.1`），不用手填。界面与连接状态见 [Pico4 头显与追踪器](../common/pico4.md#pico-toolkit-ui)。
 5. 选[采集模式](system.md#capture-mode)：控制台 → 系统 → 采集模式，按实际接了什么选 双爪 / 双爪 + 头显 / 单爪 / 单爪 + 头显 / 仅头显。单爪的左右侧由设备按实际连接自动判定；录制中不能切换。
@@ -33,7 +33,7 @@
 2. 打开控制台：连[背包热点](network.md#softap)，浏览器打开 `http://192.168.44.1`。
 3. [选项目 / 任务](monitor-record.md#project-task)：监控页底部两个下拉，末项「新建项目…」「新建任务…」可就地新建。任务的「任务指令 / prompt」必填，写完整的自然语言指令（如 *open the lid of the container, take out the chips, place them into the box*）；目标条数与目标时长可留空。
 4. [实时监控里确认](monitor-record.md#checks)：六路相机画面（左右鱼眼、左右爪各两路视触觉）与头显双目都有图像，鱼眼画面清晰——旋钮容易被误碰跑焦；位姿视图跟手动，左右追踪器没有接错；夹爪开合度随手部动作变化，闭合时约 0.02 rad、归一化为 0。录制按钮未就绪时会给出原因（未选项目 / 任务、Pico 位姿或时钟未就绪），完整的[开录门槛](monitor-record.md#record-gates)还包括磁盘占用与任务目标条数。
-5. [用夹爪按键录制](monitor-record.md#record)：右爪长按开始（灯转绿呼吸），做完一条左爪长按停止（白闪一次表示已保存），左爪双击删上一条。按键由背包端状态机接管，浏览器不在线也能录；完整手势表见[按键](../common/gripper.md#buttons)，灯语见[指示灯](../common/gripper.md#leds)。
+5. [用夹爪按键录制](monitor-record.md#record)：右爪长按开始（灯转绿呼吸），做完一条左爪长按停止（白闪一次表示已保存），左爪双击删上一条。按键由背包端状态机接管，浏览器不在线也能录；完整手势表见[按键](gripper.md#buttons)，灯语见[指示灯](gripper.md#leds)。
 
 采集全程不要重启 XTac-UMI XR：重启会重设世界坐标系原点，同一数据集内的位姿参考系就不一致了，见[启动与坐标系对齐](../common/pico4.md#pico-frame)。
 

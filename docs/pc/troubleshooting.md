@@ -23,73 +23,15 @@
 
     **解决**：重跑 `setup_env.sh --install` 自动校正；需要带 `libsvtav1` 的系统 FFmpeg 时再单独安装。
 
-## Docker 交付镜像 {#docker}
+## 硬件异常 {#hardware}
 
-只在走 [Docker 交付镜像](install.md#docker)时会遇到；容器里串口 busy 见下文 `Device or resource busy`。
-
-??? failure "`could not select device driver ... gpu` / 容器里看不到显卡"
-    **原因**：NVIDIA Container Toolkit 没装好，或装完没重启 Docker daemon。
-
-    **解决**：`install_customer.sh` 会自动装；手工确认用 `docker run --rm --gpus all ubuntu:22.04 nvidia-smi`，看不到显卡就重装 Toolkit 并 `sudo systemctl restart docker`，宿主机驱动要 ≥ 570.144。
-
-??? failure "`Unknown runtime specified nvidia`，`docker compose` 起不来"
-    **原因**：NVIDIA runtime 没注册进 Docker；`compose.yaml` 为拿到图形能力用的是 `runtime: nvidia`（见[容器里的图形界面](install.md#docker-gui)）。
-
-    **解决**：
-
-    ```bash
-    sudo nvidia-ctk runtime configure --runtime=docker
-    sudo systemctl restart docker
-    docker info --format '{{json .Runtimes}}'     # 输出里要能看到 nvidia
-    ```
-
-??? failure "容器里 Rerun 起不来：`Failed to create surface for any enabled backend` / Vulkan adapter 错误，但 `nvidia-smi` 正常"
-    **原因**：X11 没授权；或容器拿到了 CUDA 却没拿到 NVIDIA 的 Vulkan ICD，典型是把 `compose.yaml` 的 `runtime: nvidia` 改回了只申请 compute + utility 的 `gpus: all`，此时 `vulkaninfo` 报 `INCOMPATIBLE_DRIVER` 或列不出 NVIDIA 设备。
-
-    **解决**：宿主机图形桌面用户下执行 `xhost +si:localuser:root`，确认 `echo "$DISPLAY"` 非空、`/tmp/.X11-unix` 存在；`docker info --format '{{json .Runtimes}}'` 没列出 nvidia 就按上一条注册，有就把 `compose.yaml` 改回 `runtime: nvidia`；再确认容器里 `vulkaninfo --summary` 认得显卡。
-
-??? failure "`pull access denied ... 'docker login'`，或改了 `LEROBOT_IMAGE_TAG` 拉到的还是老镜像"
-    **原因**：镜像是公开的，不需要登录；是镜像名解析错了，或 `.env` 改完没重新拉、不在执行 `docker compose` 的目录里。
-
-    **解决**：`docker compose config --images` 看解析出的镜像名，检查 `.env` 里 `LEROBOT_IMAGE` 有没有写错（默认 `ghcr.io/xenserobotics-ai/xense-taccap-lerobot`，正常只写 tag 一行），再 `docker compose pull`，见[钉死镜像版本](install.md#docker-pin)。
-
-??? failure "进容器时打印 `groups: cannot find name for group ID <n>`"
-    无害。NVIDIA runtime 注入了宿主机的 `render` 组 GID，容器里没有同名组；不影响 GPU、相机或采集。
-
-??? failure "`0.0.5` 及更早的镜像：`mamba activate` 报 `Shell not initialized`；一开录就崩，报 `FileNotFoundError: 'spd-say'`；导出的 `.mp4` 都报 `Permission denied`，元数据却拷得动"
-    **原因**：老镜像的三个已知问题，`0.0.6` 起已修。进容器时环境已经激活，不需要 activate；镜像没有语音播报用的 `spd-say`，而 `--play_sounds` 默认 `true`，播报抛异常后进程以 `terminate called without an active exception` 崩掉；录出的视频是 `-rw------- root`，元数据是 `0644`，非 root 拷贝时只有视频失败，文件本身是好的。
-
-    **解决**：升级镜像（见[钉死镜像版本](install.md#docker-pin)）。仍钉在老镜像时：手工切环境先 `eval "$(mamba shell hook --shell bash)"`；录制加 `--play_sounds=false`，采集不受影响（容器里刻意不装语音合成器，装了 `spd-say` 会一直挂着，要听提示音就在宿主机上录）；老镜像录出的视频升级后权限也不会变，按[数据放在哪](install.md#docker-data)以 root 拷、拷完 `chown`，不要用 `--user`。
-
-??? failure "宿主机能看到触觉传感器，容器里找不到"
-    **原因**：容器不是通过 Compose 启动的（`/dev`、`/run/udev` 没透传），或 USB 重新枚举后节点还没稳定。
-
-    **解决**：用 `docker compose run --rm xense-taccap` 进容器，`ls /dev/v4l/by-id/*GSPS*` 确认节点在；空的话回宿主机重插 USB hub，再 `sudo udevadm settle --timeout=20`。
-
-??? failure "容器重启后传感器要重新读一遍、启动变慢"
-    **原因**：`xensesdk-cache` volume 被删了；它按序列号缓存传感器配置，避免每次启动重读 flash 并触发 USB 重新枚举。
-
-    **解决**：让它留着，各 volume 的用途见[数据放在哪](install.md#docker-data)。
-
-## 硬件与指示灯 {#hardware}
-
-先记下设备编号、连接方式、指示灯状态、软件报错和现场照片。目前只有**白色长亮 = 正常运行**是确定的灯语，其余灯态仍在开发测试中，以最终发布版本为准。上下电注意防静电。
+先记下设备序列号、连接方式、软件报错和现场照片。上下电注意防静电。
 
 !!! danger "异味、冒烟、明显发热、结构破损或线缆破皮"
     立即断电并停止使用。
 
-??? failure "主夹爪指示灯不亮"
-    **原因**：线缆未插紧、供电不足或接口损坏；主夹爪只能用配套 Type-C 线供电（DC 5V/500mA），不能接 9V/12V 快充适配器。
-
-    **解决**：重插并旋紧锁紧螺钉，换终端接口；仍不亮则停用并联系支持。
-
-??? failure "红灯闪烁 / 设备异常重启"
-    **原因**：设备故障或通信异常。
-
-    **解决**：停止录制并重新上电；反复出现则联系技术支持，附上灯态与日志。
-
 ??? failure "软件识别不到主夹爪 / `lsusb` 数量不对"
-    **原因**：USB 异常、线缆故障或软件未刷新。
+    **原因**：线缆未锁紧、USB 口接触不良或线缆故障；主夹爪只能用配套 Type-C 线供电（DC 5V/500mA），不能接 9V/12V 快充适配器。
 
     **解决**：`lsusb` 应看到全部 UVC 设备，双夹爪 6 个（4 个 `Xense Robotics ... GSPS01…` 触觉 + 2 个 `Sunplus ... XCA…` 腕相机），单臂 3 个；序列号末位单左双右，见[序列号与左右识别](../common/gripper.md#sn)。数量不对就检查线缆锁紧与左右接法，重开采集软件，换 Type-C 接口或线缆；能列出但打不开见下一节。
 
@@ -106,23 +48,23 @@
 ??? failure "从夹爪不上电 / 通信异常"
     **原因**：从夹爪供电走 24V 适配器、通信走 Type-C。不上电是 24V 未连或适配器异常；通信异常是 Type-C 未连、未识别，或线缆被机器人运动拉扯。
 
-    **解决**：检查 24V 适配器、插座、电源接口与规格，先连 24V 再连 Type-C 并锁紧（见[上电顺序](index.md#power-on)）；重连 Type-C 并旋紧锁紧螺钉，走线避开关节与夹爪运动区，首次运行前低速测试。
+    **解决**：检查 24V 适配器、插座、电源接口与规格，先连 24V 再连 Type-C 并锁紧（见[上电顺序](quickstart.md#power-on)）；重连 Type-C 并旋紧锁紧螺钉，走线避开关节与夹爪运动区，首次运行前低速测试。
 
 ??? failure "绑定从夹爪时报 `从爪固件版本过低,必须升级后才能使用本 SDK` / `Follower firmware too old`"
-    **原因**：从夹爪固件低于 1.1.6。1.1.6 起才有运动安全包络，`--robot.role=follower` 和 SDK 都会拒绝更早的固件。
+    **原因**：从夹爪固件低于 1.2.5，`--robot.role=follower` 和 SDK 都会拒绝更早的固件（1.2.5 起闭合零位才落在机械止点上）；1.2.5 到 1.2.11 之间能连上，但会提示升级。
 
-    **解决**：刷随 SDK 附带的从夹爪镜像，然后 **USB 线和电源线同时拔下再插回**：
+    **解决**：刷随 SDK 附带的从夹爪镜像，然后**拔下 24V 电源线，等约 2 秒再插回**（USB 线不用拔）：
 
     ```bash
     python third_party/taccap-gripper/python/examples/ota_update.py slave
     ```
 
-    接着多只夹爪时，指定要刷的那一只：`ota_update.py tc-gu-01-slave.bin left`（或 `right`、完整序列号），见[固件 OTA 升级](versions.md#ota)。
+    这条只在插着一只从夹爪时可用。插着多只从夹爪时，写镜像文件名加左右或序列号指定那一只：`ota_update.py tc-gu-01-slave-1.2.14.bin left`（文件名以 `firmware/` 里实际的为准），见[固件 OTA 升级](versions.md#ota)。
 
-??? failure "OTA 升级时蓝灯亮得过久"
-    **原因**：升级未完成或流程异常。
+??? failure "刷固件时报 `firmware file not found`"
+    **原因**：第一个参数被当成了镜像文件名，却找不到这个文件。常见于 `slave left` / `master left` / `slave <SN>`（角色后面再跟参数时，角色会被当成文件名），以及不带版本号的 `tc-gu-01-master.bin` / `tc-gu-01-slave.bin`（现在的文件名带版本号）。
 
-    **解决**：升级期间不要断电；长时间无变化按[固件 OTA 升级](versions.md#ota)处理并联系支持。
+    **解决**：一般直接用 `ota_update.py --all`，给插着的每只夹爪各刷对应角色的镜像；只插着一只该角色的夹爪时用 `ota_update.py master` / `ota_update.py slave`。要在多只里指定一只，写报错里 `shipped images` 列出的文件名加左右或序列号，例如 `ota_update.py tc-gu-01-slave-1.2.14.bin left`。镜像只写文件名即可，脚本会去 SDK 的 `firmware/` 里找。见[固件 OTA 升级](versions.md#ota)。
 
 ## 串口权限与设备发现
 
@@ -132,9 +74,9 @@
     **解决**：`sudo usermod -aG dialout "$USER"`，然后必须注销重登（或 `newgrp dialout`）再重插夹爪，不重登报错不变。详见[串口权限](host-setup.md#31)。
 
 ??? failure "`Device or resource busy`（热插拔后立即启动；容器里 `/dev/ttyACM*` 报 busy 也是它）"
-    **原因**：ModemManager 每次热插拔都用 AT 指令探测 CH343 串口并占用几秒，典型是拔下、换口、立即重启就 busy；装了 `brltty` 也会同样抢占。容器里也一样，规则要装在宿主机。
+    **原因**：ModemManager 每次热插拔都用 AT 指令探测 CH343 串口并占用几秒，典型是拔下、换口、立即重启就 busy；装了 `brltty` 也会同样抢占。容器里也一样，规则要装在宿主机。另一个原因是同一只夹爪被另一个程序占用（串口独占打开），例如上一次采集、标定或示例脚本还没退出。
 
-    **解决**：临时办法是插好等约 3 秒；永久办法是加 udev 规则让 ModemManager 忽略 `1a86` 设备（Docker 路径的 `install_customer.sh` 已装过一次），规则与验证命令见[关闭 ModemManager 抢占](host-setup.md#32)，装完重插夹爪。
+    **解决**：先关掉其它正在用这只夹爪的程序。ModemManager 的情况，临时办法是插好等约 3 秒；永久办法是加 udev 规则让 ModemManager 忽略 `1a86` 设备（Docker 路径的 `install_customer.sh` 已装过一次），规则与验证命令见[关闭 ModemManager 抢占](host-setup.md#32)，装完重插夹爪。
 
 ??? failure "修好权限后 `firmware_sn` 仍为空 / `role=Unknown`"
     **原因**：SN 未烧录、串口读取仍失败、固件通信异常或设备端配置问题；不能只凭空 SN 推断固件版本。
@@ -209,7 +151,7 @@
 ??? failure "没有位姿 / 追踪器连不上 / 位姿不稳"
     **原因**：电脑 WiFi 与 Pico4 Ultra 企业版有线共享网络冲突（最常见）；或 XenseVR PC Service、XTac-UMI XR 未启动，追踪器未配对或没电。
 
-    **解决**：先关闭数采电脑 WiFi，只保留有线共享网络（见[网络连接](../common/pico4.md#pico-network)）；再按[上电顺序](index.md#power-on)逐项确认；启动服务 `/opt/apps/roboticsservice/runService.sh`；必要时用 `python -m lerobot.robots.taccap_gripper.check_tracker` 自检。
+    **解决**：先关闭数采电脑 WiFi，只保留有线共享网络（见[网络连接](../common/pico4.md#pico-network)）；再按[上电顺序](quickstart.md#power-on)逐项确认；启动服务 `/opt/apps/roboticsservice/runService.sh`；必要时用 `python -m lerobot.robots.taccap_gripper.check_tracker` 自检。
 
 ??? failure "位姿参考系在集之间漂移"
     **原因**：分集途中重启了 XTac-UMI XR，世界原点被重设。
@@ -226,13 +168,13 @@
 
     **解决**：打开「体感追踪器」App 完成绑定，两枚都要绑；配对前长按电源键约 6 秒，直到指示灯蓝红交替闪烁，再点「开始配对」。见[绑定追踪器](../common/pico4.md#pico-tracker-bind)。
 
-??? failure "XTac-UMI XR 一直显示「未连接」"
+??? failure "XTac-UMI XR 一直连不上（未连接或连接失败）"
     **原因**：多半不在 App，而是有线共享网络没接好，或数采电脑的 WiFi 没关。
 
-    **解决**：先点「重连」；仍不行就按[网络连接](../common/pico4.md#pico-network)重接一遍并确认电脑 WiFi 已关，界面见[打开 App 后的界面](../common/pico4.md#pico-toolkit-ui)。
+    **解决**：有线连接确认已勾选「USB网络」，走 WiFi 确认「PC IP」填的是数采电脑的 IP，再点「连接」；仍不行就按[网络连接](../common/pico4.md#pico-network)重接一遍并确认电脑 WiFi 已关，界面见[打开 App 后的界面](../common/pico4.md#pico-toolkit-ui)。
 
-??? failure "头显里显示「已连接」，PC 端却收不到任何位姿"
-    **原因**：「已连接」只说明 App 连到了服务；主机侧服务没起来，或追踪器没开机、没绑定。
+??? failure "头显里显示「连接成功」，PC 端却收不到任何位姿"
+    **原因**：「连接成功」只说明 App 连到了服务；主机侧服务没起来，或追踪器没开机、没绑定。
 
     **解决**：确认主机已启动 [XenseVR PC Service](host-setup.md#35)；再用 `/opt/apps/roboticsservice/` 的 `ConsoleDemo` 或 `python -m lerobot.robots.taccap_gripper.check_tracker` 看能否读到带 `sn` 的位姿，读不到就回[绑定](../common/pico4.md#pico-tracker-bind)确认两枚追踪器都已开机并「已连接」。
 
@@ -243,7 +185,12 @@
 
 ## 头显相机 {#head-camera}
 
-??? failure "开了 `--robot.enable_head_camera=true`，一直卡在等待首帧"
+??? failure "报 `... always records the headset ...` 或 `... does not record the headset ...`"
+    **原因**：双夹爪的命令里写了 `--robot.enable_head_camera`，且与 `--robot.type` 矛盾。带不带头显由类型决定：`bi_taccap_gripper` 不带头显，`xtac_umi_g1` 带头显。
+
+    **解决**：去掉 `--robot.enable_head_camera`，要录头显就用 `--robot.type=xtac_umi_g1`，不录就用 `--robot.type=bi_taccap_gripper`，见[头显相机](recording.md#56)。
+
+??? failure "录头显时一直卡在等待首帧"
     **原因**：画面由 PC Service 转发，任何一环没通都收不到帧：服务版本低于 v0.2.0（v0.1.0 不转发头显相机画面），或头显 App 没在推流。
 
     **解决**：按顺序查：
@@ -268,16 +215,16 @@
     **解决**：告警不中断录制，但这几帧左右眼可能不同步。先降低主机负载（减少相机路数、用 `--robot.head_camera_eyes=left` 只录一只眼）；链路问题按[网络连接](../common/pico4.md#pico-network)排查；确认只是抖动时再适当放宽该阈值。
 
 ??? failure "`head_camera_width/_height` 报尺寸不支持，或尺寸合法、connect 时仍报首帧尺寸不符"
-    **原因**：头显相机只接受与头显 App「分辨率」三档一一对应的三种尺寸，填别的直接报错；尺寸合法仍报不符，是命令行与头显里的「分辨率」对不上，最常见是头显调到了 `1024` 或 `1280`，命令行还是默认。
+    **原因**：头显相机只接受 `640x480`（默认）、`1024x768`、`1280x960` 三种尺寸（都是 4:3），填别的直接报错；尺寸合法仍报不符，是命令行的尺寸和头显实际输出的分辨率对不上。
 
-    **解决**：两边取同一个值，头显停在默认 `640` 就不加参数，对应表见[头显相机](recording.md#56)；改尺寸等于换了一组数据，变更前后的 episode 不能混用。头显那一项在[打开 App 后的界面](../common/pico4.md#pico-toolkit-ui)。
+    **解决**：XTac-UMI XR 默认每眼 640x480，命令行不加这两个参数即可对上；头显被调成其他分辨率时，联系[技术支持](../common/reference.md#support)确认头显的设置，再把这两个参数改成同一个值，见[头显相机](recording.md#56)。改尺寸等于换了一组数据，变更前后的 episode 不能混用。
 
 ## 采集与录制
 
 ??? failure "命令刚敲下去就退出：`--robot.id is required`"
     **原因**：`--robot.id` 是必填的工位号，解析命令行时就检查。
 
-    **解决**：补上工位号，填数字即可（`0` / `1`…，一套设备一个，双夹爪算一套；前缀按 `--robot.type` 自动补成 `taccap_0` / `bi_taccap_0`），例如 `lerobot-record --robot.type=bi_taccap_gripper --robot.id=0 ...`。它标的是工位不是硬件，换夹爪不用改；设备身份记在数据集的 `meta/hardware.json` 里，见 [`--robot.id` 与硬件清单](recording.md#robot-id)。
+    **解决**：补上工位号，填数字即可（`0` / `1`…，一套设备一个，双夹爪算一套；前缀按 `--robot.type` 自动补成 `taccap_0` / `bi_taccap_0` / `xtac_umi_g1_0`），例如 `lerobot-record --robot.type=bi_taccap_gripper --robot.id=0 ...`。它标的是工位不是硬件，换夹爪不用改；设备身份记在数据集的 `meta/hardware.json` 里，见 [`--robot.id` 与硬件清单](recording.md#robot-id)。
 
 ??? failure "续录时硬件和数据集里记的对不上"
     **原因**：用 `--resume` 续录时换了夹爪或触觉传感器。这不是错误：清单会在当前集数处另起一个 epoch，日志打一行 `... recorded as a new epoch in .../hardware.json`。只有 `--robot.type` 对不上时才保留原文件并告警。
@@ -346,6 +293,54 @@
     **原因**：双夹爪多相机原始视频吞吐可达约 280 MB/s，编码后写入量取决于分辨率、画面内容、编码器与码率；盘空间不足、持续写入性能不足或编码线程跟不上都会出问题。
 
     **解决**：先用少量 episode 实测编码后体积和丢帧情况，再规划批量采集；定期检查 `df -h` 与数据集目录大小，见[存储规划](dataset.md#storage-planning)。
+
+## Docker 交付镜像 {#docker}
+
+只在走 [Docker 交付镜像](install.md#docker)时会遇到；容器里串口 busy 见上文 `Device or resource busy`。
+
+??? failure "`could not select device driver ... gpu` / 容器里看不到显卡"
+    **原因**：NVIDIA Container Toolkit 没装好，或装完没重启 Docker daemon。
+
+    **解决**：`install_customer.sh` 会自动装；手工确认用 `docker run --rm --gpus all ubuntu:22.04 nvidia-smi`，看不到显卡就重装 Toolkit 并 `sudo systemctl restart docker`，宿主机驱动要 ≥ 570.144。
+
+??? failure "`Unknown runtime specified nvidia`，`docker compose` 起不来"
+    **原因**：NVIDIA runtime 没注册进 Docker；`compose.yaml` 为拿到图形能力用的是 `runtime: nvidia`（见[容器里的图形界面](install.md#docker-gui)）。
+
+    **解决**：
+
+    ```bash
+    sudo nvidia-ctk runtime configure --runtime=docker
+    sudo systemctl restart docker
+    docker info --format '{{json .Runtimes}}'     # 输出里要能看到 nvidia
+    ```
+
+??? failure "容器里 Rerun 起不来：`Failed to create surface for any enabled backend` / Vulkan adapter 错误，但 `nvidia-smi` 正常"
+    **原因**：X11 没授权；或容器拿到了 CUDA 却没拿到 NVIDIA 的 Vulkan ICD，典型是把 `compose.yaml` 的 `runtime: nvidia` 改回了只申请 compute + utility 的 `gpus: all`，此时 `vulkaninfo` 报 `INCOMPATIBLE_DRIVER` 或列不出 NVIDIA 设备。
+
+    **解决**：宿主机图形桌面用户下执行 `xhost +si:localuser:root`，确认 `echo "$DISPLAY"` 非空、`/tmp/.X11-unix` 存在；`docker info --format '{{json .Runtimes}}'` 没列出 nvidia 就按上一条注册，有就把 `compose.yaml` 改回 `runtime: nvidia`；再确认容器里 `vulkaninfo --summary` 认得显卡。
+
+??? failure "`pull access denied ... 'docker login'`，或改了 `LEROBOT_IMAGE_TAG` 拉到的还是老镜像"
+    **原因**：镜像是公开的，不需要登录；是镜像名解析错了，或 `.env` 改完没重新拉、不在执行 `docker compose` 的目录里。
+
+    **解决**：`docker compose config --images` 看解析出的镜像名，检查 `.env` 里 `LEROBOT_IMAGE` 有没有写错（默认 `ghcr.io/xenserobotics-ai/xense-taccap-lerobot`，正常只写 tag 一行），再 `docker compose pull`，见[钉死镜像版本](install.md#docker-pin)。
+
+??? failure "进容器时打印 `groups: cannot find name for group ID <n>`"
+    无害。NVIDIA runtime 注入了宿主机的 `render` 组 GID，容器里没有同名组；不影响 GPU、相机或采集。
+
+??? failure "`0.0.5` 及更早的镜像：`mamba activate` 报 `Shell not initialized`；一开录就崩，报 `FileNotFoundError: 'spd-say'`；导出的 `.mp4` 都报 `Permission denied`，元数据却拷得动"
+    **原因**：老镜像的三个已知问题，`0.0.6` 起已修。进容器时环境已经激活，不需要 activate；镜像没有语音播报用的 `spd-say`，而 `--play_sounds` 默认 `true`，播报抛异常后进程以 `terminate called without an active exception` 崩掉；录出的视频是 `-rw------- root`，元数据是 `0644`，非 root 拷贝时只有视频失败，文件本身是好的。
+
+    **解决**：升级镜像（见[钉死镜像版本](install.md#docker-pin)）。仍钉在老镜像时：手工切环境先 `eval "$(mamba shell hook --shell bash)"`；录制加 `--play_sounds=false`，采集不受影响（容器里刻意不装语音合成器，装了 `spd-say` 会一直挂着，要听提示音就在宿主机上录）；老镜像录出的视频升级后权限也不会变，按[数据放在哪](install.md#docker-data)以 root 拷、拷完 `chown`，不要用 `--user`。
+
+??? failure "宿主机能看到触觉传感器，容器里找不到"
+    **原因**：容器不是通过 Compose 启动的（`/dev`、`/run/udev` 没透传），或 USB 重新枚举后节点还没稳定。
+
+    **解决**：用 `docker compose run --rm xense-taccap` 进容器，`ls /dev/v4l/by-id/*GSPS*` 确认节点在；空的话回宿主机重插 USB hub，再 `sudo udevadm settle --timeout=20`。
+
+??? failure "容器重启后传感器要重新读一遍、启动变慢"
+    **原因**：`xensesdk-cache` volume 被删了；它按序列号缓存传感器配置，避免每次启动重读 flash 并触发 USB 重新枚举。
+
+    **解决**：让它留着，各 volume 的用途见[数据放在哪](install.md#docker-data)。
 
 ---
 
