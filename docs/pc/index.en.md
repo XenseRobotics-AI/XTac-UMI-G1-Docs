@@ -60,7 +60,7 @@ Collection comes in three tiers depending on the connected devices, chosen with 
 | ② With wrist pose | Grippers + trackers + headset | Adds the gripper pose |
 | ③ Full rig | Same as ② | Adds headset stereo images and head pose |
 
-Commands are in [5. Data preview and collection](recording.md).
+Commands are in [Data collection](recording.md).
 
 ## What each frame records {#frame}
 
@@ -104,4 +104,4 @@ Taking two grippers as the example, each dataset row is the **observation** from
 - Dimensions per tier: ① state and action 2-D each, 6 image streams; ② 20-D each, 6 streams; ③ 29-D each, 8 streams.
 - With a single gripper (`--robot.type=taccap_gripper`) the keys have no `left_` / `right_` prefix and the wrist camera is `wrist_cam`.
 
-Field details are in [What each frame records](recording.md#53), the dataset format in [6. Dataset & Examples](dataset.md).
+Field details are in [What each frame records](recording.md#53), the dataset format in [Dataset](dataset.md).
