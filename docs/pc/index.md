@@ -6,10 +6,64 @@ PC 版把计算放在你自己的 x86 工作站上（推荐 NVIDIA GPU，Mamba �
 基于 lerobot 开源生态，适合研究与算法团队、自建训练管线；完全开放二次开发，改 Python 代码或接自定义机器人都可以。
 不需要 PC、由采集团队在现场用平板和夹爪按键操作的是[背包版](../backpack/index.md)；两种配置的对比见[产品线与配置对比](../product/editions.md)。
 
-## 从哪开始 {#start}
+## 采集全流程 {#workflow}
 
-第一次使用，按顺序走一遍：[安装](install.md) → [主机配置](host-setup.md) → [Pico4 头显与追踪器](../common/pico4.md) → [标定与自检](calibration.md)；
-之后每次采集照着 [一页速通](quickstart.md) 做即可。要让从夹爪在机器人上执行动作，见 [从夹爪](../follower/index.md)；自己写程序读写夹爪，见 [SDK 与二次开发](../sdk/index.md)。
+<div class="tc-flow" markdown>
+
+<div class="tc-flow__group" markdown>
+
+### ① 准备工作
+
+<p class="tc-flow__lead">每台电脑、每台设备做一次</p>
+
+1. **[认识硬件](../common/gripper.md)**<br>
+   部件、接线与上电顺序
+2. **[安装环境](install.md)**<br>
+   `setup_env.sh` 或 Docker 镜像
+3. **[配置主机](host-setup.md#31)**<br>
+   串口权限、关闭 ModemManager
+4. **[配置 Pico4 Ultra 企业版](../common/pico4.md)**<br>
+   开发者模式、XR 应用、追踪器
+5. **[标定主夹爪](calibration.md#41)**<br>
+   零点与行程上限，每只一次
+
+</div>
+
+<div class="tc-flow__group" markdown>
+
+### ② 采集
+
+<p class="tc-flow__lead">每次采集按这个顺序</p>
+
+1. **[上电与连接](quickstart.md#power-on)**<br>
+   插夹爪、开追踪器，关电脑 WiFi
+2. **[启动服务与 XR 应用](host-setup.md#35)**<br>
+   先启 PC Service，再开 XR 应用
+3. **[预览检查](recording.md#preview)**<br>
+   `lerobot-teleoperate` 确认数据流
+4. **[正式录制](recording.md#52)**<br>
+   `lerobot-record`，中途不重启 XR
+
+</div>
+
+<div class="tc-flow__group" markdown>
+
+### ③ 数据
+
+<p class="tc-flow__lead">录完之后</p>
+
+1. **[检查完整性](dataset.md#62)**<br>
+   `lerobot-check-dataset`
+2. **[上传 Hub（可选）](dataset.md#64)**<br>
+   `lerobot-push-dataset-to-hub`
+3. **[了解数据格式](dataset.md#61)**<br>
+   每帧记录了什么、怎么读取
+
+</div>
+
+</div>
+
+<p class="tc-flow__more" markdown>把从夹爪装到机器人上、用程序控制开合与夹持，见[从夹爪](../follower/index.md)；直接调用夹爪 SDK，见[SDK 与二次开发](../sdk/index.md)。</p>
 
 ## 数采系统组成 {#system}
 
@@ -105,3 +159,13 @@ PC 版把计算放在你自己的 x86 工作站上（推荐 NVIDIA GPU，Mamba �
 - 单夹爪（`--robot.type=taccap_gripper`）的键名不带 `left_` / `right_` 前缀，腕部相机叫 `wrist_cam`。
 
 字段明细见 [每帧记录内容](recording.md#53)，数据集格式见 [数据集](dataset.md)。
+
+## 相关开源仓库 {#repos}
+
+| 仓库 / 包 | 备注 |
+|---|---|
+| [`xense-taccap-lerobot`](https://github.com/XenseRobotics-AI/xense-taccap-lerobot) | 数采主仓库，基于 lerobot 0.5.1 定制 |
+| [`xense.taccap`](https://github.com/XenseRobotics-AI/TacCap-Gripper) | 夹爪 SDK，数采仓库以子模块引入；[开发文档](../sdk/index.md) |
+| [`xensevr_pc_service_sdk`](https://github.com/XenseRobotics-AI/XenseVR-PC-Service) | Pico4 Ultra 企业版 PC 服务，以 `.deb` 安装 |
+| [`xensesdk`](https://github.com/XenseRobotics/xensesdk) | 视触觉传感器 SDK，由安装脚本安装；[开发文档](https://docs.xenserobotics.com/) |
+| [`xense-lerobot-viewer`](https://github.com/XenseRobotics-AI/xense-lerobot-viewer) | 开源的本地可视化工具，在浏览器里查看本地 LeRobot 数据集 |

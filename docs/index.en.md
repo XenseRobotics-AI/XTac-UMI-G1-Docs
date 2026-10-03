@@ -6,16 +6,34 @@ hide:
 
 <div class="tc-hero" markdown>
 
-<span class="tc-eyebrow">XTac-UMI · Handheld multimodal data collection system</span>
+<div class="tc-hero__text" markdown>
 
-# Give robot datasets a sense of touch
+<span class="tc-eyebrow">XTac-UMI · Handheld multimodal data collection</span>
 
-<p class="tc-sub">Visuotactile sensing on both grippers, a wrist fisheye, the headset's first-person view and 6DoF pose, all recorded in sync. One handheld demonstration, one training-ready dataset.</p>
+# Give robot datasets<br>a sense of touch
+
+<p class="tc-sub">Touch, vision and pose recorded in sync<br>One demonstration, a training-ready dataset</p>
+
+<p class="tc-note">Both kits share the XTac-UMI&nbsp;G1 grippers<br>and the Pico4&nbsp;Ultra&nbsp;Enterprise headset</p>
 
 [Choose a kit](product/editions.md){ .md-button .md-button--primary }
-[See what the data looks like](pc/dataset.md#61){ .md-button }
+[See the data](pc/dataset.md#61){ .md-button }
 
-![XTac-UMI G1 product photo](assets/product/xtac-umi-g1-hero.webp){ .tc-hero-img }
+</div>
+
+<div class="tc-stage" markdown>
+
+<figure class="tc-tile tc-tile--leader" markdown>
+![Leader gripper](assets/product/leader-front-open-cutout.webp)
+<figcaption markdown>[Leader: hand-held capture](common/gripper.md)</figcaption>
+</figure>
+
+<figure class="tc-tile tc-tile--follower" markdown>
+![Follower gripper](assets/product/follower-rear-ports.webp)
+<figcaption markdown>[Follower: isomorphic end effector](follower/index.md)</figcaption>
+</figure>
+
+</div>
 
 </div>
 

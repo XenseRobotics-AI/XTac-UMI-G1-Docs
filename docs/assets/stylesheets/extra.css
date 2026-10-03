@@ -1,41 +1,164 @@
-/* ===== 首页 Hero(浅色居中,产品图在下) ===== */
-.tc-hero {
-  text-align: center;
-  padding: 2.2rem 0 1.2rem;
+/* =====================================================================
+   首页首屏:左栏标题与入口,右栏三块同色展台拼成的产品图
+   ===================================================================== */
+
+.md-typeset .tc-hero {
+  display: grid;
+  grid-template-columns: 5fr 7fr;
+  gap: 2.4rem;
+  align-items: center;
+  padding: 1.2rem 0 1.6rem;
 }
-.tc-hero .tc-eyebrow {
+.md-typeset .tc-hero h1 {
+  margin: 0 0 .9rem;
+  font-size: 2.4rem;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -.01em;
+  color: var(--md-default-fg-color);
+}
+/* 英文标题更长,字号小一档,保证每个短语一行 */
+html[lang="en"] .md-typeset .tc-hero h1 {
+  font-size: 1.9rem;
+}
+/* 首屏标题的 ¶ 锚点用不上 */
+.md-typeset .tc-hero h1 .headerlink {
+  display: none;
+}
+/* 说明文字两层:主句说能得到什么,小字交代设备。行已在文案里手动断好;
+   中文只在标点、空格处折行,产品名内部用 &nbsp; 连住 */
+.md-typeset .tc-hero .tc-sub,
+.md-typeset .tc-hero .tc-note {
+  word-break: keep-all;
+}
+.md-typeset .tc-hero .tc-sub {
+  margin: 0 0 .5rem;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--md-default-fg-color);
+}
+.md-typeset .tc-hero .tc-note {
+  margin: 0 0 1.5rem;
+  font-size: .8rem;
+  line-height: 1.6;
+  color: var(--md-default-fg-color--light);
+}
+.md-typeset .tc-hero .md-button {
+  margin: 0 .5rem .5rem 0;
+}
+
+/* 右栏:主夹爪、从夹爪两张透明底渲染图并排,图注在同一行。
+   两栏宽度按宽高比分配:主夹爪 1400×1365 → 1.026;从夹爪 1400×781 → 1.793,
+   再乘 k = 0.65,让从夹爪显示为主夹爪高度的 65%。
+   从夹爪图下方留白 (1-k)/(2×1.793×k) = 15% 栏宽,使它与主夹爪上下居中对齐。
+   换图或改 k 时同步改这几个数 */
+.md-typeset .tc-stage {
+  display: grid;
+  grid-template-columns: 1.026fr 1.165fr;
+  gap: 1.6rem;
+  align-items: end;
+}
+.md-typeset .tc-tile--follower img {
+  margin-bottom: 15%;
+}
+.md-typeset .tc-tile {
+  margin: 0;
+}
+/* md_in_html 生成 figure > p > a.glightbox > img */
+.md-typeset .tc-tile > p {
+  margin: 0;
+}
+.md-typeset .tc-tile img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 0;
+}
+.md-typeset .tc-tile figcaption {
+  max-width: none;
+  margin: .6rem 0 0;
+  font-size: .75rem;
+  font-style: normal;
+  font-weight: 600;
+  text-align: left;
+}
+.md-typeset .tc-tile figcaption p {
+  margin: 0;
+}
+
+@media screen and (max-width: 59.9375em) {
+  .md-typeset .tc-hero {
+    grid-template-columns: 1fr;
+    gap: 1.6rem;
+  }
+}
+@media screen and (max-width: 30em) {
+  .md-typeset .tc-hero h1 {
+    font-size: 1.9rem;
+  }
+  html[lang="en"] .md-typeset .tc-hero h1 {
+    font-size: 1.5rem;
+  }
+}
+
+/* 首页「采集全流程」:准备工作、采集、数据三段,对应左侧导航的三组。
+   桌面三栏并排,窄屏上下排;每步「标题链接一行 + 说明一行」 */
+.md-typeset .tc-flow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-top: 1rem;
+}
+.md-typeset .tc-flow__group h3 {
+  margin: 0;
+  padding-top: .8rem;
+  border-top: 2px solid var(--md-default-fg-color--lightest);
+  font-size: 1rem;
+  font-weight: 700;
+}
+/* 「采集」是每次都要走的主线,顶线用主题色区分 */
+.md-typeset .tc-flow__group:nth-child(2) h3 {
+  border-top-color: var(--md-primary-fg-color);
+}
+.md-typeset .tc-flow__lead {
+  margin: .2rem 0 .8rem;
+  font-size: .75rem;
+  color: var(--md-default-fg-color--light);
+}
+.md-typeset .tc-flow ol {
+  margin: 0;
+  padding-left: 1.3em;
+}
+.md-typeset .tc-flow li {
+  margin: 0 0 .8em;
+  font-size: .78rem;
+  line-height: 1.6;
+}
+.md-typeset .tc-flow li strong {
+  font-size: .82rem;
+}
+.md-typeset .tc-flow__more {
+  margin-top: .6rem;
+  font-size: .78rem;
+  color: var(--md-default-fg-color--light);
+}
+@media screen and (max-width: 63.9375em) {
+  .md-typeset .tc-flow {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+  }
+}
+
+/* 首屏标题上方的小字 */
+.md-typeset .tc-hero .tc-eyebrow {
+  display: block;
+  margin-bottom: .4rem;
   text-transform: uppercase;
   letter-spacing: .12em;
   font-size: .72rem;
-  color: var(--md-primary-fg-color);
   font-weight: 700;
+  color: var(--md-primary-fg-color);
 }
-.tc-hero h1 {
-  font-weight: 800;
-  font-size: 2.1rem;
-  line-height: 1.15;
-  margin: .3rem 0 .5rem;
-}
-.tc-hero .tc-sub {
-  color: var(--md-default-fg-color--light);
-  font-size: 1.05rem;
-  max-width: 42rem;
-  margin: 0 auto 1.1rem;
-}
-.tc-hero .md-button {
-  margin: .3rem .3rem 0;
-}
-
-/* 首页 Hero 产品图 */
-.tc-hero-img {
-  display: block;
-  max-width: min(760px, 100%);
-  height: auto;
-  margin: 1.4rem auto 0;
-  border-radius: .6rem;
-  box-shadow: 0 8px 28px rgba(0, 0, 0, .14);
-}
-
 /* 卡片网格里的图标略放大 */
 .md-typeset .grid.cards :is(.twemoji, .emojione, .gemoji) svg {
   height: 1.4rem;

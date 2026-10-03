@@ -6,16 +6,34 @@ hide:
 
 <div class="tc-hero" markdown>
 
+<div class="tc-hero__text" markdown>
+
 <span class="tc-eyebrow">XTac-UMI · 手持式多模态数据采集系统</span>
 
-# 让机器人数据集拥有触觉
+# 让机器人数据集<br>拥有触觉
 
-<p class="tc-sub">双夹爪视触觉、腕部鱼眼、头显第一视角与 6DoF 位姿同步记录。一次手持示教，直接得到可训练的数据集。</p>
+<p class="tc-sub">视触觉、腕部鱼眼、头显第一视角与位姿同步记录<br>一次手持示教，直接得到可训练的数据集</p>
+
+<p class="tc-note">背包版与 PC 版共用同一套 XTac-UMI&nbsp;G1 夹爪<br>与 Pico4&nbsp;Ultra&nbsp;企业版头显</p>
 
 [选择配置](product/editions.md){ .md-button .md-button--primary }
 [看看数据长什么样](pc/dataset.md#61){ .md-button }
 
-![XTac-UMI G1 产品外观](assets/product/xtac-umi-g1-hero.webp){ .tc-hero-img }
+</div>
+
+<div class="tc-stage" markdown>
+
+<figure class="tc-tile tc-tile--leader" markdown>
+![主夹爪](assets/product/leader-front-open-cutout.webp)
+<figcaption markdown>[主夹爪：手持采集](common/gripper.md)</figcaption>
+</figure>
+
+<figure class="tc-tile tc-tile--follower" markdown>
+![从夹爪](assets/product/follower-rear-ports.webp)
+<figcaption markdown>[从夹爪：同构末端执行器](follower/index.md)</figcaption>
+</figure>
+
+</div>
 
 </div>
 

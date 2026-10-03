@@ -6,10 +6,64 @@ The operator's interface is the terminal plus a Rerun preview window; `lerobot-r
 Built on the open-source lerobot ecosystem, it suits research and algorithm teams with their own training pipelines; it is fully open to customization, whether that means changing the Python code or hooking up a custom robot.
 If you want no PC at all, with a collection team driving it from a tablet and the gripper buttons in the field, that is the [Backpack Kit](../backpack/index.md); the two editions are compared in [Editions](../product/editions.md).
 
-## Where to start {#start}
+## The collection workflow {#workflow}
 
-First time through, go in order: [Installation](install.md) → [Host setup](host-setup.md) → [Pico4 headset and trackers](../common/pico4.md) → [Calibration and self-check](calibration.md);
-after that, every collection session follows the [Quickstart](quickstart.md). To drive the follower gripper on a robot see [Follower gripper](../follower/index.md); to write your own programs against the grippers see [SDK & development](../sdk/index.md).
+<div class="tc-flow" markdown>
+
+<div class="tc-flow__group" markdown>
+
+### ① Getting ready
+
+<p class="tc-flow__lead">Once per computer and per device</p>
+
+1. **[Know the hardware](../common/gripper.md)**<br>
+   Parts, wiring and power-on order
+2. **[Install the environment](install.md)**<br>
+   `setup_env.sh` or the Docker image
+3. **[Configure the host](host-setup.md#31)**<br>
+   Serial access, ModemManager off
+4. **[Set up the Pico4 Ultra Enterprise](../common/pico4.md)**<br>
+   Developer mode, XR app, trackers
+5. **[Calibrate the leaders](calibration.md#41)**<br>
+   Zero and travel span, once each
+
+</div>
+
+<div class="tc-flow__group" markdown>
+
+### ② Collecting
+
+<p class="tc-flow__lead">In this order, every session</p>
+
+1. **[Power on and connect](quickstart.md#power-on)**<br>
+   Grippers in, trackers on, PC WiFi off
+2. **[Start the service and XR app](host-setup.md#35)**<br>
+   PC Service, then the XR app
+3. **[Preview check](recording.md#preview)**<br>
+   `lerobot-teleoperate` in Rerun
+4. **[Full recording](recording.md#52)**<br>
+   `lerobot-record`, keep XR running
+
+</div>
+
+<div class="tc-flow__group" markdown>
+
+### ③ The data
+
+<p class="tc-flow__lead">After recording</p>
+
+1. **[Check completeness](dataset.md#62)**<br>
+   `lerobot-check-dataset`
+2. **[Upload to the Hub (optional)](dataset.md#64)**<br>
+   `lerobot-push-dataset-to-hub`
+3. **[Understand the format](dataset.md#61)**<br>
+   What each frame records
+
+</div>
+
+</div>
+
+<p class="tc-flow__more" markdown>To mount the follower gripper on a robot and drive it from code, see [Follower gripper](../follower/index.md); to call the gripper SDK directly, see [SDK & development](../sdk/index.md).</p>
 
 ## System components {#system}
 
@@ -105,3 +159,13 @@ Taking two grippers as the example, each dataset row is the **observation** from
 - With a single gripper (`--robot.type=taccap_gripper`) the keys have no `left_` / `right_` prefix and the wrist camera is `wrist_cam`.
 
 Field details are in [What each frame records](recording.md#53), the dataset format in [Dataset](dataset.md).
+
+## Related open-source repositories {#repos}
+
+| Repo / package | Notes |
+|---|---|
+| [`xense-taccap-lerobot`](https://github.com/XenseRobotics-AI/xense-taccap-lerobot) | Data-collection repo, customized from lerobot 0.5.1 |
+| [`xense.taccap`](https://github.com/XenseRobotics-AI/TacCap-Gripper) | Gripper SDK, included in the data-collection repo as a submodule; [developer docs](../sdk/index.md) |
+| [`xensevr_pc_service_sdk`](https://github.com/XenseRobotics-AI/XenseVR-PC-Service) | Pico4 Ultra Enterprise PC service, installed as a `.deb` |
+| [`xensesdk`](https://github.com/XenseRobotics/xensesdk) | Visuotactile sensor SDK, installed by the setup script; [developer docs](https://docs.xenserobotics.com/) |
+| [`xense-lerobot-viewer`](https://github.com/XenseRobotics-AI/xense-lerobot-viewer) | Open-source local visualization tool for browsing LeRobot datasets in the browser |
