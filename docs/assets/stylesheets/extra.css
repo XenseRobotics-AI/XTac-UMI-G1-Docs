@@ -809,3 +809,14 @@ html[lang="en"] .md-typeset .tc-hero h1 {
     grid-template-columns: 1fr;
   }
 }
+
+/* 首页「公开数据集」:左场景图右要点,场景图是方图,给窄一点的栏 */
+.md-typeset .tc-feature--dataset {
+  grid-template-columns: 1fr 1.5fr;
+}
+.md-typeset .tc-feature--dataset img {
+  display: block;
+  width: 100%;
+  max-width: 22rem;
+  margin: 0 auto;
+}

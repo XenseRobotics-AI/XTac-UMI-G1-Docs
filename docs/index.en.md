@@ -141,6 +141,27 @@ Both kits use the same grippers and headset and produce the same data. The Backp
 
 </div>
 
+## Open dataset: TacVerse {#tacverse}
+
+<div class="tc-feature tc-feature--dataset" markdown>
+
+![The three TacVerse scene families: office, home and workbench](assets/dataset/tacverse-scenes.webp)
+
+<div class="tc-feature__text" markdown>
+
+Visuotactile manipulation data collected with XTac-UMI G1 grippers, released as LeRobotDataset v3 under CC BY-SA 4.0 and ready to download and train on.
+
+- **122 tasks** across office, home and workbench scenes
+- **17,690 demonstrations**: 370 hours, about 40 million frames
+- **Two-handed touch**: four tactile streams, two wrist views and gripper poses per frame
+
+[Hugging Face](https://huggingface.co/TacVerse){ .md-button .md-button--primary }
+[ModelScope](https://modelscope.cn/datasets/XenseRobotics/TacVerse-Opendata){ .md-button }
+
+</div>
+
+</div>
+
 ## Developer Kit open-source repositories
 
 The Developer Kit's collection repo, gripper SDK, tracker service and viewer are open source under Apache-2.0, see [the list](pc/index.md#repos); the Backpack Kit's software is closed.

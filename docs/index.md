@@ -141,6 +141,27 @@ hide:
 
 </div>
 
+## 公开数据集 TacVerse {#tacverse}
+
+<div class="tc-feature tc-feature--dataset" markdown>
+
+![TacVerse 覆盖的三类场景：办公、家庭、工作台](assets/dataset/tacverse-scenes.webp)
+
+<div class="tc-feature__text" markdown>
+
+用 XTac-UMI G1 双夹爪采集的视触觉操作数据，以 LeRobotDataset v3 格式按 CC BY-SA 4.0 协议开放，可直接下载训练。
+
+- **122 个任务**：覆盖办公、家庭、工作台三类场景
+- **17,690 条示教**：共 370 小时、约 4,000 万帧
+- **双手视触觉**：每帧四路触觉、两路腕部画面与夹爪位姿
+
+[Hugging Face](https://huggingface.co/TacVerse){ .md-button .md-button--primary }
+[ModelScope](https://modelscope.cn/datasets/XenseRobotics/TacVerse-Opendata){ .md-button }
+
+</div>
+
+</div>
+
 ## PC 版开源仓库
 
 PC 版的数采主仓库、夹爪 SDK、追踪器服务与可视化工具均以 Apache-2.0 许可开源，清单见 [PC 版开源仓库](pc/index.md#repos)；背包版采集软件不开源。
