@@ -98,8 +98,8 @@ hide:
 
 <div class="tc-data" markdown>
 
-<figure class="tc-shot tc-shot--placeholder" markdown>
-<div class="tc-shot__slot">Rerun 实时预览截图（待补）</div>
+<figure class="tc-shot" markdown>
+![Rerun 实时预览：四路视触觉、头显双目、左右腕部相机与动作曲线](assets/dataset/rerun-preview.webp)
 <figcaption>预览检查：在 Rerun 里实时查看各路画面与位姿</figcaption>
 </figure>
 

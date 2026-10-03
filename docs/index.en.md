@@ -101,8 +101,8 @@ hide:
 
 <div class="tc-data" markdown>
 
-<figure class="tc-shot tc-shot--placeholder" markdown>
-<div class="tc-shot__slot">Rerun live preview screenshot (coming soon)</div>
+<figure class="tc-shot" markdown>
+![Rerun live preview: four visuotactile streams, headset stereo, both wrist cameras and action curves](assets/dataset/rerun-preview.webp)
 <figcaption>Preview check: watch every stream and the poses live in Rerun</figcaption>
 </figure>
 
