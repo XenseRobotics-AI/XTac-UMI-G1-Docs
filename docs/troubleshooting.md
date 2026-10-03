@@ -431,7 +431,7 @@
 
 ??? failure "绑定从夹爪时报 `从爪固件版本过低,必须升级后才能使用本 SDK` / `Follower firmware too old`"
     **原因**：从夹爪固件低于 1.1.6。1.1.6 起才有运动安全包络，`--robot.role=follower` 和 SDK 都会拒绝更早的固件。
-    **解决**：刷随 SDK 附带的从夹爪镜像，然后**USB 线和电源线同时拔下再插回**：
+    **解决**：刷随 SDK 附带的从夹爪镜像，然后**拔下 24V 电源线，等约 2 秒再插回**（USB 线不用拔）：
 
     ```bash
     python third_party/taccap-gripper/python/examples/ota_update.py slave

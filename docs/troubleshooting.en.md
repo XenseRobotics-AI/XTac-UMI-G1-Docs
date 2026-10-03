@@ -511,8 +511,8 @@ Only relevant on [the Docker path](02-environment.md#docker).
 ??? failure "Binding the follower fails with `Follower firmware too old -- upgrade required`"
     **Cause**: the follower firmware is below 1.1.6. The motion safety envelope arrived in 1.1.6, and
     both `--robot.role=follower` and the SDK refuse older firmware.
-    **Fix**: flash the follower image that ships with the SDK, then **unplug the USB cable and the
-    power cable together** and plug them back in:
+    **Fix**: flash the follower image that ships with the SDK, then **unplug the 24 V power cable, wait about
+    2 seconds and plug it back in** (the USB cable can stay connected):
 
     ```bash
     python third_party/taccap-gripper/python/examples/ota_update.py slave

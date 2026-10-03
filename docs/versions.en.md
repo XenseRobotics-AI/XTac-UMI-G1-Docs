@@ -646,6 +646,10 @@ verifies — so a failed transfer cannot brick the gripper.
     So the order is: **flash → unplug and replug → then** do the step-3 version check and any
     calibration. Anything measured before the replug is untrustworthy.
 
+    How to power-cycle: on a leader, unplug and replug the USB cable; on a follower, unplug the
+    24 V power cable, wait about 2 seconds and plug it back in, leaving USB connected (the
+    follower's controller and motor both run on 24 V, so pulling only USB does not restart it).
+
     This does not contradict "do not cut power during the upgrade" below: cutting power **while the
     upgrade is running** (blue blinking) corrupts the write; power-cycling **after it has finished
     and the gripper has rebooted** is required.
