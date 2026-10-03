@@ -1,22 +1,35 @@
 # 产品线与配置对比
 
-XTac-UMI 有两种配置：**背包版**（XTac-UMI 数采背包）和 **PC 版**（XTac-UMI G1 开发套件）。两者用的是同一套 XTac-UMI G1 主夹爪和 Pico4 Ultra 头显，差别只在计算节点放在哪、操作员面对什么界面、原始数据以什么格式落盘。本页帮你选定一边，并核对箱内清单与接线。
+XTac-UMI 提供两种配置，使用同一套 XTac-UMI G1 夹爪与 Pico4 Ultra 企业版头显，采集到的数据定义一致：
 
-<div class="grid cards" markdown>
+- **背包版**：数采背包完成全部采集，平板浏览器即控制台，开箱即用，适合规模化现场采集；采集软件不开源。
+- **PC 版（开源）**：夹爪与头显直连您的工作站，基于开源 LeRobot 录制，适合科研与算法团队自由二次开发。
 
--   :material-bag-personal:{ .lg .middle } __背包版 · XTac-UMI 数采背包__
+本页对比两者的差别，并列出各自的箱内清单与接线方式。
+
+<div class="grid cards xu-cards" markdown>
+
+-   ![背包版接线：左右夹爪、头显接数采背包](../assets/product/backpack-wiring-adapter.webp){ .xu-card__img }
+
+    <span class="xu-tag xu-tag--backpack">背包版</span>
+
+    **XTac-UMI 数采背包**{ .xu-card__title }
 
     ---
 
-    面向规模化数采工厂与采集团队：背包即主机、平板即控制台、夹爪按键开录；软件闭源交付，支持轻量二次开发。
+    背包即主机、平板即控制台，夹爪按键开始与停止录制，一键发布到 ModelScope。
 
     [快速开始](../backpack/index.md){ .md-button .md-button--primary }
 
--   :material-desktop-tower-monitor:{ .lg .middle } __PC 版 · XTac-UMI G1 开发套件__
+-   ![PC 版采集中的 Rerun 实时预览](../assets/dataset/rerun-xtac-umi-g1.webp){ .xu-card__img }
+
+    <span class="xu-tag xu-tag--pc">PC 版</span>
+
+    **XTac-UMI G1 开发套件（开源）**{ .xu-card__title }
 
     ---
 
-    基于 lerobot 开源生态，适合研究与算法团队：接入自己的工作站，直接产出 LeRobotDataset；完全开放二次开发。
+    接入您自己的工作站，录制即得到 LeRobotDataset；采集软件与夹爪 SDK 以 Apache-2.0 开源。
 
     [快速开始](../pc/quickstart.md){ .md-button .md-button--primary }
 
@@ -34,7 +47,7 @@ XTac-UMI 有两种配置：**背包版**（XTac-UMI 数采背包）和 **PC 版*
 | 原始数据 | 设备上是每条 episode 一个 MCAP 原始记录 + H.264；对外的 `LeRobot 数据集` 与 `mcap` 都是离线导出的产物 | LeRobotDataset v3 直接落盘 |
 | 导出与上传 | 任务级导出：先选去向（下载到设备 / 上传到远端），再选格式（`LeRobot 数据集` / `mcap`，两种并列）；下载得到一个压缩包，上传走事先配置好的上传后端，上传后默认保留本地文件，腾空间用随时可用的「归档」 | Hugging Face Hub |
 | 升级 | 系统页导入固件包（`.tar.zst`），保留上一版本可回滚；手动应用前先停录，远程下发的更新会等当前条录完再重启 | 拉仓库、跑安装脚本或换镜像 tag；夹爪固件 OTA 用 SDK 脚本 |
-| 二次开发 | 闭源，轻量：采集软件以固件包整体交付，定制基于导出的 `LeRobot 数据集` / `mcap` 产物、上传配置与采集设置，不改采集软件本身 | 完全开放：基于 lerobot 开源生态，改 Python 代码、接自定义机器人都可以 |
+| 二次开发 | 不开源，轻量：采集软件以固件包整体交付，定制基于导出的 `LeRobot 数据集` / `mcap` 产物、上传配置与采集设置，不改采集软件本身 | 完全开放：采集软件与夹爪 SDK 以 Apache-2.0 开源，改 Python 代码、接自定义机器人都可以 |
 | 适合谁 | 规模化数采工厂、数据采集团队、外部现场 | 研究与算法团队、自建训练管线 |
 
 ## 箱内清单与接线 {#kit}

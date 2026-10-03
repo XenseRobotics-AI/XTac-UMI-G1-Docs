@@ -1,22 +1,35 @@
 # Product line and configuration comparison
 
-XTac-UMI comes in two configurations: the **Backpack Kit** (the XTac-UMI Backpack) and the **Developer Kit** (the XTac-UMI G1 Developer Kit). Both use the same XTac-UMI G1 leader grippers and Pico4 Ultra headset; they differ only in where the compute node sits, what interface the operator faces, and what format the raw data lands in. This page helps you pick a side and check the box contents and the wiring.
+XTac-UMI comes in two configurations that share the same XTac-UMI G1 grippers and Pico4 Ultra Enterprise headset and record the same data:
 
-<div class="grid cards" markdown>
+- **Backpack Kit**: the backpack runs all collection and a tablet browser is the console; turnkey and built for large-scale field collection. The collection software is not open source.
+- **Developer Kit (open source)**: the grippers and headset connect straight to your workstation and record with open-source LeRobot; built for research and algorithm teams who want to customise freely.
 
--   :material-bag-personal:{ .lg .middle } __Backpack Kit · the XTac-UMI Backpack__
+This page compares the two and lists each kit's box contents and wiring.
+
+<div class="grid cards xu-cards" markdown>
+
+-   ![Backpack Kit wiring: both grippers and the headset connected to the backpack](../assets/product/backpack-wiring-adapter.webp){ .xu-card__img }
+
+    <span class="xu-tag xu-tag--backpack">Backpack Kit</span>
+
+    **XTac-UMI Data Collection Backpack**{ .xu-card__title }
 
     ---
 
-    For high-volume collection operations and collection teams: the backpack is the host, a tablet is the console, and the gripper buttons start recording. The software is delivered closed-source with support for light customisation.
+    The backpack is the host and a tablet the console; gripper buttons start and stop recording, and datasets publish to ModelScope in one click.
 
     [Quickstart](../backpack/index.md){ .md-button .md-button--primary }
 
--   :material-desktop-tower-monitor:{ .lg .middle } __Developer Kit · the XTac-UMI G1 Developer Kit__
+-   ![Developer Kit live Rerun preview while recording](../assets/dataset/rerun-xtac-umi-g1.webp){ .xu-card__img }
+
+    <span class="xu-tag xu-tag--pc">Developer Kit</span>
+
+    **XTac-UMI G1 Developer Kit (open source)**{ .xu-card__title }
 
     ---
 
-    Built on the open-source lerobot ecosystem and suited to research and algorithm teams: connect it to your own workstation and produce a LeRobotDataset directly, with customisation completely open.
+    Connect it to your own workstation and every recording is a LeRobotDataset; the collection software and gripper SDK are open source under Apache-2.0.
 
     [Quickstart](../pc/quickstart.md){ .md-button .md-button--primary }
 
@@ -34,7 +47,7 @@ XTac-UMI comes in two configurations: the **Backpack Kit** (the XTac-UMI Backpac
 | Raw data | On the device, one MCAP raw recording plus H.264 per episode; the `LeRobot dataset` and `mcap` you hand out are both offline export products | LeRobotDataset v3 written straight to disk |
 | Export and upload | Task-level export: pick the destination first (download to device / upload to remote), then the format (`LeRobot dataset` / `mcap`, two equals). Downloading gives you an archive; uploading goes through an upload backend you configured beforehand, local files are kept by default after an upload, and "Archive" — always available — frees the space | Hugging Face Hub |
 | Upgrading | Import a firmware bundle (`.tar.zst`) on the System page, with the previous version kept for rollback; stop recording before applying one by hand, and an update pushed remotely waits for the current take to finish before restarting | Pull the repo, run the install script or switch the image tag; gripper firmware OTA uses the SDK script |
-| Customisation | Closed-source and light: the collection software is delivered and upgraded as a whole firmware bundle, and customisation builds on the exported `LeRobot dataset` / `mcap` output, the upload configuration and the capture settings rather than on the software itself | Completely open: built on the open-source lerobot ecosystem, you can change the Python code and connect your own robot |
+| Customisation | Not open source, light: the collection software is delivered and upgraded as a whole firmware bundle, and customisation builds on the exported `LeRobot dataset` / `mcap` output, the upload configuration and the capture settings rather than on the software itself | Fully open: the collection software and gripper SDK are open source under Apache-2.0, so you can change the Python code or hook up your own robot |
 | Who it suits | High-volume collection operations, data collection teams, external sites | Research and algorithm teams, in-house training pipelines |
 
 ## Box contents and wiring {#kit}
