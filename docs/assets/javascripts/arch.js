@@ -184,7 +184,7 @@
         st.textContent = s;
       });
       g.addEventListener("mouseenter", function () { focus(n.id); });
-      g.addEventListener("mouseleave", function () { if (!pinned) focus(null); });
+      g.addEventListener("mouseleave", function () { focus(pinned); });
       g.addEventListener("focus", function () { focus(n.id); });
       g.addEventListener("click", function (ev) {
         ev.stopPropagation();
