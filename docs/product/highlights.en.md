@@ -1,6 +1,6 @@
 # Highlights
 
-**XTac-UMI G1** is a **wearable visuotactile multimodal data-collection gripper** for robot manipulation learning, built for embodied manipulation datasets. The system combines a **wearable leader end, a robot-side follower, a collection backpack and tri-colour visuotactile sensors**, together with a wrist fisheye camera, a high-precision pose unit and an IMU. It records RGB images, visuotactile images, spatial pose, gripper state and inertial data in sync, for imitation learning, VLA / VTLA model training and tactile world-model research.
+**XTac-UMI G1** is a multimodal UMI data-collection gripper whose fingertips carry Xense's own **visuotactile sensors**, seeing exactly where, how hard and how stably every contact happens. A handheld demonstration records touch, vision and pose in sync, turning out high-quality robot manipulation data for imitation learning, VLA model training and tactile research.
 
 <figure class="tc-video">
 <video controls preload="none" playsinline poster="../../../assets/highlights/video-poster.webp">
