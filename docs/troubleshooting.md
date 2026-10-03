@@ -197,7 +197,8 @@
 ??? failure "`Device or resource busy`（热插拔后立即启动）"
     **原因**：**ModemManager** 每次热插拔都用 AT 指令探测 CH343 串口并占用几秒。典型：
     第一次启动正常，拔下→换口→立即重启就 busy。（装了 `brltty` 也会同样抢占。）
-    **解决**：临时——插好等 ~3 秒；永久——udev 规则忽略 `1a86` 设备：
+    另一个原因是同一只夹爪被另一个程序占用（SDK 串口独占打开），例如上一次采集、标定或示例脚本还没退出。
+    **解决**：先关掉其它正在用这只夹爪的程序。ModemManager 的情况，临时——插好等 ~3 秒；永久——udev 规则忽略 `1a86` 设备：
     ```bash
     sudo tee /etc/udev/rules.d/99-taccap-ignore-modemmanager.rules >/dev/null <<'EOF'
     ACTION=="add|change", SUBSYSTEMS=="usb", ATTRS{idVendor}=="1a86", ENV{ID_MM_DEVICE_IGNORE}="1"
@@ -327,7 +328,7 @@
     **原因**：`--robot.id` 是**必填**的工位号，而且是在**解析命令行时**就检查的——所以什么设备
     都还没碰到就退出了，这是好事：不会有一台设备匿名录完一批数据。
     **解决**：补上工位号，**填数字即可**（`0` / `1`…，一套设备一个，双夹爪算一套；
-    前缀按 `--robot.type` 自动补成 `taccap_0` / `bi_taccap_0`）：
+    前缀按 `--robot.type` 自动补成 `taccap_0` / `bi_taccap_0` / `xtac_umi_g1_0`）：
 
     ```bash
     lerobot-record --robot.type=bi_taccap_gripper --robot.id=0 ...
@@ -424,30 +425,34 @@
     **解决**：刷固件。SDK 自 0.1.7 起把已发布镜像放在
     `third_party/taccap-gripper/firmware/`，不再需要固件源码：
     ```bash
-    python third_party/taccap-gripper/python/examples/ota_update.py \
-        tc-gu-01-master.bin left
+    python third_party/taccap-gripper/python/examples/ota_update.py --all
     ```
-    **先升 SDK 再刷固件**（刷写要用 0.1.7 及以上的 SDK），镜像**按角色选**——
+    `--all` 给插着的每只夹爪各刷对应角色的镜像。
+    **先升 SDK 再刷固件**（用数采环境自带的 SDK 0.4.1 刷），镜像**按角色选**——
     看固件 SN 末位 `m`/`s`，不是看左右手。完整步骤与风险见
     [固件 OTA 升级](versions.md#ota)。刷完回来重跑 `calibrate.py`。
 
 ??? failure "绑定从夹爪时报 `从爪固件版本过低,必须升级后才能使用本 SDK` / `Follower firmware too old`"
-    **原因**：从夹爪固件低于 1.1.6。1.1.6 起才有运动安全包络，`--robot.role=follower` 和 SDK 都会拒绝更早的固件。
+    **原因**：从夹爪固件低于 1.2.5。`--robot.role=follower` 和 SDK 都会拒绝更早的固件（1.2.5 起闭合零位才落在机械止点上）；
+    1.2.5 到 1.2.11 之间能连上，但会提示升级。
     **解决**：刷随 SDK 附带的从夹爪镜像，然后**拔下 24V 电源线，等约 2 秒再插回**（USB 线不用拔）：
 
     ```bash
     python third_party/taccap-gripper/python/examples/ota_update.py slave
     ```
 
-    接着多只夹爪时，指定要刷的那一只：`ota_update.py tc-gu-01-slave.bin left`（或 `right`、完整序列号），见
+    这条只在插着一只从夹爪时可用。插着多只从夹爪时，写镜像文件名加左右或序列号指定那一只：
+    `ota_update.py tc-gu-01-slave-1.2.14.bin left`（文件名以 `firmware/` 里实际的为准），见
     [固件 OTA 升级](versions.md#ota)。
 
-??? failure "刷固件时提示到某个目录下找 `.bin`，但该目录不存在"
-    **原因**：镜像路径写法不对。镜像随 SDK 附带在
-    `third_party/taccap-gripper/firmware/`，不需要自己拼目录。
-    **解决**：**镜像名直接写文件名**——`tc-gu-01-master.bin` / `tc-gu-01-slave.bin`，
-    脚本会自己去 SDK 的 `firmware/` 里找，在哪个目录运行都一样。见
-    [固件 OTA 升级](versions.md#ota)。
+??? failure "刷固件时报 `firmware file not found`"
+    **原因**：第一个参数被当成了镜像文件名，却找不到这个文件。常见于两种写法：
+    `slave left` / `master left` / `slave <SN>`（角色后面再跟参数时，角色会被当成文件名），
+    以及旧文档里不带版本号的 `tc-gu-01-master.bin` / `tc-gu-01-slave.bin`（现在的文件名带版本号）。
+    **解决**：一般直接用 `ota_update.py --all`；只插着一只该角色的夹爪时用 `ota_update.py master` /
+    `ota_update.py slave`。要在多只里指定一只，写报错里 `shipped images` 列出的文件名加左右或序列号，
+    例如 `ota_update.py tc-gu-01-slave-1.2.14.bin left`。镜像只写文件名即可，脚本会去 SDK 的
+    `firmware/` 里找。见 [固件 OTA 升级](versions.md#ota)。
 
 ??? failure "腕相机/视触觉打不开、`video ... busy`"
     **原因**：相机由外部相机服务占用，或用户不在 `video` 组。

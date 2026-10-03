@@ -201,7 +201,7 @@ git submodule update --init --recursive --progress
     AttributeError: module 'xense.taccap._taccap_native' has no attribute 'GripperAutoCalConfig'
     ```
 
-    版本号相同（例如都是 0.1.9）的子模块也可能含 C++ 改动，所以**每次拉子模块都重跑一次
+    版本号相同（例如都是 0.4.1）的子模块也可能含 C++ 改动，所以**每次拉子模块都重跑一次
     `./setup_env.sh --install`**。只想单独重编 `xense.taccap` 时：
 
     ```bash

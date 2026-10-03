@@ -139,8 +139,8 @@ Step 2/2: open the gripper to its MECHANICAL LIMIT.
   更低版本不支持行程标定：`calibrate.py` 会**原样退出、
   不改动任何东西**，采集时主夹爪则直接报错退出，并提示先做 OTA 升级。
   **低于 V2.1 的夹爪必须先升级固件**，镜像随 SDK 附带 → [固件 OTA 升级](versions.md#ota)。
-  **先升 SDK 再刷固件**——刷写要用 0.1.7 及以上的 SDK；要刷到修掉[三个已知缺陷](versions.md#ota-when)
-  的当前镜像 leader `1.2.2` / follower `1.1.6`，子模块要升到[版本基线](versions.md#版本兼容基线)（附带镜像随 SDK 走，以 `firmware/manifest.json` 为准）。
+  **先升 SDK 再刷固件**——用数采环境自带的 SDK 0.4.1 刷；要刷到修掉[三个已知缺陷](versions.md#ota-when)
+  的当前镜像 leader `1.2.6` / follower `1.2.14`，子模块要升到 SDK 0.4.1（见[版本基线](versions.md#版本兼容基线)）（附带镜像随 SDK 走，以 `firmware/manifest.json` 为准）。
 - **标定是一次性的。**值写在 MCU flash 里，断电不丢，换主机不用重标。需要重做的只有两类
   情况：拆装编码器、更换机械限位或擦除固件之后；以及预览时发现**张到底明显够不到 1.0**
   ——后者说明存的值已经和实际行程对不上，见 [4.1.3](#413)。
@@ -168,7 +168,7 @@ python -m lerobot.robots.taccap_gripper.check_tracker --side right
 
 !!! note "安装变换是内置的，不需要你测"
     追踪器拧在夹爪上，它报的是**追踪器**的位姿，不是我们要记的 TCP。两者之间的刚性偏移
-    由 `ee_transform.tracker_to_tcp` 内置（取自 CAD 装配实测），**左右两侧各自实测**——
+    已内置在采集程序里（取自 CAD 装配实测），**左右两侧各自实测**——
     两侧接近镜像但不完全相同（旋转差 0.03°、平移差 1.27 mm），所以左值不是把右值镜像出来的。
 
     `--side` 决定套用哪一侧的内置值；**不带 `--side` 时变换是单位阵**，`ee` 会完全跟随 `raw`。

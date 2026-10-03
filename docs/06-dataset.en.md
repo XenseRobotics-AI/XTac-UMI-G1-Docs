@@ -41,17 +41,18 @@ How it is serialised:
     the ones 1 s, 0.5 s and 0.2 s before it.
 
 The metadata that matters in `info`: `fps`, `features`, `total_episodes`, `total_frames`,
-`robot_type`, `data_path`, `video_path`.
+`robot_type`, `data_path`, `video_path`. `robot_type` is the `--robot.type` used for recording
+(`taccap_gripper` / `bi_taccap_gripper` / `xtac_umi_g1`); right after it, `collection_stack` is
+always `"xense-taccap-lerobot"`, marking the data as recorded directly by this collection program.
 
 !!! note "Datasets recorded before 0.0.8: the image `std` statistic is 0"
     In datasets recorded before 0.0.8, the `std` of image and video features in `meta/stats.json`
     is always 0 (`mean`, `min`, `max` and the quantiles are unaffected). If training normalises
     images by `std`, recompute the statistics first.
 
-!!! info "Two things the XTac-UMI G1 adds: `meta/hardware.json` and `meta/runtimes/`"
+!!! info "What the XTac-UMI G1 adds: `meta/hardware.json`"
     A standard LeRobotDataset records only `robot_type` in `info`, which cannot say **which
-    physical rig** produced the data — let alone what that sensor's calibration was at the time.
-    So recording writes two extra things:
+    physical rig** produced the data. So recording writes an extra hardware manifest:
 
     **`meta/hardware.json` — who recorded it.** The station number `robot_id`, each gripper's
     **firmware SN**, and the SNs of the two tactile sensors on it (each carrying the observation
@@ -64,17 +65,17 @@ The metadata that matters in `info`: `fps`, `features`, `total_episodes`, `total
     same shape as a raw fisheye one, so without this the two cannot be told apart; see
     [5.7 Wrist fisheye undistortion](05-data-collection.md#57).
 
-    **`meta/runtimes/` — what the calibration was at the time.** One runtime bundle per tactile
-    sensor (`<SN>-<timestamp>.bin`, ~841 KB), with each sensor in `epochs` pointing at its own.
-    Rebuilding depth / force / difference from the recorded `rectify` stream needs it.
+    Rebuilding depth / force / difference from the recorded `rectify` stream needs only the sensor
+    model and the first `rectify` frame of each episode, which the dataset already holds. A
+    `meta/runtimes/` in a dataset recorded on an earlier version is ignored.
 
-    Both are **separate files** and do not touch the upstream `info` structure, so no tool that
+    It is a **separate file** and do not touch the upstream `info` structure, so no tool that
     reads this dataset as a standard one is affected. Field meanings, resume behaviour and what to
     watch out for when reconstructing →
     [`--robot.id` and the hardware manifest](05-data-collection.md#robot-id).
 
     New datasets produced by `lerobot-edit-dataset` (deleting episodes, splitting, removing
-    features, the 8 → 6 camera conversion) carry both along. **Merging (`merge`) is refused**:
+    features, the 8 → 6 camera conversion) carry `hardware.json` along. **Merging (`merge`) is refused**:
     no single manifest could match every merged episode to the sensors that recorded it.
 
 ## 6.2 Checking the data {#62}
@@ -97,8 +98,8 @@ lerobot-check-dataset --repo-id <your_org>/<your_dataset> --episode-index 0 2 4
 | `episode-index` | Check only these episodes (accepts several, e.g. `0 2 4`) |
 
 The checks cover whether `meta/` is complete, whether episode counts agree, whether parquet row
-counts and indices are contiguous, NaNs, whether each video exists with a frame count matching the
-parquet, and the **camera format**: a bimanual dataset is classified as 6-camera (four tactile +
+counts and indices are contiguous, NaNs, whether each video exists with a frame count **exactly**
+matching what is declared, and the **camera format**: a bimanual dataset is classified as 6-camera (four tactile +
 two wrist) or 8-camera (plus the two headset eyes), which train with different input shapes. The
 last line sums it up:
 
@@ -109,6 +110,13 @@ Summary: 0 error(s), 0 warning(s) | Camera format: 6-camera (no headset)
 A single-gripper dataset, or one recorded without the wrist cameras or with only one headset eye,
 shows `not recognized` with a warning; the check targets the standard bimanual layouts and does not
 affect the other checks.
+
+A video frame-count mismatch is graded by direction:
+
+| Case | Result | Meaning |
+|---|---|---|
+| **Fewer** than declared | error (`... frames but episodes declare ... (N missing ...)`) | Episodes reference frames the video does not have; decoding runs past the end of the stream |
+| **More** than declared | warning (`... more than the ... episodes declare -- unreferenced leftover frames`) | Leftover frames no episode refers to (e.g. after deleting episodes); every declared frame is still there, so the data is usable |
 
 ### Bimanual 8 cameras → 6 cameras {#8to6}
 

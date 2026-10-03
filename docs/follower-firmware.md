@@ -27,8 +27,8 @@
 python -c "from xense.taccap import scan_grippers
 for g in scan_grippers(): print(g.side, g.role, g.firmware_sn)"
 
-# 2. 刷写,按提示确认
-python python/examples/ota_update.py slave left
+# 2. 刷写,按提示确认(只接着一只从夹爪时)
+python python/examples/ota_update.py slave
 
 # 3. 断电重启(见下)
 
@@ -36,6 +36,9 @@ python python/examples/ota_update.py slave left
 python python/examples/follower_status.py left
 ```
 
+- 接着多只从夹爪、只刷其中一只时，写镜像文件名加左右或序列号：
+  `python python/examples/ota_update.py tc-gu-01-slave-1.2.14.bin left`。
+  不要写成 `slave left`，那样会报 `firmware file not found`。
 - 刷写约 1 秒，之后夹爪自动重启。
 - 脚本发现固件与夹爪角色不符时会拒绝刷写，**不要加 `--force` 强制**。
 - 刷写中断不会损坏夹爪，原固件继续运行，重新刷一次即可。

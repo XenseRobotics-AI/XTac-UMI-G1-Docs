@@ -129,5 +129,6 @@ hide:
 | [`xense-lerobot-viewer`](https://github.com/XenseRobotics-AI/xense-lerobot-viewer) | Open-source local visualization tool for browsing LeRobot datasets in the browser |
 
 !!! note "Versions"
-    Data collection uses the SDK bundled with `xense-taccap-lerobot` (the 0.1.9 series); the follower chapter
-    and the SDK appendix use a separately installed `xense.taccap` 0.4.1. Component baselines are in [Versions & Support](versions.md).
+    Data collection, the follower chapter and the SDK appendix all use the `xense.taccap` 0.4.1 bundled with
+    `xense-taccap-lerobot` (submodule `third_party/taccap-gripper`); installing the data-collection environment
+    is all it takes. Component baselines are in [Versions & Support](versions.md).

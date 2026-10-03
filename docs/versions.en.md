@@ -7,8 +7,8 @@ to report a problem.
 
 !!! danger "This is not optional — bring all four up to the versions below before collecting"
     The whole chain is a **matched set**: the firmware needs [command set V2.1](#v21) for travel
-    calibration, SDK ≥ 0.1.7 is what can safely flash that firmware, 0.1.9 is the release that
-    **carries the images with three known defects fixed** (see [known defects](#ota-when)), and the
+    calibration, SDK 0.4.1 **carries the images with the [three known defects](#ota-when) fixed** and
+    is also what you flash them with, and the
     0–1 normalisation of `gripper.pos` only holds once firmware, SDK and calibration are all in
     place. A leader gripper
     that is uncalibrated or on too-old firmware is **refused a connection outright**, so it cannot
@@ -19,9 +19,12 @@ to report a problem.
 | Component | Minimum version | How to check |
 |---|---|---|
 | `xense-taccap-lerobot` | `0.5.1+xtac.0.0.8` | `pip show lerobot`, or look at `pyproject.toml` |
-| `xense.taccap` SDK | **0.1.9** | `python -c "import xense.taccap as t; print(t.__version__)"` |
-| Gripper firmware | **command set V2.1**, i.e. build leader **≥ 1.2.0** / follower **≥ 1.1.0** ([the difference](#v21)); a follower used with `--robot.role=follower` must be **≥ 1.1.6** | Run [`calibrate.py`](04-calibration.md#41) — if it is too old it prints the current version and exits; to read the version directly see [the command below](#v21) |
+| `xense.taccap` SDK | **0.4.1** | `python -c "import xense.taccap as t; print(t.__version__)"` |
+| Gripper firmware | **command set V2.1**, i.e. build leader **≥ 1.2.0** / follower **≥ 1.1.0** ([the difference](#v21)); a follower used with `--robot.role=follower` must be **≥ 1.2.5** (below 1.2.11 it warns you to upgrade) | Run [`calibrate.py`](04-calibration.md#41) — if it is too old it prints the current version and exits; to read the version directly see [the command below](#v21) |
 | Encoder calibration on every leader | Zero + travel limit written to flash | [4.1 Gripper calibration](04-calibration.md#41) |
+
+The [follower gripper](follower-overview.md) chapter (Chinese only) uses this same SDK 0.4.1 from the
+data-collection environment, with the same follower firmware requirement.
 
 ### Three numbering schemes: V2.1 is a command set, not a firmware version {#v21}
 
@@ -48,7 +51,8 @@ differ simply because they are two different firmware images, not because one is
 **"New enough" is not the same as "defect-free", though.** Whether the command set covers what you
 need is one question; whether that particular image has known problems is another. Leader `1.2.2` /
 follower `1.1.5` onward fix three defects present in everything older — see
-[V2.1 is only the floor](#ota-when); the follower image bundled now, `1.1.6`, adds the motion-safety envelope on top.
+[V2.1 is only the floor](#ota-when); the images bundled now, leader `1.2.6` / follower `1.2.14`, add the
+motion-safety envelope on top and fix the control serial link going deaf to commands after a single overrun.
 
 One command prints the SDK version and every gripper's firmware build. **The firmware version is not
 in the SN** — the SN only gives you the side and the role; the version has to be asked of the
@@ -58,7 +62,7 @@ firmware with `GetVersion`:
 python - <<'EOF'
 import xense.taccap as t
 from xense.taccap import scan_grippers, LeaderGripper, Cmd
-print("xense.taccap", t.__version__, "(needs >= 0.1.9)")
+print("xense.taccap", t.__version__, "(needs >= 0.4.1)")
 for ep in scan_grippers():
     g = LeaderGripper(mcu_device=ep.mcu_device)   # read-only, works for both roles; camera stays closed
     ack = g.transport.send_cmd(Cmd.GetVersion, b"", 500)
@@ -129,9 +133,9 @@ and fields are still whatever your local checkout says.
 | `opencv-python` | Pinned `==4.12.0.88` (consistent across the XenseRobotics SDKs) | 4.12.0.88 |
 | NumPy | `>=1.26.4` | 2.2.6 |
 | `xense-taccap-lerobot` | A customisation of lerobot 0.5.1; version `0.5.1+xtac.0.0.8` (kept in step with the doc version) | `v0.0.8` (`da5c3eff`) |
-| `xense.taccap` (the `taccap-gripper` SDK) | Matched to the main repo's submodule version | 0.1.9 (submodule `3d44440`) |
+| `xense.taccap` (the `taccap-gripper` SDK) | Matched to the main repo's submodule `third_party/taccap-gripper`; data collection, the follower chapter and the SDK appendix all use this one | **0.4.1** (tag `v0.4.1`), bundling firmware leader **1.2.6** / follower **1.2.14**. The submodule in the `v0.0.8` tag is still `3d44440` (0.1.9); this is updated at the next release |
 | Gripper firmware command set | **V2.1** (wire framing is counted separately, at V1.8; see [three numbering schemes](#v21)) | Command set V2.1 |
-| Gripper firmware build | leader **≥ 1.2.0** / follower **≥ 1.1.0** supports command set V2.1 | This baseline ships leader **1.2.2** / follower **1.1.6**, both fixing the [three known defects](#ota-when); **the SDK refuses a follower below 1.1.6**. Image versions follow the SDK — `firmware/manifest.json` is authoritative, see [Firmware OTA upgrade](#ota) |
+| Gripper firmware build | leader **≥ 1.2.0** / follower **≥ 1.1.0** supports command set V2.1 | SDK 0.4.1 ships leader **1.2.6** / follower **1.2.14**, both fixing the [three known defects](#ota-when); **the SDK refuses a follower below 1.2.5** and warns below 1.2.11. Image versions follow the SDK — `firmware/manifest.json` is authoritative, see [Firmware OTA upgrade](#ota) |
 | `xensesdk` | Provided by the install script | 2.1.2 |
 | XenseVR PC Service (`.deb` daemon) | ≥ **v0.2.0**; **install v0.2.1 on a new machine**, reason below | v0.2.1 |
 | `xensevr_pc_service_sdk` (the Python interface) | Bundled in the main repo (no longer a submodule); links the C SDK from the `.deb` | 0.2.1 — **the version comes from the `.deb`**, see below |
@@ -219,14 +223,14 @@ and fields are still whatever your local checkout says.
 
 !!! warning "Firmware images 1.2.2 / 1.1.6: this one **is** worth flashing, unlike the last few"
     With the submodule at SDK **0.1.9** (`3dac16a`), the images bundled under `firmware/` are leader
-    **1.2.2** / follower **1.1.5**; still at 0.1.9, the current baseline (submodule `3d44440`) ships the
+    **1.2.2** / follower **1.1.5**; still at 0.1.9, the `v0.0.8` baseline (submodule `3d44440`) ships the
     follower at **1.1.6** — `manifest.json` is authoritative. The previous baseline carried 1.2.1 / 1.1.1
     (SDK `83314c8`), and the one before that 1.2.0 / 1.1.0.
 
     **Follower 1.1.6** adds the motion-safety envelope on top of 1.1.5 (error and torque clamping, a
     temperature wall, derating of sustained torque at zero speed); the protocol is unchanged and a power
-    cycle after flashing is still required. **A follower below 1.1.6 is refused by the SDK and by
-    `--robot.role=follower`.**
+    cycle after flashing is still required. (The follower floor has since risen to **1.2.5** — see the
+    [baseline table](#baseline).)
 
     **Earlier bumps changed surface behaviour like the LED colour. This one does not.** 1.2.2 /
     1.1.5 fix three real defects present in every older image, including ones that satisfy command
@@ -397,26 +401,17 @@ and fields are still whatever your local checkout says.
     means **"nothing here says the rig changed"**, not **"the rig did not change"** — the old format
     could not express a swap at all.
 
-!!! danger "Tactile runtime bundles are stored in the dataset — needs a version after `dbbdd08e`"
-    Recording the serial says which sensor produced a stream; it does not say what that sensor's
-    calibration was at the time. Rebuilding depth / force / difference from the recorded `rectify`
-    stream needs the **runtime config**, which carries the reference image captured when the sensor
-    came up.
+!!! note "Tactile runtime bundles: written from `dbbdd08e`, no longer recorded from the next release"
+    Versions after `dbbdd08e` and before the next release write each tactile sensor's runtime bundle
+    to `meta/runtimes/<SN>-<timestamp>.bin` and add a `runtime` entry to that sensor in
+    `meta/hardware.json`.
 
-    From this version on, each sensor's bundle is written to `meta/runtimes/<SN>-<timestamp>.bin`
-    and every sensor in the epoch points at its own. Reconstruction then works **from the dataset
-    alone** — no tracking down the physical unit months later, and no risk that the unit has since
-    been recalibrated into a different reference.
-
-    **Why this gets a warning of its own**: using the wrong bundle does not fail. Solve a stream
-    against another sensor's bundle — or the same sensor's after a recalibration — and an
-    **untouched gel** comes back with plausible-looking depth and force, with nothing in the output
-    saying otherwise. So for an older dataset (no `meta/runtimes/`) the correct move is to **skip
-    derivation**, not to reach for whichever bundle is nearest.
-
-    One bundle per capture session, ~841 KB per sensor. The timestamp in the filename is local wall
-    clock in Beijing time — read it as a label; for anything you compute with, use `recorded_at` on
-    the epoch (full ISO-8601 with offset).
+    From the next release they are no longer recorded: the only per-unit content of a bundle is the
+    reference image, which is simply the first `rectify` frame of each episode; everything else is
+    fixed by the sensor model. So depth / force / difference are rebuilt from **the sensor model +
+    each episode's first `rectify` frame**, from the dataset alone. In older datasets,
+    `meta/runtimes/` and the `runtime` key are ignored and do not affect reading; `lerobot-edit-dataset`
+    no longer copies them either.
 
 !!! note "Wrist fisheye undistortion — needs a version after `e5b4445a`"
     Adds `--robot.wrist_undistort` (**off by default**). Turned on, the wrist fisheye is
@@ -496,7 +491,7 @@ git submodule status         # should show 3d44440…
 
 !!! danger "Rerun `./setup_env.sh --install` after pulling the submodule"
     `git submodule update` only updates files, it does not rebuild. A submodule with the same SDK
-    version (0.1.9) can still carry C++ changes, and without a rebuild `import xense.taccap` fails with
+    version (0.4.1, say) can still carry C++ changes, and without a rebuild `import xense.taccap` fails with
     `AttributeError`. See [2.2 Clone the repo and its submodules](02-environment.md#22).
 
 ### Firmware OTA upgrade {#ota}
@@ -519,7 +514,7 @@ thing if it is too old, printing the version this unit reports:
 | `calibrate.py` reports `needs command set >= V2.1` and exits unchanged | [4.1 Gripper calibration](04-calibration.md#41) |
 | The leader will not connect and the error tells you to do an OTA upgrade first | [4.1.1](04-calibration.md#41) |
 | The gripper firmware is below command set **V2.1** (i.e. leader < 1.2.0 / follower < 1.1.0) | The [baseline table](#baseline) above |
-| Using the follower reports `Follower firmware too old` (follower below 1.1.6) | The [baseline table](#baseline) above |
+| Using the follower reports `Follower firmware too old` (follower below 1.2.5) | The [baseline table](#baseline) above |
 
 If none of them apply, **do not flash**. Firmware does not regress on its own, and once flashed it
 does not need flashing again unless the board is replaced or the firmware erased.
@@ -542,7 +537,8 @@ does not need flashing again unless the board is replaced or the firmware erased
 
     All three apply to leader and follower alike — they live in code the two roles share.
 
-    **From SDK 0.1.9 on, the images under `firmware/` are the fixed ones**, so there is nothing to
+    **In SDK 0.4.1, which the data-collection environment ships, the images under `firmware/` are the
+    fixed ones**, so there is nothing to
     wait for — walk through [How to flash](#how-to-flash) below. The test for whether you need to:
     compare the version in [`manifest.json`](#ota) against what `GetVersion` reports on your
     gripper; if the bundled image is newer, it is worth flashing.
@@ -556,10 +552,12 @@ Since 0.1.7 the SDK **ships the released firmware images with the repo**, so you
 
 | Image | Role it is for |
 |---|---|
-| `tc-gu-01-master.bin` | Leader gripper (SN ending in **`m`**) |
-| `tc-gu-01-slave.bin` | Follower gripper (SN ending in **`s`**) |
+| `tc-gu-01-master-1.2.6.bin` | Leader gripper (SN ending in **`m`**) |
+| `tc-gu-01-slave-1.2.14.bin` | Follower gripper (SN ending in **`s`**) |
 
-They live in `third_party/taccap-gripper/firmware/`, which only keeps the current release.
+They live in `third_party/taccap-gripper/firmware/`, which only keeps the current release. The file
+names carry the version and change with the SDK, so the commands below prefer letting the script
+**pick the image by role** — no file name to remember.
 
 !!! note "Image versions follow the SDK version — `manifest.json` is authoritative"
     **No version number is hard-coded here** — which image version you have depends on your SDK
@@ -573,17 +571,17 @@ They live in `third_party/taccap-gripper/firmware/`, which only keeps the curren
     Anything not below leader `1.2.0` / follower `1.1.0` already supports command set V2.1.
 
 !!! warning "Order: **upgrade the SDK first, then flash the firmware**"
-    **Use SDK 0.1.7 or newer to flash and to verify afterwards**; do not flash with anything older.
+    **Flash and verify with the SDK 0.4.1 in the data-collection environment**; never flash with an SDK older than 0.1.7.
 
     A new SDK talks to old firmware unchanged, so **upgrading the SDK first is always safe**.
 
     There is a second layer to this: which image ships depends on the SDK version, so **reaching
-    the current 1.2.2 / 1.1.6 requires the submodule at this page's baseline first**. On a machine
+    the current 1.2.6 / 1.2.14 requires the submodule at SDK 0.4.1 first**. On a machine
     pinned to an earlier SDK, `firmware/` still holds the old images and flashing fixes nothing.
 
 **Pick the image by role, not by which hand it is.** The role is the **last character** of the
 firmware SN: `TCGU01A28Z0023m` (an example SN) → last character `m` → leader →
-`tc-gu-01-master.bin`. On one rig, both grippers are
+the leader image. On one rig, both grippers are
 frequently **both leaders**.
 
 ```bash
@@ -591,9 +589,8 @@ frequently **both leaders**.
 python -c "from xense.taccap import scan_grippers
 for g in scan_grippers(): print(g.firmware_sn, '->', 'master' if g.firmware_sn.endswith('m') else 'slave')"
 
-# 2. Flash (just the file name — the script finds it in the SDK's firmware/; the last argument picks the gripper: left/right or an SN)
-python third_party/taccap-gripper/python/examples/ota_update.py \
-    tc-gu-01-master.bin left
+# 2. Flash: every plugged-in gripper gets the image for its role
+python third_party/taccap-gripper/python/examples/ota_update.py --all
 
 # 3. Confirm: GetVersion returns a constant compiled into the firmware, so what you read back is
 #    what was actually flashed
@@ -607,23 +604,23 @@ for ep in scan_grippers():
 ```
 
 What step 3 reads back must be **not below** leader 1.2.0 / follower 1.1.0. When flashing the images
-that ship with the SDK it is usually higher — the current baseline ships leader `1.2.2` / follower `1.1.6`, so
+that ship with the SDK it is usually higher — SDK 0.4.1 ships leader `1.2.6` / follower `1.2.14`, so
 those are the numbers that come back. That is normal — see [three numbering schemes](#v21). Step 3
 reads both roles with `LeaderGripper`: it is read-only and works for either, whereas `FollowerGripper`
-refuses a follower below 1.1.6.
+refuses a follower below 1.2.5.
 
-The script can also pick the image by role: `ota_update.py master` / `ota_update.py slave`;
-`ota_update.py --all` flashes every attached gripper with its matching image.
+Other forms:
 
-!!! tip "`--target-version` is optional"
+- With only **one** leader (or one follower) plugged in, the role alone is enough: `ota_update.py master` / `ota_update.py slave`.
+- To flash one of several grippers of the same role, pass **the image file name plus a side or SN**:
+  `ota_update.py tc-gu-01-master-1.2.6.bin left` (use the name actually present in `firmware/`).
+- Do not write `slave left` / `master left`: the first argument is then taken as an image file name and fails with `firmware file not found`.
+
+!!! tip "`--target-version` is normally unnecessary"
     It only tags the firmware's post-install verification log and the partition metadata, and
-    **does not affect what gets flashed** — the image file alone decides that. Add it when you want
-    the log annotated, using the version from `manifest.json`:
-
-    ```bash
-    python third_party/taccap-gripper/python/examples/ota_update.py \
-        tc-gu-01-master.bin left --target-version 1.2.2
-    ```
+    **does not affect what gets flashed** — the image file alone decides that. The script looks the
+    version up in `manifest.json` by the image's CRC32 and fills it in; you only need it for an image
+    `manifest.json` does not know.
 
 The write takes about a second, and the gripper reboots and is re-detected in about 1–3 s. The new
 firmware is written to the **spare partition** and does not overwrite the running one until it
@@ -663,7 +660,7 @@ verifies — so a failed transfer cannot brick the gripper.
 
 !!! note "Pass only the file name; the working directory does not matter"
     `ota_update.py` tries, in order: the path you gave → the same name under the SDK root → the same
-    file under the SDK's `firmware/`. So `tc-gu-01-master.bin` resolves to the same image from the
+    file under the SDK's `firmware/`. So `tc-gu-01-master-1.2.6.bin` resolves to the same image from the
     main repo root, from the SDK directory, or anywhere else, with no repo-specific prefix to
     assemble. The path is checked **before connecting to the device**, so a mistyped file name does
     not cost you a device-discovery round.
@@ -715,11 +712,11 @@ Please include:
   alone; and `mamba activate` in the container no longer answers `Shell not initialized`.
   **The collection program's behaviour, the data format and the three SDKs are the same as 0.0.5** —
   upgrading changes nothing about data already recorded and requires no re-calibration.
-- **SDK 0.1.9 with firmware 1.2.2 / 1.1.5** (follower now 1.1.6): with the submodule at `3dac16a`, the bundled images
+- **SDK 0.1.9 with firmware 1.2.2 / 1.1.5** (follower later 1.1.6): with the submodule at `3dac16a`, the bundled images
   fix three defects in code both roles share (command-channel livelock, logging stalling realtime
   tasks, an out-of-bounds write at boot). **Every device should be flashed up to these** — the
   first firmware bump since 1.2.0 that is worth flashing for its own sake. A **power cycle after
-  flashing is mandatory**. The same baseline adds `meta/runtimes/` (tactile runtime bundles) to the
+  flashing is mandatory**. The same baseline adds `meta/runtimes/` (tactile runtime bundles, no longer recorded from the next release) to the
   dataset and moves `meta/hardware.json` to an `epochs` structure; both are backward compatible and
   older datasets still read.
 - **0.0.5 vs 0.0.4: only the installation method changed** — Docker now pulls from GHCR by default

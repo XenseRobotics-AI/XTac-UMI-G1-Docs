@@ -228,7 +228,7 @@ Submodules and the packages they install — there is **only one**:
     AttributeError: module 'xense.taccap._taccap_native' has no attribute 'GripperAutoCalConfig'
     ```
 
-    A submodule with the same version number (0.1.9, say) can still carry C++ changes, so **rerun
+    A submodule with the same version number (0.4.1, say) can still carry C++ changes, so **rerun
     `./setup_env.sh --install` every time you pull the submodule**. To rebuild just `xense.taccap`:
 
     ```bash

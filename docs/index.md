@@ -126,5 +126,5 @@ hide:
 | [`xense-lerobot-viewer`](https://github.com/XenseRobotics-AI/xense-lerobot-viewer) | 开源的本地可视化工具，在浏览器里查看本地 LeRobot 数据集 |
 
 !!! note "适用版本"
-    数采部分使用 `xense-taccap-lerobot` 自带的 SDK（0.1.9 系列）；从夹爪章节与 SDK 附录使用单独安装的
-    `xense.taccap` 0.4.1。各组件的版本基线见[版本与支持](versions.md)。
+    数采、从夹爪章节与 SDK 附录用的都是 `xense-taccap-lerobot` 自带的 `xense.taccap` 0.4.1
+    （子模块 `third_party/taccap-gripper`），装好数采环境即可。各组件的版本基线见[版本与支持](versions.md)。

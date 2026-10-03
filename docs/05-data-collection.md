@@ -243,7 +243,7 @@
 | 参数 | 默认 | 含义 |
 |---|---|---|
 | `robot.side` | 自动 | `left`/`right`，**单夹爪模式**下两只都接着时必填；只接一只则自动选中 |
-| `robot.role` | `leader` | 填 `follower` 绑定从夹爪；从夹爪固件需 **≥ 1.1.6**，否则拒绝连接，见 [固件 OTA](versions.md#ota) |
+| `robot.role` | `leader` | 填 `follower` 绑定从夹爪；从夹爪固件需 **≥ 1.2.5**，否则拒绝连接（低于 1.2.11 会提示升级），见 [固件 OTA](versions.md#ota) |
 | `robot.gripper_stream_hz` | `100` | 主夹爪固件主动推送编码器（开启 IMU 时连同 IMU）读数的频率；`0` = 每帧轮询。推流起不来时自动回退轮询并告警，不影响录制。只对主夹爪生效，双夹爪两侧共用 |
 | `robot.enable_tracker` | `true` | 关闭则只录触觉 + 夹爪（无位姿） |
 | `robot.tracker_serial` | 未设 | 钉住追踪器 SN，绕过侧别自动匹配 |
@@ -303,6 +303,7 @@ Pico4 Ultra 企业版追踪器上电后，6-DoF 位姿**自动录制**——追�
 |---|---|---|
 | `--robot.id=0` | `taccap_gripper`（单夹爪） | `taccap_0` |
 | `--robot.id=0` | `bi_taccap_gripper`（双夹爪） | `bi_taccap_0` |
+| `--robot.id=0` | `xtac_umi_g1`（双夹爪 + 头显） | `xtac_umi_g1_0` |
 
 前缀是 `--robot.type` 已经说过的事，再手敲一遍只会敲错——双夹爪上写成 `--robot.id=taccap_0`，
 标签就和实际设备类型对不上了，而这在数据里看不出来。**不是纯数字的一律原样保留**，
@@ -337,10 +338,8 @@ ValueError: --robot.id is required: the station label for this rig, e.g. --robot
           "side": "left",
           "gripper_sn": "TCGU01A24Z0001m",
           "tactile_sensors": [
-            { "finger": "left",  "observation_key": "left_tactile_left",  "serial": "GSPS01A25Z0011",
-              "runtime": "meta/runtimes/GSPS01A25Z0011-20260822T160309.bin" },
-            { "finger": "right", "observation_key": "left_tactile_right", "serial": "GSPS01A25Z0012",
-              "runtime": "meta/runtimes/GSPS01A25Z0012-20260822T160309.bin" }
+            { "finger": "left",  "observation_key": "left_tactile_left",  "serial": "GSPS01A25Z0011" },
+            { "finger": "right", "observation_key": "left_tactile_right", "serial": "GSPS01A25Z0012" }
           ],
           "wrist_undistort": { "applied": false }
         }
@@ -359,7 +358,6 @@ ValueError: --robot.id is required: the station label for this rig, e.g. --robot
 - 某一侧夹爪没开时该项记 `"gripper_sn": null`（不是省略）；`--robot.enable_tactile=false` 时
   `tactile_sensors` 为空列表。
 - 它是**独立的一个文件**，不是 `meta/info.json` 里的一个键——后者的结构属于上游 lerobot。
-- `runtime` 指向这枚传感器的 **runtime bundle**，见下面那条 danger。
 - `wrist_undistort` 记这只夹爪的腕相机帧**有没有被矫正**、用的是哪一份内参
   （`"unit"` 本机标定 / `"reference"` SDK 参考值）。只要这只夹爪有腕相机就一定有这一项，
   没矫正时记 `{"applied": false}`——缺键和 `false` 若不可分，事后就说不清了。见 [§5.7](#57)。
@@ -376,28 +374,19 @@ ValueError: --robot.id is required: the station label for this rig, e.g. --robot
 | **换了夹爪或传感器** | 旧段在当前集数处**封口**，新段接上，两段都留着名字 |
 | `--robot.id` 和数据集里记的不一致 | **直接拒绝续录**，在连接任何设备之前就报 `... refusing to resume it`。一个数据集只属于一个工位：回原工位续录，或者换一个 `--dataset.repo_id` 录成新数据集。没有记工位号的老数据集不受这条限制 |
 | `--robot.type` 对不上（单夹爪 ↔ 双夹爪） | **不是换硬件，是换数据集**：观测键都不一样。保留原文件并告警 |
+| `bi_taccap_gripper` ↔ `xtac_umi_g1`（加或去掉头显） | 同样是换数据集：类型、观测键都不同，换一个 `--dataset.repo_id`。**更早版本里在 `bi_taccap_gripper` 下开头显录的数据集也续不上**（类型、特征和工位号都对不上），请录进新的 `--dataset.repo_id` |
 
 老数据集（换硬件之前录的，只有扁平的 `units`）不需要特殊处理：读出来是**一个开口的 epoch**
 (`from_episode` 0、`to_episode` `null`)。但**开口的单段只说明"这里没有任何东西表明换过硬件"，
 不等于"确实没换过"**——老格式压根表达不了这件事。
 
-!!! danger "`meta/runtimes/`：重建触觉的衍生通道必须用**这一份** bundle"
-    录下来的是 `rectify` 流；depth / force / difference 是**从它算出来的**，而算的时候要用
-    那枚传感器的 runtime 配置——里面带着它上电时拍的那张参考图。所以每次采集会话都会把每枚
-    传感器的 bundle 写进 `meta/runtimes/<SN>-<时间>.bin`（每枚约 841 KB），epoch 里各自指向
-    自己那一份。这样几个月后重建**只靠数据集本身**就够，不用去找那台实物——何况它这期间很
-    可能已经重新标定过了。
+!!! note "触觉的衍生通道只靠数据集本身就能重建"
+    录下来的是 `rectify` 流；depth / force / difference 是**从它算出来的**。计算要用的参考图
+    就是每个 episode 的第一帧 `rectify`，其余参数由传感器型号决定，所以重建**只靠数据集本身**
+    就够，不用去找那台实物。
 
-    **拿错 bundle 不会报错。**用另一枚传感器的、或者同一枚重新标定之后的 bundle 去解，一块
-    **没被碰过的胶体**照样解出看着挺合理的 depth 和 force，输出里没有任何迹象说明它是错的。
-    所以老数据集（没有 `meta/runtimes/`）的正确做法是**跳过重建**，而不是随手找一份顶上。
-
-    一次会话一份不是命名的巧合：参考图在每次传感器初始化时重拍，所以每次会话本来就该有自己
-    的一份。同一枚传感器拆下来维护再装回去，SN 不变但参考图变了——这会被算作一次变化，
-    单独开一个 epoch。
-
-    文件名里的时间是**北京时间的墙上钟点**，不带时区标记，当标签看就行；要参与计算请用
-    epoch 上的 `recorded_at`（带偏移的完整 ISO-8601）。
+    更早版本录的数据集里可能还有 `meta/runtimes/` 目录和传感器条目里的 `runtime` 字段，
+    现在都会被忽略，不影响读取。
 
 !!! note "追踪器和腕相机不在清单里"
     它们是**装上去的配件**；夹爪 + 它的两枚触觉才是这份数据讲的那个单元。
@@ -487,7 +476,7 @@ ValueError: --robot.id is required: the station label for this rig, e.g. --robot
   `--robot.wrist_camera_width/_height/_fps` 调。
 - **头显相机** → `left_head` / `right_head` + `head_camera.*`；双夹爪用 `--robot.type=xtac_umi_g1`，
   单夹爪加 `--robot.enable_head_camera=true`，详见 [§5.6](#56)。
-- **角色** → `--robot.role=follower` 绑定从夹爪（默认 `leader`）；从夹爪固件需 ≥ 1.1.6，
+- **角色** → `--robot.role=follower` 绑定从夹爪（默认 `leader`）；从夹爪固件需 ≥ 1.2.5，
   见 [固件 OTA](versions.md#ota)。
 
 ## 5.4 录制选项：流式编码与编码器预热 {#54}
@@ -538,7 +527,7 @@ lerobot-record \
 
 **编码器不用管。**`--dataset.vcodec=auto`（默认）是**真的去开一次编码会话**来探测的，
 所以没有 NVIDIA 驱动的机器上它会报告"没有硬件编码器"并回落到 `libsvtav1`
-（CPU 上的 AV1，也是离线数据工具的默认编码器）。想让命令自带说明的话，显式写
+（CPU 上的 AV1）。离线编辑数据集时重新编码也走同一套选择，有 NVIDIA 用 `h264_nvenc`，否则 `libsvtav1`。想让命令自带说明的话，显式写
 `--dataset.vcodec=libsvtav1` 也完全可以。
 
 **为什么要关流式编码。**流式编码是把编码放在采集主循环上跑——显卡上有专门的编码芯片，

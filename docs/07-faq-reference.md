@@ -9,9 +9,9 @@
 
 | 配置项 | 默认 | 作用 |
 |---|---|---|
-| `robot.id` | **必填** | 这套设备的工位号，填数字即可（`0` / `1`…），前缀按 `robot.type` 自动补成 `taccap_0` / `bi_taccap_0`；漏填在解析命令行时即报错 → [`--robot.id` 与硬件清单](05-data-collection.md#robot-id) |
+| `robot.id` | **必填** | 这套设备的工位号，填数字即可（`0` / `1`…），前缀按 `robot.type` 自动补成 `taccap_0` / `bi_taccap_0` / `xtac_umi_g1_0`；漏填在解析命令行时即报错 → [`--robot.id` 与硬件清单](05-data-collection.md#robot-id) |
 | `robot.side` | 自动 | `left`/`right`，**单夹爪模式**下两只都接着时必填；只接一只则自动选中 |
-| `robot.role` | `leader` | 填 `follower` 绑定从夹爪；从夹爪固件需 ≥ 1.1.6，见 [固件 OTA](versions.md#ota) |
+| `robot.role` | `leader` | 填 `follower` 绑定从夹爪；从夹爪固件需 ≥ 1.2.5（低于 1.2.11 会提示升级），见 [固件 OTA](versions.md#ota) |
 | `robot.gripper_stream_hz` | `100` | 主夹爪固件主动推送编码器（开启 IMU 时连同 IMU）读数的频率；`0` = 每帧轮询；推流起不来时自动回退轮询并告警 |
 | `robot.enable_tracker` | `true` | 关闭则只录触觉 + 夹爪 |
 | `robot.tracker_serial` | 未设 | 钉住追踪器 SN，绕过侧别规则 |

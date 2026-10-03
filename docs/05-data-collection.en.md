@@ -271,7 +271,7 @@ official [recording guide](https://huggingface.co/docs/lerobot/v0.5.1/en/il_robo
 | Parameter | Default | Meaning |
 |---|---|---|
 | `robot.side` | auto | `left`/`right`, required **in single-gripper mode** when both are connected; a lone unit auto-resolves |
-| `robot.role` | `leader` | `follower` binds the slave gripper; the follower firmware must be **≥ 1.1.6** or it is refused, see [firmware OTA](versions.md#ota) |
+| `robot.role` | `leader` | `follower` binds the slave gripper; the follower firmware must be **≥ 1.2.5** or it is refused (below 1.2.11 it warns you to upgrade), see [firmware OTA](versions.md#ota) |
 | `robot.gripper_stream_hz` | `100` | Rate at which the leader firmware pushes encoder (and, with the IMU on, IMU) readings; `0` = poll every frame. If the stream cannot start it falls back to polling with a warning and still records. Leaders only; one shared switch for both sides |
 | `robot.enable_tracker` | `true` | Off records tactile + gripper only (no pose) |
 | `robot.tracker_serial` | unset | Pin the tracker SN, bypassing automatic side matching |
@@ -334,6 +334,7 @@ log prefix, the calibration filename and the manifest below, but it is **not a d
 |---|---|---|
 | `--robot.id=0` | `taccap_gripper` (single) | `taccap_0` |
 | `--robot.id=0` | `bi_taccap_gripper` (bimanual) | `bi_taccap_0` |
+| `--robot.id=0` | `xtac_umi_g1` (bimanual + headset) | `xtac_umi_g1_0` |
 
 The prefix only repeats what `--robot.type` already said, and typing it by hand is how it goes
 wrong: `--robot.type=bi_taccap_gripper --robot.id=taccap_0` gives a label that disagrees with the
@@ -370,10 +371,8 @@ gripper, each carrying the observation key it feeds.
           "side": "left",
           "gripper_sn": "TCGU01A24Z0001m",
           "tactile_sensors": [
-            { "finger": "left",  "observation_key": "left_tactile_left",  "serial": "GSPS01A25Z0011",
-              "runtime": "meta/runtimes/GSPS01A25Z0011-20260822T160309.bin" },
-            { "finger": "right", "observation_key": "left_tactile_right", "serial": "GSPS01A25Z0012",
-              "runtime": "meta/runtimes/GSPS01A25Z0012-20260822T160309.bin" }
+            { "finger": "left",  "observation_key": "left_tactile_left",  "serial": "GSPS01A25Z0011" },
+            { "finger": "right", "observation_key": "left_tactile_right", "serial": "GSPS01A25Z0012" }
           ],
           "wrist_undistort": { "applied": false }
         }
@@ -395,7 +394,6 @@ gripper, each carrying the observation key it feeds.
 - A side whose gripper is off records `"gripper_sn": null` rather than being omitted;
   `--robot.enable_tactile=false` leaves `tactile_sensors` empty.
 - It is a **file of its own**, not a key in `meta/info.json` — that schema belongs to upstream.
-- `runtime` points at that sensor's **runtime bundle** — see the danger box below.
 - `wrist_undistort` records whether this unit's wrist frames were **rectified**, and from
   whose intrinsics (`"unit"` for this gripper's own, `"reference"` for the SDK's shared
   ones). Present whenever the unit has a wrist camera, including as `{"applied": false}` —
@@ -414,34 +412,21 @@ On `--resume`:
 | **A gripper or sensor was swapped** | The open epoch is **closed** at the current episode count and a new one starts. Both stay named |
 | `--robot.id` differs from the one in the dataset | **Resuming is refused** before any device is connected, with `... refusing to resume it`. One dataset belongs to one station: resume on the original station, or record into a new `--dataset.repo_id`. Older datasets with no station recorded are not affected |
 | `--robot.type` disagrees (single ↔ bimanual) | **Not a swap — a different dataset**: the observation keys differ. The original file is kept and a warning is logged |
+| `bi_taccap_gripper` ↔ `xtac_umi_g1` (adding or dropping the headset) | Also a different dataset: the type and observation keys differ, so use a new `--dataset.repo_id`. **A dataset recorded on an earlier version with the headset under `bi_taccap_gripper` cannot be resumed either** (type, features and station label all disagree) — record into a new `--dataset.repo_id` |
 
 Older datasets (recorded before epochs, with a flat `units`) need no special handling: they read
 back as **one open epoch** (`from_episode` 0, `to_episode` `null`). But note that a single open
 epoch says **"nothing here indicates the rig changed"**, not **"the rig did not change"** — the old
 format could not express it at all.
 
-!!! danger "`meta/runtimes/`: rebuilding the derived tactile channels needs **that** bundle"
-    What gets recorded is the `rectify` stream; depth / force / difference are **computed from it**,
-    and computing them needs that sensor's runtime config — which carries the reference image
-    captured when the sensor came up. So every capture session writes each sensor's bundle to
-    `meta/runtimes/<SN>-<timestamp>.bin` (~841 KB each) and the sensors in the epoch point at their
-    own. Reconstruction months later then works **from the dataset alone**, with no hunt for the
-    physical unit — which by then has quite possibly been recalibrated.
+!!! note "The derived tactile channels rebuild from the dataset alone"
+    What gets recorded is the `rectify` stream; depth / force / difference are **computed from it**.
+    The reference image that computation needs is the first `rectify` frame of each episode, and
+    everything else is fixed by the sensor model — so reconstruction works **from the dataset
+    alone**, with no hunt for the physical unit.
 
-    **Using the wrong bundle does not fail.** Solve against another sensor's bundle — or the same
-    sensor's after a recalibration — and an **untouched gel** still yields plausible-looking depth
-    and force, with nothing in the output saying otherwise. So for an older dataset (no
-    `meta/runtimes/`) the correct move is to **skip derivation**, not to grab whichever bundle is
-    at hand.
-
-    One bundle per session is not a naming accident: the reference image is re-captured every time
-    the sensor initialises, so each session genuinely has its own. A sensor pulled for maintenance
-    and refitted keeps its serial but comes back with a new reference image — that counts as a
-    change and opens its own epoch.
-
-    The timestamp in the filename is local wall clock in Beijing time with no offset marker; read
-    it as a label. For anything you compute with, use `recorded_at` on the epoch (full ISO-8601
-    with offset).
+    Datasets recorded on earlier versions may still carry a `meta/runtimes/` directory and a
+    `runtime` key on each sensor entry; both are now ignored and do not affect reading.
 
 !!! note "Trackers and wrist cameras are deliberately left out"
     They are mounted accessories; the gripper plus its two tactile sensors is the unit the data is
@@ -545,7 +530,7 @@ format could not express it at all.
 - **Headset camera** → `left_head` / `right_head` plus `head_camera.*`; bimanual uses
   `--robot.type=xtac_umi_g1`, single gripper adds `--robot.enable_head_camera=true` — see [§5.6](#56).
 - **Role** → `--robot.role=follower` binds the slave unit (default `leader`); the follower
-  firmware must be ≥ 1.1.6, see [firmware OTA](versions.md#ota).
+  firmware must be ≥ 1.2.5, see [firmware OTA](versions.md#ota).
 
 ## 5.4 Recording options: streaming encoding and encoder warm-up {#54}
 
@@ -602,8 +587,8 @@ lerobot-record \
 
 **The codec you can leave alone.** `--dataset.vcodec=auto` (the default) probes by **actually
 opening an encode session**, so on a host with no NVIDIA driver it reports no hardware encoder and
-falls back to `libsvtav1` — AV1 on the CPU, which is what the offline dataset tools already default
-to. Passing `--dataset.vcodec=libsvtav1` explicitly is fine too, and worth doing if you want the
+falls back to `libsvtav1` — AV1 on the CPU. Re-encoding when you edit a dataset offline makes the
+same choice: `h264_nvenc` with NVIDIA, otherwise `libsvtav1`. Passing `--dataset.vcodec=libsvtav1` explicitly is fine too, and worth doing if you want the
 command to be self-documenting about where it can run.
 
 **Why streaming encoding goes off.** Streaming encoding runs the encoder inline with capture, which

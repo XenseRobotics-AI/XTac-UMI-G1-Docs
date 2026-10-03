@@ -9,7 +9,7 @@
     **解决**：
 
     - 确认 USB 和 24V 都接好，`lsusb` 里应有 `1a86:55d2`；没有就换线或换 USB 口。
-    - 确认已执行串口权限命令并重新登录，见 [安装 SDK](follower-setup.md#install)。
+    - 确认已加入 `dialout` 组并重新登录，见 [3.1 串口权限](03-host-hardware.md#31)。
     - 关掉数采程序和其他用到夹爪的程序，再扫描。
     - 仍显示 `Role.Unknown` 或序列号为空，联系[技术支持](versions.md#support)。
 
@@ -25,8 +25,15 @@
     **解决**：按 [升级夹爪固件](follower-firmware.md#mcu-ota) 升级到随 SDK 附带的版本，然后断电重启。
 
 ??? failure "`hello()` 显示的版本不是 0.4.1，或 `import` 报错"
-    **原因**：用的是数采环境里的旧版 SDK。
-    **解决**：`mamba activate taccap` 后再运行。
+    **原因**：SDK 子模块没更新，或更新后没有重新编译。
+    **解决**：在数采仓库根目录拉子模块并重跑安装脚本：
+
+    ```bash
+    git submodule update --init --recursive
+    ./setup_env.sh --install
+    ```
+
+    见 [2.2 克隆仓库与子模块](02-environment.md#22)。
 
 ## 自检异常 {#self-check}
 

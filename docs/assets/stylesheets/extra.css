@@ -204,6 +204,11 @@ html[lang="en"] .md-typeset .tc-hero h1 {
   }
 }
 
+/* 一页速通的三档表:档位名不换行 */
+.md-typeset .tc-tiers td:first-child {
+  white-space: nowrap;
+}
+
 /* 卡片网格里的图标略放大 */
 .md-typeset .grid.cards :is(.twemoji, .emojione, .gemoji) svg {
   height: 1.4rem;

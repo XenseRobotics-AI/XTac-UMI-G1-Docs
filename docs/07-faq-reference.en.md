@@ -10,9 +10,9 @@ This page keeps the configuration options, the glossary and the appendix.
 
 | Option | Default | What it does |
 |---|---|---|
-| `robot.id` | **required** | The station number for this rig — pass a bare number (`0`, `1`, …) and the prefix is filled in from `robot.type`, giving `taccap_0` / `bi_taccap_0`. Leaving it out fails at CLI-parse time → [`--robot.id` and the hardware manifest](05-data-collection.md#robot-id) |
+| `robot.id` | **required** | The station number for this rig — pass a bare number (`0`, `1`, …) and the prefix is filled in from `robot.type`, giving `taccap_0` / `bi_taccap_0` / `xtac_umi_g1_0`. Leaving it out fails at CLI-parse time → [`--robot.id` and the hardware manifest](05-data-collection.md#robot-id) |
 | `robot.side` | auto | `left` / `right`. Required in **single-gripper mode** when both grippers are plugged in; a lone unit is picked automatically |
-| `robot.role` | `leader` | Set `follower` to bind the follower gripper; the follower firmware must be ≥ 1.1.6, see [firmware OTA](versions.md#ota) |
+| `robot.role` | `leader` | Set `follower` to bind the follower gripper; the follower firmware must be ≥ 1.2.5 (below 1.2.11 it warns you to upgrade), see [firmware OTA](versions.md#ota) |
 | `robot.gripper_stream_hz` | `100` | Rate at which the leader firmware pushes encoder (and, with the IMU on, IMU) readings; `0` = poll every frame; falls back to polling with a warning if the stream cannot start |
 | `robot.enable_tracker` | `true` | Off records tactile + gripper only |
 | `robot.tracker_serial` | unset | Pin a tracker by SN, bypassing the side rule |

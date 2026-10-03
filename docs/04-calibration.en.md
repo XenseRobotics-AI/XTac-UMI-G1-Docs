@@ -160,9 +160,9 @@ value is still *accurate*.
   connect with a pointer to the OTA update. Any gripper
   below V2.1 **must be upgraded**; the images ship with the SDK →
   [Firmware OTA upgrade](versions.md#ota). **Update the SDK before the firmware** — the other
-  order runs into an old bug where a failed update reported success. Reaching the current leader `1.2.2` /
-  follower `1.1.6` images, which fix [three known defects](versions.md#ota-when), needs the submodule at
-  the [version baseline](versions.md#ota): which image ships is decided by the SDK version, see
+  order runs into an old bug where a failed update reported success. Reaching the current leader `1.2.6` /
+  follower `1.2.14` images, which fix [three known defects](versions.md#ota-when), needs the submodule at
+  SDK 0.4.1 (see the [version baseline](versions.md#baseline)): which image ships is decided by the SDK version, see
   `firmware/manifest.json`.
 - **Calibration is one-off.** The values live in MCU flash: they survive power cycles and moving
   to another host. Only redo it after removing or refitting the encoder, changing the mechanical
@@ -194,7 +194,7 @@ Wave the gripper: `raw xyz` should move smoothly and the SN should match what yo
 !!! note "The mount transform is built in — you do not measure it"
     The tracker is bolted to the gripper, so what it reports is the **tracker's** pose, not the TCP
     we want to record. The rigid offset between them is built into
-    `ee_transform.tracker_to_tcp` (measured off the CAD assembly), **with each side measured
+    the collection program (measured off the CAD assembly), **with each side measured
     separately** — the two are close to mirror images but not exactly (0.03° apart in rotation,
     1.27 mm in translation), so the left value is not the right one mirrored.
 

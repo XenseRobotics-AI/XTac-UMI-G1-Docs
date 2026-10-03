@@ -5,26 +5,21 @@
 
 ## 1. 安装 SDK {#install}
 
-需要 Ubuntu 22.04 及以上，以及 `mamba` 或 `conda`。
+装好数采环境（[环境安装](02-environment.md)）就已经带有 SDK 0.4.1，不需要另外安装。示例脚本在数采仓库的
+`third_party/taccap-gripper/python/examples/` 下。串口权限见 [3.1 串口权限](03-host-hardware.md#31)。
+
+验证（在数采仓库根目录、数采环境里）：
 
 ```bash
-git clone --branch v0.4.1 https://github.com/XenseRobotics-AI/TacCap-Gripper.git
-cd TacCap-Gripper
-mamba env create -f environment.yml     # 新建名为 taccap 的环境
-mamba activate taccap
-pip install . --no-build-isolation      # 需要几分钟
-sudo usermod -aG dialout,video "$USER"  # 串口权限,注销后重新登录生效
-```
-
-验证：
-
-```bash
+cd third_party/taccap-gripper
 python -c "import xense.taccap as t; print(t.hello())"
 ```
 
-应输出 `taccap-gripper OK; version 0.4.1`。版本不对说明用错了环境，先 `mamba activate taccap`。
+应输出 `taccap-gripper OK; version 0.4.1`。版本不对说明 SDK 子模块没更新或没重新编译，见
+[从夹爪故障排查](follower-troubleshooting.md#connect)。
 
-之后的命令都在 `TacCap-Gripper` 目录下、`taccap` 环境里运行。安装问题见 [SDK 附录 → 安装与构建](sdk-install.md)。
+之后的命令都在 `third_party/taccap-gripper` 目录下、数采环境里运行。不使用数采仓库、单独安装 SDK 的方法见
+[SDK 附录 → 安装与构建](sdk-install.md)。
 
 ## 2. 找到设备 {#discover}
 

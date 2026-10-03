@@ -225,8 +225,9 @@ Only relevant on [the Docker path](02-environment.md#docker).
     **Cause**: **ModemManager** probes the CH343 serial port with AT commands on every hot-plug and
     holds it for a few seconds. The classic shape: the first start works, then you unplug, move to
     another port, restart immediately, and get busy. (`brltty`, if installed, grabs it the same
-    way.)
-    **Fix**: temporarily — wait ~3 s after plugging in. Permanently — a udev rule that makes it
+    way.) The other cause is that the same gripper is held by another program (the SDK opens the
+    serial port exclusively) — e.g. an earlier recording, calibration or example script still running.
+    **Fix**: first close any other program using that gripper. For ModemManager: temporarily — wait ~3 s after plugging in. Permanently — a udev rule that makes it
     ignore `1a86` devices:
     ```bash
     sudo tee /etc/udev/rules.d/99-taccap-ignore-modemmanager.rules >/dev/null <<'EOF'
@@ -389,8 +390,8 @@ Only relevant on [the Docker path](02-environment.md#docker).
     the command line** — so it exits before touching any device. That is a good thing: no rig ever
     records a batch of data anonymously.
     **Fix**: add the station number. **A bare number is enough** (`0`, `1`, …; one per rig, and a
-    bimanual rig counts as one). The prefix is filled in from `--robot.type`, giving `taccap_0` or
-    `bi_taccap_0`:
+    bimanual rig counts as one). The prefix is filled in from `--robot.type`, giving `taccap_0`,
+    `bi_taccap_0` or `xtac_umi_g1_0`:
 
     ```bash
     lerobot-record --robot.type=bi_taccap_gripper --robot.id=0 ...
@@ -506,16 +507,17 @@ Only relevant on [the Docker path](02-environment.md#docker).
     **Fix**: flash the firmware. Since 0.1.7 the SDK ships the released images in
     `third_party/taccap-gripper/firmware/`, so the firmware sources are no longer needed:
     ```bash
-    python third_party/taccap-gripper/python/examples/ota_update.py \
-        tc-gu-01-master.bin left
+    python third_party/taccap-gripper/python/examples/ota_update.py --all
     ```
-    **Upgrade the SDK before flashing** (flashing requires SDK 0.1.7 or newer), and pick the image
+    `--all` flashes every plugged-in gripper with the image for its role.
+    **Upgrade the SDK before flashing** (flash with the SDK 0.4.1 in the data-collection environment), and pick the image
     **by role** — by the trailing `m`/`s` of the firmware SN, not by left or right. Full procedure
     and risks: [Firmware OTA upgrade](versions.md#ota). Re-run `calibrate.py` afterwards.
 
 ??? failure "Binding the follower fails with `Follower firmware too old -- upgrade required`"
-    **Cause**: the follower firmware is below 1.1.6. The motion safety envelope arrived in 1.1.6, and
-    both `--robot.role=follower` and the SDK refuse older firmware.
+    **Cause**: the follower firmware is below 1.2.5. Both `--robot.role=follower` and the SDK refuse
+    older firmware (only from 1.2.5 does the closed zero sit on the mechanical stop); between 1.2.5
+    and 1.2.11 it connects but warns you to upgrade.
     **Fix**: flash the follower image that ships with the SDK, then **unplug the 24 V power cable, wait about
     2 seconds and plug it back in** (the USB cable can stay connected):
 
@@ -523,16 +525,20 @@ Only relevant on [the Docker path](02-environment.md#docker).
     python third_party/taccap-gripper/python/examples/ota_update.py slave
     ```
 
-    With several grippers plugged in, name the one to flash:
-    `ota_update.py tc-gu-01-slave.bin left` (or `right`, or its full serial number); see
-    [Firmware OTA upgrade](versions.md#ota).
+    That works only with a single follower plugged in. With several, pass the image file name plus a
+    side or serial number: `ota_update.py tc-gu-01-slave-1.2.14.bin left` (use the name actually in
+    `firmware/`); see [Firmware OTA upgrade](versions.md#ota).
 
-??? failure "Flashing says it is looking for the `.bin` under some directory that does not exist"
-    **Cause**: the image path was written the wrong way. The images ship with the SDK under
-    `third_party/taccap-gripper/firmware/`; you do not assemble the path yourself.
-    **Fix**: **pass just the file name** — `tc-gu-01-master.bin` / `tc-gu-01-slave.bin`. The script
-    looks it up in the SDK's `firmware/` itself, from whatever directory you run it in. See
-    [Firmware OTA upgrade](versions.md#ota).
+??? failure "Flashing fails with `firmware file not found`"
+    **Cause**: the first argument was taken as an image file name and no such file exists. Two usual
+    ways in: `slave left` / `master left` / `slave <SN>` (a role followed by another argument is
+    treated as a file name), and the unversioned `tc-gu-01-master.bin` / `tc-gu-01-slave.bin` from
+    older docs (file names now carry the version).
+    **Fix**: normally just `ota_update.py --all`; with only one gripper of that role plugged in,
+    `ota_update.py master` / `ota_update.py slave`. To pick one of several, pass a file name listed
+    under `shipped images` in the error plus a side or serial, e.g.
+    `ota_update.py tc-gu-01-slave-1.2.14.bin left`. The bare file name is enough — the script looks
+    in the SDK's `firmware/`. See [Firmware OTA upgrade](versions.md#ota).
 
 ??? failure "The wrist camera or a tactile sensor will not open, `video ... busy`"
     **Cause**: the camera is held by an external camera service, or the user is not in the `video`
