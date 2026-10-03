@@ -141,10 +141,6 @@ Both kits use the same grippers and headset and produce the same data. The Backp
 
 </div>
 
-## See it before you record
-
-The console's live monitor is a Backpack Kit capability; the main text is in the [Backpack Kit entry point](backpack/index.md#overview).
-
 ## Developer Kit open-source repositories
 
 The Developer Kit's collection repo, gripper SDK, tracker service and viewer are open source under Apache-2.0, see [the list](pc/index.md#repos); the Backpack Kit's software is closed.

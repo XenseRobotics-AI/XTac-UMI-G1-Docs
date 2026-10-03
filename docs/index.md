@@ -141,10 +141,6 @@ hide:
 
 </div>
 
-## 录之前先看见
-
-控制台的实时监控属于背包版的能力，正文见[背包版入口](backpack/index.md#overview)。
-
 ## PC 版开源仓库
 
 PC 版的数采主仓库、夹爪 SDK、追踪器服务与可视化工具均以 Apache-2.0 许可开源，清单见 [PC 版开源仓库](pc/index.md#repos)；背包版采集软件不开源。
