@@ -58,7 +58,8 @@
 | 文件 | 内容 | 来源 |
 |---|---|---|
 | `sensor-key-map.webp` | 八路画面与数据集键名的对应图 | TacVerse 数据集卡片的 `sensor_key_map.png`（公开于 Hugging Face `TacVerse/TacVerse`，CC BY-SA 4.0；数采仓库 v0.0.8 上传数据集时也附带同一张图） |
-| `rerun-preview.webp` | Rerun 实时预览截图：四路视触觉、头显双目、左右腕部相机与动作 / 状态曲线 | 本公司实机截图 |
+| `rerun-xtac-umi-g1.webp` | Rerun 实时预览，`xtac_umi_g1`（双夹爪 + 头显）：四路视触觉、头显双目、左右腕部相机与动作 / 状态曲线 | 本公司实机截图 |
+| `rerun-bi-taccap-gripper.webp` | Rerun 实时预览，`bi_taccap_gripper`（双夹爪，不带头显）：四路视触觉、左右腕部相机与状态 / 动作曲线 | 本公司实机截图 |
 
 原图在 `materials/dataset-card-orig/`。
 

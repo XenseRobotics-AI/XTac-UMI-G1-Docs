@@ -57,7 +57,7 @@ lerobot-teleoperate \
 ```
 
 <figure class="tc-shot" markdown>
-![Rerun 实时预览](assets/dataset/rerun-preview.webp)
+![Rerun 实时预览：四路视触觉、左右腕部相机与状态、动作曲线](assets/dataset/rerun-bi-taccap-gripper.webp)
 <figcaption>移动、开合夹爪，确认各路画面、触觉和位姿都在更新，然后按 Ctrl+C 退出</figcaption>
 </figure>
 

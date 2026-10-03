@@ -112,7 +112,7 @@ hide:
 </figure>
 
 <figure class="tc-shot" markdown>
-![Rerun live preview: four visuotactile streams, headset stereo, both wrist cameras and action curves](assets/dataset/rerun-preview.webp)
+![Rerun live preview: four visuotactile streams, headset stereo, both wrist cameras and action curves](assets/dataset/rerun-xtac-umi-g1.webp)
 <figcaption>Preview check: watch every stream and the poses live in Rerun</figcaption>
 </figure>
 

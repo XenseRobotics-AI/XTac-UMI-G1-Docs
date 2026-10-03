@@ -57,7 +57,7 @@ lerobot-teleoperate \
 ```
 
 <figure class="tc-shot" markdown>
-![Rerun live preview](assets/dataset/rerun-preview.webp)
+![Rerun live preview: four visuotactile streams, both wrist cameras, state and action curves](assets/dataset/rerun-bi-taccap-gripper.webp)
 <figcaption>Move and open/close the grippers, check that every image, tactile stream and pose updates, then press Ctrl+C</figcaption>
 </figure>
 

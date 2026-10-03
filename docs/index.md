@@ -109,7 +109,7 @@ hide:
 </figure>
 
 <figure class="tc-shot" markdown>
-![Rerun 实时预览：四路视触觉、头显双目、左右腕部相机与动作曲线](assets/dataset/rerun-preview.webp)
+![Rerun 实时预览：四路视触觉、头显双目、左右腕部相机与动作曲线](assets/dataset/rerun-xtac-umi-g1.webp)
 <figcaption>预览检查：在 Rerun 里实时查看各路画面与位姿</figcaption>
 </figure>
 
