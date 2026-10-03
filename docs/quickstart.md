@@ -1,208 +1,113 @@
 # 一页速通（TL;DR）
 
-已经做完准备工作（认识硬件、连好线、装好环境）？这一页从**上电到出第一条数据**，照抄即可。
-第一次用请先走 [准备工作](hardware.md)：[硬件介绍](hardware.md) → [环境安装](02-environment.md) →
-[主机与设备配置](03-host-hardware.md)，再回来。
+从上电到录出第一条数据，照着做即可。开始前确认这五项都已完成：
 
-!!! danger "先确认版本：仓库 / SDK / 固件都必须是最新"
-    版本不配套时采集**照样能跑完并落盘**，只是 `gripper.pos` 的刻度和别人对不上，
-    事后从数据里看不出来。一次性升级步骤 → [必须升级到最新版本](versions.md#required)。
+- 硬件已接好 → [硬件介绍](hardware.md#install)
+- 环境已安装，已进入采集环境（`mamba activate xense-taccap` 或 Docker 容器） → [环境安装](02-environment.md)
+- 主机已配置串口权限并关闭 ModemManager 抢占 → [主机与设备配置](03-host-hardware.md#31)
+- 每只主夹爪已标定（没标定会被拒绝连接） → [夹爪标定](04-calibration.md#41)
+- 仓库、SDK 与夹爪固件都是最新版本 → [必须升级到最新版本](versions.md#required)
 
-!!! note "前提（准备工作）"
-    - 已了解设备并**连接好硬件、上电**（见 [硬件介绍](hardware.md#install)）。
-    - 已按 [版本要求](versions.md#required) 升级仓库、子模块与**夹爪固件**——固件要求的是
-      **命令集 V2.1**，对应构建号 **主夹爪 ≥ 1.2.0 / 从夹爪 ≥ 1.1.0**（更高版本同样支持，
-      不必回刷；[两者的区别](versions.md#v21)）。用从夹爪（`--robot.role=follower`）时，从夹爪固件还需
-      **≥ 1.1.6**，否则拒绝连接，见 [固件 OTA](versions.md#ota)。
-    - 已完成 [环境安装](02-environment.md)——Mamba 或 Docker 任选一条，三个 SDK 包都能 import。
-    - 已做 [串口权限 + ModemManager](03-host-hardware.md#31) 一次性主机配置。
-    - **双夹爪**：已查过 [USB 带宽预算](03-host-hardware.md#usb-budget)（六个相机挤在一条总线上会打不开）。
-    - 每台主夹爪已做过[夹爪标定](04-calibration.md#41)（零点 + 行程上限，一台一次）。
-      **没标定的主夹爪会被拒绝连接**；双夹爪两侧都要标，只标一侧会让左右刻度不一致。
-    - 已进入采集环境：Mamba 路径执行 `mamba activate xense-taccap`；Docker 路径执行
-      `docker compose run --rm xense-taccap` 进容器。
+## 1. 上电与连接
 
-## 1. 上电顺序
+1. 插上夹爪 USB。
+2. 头显接上有线网络，**关闭电脑 WiFi**。
+3. 打开头显，短按追踪器电源键至蓝灯亮起。
+4. 启动 XenseVR PC Service：`/opt/apps/roboticsservice/runService.sh`
+5. **面朝机器人**打开 XTac-UMI XR，点「重连」，状态变为「已连接」。
 
-```mermaid
-flowchart LR
-    A[插夹爪 USB] --> N[接 Pico4 Ultra 企业版<br/>有线网络并关闭 WiFi] --> B[开启 Pico4 Ultra 企业版<br/>配对追踪器] --> D[启动 XenseVR PC Service] --> C[面朝机器人启动<br/>XTac-UMI XR]
-```
+<div class="tc-pair" markdown>
 
-```bash
-/opt/apps/roboticsservice/runService.sh    # 启动 XenseVR PC Service(要在打开 APP 之前)
-```
+<figure class="tc-shot" markdown>
+![夹爪经 USB 连接到电脑](assets/hardware/master-connection.jpg)
+<figcaption>夹爪经 USB Type-C 连接电脑</figcaption>
+</figure>
 
-!!! warning "服务先起，再打开 APP"
-    APP 去连的就是这个服务。服务没起来，APP 只会停在「未连接」。
+<figure class="tc-shot" markdown>
+![XTac-UMI XR 显示已连接](assets/pico4/app-connected-crop.webp)
+<figcaption>XTac-UMI XR 状态变为「已连接」</figcaption>
+</figure>
 
-!!! danger "走有线时关闭电脑 WiFi"
-    **有线共享网络**会与电脑 WiFi 冲突，导致追踪不稳 / 连不上。采集期间关闭数采电脑 WiFi。
-    头显也支持 WiFi 接入，但**正式采集建议走有线**，见 [3.4 网络连接](03-host-hardware.md#pico-network)。
+</div>
 
-!!! warning "采集全程不要重启 XTac-UMI XR"
-    重启会重设世界原点，导致同一数据集内位姿参考系不一致。
+!!! warning "三个容易出错的地方"
+    - 先启动 PC Service，再打开 XR 应用，否则应用一直显示「未连接」。
+    - 头显走有线时必须关闭电脑 WiFi，否则追踪不稳。见 [网络连接](03-host-hardware.md#pico-network)。
+    - 采集期间不要重启 XR 应用：重启会重设世界原点，同一数据集里的位姿就对不上了。
 
-## 2. 自检（确认设备就绪）
+## 2. 自检
 
 ```bash
-# 夹爪可读:role 应为 Leader/Follower,firmware_sn 非空
 python -c "from xense.taccap import scan_grippers
 for g in scan_grippers(): print(g.side.name, g.role.name, repr(g.firmware_sn))"
 ```
 
-出问题看 [故障排查](troubleshooting.md)。
+每只夹爪一行，`role` 为 `Leader` 或 `Follower`，序列号不为空。出问题见 [故障排查](troubleshooting.md)。
 
-## 3. 预览实时数据
+## 3. 预览检查
 
-录制前先用 `lerobot-teleoperate` 打开 Rerun 确认数据流。**分三档**，每一档比上一档多接一层设备
-——**你要录到哪一档，就预览到哪一档**。
+```bash
+lerobot-teleoperate \
+    --robot.type=bi_taccap_gripper \
+    --robot.id=0 \
+    --robot.enable_tracker=true \
+    --robot.enable_head_camera=false \
+    --fps=30 \
+    --display_data=true
+```
 
-=== "① 只有夹爪"
+<figure class="tc-shot" markdown>
+![Rerun 实时预览](assets/dataset/rerun-preview.webp)
+<figcaption>移动、开合夹爪，确认各路画面、触觉和位姿都在更新，然后按 Ctrl+C 退出</figcaption>
+</figure>
 
-    触觉两路、腕相机、`gripper.pos`。追踪器和头显都关着，**不需要启动 PC Service**。
+上面是标准配置（带追踪器位姿）。三档的区别只在 `--robot.enable_tracker` 和 `--robot.enable_head_camera` 两个开关，**预览用哪一档，录制就用哪一档**：
 
-    这一档就能**上手感受触觉**：用手指按压左右指的视触觉传感器，Rerun 里对应画面的纹理会
-    随压力明显起伏，松手即恢复；开合夹爪则看 `gripper.pos` 能否张到 **1.0**、闭到 **0.0**。
+| 档位 | 追踪器 | 头显相机 | 包含的数据 |
+|---|---|---|---|
+| ① 只有夹爪 | `false` | `false` | 触觉、腕部相机、开合度；不需要 PC Service |
+| ② 加追踪器（标准） | `true` | `false` | 再加夹爪位姿 `tcp.*` |
+| ③ 全开 | `true` | `true` | 再加头显双目画面与头部位姿；需要 PC Service ≥ v0.2.0 |
 
-    ```bash
-    lerobot-teleoperate \
-        --robot.type=bi_taccap_gripper \
-        --robot.id=0 \
-        --robot.enable_tracker=false \
-        --robot.enable_head_camera=false \
-        --fps=30 \
-        --display_data=true
-    ```
+启动前把追踪器放在头显视野内，被遮挡会丢跟踪。
 
-=== "② 加上追踪器位姿"
+## 4. 正式录制
 
-    Rerun 里多出 `/world` 3D 视图：夹爪的 EE 标记，以及它走过的**轨迹**。
+```bash
+lerobot-record \
+    --robot.type=bi_taccap_gripper \
+    --robot.id=0 \
+    --robot.enable_tracker=true \
+    --robot.enable_head_camera=false \
+    --dataset.repo_id=<你的org>/<数据集名> \
+    --dataset.single_task='Pick up the object' \
+    --dataset.num_episodes=1 \
+    --dataset.fps=30 \
+    --dataset.episode_time_s=120 \
+    --dataset.reset_time_s=60 \
+    --dataset.push_to_hub=false
+```
 
-    **启动脚本前先把追踪器摆进头显视野内。**独立追踪靠头显看着追踪器，被身体、桌沿或另一只手
-    遮挡就会丢跟踪，表现为位姿跳变或卡住（见
-    [绑定运动追踪器](03-host-hardware.md#pico-tracker-bind)）。
+<figure class="tc-shot tc-shot--narrow" markdown>
+![八路画面与数据键的对应](assets/dataset/sensor-key-map.webp)
+<figcaption>全开时每一帧记录的八路画面及其在数据集里的键名</figcaption>
+</figure>
 
-    还需要追踪器已开机、Pico4 已连上、[XenseVR PC Service](03-host-hardware.md#35) 已启动。
+- `--robot.id` 必填，直接填工位号数字（`0`、`1`…），一套设备一个。
+- 两个 `enable_*` 开关与预览时保持一致，见上一步的表格。
+- 单夹爪：`--robot.type=taccap_gripper`，两只夹爪都接着时再加 `--robot.side=left` 或 `right`。
 
-    ```bash
-    lerobot-teleoperate \
-        --robot.type=bi_taccap_gripper \
-        --robot.id=0 \
-        --robot.enable_tracker=true \
-        --robot.enable_head_camera=false \
-        --fps=30 \
-        --display_data=true
-    ```
+全部参数见 [录制参数](05-data-collection.md#params)。
 
-=== "③ 全开（含头显相机）"
+## 5. 检查与上传
 
-    再多出头显双目画面与头部位姿。需要 **PC Service ≥ v0.2.0**
-    → [5.6 头显相机](05-data-collection.md#56)。
-
-    ```bash
-    lerobot-teleoperate \
-        --robot.type=bi_taccap_gripper \
-        --robot.id=0 \
-        --robot.enable_tracker=true \
-        --robot.enable_head_camera=true \
-        --fps=30 \
-        --display_data=true
-    ```
-
-**单夹爪**：把 `--robot.type` 换成 `taccap_gripper` 并加上 `--robot.side=left|right`，其余相同。
-
-移动并开合夹爪检查各路数据；确认无误后按 `Ctrl+C` 退出预览。录制命令用哪一档，预览就用哪一档。
-
-## 4. 录制一条数据
-
-**和上面预览的那一档对应**——三档录出来的数据集内容不同：
-
-=== "① 只有夹爪"
-
-    落盘 `gripper.pos` + 左右触觉 + 腕相机，**没有位姿**（数据里不会有 `tcp.*`）。
-
-    ```bash
-    lerobot-record \
-        --robot.type=bi_taccap_gripper \
-        --robot.id=0 \
-        --robot.enable_tracker=false \
-        --robot.enable_head_camera=false \
-        --display_data=false \
-        --dataset.repo_id=<你的org>/<数据集名> \
-        --dataset.num_episodes=1 \
-        --dataset.fps=30 \
-        --dataset.push_to_hub=false \
-        --dataset.episode_time_s=120 \
-        --dataset.reset_time_s=60 \
-        --dataset.single_task='Pick up the object'
-    ```
-
-=== "② 加上追踪器位姿"
-
-    再加 EEF 位姿 `tcp.*`。**这是标准采集配置**，绝大多数情况用这一档。
-
-    ```bash
-    lerobot-record \
-        --robot.type=bi_taccap_gripper \
-        --robot.id=0 \
-        --robot.enable_tracker=true \
-        --robot.enable_head_camera=false \
-        --display_data=false \
-        --dataset.repo_id=<你的org>/<数据集名> \
-        --dataset.num_episodes=1 \
-        --dataset.fps=30 \
-        --dataset.push_to_hub=false \
-        --dataset.episode_time_s=120 \
-        --dataset.reset_time_s=60 \
-        --dataset.single_task='Pick up the object'
-    ```
-
-=== "③ 全开（含头显相机）"
-
-    再加头显双目画面 `left_head` / `right_head` 与头部位姿 `head_camera.*`
-    （见 [§5.6](05-data-collection.md#56)）。视频量会明显增加。
-
-    ```bash
-    lerobot-record \
-        --robot.type=bi_taccap_gripper \
-        --robot.id=0 \
-        --robot.enable_tracker=true \
-        --robot.enable_head_camera=true \
-        --display_data=false \
-        --dataset.repo_id=<你的org>/<数据集名> \
-        --dataset.num_episodes=1 \
-        --dataset.fps=30 \
-        --dataset.push_to_hub=false \
-        --dataset.episode_time_s=120 \
-        --dataset.reset_time_s=60 \
-        --dataset.single_task='Pick up the object'
-    ```
-
-**单夹爪**：`--robot.type=taccap_gripper`，其余相同；两只夹爪都接着时再加
-`--robot.side=left|right`。
-
-几个容易搞错的：
-
-- `--robot.id` 是**必填**的工位号，**直接填数字**（`0` / `1`…，一套设备一个，双夹爪算一套）；
-  漏了会在解析命令行时就报错退出。前缀由 `--robot.type` 自动补：单夹爪存成 `taccap_0`，
-  双夹爪存成 `bi_taccap_0` → [`--robot.id` 与硬件清单](05-data-collection.md#robot-id)。
-- `--robot.side` 只在单夹爪模式、且**两只夹爪都接着**时才需要；单只会自动选中。
-- `--fps` 是主循环帧率，`--dataset.fps` 是落盘采样率——**两个参数**，通常设成一样。
-- `--robot.enable_tracker` 和 `--robot.enable_head_camera` 显式写出，和预览时用的那一档保持一致——预览到哪一档就录哪一档。
-- `--display_data` 默认关；0.0.8 起 Rerun 显示不占采集循环的帧预算，想边录边看就打开。
-
-全部参数（数据集 / 录制控制 / 设备三类）→ [5.2 参数详解](05-data-collection.md#params)
-
-## 5. 检查本地数据完整性
-
-使用与录制时相同的 `repo_id`，检查本地数据集结构与内容是否完整。
+检查数据集完整性：
 
 ```bash
 lerobot-check-dataset --repo-id <你的org>/<数据集名>
 ```
 
-## 6.（可选）上传 Hub
+需要时上传到 Hugging Face Hub：
 
 ```bash
 lerobot-push-dataset-to-hub \
@@ -211,4 +116,4 @@ lerobot-push-dataset-to-hub \
     --upload-large-folder
 ```
 
-数据集长什么样、每帧记录了什么 → [数据集与示例](06-dataset.md)。
+数据集的结构与字段见 [数据集与示例](06-dataset.md)。

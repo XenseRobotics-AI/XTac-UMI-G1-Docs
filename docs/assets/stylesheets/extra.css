@@ -184,6 +184,25 @@ html[lang="en"] .md-typeset .tc-hero h1 {
   }
 }
 
+/* 正文里两张图并排(如一页速通的接线图与应用截图);窄屏上下排 */
+.md-typeset .tc-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem;
+  align-items: end;
+  margin: 1rem 0;
+}
+/* 竖幅示意图别铺满整栏 */
+.md-typeset .tc-shot--narrow {
+  max-width: 28rem;
+  margin: 1rem auto;
+}
+@media screen and (max-width: 44.9375em) {
+  .md-typeset .tc-pair {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* 卡片网格里的图标略放大 */
 .md-typeset .grid.cards :is(.twemoji, .emojione, .gemoji) svg {
   height: 1.4rem;

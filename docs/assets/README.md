@@ -49,6 +49,7 @@
 |---|---|---|
 | `pico4-ultra-enterprise.webp` | Pico4 Ultra 企业版头显与手柄,已去背景 | PICO 官方产品图,原图与抠图在 `materials/pico4-orig/` |
 | `pico4-motion-trackers.webp` | Pico4 Ultra 运动追踪器(出厂腕带形态),已去背景 | 同上 |
+| `app-connected-crop.webp` | XTac-UMI XR「已连接」界面，从 `app-step4-connected.jpg` 裁成 16:9，供一页速通与接线图并排 | 自有截图 |
 
 这两张是第三方官方图片,不是我们自己拍摄或渲染的;替换或新增同类图片时注意来源与使用授权。
 

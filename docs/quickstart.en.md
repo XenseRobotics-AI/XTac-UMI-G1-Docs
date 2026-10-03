@@ -1,232 +1,113 @@
 # Quickstart (TL;DR)
 
-Already prepared — device understood, cables in, environment installed? This page
-takes you **from power-on to your first episode**, copy-paste as-is. First time
-through, do [Getting Ready](hardware.md) first: [Hardware](hardware.md) →
-[Installation](02-environment.md) → [Host & Device Setup](03-host-hardware.md),
-then come back.
+From power-on to your first recorded episode. Before you start, make sure these five are done:
 
-!!! danger "Check your versions first — repo, SDK and firmware must all be current"
-    On a mismatched stack, collection **still runs to completion and writes a dataset**; only
-    `gripper.pos` ends up on a scale that does not match anyone else's, and nothing in the data
-    shows it. One-off upgrade steps → [Required versions](versions.md#required).
+- Hardware connected → [Hardware](hardware.md#install)
+- Environment installed and active (`mamba activate xense-taccap` or the Docker container) → [Installation](02-environment.md)
+- Host configured: serial permissions, ModemManager kept off the ports → [Host & Device Setup](03-host-hardware.md#31)
+- Every leader gripper calibrated (an uncalibrated leader is refused) → [Gripper calibration](04-calibration.md#41)
+- Repo, SDK and gripper firmware all up to date → [Required versions](versions.md#required)
 
-!!! note "Prerequisites (Getting Ready)"
-    - Device understood, **hardware connected and powered** (see [Hardware](hardware.md#install)).
-    - Repo, submodules and **gripper firmware** upgraded per
-      [Required versions](versions.md#required). The firmware requirement is **command set
-      V2.1** — build **leader >= 1.2.0 / follower >= 1.1.0**, and a higher build is fine
-      ([the difference](versions.md#v21)). To use a follower (`--robot.role=follower`), its
-      firmware must also be **>= 1.1.6** or it is refused; see [firmware OTA](versions.md#ota).
-    - [Installation](02-environment.md) done — either path, with all three SDK packages importing.
-    - [Serial permissions + ModemManager](03-host-hardware.md#31) one-off host setup done.
-    - **Bimanual rigs**: the [USB bandwidth budget](03-host-hardware.md#usb-budget) has been checked
-      — six cameras on one bus is how a camera ends up refusing to open.
-    - Every leader gripper has been through [gripper calibration](04-calibration.md#41) (zero +
-      travel span, once per unit). **An uncalibrated leader is refused at connect.** Calibrate
-      both sides of a bimanual rig — doing one leaves the two channels on different scales.
-    - You are inside the collection environment: `mamba activate xense-taccap` on the Mamba
-      path, or `docker compose run --rm xense-taccap` on the Docker one.
+## 1. Power on and connect
 
-## 1. Power-on order
+1. Plug in the gripper USB.
+2. Wire the headset network and **turn off the PC's WiFi**.
+3. Turn on the headset and short-press the tracker power button until the LED is solid blue.
+4. Start the XenseVR PC Service: `/opt/apps/roboticsservice/runService.sh`
+5. **Facing the robot**, open XTac-UMI XR and tap Reconnect until it shows Connected.
 
-```mermaid
-flowchart LR
-    A[Plug in gripper USB] --> N[Connect Pico4 Ultra Enterprise<br/>wired network, turn WiFi off] --> B[Power on Pico4 Ultra Enterprise<br/>pair the tracker] --> D[Start XenseVR PC Service] --> C[Face the robot, launch<br/>XTac-UMI XR]
-```
+<div class="tc-pair" markdown>
 
-```bash
-/opt/apps/roboticsservice/runService.sh    # start it before opening the app
-```
+<figure class="tc-shot" markdown>
+![Gripper connected to the PC over USB](assets/hardware/master-connection.jpg)
+<figcaption>The gripper connects to the PC over USB Type-C</figcaption>
+</figure>
 
-!!! warning "Service first, then the app"
-    The app connects to this service. With it down, the app just sits on "Not connected".
+<figure class="tc-shot" markdown>
+![XTac-UMI XR showing Connected](assets/pico4/app-connected-crop.webp)
+<figcaption>XTac-UMI XR shows Connected</figcaption>
+</figure>
 
-!!! danger "On the wired link, turn the host's WiFi off"
-    The Pico4 Ultra Enterprise uses a **wired shared network**. Host WiFi conflicts with it and
-    makes tracking unstable or unreachable. Turn WiFi off on the collection host for the whole
-    session. See [3.4 Network](03-host-hardware.md#pico-network).
+</div>
 
-!!! warning "Never restart XTac-UMI XR mid-session"
-    Restarting resets the world origin, which leaves poses inside one dataset referenced to
-    different frames.
+!!! warning "Three common mistakes"
+    - Start the PC Service before opening the XR app, or the app stays Disconnected.
+    - With a wired headset the PC's WiFi must be off, or tracking is unstable. See [Network](03-host-hardware.md#pico-network).
+    - Do not restart the XR app during collection: it resets the world origin, so poses within one dataset stop lining up.
 
-## 2. Self-check (devices ready)
+## 2. Self-check
 
 ```bash
-# Grippers readable: role should be Leader/Follower, firmware_sn non-empty
 python -c "from xense.taccap import scan_grippers
 for g in scan_grippers(): print(g.side.name, g.role.name, repr(g.firmware_sn))"
 ```
 
-Anything wrong → [Troubleshooting](troubleshooting.md).
+One line per gripper, `role` is `Leader` or `Follower`, and the serial is not empty. If not, see [Troubleshooting](troubleshooting.md).
 
-## 3. Preview the live streams
+## 3. Preview check
 
-Before recording, open Rerun with `lerobot-teleoperate` and confirm the streams. **Three stages**,
-each adding a layer of hardware — **preview at whichever stage you intend to record at**.
+```bash
+lerobot-teleoperate \
+    --robot.type=bi_taccap_gripper \
+    --robot.id=0 \
+    --robot.enable_tracker=true \
+    --robot.enable_head_camera=false \
+    --fps=30 \
+    --display_data=true
+```
 
-=== "1. Gripper only"
+<figure class="tc-shot" markdown>
+![Rerun live preview](assets/dataset/rerun-preview.webp)
+<figcaption>Move and open/close the grippers, check that every image, tactile stream and pose updates, then press Ctrl+C</figcaption>
+</figure>
 
-    Both tactile streams, the wrist camera and `gripper.pos`. Tracker and headset off, so this
-    **does not need the PC Service running**.
+That is the standard setup (with tracker pose). The tiers differ only in `--robot.enable_tracker` and `--robot.enable_head_camera`; **record with the same tier you previewed**:
 
-    This is the stage to **get a feel for the tactile sensors**: press a finger against either
-    visuotactile pad and its texture in Rerun deforms visibly with the pressure, springing back
-    when you let go. Work the jaw and watch `gripper.pos` reach **1.0** open and **0.0** closed.
+| Tier | Tracker | Headset camera | Data included |
+|---|---|---|---|
+| ① Grippers only | `false` | `false` | Tactile, wrist cameras, gripper opening; no PC Service needed |
+| ② Plus tracker (standard) | `true` | `false` | Adds the gripper pose `tcp.*` |
+| ③ Everything | `true` | `true` | Adds headset stereo images and head pose; needs PC Service ≥ v0.2.0 |
 
-    ```bash
-    lerobot-teleoperate \
-        --robot.type=bi_taccap_gripper \
-        --robot.id=0 \
-        --robot.enable_tracker=false \
-        --robot.enable_head_camera=false \
-        --fps=30 \
-        --display_data=true
-    ```
+Keep the trackers in the headset's view before starting; occlusion loses tracking.
 
-=== "2. Add the tracker pose"
+## 4. Full recording
 
-    Rerun gains the `/world` 3D view: the gripper's EE marker and the **trail** it has travelled.
+```bash
+lerobot-record \
+    --robot.type=bi_taccap_gripper \
+    --robot.id=0 \
+    --robot.enable_tracker=true \
+    --robot.enable_head_camera=false \
+    --dataset.repo_id=<your_org>/<dataset_name> \
+    --dataset.single_task='Pick up the object' \
+    --dataset.num_episodes=1 \
+    --dataset.fps=30 \
+    --dataset.episode_time_s=120 \
+    --dataset.reset_time_s=60 \
+    --dataset.push_to_hub=false
+```
 
-    **Put the tracker in the headset's field of view before starting.** Standalone tracking works
-    by the headset seeing the tracker, so anything blocking it — your body, the desk edge, your
-    other hand — loses tracking, which shows up as pose jumps or a frozen pose (see
-    [binding the tracker](03-host-hardware.md#pico-tracker-bind)).
+<figure class="tc-shot tc-shot--narrow" markdown>
+![The eight streams and their dataset keys](assets/dataset/sensor-key-map.webp)
+<figcaption>With everything on, the eight streams recorded every frame and their keys in the dataset</figcaption>
+</figure>
 
-    It also needs the tracker powered on, the Pico4 connected and the
-    [XenseVR PC Service](03-host-hardware.md#35) running.
+- `--robot.id` is required: the station number as a plain number (`0`, `1`, …), one per kit.
+- Keep the two `enable_*` switches the same as in the preview; see the table above.
+- Single gripper: `--robot.type=taccap_gripper`; with both grippers plugged in, add `--robot.side=left` or `right`.
 
-    ```bash
-    lerobot-teleoperate \
-        --robot.type=bi_taccap_gripper \
-        --robot.id=0 \
-        --robot.enable_tracker=true \
-        --robot.enable_head_camera=false \
-        --fps=30 \
-        --display_data=true
-    ```
+All parameters: [Recording parameters](05-data-collection.md#params).
 
-=== "3. Everything, headset camera included"
+## 5. Check and upload
 
-    Adds the headset's stereo view and the head pose. Needs **PC Service >= v0.2.0**
-    → [5.6 Headset camera](05-data-collection.md#56).
-
-    ```bash
-    lerobot-teleoperate \
-        --robot.type=bi_taccap_gripper \
-        --robot.id=0 \
-        --robot.enable_tracker=true \
-        --robot.enable_head_camera=true \
-        --fps=30 \
-        --display_data=true
-    ```
-
-**Single gripper**: swap `--robot.type` for `taccap_gripper` and add
-`--robot.side=left|right`; everything else is the same.
-
-Move the gripper and work the jaw to check every stream. `Ctrl+C` to leave the preview. Preview at
-whichever stage matches the recording you are about to make.
-
-!!! tip "Check `gripper.pos` here, not after recording"
-    In the scalar panel, a fully open jaw should read **1.0** and fully closed **0.0**. Topping
-    out below 1.0 (e.g. 0.68) means that unit's travel span was never calibrated — see
-    [4.1 Gripper calibration](04-calibration.md#41). Nothing downstream will flag this for you.
-
-## 4. Record one episode
-
-**Match the stage you just previewed** — the three produce different datasets:
-
-=== "1. Gripper only"
-
-    Writes `gripper.pos`, both tactile streams and the wrist camera. **No pose** — the dataset
-    has no `tcp.*` at all.
-
-    ```bash
-    lerobot-record \
-        --robot.type=bi_taccap_gripper \
-        --robot.id=0 \
-        --robot.enable_tracker=false \
-        --robot.enable_head_camera=false \
-        --display_data=false \
-        --dataset.repo_id=<your_org>/<dataset_name> \
-        --dataset.num_episodes=1 \
-        --dataset.fps=30 \
-        --dataset.push_to_hub=false \
-        --dataset.episode_time_s=120 \
-        --dataset.reset_time_s=60 \
-        --dataset.single_task='Pick up the object'
-    ```
-
-=== "2. Add the tracker pose"
-
-    Adds the EEF pose `tcp.*`. **This is the standard collection setup** — what you want almost every time.
-
-    ```bash
-    lerobot-record \
-        --robot.type=bi_taccap_gripper \
-        --robot.id=0 \
-        --robot.enable_tracker=true \
-        --robot.enable_head_camera=false \
-        --display_data=false \
-        --dataset.repo_id=<your_org>/<dataset_name> \
-        --dataset.num_episodes=1 \
-        --dataset.fps=30 \
-        --dataset.push_to_hub=false \
-        --dataset.episode_time_s=120 \
-        --dataset.reset_time_s=60 \
-        --dataset.single_task='Pick up the object'
-    ```
-
-=== "3. Everything, headset camera included"
-
-    Adds the headset's stereo view as `left_head` / `right_head` and the head pose
-    `head_camera.*` (see [§5.6](05-data-collection.md#56)). Expect noticeably more video.
-
-    ```bash
-    lerobot-record \
-        --robot.type=bi_taccap_gripper \
-        --robot.id=0 \
-        --robot.enable_tracker=true \
-        --robot.enable_head_camera=true \
-        --display_data=false \
-        --dataset.repo_id=<your_org>/<dataset_name> \
-        --dataset.num_episodes=1 \
-        --dataset.fps=30 \
-        --dataset.push_to_hub=false \
-        --dataset.episode_time_s=120 \
-        --dataset.reset_time_s=60 \
-        --dataset.single_task='Pick up the object'
-    ```
-
-**Single gripper**: `--robot.type=taccap_gripper`; everything else is the same. Add
-`--robot.side=left|right` only when both grippers are plugged in.
-
-A few that are easy to get wrong:
-
-- `--robot.id` is **required** — the station number for this rig, and **a bare number is what you
-  pass** (`0`, `1`, …; one per rig, and a bimanual rig is one rig). Leaving it out fails at
-  CLI-parse time. The prefix comes from `--robot.type`: `0` is stored as `taccap_0` on a single rig
-  and `bi_taccap_0` on a bimanual one →
-  [`--robot.id` and the hardware manifest](05-data-collection.md#robot-id).
-- `--robot.side` is only needed in single-gripper mode with **both grippers plugged in**; a lone unit auto-resolves.
-- `--fps` is the main loop rate, `--dataset.fps` is the recording sample rate — **two parameters**,
-  usually set to the same value.
-- `--robot.enable_tracker` and `--robot.enable_head_camera` are spelled out so they match the preview stage you just ran — record at the stage you previewed.
-- `--display_data` is off by default; since 0.0.8 the Rerun display costs the collection loop no
-  frame budget, so turn it on if you want to watch while recording.
-
-Every parameter (dataset / recording control / device) → [5.2 Parameter reference](05-data-collection.md#params)
-
-## 5. Check the local dataset
-
-Use the same `repo_id` you recorded with to verify the local dataset's structure and contents.
+Check the dataset:
 
 ```bash
 lerobot-check-dataset --repo-id <your_org>/<dataset_name>
 ```
 
-## 6. (Optional) Push to the Hub
+Upload to the Hugging Face Hub when needed:
 
 ```bash
 lerobot-push-dataset-to-hub \
@@ -235,4 +116,4 @@ lerobot-push-dataset-to-hub \
     --upload-large-folder
 ```
 
-What the dataset looks like and what each frame holds → [Dataset & examples](06-dataset.md).
+Dataset layout and fields: [Dataset & Examples](06-dataset.md).
