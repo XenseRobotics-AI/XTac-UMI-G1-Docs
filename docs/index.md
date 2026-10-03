@@ -83,17 +83,17 @@ hide:
 
 <figure class="tc-shot" markdown>
 ![XTac-UMI XR 控制台：连接成功](assets/pico4/xr-console-connected.webp)
-<figcaption>XTac-UMI XR：头显连上采集单元后显示「连接成功」</figcaption>
+<figcaption>头显连接成功</figcaption>
 </figure>
 
 <figure class="tc-shot" markdown>
 ![八路画面与数据键的对应](assets/dataset/sensor-key-map.webp)
-<figcaption>每一帧同步记录八路画面，图中标注了各自在数据集里的键名</figcaption>
+<figcaption>八路画面同步记录</figcaption>
 </figure>
 
 <figure class="tc-shot" markdown>
 ![Rerun 实时预览：四路视触觉、头显双目、左右腕部相机与动作曲线](assets/dataset/rerun-xtac-umi-g1.webp)
-<figcaption>PC 版预览检查：在 Rerun 里实时查看各路画面与位姿</figcaption>
+<figcaption>Rerun 实时预览</figcaption>
 </figure>
 
 </div>
