@@ -18,7 +18,7 @@ XTac-UMI 有两种配置：**背包版**（XTac-UMI 数采背包）和 **PC 版*
 
     基于 lerobot 开源生态，适合研究与算法团队：接入自己的工作站，直接产出 LeRobotDataset；完全开放二次开发。
 
-    [快速开始](../pc/index.md){ .md-button .md-button--primary }
+    [快速开始](../pc/quickstart.md){ .md-button .md-button--primary }
 
 </div>
 
@@ -72,7 +72,7 @@ XTac-UMI 有两种配置：**背包版**（XTac-UMI 数采背包）和 **PC 版*
     - 两只夹爪各用一条 Type-C 线直连主机，双夹爪的六路相机要分挂两条 USB 总线，见 [USB 带宽预算](../pc/host-setup.md#usb-budget)。
     - 头显用 Type-C 线接主机走有线共享网络，或走 WiFi，见[网络连接](../common/pico4.md#pico-network)。
 
-    上电顺序与第一次采集见 [PC 版快速开始](../pc/index.md#power-on)。
+    上电顺序与第一次采集见 [PC 版一页速通](../pc/quickstart.md#power-on)。
 
 ## 常见问题
 
@@ -86,7 +86,7 @@ XTac-UMI 有两种配置：**背包版**（XTac-UMI 数采背包）和 **PC 版*
 
 ??? question "PC 版一定要 NVIDIA 显卡吗"
 
-    正式采集要：最低 RTX 3060 / 8 GB 显存，推荐 RTX 4070 / 12 GB，驱动 ≥ 570.144，见[主机配置要求](../pc/install.md#host-spec)。没有显卡的机器可以关掉流式编码把数据录下来，但存盘慢、更容易掉帧，只是临时办法，见[没有 NVIDIA GPU 的主机怎么录](../pc/recording.md#no-gpu)。
+    正式采集要：最低 RTX 3060 / 8 GB 显存，推荐 RTX 5060 Laptop / 8 GB 及以上，驱动 ≥ 570.144，见[主机配置要求](../pc/install.md#host-spec)。没有显卡的机器可以关掉流式编码把数据录下来，但存盘慢、更容易掉帧，只是临时办法，见[没有 NVIDIA GPU 的主机怎么录](../pc/recording.md#no-gpu)。
 
 ??? question "头显是必需的吗"
 
@@ -102,4 +102,4 @@ XTac-UMI 有两种配置：**背包版**（XTac-UMI 数采背包）和 **PC 版*
 
 ## 联系与快速开始
 
-选好了就去各自的入口页：[背包版快速开始](../backpack/index.md)、[PC 版快速开始](../pc/index.md)。线缆、适配器、充电宝等以合同配置及随货清单为准，缺件联系项目负责人，勿自行替代；技术问题的反馈渠道与要附带的信息见[支持与反馈](../common/reference.md#support)。
+选好了就去各自的入口页：[背包版快速开始](../backpack/index.md)、[PC 版一页速通](../pc/quickstart.md)。线缆、适配器、充电宝等以合同配置及随货清单为准，缺件联系项目负责人，勿自行替代；技术问题的反馈渠道与要附带的信息见[支持与反馈](../common/reference.md#support)。

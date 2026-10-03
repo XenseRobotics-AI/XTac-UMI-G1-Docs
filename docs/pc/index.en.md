@@ -6,138 +6,102 @@ The operator's interface is the terminal plus a Rerun preview window; `lerobot-r
 Built on the open-source lerobot ecosystem, it suits research and algorithm teams with their own training pipelines; it is fully open to customization, whether that means changing the Python code or hooking up a custom robot.
 If you want no PC at all, with a collection team driving it from a tablet and the gripper buttons in the field, that is the [Backpack Kit](../backpack/index.md); the two editions are compared in [Editions](../product/editions.md).
 
-Hardware connected, environment installed, leader gripper calibrated? What follows takes you from
-power-on to your first episode; copy it as-is. First time through, go through
-[XTac-UMI G1](../product/g1.md) → [Installation](install.md) → [Host setup](host-setup.md) →
-[Pico4 headset and trackers](../common/pico4.md) → [Calibration and self-check](calibration.md) first, then come back.
+## Where to start {#start}
 
-Before you start, confirm:
+First time through, go in order: [Installation](install.md) → [Host setup](host-setup.md) → [Pico4 headset and trackers](../common/pico4.md) → [Calibration and self-check](calibration.md);
+after that, every collection session follows the [Quickstart](quickstart.md). To drive the follower gripper on a robot see [Follower gripper](../follower/index.md); to write your own programs against the grippers see [SDK & development](../sdk/index.md).
 
-- The repo, submodules, SDK and gripper firmware have all been upgraded per
-  [Upgrade to the latest versions](versions.md#required). On a mismatched stack, collection still
-  runs to completion and writes to disk; only `gripper.pos` ends up on a scale that does not match
-  anyone else's, and nothing in the data shows it afterwards. The firmware requirement is command set
-  V2.1, which means leader ≥ 1.2.0 / follower ≥ 1.1.0; a higher build does not need to be flashed
-  back ([the difference between the two](versions.md#v21)); with a follower gripper (`--robot.role=follower`) the follower
-  firmware must also be ≥ 1.1.6.
-- The [serial permissions and ModemManager](host-setup.md#31) one-off host setup is done; on a
-  bimanual rig, the [USB bandwidth budget](host-setup.md#usb-budget) has been checked.
-- Every leader gripper has been through [gripper calibration](calibration.md#41): an uncalibrated
-  leader is refused at connect. On a bimanual rig calibrate both sides; doing only one leaves left
-  and right on different scales.
-- You are inside the collection environment: `mamba activate xense-taccap` on the Mamba path, or
-  `docker compose run --rm xense-taccap` to enter the container on the Docker path.
+## System components {#system}
 
-## Power-on and power-off sequence {#power-on}
+Collection runs inside one `lerobot-record` process on the collection PC: each device is read independently, every frame takes the latest value from each stream, and the paired frames are written to the dataset.
+Hover over (or tap) any block to see where its data comes from and where it goes; the buttons above switch between the three tiers.
 
-1. Plug the XTac-UMI G1 into the host (USB).
-2. Bimanual rig: check the [USB bandwidth budget](host-setup.md#usb-budget) before going any further.
-3. Connect the Pico4 Ultra Enterprise's wired shared network and turn off the collection PC's WiFi.
-   The wired shared network conflicts with the PC's WiFi, which makes tracking unstable or
-   unreachable. The headset also supports WiFi, but the link fluctuates and pose data arrives late, so keep it for quick debugging; see
-   [Network connection](../common/pico4.md#pico-network).
-4. Power on the Pico4 Ultra Enterprise and short-press the tracker's power button until the blue light comes on (first use needs [binding](../common/pico4.md#pico-tracker-bind) first).
-5. Start the XenseVR PC Service on the host:
+<div class="tc-arch"><script type="application/json">
+{
+  "title": "XTac-UMI G1 collection system architecture",
+  "tiers": ["① Grippers only", "② With wrist pose", "③ Full rig"],
+  "cols": {"dev": "Devices", "read": "Collection PC · read", "core": "Collection PC · process", "out": "Output"},
+  "group": "Leader grippers ×2 (left / right)",
+  "hint": "Hover over (or tap) any block to see where its data comes from and where it goes.",
+  "sep": ": ",
+  "offNote": " (not used in the selected tier)",
+  "legend": ["Data and poses", "Headset stereo images (tier ③)"],
+  "edges": {
+    "e-grip": "USB serial", "e-tact": "USB", "e-wrist": "USB",
+    "e-track": "Wireless", "e-head": "Wired / WiFi"
+  },
+  "nodes": {
+    "grip": {"title": "MCU · encoder", "sub": "Jaw angle", "desc": "The leader gripper's MCU reads the encoder for the jaw angle and pushes it to the PC over USB serial. The MCU also carries an IMU, reserved and not recorded by default."},
+    "tact": {"title": "Visuotactile ×2", "sub": "One per finger", "desc": "One visuotactile sensor on each finger, imaging the contact between the finger surface and the object."},
+    "wrist": {"title": "Wrist camera", "sub": "Wrist-view RGB", "desc": "A fisheye camera on the gripper giving the wrist view."},
+    "tracker": {"title": "Motion tracker ×2", "sub": "Pico4 Ultra", "desc": "Mounted on top of each gripper; the headset tracks its 6-DoF pose. Not needed in tier ①."},
+    "headset": {"title": "Headset", "sub": "Pico4 Ultra Enterprise", "desc": "Runs XTac-UMI XR, tracks both trackers and sends the poses to the PC over a cable (recommended) or WiFi; in tier ③ it also streams its own stereo cameras as a first-person view, plus the head pose. The world origin is where the headset was when the XR app started."},
+    "sdk": {"title": "xense.taccap", "sub": "Serial · 100 Hz push", "desc": "The gripper SDK receives the readings the MCU pushes (100 Hz by default) and normalises the jaw angle with the calibration into gripper.pos (closed = 0, open = 1)."},
+    "xsdk": {"title": "xensesdk", "sub": "Rectified · 30 fps", "desc": "The visuotactile sensor SDK reads each sensor independently and outputs the rectified visuotactile image (about 400 × 700) at 30 fps by default."},
+    "cam": {"title": "Camera capture", "sub": "640 × 480 · 30 fps", "desc": "Finds each gripper's wrist camera by serial number and reads each one independently, 640 × 480 at 30 fps by default. Fisheye undistortion is optional and off by default."},
+    "pcs": {"title": "XenseVR PC Service", "sub": "Pose · ~90 Hz", "desc": "A service on the PC that receives the tracker poses from the headset (refreshed at about 90 Hz); the collection program transforms them to the gripper tip (TCP) to get tcp.*. In tier ③ it also relays the headset stereo images (left and right paired by frame number) and the head pose."},
+    "obs": {"title": "Frame assembly", "sub": "Latest of each stream", "desc": "Each frame (30 fps by default) takes the latest value of every stream as one observation: opening, gripper pose, visuotactile images and wrist view; tier ③ adds the headset stereo images and head pose."},
+    "pair": {"title": "Shifted pairing", "sub": "Obs t-1 + action t", "desc": "Pairs the previous frame's observation with this frame's gripper pose and opening (plus the head pose in tier ③), so the action leads the observation by one step. The first frame of each episode has nothing to pair with, so each episode is one frame shorter."},
+    "rerun": {"title": "Rerun live preview", "sub": "--display_data=true", "desc": "Add --display_data=true when previewing or recording to see every image stream, value curves and a 3D view of the gripper trajectories live. Display only; nothing here goes into the dataset."},
+    "ds": {"title": "LeRobotDataset v3.0", "sub": ["Parquet + MP4", "+ meta/hardware.json"], "desc": "State and action go to Parquet; every camera is encoded to MP4 while recording, using hardware encoding automatically when an NVIDIA GPU is present. The hardware manifest, such as the serial numbers of this kit, is stored separately in meta/hardware.json."}
+  }
+}
+</script></div>
 
-    ```bash
-    /opt/apps/roboticsservice/runService.sh    # before opening the app
-    ```
+- The **leader grippers** connect over USB: the opening is read by `xense.taccap` (100 Hz push), the visuotactile images by `xensesdk`, and each wrist camera is matched to its gripper by serial number.
+- The **motion trackers** sit on top of the grippers and are tracked by the **headset**, which hands the poses to the **XenseVR PC Service** over a cable (recommended) or WiFi; the collection program then transforms them to the gripper tip (TCP). Tier ③ also brings the headset stereo images and head pose.
+- **`lerobot-record`** takes the latest value of every stream each frame, pairs the previous frame's observation with this frame's pose and opening, and writes a **LeRobotDataset v3.0**; camera streams are encoded while recording, with hardware encoding on an NVIDIA GPU.
 
-6. Facing straight towards the robot, launch the XTac-UMI XR app (this freezes the world origin and orientation, see [frames](../common/pico4.md#pico-frame)),
-   then tap "Reconnect" so the [status reads "Connected"](../common/pico4.md#pico-toolkit-ui).
-7. Run the calibration / self-check / recording scripts.
+Collection comes in three tiers depending on the connected devices, chosen with `--robot.type`:
 
-```mermaid
-flowchart LR
-    A[Plug in gripper USB] --> U[Bimanual: check USB bandwidth budget]
-    U --> N[Connect Pico4 Ultra Enterprise<br/>wired network, turn WiFi off]
-    N --> B[Power on Pico4 Ultra Enterprise<br/>pair the tracker]
-    B --> D[Start XenseVR PC Service]
-    D --> C[Launch XTac-UMI XR<br/>freeze origin, shows Connected]
-    C --> E[Run calibration / recording]
-```
+| Tier | Devices needed | Data recorded |
+|---|---|---|
+| ① Grippers only | Leader grippers | Tactile, wrist cameras, opening |
+| ② With wrist pose | Grippers + trackers + headset | Adds the gripper pose |
+| ③ Full rig | Same as ② | Adds headset stereo images and head pose |
 
-!!! warning "Step 5 must come before step 6: start the service, then open the app"
-    The app connects to this service. With it down, the app just sits on "Not connected", and restarting the app to reconnect resets the world origin again.
+Commands are in [Data collection](recording.md).
 
-Never restart XTac-UMI XR during collection: it resets the world origin and leaves poses inside one dataset referenced to different frames; see [Startup and frame alignment](../common/pico4.md#pico-frame).
+## What each frame records {#frame}
 
-Power off in the reverse order: stop recording / replay first and wait for the current episode to be saved, then quit XTac-UMI XR and stop the XenseVR PC Service, and finally unplug the cables in the order given in [Power and connection requirements](../common/gripper.md#power): unplug the host end first, then loosen the screws and unplug the gripper end; on the follower gripper, cut the 24V before unplugging the gripper end.
+Taking two grippers as the example, each dataset row is the **observation** from frame t-1 plus the **action** from frame t. Hover over (or tap) any data item, source or storage block to see where it comes from and where it is stored; the buttons switch between the three tiers.
 
-## Self-check {#self-check}
+<div class="tc-arch" data-diagram="frame"><script type="application/json">
+{
+  "title": "What makes up one XTac-UMI G1 dataset row",
+  "tiers": ["① Grippers only", "② With wrist pose", "③ Full rig"],
+  "cols": {"src": "Source", "obs": "Observation · frame t-1", "act": "Action · frame t", "out": "Stored as"},
+  "groups": {"img": "observation.images · {n} streams", "state": "observation.state · {n}-D", "act": "action · {n}-D"},
+  "timeline": {"caption": "time →", "obs": "obs", "act": "action", "row": "one dataset row"},
+  "hint": "Hover over (or tap) any data item, source or storage block to see where it comes from and where it is stored.",
+  "sep": ": ",
+  "offNote": " (not recorded in the selected tier)",
+  "dims": " {n} dimensions in total.",
+  "obsNote": " The observation holds the value from frame t-1.",
+  "actNote": " The action holds the value from frame t, one step ahead of the observation.",
+  "keys": {
+    "tactile": "The visuotactile image from one finger of this gripper, rectified to about 400 × 700, 30 fps.",
+    "wrist": "This gripper's wrist camera view, 640 × 480 by default.",
+    "headimg": "One eye of the headset camera, 640 × 480 by default; recorded in tier ③ only.",
+    "tcp": "The pose of this gripper's tip (midpoint between the fingers) in the world frame: position x, y, z (metres) plus the 6-D rotation r1–r6, derived from the tracker pose.",
+    "grip": "This gripper's opening, closed = 0, open = 1.",
+    "headpose": "The headset pose in the world frame, same format as tcp.*; recorded in tier ③ only."
+  },
+  "nodes": {
+    "lgrip": {"title": "Left gripper", "sub": "Tactile · wrist · encoder", "desc": "Provides two visuotactile images, the wrist camera view and the opening."},
+    "ltrk": {"title": "Left tracker", "sub": "Via headset + PC Service", "desc": "Its pose is transformed to the left gripper tip as left_tcp.*, stored once in the observation and once in the action. Not recorded in tier ①."},
+    "rgrip": {"title": "Right gripper", "sub": "Tactile · wrist · encoder", "desc": "Provides two visuotactile images, the wrist camera view and the opening."},
+    "rtrk": {"title": "Right tracker", "sub": "Via headset + PC Service", "desc": "Its pose is transformed to the right gripper tip as right_tcp.*, stored once in the observation and once in the action. Not recorded in tier ①."},
+    "head": {"title": "Headset", "sub": "Stereo camera · head pose", "desc": "Provides the left and right eye images and the head pose head_camera.*, which is stored in both the observation and the action. Recorded in tier ③ only."},
+    "mp4": {"title": "MP4 video", "sub": "videos/ · one key each", "desc": "Each image stream is one video key, observation.images.<key>, encoded to MP4 while recording and stored under videos/."},
+    "pq": {"title": "Parquet table", "sub": ["data/ · one row per frame", "state + action + index"], "desc": "One row per frame: the observation.state and action vectors, plus index columns such as timestamp, frame index and episode index, stored under data/."}
+  }
+}
+</script></div>
 
-```bash
-# Grippers readable: role should be Leader/Follower, firmware_sn non-empty
-python -c "from xense.taccap import scan_grippers
-for g in scan_grippers(): print(g.side.name, g.role.name, repr(g.firmware_sn))"
-```
+- The observation comes from frame t-1 and the action from frame t, so the action leads by one step; the first frame of each episode has nothing to pair with, so each episode is one frame shorter.
+- The poses `*_tcp.*` and `head_camera.*` are 9-D each: position x, y, z plus a 6-D rotation, in a world frame of X forward / Y left / Z up.
+- Dimensions per tier: ① state and action 2-D each, 6 image streams; ② 20-D each, 6 streams; ③ 29-D each, 8 streams.
+- With a single gripper (`--robot.type=taccap_gripper`) the keys have no `left_` / `right_` prefix and the wrist camera is `wrist_cam`.
 
-Anything wrong, see [Troubleshooting](troubleshooting.md).
-
-## Preview
-
-Before recording, open Rerun with `lerobot-teleoperate` and confirm the streams; it only reads the devices and writes nothing:
-
-```bash
-lerobot-teleoperate \
-    --robot.type=bi_taccap_gripper \
-    --robot.id=0 \
-    --robot.enable_tracker=true \
-    --robot.enable_head_camera=false \
-    --fps=30 \
-    --display_data=true \
-    --show_trajectory=true
-```
-
-In Rerun you should see the left and right tactile streams and the wrist camera frames, `gripper.pos`
-reaching 1.0 open / 0.0 closed, and the EE marker in `/world` moving smoothly with the gripper. Once
-confirmed, `Ctrl+C` to exit. For a single gripper, swap in `--robot.type=taccap_gripper`, and add
-`--robot.side=left|right` only when both are plugged in. For the other two stages, gripper only or
-with the head camera added, see [Preview](recording.md#preview).
-
-## Record
-
-```bash
-lerobot-record \
-    --robot.type=bi_taccap_gripper \
-    --robot.id=0 \
-    --robot.enable_tracker=true \
-    --robot.enable_head_camera=false \
-    --display_data=false \
-    --dataset.repo_id=<your_org>/<your_dataset> \
-    --dataset.num_episodes=1 \
-    --dataset.fps=30 \
-    --dataset.push_to_hub=false \
-    --dataset.episode_time_s=120 \
-    --dataset.reset_time_s=60 \
-    --dataset.single_task='Pick up the object'
-```
-
-`--robot.id` is the required station number. Pass a bare number, one per rig (a bimanual rig counts
-as one); leaving it out fails at command-line parse time
-([`--robot.id` and the hardware manifest](recording.md#robot-id)). Keep `--robot.enable_tracker` and
-`--robot.enable_head_camera` the same as the stage you previewed; `--display_data` is off by default;
-since 0.0.8 leaving it on while recording costs no frame budget, so turn it on if you want to watch. The commands for all three stages and every parameter are in [Record](recording.md#52).
-
-## Check the local dataset
-
-Use the same `repo_id` you recorded with to verify the local dataset's structure and contents:
-
-```bash
-lerobot-check-dataset --repo-id <your_org>/<your_dataset>
-```
-
-For checking only certain episodes and other variants, see [Dataset check](dataset.md#62).
-
-## Push to the Hub (optional)
-
-Run `hf auth login` or set `HF_TOKEN` first, then push:
-
-```bash
-lerobot-push-dataset-to-hub \
-    --repo-id <your_org>/<your_dataset> \
-    --dataset-path ~/.cache/huggingface/lerobot/<your_org>/<your_dataset> \
-    --upload-large-folder
-```
-
-For variants such as a private repo or skipping the video, see [Push to the Hub](dataset.md#64); for what the dataset looks like and what each frame holds, see [Dataset](dataset.md).
+Field details are in [What each frame records](recording.md#53), the dataset format in [Dataset](dataset.md).

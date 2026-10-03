@@ -1,10 +1,10 @@
 # Technical specifications
 
-This page is the specification table for the XTac-UMI G1 gripper and the backpack — look here when choosing a configuration, writing a proposal or checking a connector. The wiring steps are in [Gripper buttons, LEDs and serial numbers](../common/gripper.md#install), and the trade-off between the Backpack Kit and the Developer Kit is in [Product line and configuration comparison](editions.md).
+This page is the specification table for the XTac-UMI G1 gripper and the backpack — look here when choosing a configuration, writing a proposal or checking a connector. The wiring steps are in [Gripper connection and serial numbers](../common/gripper.md#install), and the trade-off between the Backpack Kit and the Developer Kit is in [Product line and configuration comparison](editions.md).
 
 ## XTac-UMI G1 {#specs}
 
-The electrical and connector requirements are in [Power and connection requirements](../common/gripper.md#install). The table below is the sensor and whole-unit specification; the actual rates during collection can be configured as needed (the Developer Kit, for example, records tactile data at a lower frame rate) without changing the sensor specification.
+The electrical and connector requirements are in [Power and connection requirements](../common/gripper.md#power); the follower gripper's motor is in the [Follower gripper overview](../follower/index.md#motor-model). The table below is the sensor and whole-unit specification; the actual rates during collection can be configured as needed (the Developer Kit, for example, records tactile data at a lower frame rate) without changing the sensor specification.
 
 | Item | Specification |
 |---|---|
@@ -19,7 +19,6 @@ The electrical and connector requirements are in [Power and connection requireme
 | Pose | Pico4 Ultra motion tracker, 6-DoF; the frame definition is in [Coordinate frames](../common/coordinates.md) |
 | Output data | RGB, multimodal tactile, gripper opening angle, IMU, spatial trajectory |
 
-Internal communication: the external interface is USB Type-C; the internal MCU serial port is bridged by a CH343 (`1a86:55d2`) and enumerates as `/dev/ttyACM*`, USART3 @ 3 Mbps; the visuotactile sensors and the wrist camera are UVC (`/dev/video*`); the follower gripper passes through to a Lingzu motor over FDCAN1 @ 1 Mbps.
 
 ## The backpack
 

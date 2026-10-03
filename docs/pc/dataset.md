@@ -23,12 +23,12 @@ sample = ds[0]          # 单帧:观测 + 动作,均为 torch tensor
 
 - `hf_dataset`:Hugging Face datasets → parquet
 - 视频（触觉 + 腕相机）：mp4（省空间）
-- 元数据：纯 json / jsonl(`info` / `episodes` / `stats` / `tasks`)；`info` 里的关键字段有 `fps`、`features`、`total_episodes`、`total_frames`、`robot_type`、`data_path`、`video_path`
+- 元数据：纯 json / jsonl(`info` / `episodes` / `stats` / `tasks`)；`info` 里的关键字段有 `fps`、`features`、`total_episodes`、`total_frames`、`robot_type`、`data_path`、`video_path`。`robot_type` 是录制时的 `--robot.type`（`taccap_gripper` / `bi_taccap_gripper` / `xtac_umi_g1`）；紧跟其后的 `collection_stack` 固定为 `"xense-taccap-lerobot"`，标明这份数据是本采集程序直接录的
 - 时序查询：`delta_timestamps = {"observation.image": [-1, -0.5, -0.2, 0]}` 一次取当前帧及其前 1s / 0.5s / 0.2s 三帧
 
 每帧记录了哪些观测与动作键，见 [每帧记录内容](recording.md#53)。
 
-标准 LeRobotDataset 只在 `info` 里记 `robot_type`，所以录制时额外写两样独立文件（都不动上游的 `info` 结构）：`meta/hardware.json` 记这批数据是哪套硬件采的（工位号、夹爪与触觉 SN、腕相机是否去畸变，按 `epochs` 分段，中途换硬件会另起一段）；`meta/runtimes/` 记每枚触觉传感器采集时的 runtime bundle，从 `rectify` 流重建 depth / force / difference 要用它。字段含义、续录行为与重建注意事项见 [`--robot.id` 与硬件清单](recording.md#robot-id)。用 `lerobot-edit-dataset` 删集、拆分、去特征、8 → 6 相机转换得到的新数据集会把这两样一起带上；**合并（`merge`）会直接报错拒绝**，因为合并后没有一份清单能对应到每一集真实的传感器。
+标准 LeRobotDataset 只在 `info` 里记 `robot_type`，所以录制时额外写一份独立的硬件清单 `meta/hardware.json`（不动上游的 `info` 结构），记这批数据是哪套硬件采的（工位号、夹爪与触觉 SN、腕相机是否去畸变，按 `epochs` 分段，中途换硬件会另起一段）。从 `rectify` 流重建 depth / force / difference 只需要传感器型号和每个 episode 的第一帧 `rectify`，数据集里本来就有；更早版本录的数据集里的 `meta/runtimes/` 会被忽略。字段含义、续录行为与重建注意事项见 [`--robot.id` 与硬件清单](recording.md#robot-id)。用 `lerobot-edit-dataset` 删集、拆分、去特征、8 → 6 相机转换得到的新数据集会把 `hardware.json` 一起带上；**合并（`merge`）会直接报错拒绝**，因为合并后没有一份清单能对应到每一集真实的传感器。
 
 <span id="stats-std"></span>
 
@@ -70,7 +70,7 @@ lerobot-check-dataset --repo-id <your_org>/<your_dataset> --episode-index 0 2 4
 | `root` | 本地根目录（默认 `~/.cache/huggingface/lerobot`） |
 | `episode-index` | 只检查指定集（可多值，如 `0 2 4`） |
 
-检查项包括 `meta/` 是否齐全、集数是否对得上、parquet 的行数与索引是否连续、有没有 NaN、视频文件是否存在且帧数与 parquet 对齐，以及**相机格式**——双臂数据集会被判为 6 相机（四路触觉 + 两路腕相机）还是 8 相机（再加头显两只眼），两种格式训练时的输入维度不同。结果汇总在最后一行：
+检查项包括 `meta/` 是否齐全、集数是否对得上、parquet 的行数与索引是否连续、有没有 NaN、视频文件是否存在且帧数与声明**完全相等**，以及**相机格式**——双臂数据集会被判为 6 相机（四路触觉 + 两路腕相机）还是 8 相机（再加头显两只眼），两种格式训练时的输入维度不同。结果汇总在最后一行：
 
 ```text
 Summary: 0 error(s), 0 warning(s) | Camera format: 6-camera (no headset)
@@ -78,9 +78,16 @@ Summary: 0 error(s), 0 warning(s) | Camera format: 6-camera (no headset)
 
 单夹爪数据集、关了腕相机或只录一只眼的数据集，相机格式会显示 `not recognized` 并给一条告警；这项检查只针对标准的双臂格式，不影响其余检查项。
 
+视频帧数对不上时按方向区分：
+
+| 情况 | 结果 | 含义 |
+|---|---|---|
+| 比声明**少** | error（`... frames but episodes declare ... (N missing ...)`） | episode 引用了视频里不存在的帧，解码会越过流末尾 |
+| 比声明**多** | warning（`... more than the ... episodes declare -- unreferenced leftover frames`） | 多出来的帧没有 episode 引用（例如删过集），声明的每一帧都取得到，不影响使用 |
+
 ### 双臂 8 相机 → 6 相机 {#8to6}
 
-开了[头显相机](recording.md#56)录的双臂数据集是 8 相机格式。要把它降成 6 相机格式（与 `--robot.enable_head_camera=false` 录出来的同构），用 `lerobot-edit-dataset`：
+开了[头显相机](recording.md#56)录的双臂数据集是 8 相机格式。要把它降成 6 相机格式（与 `bi_taccap_gripper` 录出来的同构，数据集里记录的类型也随之改为 `bi_taccap_gripper`），用 `lerobot-edit-dataset`：
 
 ```bash
 lerobot-edit-dataset \

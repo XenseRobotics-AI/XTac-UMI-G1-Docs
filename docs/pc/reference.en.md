@@ -1,23 +1,23 @@
-# RobotConfig & SDK
+# RobotConfig options
 
-A lookup appendix: `RobotConfig` options and the SDK entry point. The collection workflow is in [Data collection](recording.md); errors are in [Troubleshooting](troubleshooting.md).
+A lookup appendix: the `RobotConfig` options. The collection workflow is in [Data collection](recording.md); errors are in [Troubleshooting](troubleshooting.md).
 
 ## Common `RobotConfig` options {#robotconfig}
 
 | Option | Default | What it does |
 |---|---|---|
-| `robot.id` | **required** | The station number for this rig; pass a bare number (`0` / `1` ...) and the prefix is filled in from `robot.type` to give `taccap_0` / `bi_taccap_0`. Leaving it out fails at command-line parse time → [`--robot.id` and the hardware manifest](recording.md#robot-id) |
+| `robot.id` | **required** | The station number for this rig; pass a bare number (`0` / `1` ...) and the prefix is filled in from `robot.type` to give `taccap_0` / `bi_taccap_0` / `xtac_umi_g1_0`. Leaving it out fails at command-line parse time → [`--robot.id` and the hardware manifest](recording.md#robot-id) |
 | `robot.side` | auto | `left`/`right`; required in **single-gripper mode** when both grippers are plugged in, picked automatically when only one is |
-| `robot.role` | `leader` | Set `follower` to bind the follower gripper; the follower firmware must be ≥ 1.1.6, see [Firmware OTA](versions.md#ota) |
+| `robot.role` | `leader` | Set `follower` to bind the follower gripper; the follower firmware must be ≥ 1.2.5 (below 1.2.11 it warns you to upgrade), see [Firmware OTA](versions.md#ota) |
 | `robot.enable_tracker` | `true` | Off records tactile + gripper only |
 | `robot.tracker_serial` | unset | Pin a tracker by SN, bypassing the side rule; used verbatim and not validated, so a typo reports not found at connect |
 | `robot.enable_wrist_camera` | `true` | Turns the wrist camera off |
 | `robot.wrist_camera_width/_height/_fps` | — | Wrist camera resolution / frame rate |
 | `robot.wrist_camera_fourcc` | `MJPG` | Wrist camera pixel format; the MJPG default leaves USB bandwidth for the tactile sensors on the same hub, `YUYV` is uncompressed and only for when bandwidth allows |
 | `robot.wrist_undistort` / `_balance` | `false` / `0.0` | Undistort the wrist camera fisheye before writing to disk, and its field-of-view setting, see [Fisheye undistortion](recording.md#57) |
-| `robot.enable_head_camera` | `false` | Head camera (first-person view + headset pose), see [Head camera](recording.md#56) |
+| `robot.enable_head_camera` | `false` | **Single gripper only**: head camera (first-person view + headset pose); bimanual uses `--robot.type=xtac_umi_g1`, see [Head camera](recording.md#56) |
 | `robot.head_camera_eyes` | `both` | `both` = one key per eye; `left` / `right` records only that eye |
-| `robot.head_camera_width/_height` | `640` / `480` | Size **per eye**; only `640x480` / `1024x768` / `1280x960` are accepted, and it must match the "Resolution" set in the headset |
+| `robot.head_camera_width/_height` | `640` / `480` | Size **per eye**; only `640x480` / `1024x768` / `1280x960` are accepted, and it must match the resolution the headset outputs (both default to 640x480) |
 | `robot.head_camera_fps` | `30` | Head camera frame rate |
 | `robot.head_camera_pair_max_skew_ms` | `20.0` | When the two eyes carry different frame numbers, the largest time difference still treated as one exposure |
 | `robot.head_camera_startup_timeout_s` | `5.0` | Seconds to wait for the first frame at connect |
@@ -41,6 +41,6 @@ The table is written for a single gripper. On `bi_taccap_gripper`, `enable_wrist
 
 ## SDK and custom development
 
-`xense.taccap` (the `taccap-gripper` SDK) is the C++17 / Python device access layer for the XTac-UMI G1. It talks to the gripper MCU over the serial protocol and provides the IMU, encoder, buttons, LEDs, sensor errors, calibration, OTA, and the motor control that only the follower gripper has; there is also an optional wrist UVC `Camera` class. It has two consumable surfaces: the `taccap_core` CMake target (`libtaccap_core.so`, for ROS2 / CMake projects to integrate with `add_subdirectory()`) and the `xense.taccap` Python extension, which the data-collection main repo consumes through the `third_party/taccap-gripper` submodule. Dataset recording, time alignment, episode splitting and the lerobot adaptation all live in the repo above it, not in the SDK. Build and install, examples, fisheye calibration and the API description are in the [TacCap-Gripper repo docs](https://github.com/XenseRobotics-AI/TacCap-Gripper/tree/main/docs).
+To write your own programs that read the leader gripper or drive the follower gripper, see [SDK & development](../sdk/index.md).
 
 Terms are in the [Glossary](../common/reference.md#glossary); feedback channels and related repositories are in [Support and feedback](../common/reference.md#support).

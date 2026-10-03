@@ -1,10 +1,10 @@
 # 技术参数
 
-本页是 XTac-UMI G1 夹爪与数采背包的规格表，选型、写方案、核对接口时查这里；接线步骤见[夹爪按键、指示灯与序列号](../common/gripper.md#install)，背包与 PC 两种配置的取舍见[产品线与配置对比](editions.md)。
+本页是 XTac-UMI G1 夹爪与数采背包的规格表，选型、写方案、核对接口时查这里；接线步骤见[夹爪连接与序列号](../common/gripper.md#install)，背包与 PC 两种配置的取舍见[产品线与配置对比](editions.md)。
 
 ## XTac-UMI G1 {#specs}
 
-电气与接口见[供电与连接要求](../common/gripper.md#install)。下表是传感器与整机规格；采集时实际速率可按需配置（如 PC 版触觉以较低帧率录制），不改变传感器规格。
+电气与接口见[供电与连接要求](../common/gripper.md#power)；从夹爪的电机见[从夹爪概览](../follower/index.md#motor-model)。下表是传感器与整机规格；采集时实际速率可按需配置（如 PC 版触觉以较低帧率录制），不改变传感器规格。
 
 | 参数项 | 规格 |
 |---|---|
@@ -19,7 +19,6 @@
 | 位姿 | Pico4 Ultra 运动追踪器，6-DoF，坐标系定义见[坐标系](../common/coordinates.md) |
 | 输出数据 | RGB、多模态触觉、夹爪开口角度、IMU、空间定位轨迹 |
 
-内部通信：对外接口为 USB Type-C；内部 MCU 串口经 CH343（`1a86:55d2`）桥接，枚举为 `/dev/ttyACM*`，USART3 @ 3 Mbps；视触觉与腕相机为 UVC(`/dev/video*`)；从爪经 FDCAN1 @ 1 Mbps 透传灵足电机。
 
 ## 数采背包
 

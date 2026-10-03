@@ -71,9 +71,30 @@ Pick one to start. Hardware, calibration and data definitions are the same on bo
     For: research and algorithm teams, self-hosted training pipelines
     { .xu-card__fit }
 
-    [Quick start](pc/index.md){ .md-button .md-button--primary }
+    [Quick start](pc/quickstart.md){ .md-button .md-button--primary }
     [Compare the two kits](product/editions.md){ .md-button }
     { .xu-card__actions }
+
+</div>
+
+## The data you get
+
+<div class="tc-data" markdown>
+
+<figure class="tc-shot" markdown>
+![XTac-UMI XR console: Connected](assets/pico4/xr-console-connected-en.webp)
+<figcaption>XTac-UMI XR shows Connected once the headset reaches the collection unit</figcaption>
+</figure>
+
+<figure class="tc-shot" markdown>
+![The eight streams and their dataset keys](assets/dataset/sensor-key-map.webp)
+<figcaption>Every frame records eight image streams in sync, labelled with their dataset keys</figcaption>
+</figure>
+
+<figure class="tc-shot" markdown>
+![Rerun live preview: four visuotactile streams, headset stereo, both wrist cameras and action curves](assets/dataset/rerun-xtac-umi-g1.webp)
+<figcaption>Developer Kit preview check: every stream and pose live in Rerun</figcaption>
+</figure>
 
 </div>
 

@@ -6,7 +6,7 @@ Pico4 Ultra 企业版配套的独立运动追踪器装在夹爪顶部，提供 6
 |---|---|---|
 | 头显接到哪 | 数采背包的 `PICO` 口（USB 有线），或与背包接同一个 WiFi | 数采主机的 Type-C 口（USB 有线共享网络），或与主机接同一个 WiFi |
 | 位姿服务在哪跑 | XenseVR 运行时内置在 XTac-UMI Collector 里，背包开机即在，不用单独启动 | 数采主机上的 [XenseVR PC Service](../pc/host-setup.md#35)，每次采集前手动启动 |
-| APP 里怎么连 | 勾选「USB 网络」→ 点「连接」；走 WiFi 时不勾，填背包 IP | 点「重连」，不用填 IP |
+| APP 里怎么连 | 勾选「USB网络」→ 点「连接」；走 WiFi 时不勾，填背包 IP | 勾选「USB网络」→ 点「连接」；走 WiFi 时不勾，在「PC IP」填数采主机 IP |
 
 出厂已配置的头显，开发者模式、电源策略、APP、追踪器绑定、追踪模式都已设好且断电不丢（恢复出厂或换头显才要重做），直接从[网络连接](#pico-network)开始；接线、短按追踪器电源键到蓝灯亮、在 APP 里[连上](#pico-toolkit-ui)、[启动对齐](#pico-frame)每次采集都要做。
 
@@ -80,19 +80,19 @@ adb install XTac-UMI-XR-0.2.5.apk    # 换成拿到的那份
 
     1. Type-C 线一端接头显侧面的 Type-C 口，另一端接背包的 `PICO` 口。用充电宝供电时头显先接二合一线：充电口接充电宝，数据口接背包 `PICO` 口，接线见[充电宝供电](../backpack/unbox-connect.md#powerbank)。
     2. 背包开机。XenseVR 运行时内置在 Collector 里，随背包一起启动，不需要单独开服务。
-    3. 打开 XTac-UMI XR，勾选「USB 网络」点「连接」，背包会自动在 USB 链路上建网（地址 `192.168.58.1`），不用手填。
+    3. 打开 XTac-UMI XR，勾选「USB网络」点「连接」，背包会自动在 USB 链路上建网（地址 `192.168.58.1`），不用手填。
 
-    走 WiFi 时头显与背包接同一个网络（例如同一台路由器；背包只连 5 GHz WiFi），APP 里不勾「USB 网络」，填背包的 IP 再点「连接」。背包 IP 在控制台顶栏的网络下拉里看。
+    走 WiFi 时头显与背包接同一个网络（例如同一台路由器；背包只连 5 GHz WiFi），APP 里不勾「USB网络」，填背包的 IP 再点「连接」。背包 IP 在控制台顶栏的网络下拉里看。
 
 === "PC 版"
 
     有线连接步骤：
 
-    1. 电脑端先启动服务（见[启动 XenseVR PC Service](../pc/host-setup.md#35)）：`runService.sh`。服务没起来，APP 只会停在「未连接」。
+    1. 电脑端先启动服务（见[启动 XenseVR PC Service](../pc/host-setup.md#35)）：`runService.sh`。服务没起来，APP 连不上。
     2. Type-C 线直连头显与数采主机，头显给主机分配 IP。
-    3. 打开 XTac-UMI XR，点「重连」，状态变成「已连接」（见[打开 App 后的界面](#pico-toolkit-ui)）。
+    3. 打开 XTac-UMI XR，勾选「USB网络」，点「连接」，网络状态变成「连接成功」（见[打开 App 后的界面](#pico-toolkit-ui)）。勾选后 APP 自动连接数采主机（`192.168.1.58`），不用填 IP。
 
-    走 WiFi 时头显和数采主机接同一网络，其余相同。
+    走 WiFi 时头显和数采主机接同一网络，不勾选「USB网络」，在「PC IP」里填数采主机的 IP，再点「连接」。
 
     !!! warning "走有线时，关掉数采主机的 WiFi"
         有线共享网络会与主机上的其他网络（尤其 WiFi）冲突（路由 / 网卡抢占），导致追踪器连不上或位姿不稳。只保留头显的共享网络。
@@ -144,7 +144,7 @@ SN 决定左右（`G` 前一个数字单左双右），也是采集单元识别�
     print(xrt.get_motion_tracker_serial_numbers())   # 例:['PC2310MLL3200496G', ...]
     ```
 
-    它只返回服务当前收到数据的追踪器，所以要先：追踪器已绑定并开机 → XTac-UMI XR [「已连接」](#pico-toolkit-ui) → 主机已启动 [PC Service](../pc/host-setup.md#35)，少一步就是空列表。拿到 SN 可用 `--robot.tracker_serial=<SN>` 直接钉住，跳过[自动匹配](../pc/host-setup.md#33)；逐个摇晃夹爪确认哪个 SN 是哪只手，再写进配置。
+    它只返回服务当前收到数据的追踪器，所以要先：追踪器已绑定并开机 → XTac-UMI XR [「连接成功」](#pico-toolkit-ui) → 主机已启动 [PC Service](../pc/host-setup.md#35)，少一步就是空列表。拿到 SN 可用 `--robot.tracker_serial=<SN>` 直接钉住，跳过[自动匹配](../pc/host-setup.md#33)；逐个摇晃夹爪确认哪个 SN 是哪只手，再写进配置。
 
 ## 追踪模式 {#pico-tracker}
 
@@ -154,25 +154,42 @@ SN 决定左右（`G` 前一个数字单左双右），也是采集单元识别�
 
 ## 打开 App 后的界面 {#pico-toolkit-ui}
 
-戴上头显，从资源库打开 XTac-UMI XR。首次打开会问「允许"XTac-UMI XR"使用相机权限吗？」，点「允许」，否则取不到头显相机画面。「状态」显示「已连接」之前，采集单元读不到任何位姿；右上角「折叠」收起面板。
+戴上头显，从资源库打开 XTac-UMI XR，进入「XENSE XR 控制台」。连接只用到左侧这几项：
 
-![允许 XTac-UMI XR 使用相机权限](../assets/pico4/app-step3-camera.webp){ width="380" }
+| 项目 | 说明 |
+|---|---|
+| 追踪模式 | 应显示「独立追踪」，不是的话回到[追踪模式](#pico-tracker)重新设置 |
+| Pico硬件版本 | 应显示「企业版」 |
+| 网络状态 | 「连接成功」之前，采集单元读不到任何位姿 |
+| USB网络 | 有线连接时勾选，APP 自动连接有线链路另一端的采集单元，不用填 IP |
+| PC IP | 走 WiFi 时手动填采集单元（背包或数采主机）的 IP；有线连接不用填 |
+| 连接 / 断开 | 点「连接」开始连接，连上后按钮变为「断开」 |
+
+=== "未连接"
+
+    刚打开时网络状态是「未连接」。有线连接勾选「USB网络」，再点「连接」。
+
+    ![XTac-UMI XR 控制台：未连接](../assets/pico4/xr-console-idle.webp){ width="560" }
+
+=== "连接成功"
+
+    网络状态变为「连接成功」，就可以开始采集了。
+
+    ![XTac-UMI XR 控制台：连接成功](../assets/pico4/xr-console-connected.webp){ width="560" }
+
+两种形态在连接上的差别：
 
 === "背包版"
 
-    面板里勾选「USB 网络」→ 点「连接」（有线）；走 WiFi 时不勾，填背包 IP 再点「连接」。追踪器数据精度不准、与背包断开时，面板上会出现图标提示。
+    面板里勾选「USB网络」→ 点「连接」（有线）；走 WiFi 时不勾，填背包 IP 再点「连接」。追踪器数据精度不准、与背包断开时，面板上会出现图标提示。
 
     连上后打开控制台「实时监控」页，位姿视图应出现头显与左右爪的位姿；录制按钮未就绪时会给出原因，其中「Pico 位姿或时钟未就绪」就是头显还没连好。
 
 === "PC 版"
 
-    界面只有状态、分辨率、重连三项。不用填 PC 端 IP：[有线共享网络](#pico-network)接好后 APP 会自动识别主机上的 XenseVR PC Service，但要点一下「重连」才会连，打开 APP 不会自动连。
+    有线连接勾选「USB网络」，APP 自动连接数采主机（`192.168.1.58`）；走 WiFi 时不勾，在「PC IP」里填数采主机的 IP，再点「连接」。
 
-    ![状态未连接，点「重连」](../assets/pico4/app-step2-disconnected.webp){ width="420" }
-
-    「分辨率」是[头显相机](../pc/recording.md#56)的取流分辨率，三档 `640` / `1024` / `1280`，默认 `640`，推荐就用它；不用头显相机时不起作用。在这里调高了，采集命令的 `--robot.head_camera_width/_height` 要跟着改成对应值，否则 connect 报首帧尺寸不符，对应表见[头显相机](../pc/recording.md#56)。
-
-    高精度追踪默认开启，没有开关。一直连不上，多半是[网络](#pico-network)没接好或电脑 WiFi 没关。显示「已连接」后，在主机上用 `/opt/apps/roboticsservice/` 的 `ConsoleDemo` 或 `python -m lerobot.robots.taccap_gripper.check_tracker` 确认能读到带 `sn` 的位姿：头显显示连上和主机真的收到数据是两件事。
+    一直连不上，多半是[网络](#pico-network)没接好或电脑 WiFi 没关。显示「连接成功」后，在主机上用 `/opt/apps/roboticsservice/` 的 `ConsoleDemo` 或 `python -m lerobot.robots.taccap_gripper.check_tracker` 确认能读到带 `sn` 的位姿：头显显示连上和主机真的收到数据是两件事。
 
 ## 启动与坐标系对齐 {#pico-frame}
 

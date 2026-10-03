@@ -18,7 +18,7 @@ XTac-UMI comes in two configurations: the **Backpack Kit** (the XTac-UMI Backpac
 
     Built on the open-source lerobot ecosystem and suited to research and algorithm teams: connect it to your own workstation and produce a LeRobotDataset directly, with customisation completely open.
 
-    [Quickstart](../pc/index.md){ .md-button .md-button--primary }
+    [Quickstart](../pc/quickstart.md){ .md-button .md-button--primary }
 
 </div>
 
@@ -72,7 +72,7 @@ XTac-UMI comes in two configurations: the **Backpack Kit** (the XTac-UMI Backpac
     - Each gripper connects to the host with its own Type-C cable, and with two grippers the six camera feeds have to be split across two USB buses, see [The USB bandwidth budget](../pc/host-setup.md#usb-budget).
     - The headset connects to the host with a Type-C cable over wired network sharing, or over WiFi, see [Network connection](../common/pico4.md#pico-network).
 
-    The power-up order and your first collection run are in [Developer Kit quickstart](../pc/index.md#power-on).
+    The power-up order and your first collection run are in [Developer Kit quickstart](../pc/quickstart.md#power-on).
 
 ## Common questions
 
@@ -86,7 +86,7 @@ XTac-UMI comes in two configurations: the **Backpack Kit** (the XTac-UMI Backpac
 
 ??? question "Does the Developer Kit have to have an NVIDIA graphics card"
 
-    For real collection, yes: at least an RTX 3060 / 8 GB, an RTX 4070 / 12 GB recommended, driver ≥ 570.144, see [Host requirements](../pc/install.md#host-spec). A machine without one can turn off streaming encoding and still record, but writing to disk is slow and frames drop more easily, so it is only a stopgap, see [Recording on a host with no NVIDIA GPU](../pc/recording.md#no-gpu).
+    For real collection, yes: at least an RTX 3060 / 8 GB, an RTX 5060 Laptop / 8 GB or better recommended, driver ≥ 570.144, see [Host requirements](../pc/install.md#host-spec). A machine without one can turn off streaming encoding and still record, but writing to disk is slow and frames drop more easily, so it is only a stopgap, see [Recording on a host with no NVIDIA GPU](../pc/recording.md#no-gpu).
 
 ??? question "Is the headset required"
 
@@ -102,4 +102,4 @@ XTac-UMI comes in two configurations: the **Backpack Kit** (the XTac-UMI Backpac
 
 ## Getting in touch and getting started
 
-Once you have chosen, go to the matching entry point: [Backpack Kit quickstart](../backpack/index.md) or [Developer Kit quickstart](../pc/index.md). Cables, adapters, power banks and the like follow the contract configuration and the packing list — if something is missing, contact your project manager rather than substituting it yourself. The channels for reporting technical problems and what to include are in [Support and feedback](../common/reference.md#support).
+Once you have chosen, go to the matching entry point: [Backpack Kit quickstart](../backpack/index.md) or [Developer Kit quickstart](../pc/quickstart.md). Cables, adapters, power banks and the like follow the contract configuration and the packing list — if something is missing, contact your project manager rather than substituting it yourself. The channels for reporting technical problems and what to include are in [Support and feedback](../common/reference.md#support).

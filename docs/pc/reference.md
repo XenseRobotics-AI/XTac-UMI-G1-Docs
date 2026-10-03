@@ -1,23 +1,23 @@
-# RobotConfig 与 SDK
+# RobotConfig 配置项
 
-查表用的附录：`RobotConfig` 配置项与 SDK 入口；采集流程见[数据采集](recording.md)，报错见[故障排查](troubleshooting.md)。
+查表用的附录：`RobotConfig` 配置项；采集流程见[数据采集](recording.md)，报错见[故障排查](troubleshooting.md)。
 
 ## `RobotConfig` 常用配置项 {#robotconfig}
 
 | 配置项 | 默认 | 作用 |
 |---|---|---|
-| `robot.id` | **必填** | 这套设备的工位号，填数字即可（`0` / `1`…），前缀按 `robot.type` 自动补成 `taccap_0` / `bi_taccap_0`；漏填在解析命令行时即报错 → [`--robot.id` 与硬件清单](recording.md#robot-id) |
+| `robot.id` | **必填** | 这套设备的工位号，填数字即可（`0` / `1`…），前缀按 `robot.type` 自动补成 `taccap_0` / `bi_taccap_0` / `xtac_umi_g1_0`；漏填在解析命令行时即报错 → [`--robot.id` 与硬件清单](recording.md#robot-id) |
 | `robot.side` | 自动 | `left`/`right`，**单夹爪模式**下两只都接着时必填；只接一只则自动选中 |
-| `robot.role` | `leader` | 填 `follower` 绑定从夹爪；从夹爪固件须 ≥ 1.1.6，见[固件 OTA](versions.md#ota) |
+| `robot.role` | `leader` | 填 `follower` 绑定从夹爪；从夹爪固件须 ≥ 1.2.5（低于 1.2.11 会提示升级），见[固件 OTA](versions.md#ota) |
 | `robot.enable_tracker` | `true` | 关闭则只录触觉 + 夹爪 |
 | `robot.tracker_serial` | 未设 | 钉住追踪器 SN，绕过侧别规则；逐字使用、不校验，打错 connect 时报找不到 |
 | `robot.enable_wrist_camera` | `true` | 关闭腕相机 |
 | `robot.wrist_camera_width/_height/_fps` | — | 腕相机分辨率/帧率 |
 | `robot.wrist_camera_fourcc` | `MJPG` | 腕相机像素格式；默认 MJPG 是为同 hub 的触觉让出 USB 带宽，`YUYV` 无压缩，带宽够时才用 |
 | `robot.wrist_undistort` / `_balance` | `false` / `0.0` | 落盘前矫正腕相机鱼眼及其视野档位，见[鱼眼矫正](recording.md#57) |
-| `robot.enable_head_camera` | `false` | 头显相机（第一视角 + 头显位姿），见[头显相机](recording.md#56) |
+| `robot.enable_head_camera` | `false` | **仅单夹爪**：头显相机（第一视角 + 头显位姿）；双夹爪用 `--robot.type=xtac_umi_g1`，见[头显相机](recording.md#56) |
 | `robot.head_camera_eyes` | `both` | `both` = 左右眼各一个键；`left` / `right` 只录一只 |
-| `robot.head_camera_width/_height` | `640` / `480` | **每只眼**尺寸，只接受 `640x480` / `1024x768` / `1280x960`，要与头显里的「分辨率」一致 |
+| `robot.head_camera_width/_height` | `640` / `480` | **每只眼**尺寸，只接受 `640x480` / `1024x768` / `1280x960`，要与头显输出的分辨率一致（默认都是 640x480） |
 | `robot.head_camera_fps` | `30` | 头显相机帧率 |
 | `robot.head_camera_pair_max_skew_ms` | `20.0` | 左右眼帧序号不同时，判为同一次曝光的最大时间差 |
 | `robot.head_camera_startup_timeout_s` | `5.0` | connect 时等待首帧的秒数 |
@@ -41,6 +41,6 @@
 
 ## SDK 与二次开发
 
-`xense.taccap`（`taccap-gripper` SDK）是 XTac-UMI G1 的 C++17 / Python 设备访问层：通过串口协议访问夹爪 MCU，提供 IMU、编码器、按键、LED、传感器错误、标定、OTA，以及仅从夹爪具备的电机控制；另有可选的腕部 UVC `Camera` 类。两个可消费面：`taccap_core` CMake target（`libtaccap_core.so`，供 ROS2 / CMake 工程以 `add_subdirectory()` 集成）和 `xense.taccap` Python 扩展，数采主仓库通过 `third_party/taccap-gripper` 子模块消费后者。数据集录制、时间对齐、分集、lerobot 适配都在上层仓库，不在 SDK 内。安装构建、示例、鱼眼标定与 API 说明见 [TacCap-Gripper 仓库 docs](https://github.com/XenseRobotics-AI/TacCap-Gripper/tree/main/docs)。
+自己写程序读取主夹爪、控制从夹爪，见 [SDK 与二次开发](../sdk/index.md)。
 
 术语见[术语表](../common/reference.md#glossary)；反馈渠道与相关仓库见[支持与反馈](../common/reference.md#support)。
