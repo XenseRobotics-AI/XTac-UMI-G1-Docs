@@ -74,7 +74,7 @@ hide:
 
 ## Two kits for different settings
 
-Both kits use the same grippers and headset and produce the same data; they differ in whether collection runs on the backpack or on your computer, and how you operate it on site.
+Both kits use the same grippers and headset and produce the same data. The Backpack Kit is a turnkey unit whose collection software is not open source; the Developer Kit's collection software and gripper SDK are open source and free to customize.
 
 <div class="grid cards xu-cards" markdown>
 
@@ -91,7 +91,7 @@ Both kits use the same grippers and headset and produce the same data; they diff
     - One person wears it, suited to field work and long sessions
     - Publish datasets to ModelScope in one click, as MCAP or LeRobotDataset v3
 
-    For large-scale collection teams and data factories
+    Turnkey, closed-source collection software; for large-scale collection teams and data factories
     { .xu-card__fit }
 
     [Quick start](backpack/index.md){ .md-button .md-button--primary }
@@ -102,7 +102,7 @@ Both kits use the same grippers and headset and produce the same data; they diff
 
     <span class="xu-tag xu-tag--pc">Developer Kit</span>
 
-    **XTac-UMI G1 Developer Kit**{ .xu-card__title }
+    **XTac-UMI G1 Developer Kit (open source)**{ .xu-card__title }
 
     ---
 

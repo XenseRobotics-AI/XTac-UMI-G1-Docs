@@ -74,7 +74,7 @@ hide:
 
 ## 两种配置，按场景选择
 
-两种配置使用同一套夹爪与头显，录出的数据定义一致；区别在于采集运行在背包上还是您的电脑上，以及现场怎么操作。
+两种配置使用同一套夹爪与头显，录出的数据定义一致。背包版是整机交付、开箱即用，采集软件不开源；PC 版的采集软件与夹爪 SDK 开源，可以自由二次开发。
 
 <div class="grid cards xu-cards" markdown>
 
@@ -91,7 +91,7 @@ hide:
     - 单人背负即可作业，适合现场与长时间采集
     - 一键将数据集发布到 ModelScope，支持 MCAP 与 LeRobotDataset v3 两种格式
 
-    适用于规模化数据采集团队与数采工厂
+    整机交付、开箱即用，采集软件不开源；适用于规模化数据采集团队与数采工厂
     { .xu-card__fit }
 
     [快速开始](backpack/index.md){ .md-button .md-button--primary }
@@ -102,7 +102,7 @@ hide:
 
     <span class="xu-tag xu-tag--pc">PC 版</span>
 
-    **XTac-UMI G1 开发套件**{ .xu-card__title }
+    **XTac-UMI G1 开发套件（开源）**{ .xu-card__title }
 
     ---
 
