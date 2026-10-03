@@ -41,145 +41,6 @@
     **原因**：`torchcodec` 与当前 PyTorch 的兼容版本不匹配，或 PyAV 不是要求的 `15.1.0`。
     **解决**：重跑 `setup_env.sh --install` 自动校正版本；需要带 `libsvtav1` 的系统 FFmpeg 时再单独安装。
 
-## Docker 交付镜像 {#docker}
-
-只在走 [Docker 那条路径](02-environment.md#docker)时会遇到。
-
-??? failure "`could not select device driver ... gpu` / 容器里看不到显卡"
-    **原因**：NVIDIA Container Toolkit 没装好，或装完没重启 Docker daemon。
-    **解决**：`install_customer.sh` 会自动装，手工确认用——
-
-    ```bash
-    docker run --rm --gpus all ubuntu:22.04 nvidia-smi
-    ```
-
-    这条能看到显卡，容器才能用 GPU。看不到就重装 Toolkit 并
-    `sudo systemctl restart docker`。宿主机驱动本身要 **≥ 570.144**。
-
-    !!! note "这条过了不代表图形能力也在"
-        `--gpus all` 只申请 compute + utility。CUDA 正常、Rerun 却起不来是另一回事，
-        见下面 `Failed to create surface` 那条。
-
-??? failure "`Unknown runtime specified nvidia`，`docker compose` 起不来"
-    **原因**：NVIDIA runtime 没有注册进 Docker。`compose.yaml` 用的是 `runtime: nvidia`
-    （为了拿到图形能力，理由见 [容器里的图形界面](02-environment.md#docker-gui)），
-    没注册就直接失败。
-    **解决**：
-
-    ```bash
-    sudo nvidia-ctk runtime configure --runtime=docker
-    sudo systemctl restart docker
-    docker info --format '{{json .Runtimes}}'     # 输出里要能看到 nvidia
-    ```
-
-??? failure "Rerun 报 `Failed to create surface for any enabled backend`，但 `nvidia-smi` 正常"
-    **原因**：容器拿到了 CUDA，却没拿到 NVIDIA 的 Vulkan ICD——典型是有人把
-    `compose.yaml` 的 `runtime: nvidia` 改回了 `gpus: all`，后者只申请 compute + utility。
-    容器里 `vulkaninfo` 会报 `INCOMPATIBLE_DRIVER` 或列不出 NVIDIA 设备。
-    **解决**：
-
-    ```bash
-    docker info --format '{{json .Runtimes}}'     # 确认列出了 nvidia
-    ```
-
-    没有就按上一条注册 runtime；有的话把 `compose.yaml` 改回 `runtime: nvidia`，
-    **不要**换成 `gpus: all`。
-
-??? failure "`docker compose` 报 `pull access denied ... 'docker login'`"
-    **原因**：通常不是权限问题——镜像包是**公开的**，拉取不需要登录。多半是镜像名被解析错了。
-    **解决**：
-
-    ```bash
-    docker compose config --images
-    ```
-
-    看解析出来的镜像名对不对，再检查 `.env` 里有没有写错的 `LEROBOT_IMAGE`。
-    默认就是 `ghcr.io/xenserobotics-ai/xense-taccap-lerobot`，**正常情况下 `.env` 里只需要写 tag 一行**，
-    见 [录数据前先把版本钉死](02-environment.md#docker-pin)。
-
-??? failure "改了 `.env` 里的 `LEROBOT_IMAGE_TAG`，拉到的还是老镜像"
-    **原因**：改完没重新拉，或者 `.env` 不在执行 `docker compose` 的那个目录里。
-    **解决**：先确认解析结果，再拉：
-
-    ```bash
-    docker compose config --images
-    docker compose pull
-    ```
-
-    见 [录数据前先把版本钉死](02-environment.md#docker-pin)。
-
-??? failure "容器里 `mamba activate` 报 `Shell not initialized`"
-    **原因**：不用 activate——**进容器时环境本来就是激活的**，`lerobot-info` 一类命令直接可用。
-    **解决**：确实要手工切环境时，先初始化一次 shell hook：
-
-    ```bash
-    eval "$(mamba shell hook --shell bash)"
-    ```
-
-    `0.0.6` 起镜像已经内置了这个 hook，不会再出现这条提示。
-
-??? failure "进容器时打印 `groups: cannot find name for group ID <n>`"
-    **无害**，可以忽略。NVIDIA runtime 把宿主机的 `render` 组 GID 注入了进来，而容器里
-    没有同名的组，仅此而已。不影响 GPU、相机或采集。
-
-??? failure "容器里 `lerobot-record` 一开录就崩，报 `FileNotFoundError: 'spd-say'`"
-    **原因**：每集开始会语音播报一句，而播报用的 `spd-say` **不在 `0.0.5` 及更早的镜像里**，
-    偏偏 `--play_sounds` 默认是 `true`。第一集播报就抛异常，收尾时"Stop recording"那句又抛一次，
-    于是变成 `terminate called without an active exception` 直接崩掉。
-    **解决**：把播报关掉即可，**采集本身不受任何影响**：
-
-    ```bash
-    lerobot-record --play_sounds=false ... 
-    ```
-
-    **`0.0.6` 起已经修好**（播报失败只告警一次，不再中断录制），升级后就不用带这个参数了；
-    仍然钉在 `0.0.5` 及更早的机器都要带。Mamba 路径上装了 `speech-dispatcher` 的主机不受影响。
-
-    !!! note "修好之后容器里仍然听不到声音"
-        `0.0.6` 的镜像装了 `speech-dispatcher`，但**没有装语音合成器模块**，所以播报只是被
-        安全地跳过并告警一次。**这是刻意的**：容器里没有可用的音频输出，补上合成器之后
-        `spd-say` 会从"立刻失败"变成"一直挂着"，反而更糟。真要听到提示音，请在宿主机上跑录制。
-
-??? failure "导出数据时每个 `.mp4` 都报 `Permission denied`，元数据却拷得动"
-    **原因**：`0.0.5` 及更早的镜像录出来的视频是 `-rw------- root`（拼接用的临时文件是 `0600`，
-    移动时保留了权限），而元数据是正常的 `0644`。所以非 root 拷贝时**只有视频失败**，
-    看着像个别文件坏了——文件其实是好的。
-    **解决**：按 [数据放在哪](02-environment.md#docker-data) 那条**以 root 拷、拷完再 `chown`**
-    的写法导出，不要用 `--user`。**`0.0.6` 起录出来的视频就是 `0644`**，不会再有这个现象；
-    但这取决于**当初录数据的那版镜像**，升级不会改写已经录好的文件，老数据仍按上面的写法导出。
-
-??? failure "容器里看得到 `/dev/ttyACM*`，却报 busy"
-    **原因**：ModemManager 抢占，这是**宿主机**的事——容器管不了宿主机的热插拔规则。
-    **解决**：在宿主机装那条 udev 规则（见 [3.2](03-host-hardware.md#32)），
-    再重新插拔夹爪。`install_customer.sh` 已经帮你装过一次，手工验证同 3.2。
-
-??? failure "宿主机能看到触觉传感器，容器里找不到"
-    **原因**：容器不是通过 Compose 启动的（`/dev`、`/run/udev` 没透传），或 USB 重新枚举后
-    设备节点还没稳定。
-    **解决**：用 `docker compose run --rm xense-taccap` 进容器；在容器里确认节点在——
-
-    ```bash
-    ls /dev/v4l/by-id/*GSPS*
-    ```
-
-    空的话回宿主机重新插拔 USB hub，再 `sudo udevadm settle --timeout=20`。
-
-??? failure "容器里 Rerun 窗口出不来 / 报 Vulkan adapter 错误"
-    **原因**：X11 没授权，或容器里看不到 NVIDIA GPU。
-    **解决**：先在宿主机的图形桌面用户下执行 `xhost +si:localuser:root`，并确认
-    `echo "$DISPLAY"` 非空、`/tmp/.X11-unix` 存在；再在容器里确认
-    `nvidia-smi` 和 `vulkaninfo --summary` 都能识别到显卡。
-    见 [容器里的图形界面](02-environment.md#docker-gui)。
-
-    `nvidia-smi` 正常、只有 `vulkaninfo` 认不到显卡时，是图形能力没注入，
-    见上面 `Failed to create surface` 那条。
-
-??? failure "容器重启后传感器要重新读一遍、启动变慢"
-    **原因**：`xensesdk-cache` 这个 volume 被删了，配置缓存没了。
-    **解决**：让它留着就行——它按传感器序列号缓存配置，避免每次启动重读传感器 flash
-    并触发 USB 重新枚举。各 volume 的用途见
-    [数据放在哪](02-environment.md#docker-data)。
-
 ## 串口权限与设备发现
 
 ??? failure "`connect()` 报 `No leader gripper discovered for the <side> side.`"
@@ -568,3 +429,142 @@
 ---
 
 仍未解决？请带上完整报错、自检输出（`scan_grippers` 的 side / role / firmware_sn）、版本信息和复现命令，按[版本与支持](versions.md#support)中的渠道反馈。
+
+## Docker 交付镜像 {#docker}
+
+只在走 [Docker 那条路径](02-environment.md#docker)时会遇到。
+
+??? failure "`could not select device driver ... gpu` / 容器里看不到显卡"
+    **原因**：NVIDIA Container Toolkit 没装好，或装完没重启 Docker daemon。
+    **解决**：`install_customer.sh` 会自动装，手工确认用——
+
+    ```bash
+    docker run --rm --gpus all ubuntu:22.04 nvidia-smi
+    ```
+
+    这条能看到显卡，容器才能用 GPU。看不到就重装 Toolkit 并
+    `sudo systemctl restart docker`。宿主机驱动本身要 **≥ 570.144**。
+
+    !!! note "这条过了不代表图形能力也在"
+        `--gpus all` 只申请 compute + utility。CUDA 正常、Rerun 却起不来是另一回事，
+        见下面 `Failed to create surface` 那条。
+
+??? failure "`Unknown runtime specified nvidia`，`docker compose` 起不来"
+    **原因**：NVIDIA runtime 没有注册进 Docker。`compose.yaml` 用的是 `runtime: nvidia`
+    （为了拿到图形能力，理由见 [容器里的图形界面](02-environment.md#docker-gui)），
+    没注册就直接失败。
+    **解决**：
+
+    ```bash
+    sudo nvidia-ctk runtime configure --runtime=docker
+    sudo systemctl restart docker
+    docker info --format '{{json .Runtimes}}'     # 输出里要能看到 nvidia
+    ```
+
+??? failure "Rerun 报 `Failed to create surface for any enabled backend`，但 `nvidia-smi` 正常"
+    **原因**：容器拿到了 CUDA，却没拿到 NVIDIA 的 Vulkan ICD——典型是有人把
+    `compose.yaml` 的 `runtime: nvidia` 改回了 `gpus: all`，后者只申请 compute + utility。
+    容器里 `vulkaninfo` 会报 `INCOMPATIBLE_DRIVER` 或列不出 NVIDIA 设备。
+    **解决**：
+
+    ```bash
+    docker info --format '{{json .Runtimes}}'     # 确认列出了 nvidia
+    ```
+
+    没有就按上一条注册 runtime；有的话把 `compose.yaml` 改回 `runtime: nvidia`，
+    **不要**换成 `gpus: all`。
+
+??? failure "`docker compose` 报 `pull access denied ... 'docker login'`"
+    **原因**：通常不是权限问题——镜像包是**公开的**，拉取不需要登录。多半是镜像名被解析错了。
+    **解决**：
+
+    ```bash
+    docker compose config --images
+    ```
+
+    看解析出来的镜像名对不对，再检查 `.env` 里有没有写错的 `LEROBOT_IMAGE`。
+    默认就是 `ghcr.io/xenserobotics-ai/xense-taccap-lerobot`，**正常情况下 `.env` 里只需要写 tag 一行**，
+    见 [录数据前先把版本钉死](02-environment.md#docker-pin)。
+
+??? failure "改了 `.env` 里的 `LEROBOT_IMAGE_TAG`，拉到的还是老镜像"
+    **原因**：改完没重新拉，或者 `.env` 不在执行 `docker compose` 的那个目录里。
+    **解决**：先确认解析结果，再拉：
+
+    ```bash
+    docker compose config --images
+    docker compose pull
+    ```
+
+    见 [录数据前先把版本钉死](02-environment.md#docker-pin)。
+
+??? failure "容器里 `mamba activate` 报 `Shell not initialized`"
+    **原因**：不用 activate——**进容器时环境本来就是激活的**，`lerobot-info` 一类命令直接可用。
+    **解决**：确实要手工切环境时，先初始化一次 shell hook：
+
+    ```bash
+    eval "$(mamba shell hook --shell bash)"
+    ```
+
+    `0.0.6` 起镜像已经内置了这个 hook，不会再出现这条提示。
+
+??? failure "进容器时打印 `groups: cannot find name for group ID <n>`"
+    **无害**，可以忽略。NVIDIA runtime 把宿主机的 `render` 组 GID 注入了进来，而容器里
+    没有同名的组，仅此而已。不影响 GPU、相机或采集。
+
+??? failure "容器里 `lerobot-record` 一开录就崩，报 `FileNotFoundError: 'spd-say'`"
+    **原因**：每集开始会语音播报一句，而播报用的 `spd-say` **不在 `0.0.5` 及更早的镜像里**，
+    偏偏 `--play_sounds` 默认是 `true`。第一集播报就抛异常，收尾时"Stop recording"那句又抛一次，
+    于是变成 `terminate called without an active exception` 直接崩掉。
+    **解决**：把播报关掉即可，**采集本身不受任何影响**：
+
+    ```bash
+    lerobot-record --play_sounds=false ... 
+    ```
+
+    **`0.0.6` 起已经修好**（播报失败只告警一次，不再中断录制），升级后就不用带这个参数了；
+    仍然钉在 `0.0.5` 及更早的机器都要带。Mamba 路径上装了 `speech-dispatcher` 的主机不受影响。
+
+    !!! note "修好之后容器里仍然听不到声音"
+        `0.0.6` 的镜像装了 `speech-dispatcher`，但**没有装语音合成器模块**，所以播报只是被
+        安全地跳过并告警一次。**这是刻意的**：容器里没有可用的音频输出，补上合成器之后
+        `spd-say` 会从"立刻失败"变成"一直挂着"，反而更糟。真要听到提示音，请在宿主机上跑录制。
+
+??? failure "导出数据时每个 `.mp4` 都报 `Permission denied`，元数据却拷得动"
+    **原因**：`0.0.5` 及更早的镜像录出来的视频是 `-rw------- root`（拼接用的临时文件是 `0600`，
+    移动时保留了权限），而元数据是正常的 `0644`。所以非 root 拷贝时**只有视频失败**，
+    看着像个别文件坏了——文件其实是好的。
+    **解决**：按 [数据放在哪](02-environment.md#docker-data) 那条**以 root 拷、拷完再 `chown`**
+    的写法导出，不要用 `--user`。**`0.0.6` 起录出来的视频就是 `0644`**，不会再有这个现象；
+    但这取决于**当初录数据的那版镜像**，升级不会改写已经录好的文件，老数据仍按上面的写法导出。
+
+??? failure "容器里看得到 `/dev/ttyACM*`，却报 busy"
+    **原因**：ModemManager 抢占，这是**宿主机**的事——容器管不了宿主机的热插拔规则。
+    **解决**：在宿主机装那条 udev 规则（见 [3.2](03-host-hardware.md#32)），
+    再重新插拔夹爪。`install_customer.sh` 已经帮你装过一次，手工验证同 3.2。
+
+??? failure "宿主机能看到触觉传感器，容器里找不到"
+    **原因**：容器不是通过 Compose 启动的（`/dev`、`/run/udev` 没透传），或 USB 重新枚举后
+    设备节点还没稳定。
+    **解决**：用 `docker compose run --rm xense-taccap` 进容器；在容器里确认节点在——
+
+    ```bash
+    ls /dev/v4l/by-id/*GSPS*
+    ```
+
+    空的话回宿主机重新插拔 USB hub，再 `sudo udevadm settle --timeout=20`。
+
+??? failure "容器里 Rerun 窗口出不来 / 报 Vulkan adapter 错误"
+    **原因**：X11 没授权，或容器里看不到 NVIDIA GPU。
+    **解决**：先在宿主机的图形桌面用户下执行 `xhost +si:localuser:root`，并确认
+    `echo "$DISPLAY"` 非空、`/tmp/.X11-unix` 存在；再在容器里确认
+    `nvidia-smi` 和 `vulkaninfo --summary` 都能识别到显卡。
+    见 [容器里的图形界面](02-environment.md#docker-gui)。
+
+    `nvidia-smi` 正常、只有 `vulkaninfo` 认不到显卡时，是图形能力没注入，
+    见上面 `Failed to create surface` 那条。
+
+??? failure "容器重启后传感器要重新读一遍、启动变慢"
+    **原因**：`xensesdk-cache` 这个 volume 被删了，配置缓存没了。
+    **解决**：让它留着就行——它按传感器序列号缓存配置，避免每次启动重读传感器 flash
+    并触发 USB 重新枚举。各 volume 的用途见
+    [数据放在哪](02-environment.md#docker-data)。

@@ -48,163 +48,6 @@ variable and the on-screen verbosity with `XENSE_LOG_LEVEL`.
     **Fix**: re-run `setup_env.sh --install`, which corrects the versions automatically. Install a
     system FFmpeg with `libsvtav1` separately only if you actually need one.
 
-## Docker delivery image {#docker}
-
-Only relevant on [the Docker path](02-environment.md#docker).
-
-??? failure "`could not select device driver ... gpu` / no GPU inside the container"
-    **Cause**: the NVIDIA Container Toolkit is not installed, or the Docker daemon was not
-    restarted after installing it.
-    **Fix**: `install_customer.sh` installs it for you; to check by hand —
-
-    ```bash
-    docker run --rm --gpus all ubuntu:22.04 nvidia-smi
-    ```
-
-    The container can only use the GPU if this shows it. If it does not, reinstall the Toolkit and
-    `sudo systemctl restart docker`. The host driver itself must be **≥ 570.144**.
-
-    !!! note "Passing this does not mean graphics works"
-        `--gpus all` requests compute + utility only. CUDA working while Rerun refuses to start is
-        a different problem — see the `Failed to create surface` entry below.
-
-??? failure "`Unknown runtime specified nvidia`, `docker compose` will not start"
-    **Cause**: the NVIDIA runtime is not registered with Docker. `compose.yaml` uses
-    `runtime: nvidia` (to get graphics capability — the reasoning is in
-    [Graphics from inside the container](02-environment.md#docker-gui)), and without the
-    registration it fails outright.
-    **Fix**:
-
-    ```bash
-    sudo nvidia-ctk runtime configure --runtime=docker
-    sudo systemctl restart docker
-    docker info --format '{{json .Runtimes}}'     # nvidia must appear in the output
-    ```
-
-??? failure "Rerun reports `Failed to create surface for any enabled backend`, but `nvidia-smi` is fine"
-    **Cause**: the container got CUDA but not NVIDIA's Vulkan ICD. The usual reason is that
-    someone changed `runtime: nvidia` in `compose.yaml` back to `gpus: all`, which requests
-    compute + utility only. Inside the container `vulkaninfo` will report `INCOMPATIBLE_DRIVER` or
-    list no NVIDIA device.
-    **Fix**:
-
-    ```bash
-    docker info --format '{{json .Runtimes}}'     # confirm nvidia is listed
-    ```
-
-    If it is not, register the runtime as in the previous entry. If it is, change `compose.yaml`
-    back to `runtime: nvidia` — **do not** use `gpus: all`.
-
-??? failure "`docker compose` reports `pull access denied ... 'docker login'`"
-    **Cause**: usually not a permissions problem — the image package is **public** and pulling
-    needs no login. Far more often the image name resolved to something unexpected.
-    **Fix**:
-
-    ```bash
-    docker compose config --images
-    ```
-
-    Check the resolved image name, then look for a mistyped `LEROBOT_IMAGE` in `.env`. The default
-    is `ghcr.io/xenserobotics-ai/xense-taccap-lerobot`, and **normally `.env` needs only the tag line** —
-    see [Pin a version before you record](02-environment.md#docker-pin).
-
-??? failure "Changed `LEROBOT_IMAGE_TAG` in `.env` but still get the old image"
-    **Cause**: it was not pulled again after the change, or `.env` is not in the directory you run
-    `docker compose` from.
-    **Fix**: confirm what resolves, then pull:
-
-    ```bash
-    docker compose config --images
-    docker compose pull
-    ```
-
-    See [Pin a version before you record](02-environment.md#docker-pin).
-
-??? failure "`mamba activate` inside the container says `Shell not initialized`"
-    **Cause**: there is nothing to activate — **the environment is already active** when you enter
-    the container, and commands like `lerobot-info` work straight away.
-    **Fix**: if you really do want to switch environments by hand, initialise the shell hook once:
-
-    ```bash
-    eval "$(mamba shell hook --shell bash)"
-    ```
-
-    Images from `0.0.6` on ship this hook already, so the message no longer appears.
-
-??? failure "Entering the container prints `groups: cannot find name for group ID <n>`"
-    **Harmless**, ignore it. The NVIDIA runtime injected the host's `render` group GID and the
-    container has no group by that name — that is all. It affects neither the GPU, nor the
-    cameras, nor collection.
-
-??? failure "`lerobot-record` in the container dies as recording starts, with `FileNotFoundError: 'spd-say'`"
-    **Cause**: each episode is announced by text-to-speech, and the `spd-say` binary it uses is
-    **not in the `0.0.5` or earlier images** — while `--play_sounds` defaults to `true`. The first
-    episode announcement raises, the "Stop recording" announcement in teardown raises again while
-    that is being handled, and the process dies with
-    `terminate called without an active exception`.
-    **Fix**: turn the announcements off. **Collection itself is unaffected:**
-
-    ```bash
-    lerobot-record --play_sounds=false ...
-    ```
-
-    **Fixed from `0.0.6` on** — a failed announcement warns once and recording continues, so the
-    flag is no longer needed after upgrading. Machines still pinned to `0.0.5` or earlier need it.
-    Hosts on the Mamba path that have `speech-dispatcher` installed are unaffected.
-
-    !!! note "Even after the fix, the container stays silent"
-        The `0.0.6` image installs `speech-dispatcher` but **no speech synthesiser module**, so the
-        announcement is skipped safely and warned about once. **That is deliberate**: there is no
-        working audio sink in the container, and adding a synthesiser turns `spd-say` from failing
-        immediately into hanging, which is worse. To actually hear the announcements, record on the
-        host.
-
-??? failure "Exporting data fails with `Permission denied` on every `.mp4`, while the metadata copies fine"
-    **Cause**: videos recorded by the `0.0.5` and earlier images are `-rw------- root` (the
-    temporary file used for concatenation is `0600` and the move preserved its mode), while the
-    metadata is a normal `0644`. So a non-root copy fails on **the videos only**, which reads like a
-    few damaged files — the files are in fact fine.
-    **Fix**: export using the **copy as root, then `chown`** form in
-    [Where the data lives](02-environment.md#docker-data); do not use `--user`. **From `0.0.6` on,
-    recorded videos are `0644`** and this stops happening — but that depends on the image that
-    recorded the data, and upgrading does not rewrite files already written, so older data still
-    needs the form above.
-
-??? failure "`/dev/ttyACM*` is visible in the container but reports busy"
-    **Cause**: ModemManager took the port, which is a **host** matter — the container has no say
-    over the host's hot-plug rules.
-    **Fix**: install the udev rule on the host (see [3.2](03-host-hardware.md#32)) and re-plug the
-    gripper. `install_customer.sh` already installed it once; verifying by hand is the same as 3.2.
-
-??? failure "The host sees the tactile sensors, the container does not"
-    **Cause**: the container was not started through Compose (so `/dev` and `/run/udev` were not
-    passed through), or the device nodes have not settled after a USB re-enumeration.
-    **Fix**: enter with `docker compose run --rm xense-taccap`, then confirm the nodes exist inside
-    the container —
-
-    ```bash
-    ls /dev/v4l/by-id/*GSPS*
-    ```
-
-    If that is empty, go back to the host, re-plug the USB hub and run
-    `sudo udevadm settle --timeout=20`.
-
-??? failure "No Rerun window from the container / Vulkan adapter errors"
-    **Cause**: X11 was never authorised, or the container cannot see the NVIDIA GPU.
-    **Fix**: on the host, as the graphical desktop user, run `xhost +si:localuser:root` and check
-    that `echo "$DISPLAY"` is non-empty and `/tmp/.X11-unix` exists. Then, inside the container,
-    confirm that both `nvidia-smi` and `vulkaninfo --summary` recognise the GPU.
-    See [Graphics from inside the container](02-environment.md#docker-gui).
-
-    If `nvidia-smi` is fine and only `vulkaninfo` cannot see the GPU, graphics capability was not
-    injected — see the `Failed to create surface` entry above.
-
-??? failure "After a container restart the sensors are re-read and startup is slow"
-    **Cause**: the `xensesdk-cache` volume was deleted, taking the configuration cache with it.
-    **Fix**: leave it alone. It caches each sensor's configuration by serial, which avoids
-    re-reading sensor flash — and the USB re-enumeration that triggers — on every start. What each
-    volume holds: [Where the data lives](02-environment.md#docker-data).
-
 ## Serial permissions and device discovery
 
 ??? failure "`connect()` reports `No leader gripper discovered for the <side> side.`"
@@ -677,3 +520,160 @@ Only relevant on [the Docker path](02-environment.md#docker).
 Still stuck? Report it through the channels in [Versions & Support](versions.md#support), with the
 complete error, the self-check output (`scan_grippers`'s side / role / firmware_sn), version
 information and the command that reproduces it.
+
+## Docker delivery image {#docker}
+
+Only relevant on [the Docker path](02-environment.md#docker).
+
+??? failure "`could not select device driver ... gpu` / no GPU inside the container"
+    **Cause**: the NVIDIA Container Toolkit is not installed, or the Docker daemon was not
+    restarted after installing it.
+    **Fix**: `install_customer.sh` installs it for you; to check by hand —
+
+    ```bash
+    docker run --rm --gpus all ubuntu:22.04 nvidia-smi
+    ```
+
+    The container can only use the GPU if this shows it. If it does not, reinstall the Toolkit and
+    `sudo systemctl restart docker`. The host driver itself must be **≥ 570.144**.
+
+    !!! note "Passing this does not mean graphics works"
+        `--gpus all` requests compute + utility only. CUDA working while Rerun refuses to start is
+        a different problem — see the `Failed to create surface` entry below.
+
+??? failure "`Unknown runtime specified nvidia`, `docker compose` will not start"
+    **Cause**: the NVIDIA runtime is not registered with Docker. `compose.yaml` uses
+    `runtime: nvidia` (to get graphics capability — the reasoning is in
+    [Graphics from inside the container](02-environment.md#docker-gui)), and without the
+    registration it fails outright.
+    **Fix**:
+
+    ```bash
+    sudo nvidia-ctk runtime configure --runtime=docker
+    sudo systemctl restart docker
+    docker info --format '{{json .Runtimes}}'     # nvidia must appear in the output
+    ```
+
+??? failure "Rerun reports `Failed to create surface for any enabled backend`, but `nvidia-smi` is fine"
+    **Cause**: the container got CUDA but not NVIDIA's Vulkan ICD. The usual reason is that
+    someone changed `runtime: nvidia` in `compose.yaml` back to `gpus: all`, which requests
+    compute + utility only. Inside the container `vulkaninfo` will report `INCOMPATIBLE_DRIVER` or
+    list no NVIDIA device.
+    **Fix**:
+
+    ```bash
+    docker info --format '{{json .Runtimes}}'     # confirm nvidia is listed
+    ```
+
+    If it is not, register the runtime as in the previous entry. If it is, change `compose.yaml`
+    back to `runtime: nvidia` — **do not** use `gpus: all`.
+
+??? failure "`docker compose` reports `pull access denied ... 'docker login'`"
+    **Cause**: usually not a permissions problem — the image package is **public** and pulling
+    needs no login. Far more often the image name resolved to something unexpected.
+    **Fix**:
+
+    ```bash
+    docker compose config --images
+    ```
+
+    Check the resolved image name, then look for a mistyped `LEROBOT_IMAGE` in `.env`. The default
+    is `ghcr.io/xenserobotics-ai/xense-taccap-lerobot`, and **normally `.env` needs only the tag line** —
+    see [Pin a version before you record](02-environment.md#docker-pin).
+
+??? failure "Changed `LEROBOT_IMAGE_TAG` in `.env` but still get the old image"
+    **Cause**: it was not pulled again after the change, or `.env` is not in the directory you run
+    `docker compose` from.
+    **Fix**: confirm what resolves, then pull:
+
+    ```bash
+    docker compose config --images
+    docker compose pull
+    ```
+
+    See [Pin a version before you record](02-environment.md#docker-pin).
+
+??? failure "`mamba activate` inside the container says `Shell not initialized`"
+    **Cause**: there is nothing to activate — **the environment is already active** when you enter
+    the container, and commands like `lerobot-info` work straight away.
+    **Fix**: if you really do want to switch environments by hand, initialise the shell hook once:
+
+    ```bash
+    eval "$(mamba shell hook --shell bash)"
+    ```
+
+    Images from `0.0.6` on ship this hook already, so the message no longer appears.
+
+??? failure "Entering the container prints `groups: cannot find name for group ID <n>`"
+    **Harmless**, ignore it. The NVIDIA runtime injected the host's `render` group GID and the
+    container has no group by that name — that is all. It affects neither the GPU, nor the
+    cameras, nor collection.
+
+??? failure "`lerobot-record` in the container dies as recording starts, with `FileNotFoundError: 'spd-say'`"
+    **Cause**: each episode is announced by text-to-speech, and the `spd-say` binary it uses is
+    **not in the `0.0.5` or earlier images** — while `--play_sounds` defaults to `true`. The first
+    episode announcement raises, the "Stop recording" announcement in teardown raises again while
+    that is being handled, and the process dies with
+    `terminate called without an active exception`.
+    **Fix**: turn the announcements off. **Collection itself is unaffected:**
+
+    ```bash
+    lerobot-record --play_sounds=false ...
+    ```
+
+    **Fixed from `0.0.6` on** — a failed announcement warns once and recording continues, so the
+    flag is no longer needed after upgrading. Machines still pinned to `0.0.5` or earlier need it.
+    Hosts on the Mamba path that have `speech-dispatcher` installed are unaffected.
+
+    !!! note "Even after the fix, the container stays silent"
+        The `0.0.6` image installs `speech-dispatcher` but **no speech synthesiser module**, so the
+        announcement is skipped safely and warned about once. **That is deliberate**: there is no
+        working audio sink in the container, and adding a synthesiser turns `spd-say` from failing
+        immediately into hanging, which is worse. To actually hear the announcements, record on the
+        host.
+
+??? failure "Exporting data fails with `Permission denied` on every `.mp4`, while the metadata copies fine"
+    **Cause**: videos recorded by the `0.0.5` and earlier images are `-rw------- root` (the
+    temporary file used for concatenation is `0600` and the move preserved its mode), while the
+    metadata is a normal `0644`. So a non-root copy fails on **the videos only**, which reads like a
+    few damaged files — the files are in fact fine.
+    **Fix**: export using the **copy as root, then `chown`** form in
+    [Where the data lives](02-environment.md#docker-data); do not use `--user`. **From `0.0.6` on,
+    recorded videos are `0644`** and this stops happening — but that depends on the image that
+    recorded the data, and upgrading does not rewrite files already written, so older data still
+    needs the form above.
+
+??? failure "`/dev/ttyACM*` is visible in the container but reports busy"
+    **Cause**: ModemManager took the port, which is a **host** matter — the container has no say
+    over the host's hot-plug rules.
+    **Fix**: install the udev rule on the host (see [3.2](03-host-hardware.md#32)) and re-plug the
+    gripper. `install_customer.sh` already installed it once; verifying by hand is the same as 3.2.
+
+??? failure "The host sees the tactile sensors, the container does not"
+    **Cause**: the container was not started through Compose (so `/dev` and `/run/udev` were not
+    passed through), or the device nodes have not settled after a USB re-enumeration.
+    **Fix**: enter with `docker compose run --rm xense-taccap`, then confirm the nodes exist inside
+    the container —
+
+    ```bash
+    ls /dev/v4l/by-id/*GSPS*
+    ```
+
+    If that is empty, go back to the host, re-plug the USB hub and run
+    `sudo udevadm settle --timeout=20`.
+
+??? failure "No Rerun window from the container / Vulkan adapter errors"
+    **Cause**: X11 was never authorised, or the container cannot see the NVIDIA GPU.
+    **Fix**: on the host, as the graphical desktop user, run `xhost +si:localuser:root` and check
+    that `echo "$DISPLAY"` is non-empty and `/tmp/.X11-unix` exists. Then, inside the container,
+    confirm that both `nvidia-smi` and `vulkaninfo --summary` recognise the GPU.
+    See [Graphics from inside the container](02-environment.md#docker-gui).
+
+    If `nvidia-smi` is fine and only `vulkaninfo` cannot see the GPU, graphics capability was not
+    injected — see the `Failed to create surface` entry above.
+
+??? failure "After a container restart the sensors are re-read and startup is slow"
+    **Cause**: the `xensesdk-cache` volume was deleted, taking the configuration cache with it.
+    **Fix**: leave it alone. It caches each sensor's configuration by serial, which avoids
+    re-reading sensor flash — and the USB re-enumeration that triggers — on every start. What each
+    volume holds: [Where the data lives](02-environment.md#docker-data).
