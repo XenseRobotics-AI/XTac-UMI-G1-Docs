@@ -63,7 +63,7 @@ If what is on your devices differs from this table, upgrade to match it, or use 
 
 | Docs version | xense-taccap-lerobot (Developer Kit collection) | XTac-UMI XR (headset app) | XTac-UMI Collector (Backpack Kit collection unit) | TacCap-Gripper SDK (gripper SDK) |
 |---|---|---|---|---|
-| v0.1.0 | to be released | 0.3.2 | 0.4.1 | 0.4.1 |
+| v0.1.0 | v0.1.0 | 0.3.2 | 0.4.1 | 0.4.1 |
 
 The gripper firmware ships with the SDK (SDK 0.4.1 ships leader 1.2.6 and follower 1.2.14) and is not listed separately. How to upgrade each component is in [Developer Kit · Versions & upgrades](../pc/versions.md) and [Backpack Kit · Versions](../backpack/versions.md).
 

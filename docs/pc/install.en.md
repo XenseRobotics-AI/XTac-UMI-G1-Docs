@@ -87,7 +87,7 @@ Both paths need internet access: Mamba fetches conda-forge and PyPI packages, cl
 
     ```bash
     git clone \
-      --branch v0.0.8 \
+      --branch v0.1.0 \
       --recurse-submodules \
       https://github.com/XenseRobotics-AI/xense-taccap-lerobot.git
     cd xense-taccap-lerobot
@@ -179,7 +179,7 @@ Both paths need internet access: Mamba fetches conda-forge and PyPI packages, cl
     Run as a normal user (not root):
 
     ```bash
-    git clone --branch v0.0.8 https://github.com/XenseRobotics-AI/xense-taccap-lerobot.git
+    git clone --branch v0.1.0 https://github.com/XenseRobotics-AI/xense-taccap-lerobot.git
     cd xense-taccap-lerobot
     ./docker/install_customer.sh
     ```
@@ -195,7 +195,7 @@ Both paths need internet access: Mamba fetches conda-forge and PyPI packages, cl
     For a fully offline machine, ask your delivery channel for the image `.tar` bundle, drop it in the repo root or pass it as the first argument, and the script verifies and imports it instead:
 
     ```bash
-    ./docker/install_customer.sh xense-taccap-lerobot-0.0.8-linux-amd64.tar
+    ./docker/install_customer.sh xense-taccap-lerobot-0.1.0-linux-amd64.tar
     ```
 
     Pulling online is still the default: most of the image's twenty-odd GB is dependency layers that rarely change, so an upgrade fetches only the few layers that moved.
@@ -205,7 +205,7 @@ Both paths need internet access: Mamba fetches conda-forge and PyPI packages, cl
     The default `latest` tag floats: the next release repoints it to a new image. Before real collection, pin a version in the repo root's `.env`. `compose.yaml` already points at the official GHCR image, so only the tag line is needed and there is no need to set `LEROBOT_IMAGE` (only for a different image name). The repository name shown by `docker compose config --images` may differ from the one above; check the tag, it is the same image:
 
     ```dotenv
-    LEROBOT_IMAGE_TAG=0.0.8
+    LEROBOT_IMAGE_TAG=0.1.0
     ```
 
     Confirm that this is the version that resolves, then pull:

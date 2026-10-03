@@ -87,7 +87,7 @@
 
     ```bash
     git clone \
-      --branch v0.0.8 \
+      --branch v0.1.0 \
       --recurse-submodules \
       https://github.com/XenseRobotics-AI/xense-taccap-lerobot.git
     cd xense-taccap-lerobot
@@ -179,7 +179,7 @@
     用普通用户（不要用 root）执行：
 
     ```bash
-    git clone --branch v0.0.8 https://github.com/XenseRobotics-AI/xense-taccap-lerobot.git
+    git clone --branch v0.1.0 https://github.com/XenseRobotics-AI/xense-taccap-lerobot.git
     cd xense-taccap-lerobot
     ./docker/install_customer.sh
     ```
@@ -195,7 +195,7 @@
     完全离线的机器向交付渠道要镜像 `.tar` 包，放进仓库根目录或作为第一个参数传给脚本，脚本会改为校验并导入：
 
     ```bash
-    ./docker/install_customer.sh xense-taccap-lerobot-0.0.8-linux-amd64.tar
+    ./docker/install_customer.sh xense-taccap-lerobot-0.1.0-linux-amd64.tar
     ```
 
     在线拉取仍是默认：镜像二十多 GB 大部分是不常变的依赖层，升级只拉变动的几层。
@@ -205,7 +205,7 @@
     默认拉的 `latest` 是浮动的，下次发布会指向新镜像。正式采集前在仓库根目录的 `.env` 里钉死版本；`compose.yaml` 已默认指向官方 GHCR 镜像，只需要写 tag 这一行，不需要再写 `LEROBOT_IMAGE`（只在换镜像名时用）：`docker compose config --images` 显示的仓库名可能和上文的不同，按 tag 核对即可，两者是同一个镜像：
 
     ```dotenv
-    LEROBOT_IMAGE_TAG=0.0.8
+    LEROBOT_IMAGE_TAG=0.1.0
     ```
 
     改完确认解析到的是这一版，再拉：

@@ -9,7 +9,7 @@ This page gives the version baseline you must reach before collecting, and how t
 
 | Component | Minimum | How to check |
 |---|---|---|
-| `xense-taccap-lerobot` | `0.5.1+xtac.0.0.8` | `pip show lerobot`, or look at `pyproject.toml` |
+| `xense-taccap-lerobot` | `0.5.1+xtac.0.1.0` | `pip show lerobot`, or look at `pyproject.toml` |
 | `xense.taccap` SDK | **0.4.1** | `python -c "import xense.taccap as t; print(t.__version__)"` |
 | Gripper firmware | **command set V2.1**, i.e. leader ≥ 1.2.0 / follower ≥ 1.1.0; with a follower gripper (`--robot.role=follower`) the follower needs ≥ 1.2.5 (below 1.2.11 it warns you to upgrade) | Run [`calibrate.py`](calibration.md#41); if the version is too old it prints the current version and exits. Or [read it directly](#check-versions) |
 | Encoder calibration on every leader | Zero + travel limit written to flash | [Gripper calibration](calibration.md#41) |
@@ -40,8 +40,8 @@ Commands and fields should be taken from your local checkout and from the device
 | `rerun-sdk` | `>=0.24.0,<0.27.0` | 0.26.2 |
 | `opencv-python` | `==4.12.0.88` | 4.12.0.88 |
 | NumPy | `>=1.26.4` | 2.2.6 |
-| `xense-taccap-lerobot` | Based on lerobot 0.5.1, version `0.5.1+xtac.0.0.8` | `v0.0.8` (`da5c3eff`) |
-| `xense.taccap` SDK | Matched to the main repo's submodule `third_party/taccap-gripper` | 0.4.1 (tag `v0.4.1`), bundling firmware leader 1.2.6 / follower 1.2.14; the submodule in the `v0.0.8` tag is still `3d44440` (0.1.9), updated at the next release |
+| `xense-taccap-lerobot` | Based on lerobot 0.5.1, version `0.5.1+xtac.0.1.0` | `v0.1.0` |
+| `xense.taccap` SDK | Matched to the main repo's submodule `third_party/taccap-gripper` | 0.4.1 (tag `v0.4.1`, submodule `afff1b7`), bundling firmware leader 1.2.6 / follower 1.2.14 |
 | Gripper firmware | Command set V2.1 (wire framing V1.8), leader ≥ 1.2.0 / follower ≥ 1.1.0 | leader 1.2.6 / follower 1.2.14, follows the SDK, with `firmware/manifest.json` as the authority, see [OTA](#ota); the SDK refuses a follower below 1.2.5 and warns below 1.2.11 |
 | `xensesdk` | Provided by the install script | 2.1.2 |
 | XenseVR PC Service (`.deb`) | ≥ v0.2.0; install v0.2.1 on a new machine | v0.2.1 |
@@ -104,14 +104,15 @@ python -c "import xensevr_pc_service_sdk as xrt; print('pico camera API:', hasat
 
 `pip show xensevr-pc-service-sdk` shows the `.deb` version read from `dpkg` at build time; for the head camera interface check `has_pico_camera_frame`; for gripper SNs and roles use the self-check command in [Quickstart](quickstart.md#self-check).
 
-## What's new in 0.0.8 {#whats-new}
+## What's new in 0.1.0 {#whats-new}
 
-- **Machines without an NVIDIA card must upgrade**: software encoding no longer grows by about 1.3 GB per episode, so long sessions no longer run out of memory.
-- In `meta/stats.json` the `std` of image/video features was always 0 before; if you normalise images by `std` during training, recompute the statistics for older datasets, see [Dataset](dataset.md#stats-std).
-- The Rerun display moved off the recording loop; recording with `--display_data` on no longer slows collection, see [Record](recording.md#52).
-- After a re-record (←) the reset phase still follows; `--resume` refuses when `--robot.id` does not match the dataset.
-- The leader's encoder is streamed by the firmware (`--robot.gripper_stream_hz`, default 100); the session log is enough to diagnose a run on its own.
-- After moving to v0.0.8 you **must re-run `./setup_env.sh --install`**.
+- **Whether the headset is recorded is now set by `--robot.type`**: bimanual rigs gain `xtac_umi_g1` (headset stereo images and head pose), and `bi_taccap_gripper` no longer records the headset; a bimanual command that still passes `--robot.enable_head_camera` contradicting the type is rejected with an error. The three tiers are in [Record](recording.md#52).
+- The gripper SDK moves to 0.4.1, bundling firmware leader 1.2.6 / follower 1.2.14; follower firmware below 1.2.5 is refused and below 1.2.11 triggers an upgrade prompt, see [Firmware OTA](#ota).
+- `meta/runtimes/` is no longer written; `meta/info.json` gains `collection_stack`, naming the collection software that recorded the data, see [Dataset](dataset.md).
+- `lerobot-check-dataset` now requires the video frame count to match exactly: missing frames are an error, extra frames a warning; editing a dataset re-encodes with the same encoder used for collection.
+- The Docker image can speak voice prompts from inside the container.
+- The repo, submodule and image paths moved to the `XenseRobotics-AI` organisation.
+- After moving to v0.1.0 you **must re-run `./setup_env.sh --install`**.
 
 ## Repo and submodule update {#repo-update}
 
@@ -119,10 +120,10 @@ Update by release tag rather than pulling `main` (`main` may carry unreleased ch
 
 ```bash
 git fetch --tags
-git checkout v0.0.8
+git checkout v0.1.0
 git submodule update --init --recursive --progress
 ./setup_env.sh --install     # realign the dependencies and rebuild xense.taccap
-git submodule status         # the submodule should show 3d44440…
+git submodule status         # the submodule should show afff1b7… (v0.4.1)
 ```
 
 !!! warning "`xense.taccap` must be rebuilt after pulling the submodule"

@@ -9,7 +9,7 @@
 
 | 组件 | 最低要求 | 怎么查 |
 |---|---|---|
-| `xense-taccap-lerobot` | `0.5.1+xtac.0.0.8` | `pip show lerobot` 或看 `pyproject.toml` |
+| `xense-taccap-lerobot` | `0.5.1+xtac.0.1.0` | `pip show lerobot` 或看 `pyproject.toml` |
 | `xense.taccap` SDK | **0.4.1** | `python -c "import xense.taccap as t; print(t.__version__)"` |
 | 夹爪固件 | **命令集 V2.1**，即 leader ≥ 1.2.0 / follower ≥ 1.1.0；用从夹爪（`--robot.role=follower`）时 follower 须 ≥ 1.2.5（低于 1.2.11 会提示升级） | 跑 [`calibrate.py`](calibration.md#41)，版本不够会打印当前版本并退出；或[直接读](#check-versions) |
 | 每台 leader 的编码器标定 | 零点 + 行程上限已写入 flash | [夹爪标定](calibration.md#41) |
@@ -40,8 +40,8 @@ flowchart LR
 | `rerun-sdk` | `>=0.24.0,<0.27.0` | 0.26.2 |
 | `opencv-python` | `==4.12.0.88` | 4.12.0.88 |
 | NumPy | `>=1.26.4` | 2.2.6 |
-| `xense-taccap-lerobot` | 基于 lerobot 0.5.1，版本号 `0.5.1+xtac.0.0.8` | `v0.0.8`（`da5c3eff`） |
-| `xense.taccap` SDK | 与主仓库子模块 `third_party/taccap-gripper` 配套 | 0.4.1（tag `v0.4.1`），附带固件 leader 1.2.6 / follower 1.2.14；`v0.0.8` 标签里的子模块仍是 `3d44440`（0.1.9），下一版发布时更新 |
+| `xense-taccap-lerobot` | 基于 lerobot 0.5.1，版本号 `0.5.1+xtac.0.1.0` | `v0.1.0` |
+| `xense.taccap` SDK | 与主仓库子模块 `third_party/taccap-gripper` 配套 | 0.4.1（tag `v0.4.1`，子模块 `afff1b7`），附带固件 leader 1.2.6 / follower 1.2.14 |
 | 夹爪固件 | 命令集 V2.1（帧格式 V1.8），leader ≥ 1.2.0 / follower ≥ 1.1.0 | leader 1.2.6 / follower 1.2.14，随 SDK 走，以 `firmware/manifest.json` 为准，见 [OTA](#ota)；从夹爪低于 1.2.5 时 SDK 拒绝连接，低于 1.2.11 时提示升级 |
 | `xensesdk` | 由安装脚本提供 | 2.1.2 |
 | XenseVR PC Service(`.deb`) | ≥ v0.2.0，装机直接用 v0.2.1 | v0.2.1 |
@@ -104,14 +104,15 @@ python -c "import xensevr_pc_service_sdk as xrt; print('pico camera API:', hasat
 
 `pip show xensevr-pc-service-sdk` 显示的是构建时从 `dpkg` 读到的 `.deb` 版本；头显相机接口看 `has_pico_camera_frame`；夹爪 SN 与角色用[快速开始](quickstart.md#self-check)的自检命令看。
 
-## 0.0.8 更新要点 {#whats-new}
+## 0.1.0 更新要点 {#whats-new}
 
-- **没有 NVIDIA 显卡的机器必须升级**：软件编码不再每条 episode 多占约 1.3 GB 内存，长时间录制不会再耗尽内存。
-- 数据集 `meta/stats.json` 里图像/视频特征的 `std` 此前恒为 0；训练时若按 `std` 归一化图像，旧数据集需要重算统计量，见[数据集](dataset.md#stats-std)。
-- Rerun 显示移出了录制循环，开着 `--display_data` 录制也不再拖慢采集，见[录制](recording.md#52)。
-- 重录（←）之后照常进入复位阶段；`--resume` 时 `--robot.id` 与数据集不一致会直接拒绝续录。
-- 主夹爪编码器改为固件主动推流（`--robot.gripper_stream_hz`，默认 100）；会话日志可单独定位问题。
-- 拉到 v0.0.8 后**必须重跑 `./setup_env.sh --install`**。
+- **带不带头显改由 `--robot.type` 决定**：双夹爪新增 `xtac_umi_g1`（录头显双目画面与头部位姿），`bi_taccap_gripper` 不再录头显；双夹爪命令里再写 `--robot.enable_head_camera` 且与类型矛盾时会直接报错。三档写法见[录制](recording.md#52)。
+- 夹爪 SDK 升到 0.4.1，附带固件主夹爪 1.2.6 / 从夹爪 1.2.14；从夹爪固件低于 1.2.5 拒绝连接，低于 1.2.11 提示升级，见[固件 OTA](#ota)。
+- 不再落盘 `meta/runtimes/`；`meta/info.json` 新增 `collection_stack`，标明数据由哪套采集软件录制，见[数据集](dataset.md)。
+- `lerobot-check-dataset` 的视频帧数改为严格相等：少帧报错、多帧告警；编辑数据集时重新编码沿用采集的那套编码器。
+- Docker 镜像支持在容器内语音播报。
+- 仓库、子模块与镜像地址迁到 `XenseRobotics-AI` 组织。
+- 拉到 v0.1.0 后**必须重跑 `./setup_env.sh --install`**。
 
 ## 仓库与子模块更新 {#repo-update}
 
@@ -119,10 +120,10 @@ python -c "import xensevr_pc_service_sdk as xrt; print('pico camera API:', hasat
 
 ```bash
 git fetch --tags
-git checkout v0.0.8
+git checkout v0.1.0
 git submodule update --init --recursive --progress
 ./setup_env.sh --install     # 对齐依赖并重编 xense.taccap
-git submodule status         # 子模块应显示 3d44440…
+git submodule status         # 子模块应显示 afff1b7…（v0.4.1）
 ```
 
 !!! warning "拉完子模块必须重新编译 `xense.taccap`"

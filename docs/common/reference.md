@@ -63,7 +63,7 @@
 
 | 文档版本 | xense-taccap-lerobot（PC 版数采） | XTac-UMI XR（头显应用） | XTac-UMI Collector（背包版采集单元） | TacCap-Gripper SDK（夹爪 SDK） |
 |---|---|---|---|---|
-| v0.1.0 | 待发布 | 0.3.2 | 0.4.1 | 0.4.1 |
+| v0.1.0 | v0.1.0 | 0.3.2 | 0.4.1 | 0.4.1 |
 
 夹爪固件随 SDK 附带（SDK 0.4.1 附带主夹爪 1.2.6、从夹爪 1.2.14），不单独列。各组件的升级方法见 [PC 版 · 版本与升级](../pc/versions.md) 与 [背包版 · 版本](../backpack/versions.md)。
 
