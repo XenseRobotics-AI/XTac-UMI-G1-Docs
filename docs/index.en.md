@@ -147,4 +147,4 @@ The console's live monitor is a Backpack Kit capability; the main text is in the
 
 ## Developer Kit open-source repositories
 
-The Developer Kit's collection repo and gripper SDK are open source under Apache-2.0, see [the list](pc/index.md#repos); the Backpack Kit's software is closed and preinstalled.
+The Developer Kit's collection repo, gripper SDK, tracker service and viewer are open source under Apache-2.0, see [the list](pc/index.md#repos); the Backpack Kit's software is closed.

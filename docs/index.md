@@ -147,4 +147,4 @@ hide:
 
 ## PC 版开源仓库
 
-PC 版数采主仓库与夹爪 SDK 以 Apache-2.0 许可开源，清单见 [PC 版开源仓库](pc/index.md#repos)；背包版采集软件不开源，随背包预装。
+PC 版的数采主仓库、夹爪 SDK、追踪器服务与可视化工具均以 Apache-2.0 许可开源，清单见 [PC 版开源仓库](pc/index.md#repos)；背包版采集软件不开源。

@@ -164,10 +164,10 @@ Field details are in [What each frame records](recording.md#53), the dataset for
 
 Everything the Developer Kit runs on is open source; the table lists each repository and what it is for. The Backpack Kit's collection software is not open source and is not listed here.
 
-| Repo / package | Notes |
-|---|---|
-| [`xense-taccap-lerobot`](https://github.com/XenseRobotics-AI/xense-taccap-lerobot) | Data-collection repo, customized from lerobot 0.5.1 |
-| [`xense.taccap`](https://github.com/XenseRobotics-AI/TacCap-Gripper) | Gripper SDK, included in the data-collection repo as a submodule; [developer docs](../sdk/index.md) |
-| [`xensevr_pc_service_sdk`](https://github.com/XenseRobotics-AI/XenseVR-PC-Service) | Pico4 Ultra Enterprise PC service, installed as a `.deb` |
-| [`xensesdk`](https://github.com/XenseRobotics/xensesdk) | Visuotactile sensor SDK, installed by the setup script; [developer docs](https://docs.xenserobotics.com/) |
-| [`xense-lerobot-viewer`](https://github.com/XenseRobotics-AI/xense-lerobot-viewer) | Open-source local visualization tool for browsing LeRobot datasets in the browser |
+| Repo / package | License | Notes |
+|---|---|---|
+| [`xense-taccap-lerobot`](https://github.com/XenseRobotics-AI/xense-taccap-lerobot) | Apache-2.0 | Data-collection repo, customized from lerobot 0.5.1 |
+| [`xense.taccap`](https://github.com/XenseRobotics-AI/TacCap-Gripper) | Apache-2.0 | Gripper SDK, included in the data-collection repo as a submodule; [developer docs](../sdk/index.md) |
+| [`xensevr_pc_service_sdk`](https://github.com/XenseRobotics-AI/XenseVR-PC-Service) | Apache-2.0 | Pico4 Ultra Enterprise PC service, installed as a `.deb` |
+| [`xensesdk`](https://github.com/XenseRobotics/xensesdk) | not stated | Visuotactile sensor SDK, installed by the setup script; [developer docs](https://docs.xenserobotics.com/) |
+| [`xense-lerobot-viewer`](https://github.com/XenseRobotics-AI/xense-lerobot-viewer) | Apache-2.0 | Open-source local visualization tool for browsing LeRobot datasets in the browser |

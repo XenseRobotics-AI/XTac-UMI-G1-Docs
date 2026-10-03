@@ -164,10 +164,10 @@ PC 版把计算放在你自己的 x86 工作站上（推荐 NVIDIA GPU，Mamba �
 
 PC 版用到的软件都开源，下表是各仓库及其用途。背包版的采集软件不开源，不在此列。
 
-| 仓库 / 包 | 备注 |
-|---|---|
-| [`xense-taccap-lerobot`](https://github.com/XenseRobotics-AI/xense-taccap-lerobot) | 数采主仓库，基于 lerobot 0.5.1 定制 |
-| [`xense.taccap`](https://github.com/XenseRobotics-AI/TacCap-Gripper) | 夹爪 SDK，数采仓库以子模块引入；[开发文档](../sdk/index.md) |
-| [`xensevr_pc_service_sdk`](https://github.com/XenseRobotics-AI/XenseVR-PC-Service) | Pico4 Ultra 企业版 PC 服务，以 `.deb` 安装 |
-| [`xensesdk`](https://github.com/XenseRobotics/xensesdk) | 视触觉传感器 SDK，由安装脚本安装；[开发文档](https://docs.xenserobotics.com/) |
-| [`xense-lerobot-viewer`](https://github.com/XenseRobotics-AI/xense-lerobot-viewer) | 开源的本地可视化工具，在浏览器里查看本地 LeRobot 数据集 |
+| 仓库 / 包 | 许可证 | 备注 |
+|---|---|---|
+| [`xense-taccap-lerobot`](https://github.com/XenseRobotics-AI/xense-taccap-lerobot) | Apache-2.0 | 数采主仓库，基于 lerobot 0.5.1 定制 |
+| [`xense.taccap`](https://github.com/XenseRobotics-AI/TacCap-Gripper) | Apache-2.0 | 夹爪 SDK，数采仓库以子模块引入；[开发文档](../sdk/index.md) |
+| [`xensevr_pc_service_sdk`](https://github.com/XenseRobotics-AI/XenseVR-PC-Service) | Apache-2.0 | Pico4 Ultra 企业版 PC 服务，以 `.deb` 安装 |
+| [`xensesdk`](https://github.com/XenseRobotics/xensesdk) | 未声明 | 视触觉传感器 SDK，由安装脚本安装；[开发文档](https://docs.xenserobotics.com/) |
+| [`xense-lerobot-viewer`](https://github.com/XenseRobotics-AI/xense-lerobot-viewer) | Apache-2.0 | 开源的本地可视化工具，在浏览器里查看本地 LeRobot 数据集 |
