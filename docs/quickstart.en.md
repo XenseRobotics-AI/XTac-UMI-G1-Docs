@@ -50,8 +50,6 @@ One line per gripper, `role` is `Leader` or `Follower`, and the serial is not em
 lerobot-teleoperate \
     --robot.type=bi_taccap_gripper \
     --robot.id=0 \
-    --robot.enable_tracker=true \
-    --robot.enable_head_camera=false \
     --fps=30 \
     --display_data=true
 ```
@@ -61,13 +59,13 @@ lerobot-teleoperate \
 <figcaption>Move and open/close the grippers, check that every image, tactile stream and pose updates, then press Ctrl+C</figcaption>
 </figure>
 
-That is the standard setup (with tracker pose). The tiers differ only in `--robot.enable_tracker` and `--robot.enable_head_camera`; **record with the same tier you previewed**:
+That is the standard setup: both grippers plus tracker pose. The tiers are chosen with `--robot.type`; **record with the same tier you previewed**:
 
-| Tier | Tracker | Headset camera | Data included |
-|---|---|---|---|
-| ① Grippers only | `false` | `false` | Tactile, wrist cameras, gripper opening; no PC Service needed |
-| ② Plus tracker (standard) | `true` | `false` | Adds the gripper pose `tcp.*` |
-| ③ Everything | `true` | `true` | Adds headset stereo images and head pose; needs PC Service ≥ v0.2.0 |
+| Tier | How | Data included |
+|---|---|---|
+| ① Grippers only | `--robot.type=bi_taccap_gripper --robot.enable_tracker=false` | Tactile, wrist cameras, gripper opening; no PC Service needed |
+| ② Plus tracker (standard) | `--robot.type=bi_taccap_gripper` | Adds the gripper pose `tcp.*` |
+| ③ Plus headset | `--robot.type=xtac_umi_g1` | Adds headset stereo images and head pose |
 
 Keep the trackers in the headset's view before starting; occlusion loses tracking.
 
@@ -77,8 +75,6 @@ Keep the trackers in the headset's view before starting; occlusion loses trackin
 lerobot-record \
     --robot.type=bi_taccap_gripper \
     --robot.id=0 \
-    --robot.enable_tracker=true \
-    --robot.enable_head_camera=false \
     --dataset.repo_id=<your_org>/<dataset_name> \
     --dataset.single_task='Pick up the object' \
     --dataset.num_episodes=1 \
@@ -90,11 +86,11 @@ lerobot-record \
 
 <figure class="tc-shot tc-shot--narrow" markdown>
 ![The eight streams and their dataset keys](assets/dataset/sensor-key-map.webp)
-<figcaption>With everything on, the eight streams recorded every frame and their keys in the dataset</figcaption>
+<figcaption>With `xtac_umi_g1`, the eight streams recorded every frame and their keys in the dataset</figcaption>
 </figure>
 
 - `--robot.id` is required: the station number as a plain number (`0`, `1`, …), one per kit.
-- Keep the two `enable_*` switches the same as in the preview; see the table above.
+- Keep `--robot.type` (and whether you add `--robot.enable_tracker=false`) the same as in the preview; see the table above.
 - Single gripper: `--robot.type=taccap_gripper`; with both grippers plugged in, add `--robot.side=left` or `right`.
 
 All parameters: [Recording parameters](05-data-collection.md#params).

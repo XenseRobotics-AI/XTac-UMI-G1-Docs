@@ -50,8 +50,6 @@ for g in scan_grippers(): print(g.side.name, g.role.name, repr(g.firmware_sn))"
 lerobot-teleoperate \
     --robot.type=bi_taccap_gripper \
     --robot.id=0 \
-    --robot.enable_tracker=true \
-    --robot.enable_head_camera=false \
     --fps=30 \
     --display_data=true
 ```
@@ -61,13 +59,13 @@ lerobot-teleoperate \
 <figcaption>移动、开合夹爪，确认各路画面、触觉和位姿都在更新，然后按 Ctrl+C 退出</figcaption>
 </figure>
 
-上面是标准配置（带追踪器位姿）。三档的区别只在 `--robot.enable_tracker` 和 `--robot.enable_head_camera` 两个开关，**预览用哪一档，录制就用哪一档**：
+上面是标准配置：双夹爪加追踪器位姿。三档用 `--robot.type` 区分，**预览用哪一档，录制就用哪一档**：
 
-| 档位 | 追踪器 | 头显相机 | 包含的数据 |
-|---|---|---|---|
-| ① 只有夹爪 | `false` | `false` | 触觉、腕部相机、开合度；不需要 PC Service |
-| ② 加追踪器（标准） | `true` | `false` | 再加夹爪位姿 `tcp.*` |
-| ③ 全开 | `true` | `true` | 再加头显双目画面与头部位姿；需要 PC Service ≥ v0.2.0 |
+| 档位 | 写法 | 包含的数据 |
+|---|---|---|
+| ① 只有夹爪 | `--robot.type=bi_taccap_gripper --robot.enable_tracker=false` | 触觉、腕部相机、开合度；不需要 PC Service |
+| ② 加追踪器（标准） | `--robot.type=bi_taccap_gripper` | 再加夹爪位姿 `tcp.*` |
+| ③ 加头显 | `--robot.type=xtac_umi_g1` | 再加头显双目画面与头部位姿 |
 
 启动前把追踪器放在头显视野内，被遮挡会丢跟踪。
 
@@ -77,8 +75,6 @@ lerobot-teleoperate \
 lerobot-record \
     --robot.type=bi_taccap_gripper \
     --robot.id=0 \
-    --robot.enable_tracker=true \
-    --robot.enable_head_camera=false \
     --dataset.repo_id=<你的org>/<数据集名> \
     --dataset.single_task='Pick up the object' \
     --dataset.num_episodes=1 \
@@ -90,11 +86,11 @@ lerobot-record \
 
 <figure class="tc-shot tc-shot--narrow" markdown>
 ![八路画面与数据键的对应](assets/dataset/sensor-key-map.webp)
-<figcaption>全开时每一帧记录的八路画面及其在数据集里的键名</figcaption>
+<figcaption>使用 `xtac_umi_g1` 时每一帧记录的八路画面及其在数据集里的键名</figcaption>
 </figure>
 
 - `--robot.id` 必填，直接填工位号数字（`0`、`1`…），一套设备一个。
-- 两个 `enable_*` 开关与预览时保持一致，见上一步的表格。
+- `--robot.type`（以及是否加 `--robot.enable_tracker=false`）与预览时保持一致，见上一步的表格。
 - 单夹爪：`--robot.type=taccap_gripper`，两只夹爪都接着时再加 `--robot.side=left` 或 `right`。
 
 全部参数见 [录制参数](05-data-collection.md#params)。
