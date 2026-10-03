@@ -72,9 +72,9 @@ hide:
 
 </div>
 
-## Two kits, one gripper
+## Two kits for different settings
 
-Pick one to start. Hardware, calibration and data definitions are the same on both sides; the only differences are where the compute lives and what you operate it with.
+Both kits use the same grippers and headset and produce the same data; they differ in whether collection runs on the backpack or on your computer, and how you operate it on site.
 
 <div class="grid cards xu-cards" markdown>
 
@@ -86,11 +86,12 @@ Pick one to start. Hardware, calibration and data definitions are the same on bo
 
     ---
 
-    - The backpack is the host and a tablet is the console; no PC needed
-    - Start recording from the gripper button with LED feedback; one person can run it
-    - Raw MCAP recording, one-click LeRobot publishing to ModelScope
+    - The backpack runs all collection; no computer needed
+    - A tablet browser is the console; gripper buttons start and stop recording
+    - One person wears it, suited to field work and long sessions
+    - Raw data saved as MCAP, exported to a LeRobot dataset in one click
 
-    For: data-collection factories and collection teams; closed-source software with light customization
+    For large-scale collection teams and data factories
     { .xu-card__fit }
 
     [Quick start](backpack/index.md){ .md-button .md-button--primary }
@@ -105,11 +106,12 @@ Pick one to start. Hardware, calibration and data definitions are the same on bo
 
     ---
 
-    - Plugs into your own x86 workstation and runs entirely on the LeRobot framework
-    - `lerobot-record` writes a LeRobotDataset directly
-    - Built on the open-source lerobot ecosystem, fully open to customization
+    - Grippers and headset connect straight to your workstation
+    - Built on open-source LeRobot; recording produces a LeRobotDataset
+    - Open-source collection software and gripper SDK, free to customize
+    - Supports the follower gripper for executing and replaying motions on a robot
 
-    For: research and algorithm teams, self-hosted training pipelines
+    For research and algorithm teams with their own training pipelines
     { .xu-card__fit }
 
     [Quick start](pc/quickstart.md){ .md-button .md-button--primary }
