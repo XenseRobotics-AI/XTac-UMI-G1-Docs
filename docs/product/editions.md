@@ -67,21 +67,15 @@ XTac-UMI 提供两种配置，使用同一套 XTac-UMI G1 夹爪与 Pico4 Ultra 
     | 充电宝 | 1 | 20000 mAh，45 W |
     | 12 V PD 电源线 | 1 | 0.3 m，充电宝接背包 `DC` 口 |
     | 平板电脑 | 1 | 6 GB + 128 GB，含保护套，作为控制台 |
-    | Type-C 充电插头 | 1 | |
+    | Type-C 充电插头 | 1 | PD 快充，100 W |
 
     固定工位用适配器供电，移动采集用充电宝供电：
 
-    <div class="tc-pair tc-pair--wiring" markdown>
+    <div class="tc-pair" markdown>
 
-    <figure class="tc-shot" markdown>
-    ![适配器供电接线：头显接 PICO 口，左右夹爪接 UMI-L / UMI-R，适配器接 DC](../assets/product/backpack-wiring-adapter.webp)
-    <figcaption>适配器供电（固定工位）</figcaption>
-    </figure>
+    ![适配器供电接线：头显接 PICO 口，左右夹爪接 UMI-L / UMI-R，适配器接 DC](../assets/product/backpack-wiring-adapter.svg)
 
-    <figure class="tc-shot" markdown>
-    ![充电宝供电接线：左右主夹爪与头显接数采背包，充电宝接背包 DC 口](../assets/product/backpack-wiring-powerbank.webp)
-    <figcaption>充电宝供电（移动采集）</figcaption>
-    </figure>
+    ![充电宝供电接线：左右主夹爪与头显接数采背包，充电宝接背包 DC 口](../assets/product/backpack-wiring-powerbank.svg)
 
     </div>
 

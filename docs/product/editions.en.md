@@ -67,21 +67,15 @@ This page compares the two and lists each kit's box contents and wiring.
     | Power bank | 1 | 20000 mAh, 45 W |
     | 12 V PD power cable | 1 | 0.3 m, power bank to the backpack's `DC` port |
     | Tablet | 1 | 6 GB + 128 GB, with case; serves as the console |
-    | Type-C charging plug | 1 | |
+    | Type-C charging plug | 1 | PD fast charging, 100 W |
 
     Use the adapter at a fixed workstation and the power bank for mobile collection:
 
-    <div class="tc-pair tc-pair--wiring" markdown>
+    <div class="tc-pair" markdown>
 
-    <figure class="tc-shot" markdown>
-    ![Adapter wiring: the headset to the PICO port, the left and right grippers to UMI-L / UMI-R, the adapter to DC](../assets/product/backpack-wiring-adapter.webp)
-    <figcaption>Adapter power (fixed workstation)</figcaption>
-    </figure>
+    ![Adapter wiring: the headset to the PICO port, the left and right grippers to UMI-L / UMI-R, the adapter to DC](../assets/product/backpack-wiring-adapter-en.svg)
 
-    <figure class="tc-shot" markdown>
-    ![Power-bank wiring: both leader grippers and the headset to the backpack, the power bank to the backpack's DC port](../assets/product/backpack-wiring-powerbank.webp)
-    <figcaption>Power-bank power (mobile collection)</figcaption>
-    </figure>
+    ![Power-bank wiring: both leader grippers and the headset to the backpack, the power bank to the backpack's DC port](../assets/product/backpack-wiring-powerbank-en.svg)
 
     </div>
 

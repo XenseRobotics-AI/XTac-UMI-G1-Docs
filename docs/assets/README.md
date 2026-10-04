@@ -143,3 +143,7 @@ theme:
 | `product/backpack-ports-drawing.webp` | 数采背包六视图，标注 ① DC IN 至 ⑩ HOST2 十个接口位置 |
 | `product/backpack-belt-drawing.webp` | 腰带固定结构示意图 |
 | `product/follower-dimensions.webp` | 从夹爪外形尺寸图（157 × 111 / 200 mm） |
+
+## 背包版接线示意图（SVG）
+
+`product/backpack-wiring-adapter.svg`、`product/backpack-wiring-powerbank.svg`（及 `-en` 英文版）是用脚本生成的矢量示意图，生成脚本在 `materials/backpack-wiring-svg-gen.py`；改线缆规格或文字时改脚本里的 `T` 表后重新运行：`python3 materials/backpack-wiring-svg-gen.py docs/assets/product`。
