@@ -95,7 +95,7 @@ XTac-UMI 提供两种配置，使用同一套 XTac-UMI G1 夹爪与 Pico4 Ultra 
     | 主夹爪连接线 | 2 | Type-C 转 Type-A，USB 2.0，3 m；夹爪端为锁紧接头 |
     | Pico4 Ultra 企业版头显 | 1 | 含手柄与运动追踪器，追踪器装在两只主夹爪顶部 |
     | 追踪器充电底座 | 1 | 一拖三 |
-    | 头显连接线 | 1 | 双 Type-C，1.5 m，头显接主机 |
+    | 头显连接线 | 1 | 双头 Type-C，1.5 m，头显接主机 |
 
     选配从夹爪时另附：
 
@@ -105,10 +105,10 @@ XTac-UMI 提供两种配置，使用同一套 XTac-UMI G1 夹爪与 Pico4 Ultra 
     | 24 V 电源适配器 | 2 | 24 V 2.5 A，线长 4.5 m，带磁环，每只从夹爪一个 |
     | 束线带 | 1 | 3 m，沿机械臂整理线缆 |
 
-    主机自备，配置要求见[采集主机配置要求](../pc/install.md#host-spec)。接线只有两处：
+    主机自备，配置要求见[采集主机配置要求](../pc/install.md#host-spec)。一共 3 条线：
 
-    - 两只夹爪各用一条主夹爪连接线接主机的 USB-A 口，双夹爪的六路相机要分挂两条 USB 总线，见 [USB 带宽预算](../pc/host-setup.md#usb-budget)。
-    - 头显用头显连接线接主机走有线共享网络，或走 WiFi，见[网络连接](../common/pico4.md#pico-network)。
+    - **主夹爪 × 2**：Type-C 转 USB-A 线，左右各一条接主机的 USB-A 口；两只夹爪要分挂两条 USB 总线，见 [USB 带宽预算](../pc/host-setup.md#usb-budget)。
+    - **头显 × 1**：双头 Type-C 线接主机，走有线共享网络，见[网络连接](../common/pico4.md#pico-network)。
 
     上电顺序与第一次采集见 [PC 版一页速通](../pc/quickstart.md#power-on)。
 

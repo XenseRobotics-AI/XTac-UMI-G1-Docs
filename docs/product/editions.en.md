@@ -105,10 +105,10 @@ This page compares the two and lists each kit's box contents and wiring.
     | 24 V power adapter | 2 | 24 V 2.5 A, 4.5 m lead with ferrite, one per follower |
     | Cable sleeve | 1 | 3 m, for routing cables along the arm |
 
-    You supply the host; the requirements are in [Collection host requirements](../pc/install.md#host-spec). There are only two things to wire:
+    You supply the host; the requirements are in [Collection host requirements](../pc/install.md#host-spec). Three cables in total:
 
-    - Each gripper connects to a USB-A port on the host with its own leader gripper cable, and with two grippers the six camera feeds have to be split across two USB buses, see [The USB bandwidth budget](../pc/host-setup.md#usb-budget).
-    - The headset connects to the host with the headset cable over wired network sharing, or over WiFi, see [Network connection](../common/pico4.md#pico-network).
+    - **Leader grippers × 2**: a Type-C to USB-A cable from each gripper to a USB-A port on the host; put the two grippers on two separate USB buses, see [The USB bandwidth budget](../pc/host-setup.md#usb-budget).
+    - **Headset × 1**: a Type-C to Type-C cable to the host, over wired network sharing, see [Network connection](../common/pico4.md#pico-network).
 
     The power-up order and your first collection run are in [Developer Kit quickstart](../pc/quickstart.md#power-on).
 
