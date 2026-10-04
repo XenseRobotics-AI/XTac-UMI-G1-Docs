@@ -1,75 +1,88 @@
 # Network and console access
 
-This page solves "how do I open the console": the backpack hotspot, the mDNS device name and a LAN IP are the three ways in, plus how to put the backpack on the site WiFi or configure a wired IP. By the end you can open the XTac-UMI Collector console (below, "the console") in any network environment.
+This page covers how to open the XTac-UMI Collector console (below, "the console"). **The recommended way is to plug the bundled tablet into USB**: the backpack opens the console on the tablet by itself, and can put both the backpack and the tablet on the site WiFi in one step.
 
 ## Identify the unit by its label, not by IP {#label}
 
-![Body label: SN, WiFi name, password, IP and mDNS address](../assets/product/backpack-label.webp){ width="520" }
+![The body label: SN, WiFi name, password, IP and mDNS address](../assets/product/backpack-label.webp){ width="420" }
 
-The body label carries every way into this device: the SN, the hotspot name `xense-<last 6 of the serial>`, the hotspot password, the hotspot IP `192.168.44.1` and the device name `http://xense-<last 6 of the serial>.local`. The backpack's wired IP comes from DHCP, so it changes and differs from unit to unit — never write an IP into any procedure. Identify a unit by its SN (which you can read on the console's System → [Device info](system.md#device-info) page), its hotspot name and its device name. Serials like `xense-e3d202` in this text are only examples.
+The body label carries the backpack's SN, hotspot name and password, and device name. The backpack's IP changes and differs from unit to unit, so never write an IP into a procedure; identify a unit by its SN (shown on the console's System → [Device info](system.md#device-info) page) and its hotspot name.
+
+## Recommended: the tablet over USB {#tablet}
+
+Connect the tablet to the backpack's front `HOST1` or `HOST2` port with a data cable. Once the tablet is unlocked, the backpack opens the console's System → Network page on it by itself; no WiFi and no address to type.
+
+![The Network page the tablet opens over USB](../assets/backpack/tablet-usb-network-settings.webp)
+
+**Before a tablet's first use**, turn on USB debugging and trust the backpack (the bundled REDMI Pad 2 SE shown here):
+
+=== "1. Developer mode"
+
+    Settings → My device, tap "OS version" about 7 times until it says developer mode is on.
+
+    ![Tap OS version](../assets/backpack/tablet-adb-1-os-version.webp)
+
+=== "2. Developer options"
+
+    Settings → Additional settings → Developer options.
+
+    ![Developer options under Additional settings](../assets/backpack/tablet-adb-2-developer-entry.webp)
+
+=== "3. USB debugging"
+
+    In the Debugging group, turn on "USB debugging" and confirm.
+
+    ![Turn on USB debugging](../assets/backpack/tablet-adb-3-usb-debugging.webp)
+
+=== "4. Trust the backpack"
+
+    When the tablet asks "Allow USB debugging?" after you plug into the backpack, tick "Always allow from this computer" and tap Allow. Later connections need no confirmation.
+
+After authorisation the backpack turns off the tablet's debugging-authorisation timeout, so there is nothing more to maintain. A factory reset or revoking debugging authorisations means trusting it again.
+
+### Putting the backpack on WiFi from the tablet {#tablet-wifi}
+
+On this page, pick the site's 5 GHz WiFi and enter its password: the backpack and the tablet **join together**. Once the backpack confirms the tablet is on the same network, the tablet switches to the backpack's WiFi address and you can unplug the USB cable.
 
 ## The backpack's three network interfaces {#interfaces}
 
-| Interface | What it is | Address | Used for |
-|---|---|---|---|
-| Wired `eth0` | The Ethernet port into a router | Obtained by DHCP, can be set static | The main connection for a lab or a fixed workstation, with the steadiest bandwidth |
-| Wireless `wlan0` | The backpack as a client on the site WiFi | Assigned by the site's router | Joining the site network where running a cable is inconvenient |
-| Hotspot `ap0` | The backpack's own always-on WiFi hotspot | Gateway fixed at `192.168.44.1` | The fallback way in, independent of any site network |
+| Interface | What it is | Use |
+|---|---|---|
+| Wired | Ethernet to a router, IP by DHCP, static possible | Labs and fixed workstations; the steadiest bandwidth |
+| Wireless | The backpack joins the site's 5 GHz WiFi | Several people on the same network |
+| Hotspot | The backpack's own 5 GHz hotspot, fixed address `192.168.44.1` | The way in when there is no tablet and no site network |
 
-All three work at once: with a cable plugged in and the site WiFi joined, the hotspot stays up. However the site network changes, joining the hotspot and opening `192.168.44.1` will always open the console. The address needs no port number.
+## The backpack hotspot {#softap}
 
-## Option 1: the backpack hotspot {#softap}
+Without a tablet, use the backpack hotspot to reach the console:
 
-Every backpack keeps its own hotspot up, and the SSID is its identity. On an uncontrolled customer network (multicast blocked, client isolation) this is the main way in: it never touches the site network and needs no permission from the site's IT.
+1. Join the hotspot from a phone, tablet or computer (name and password on the body label).
+2. Open `http://192.168.44.1` in a browser.
 
-1. Connect a phone, tablet or PC to the hotspot `xense-<last 6 of the serial>` (for example `xense-e3d202`); the password is on the body label or in the console's top-bar [network drop-down](#status).
-2. Open `http://192.168.44.1` in a browser, or `http://xense-<last 6 of the serial>.local`.
+!!! note "On a new unit the hotspot is off at first boot"
+    Use "Turn on hotspot" in System → [Network](system.md#wifi); the device remembers the choice. You can reach the console with the [tablet over USB](#tablet) to turn it on. The hotspot is 5 GHz only; 2.4 GHz-only devices will not see it.
 
-- **On iOS / Safari you must type the full `http://` prefix** (for example `http://xense-e3d202.local`): a bare device name is treated as a search term and handed to a search engine, which looks like "it will not open" when in fact no request was ever made.
-- Some Android models cannot open `.local` device names; use `http://192.168.44.1` instead.
-- With several backpacks on site every hotspot starts with `xense-`, so check the last 6 characters against the target unit's body label before connecting — do not join the one next to it.
-- Turn off "auto-connect" for the other saved networks on the phone or tablet, or the system will hop to a stronger network mid-collection and drop the console.
+- On iOS / Safari, type the full `http://` prefix.
+- With several backpacks on site, check the hotspot name against the body label before joining.
+- Turn off auto-join for other saved networks on the phone or tablet so it does not hop away mid-collection.
 
-!!! warning "The hotspot is 5 GHz only"
-    The connecting phone / tablet / PC must support 5 GHz WiFi; a device that only does 2.4 GHz will not see this hotspot.
+## Device name {#mdns}
 
-The hotspot can be switched with "Turn off hotspot" / "Turn on hotspot" in System → [Network / Setup](system.md#wifi), and the device remembers the choice. Turning it off disconnects every device that is using the hotspot and removes this fallback way in; do not turn it off unless another way in (a network cable or the site WiFi) is available.
+On the same network as the backpack you can use its device name instead of an IP: `http://xense-<name>.local` (see the body label). The name can be changed or turned off in System → [Network](system.md#wifi). Windows and some Android phones cannot open `.local` names; use the IP from the [network drop-down](#status) instead.
 
-## Option 2: the mDNS device name {#mdns}
-
-On the same subnet as the backpack (the same router, or joined to its hotspot), use the device name directly and skip the IP:
-
-```
-http://xense-<last 6 of the serial>.local
-```
-
-You can rename the device in System → [Network / Setup](system.md#wifi), or untick "Use mDNS hostname"; renaming does not change the hotspot name and password on the body label, and backpacks at the same site should each get a different name. macOS, iOS and most Linux systems work out of the box. Windows has unreliable mDNS support, and failing to open it there is a known environment difference: use the [device scanner](#scanner) to find the IP instead, or go in through the hotspot at `http://192.168.44.1`; for diagnosis see [Troubleshooting](troubleshooting.md).
-
-## Option 3: joining a site network {#lan}
+## Joining a site network {#lan}
 
 ### Wired {#wired}
 
-Run the backpack's Ethernet port to a router's LAN port; it ships on DHCP and works as soon as you plug it in. Put the PC on the same router and open the backpack's IP (found with the [scanner](#scanner)) or its device name in a browser; the cabling topology is in [A fixed workstation layout](unbox-connect.md#desk). On an Ubuntu PC, remember to tick Wired in the system settings:
+Run the backpack's Ethernet port to a router LAN port and it works as soon as it is plugged in; a computer on the same router uses the wired IP shown in the [network drop-down](#status) or the device name. The topology is in [A fixed workstation](unbox-connect.md#desk). On Ubuntu, remember to tick Wired in the system settings:
 
 ![The Ubuntu wired network switch](../assets/backpack/ubuntu-wired.webp){ width="480" }
 
-There are only two reasons to configure a static IP: the site has no DHCP (the backpack wired directly to a PC, or plugged into a switch without DHCP), or the site's IT requires a fixed address. How to configure it, and why doing so may cut you off, are in System → [Wired IP](system.md#wifi-wired).
+Set a static IP only when the site has no DHCP (backpack cabled straight to a computer) or IT requires a fixed address, see System → [Wired IP](system.md#wifi-wired).
 
 ### Site WiFi {#site-wifi}
 
-The backpack can join the site WiFi as a client, after which PCs on the same subnet reach it directly; this suits sites with 5 GHz WiFi where several people need access at once, and is unnecessary when one tablet on the hotspot is enough. The recommended route is to join the hotspot first and configure the network from the console, which needs no existing connection on the backpack; the steps and the reason for "5 GHz only" are in System → [Joining site WiFi](system.md#wifi-site).
-
-## Finding the IP on a LAN: the Windows device scanner {#scanner}
-
-With the backpack and the PC on the same router, use `taccap-device-scanner.exe` on Windows to find the IP. It scans the subnet the PC is on automatically, and you can also enter a subnet by hand (for example `192.168.0.0/24`); it probes the console's ports by default and can probe with OpenSSH at the same time; it scans TCP concurrently, does not rely on ping or ARP, and needs no administrator rights.
-
-For every backpack it finds it lists the IP, device SN, WiFi ID, version, hardware serial and operating mode, and "Open in browser" takes you straight to the console:
-
-![The device scanner](../assets/backpack/scanner.webp)
-
-![Opening the live monitor page in a browser](../assets/backpack/scanner-open-monitor.webp)
-
-With several backpacks on the same network it lists them all; check the SN / WiFi ID against the body labels to tell which is which, rather than going by a remembered IP.
+The easiest way is [WiFi setup from the tablet over USB](#tablet-wifi), which joins the backpack and the tablet together. You can also set up the backpack alone in the console's System → [Joining the site WiFi](system.md#wifi-site). The backpack only joins 5 GHz WiFi.
 
 ## Checking the current network state {#status}
 
@@ -81,11 +94,12 @@ The IP drop-down at the left of the console's top bar gathers every way into thi
 
 | Scenario | Recommended method |
 |---|---|
-| Lab or fixed workstation with your own router | [Wired](#wired) to a router LAN port + the [scanner](#scanner) to find the IP |
-| Customer site, uncontrolled network | [Hotspot](#softap) + `http://192.168.44.1`, never touching the site network |
-| Site has 5 GHz WiFi and several people need access | Go in over the hotspot first and [put the backpack on the site WiFi](#site-wifi), after which PCs on the same network reach it directly |
+| Everyday collection with the bundled tablet | [Plug the tablet into USB](#tablet); the backpack opens the console for you |
+| Lab or fixed workstation with your own router | [Wired](#wired) to a router LAN port, then use the address in the [network drop-down](#status) |
+| Customer site, uncontrolled network | [Tablet over USB](#tablet), or turn on the [hotspot](#softap) |
+| Site has 5 GHz WiFi and several people need access | Use the tablet to [put the backpack on the site WiFi](#site-wifi); PCs on the same network then reach it directly |
 | Backpack wired directly to a laptop, no router | A [static IP](#wired) on the same subnet at each end |
-| Nothing works at all | Work through [Troubleshooting](troubleshooting.md); the last resort is to power-cycle and join the hotspot |
+| Nothing works at all | Plug the tablet into USB to check the network in the console; if that fails, work through [Troubleshooting](troubleshooting.md) |
 
 ## Advanced diagnosis: handled by technical support {#ssh}
 

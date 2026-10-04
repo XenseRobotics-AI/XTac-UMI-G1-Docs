@@ -7,7 +7,7 @@
 箱内物品与数量见[产品线与配置对比](../product/editions.md)。接线前只核对三件事：
 
 - 两只 XTac-UMI G1 一左一右：序列号末位单数为左、双数为右（[序列号与左右识别](../common/gripper.md#sn)）；Type-C 线的锁紧接头完好，夹爪接口内无异物。
-- 背包机身标签印着这台设备的 SN、热点名 `xense-<序列号后 6 位>`、热点密码与控制台地址，连网时要用，别撕（[认机看标签](network.md#label)）。
+- 背包机身标签印着这台设备的 SN、热点名与密码、设备名，认机和连网时要用，别撕（[认机看标签](network.md#label)）。
 - 头显已按[Pico4 头显与追踪器](../common/pico4.md)配好：开发者模式、灭屏与休眠设为永不、两只追踪器已配对、XTac-UMI XR 已安装。接线不依赖这些，但没配好头显连不上。
 
 ## 背包接口 {#ports}
@@ -29,7 +29,7 @@
 
 1. 接夹爪：Type-C 锁紧线带螺钉的一端接夹爪本体，旋紧锁紧螺钉；另一端接背包侧面，左爪接 UMI-L，右爪接 UMI-R。夹爪由这根线总线供电，不需要单独电源。
 2. 接头显：头显用头显连接线（Pico → Pack）接背包 PICO 口，[适配器供电](#adapter)与[充电宝供电](#powerbank)两种方式接法相同。
-3. 给背包上电：DC 口接适配器或充电宝。开机后热点自动开启，夹爪指示灯绿常亮即待机（灯语见[夹爪按键、指示灯与语音](gripper.md#buttons-leds)）。
+3. 给背包上电：DC 口接适配器或充电宝。开机后夹爪指示灯绿常亮即待机；接着把平板插到背包的 `HOST` 口打开控制台，见[平板插 USB](network.md#tablet)（灯语见[夹爪按键、指示灯与语音](gripper.md#buttons-leds)）。
 
 拔线顺序相反：先停止录制，再拔背包端，最后松开锁紧螺钉拔夹爪端。上下电与插拔线缆时注意防静电。
 
@@ -88,7 +88,7 @@ XR 右上角是折叠按钮；追踪器精度不准或与背包断开时，XR �
 
 - 背包网口与 PC 网线都接路由器 LAN 口；背包有线口出厂 DHCP，插上即用。
 - 头显仍用 Type-C 线接背包 PICO 口，走 USB网络，不走路由器。
-- PC 浏览器打开背包 IP 或 `http://xense-<序列号后 6 位>.local`。找 IP 用 [Windows 设备扫描器](network.md#scanner)；Ubuntu 的 PC 记得在系统设置里勾选 Wired，见[有线](network.md#wired)。
+- PC 浏览器打开背包 IP 或 `http://xense-<序列号后 6 位>.local`。IP 看控制台顶栏的[网络下拉](network.md#status)；Ubuntu 的 PC 记得在系统设置里勾选 Wired，见[有线](network.md#wired)。
 
 ![桌面实物连接](../assets/backpack/desk-setup.webp)
 

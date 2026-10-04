@@ -7,7 +7,7 @@ Turn what is in the box into a system you can power up: grippers to the backpack
 The box contents and quantities are in [Product line and configuration comparison](../product/editions.md). Before cabling, check only three things:
 
 - The two XTac-UMI G1 grippers are one left and one right: an odd last digit of the serial number means left, an even one means right ([Serial numbers and side identification](../common/gripper.md#sn)). The Type-C cables' locking connectors are undamaged, and there is nothing lodged in the gripper connectors.
-- The backpack's body label carries this device's SN, its hotspot name `xense-<last 6 of the serial>`, the hotspot password and the console address. You need these to get on the network, so do not peel it off ([Identify the unit by its label](network.md#label)).
+- The backpack's body label carries this device's SN, hotspot name and password, and device name. You need these to identify it and get on the network, so do not peel it off ([Identify the unit by its label](network.md#label)).
 - The headset has been set up as described in [Pico4 headset and tracker setup](../common/pico4.md): developer mode on, screen timeout and system sleep set to "Never", both trackers paired, and XTac-UMI XR installed. Cabling does not depend on any of this, but without it the headset will not connect.
 
 ## The backpack's ports {#ports}
@@ -29,7 +29,7 @@ The order is fixed: grippers → headset → power up the backpack.
 
 1. Connect the grippers: the end of the Type-C locking cable with the screws goes into the gripper body, and you tighten the locking screws; the other end goes into the side of the backpack, the left gripper to UMI-L and the right to UMI-R. The gripper is bus-powered over this cable and needs no separate supply.
 2. Connect the headset: the headset cable (Pico → Pack) goes from the headset to the backpack's PICO port; this is the same for [Adapter power](#adapter) and [Power-bank power](#powerbank).
-3. Power up the backpack: the DC port takes the adapter or a power bank. The hotspot comes up automatically after boot, and a solid green gripper LED means standby (the LED patterns are in [Gripper buttons, LEDs and voice](gripper.md#buttons-leds)).
+3. Power up the backpack: the DC port takes the adapter or a power bank. After boot, a solid green gripper LED means standby; then plug the tablet into the backpack's `HOST` port to open the console, see [The tablet over USB](network.md#tablet) (the LED patterns are in [Gripper buttons, LEDs and voice](gripper.md#buttons-leds)).
 
 Disconnection is the reverse: stop recording first, then unplug the backpack end, and finally loosen the locking screws and unplug the gripper end. Take anti-static precautions when powering up or down and when plugging or unplugging cables.
 
@@ -88,7 +88,7 @@ In a lab the backpack, a PC and a router are often wired into one local network,
 
 - The backpack's Ethernet port and the PC's cable both go to the router's LAN ports; the backpack's wired port ships on DHCP and works as soon as you plug it in.
 - The headset still connects to the backpack's PICO port by Type-C cable over the USB Network, not through the router.
-- The PC's browser opens the backpack's IP or `http://xense-<last 6 of the serial>.local`. To find the IP, use the [Windows device scanner](network.md#scanner); on an Ubuntu PC remember to tick Wired in the system settings, see [Wired](network.md#wired).
+- The PC's browser opens the backpack's IP or `http://xense-<last 6 of the serial>.local`. The IP is shown in the console's top-bar [network dropdown](network.md#status); on an Ubuntu PC remember to tick Wired in the system settings, see [Wired](network.md#wired).
 
 ![The desk setup in the flesh](../assets/backpack/desk-setup.webp)
 

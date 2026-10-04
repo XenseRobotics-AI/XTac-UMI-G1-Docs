@@ -20,7 +20,7 @@ This page is organised by symptom, with a cause and a fix for each. The three mo
 ??? failure "A PC cannot open `xense-xxx.local` but a phone can"
     **Cause:** Windows has unreliable mDNS name resolution; this is a known environment difference.
 
-    **Fix:** use `http://192.168.44.1` directly when joined to the backpack hotspot; on a LAN, find the IP with the [Windows device scanner](network.md#scanner) and use "Open in browser".
+    **Fix:** use the IP address instead: plug the tablet into USB to open the console and read the backpack's current IP in the top-bar [network dropdown](network.md#status); on the backpack hotspot use `http://192.168.44.1` directly.
 
 ??? failure "The console drops mid-collection and the WiFi has hopped to another network"
     **Cause:** Windows and tablets switch automatically to a saved network with a "better signal".
