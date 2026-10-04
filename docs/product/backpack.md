@@ -2,7 +2,7 @@
 
 **XTac-UMI 数采背包**是背包版的计算节点：夹爪和头显直接接在它身上，采集软件 XTac-UMI Collector 跑在它上面，手机或平板用浏览器打开的就是它的控制台；采集、回放与 LeRobot 导出都在设备上完成，不需要 PC。本页讲它的接口、标签、控制台、采集模式、数据与升级方式，读完能判断它是否适合你的采集场景。
 
-![XTac-UMI 数采背包前面板：PICO、HEAD、USB 三个 Type-C 口](../assets/product/backpack-ports-front.webp){ width="720" }
+![XTac-UMI 数采背包前面板](../assets/product/backpack-ports-front.webp){ width="720" }
 
 [快速开始](../backpack/index.md){ .md-button .md-button--primary }
 [对比两种配置](editions.md){ .md-button }
@@ -17,19 +17,31 @@
 
 ## 接口 {#ports}
 
-| 位置 | 标识 | 接什么 |
-|---|---|---|
-| 前面板 | `PICO` | Pico4 Ultra 头显，Type-C。XR 里勾选「USB网络」点连接，背包会自动在 USB 链路上建网（地址 `192.168.58.1`），不用手填 |
-| 前面板 | `HEAD` | Type-C。采集接线不用 |
-| 前面板 | `USB` | Type-C。采集接线不用 |
-| 侧面 | `UMI-L` / `UMI-R` | 左 / 右主夹爪，Type-C，兼作夹爪供电 |
-| 后面板 | `DC` | 12 V 输入，接线图上标为 Type-C，以实物为准：配套 12 V 3 A 适配器，或充电宝的 12 V 输出 |
-| 后面板 | 网口 | 有线网，出厂 DHCP，可在系统页改静态 IP |
-| 后面板 | SD 卡槽、`HDMI`、耳机 | 采集接线不用 |
+![数采背包接口位置示意图](../assets/product/backpack-ports-drawing.webp){ width="900" }
 
-![XTac-UMI 数采背包后面板：DC、网口、SD 卡槽、HDMI、耳机](../assets/product/backpack-ports-rear.webp){ width="720" }
+| 编号 | 接口 | 位置 | 用途 |
+|---|---|---|---|
+| ① | `DC IN` | 后面板 | 12 V 供电输入，接配套 12 V 3 A 适配器，或经电源线接充电宝 |
+| ② | 网口 | 后面板 | 有线网，出厂 DHCP，可在系统页改静态 IP |
+| ③ | TF | 后面板 | TF 存储卡槽，日常采集不用 |
+| ④ | `HDMI` | 后面板 | 视频输出，日常采集不用 |
+| ⑤ | 耳机 | 后面板 | 3.5 mm 耳机口 |
+| ⑥ | `UMI-L` | 左侧 | 左主夹爪，Type-C 锁紧线，兼作夹爪供电 |
+| ⑦ | `UMI-R` | 右侧 | 右主夹爪，Type-C 锁紧线，兼作夹爪供电 |
+| ⑧ | `PICO` | 前面板 | Pico4 Ultra 头显，Type-C。XR 里勾选「USB网络」点「连接」即可，不用手填地址 |
+| ⑨ ⑩ | `HOST1` / `HOST2` | 前面板 | USB 主机接口，可接平板等设备 |
 
 接什么线、按什么顺序接见[开箱、接线与供电](../backpack/unbox-connect.md#order)。
+
+### 腰带 {#belt}
+
+腰带用来固定数采背包和充电宝，减少线缆对操作者动作的影响。
+
+![腰带固定结构示意图](../assets/product/backpack-belt-drawing.webp){ width="720" }
+
+- 佩戴前确认数采背包、充电宝与腰带固定可靠。
+- 走线留出活动余量，避免转身、弯腰或抬臂时拉扯接口。
+- 不要遮挡数采背包与充电宝的散热区域。
 
 ## 机身标签 {#label}
 

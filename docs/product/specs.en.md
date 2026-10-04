@@ -41,12 +41,15 @@ The frame rate used during collection can be set as needed (the Developer Kit re
 | Parameter | Specification |
 |---|---|
 | Structure | Two-finger gripper, mounted on the robot's end effector |
+| Dimensions | 200 × 157 × 111 mm (L × W × H), see the drawing below |
 | Motor | RobStride EL05 |
 | Maximum output torque | 1.1 N·m |
 | Opening angle | 0–70° |
 | Control | Impedance control (default), force-position control |
 | Connector and power | USB Type-C for communication + 24 V power adapter (24 V 2.5 A) |
 | Operating temperature | 0–50 °C |
+
+![Follower gripper dimensions (mm)](../assets/product/follower-dimensions.webp){ width="760" }
 
 How to use it is in [Follower gripper](../follower/index.md).
 
@@ -74,7 +77,7 @@ The Backpack Kit's collection unit: the grippers and headset plug into it and th
 | Power draw | Up to 36 W (12 V 3 A) |
 | Power-bank runtime | About 3.5–4 hours |
 | Network | Ethernet; WiFi (5 GHz); built-in 5 GHz hotspot |
-| Ports | `UMI-L` / `UMI-R` for the leader grippers, `PICO` for the headset, `DC` for power, plus Ethernet, SD slot, `HDMI` and headphone jack, see [Ports](backpack.md#ports) |
+| Ports | `UMI-L` / `UMI-R` for the leader grippers, `PICO` for the headset, `DC IN` for power, `HOST1` / `HOST2` USB host ports, plus Ethernet, TF slot, `HDMI` and headphone jack, see [Ports](backpack.md#ports) |
 | Operating temperature | 0–40 °C |
 | Environment | Indoor use; not waterproof, keep away from rain, splashes and heavy dust |
 

@@ -2,7 +2,7 @@
 
 The **XTac-UMI Backpack** is the Backpack Kit's compute node: the grippers and the headset plug straight into it, the collection software XTac-UMI Collector runs on it, and what you open in a browser from a phone or tablet is its console. Collection, replay and the LeRobot export all happen on the device, with no PC needed. This page covers its connectors, label, console, capture modes, data and upgrade path, so that by the end you can judge whether it suits your collection scenario.
 
-![The XTac-UMI Backpack's front panel: the PICO, HEAD and USB Type-C ports](../assets/product/backpack-ports-front.webp){ width="720" }
+![The XTac-UMI Backpack's front panel](../assets/product/backpack-ports-front.webp){ width="720" }
 
 [Quickstart](../backpack/index.md){ .md-button .md-button--primary }
 [Compare the two configurations](editions.md){ .md-button }
@@ -17,19 +17,31 @@ It is worn on the back: it moves with the operator and depends on neither the si
 
 ## Connectors {#ports}
 
-| Location | Marking | What goes in it |
-|---|---|---|
-| Front panel | `PICO` | The Pico4 Ultra headset, Type-C. Tick "USB Network" in XR and tap Connect, and the backpack brings the network up on the USB link automatically (address `192.168.58.1`) with nothing to type |
-| Front panel | `HEAD` | Type-C. Not used for collection wiring |
-| Front panel | `USB` | Type-C. Not used for collection wiring |
-| Sides | `UMI-L` / `UMI-R` | The left / right leader gripper, Type-C, which also powers the gripper |
-| Rear panel | `DC` | 12 V input, marked as Type-C on the wiring diagram but go by the physical unit: the supplied 12 V 3 A adapter, or a power bank's 12 V output |
-| Rear panel | Ethernet | Wired networking, DHCP from the factory, with a static IP settable on the System page |
-| Rear panel | SD card slot, `HDMI`, headphone | Not used for collection wiring |
+![Backpack connector locations](../assets/product/backpack-ports-drawing.webp){ width="900" }
 
-![The XTac-UMI Backpack's rear panel: DC, Ethernet, SD card slot, HDMI, headphone](../assets/product/backpack-ports-rear.webp){ width="720" }
+| No. | Connector | Location | What it is for |
+|---|---|---|---|
+| ① | `DC IN` | Rear panel | 12 V power input: the supplied 12 V 3 A adapter, or the power bank through its power cable |
+| ② | Ethernet | Rear panel | Wired networking, DHCP from the factory, static IP settable on the System page |
+| ③ | TF | Rear panel | TF card slot, not used for day-to-day collection |
+| ④ | `HDMI` | Rear panel | Video out, not used for day-to-day collection |
+| ⑤ | Headphone | Rear panel | 3.5 mm headphone jack |
+| ⑥ | `UMI-L` | Left side | Left leader gripper, Type-C locking cable, which also powers the gripper |
+| ⑦ | `UMI-R` | Right side | Right leader gripper, Type-C locking cable, which also powers the gripper |
+| ⑧ | `PICO` | Front panel | Pico4 Ultra headset, Type-C. Tick "USB Network" in XR and tap Connect; no address to type |
+| ⑨ ⑩ | `HOST1` / `HOST2` | Front panel | USB host ports, for a tablet or other devices |
 
 Which cables to use and in what order is in [Unboxing, cabling and power](../backpack/unbox-connect.md#order).
+
+### Waist belt {#belt}
+
+The waist belt holds the backpack and the power bank and keeps the cables out of the operator's way.
+
+![Waist belt structure](../assets/product/backpack-belt-drawing.webp){ width="720" }
+
+- Before putting it on, check that the backpack, the power bank and the belt are secure.
+- Leave slack in the cables so turning, bending or raising an arm does not pull on a connector.
+- Do not cover the vents of the backpack or the power bank.
 
 ## The body label {#label}
 

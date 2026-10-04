@@ -15,13 +15,13 @@ The box contents and quantities are in [Product line and configuration compariso
 | Port | Location | What goes in it |
 |---|---|---|
 | UMI-L / UMI-R | Both sides | Left / right gripper, Type-C locking cable |
-| PICO | Front panel | The headset, Type-C; it carries the USB network, and whether it can also power the headset depends on the notes shipped with your unit |
-| HEAD, USB | Front panel | Not used in this procedure |
-| DC | Rear panel | 12 V power input, marked as Type-C on the wiring diagram but go by the physical unit; takes the adapter or a power bank |
+| PICO | Front panel | The headset, Type-C, over the USB Network |
+| HOST1 / HOST2 | Front panel | USB host ports, for a tablet or other devices |
+| DC IN | Rear panel | 12 V power input, from the adapter or the power bank |
 | Ethernet | Rear panel | RJ45, to a router's LAN port |
-| SD card slot, HDMI, headphone | Rear panel | Not used in day-to-day collection |
+| TF, HDMI, headphone | Rear panel | Not used in day-to-day collection |
 
-Photographs of the ports are in [The Backpack](../product/backpack.md).
+The connector drawing is in [The Backpack](../product/backpack.md#ports).
 
 ## Connection and disconnection order {#order}
 

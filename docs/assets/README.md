@@ -133,3 +133,13 @@ theme:
   logo: assets/brand/logo.png
   favicon: assets/brand/favicon.png
 ```
+
+## 来自硬件部门《TC-GU-01：数采盒子使用说明 v0.0.1》
+
+原文与全部附图备份在 `materials/box-manual-v0.0.1/`。
+
+| 文件 | 内容 |
+|---|---|
+| `product/backpack-ports-drawing.webp` | 数采背包六视图，标注 ① DC IN 至 ⑩ HOST2 十个接口位置 |
+| `product/backpack-belt-drawing.webp` | 腰带固定结构示意图 |
+| `product/follower-dimensions.webp` | 从夹爪外形尺寸图（157 × 111 / 200 mm） |
