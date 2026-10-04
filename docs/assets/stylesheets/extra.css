@@ -856,3 +856,13 @@ html[lang="en"] .md-typeset .tc-hero h1 {
   fill: var(--arch-up);
   filter: drop-shadow(0 0 3px var(--arch-up));
 }
+
+/* 三张并排的卡片(如认识数采背包「它是什么」);窄屏改单列 */
+.md-typeset .grid.cards.tc-cards3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+@media screen and (max-width: 44.9375em) {
+  .md-typeset .grid.cards.tc-cards3 {
+    grid-template-columns: 1fr;
+  }
+}
