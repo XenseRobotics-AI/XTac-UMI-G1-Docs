@@ -37,18 +37,18 @@ This page compares the two and lists each kit's box contents and wiring.
 
 ## How the two differ
 
-| | Backpack Kit · the XTac-UMI Backpack | Developer Kit · the XTac-UMI G1 Developer Kit |
+| | Backpack Kit · XTac-UMI Backpack | Developer Kit · XTac-UMI G1 Developer Kit |
 |---|---|---|
-| Compute node | The RK3588 backpack that ships with it, eMMC system disk + NVMe data disk | Your own x86 workstation, installed from source with Mamba or from a Docker image; real collection requires an NVIDIA GPU, and the Mamba path installs without one but can only record in a degraded mode |
-| Interface | A browser console: live monitor / projects / replay / system; a tablet, phone or PC acts purely as a browser | Terminal commands plus a Rerun preview window |
-| How it connects | The grippers go to `UMI-L` / `UMI-R`; the headset goes to the `PICO` port over the USB Network (wired only); the operating device joins the backpack hotspot or the LAN | The grippers connect to the host over USB directly; the headset connects to the host with a Type-C cable over wired network sharing (wired by default, WiFi only for quick debugging); the host runs XenseVR PC Service |
-| Recording control | Long-press the right gripper to start, long-press the left to stop, double-click the left to delete the previous take; LED feedback; the console can do the same | `lerobot-record` command-line arguments, with `--robot.id` required |
-| Capture modes | Dual gripper · dual gripper + stereo headset · dual gripper + right mono headset · single gripper · single gripper + stereo headset · stereo headset only; every mode needs the headset for pose, and only the three dual-gripper modes can currently be exported | Single or dual gripper, with the headset camera optional |
-| Raw data | On the device, one MCAP raw recording per episode, storing the cameras' raw MJPEG frames (hardware H.264 encoding is used only for live preview); the `LeRobot dataset` and `mcap` you hand out are both offline export products | LeRobotDataset v3 written straight to disk |
-| Export and upload | Task-level export: pick the destination first (download to device / upload to remote), then the format (`LeRobot dataset` / `mcap`, two equals). Downloading gives you an archive; uploading goes through an upload backend you configured beforehand (ModelScope, S3, FTP / FTPS, NFS or STS), local files are kept by default after an upload, and "Archive" — always available — frees the space | Hugging Face Hub |
-| Upgrading | Import a firmware bundle (`.tar.zst`) on the System page, with the previous version kept for rollback; stop recording before applying one by hand, and an update pushed remotely waits for the current take to finish before restarting | Pull the repo, run the install script or switch the image tag; gripper firmware OTA uses the SDK script |
-| Customisation | Not open source, light: the collection software is delivered and upgraded as a whole firmware bundle, and customisation builds on the exported `LeRobot dataset` / `mcap` output, the upload configuration and the capture settings rather than on the software itself | Fully open: the collection software and gripper SDK are open source under Apache-2.0, so you can change the Python code or hook up your own robot |
-| Who it suits | High-volume collection operations, data collection teams, external sites | Research and algorithm teams, in-house training pipelines |
+| Compute | The backpack in the box | Your own x86 workstation, NVIDIA GPU recommended |
+| Interface | Browser console; a tablet is enough | Terminal + Rerun preview window |
+| Headset link | Type-C to the backpack, wired only | Type-C to the workstation, wired by default |
+| Recording control | Mainly the gripper buttons; the console works too | `lerobot-record` command line |
+| Capture modes | Two grippers / one gripper / headset only, optionally with headset images; only two-gripper modes export today | One or two grippers, optionally with headset images |
+| On disk | One MCAP raw recording per take | LeRobotDataset v3 directly |
+| Export and upload | Export per task as LeRobot v3 / MCAP; download, or upload to ModelScope, S3, FTP, NFS and more | Push to the Hugging Face Hub |
+| Upgrades | Import an update package in the console; can roll back | Update the repo or image |
+| Customisation | Not open source; build on the exported data | Open source (Apache-2.0); change the code, hook up your own robot |
+| For | Large-scale data factories and field collection teams | Research and algorithm teams with their own training pipelines |
 
 ## Box contents and wiring {#kit}
 
