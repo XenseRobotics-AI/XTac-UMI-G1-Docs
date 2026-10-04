@@ -73,31 +73,107 @@ PC 版把计算放在你自己的 x86 工作站上（推荐 NVIDIA GPU，Mamba �
 <div class="tc-arch"><script type="application/json">
 {
   "title": "XTac-UMI G1 数采系统架构",
-  "tiers": ["① 只有夹爪", "② 带腕部位姿", "③ 完全体"],
-  "cols": {"dev": "设备", "read": "数采电脑 · 读取", "core": "数采电脑 · 处理", "out": "输出"},
+  "tiers": [
+    "① 只有夹爪",
+    "② 带腕部位姿",
+    "③ 完全体"
+  ],
+  "cols": {
+    "dev": "设备",
+    "read": "数采电脑 · 读取",
+    "core": "数采电脑 · 处理",
+    "out": "输出",
+    "up": "上传"
+  },
   "group": "主夹爪 ×2（左 / 右）",
   "hint": "把鼠标移到（或点按）任一模块，查看它的数据从哪来、到哪去。",
   "sep": "：",
   "offNote": "（当前档位不使用）",
-  "legend": ["数据与位姿", "头显双目画面（③ 档）"],
+  "legend": [
+    "数据与位姿",
+    "头显双目画面（③ 档）"
+  ],
   "edges": {
-    "e-grip": "USB 串口", "e-tact": "USB", "e-wrist": "USB",
-    "e-track": "无线", "e-head": "有线 / WiFi"
+    "e-grip": "USB 串口",
+    "e-tact": "USB",
+    "e-wrist": "USB",
+    "e-track": "无线",
+    "e-head": "有线 / WiFi"
   },
   "nodes": {
-    "grip": {"title": "主控板 · 编码器", "sub": "开合角度", "desc": "主夹爪主控板读取编码器得到开合角度，经 USB 串口主动推送给数采电脑。主控板上还有 IMU，预留，默认不录。"},
-    "tact": {"title": "视触觉传感器 ×2", "sub": "左右指各一", "desc": "左右指各一个视触觉传感器，拍摄指面与物体接触处的视触觉图像。"},
-    "wrist": {"title": "腕部相机", "sub": "手腕视角 RGB", "desc": "装在夹爪上的鱼眼相机，提供手腕视角画面。"},
-    "tracker": {"title": "运动追踪器 ×2", "sub": "Pico4 Ultra", "desc": "装在每只夹爪顶部，由头显跟踪它的 6-DoF 位姿。① 档不需要。"},
-    "headset": {"title": "头显", "sub": "Pico4 Ultra 企业版", "desc": "运行 XTac-UMI XR，跟踪两个追踪器，经有线（推荐）或 WiFi 把位姿发给数采电脑；③ 档还用自带双目相机拍第一视角画面并提供头部位姿。世界坐标原点是 XR 应用启动时头显所在的位置。"},
-    "sdk": {"title": "xense.taccap", "sub": "串口 · 100 Hz 推送", "desc": "夹爪 SDK 接收主控板推送的读数（默认 100 Hz），按标定结果把开合角度归一化为 gripper.pos（闭合 = 0、张开 = 1）。"},
-    "xsdk": {"title": "xensesdk", "sub": "校正图 · 30 fps", "desc": "视触觉传感器 SDK，每个传感器独立读取，默认输出校正后的视触觉图像（约 400 × 700），30 fps。"},
-    "cam": {"title": "相机采集", "sub": "640 × 480 · 30 fps", "desc": "按序列号找到对应夹爪的腕部相机，每台独立读取，默认 640 × 480、30 fps。鱼眼矫正可选，默认关闭。"},
-    "pcs": {"title": "XenseVR PC Service", "sub": "位姿 · 约 90 Hz", "desc": "数采电脑上的服务，接收头显发来的追踪器位姿（约 90 Hz 刷新），由采集程序换算到夹爪末端（TCP），得到 tcp.*。③ 档同时转发头显双目画面（左右眼按帧序配对）与头部位姿。"},
-    "obs": {"title": "帧组装", "sub": "取各路最新值", "desc": "每一帧（默认 30 fps）取各路的最新值合成一帧观测：开合度、夹爪位姿、视触觉图像、腕部画面；③ 档再加头显双目画面与头部位姿。"},
-    "pair": {"title": "错帧配对", "sub": "观测 t-1 + 动作 t", "desc": "把上一帧的观测与这一帧的夹爪位姿、开合度（③ 档再加头部位姿）配成一行，动作领先观测一步。每集第一帧没有可配对的上一帧，因此少 1 帧。"},
-    "rerun": {"title": "Rerun 实时预览", "sub": "--display_data=true", "desc": "预览或录制时加 --display_data=true，实时显示各路画面、数值曲线和夹爪轨迹的 3D 视图。只用于查看，不写进数据集。"},
-    "ds": {"title": "LeRobotDataset v3.0", "sub": ["Parquet + MP4", "+ meta/hardware.json"], "desc": "状态与动作写入 Parquet；每路相机边录边编码成 MP4，有 NVIDIA GPU 时自动用硬件编码。这套设备的序列号等硬件清单另存在 meta/hardware.json。"}
+    "grip": {
+      "title": "主控板 · 编码器",
+      "sub": "开合角度",
+      "desc": "主夹爪主控板读取编码器得到开合角度，经 USB 串口主动推送给数采电脑。主控板上还有 IMU，预留，默认不录。"
+    },
+    "tact": {
+      "title": "视触觉传感器 ×2",
+      "sub": "左右指各一",
+      "desc": "左右指各一个视触觉传感器，拍摄指面与物体接触处的视触觉图像。"
+    },
+    "wrist": {
+      "title": "腕部相机",
+      "sub": "手腕视角 RGB",
+      "desc": "装在夹爪上的鱼眼相机，提供手腕视角画面。"
+    },
+    "tracker": {
+      "title": "运动追踪器 ×2",
+      "sub": "Pico4 Ultra",
+      "desc": "装在每只夹爪顶部，由头显跟踪它的 6-DoF 位姿。① 档不需要。"
+    },
+    "headset": {
+      "title": "头显",
+      "sub": "Pico4 Ultra 企业版",
+      "desc": "运行 XTac-UMI XR，跟踪两个追踪器，经有线（推荐）或 WiFi 把位姿发给数采电脑；③ 档还用自带双目相机拍第一视角画面并提供头部位姿。世界坐标原点是 XR 应用启动时头显所在的位置。"
+    },
+    "sdk": {
+      "title": "xense.taccap",
+      "sub": "串口 · 100 Hz 推送",
+      "desc": "夹爪 SDK 接收主控板推送的读数（默认 100 Hz），按标定结果把开合角度归一化为 gripper.pos（闭合 = 0、张开 = 1）。"
+    },
+    "xsdk": {
+      "title": "xensesdk",
+      "sub": "校正图 · 30 fps",
+      "desc": "视触觉传感器 SDK，每个传感器独立读取，默认输出校正后的视触觉图像（约 400 × 700），30 fps。"
+    },
+    "cam": {
+      "title": "相机采集",
+      "sub": "640 × 480 · 30 fps",
+      "desc": "按序列号找到对应夹爪的腕部相机，每台独立读取，默认 640 × 480、30 fps。鱼眼矫正可选，默认关闭。"
+    },
+    "pcs": {
+      "title": "XenseVR PC Service",
+      "sub": "位姿 · 约 90 Hz",
+      "desc": "数采电脑上的服务，接收头显发来的追踪器位姿（约 90 Hz 刷新），由采集程序换算到夹爪末端（TCP），得到 tcp.*。③ 档同时转发头显双目画面（左右眼按帧序配对）与头部位姿。"
+    },
+    "obs": {
+      "title": "帧组装",
+      "sub": "取各路最新值",
+      "desc": "每一帧（默认 30 fps）取各路的最新值合成一帧观测：开合度、夹爪位姿、视触觉图像、腕部画面；③ 档再加头显双目画面与头部位姿。"
+    },
+    "pair": {
+      "title": "错帧配对",
+      "sub": "观测 t-1 + 动作 t",
+      "desc": "把上一帧的观测与这一帧的夹爪位姿、开合度（③ 档再加头部位姿）配成一行，动作领先观测一步。每集第一帧没有可配对的上一帧，因此少 1 帧。"
+    },
+    "rerun": {
+      "title": "Rerun 实时预览",
+      "sub": "--display_data=true",
+      "desc": "预览或录制时加 --display_data=true，实时显示各路画面、数值曲线和夹爪轨迹的 3D 视图。只用于查看，不写进数据集。"
+    },
+    "ds": {
+      "title": "LeRobotDataset v3.0",
+      "sub": [
+        "Parquet + MP4",
+        "+ meta/hardware.json"
+      ],
+      "desc": "状态与动作写入 Parquet；每路相机边录边编码成 MP4，有 NVIDIA GPU 时自动用硬件编码。这套设备的序列号等硬件清单另存在 meta/hardware.json。"
+    },
+    "hub": {
+      "title": "Hugging Face Hub",
+      "sub": "推送数据集",
+      "desc": "需要时用 lerobot-push-dataset-to-hub 把本地数据集推送到 Hugging Face Hub，公开或私有均可。"
+    }
   }
 }
 </script></div>

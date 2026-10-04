@@ -7,11 +7,11 @@
   "use strict";
 
   var NS = "http://www.w3.org/2000/svg";
-  var W = 1000, H = 520;
+  var W = 1170, H = 520;
 
   /* 列中心与节点尺寸 */
-  var PC_COL = { dev: 110, read: 355, core: 640, out: 885 };
-  var PC_NW = { dev: 180, read: 175, core: 170, out: 190 };
+  var PC_COL = { dev: 110, read: 350, core: 615, out: 860, up: 1075 };
+  var PC_NW = { dev: 180, read: 175, core: 170, out: 180, up: 170 };
 
   /* kind 决定配色;tier 是开始出现的档位 */
   var PC_NODES = [
@@ -27,7 +27,8 @@
     { id: "obs",     col: "core", y: 245, h: 170, kind: "core", tier: 1 },
     { id: "pair",    col: "core", y: 425, h: 60,  kind: "core", tier: 1 },
     { id: "rerun",   col: "out",  y: 120, h: 60,  kind: "out",  tier: 1 },
-    { id: "ds",      col: "out",  y: 425, h: 84,  kind: "out",  tier: 1 }
+    { id: "ds",      col: "out",  y: 425, h: 84,  kind: "out",  tier: 1 },
+    { id: "hub",     col: "up",   y: 425, h: 60,  kind: "out",  tier: 1 }
   ];
 
   /* 端点:r = 右边、l = 左边、b = 下边、t = 上边,dy/dx 为相对节点中心的偏移 */
@@ -44,16 +45,17 @@
     { id: "e-stereo",  from: "pcs",     to: "obs",    tier: 3, a: "r", b: "l", ady: 10, bdy: 60, video: true },
     { id: "e-pair",    from: "obs",     to: "pair",   tier: 1, a: "b", b: "t" },
     { id: "e-ds",      from: "pair",    to: "ds",     tier: 1, a: "r", b: "l" },
-    { id: "e-rerun",   from: "obs",     to: "rerun",  tier: 1, a: "r", b: "l", ady: -60 }
+    { id: "e-rerun",   from: "obs",     to: "rerun",  tier: 1, a: "r", b: "l", ady: -60 },
+    { id: "e-hub",     from: "ds",      to: "hub",    tier: 1, a: "r", b: "l" }
   ];
 
   /* 有标签的连线:标签放在直段上方 */
   var PC_LABELS = {
-    "e-grip":   { x: 234, dy: -7, anchor: "middle" },
-    "e-tact":   { x: 234, dy: -7, anchor: "middle" },
-    "e-wrist":  { x: 234, dy: -7, anchor: "middle" },
+    "e-grip":   { x: 232, dy: -7, anchor: "middle" },
+    "e-tact":   { x: 232, dy: -7, anchor: "middle" },
+    "e-wrist":  { x: 232, dy: -7, anchor: "middle" },
     "e-track":  { x: 122, y: 414, anchor: "start" },
-    "e-head":   { x: 234, dy: -7, anchor: "middle" }
+    "e-head":   { x: 232, dy: -7, anchor: "middle" }
   };
 
   /* 背包版:设备列相同;背包内读取 → 录制 / 预览编码两路 → 控制台、MCAP、导出 */
@@ -71,7 +73,9 @@
     { id: "rec",     col: "core", y: 345, h: 170, kind: "core", tier: 1 },
     { id: "console", col: "out",  y: 120, h: 60,  kind: "out",  tier: 1 },
     { id: "mcap",    col: "out",  y: 300, h: 60,  kind: "out",  tier: 1 },
-    { id: "export",  col: "out",  y: 440, h: 76,  kind: "out",  tier: 1 }
+    { id: "export",  col: "out",  y: 440, h: 76,  kind: "out",  tier: 1 },
+    { id: "dl",      col: "up",   y: 395, h: 52,  kind: "out",  tier: 1 },
+    { id: "upload",  col: "up",   y: 475, h: 60,  kind: "out",  tier: 1 }
   ];
 
   var BP_EDGES = [
@@ -89,15 +93,17 @@
     { id: "e-fcam-enc", from: "fcam",    to: "enc",     tier: 1, a: "r", b: "l", ady: -12, bdy: 10 },
     { id: "e-enc",      from: "enc",     to: "console", tier: 1, a: "r", b: "l" },
     { id: "e-rec",      from: "rec",     to: "mcap",    tier: 1, a: "r", b: "l", ady: -45 },
-    { id: "e-export",   from: "mcap",    to: "export",  tier: 1, a: "b", b: "t" }
+    { id: "e-export",   from: "mcap",    to: "export",  tier: 1, a: "b", b: "t" },
+    { id: "e-dl",       from: "export",  to: "dl",      tier: 1, a: "r", b: "l", ady: -20 },
+    { id: "e-upload",   from: "export",  to: "upload",  tier: 1, a: "r", b: "l", ady: 20 }
   ];
 
   var BP_LABELS = {
-    "e-grip":   { x: 234, dy: -7, anchor: "middle" },
-    "e-tact":   { x: 234, dy: -7, anchor: "middle" },
-    "e-wrist":  { x: 234, dy: -7, anchor: "middle" },
+    "e-grip":   { x: 232, dy: -7, anchor: "middle" },
+    "e-tact":   { x: 232, dy: -7, anchor: "middle" },
+    "e-wrist":  { x: 232, dy: -7, anchor: "middle" },
     "e-track":  { x: 122, y: 414, anchor: "start" },
-    "e-head":   { x: 234, dy: -7, anchor: "middle" }
+    "e-head":   { x: 232, dy: -7, anchor: "middle" }
   };
 
   /* 每套布局:列、节点、连线、连线标签,以及设备分组框与图例的位置 */
@@ -233,7 +239,7 @@
     el("path", { d: "M0,0 L10,5 L0,10 z", class: "tc-arch__arrow" }, mk);
 
     /* 列标题与夹爪分组框 */
-    ["dev", "read", "core", "out"].forEach(function (c) {
+    Object.keys(COL).forEach(function (c) {
       var t = el("text", { x: COL[c], y: 24, class: "tc-arch__col" }, svg);
       t.textContent = spec.cols[c];
     });
@@ -245,12 +251,12 @@
     /* 图例:实线是数据与位姿,粉色虚线是 ③ 档的头显双目画面 */
     var lg = el("g", { class: "tc-arch__legend" }, svg);
     var LY = L.legend.y;
-    el("path", { d: "M560," + LY + " h34", class: "tc-arch__line" }, lg);
-    var l1 = el("text", { x: 602, y: LY + 4, class: "tc-arch__elabel" }, lg);
+    el("path", { d: "M700," + LY + " h34", class: "tc-arch__line" }, lg);
+    var l1 = el("text", { x: 742, y: LY + 4, class: "tc-arch__elabel" }, lg);
     l1.textContent = spec.legend[0];
     var lv = el("g", { class: "tc-arch__edge is-video" }, lg);
-    el("path", { d: "M760," + LY + " h34", class: "tc-arch__line" }, lv);
-    var l2 = el("text", { x: 802, y: LY + 4, class: "tc-arch__elabel" }, lg);
+    el("path", { d: "M900," + LY + " h34", class: "tc-arch__line" }, lv);
+    var l2 = el("text", { x: 942, y: LY + 4, class: "tc-arch__elabel" }, lg);
     l2.textContent = spec.legend[1];
 
     var edgeLayer = el("g", { class: "tc-arch__edges" }, svg);
