@@ -71,13 +71,13 @@ XTac-UMI 提供两种配置，使用同一套 XTac-UMI G1 夹爪与 Pico4 Ultra 
 
     固定工位用适配器供电，移动采集用充电宝供电：
 
-    <div class="tc-pair" markdown>
+    === "适配器供电（固定工位）"
 
-    ![适配器供电接线：头显接 PICO 口，左右夹爪接 UMI-L / UMI-R，适配器接 DC](../assets/product/backpack-wiring-adapter.svg)
+        ![适配器供电接线：头显接 PICO 口，左右夹爪接 UMI-L / UMI-R，适配器接 DC](../assets/product/backpack-wiring-adapter-diagram.webp)
 
-    ![充电宝供电接线：左右主夹爪与头显接数采背包，充电宝接背包 DC 口](../assets/product/backpack-wiring-powerbank.svg)
+    === "充电宝供电（移动采集）"
 
-    </div>
+        ![充电宝供电接线：左右主夹爪与头显接数采背包，充电宝接背包 DC 口](../assets/product/backpack-wiring-powerbank-diagram.webp)
 
     接线步骤见[适配器供电](../backpack/unbox-connect.md#adapter)与[充电宝供电](../backpack/unbox-connect.md#powerbank)；供电与拔线顺序的安全要求见[数采背包与供电](safety.md#backpack-power)；连上背包、打开控制台见[背包热点](../backpack/network.md#softap)。
 

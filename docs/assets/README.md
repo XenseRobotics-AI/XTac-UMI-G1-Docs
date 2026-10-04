@@ -144,6 +144,6 @@ theme:
 | `product/backpack-belt-drawing.webp` | 腰带固定结构示意图 |
 | `product/follower-dimensions.webp` | 从夹爪外形尺寸图（157 × 111 / 200 mm） |
 
-## 背包版接线示意图（SVG）
+## 背包版接线示意图
 
-`product/backpack-wiring-adapter.svg`、`product/backpack-wiring-powerbank.svg`（及 `-en` 英文版）是用脚本生成的矢量示意图，生成脚本在 `materials/backpack-wiring-svg-gen.py`；改线缆规格或文字时改脚本里的 `T` 表后重新运行：`python3 materials/backpack-wiring-svg-gen.py docs/assets/product`。
+`product/backpack-wiring-adapter-diagram.webp`、`product/backpack-wiring-powerbank-diagram.webp`（及 `-en` 英文版）是用产品渲染图拼成的示意图，脚本与素材在 `materials/wiring-diagram/`；改文字或线缆规格时改 `compose.py` 里的 `T` 表，在仓库根目录运行 `python3 materials/wiring-diagram/compose.py docs/assets/product`。
