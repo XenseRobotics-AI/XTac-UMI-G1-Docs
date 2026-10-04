@@ -81,7 +81,7 @@
 
     ---
 
-    轻量主端加背负式采集单元，实验室、家庭、现场都能部署，可扩展到千小时级数据集。
+    轻量主端加背负式采集单元，实验室、家庭、现场随处可采。
 
 -   ![指尖夹取细链](../assets/highlights/fingertip.webp){ .tc-card-img loading=lazy }
 

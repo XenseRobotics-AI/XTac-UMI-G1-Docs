@@ -81,7 +81,7 @@
 
     ---
 
-    A light leader end plus a wearable collection unit deploys in the lab, at home or on site, and scales to thousand-hour datasets.
+    A light leader end and a wearable collection unit, ready for the lab, home or field.
 
 -   ![Fingertip picking up a fine chain](../assets/highlights/fingertip.webp){ .tc-card-img loading=lazy }
 
