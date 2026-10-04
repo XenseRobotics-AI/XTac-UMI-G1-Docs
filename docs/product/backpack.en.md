@@ -9,11 +9,11 @@ The **XTac-UMI Backpack** is the Backpack Kit's compute node: the grippers and t
 
 ## What it is
 
-The backpack is an RK3588 compute node that ships with the kit (eMMC system disk + NVMe data disk). It receives, buffers and writes the collected data from the XTac-UMI G1 and the Pico system in one place, organised by project and task. It has the XenseVR runtime built in — the one that runs on a workstation in the Developer Kit — so the headset connects directly to it.
+The backpack is the Backpack Kit's collection host. The operator wears it, and it needs neither a computer nor the site network. Both leader grippers and the headset plug straight into it, and collection starts once it boots.
 
-During collection it records all of this at once: each leader gripper's wrist fisheye, its two visuotactile feeds, the encoder's opening angle and the IMU; the 6-DoF pose of the headset and both trackers; and, optionally, the headset's views (stereo or right eye only). Camera frames are written as raw MJPEG, and every channel goes into the same MCAP recording, filed by project / task / time; the backpack's hardware H.264 encoding is used only for the live preview.
-
-It is worn on the back: it moves with the operator and depends on neither the site network nor a PC, which suits continuous demonstration and multi-scene collection. Data is written locally and managed per task, replayed, deleted and exported in the console, and handed over as a LeRobot dataset for imitation learning and VLA training.
+- **What it records**: each gripper's visuotactile images, wrist fisheye, opening and IMU, the headset and tracker poses, and optionally the headset views.
+- **How it stores**: every demonstration is one MCAP raw recording, organised by project and task.
+- **How you use it**: replay and delete in the console, export as a LeRobot dataset or MCAP, and publish to ModelScope in one click.
 
 ## Connectors {#ports}
 
