@@ -34,7 +34,7 @@ If you hit a problem:
 
 1. Check troubleshooting first: the Developer Kit's [Troubleshooting](../pc/troubleshooting.md) (it includes the FAQ), or the Backpack Kit's [Troubleshooting](../backpack/troubleshooting.md).
 2. Problems with the documentation's content, links or examples go to the [docs repository Issues](https://github.com/XenseRobotics-AI/XTac-UMI-G1-Docs/issues).
-3. Hardware, firmware, calibration materials or repair matters go through the device delivery / after-sales channel, with the device SN.
+3. For hardware, firmware, missing items or repairs, contact our after-sales team with the device SN.
 
 Please include:
 

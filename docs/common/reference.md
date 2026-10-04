@@ -34,7 +34,7 @@
 
 1. 先查故障排查：PC 版见[故障排查](../pc/troubleshooting.md)（含常见问题），背包版见[背包版故障排查](../backpack/troubleshooting.md)。
 2. 文档内容、链接或示例问题提交到[文档仓库 Issues](https://github.com/XenseRobotics-AI/XTac-UMI-G1-Docs/issues)。
-3. 硬件、固件、标定材料或返修问题走设备交付 / 售后渠道，并提供设备 SN。
+3. 硬件、固件、缺件或返修问题请联系售后团队，并提供设备 SN。
 
 反馈时请附带：
 

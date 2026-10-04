@@ -138,6 +138,8 @@ This page compares the two and lists each kit's box contents and wiring.
 
     Not for collecting. The backpack keeps its own 5 GHz hotspot up with the gateway fixed at `192.168.44.1`, independent of any site network. Only "upload to remote" at export time requires the backpack to reach the upload target: cloud targets such as ModelScope or S3 usually need internet access, while an FTP / NFS server on the local network only needs the backpack on the same network; plug in a cable, or put the backpack on the site's 5 GHz WiFi from the System page. Downloading to the device needs no network.
 
-## Getting in touch and getting started
+## Getting started and after-sales support
 
-Once you have chosen, go to the matching entry point: [Backpack Kit quickstart](../backpack/index.md) or [Developer Kit quickstart](../pc/quickstart.md). Cables, adapters, power banks and the like follow the contract configuration and the packing list — if something is missing, contact your project manager rather than substituting it yourself. The channels for reporting technical problems and what to include are in [Support and feedback](../common/reference.md#support).
+- **Getting started**: see the [Backpack Kit quickstart](../backpack/index.md) or the [Developer Kit quickstart](../pc/quickstart.md).
+- **Missing or damaged items in the box**: contact our after-sales team for a replacement; do not substitute other cables or power supplies.
+- **Problems in use**: check the troubleshooting page for your kit first; if that does not solve it, contact our after-sales team with the device serial numbers and logs described in [Support and feedback](../common/reference.md#support).
