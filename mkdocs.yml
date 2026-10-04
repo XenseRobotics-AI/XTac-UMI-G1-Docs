@@ -264,9 +264,9 @@ extra:
 nav:
   - 产品:
       - 首页: index.md
+      - 认识 XTac-UMI G1: product/g1.md
       - 产品亮点: product/highlights.md
       - 产品线与配置对比: product/editions.md
-      - 认识 XTac-UMI G1: product/g1.md
       - 认识数采背包: product/backpack.md
       - 技术参数: product/specs.md
       - 安全与合规: product/safety.md
