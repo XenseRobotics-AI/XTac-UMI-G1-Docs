@@ -41,8 +41,8 @@ The frame rate used during collection can be set as needed (the Developer Kit re
 | Parameter | Specification |
 |---|---|
 | Structure | Two-finger gripper, mounted on the robot's end effector |
-| Motor | RobStride EL05 or RS00 |
-| Maximum output torque | 1.1 N·m (EL05) / 3.6 N·m (RS00) |
+| Motor | RobStride EL05 |
+| Maximum output torque | 1.1 N·m |
 | Opening angle | 0–70° |
 | Control | Impedance control (default), force-position control |
 | Connector and power | USB Type-C for communication + 24 V power adapter (24 V 2.5 A) |
@@ -68,7 +68,8 @@ The Backpack Kit's collection unit: the grippers and headset plug into it and th
 |---|---|
 | Processor | RK3588 |
 | Storage | eMMC system disk + 1 TB NVMe data disk; recordings and exports live on the data disk |
-| Recording capacity | About 200 GB per 400 hours of data; the data disk counts as full at 80% and recording stops |
+| Disk-full rule | The data disk counts as full at 80% and recording stops |
+| Exported data size | An exported LeRobot dataset takes about 200 GB per 400 hours |
 | Power | 12 V 3 A power adapter, or a 20000 mAh power bank through a 12 V PD power cable |
 | Power draw | Up to 36 W (12 V 3 A) |
 | Power-bank runtime | About 3.5–4 hours |
