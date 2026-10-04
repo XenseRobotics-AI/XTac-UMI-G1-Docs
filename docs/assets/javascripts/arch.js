@@ -111,7 +111,7 @@
     pc: { col: PC_COL, nw: PC_NW, nodes: PC_NODES, edges: PC_EDGES, labels: PC_LABELS,
           group: { x: 14, y: 52, w: 192, h: 232 }, legend: { y: 500 } },
     backpack: { col: PC_COL, nw: PC_NW, nodes: BP_NODES, edges: BP_EDGES, labels: BP_LABELS,
-          group: { x: 14, y: 52, w: 192, h: 232 }, legend: { y: 505 } }
+          group: { x: 14, y: 52, w: 192, h: 232 }, legend: { y: 535 }, h: 552 }
   };
 
   function el(name, attrs, parent) {
