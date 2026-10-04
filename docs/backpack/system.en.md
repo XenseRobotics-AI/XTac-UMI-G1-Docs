@@ -4,7 +4,7 @@ This page covers every item on the "System" page of the XTac-UMI Collector conso
 
 ## What is on the System page
 
-Open "System" from the console's top bar; the items down the left are ordered by how often they are used. Each one opens directly at `/system/<id>`, which makes it easy for support staff to send a link.
+Open "System" from the console's top bar; the items down the left are ordered by how often they are used. Each one opens directly at `/system/<id>`, which makes it easy for support staff to send a link. Next to the list there is also an "Interface language" selector: "Follow browser", "简体中文" or "English". By default it follows the browser language (anything other than Chinese or English shows English); a manual choice applies only to the current page, and a refresh or reopening goes back to following the browser.
 
 | Item | Direct link | Purpose | When you need it |
 |---|---|---|---|
@@ -18,7 +18,7 @@ Open "System" from the console's top bar; the items down the left are ordered by
 | [Fleet management](#matrix) | `/system/matrix` | Multi-device management enrolment | Not needed at present |
 
 !!! warning "Stop recording first"
-    While a recording is in progress, the device refuses all of these: switching the capture mode, changing the wrist undistortion configuration, gripper travel calibration, gripper firmware upgrades, camera profile upload / restore, and applying a system update (the interface says "Recording in progress"). When you see that message, stop the recording on the Live monitor page first.
+    While a recording is in progress, the device refuses all of these: switching project, gripper travel calibration, gripper firmware upgrades, camera profile upload / restore, and applying a system update (the interface says "Recording in progress"). When you see that message, stop the recording on the Live monitor page first.
 
 ## Device info {#device-info}
 
@@ -27,7 +27,7 @@ Open "System" from the console's top bar; the items down the left are ordered by
 One page showing this backpack's software versions, identity serial numbers, headset details, gripper MCUs and camera list. It is entirely read-only; there is nothing to change.
 
 - Metrics card: collector version, git, build time, architecture, device SN (burned in on the production line and printed on the body label), hardware serial, node ID, and mode (standalone / matrix). Anything that cannot be read shows `--`.
-- Headset: one card per unit, showing online / offline plus the Head SN, XUMI software version, resolution, and the left and right camera intrinsics (in the original order, 4 values) and extrinsics (in the original 4×4 order). When a headset has been found but its camera parameters have not arrived yet it says "Headset found, camera parameters not received yet."; with no headset connected it says "No headset detected."
+- Headset: one card per unit, showing online / offline plus the Head SN, XUMI software version, resolution, and the left and right eyes' intrinsics, extrinsics, original calibration dimensions and distortion coefficients, with the full calibration message reported by the headset available to expand. When a headset has been found but usable camera parameters have not arrived yet it says "Headset found. Usable camera parameters have not been received yet."; with no headset connected it says "No headset detected."
 - Gripper MCU: one row per gripper, with a left / right badge, SN, firmware version, baud rate, calibration mask (hexadecimal, `0x`) and serial port.
 - Cameras: the runtime's aggregated list of logical cameras, each row showing side · role, product / serial and the v4l2 node; offline ones are marked "(offline)".
 
@@ -39,7 +39,7 @@ The four sets of data are fetched independently, so a headset or MCU dropping ou
 When you need this page:
 
 - Repairs, identifying a unit: copy the device SN and hardware serial, and the Head SN for the headset. Identify units only by these; do not go by IP, because DHCP addresses change.
-- After an upgrade: check the "collector version / git / build time" to confirm the new version really took effect. The documentation is written against 0.3.16, but what this page shows is authoritative.
+- After an upgrade: check the "collector version / git / build time" to confirm the new version really took effect. This page is written against 0.4.3, but what the Device info page shows is authoritative.
 - When the number of camera feeds on the Live monitor page does not match expectations: look here first to see which camera is "(offline)".
 - Before gripper calibration: check whether the firmware version is ≥ 1.2.0.0 (the command set V2.1 and build 1.2.0 the Developer Kit talks about, see [Three numbering schemes](../pc/versions.md#v21)); a gripper below that does not support travel calibration.
 
@@ -83,25 +83,25 @@ This page covers **how recording is triggered on site and how the device reports
 
 ![Current project capture config](../assets/backpack/capture-mode.webp)
 
-This block at the top of the page shows, read-only, the four capture and export parameters of the current project. They are chosen when the project is created and cannot be changed afterwards, so there is nothing clickable here — to use a different set, create a new project.
+This block at the top of the page shows, read-only, the five capture and export parameters of the current project. They are chosen when the project is created and cannot be changed afterwards, so there is nothing clickable here — to use a different set, create a new project.
 
 The **project capture mode** decides how many grippers are recorded and whether the headset is included, and with it the Live monitor layout, what gets recorded and the channel contract of the export. There are six presets:
 
 | Mode | Grippers | Headset | Camera feeds |
 |---|---|---|---|
 | Dual gripper | 2 grippers | No headset | 6 |
-| Dual gripper + headset stereo | 2 grippers | PICO stereo pair | 8 |
-| Dual gripper + headset right eye | 2 grippers | PICO right eye | 7 |
+| Dual gripper + stereo headset | 2 grippers | PICO stereo pair | 8 |
+| Dual gripper + right mono headset | 2 grippers | PICO right eye | 7 |
 | Single gripper | 1 gripper | No headset | 3 |
-| Single gripper + headset stereo | 1 gripper | PICO stereo pair | 5 |
-| Headset stereo only | No gripper | PICO stereo pair | 2 |
+| Single gripper + stereo headset | 1 gripper | PICO stereo pair | 5 |
+| Stereo headset only | No gripper | PICO stereo pair | 2 |
 
 For "single gripper" you do not choose the side: the device works it out from which side the gripper is actually plugged into, so changing grippers needs no configuration change.
 
-The other three: the **project PICO resolution** (`640x480` or `1024x768` per eye, only for modes that include the headset), the **project tactile rectified-image export orientation** ("current orientation · 700 × 400 (landscape)" by default, with "rotated 90° counter-clockwise · 400 × 700 (aligned with the SDK)" as the alternative), and the **PICO image source** (the raw fisheye frame or the undistorted one) together with the wrist fisheye rectification switch. Think these through before creating the project, because you cannot change them afterwards.
+The other four: the **project PICO resolution** (`640x480` or `1024x768` per eye, only for modes that include the headset), the **project tactile rectified-image export orientation** ("current orientation · 700 × 400 (landscape)" by default, with "rotated 90° counter-clockwise · 400 × 700 (aligned with the SDK)" as the alternative), and the **PICO image source** (the raw fisheye frame or the undistorted one) together with the wrist fisheye rectification switch. Think these through before creating the project, because you cannot change them afterwards. When a project is selected (or the headset reconnects), the device automatically syncs the headset's mono / stereo setting, resolution and image source to the project's settings, and checks again before recording starts; recording begins only once the configuration has taken effect.
 
 !!! warning "The capture config freezes when the project is created; getting it wrong means creating a new project"
-    These four cannot be changed once the project exists, and the device will not change them for you during recording. Pick too few channels and every later recording in this project has fewer channels, and the export pre-check will block them by profile (for example "headset stereo only" data will not pass the bimanual profile's LeRobot pre-check). Historical projects keep whatever they had for fields they never specified, and can still be viewed, exported and uploaded; to use the new parameters, create a new project — and **an empty project with nothing recorded in it can simply be deleted and recreated** if you picked wrong.
+    These five cannot be changed once the project exists, and the device will not change them for you during recording. Pick too few channels and every later recording in this project has fewer channels; moreover, **in the current version only recordings from the dual-gripper modes (Dual gripper, Dual gripper + stereo headset, Dual gripper + right mono headset) can be exported** — data recorded in the single-gripper and headset-only modes can be replayed, but the export pre-check rejects it, and neither LeRobot nor mcap can be produced. Historical projects keep whatever they had for fields they never specified, and can still be viewed, exported and uploaded; to use the new parameters, create a new project — and **an empty project with nothing recorded in it can simply be deleted and recreated** if you picked wrong.
 
 ### Wrist fisheye rectification and tactile orientation {#undistort}
 
@@ -124,23 +124,31 @@ The shortcut and the device buttons below are two independent paths: the shortcu
 
 ### Voice announcements {#voice}
 
-The device speaker gives spoken prompts in Chinese at key moments, with no need for a tablet nearby and independent of the browser. The reason is practical: during collection both hands are on the grippers and your eyes are on the scene, so reading an LED means deliberately looking up, while a spoken prompt does not.
+The device gives spoken prompts at key moments, with no need for a tablet nearby and independent of the browser. The reason is practical: during collection both hands are on the grippers and your eyes are on the scene, so reading an LED means deliberately looking up, while a spoken prompt does not.
 
-There are four moments, corresponding to five fixed announcements:
+Prompts play through the headset by default; if the headset is not connected, does not support it, or lacks that prompt's audio asset, the backpack's onboard speaker plays it instead. The "Pico connection failed" prompt always uses the onboard speaker.
+
+There are six fixed announcements plus a subtask marker tone:
 
 | Moment | Announcement |
 |---|---|
-| Recording starts | "Recording started" |
-| An episode finishes | "Recording complete, please reset the environment" |
-| A serious problem occurs while recording | "Recording failed" |
-| A gripper or the headset drops out while recording | "Gripper connection failed" / "Pico connection failed" |
+| Recording starts | "Recording started." |
+| An episode finishes | "Recording complete. Please reset the scene." |
+| A serious problem occurs while recording | "Recording failed." |
+| A gripper drops out while recording | "Gripper connection failed." |
+| The headset drops out or its data stops while recording | "Pico connection failed." |
+| A Tracker drops out while recording (headset still connected) | "Tracker connection failed." |
+| A single click on the right gripper marks a subtask while recording | Subtask marker tone (no speech) |
 
-Only two things in this block are adjustable, and both survive a reboot:
+Disconnects get three separate announcements because each points to a different device to check: on "Tracker connection failed" the headset is most likely still connected, so check the Tracker on your hand first.
+
+Three things in this block are adjustable:
 
 - Switch: mute with one click (the interface shows "On" / "Muted").
-- Playback volume: a 0–100 slider (new in 0.3.16) that adjusts only the software gain at playback; it does not alter the WAV assets and does not touch the system sound card. The maximum setting is about +3 dB.
+- Playback volume: a 0–100 slider. When playing through the headset the value is sent to the headset; when falling back to the onboard speaker it adjusts only the software gain at playback, with the maximum setting about +3 dB.
+- Audio language: "Chinese" or "English". On page load and whenever the interface language changes, the audio language follows the interface language; a separately chosen audio language holds until the next page load or interface language change. For English through the headset, the headset app must include the English assets; where one is missing, that prompt plays through the onboard speaker, still in English.
 
-Each line has a "Preview \"…\"" button next to it, which goes through exactly the same path as a real announcement, so a silent preview still tells you why: if it is currently muted it prompts you to turn the switch on first, and if the device has no usable audio output it says voice announcements have been disabled for this run.
+Each line has a "Preview \"…\"" button next to it, which goes through exactly the same path as a real announcement, and the preview result says where the sound came out and why; if it is currently muted it prompts you to turn the switch on first.
 
 The wording and the timing of the announcements are fixed values that cannot be changed on site — changing them requires a release — so every device in a fleet behaves identically.
 
@@ -160,8 +168,8 @@ There are five kinds of backend, and the fields change with the kind (their cred
 
 | Kind | What it uploads | What to fill in |
 |---|---|---|
-| ModelScope | LeRobot datasets | Owner (account / organisation), Token, visibility for new repositories |
-| S3 object storage | LeRobot datasets | Bucket, Endpoint, Region (may be left blank), Access Key, Secret Key |
+| ModelScope | LeRobot datasets and exported MCAP | Owner (account / organisation), Token, visibility for new repositories |
+| S3 object storage | LeRobot datasets and exported MCAP | Bucket, Endpoint, Region (may be left blank), Access Key, Secret Key |
 | FTP / FTPS | LeRobot datasets and exported MCAP | FTP server, port, username, password, target directory, connection security; with FTPS you may also supply a private CA |
 | NFS network storage | LeRobot datasets and exported MCAP | Server, export path, protocol version; subdirectory, UID / GID and ports as needed |
 | STS (exported MCAP) | Offline-exported `*.train.mcap` | Server, Account / OpenID, Project, Project Type, Task ID (may be left blank) |
@@ -170,7 +178,7 @@ Whether this device offers FTP / FTPS and NFS depends on whether those options a
 
 Each row in the list shows the name, a kind badge and the destination (owner / bucket / project), plus the last four characters of the credential masked, and "Verify / Edit / Delete".
 
-All five kinds name their directories the same way: **`<root>/ project name / mode prefix-task name-date /`**, where the "root" is the Owner, the bucket or the target root directory depending on the kind. The project directory uses **the name you gave the project when you created it**, and you do not add the mode prefix or the date to the task name yourself — the device does that. A task that has already uploaded keeps its original directory and is not renamed by this rule.
+Apart from STS, the four kinds name their directories the same way: **`<root>/ project name / mode prefix-task name-date /`**, where the "root" is the Owner, the bucket or the target root directory depending on the kind. The project directory uses **the name you gave the project when you created it**, and you do not add the mode prefix or the date to the task name yourself — the device does that. A task that has already uploaded keeps its original directory and is not renamed by this rule. For STS the upload location is issued by the Server and does not follow this rule.
 
 What to know about each kind:
 

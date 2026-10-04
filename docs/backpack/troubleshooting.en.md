@@ -56,7 +56,7 @@ This page is organised by symptom, with a cause and a fix for each. The three mo
 
 ## Headset and trackers {#tracker}
 
-??? failure "The status dot on the live monitor's pose card is yellow, with \"tracker out of view\" or \"pose stale\" beside it"
+??? failure "The status dot on the live monitor's pose card is yellow, with “tracker out of view” or “pose stale” beside it"
     **Cause:** the headset is connected but the tracker pose is invalid: the tracker has left the headset's field of view, tracking has gone wrong, or the tracker is not powered on or not paired. "Pico offline" instead means the headset is not connected to the backpack. Poses recorded while tracking was lost cannot be trusted — do not use that stretch of data.
 
     **Fix:** bring the grippers back into the headset's field of view; confirm both trackers show a blue light, are [paired to the headset](../common/pico4.md#pico-tracker-bind) and are in standalone tracking mode. For "Pico offline", check whether XTac-UMI XR in the headset is connected, see [The app interface](../common/pico4.md#pico-toolkit-ui).
@@ -74,16 +74,16 @@ This page is organised by symptom, with a cause and a fix for each. The three mo
 ## Collection and recording {#record}
 
 ??? failure "The record button is greyed out, or the gripper button refuses to start (solid yellow LED)"
-    **Cause:** a pre-recording gate did not pass, and the browser pops up the reason: no project / task selected; the Pico pose or clock is not ready; no gripper MCU online; the task has reached its cumulative collection target; the recording disk is 80 % used.
+    **Cause:** a pre-recording gate did not pass, and the browser pops up the reason: no project / task selected; "Pico not ready" or "Tracker not ready" (followed by the specific reason, such as a connection timeout, missing pose or video from one eye, missing clock sync, a headset configuration change awaiting confirmation, or a Tracker out of view or still for more than 5 seconds without active tracking); no gripper MCU online; the task has reached its cumulative collection target; the recording disk is 80 % used.
 
-    **Fix:** deal with whichever one the dialog names: pick a [project and task](monitor-record.md#project-task) at the bottom of the live monitor page; wait for the headset to connect and the pose dot to turn green; a full disk is the next entry; a met target is the "cumulative collection target" entry below.
+    **Fix:** deal with whichever one the dialog names: pick a [project and task](monitor-record.md#project-task) at the bottom of the live monitor page; wait for the headset to connect and the pose dot to turn green, and for "Tracker not ready" bring the grippers back into the headset's view and move them a little; a full disk is the next entry; a met target is the "cumulative collection target" entry below.
 
-??? failure "Recording refused: \"Task '…' has reached its cumulative collection target (N/M)\""
+??? failure "Recording refused: “Task '…' has reached its cumulative collection target (N/M)”"
     **Cause:** since 0.3.14 this gate counts **cumulative collection**: both "ready" and "uploaded" count towards it, and archiving only deletes local files without changing the state, so **neither uploading nor archiving frees up room any more**. It used to count only the ones not yet uploaded, so uploading a batch bought you a few more takes and it never matched the task's progress; that basis has been retired.
 
     **Fix:** raise that task's target count, or delete recordings on the Projects page that should not count towards it (misfired short takes, the ones already judged suspect); you can also create a new task and start counting again. Do not expect "upload a batch and keep recording" to work. The basis is in [Picking a project and task](monitor-record.md#project-task).
 
-??? failure "Recording refused: \"Recording disk is N% used, at the 80% limit\""
+??? failure "Recording refused: “Recording disk is N% used, at the 80% limit”"
     **Cause:** the capacity gate before recording refuses at 80 %, leaving 20 % for transcode intermediates and exports; better not to start this take than to record a truncated MCAP when the disk fills.
 
     **Fix:** export the data you have (download or upload) and then [archive](projects-export.md#archive) to free space, or delete recordings you do not need on the Projects page. Note that uploading by itself frees nothing — local files are kept by default after an upload, and you have to click "Archive" separately. Deleting removes the MCAP and the H264 with it and cannot be undone.
@@ -92,6 +92,16 @@ This page is organised by symptom, with a cause and a fix for each. The three mo
     **Cause:** something fatal went wrong in this take (a camera or a required channel dropped, say) and the take is already spoiled; the LED stays yellow until this recording finishes.
 
     **Fix:** after stopping, look at that take's quality annotation on the Projects page, delete it and record again; check which feed dropped on the live monitor page and inspect that cable. The meanings are in [LEDs](gripper.md#buttons-leds).
+
+??? failure "The headset disconnected during recording, and the take was interrupted and marked failed"
+    **Cause:** a protection added in 0.4.2: if during recording the headset's USB link drops, its connection breaks, or its pose / images stop updating for about 3 seconds, the device immediately marks the take failed and stops capture, announces "Pico connection failed" ("Tracker connection failed" if it was a Tracker that dropped), and the interface pops up "Pico issue: recording interrupted". The data captured so far is finalised safely and kept on the device for diagnosis, but it does not count towards the collected total and is left out of normal export and upload.
+
+    **Fix:** check the cable between the headset and the backpack's `PICO` port, the headset's battery, and whether XTac-UMI XR is still running in the headset; for a Tracker dropout, check the Tracker on your hand. Recording **does not resume automatically** once the headset recovers — wait until the live monitor shows ready and start a new recording. One incident raises only one notice.
+
+??? failure "A recording shows as failed, with power loss or a system restart as the reason"
+    **Cause:** the backpack lost power, the system restarted, or the capture service restarted while recording, so the take was not finalised normally. Since 0.4.3, after power returns the reason distinguishes a power loss / system restart from a restart of the capture service, and the data size reflects the files actually left on the device.
+
+    **Fix:** such a recording file may be incomplete, so do not treat it as valid data — confirm, delete and record again; if power losses keep happening, check the power supply and cabling, see [Power and ports](#power).
 
 ??? failure "The gripper LED is solid red"
     **Cause:** a system problem, lit by the backpack: a gripper dropped out, a camera dropped out, or a required channel is missing; it stays until the problem clears. Red only ever means a fault, not that recording is in progress.
@@ -106,44 +116,44 @@ This page is organised by symptom, with a cause and a fix for each. The three mo
 ??? failure "The buttons do nothing: a double-click is refused (fast yellow flash), a long press during recording has no effect"
     **Cause:** this is how the state machine is designed: during recording a double-click and a long press on the right gripper are silently ignored (to guard against a shaky hand); a double-click is refused when there is nothing to delete; and a double-click does nothing during the 3-second cooldown after a deletion.
 
-    **Fix:** follow the gesture table in [Buttons](gripper.md#buttons); the bindings currently in effect are shown at console → Settings → [Capture settings › Recording shortcut](system.md#keybinding).
+    **Fix:** follow the gesture table in [Buttons](gripper.md#buttons); the bindings currently in effect are shown at console → System → [Capture settings › Recording shortcut](system.md#keybinding).
 
 ??? failure "The device is silent — no voice announcement when recording starts or stops"
-    **Cause:** two possibilities. When voice was first added in 0.3.12 there was a bug that sent the sound to HDMI instead of the onboard speaker, so the preview was silent too and nothing reported an error, which looked on site like a broken speaker — that was **fixed in 0.3.13**. If it is still silent after that, it is almost always the settings: voice is muted, or the volume is at 0.
+    **Cause:** announcements play through the headset by default and fall back to the backpack's onboard speaker only when the headset is unavailable, so first make sure you are listening in the right place: the headset when it is on, the backpack when no headset is connected. If it is still silent, it is almost always the settings: voice is muted, or the volume is at 0.
 
-    **Fix:** go to [Settings › Capture settings › Voice announcements](system.md#voice) and check whether the switch says "Muted" and whether the volume slider is at 0, then use "Preview" next to the switch to check each line. Go by the console version shown on System → Device info, and [upgrade](update.md) first if it is below 0.3.13. The wording and the timing of the announcements are fixed and cannot be changed on site; only the switch and the volume are adjustable.
+    **Fix:** go to System → [Capture settings › Voice announcements](system.md#voice) and check whether the switch says "Muted" and whether the volume slider is at 0, then use "Preview" next to each line to check them one by one; the preview result says where the sound came out and why. With English announcements selected and the headset app lacking the English assets, that line plays through the onboard speaker instead. The wording and the timing of the announcements are fixed and cannot be changed on site; only the switch, the volume and the announcement language are adjustable.
 
 ??? failure "The fisheye view is blurred"
     **Cause:** the fisheye camera's focus ring is easy to knock out of place.
 
     **Fix:** check both fisheye views for sharpness before every collection run and turn the ring back if one is blurred; clean a dirty lens with a lint-free cloth, see [Maintenance](../common/maintenance.md).
 
-??? failure "Switching the capture mode, gripper calibration, a firmware upgrade or a system update is refused with \"Recording in progress\""
+??? failure "Switching project, gripper calibration, a firmware upgrade or a system update is refused with “Recording in progress”"
     **Cause:** the device refuses all of these outright while a recording is in progress.
 
     **Fix:** stop the recording on the live monitor page first (or long-press the left gripper), then try again.
 
 ## Replay, export and data {#export}
 
-??? failure "\"Replay\" is refused, saying the camera preview is holding it"
+??? failure "“Replay” is refused, saying the camera preview is holding it"
     **Cause:** replay and live preview share the backpack's hardware encoder and replay needs it exclusively, so it is refused while the live monitor is open in another tab or on another device. For up to 15 seconds after a camera disconnects it still counts as held. Opening the monitor page after replay has started is fine — the preview comes up and replay is not taken away.
 
     **Fix:** close the monitor page in other tabs and on other tablets / phones, wait a few seconds and click replay again. See [Replay](playback.md).
 
-??? failure "The pre-check or export reports \"timestamps do not overlap\" or `timestamps are not monotonic`"
+??? failure "The pre-check or export reports “timestamps do not overlap” or “camera timestamps are not monotonic”"
     **Cause:** the system clock jumped during recording (typically: the backpack sat unpowered for days, and on boot NTP moved the system time by hours in one step, so cameras that started before and after ended up on two timelines). Since 0.3.3 the time base is frozen during recording and the hardware has an RTC battery, so newly recorded data will not hit this.
 
     **Fix:** the affected historical data cannot be exported, which is expected — delete those episodes. If it recurs after upgrading, note the `episode_id` in the error and report it.
 
-??? failure "The export reports \"the camera set does not match the first episode\""
+??? failure "The export reports “the camera set does not match the first episode”"
     **Cause:** capture modes were mixed within one task (recorded at 6 feeds, then switched to 8 and carried on).
 
     **Fix:** keep one capture mode from start to finish within a task; for data that is already mixed, delete the entries whose channels differ from the first episode and export again, or split them into separate tasks.
 
-??? failure "Data recorded in headset-only mode fails the pre-check with `capture_mode_unsupported`"
-    **Cause:** the LeRobot export is organised around the bimanual layout (20-dimension state), and headset-only data cannot go into a bimanual dataset. This is expected, not corruption.
+??? failure "Data recorded in single-gripper or headset-only mode does not pass the export pre-check"
+    **Cause:** in the current version the export (LeRobot dataset and mcap alike) is organised around the dual-gripper layout and supports only the Dual gripper, Dual gripper + stereo headset and Dual gripper + right mono headset modes; recordings in the single-gripper and headset-only modes are rejected by the pre-check. This is expected, not corruption.
 
-    **Fix:** for headset-only data, pick the `mcap` format in the [export dialog](projects-export.md#export) and download it to the device to keep; to get into a LeRobot dataset, record in a dual-gripper mode.
+    **Fix:** these recordings replay normally but cannot be exported for now; for data you need to export, create a project in a dual-gripper mode and record again. The capture mode is chosen when the project is created, see [Current project capture config](system.md#capture-mode).
 
 ??? failure "After archiving, those recordings cannot be replayed or exported in the other format"
     **Cause:** expected behaviour, not a fault. Archiving deletes the local raw file and keeps only the catalogue record, and both replay and export need the raw file, so neither is possible; on the Projects page those entries' "Replay" buttons are greyed out and say "Archived, the local source has been deleted". If a take had been uploaded in only one format, the other format can never be exported after archiving — the archive confirmation lists those takes first.
@@ -153,9 +163,9 @@ This page is organised by symptom, with a cause and a fix for each. The three mo
 ??? failure "The upload finished but the recording disk has no more free space"
     **Cause:** expected behaviour (a change since 0.3.10). After a successful upload the local files are **no longer deleted automatically**; without ticking the box it only uploads and keeps every file. The old 0.3.5 default of clearing the disk on upload is out of date.
 
-    **Fix:** to free space, tick "Archive automatically after uploading (delete the local source, keep only the metadata)" before uploading, or click "Archive" in the task's export dialog afterwards. The clean-up protects formats you have not used yet: it only clears takes where every format used has been uploaded, so a recording uploaded in just one format is kept, and the interface says how many were kept.
+    **Fix:** to free space, tick "Archive automatically after uploading (delete the local source, keep only the metadata)" before uploading, or click "Archive" in the task's export dialog afterwards. Every recording uploaded in any format is archived; for one uploaded in only one format, the other format can never be exported once its source is gone, so if you want both, export or upload the other one first.
 
-??? failure "An NFS / FTP upload fails, or \"Check read/write\" does not pass"
+??? failure "An NFS / FTP upload fails, or “Check read/write” does not pass"
     **Cause:** usually the target does not meet the requirements — the target directory does not exist yet; the account or the device account lacks write, rename or delete permission; the NFS protocol version does not match the server; the FTPS server address does not match the certificate, or the private CA is missing or wrong; or the target path or port is wrong. Not every upload failure comes from these, and the hints shown by the check are what to go by.
 
     **Fix:** open that entry at console → System → [Upload configuration](system.md#upload) and work through the hints: whether the target directory (and the NFS target subdirectory) already exists, because the device will not create it for you; whether the NAS or the FTP / FTPS service allows that account to write, read back, rename and delete; for NFS, also the protocol version and UID / GID; for FTPS, also whether the server address matches the certificate and whether a private CA is needed. Save the changes and click "Check read/write" again. If it still fails, contact support with the exact text of the check's message, the device SN, the console version and that entry's backend kind.
@@ -177,7 +187,7 @@ This page is organised by symptom, with a cause and a fix for each. The three mo
 
     **Fix:** read the line in "Last error"; download the bundle again and re-upload, and for an upgrade that skips versions, ask technical support for the intermediate bundles. A refusal does not affect the version currently running.
 
-??? failure "The card at the bottom right says \"Update preparation failed\""
+??? failure "The card at the bottom right says “Update preparation failed”"
     **Cause:** the bundle pushed from the remote end failed to download or verify.
 
     **Fix:** there is no need to retry by hand — the device re-attempts on its next round. If it keeps failing, first confirm the backpack can reach the internet (by cable or site WiFi). See [Remote forced updates](update.md#remote).

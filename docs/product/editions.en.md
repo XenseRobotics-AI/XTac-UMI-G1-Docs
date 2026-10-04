@@ -43,9 +43,9 @@ This page compares the two and lists each kit's box contents and wiring.
 | Interface | A browser console: live monitor / projects / replay / system; a tablet, phone or PC acts purely as a browser | Terminal commands plus a Rerun preview window |
 | How it connects | The grippers go to `UMI-L` / `UMI-R`; the headset goes to the `PICO` port over the USB Network (wired only); the operating device joins the backpack hotspot or the LAN | The grippers connect to the host over USB directly; the headset connects to the host with a Type-C cable over wired network sharing (wired by default, WiFi only for quick debugging); the host runs XenseVR PC Service |
 | Recording control | Long-press the right gripper to start, long-press the left to stop, double-click the left to delete the previous take; LED feedback; the console can do the same | `lerobot-record` command-line arguments, with `--robot.id` required |
-| Capture modes | Dual gripper · dual gripper + headset · single gripper · single gripper + headset · headset only | Single or dual gripper, with the headset camera optional |
-| Raw data | On the device, one MCAP raw recording plus H.264 per episode; the `LeRobot dataset` and `mcap` you hand out are both offline export products | LeRobotDataset v3 written straight to disk |
-| Export and upload | Task-level export: pick the destination first (download to device / upload to remote), then the format (`LeRobot dataset` / `mcap`, two equals). Downloading gives you an archive; uploading goes through an upload backend you configured beforehand, local files are kept by default after an upload, and "Archive" — always available — frees the space | Hugging Face Hub |
+| Capture modes | Dual gripper · dual gripper + stereo headset · dual gripper + right mono headset · single gripper · single gripper + stereo headset · stereo headset only; every mode needs the headset for pose, and only the three dual-gripper modes can currently be exported | Single or dual gripper, with the headset camera optional |
+| Raw data | On the device, one MCAP raw recording per episode, storing the cameras' raw MJPEG frames (hardware H.264 encoding is used only for live preview); the `LeRobot dataset` and `mcap` you hand out are both offline export products | LeRobotDataset v3 written straight to disk |
+| Export and upload | Task-level export: pick the destination first (download to device / upload to remote), then the format (`LeRobot dataset` / `mcap`, two equals). Downloading gives you an archive; uploading goes through an upload backend you configured beforehand (ModelScope, S3, FTP / FTPS, NFS or STS), local files are kept by default after an upload, and "Archive" — always available — frees the space | Hugging Face Hub |
 | Upgrading | Import a firmware bundle (`.tar.zst`) on the System page, with the previous version kept for rollback; stop recording before applying one by hand, and an update pushed remotely waits for the current take to finish before restarting | Pull the repo, run the install script or switch the image tag; gripper firmware OTA uses the SDK script |
 | Customisation | Not open source, light: the collection software is delivered and upgraded as a whole firmware bundle, and customisation builds on the exported `LeRobot dataset` / `mcap` output, the upload configuration and the capture settings rather than on the software itself | Fully open: the collection software and gripper SDK are open source under Apache-2.0, so you can change the Python code or hook up your own robot |
 | Who it suits | High-volume collection operations, data collection teams, external sites | Research and algorithm teams, in-house training pipelines |
@@ -128,7 +128,7 @@ This page compares the two and lists each kit's box contents and wiring.
 
 ??? question "Is the headset required"
 
-    Both configurations need it. The 6-DoF pose comes from the headset and the two trackers fitted on top of the grippers, so without the headset there is no pose. The "+ headset" in the Backpack Kit's capture modes means additionally recording the headset's stereo views, not whether the headset is needed at all.
+    Both configurations need it. The 6-DoF pose comes from the headset and the two trackers fitted on top of the grippers, so without the headset there is no pose. The "+ stereo headset" and "+ right mono headset" in the Backpack Kit's capture modes mean additionally recording the headset's views, not whether the headset is needed at all.
 
 ??? question "Can a phone be the Backpack Kit's console"
 
@@ -136,7 +136,7 @@ This page compares the two and lists each kit's box contents and wiring.
 
 ??? question "Does the Backpack Kit need an internet connection"
 
-    Not for collecting. The backpack keeps its own 5 GHz hotspot up with the gateway fixed at `192.168.44.1`, independent of any site network. Only "upload to remote" at export time requires the backpack to reach the internet: plug in a cable, or put the backpack on the site's 5 GHz WiFi from the System page. Downloading to the device needs no internet.
+    Not for collecting. The backpack keeps its own 5 GHz hotspot up with the gateway fixed at `192.168.44.1`, independent of any site network. Only "upload to remote" at export time requires the backpack to reach the upload target: cloud targets such as ModelScope or S3 usually need internet access, while an FTP / NFS server on the local network only needs the backpack on the same network; plug in a cable, or put the backpack on the site's 5 GHz WiFi from the System page. Downloading to the device needs no network.
 
 ## Getting in touch and getting started
 

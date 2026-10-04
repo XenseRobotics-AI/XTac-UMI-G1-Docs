@@ -28,7 +28,7 @@ The backpack is the Backpack Kit's collection unit: the grippers and the headset
 |---|---|
 | Compute node | RK3588 (Xense-3588Q) |
 | Storage | eMMC system disk + NVMe data disk; episode records and exports both land on the data disk |
-| Power input | The `DC` port, with the supplied 12 V 3 A 36 W adapter, or a power bank whose Type-C output is 12 V 3 A |
+| Power input | The `DC` port, with the supplied 12 V 3 A (36 W) adapter, or the supplied power bank (20000 mAh, 45 W) over the 0.3 m 12 V PD power cable |
 | Networking | Wired Ethernet (DHCP, can be set static); WiFi client, 5 GHz only; its own SoftAP hotspot `xense-<last 6 of the serial>`, likewise 5 GHz only, with the gateway fixed at `192.168.44.1` |
 | Battery / runtime | To be added |
 | Whole-unit power draw | To be added |

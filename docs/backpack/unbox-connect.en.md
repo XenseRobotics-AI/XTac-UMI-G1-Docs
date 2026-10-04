@@ -28,7 +28,7 @@ Photographs of the ports are in [The Backpack](../product/backpack.md).
 The order is fixed: grippers → headset → power up the backpack.
 
 1. Connect the grippers: the end of the Type-C locking cable with the screws goes into the gripper body, and you tighten the locking screws; the other end goes into the side of the backpack, the left gripper to UMI-L and the right to UMI-R. The gripper is bus-powered over this cable and needs no separate supply.
-2. Connect the headset: follow either [Adapter power](#adapter) or [Power-bank power](#powerbank).
+2. Connect the headset: the headset cable (Pico → Pack) goes from the headset to the backpack's PICO port; this is the same for [Adapter power](#adapter) and [Power-bank power](#powerbank).
 3. Power up the backpack: the DC port takes the adapter or a power bank. The hotspot comes up automatically after boot, and a solid green gripper LED means standby (the LED patterns are in [Gripper buttons, LEDs and voice](gripper.md#buttons-leds)).
 
 Disconnection is the reverse: stop recording first, then unplug the backpack end, and finally loosen the locking screws and unplug the gripper end. Take anti-static precautions when powering up or down and when plugging or unplugging cables.
@@ -43,37 +43,37 @@ Use this at a fixed workstation with a mains socket: one cable from the headset 
 ![Adapter wiring: left and right grippers to the sides of the backpack, the headset's Type-C to the PICO port, the adapter to the DC port](../assets/product/backpack-wiring-adapter.webp)
 
 1. Connect the left / right grippers to UMI-L / UMI-R.
-2. Connect the headset to the backpack's PICO port with a Type-C cable, carrying the USB network; whether that one cable can also power the headset depends on the notes shipped with your unit.
-3. Connect the 12 V 3 A 36 W adapter to the backpack's DC port, then plug it into the mains.
+2. Connect the headset to the backpack's PICO port with the headset cable (Pico → Pack), carrying the USB network; whether that one cable can also power the headset depends on the notes shipped with your unit.
+3. Connect the 12 V 3 A adapter to the backpack's DC port, then plug it into the mains.
 
 ## Power-bank power {#powerbank}
 
-Use this for mobile collection away from a socket: the headset and the backpack each take one power-bank output, and the box contains two power banks (Type-C output 5 V 3 A / 12 V 3 A).
+Use this for mobile collection away from a socket: the single power bank in the box (20000 mAh, 45 W) feeds the backpack over the 0.3 m 12 V PD power cable, and the headset still connects to the backpack's PICO port over the headset cable, exactly as with adapter power.
 
-![Power-bank wiring: the headset takes the two-in-one cable, its charging leg to a power bank and its data leg to the PICO port; the other power bank feeds the DC port over a 0.5 m C-to-C cable](../assets/product/backpack-wiring-powerbank.webp)
+![Power-bank wiring: left and right grippers to the sides of the backpack, the headset to the PICO port, the power bank to the DC port over the 0.3 m 12 V PD power cable](../assets/product/backpack-wiring-powerbank.webp)
 
-Match the cable harness to the labels in the diagram:
-
-| Harness label | Cable | How it connects |
-|---|---|---|
-| UMI-L / UMI-R | 1.5 m C-to-C | Left / right gripper ↔ the backpack's UMI-L / UMI-R |
-| PICO-LINK / PICO-DATA / POWER-PICO | Two-in-one Type-C (data + charging) | PICO-LINK to the headset; PICO-DATA to the backpack's PICO port; POWER-PICO to a power bank |
-| 12V DC-IN / POWER-COMPUTE | 0.5 m C-to-C | Power bank ↔ the backpack's DC port, using the power bank's 12 V 3 A output |
+| Cable | How it connects |
+|---|---|
+| Gripper cable (1.5 m C-to-C) ×2 | Left / right gripper ↔ the backpack's UMI-L / UMI-R |
+| Headset cable (Pico → Pack, 1.5 m C-to-C) | The headset's Type-C port ↔ the backpack's PICO port |
+| 12 V PD power cable (0.3 m) | Power bank ↔ the backpack's DC port, using the power bank's 12 V output |
 
 1. Connect the left / right grippers to UMI-L / UMI-R.
-2. Connect the headset to the two-in-one Type-C cable first: the charging leg to a power bank, the data leg to the backpack's PICO port.
-3. Run the second cable from the other power bank to the backpack's DC port.
+2. Connect the headset to the backpack's PICO port with the headset cable, carrying the USB network; whether that one cable can also power the headset depends on the notes shipped with your unit.
+3. Connect the 12 V PD power cable from the power bank to the backpack's DC port.
 
-If the headset is underpowered it will lose power and shut down (it draws roughly 6–7 W in operation, but needs a stable supply). The power banks in the box were chosen with this in mind; if you buy your own, pick one with a stable output above 20 W, and a magnetic power bank must output 5.4–8.4 V / 5 A max and come with a magnetic base. The backpack's own battery, runtime and power figures are to be added.
+If the headset is underpowered it will lose power and shut down, which interrupts collection; make sure the headset is well charged before you start and keep an eye on its battery icon during collection (set it to always show under [power policy](../common/pico4.md#pico-system)). The backpack's own battery, runtime and power figures are to be added.
 
 !!! warning "Do not add devices to a power bank during collection"
-    Some power banks shut down an existing output port when a second device is plugged in, and the headset or the backpack loses power on the spot. Connect every cable before you start recording.
+    Some power banks shut down an existing output port when a second device is plugged in, and the backpack loses power on the spot. Connect every cable before you start recording.
 
 ## Connecting the headset to the backpack {#pico-link}
 
 Put the headset on and open XTac-UMI XR. The headset and the backpack **connect by cable only**: the headset's Type-C port is already wired to the backpack's PICO port by the steps above. In XR, tick "USB Network" and tap "Connect"; the backpack brings the network up on the USB link automatically (address `192.168.58.1`) with nothing to type.
 
 The fold button is at the top right of XR; when tracking accuracy degrades or a tracker disconnects from the backpack, both XR and the console's live monitor page show an icon. The interface is described in [The XTac-UMI XR interface](../common/pico4.md#pico-toolkit-ui).
+
+Leave this cable alone while recording: pulling it or letting it work loose makes the device stop and fail the current recording at once, see [Headset disconnects while recording](monitor-record.md#pico-disconnect).
 
 Stand at the work position facing the working direction before you open XR: where you are when XR first starts becomes the [world-frame origin](../common/pico4.md#pico-frame), and you must not restart XR during a collection run.
 
@@ -96,8 +96,8 @@ In a lab the backpack, a PC and a router are often wired into one local network,
 
 Once the console is open, look at three things; if any of them is wrong, go back and check the cabling:
 
-- The "cameras" counter at the top right shows online / total, which should be 6 / 6 in dual-gripper mode; one missing usually means a gripper cable is not tightened or not fully seated.
+- The "Cameras" counter at the top right shows online / total, which should be 6 / 6 in "Dual gripper" mode; one missing usually means a gripper cable is not tightened or not fully seated.
 - The gripper LEDs are solid green. A rapid red flash means the gripper's own self-check found a problem; solid red means the backpack detected that the gripper dropped out.
-- System → [Capture mode](system.md#capture-mode) matches how the system is actually wired (dual gripper / dual gripper + headset / single gripper / single gripper + headset / headset only); once the headset is connected, the pose view on the live monitor page should follow your hand, see [Camera and pose checks](monitor-record.md#checks).
+- The current project's [capture mode](system.md#capture-mode) matches how the system is actually wired ("Dual gripper", "Dual gripper + stereo headset", "Dual gripper + headset right eye", "Single gripper", "Single gripper + headset" or "Headset only"; the System page shows it); once the headset is connected, the pose view on the live monitor page should follow your hand, see [Camera and pose checks](monitor-record.md#checks).
 
 If nothing happens when you power up, or the headset keeps dropping in and out, try a different cable and a different port first. Poor contact in the `DC`, `PICO` or `USB` port itself is a hardware fault: note the serial number on the body and contact support, and do not force or lever the connector — see [Troubleshooting](troubleshooting.md).

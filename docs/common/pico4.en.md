@@ -78,7 +78,7 @@ On both editions, set USB up on the headset first: Settings → Developer option
 
     Wired setup:
 
-    1. Run a Type-C cable from the Type-C port on the side of the headset to the backpack's `PICO` port. When running from a power bank, the headset takes the two-in-one cable first: its charging plug goes to the power bank, its data plug to the backpack's `PICO` port; wiring in [Power bank wiring](../backpack/unbox-connect.md#powerbank).
+    1. Run the headset cable (Pico → Pack, Type-C to Type-C) from the Type-C port on the side of the headset to the backpack's `PICO` port. It is connected the same way with adapter power and with power-bank power; wiring in [Unboxing, cabling and power](../backpack/unbox-connect.md#order).
     2. Power on the backpack. The XenseVR runtime is built into Collector and starts with it; there is no separate service to launch.
     3. Open XTac-UMI XR, tick "USB Network" and tap "Connect": the backpack brings up its own network on the USB link (address `192.168.58.1`), nothing to enter by hand.
 
@@ -183,7 +183,7 @@ How the two editions differ when connecting:
 
     In the panel, tick "USB Network" → tap "Connect"; the Backpack Kit only connects over the cable. When tracker accuracy degrades or the link to the backpack drops, an icon appears on the panel.
 
-    Once connected, open the console's "Live monitor" page: the pose view should show the headset and both gripper poses. When the record button is not ready it states the reason; "Pico pose or clock not ready" means the headset is not connected yet.
+    Once connected, open the console's "Live monitor" page: the pose view should show the headset and both gripper poses. When the record button is not ready it states the reason: "Pico not ready" is followed by the headset-side cause (for example disconnected or timed out, pose data missing or timed out, clock synchronization missing or timed out), and "Tracker not ready" by the tracker's cause (for example out of view or stationary for over 5 seconds); both can appear together. If the headset disconnects while recording, that recording stops at once, see [Headset disconnects while recording](../backpack/monitor-record.md#pico-disconnect).
 
 === "Developer Kit"
 

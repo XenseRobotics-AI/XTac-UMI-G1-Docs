@@ -16,7 +16,7 @@ The body label carries every way into this device: the SN, the hotspot name `xen
 | Wireless `wlan0` | The backpack as a client on the site WiFi | Assigned by the site's router | Joining the site network where running a cable is inconvenient |
 | Hotspot `ap0` | The backpack's own always-on WiFi hotspot | Gateway fixed at `192.168.44.1` | The fallback way in, independent of any site network |
 
-All three work at once: with a cable plugged in and the site WiFi joined, the hotspot stays up. However the site network changes, joining the hotspot and opening `192.168.44.1` will always open the console. The console runs on port 80, so the address needs no port number.
+All three work at once: with a cable plugged in and the site WiFi joined, the hotspot stays up. However the site network changes, joining the hotspot and opening `192.168.44.1` will always open the console. The address needs no port number.
 
 ## Option 1: the backpack hotspot {#softap}
 
@@ -33,6 +33,8 @@ Every backpack keeps its own hotspot up, and the SSID is its identity. On an unc
 !!! warning "The hotspot is 5 GHz only"
     The connecting phone / tablet / PC must support 5 GHz WiFi; a device that only does 2.4 GHz will not see this hotspot.
 
+The hotspot can be switched with "Turn off hotspot" / "Turn on hotspot" in System → [Network / Setup](system.md#wifi), and the device remembers the choice. Turning it off disconnects every device that is using the hotspot and removes this fallback way in; do not turn it off unless another way in (a network cable or the site WiFi) is available.
+
 ## Option 2: the mDNS device name {#mdns}
 
 On the same subnet as the backpack (the same router, or joined to its hotspot), use the device name directly and skip the IP:
@@ -41,7 +43,7 @@ On the same subnet as the backpack (the same router, or joined to its hotspot), 
 http://xense-<last 6 of the serial>.local
 ```
 
-macOS, iOS and most Linux systems work out of the box. Windows has unreliable mDNS support, and failing to open it there is a known environment difference: use the [device scanner](#scanner) to find the IP instead, or go in through the hotspot at `http://192.168.44.1`; for diagnosis see [Troubleshooting](troubleshooting.md).
+You can rename the device in System → [Network / Setup](system.md#wifi), or untick "Use mDNS hostname"; renaming does not change the hotspot name and password on the body label, and backpacks at the same site should each get a different name. macOS, iOS and most Linux systems work out of the box. Windows has unreliable mDNS support, and failing to open it there is a known environment difference: use the [device scanner](#scanner) to find the IP instead, or go in through the hotspot at `http://192.168.44.1`; for diagnosis see [Troubleshooting](troubleshooting.md).
 
 ## Option 3: joining a site network {#lan}
 
@@ -59,7 +61,7 @@ The backpack can join the site WiFi as a client, after which PCs on the same sub
 
 ## Finding the IP on a LAN: the Windows device scanner {#scanner}
 
-With the backpack and the PC on the same router, use `taccap-device-scanner.exe` on Windows to find the IP. It scans the subnet the PC is on automatically, and you can also enter a subnet by hand (for example `192.168.0.0/24`); it probes ports 80 and 8080 by default and can probe with OpenSSH at the same time; it scans TCP concurrently, does not rely on ping or ARP, and needs no administrator rights.
+With the backpack and the PC on the same router, use `taccap-device-scanner.exe` on Windows to find the IP. It scans the subnet the PC is on automatically, and you can also enter a subnet by hand (for example `192.168.0.0/24`); it probes the console's ports by default and can probe with OpenSSH at the same time; it scans TCP concurrently, does not rely on ping or ARP, and needs no administrator rights.
 
 For every backpack it finds it lists the IP, device SN, WiFi ID, version, hardware serial and operating mode, and "Open in browser" takes you straight to the console:
 

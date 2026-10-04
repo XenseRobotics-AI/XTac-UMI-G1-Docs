@@ -2,7 +2,7 @@
 
 This page covers upgrading the XTac-UMI Collector console (below, "the console") itself: importing an upgrade bundle on the System page, getting back to the previous version when an upgrade fails, and how a forced update pushed from a management end behaves on site. By the end you can carry out an upgrade on your own and verify the result. Flashing gripper firmware has its own section at the end of the page.
 
-Console upgrades are all done on the console's System → System update page, and that page is authoritative for the version (this page is written against 0.4.1). From top to bottom the page has a metrics card (current version, git, build time, architecture, and status: idle / ready / applying / error) and four cards: "Upload firmware bundle", "Pending version", "Rollback" and "Remote update".
+Console upgrades are all done on the console's System → System update page, and that page is authoritative for the version (this page is written against 0.4.3). From top to bottom the page has a metrics card (current version, git, build time, architecture, and status: idle / ready / applying / error) and four cards: "Upload firmware package", "Version pending application", "Rollback" and "Remote update".
 
 ![System update page](../assets/backpack/update.webp)
 
@@ -10,13 +10,13 @@ The screenshot shows an older version of the page; the current one also has "Clo
 
 ## Importing an upgrade bundle {#bundle}
 
-An upgrade bundle is a `.tar.zst` file supplied by technical support, named like `taccap-collector-v0.4.1-245dd270d88f-aarch64.tar.zst`: the version number comes first, then 12 characters of git hash, then the architecture. The bundle holds only the console program (front end and back end in a single binary) plus a `manifest.json` — no gripper firmware, no camera profiles and no collected data. Fixes that need the device's system components updated therefore do not ship with this console bundle, see [Updates a console bundle does not cover](#system-patch).
+An upgrade bundle is a `.tar.zst` file supplied by technical support, named like `taccap-collector-v0.4.3-<12-character hash>-aarch64.tar.zst`: the version number comes first, then 12 characters of git hash, then the architecture. The bundle holds only the console program (front end and back end in a single binary) plus a `manifest.json` — no gripper firmware, no camera profiles and no collected data. Fixes that need the device's system components updated therefore do not ship with this console bundle, see [Updates a console bundle does not cover](#system-patch).
 
 A version's identity is its **version number plus the 12-character git hash**: a higher version number upgrades; the same version number with a different hash also upgrades (a revision build of the same version); if both match, nothing happens. Check both when you verify a version.
 
 1. Stop recording. The service restarts when an update is applied, and a recording in progress is refused outright.
-2. "Upload firmware bundle" → pick the `.tar.zst` → "Upload and verify", with an upload progress bar. Once it passes you get "Uploaded and verified: &lt;version&gt;" and the status becomes "ready".
-3. On the "Pending version" card, check the version number, the git hash and the `sha256`.
+2. "Upload firmware package" → pick the `.tar.zst` → "Upload and verify", with an upload progress bar. Once it passes you get "Uploaded and verified: &lt;version&gt;" and the status becomes "ready".
+3. On the "Version pending application" card, check the version number, the git hash and the `sha256`.
 4. "Apply update and restart" → confirm. The page shows "Service restarting, waiting to reconnect…", and once the new version is up you get "Update applied, service restarted". The front end waits at most 90 seconds; on timeout it says "Service restart timed out, refresh manually to confirm the status", and a refresh usually brings it back.
 5. Go to [Device info](system.md#device-info) and check that the collector version / git / build time really did change.
 
@@ -35,7 +35,7 @@ The 0.4.x networking changes are partly of this kind: after upgrading, the new n
 
     Whether a given device needs anything extra **is for technical support to tell you**. When technical support says it does, they handle it; there is nothing to do on site, and no way to do it there. The version shown in the console still refers only to the console program.
 
-    Do **not** upload any other file technical support gives you into "Upload firmware bundle" — it accepts only `.tar.zst` console upgrade bundles, and anything else is refused by the verification step.
+    Do **not** upload any other file technical support gives you into "Upload firmware package" — it accepts only `.tar.zst` console upgrade bundles, and anything else is refused by the verification step.
 
 ## A/B slots and rollback {#rollback}
 

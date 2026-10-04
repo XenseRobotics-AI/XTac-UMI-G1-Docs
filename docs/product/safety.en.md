@@ -49,11 +49,11 @@ The gripper's wiring and serial-number rules are in [Gripper connection and seri
 
 ## The backpack and its power {#backpack-power}
 
-The backpack's `DC` port takes only the supplied 12 V 3 A (36 W) adapter, or the 12 V output of the supplied power bank. The power bank's Type-C port can output either 5 V 3 A or 12 V 3 A; the cable feeding the backpack must be on the 12 V output. The grippers plug into `UMI-L` / `UMI-R` and are powered by the backpack, with no separate supply.
+The backpack's `DC` port takes only the supplied 12 V 3 A (36 W) adapter, or the supplied power bank over the supplied 0.3 m 12 V PD power cable; do not substitute another power source or cable. The grippers plug into `UMI-L` / `UMI-R` and are powered by the backpack, with no separate supply.
 
 The connection order is the same as on the Developer Kit: connect the gripper end first and tighten the locking screws, then the backpack's `UMI-L` / `UMI-R`. To disconnect, stop recording first (the console's "Stop recording", or a long press on the left gripper), then unplug the backpack end, and finally loosen the screws and unplug the gripper end. The full wiring for both power options is in [Adapter power](../backpack/unbox-connect.md#adapter) and [Power-bank power](../backpack/unbox-connect.md#powerbank).
 
-If the headset is underpowered it will lose power and shut down, and collection stops with it. Power requirements, choosing a power bank and wiring the two-in-one cable are in [Power-bank power](../backpack/unbox-connect.md#powerbank); do not add devices to the power bank part-way through a collection run.
+If the headset is underpowered it will lose power and shut down, and collection stops with it. The power-bank wiring is in [Power-bank power](../backpack/unbox-connect.md#powerbank); do not add devices to the power bank part-way through a collection run.
 
 - Connectors: on individual units the `DC`, `PICO` or `USB` port may make poor contact, which is a hardware fault; do not force or lever the connector — note the serial number on the body and send it in for repair.
 - Cooling: do not block the fan outlet. After long use, overheating can drop the WiFi, which a restart recovers; check that the fan is turning, and report it if it keeps happening.
@@ -78,8 +78,8 @@ If the headset is underpowered it will lose power and shut down, and collection 
 
 - The backpack console has no login gate: anyone on the backpack's network (its hotspot, wired, or site WiFi) can operate the device and download or delete data. The hotspot password is printed on the body label; keep this in mind when the device leaves your hands or joins an uncontrolled network.
 - "Delete permanently" is a hard delete: it cascades through every recording under the task and removes the MCAP, H264 and LeRobot export files from disk. It cannot be undone, and the confirmation dialog asks you to type the name.
-- After publishing to ModelScope, those episodes are marked as published and removed from the exportable set, and by default the local files are deleted as well. If you need a local copy, batch-download the MCAP files from the export dialog before publishing.
-- The ModelScope access token is stored on the device's state disk and is not shown again after saving. Choose a "private" repository when creating an upload configuration — publishing publicly cannot be undone. After publishing to the wrong account, programmatic deletion is limited and you have to sort it out in the ModelScope web console, so check which configuration a project is bound to when you create it.
+- After an upload completes the entries are marked "Uploaded" and the local files are kept by default; the raw files are removed only if you tick the clean-up before uploading or [archive](../backpack/projects-export.md#archive) afterwards, and once removed the take can no longer be replayed or exported in any format. If you need a local copy, pick the "Download to device" destination in the export dialog and collect the archive before cleaning up or archiving.
+- The credentials in an upload configuration (ModelScope token, S3 keys, FTP password and so on) are stored on the device and are not shown again after saving. Choose a "private" repository when creating an upload configuration — publishing publicly cannot be undone. After publishing to the wrong account, programmatic deletion is limited and you have to sort it out in the ModelScope web console, so check which configuration a project is bound to when you create it.
 - When uploading to the Hugging Face Hub on the Developer Kit, add `--private` for a private repository, see [Uploading to the Hub and backups](../pc/dataset.md#64).
 - Privacy protection: to be added.
 
