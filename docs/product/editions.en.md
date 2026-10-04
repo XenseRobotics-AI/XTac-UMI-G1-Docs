@@ -114,29 +114,29 @@ This page compares the two and lists each kit's box contents and wiring.
 
 ## Common questions
 
-??? question "Can data from the two configurations be trained on together"
+??? question "Can data from the two kits be trained on together?"
 
-    Yes. The `LeRobot dataset` exported by the Backpack Kit and what the Developer Kit writes straight to disk are both LeRobotDataset v3, and the same `lerobot` tooling loads both. The camera key names and the state field layout are not identical on the two sides, so compare their `meta/info.json` before merging; the Developer Kit's fields are in [Datasets](../pc/dataset.md#61).
+    Yes. Both produce LeRobotDataset v3 and the same LeRobot tools read them; camera keys and field layout differ slightly, so compare each `meta/info.json` before merging.
 
-??? question "Can the Backpack Kit be customised"
+??? question "Can the Backpack Kit be customised?"
 
-    Yes, but lightly. The collection software on the backpack is closed-source and is delivered and upgraded as a whole firmware bundle; customisation builds on the exported `LeRobot dataset` / `mcap` output, the upload configuration and the capture settings rather than on the software itself. To change the collection logic or connect your own robot, choose the fully open Developer Kit.
+    Only lightly: the collection software is not open source, so customisation builds on the exported data, the upload configuration and the capture settings. To change the collection logic or connect your own robot, choose the open-source Developer Kit.
 
-??? question "Does the Developer Kit have to have an NVIDIA graphics card"
+??? question "Does the Developer Kit need an NVIDIA GPU?"
 
-    For real collection, yes: at least an RTX 3060 / 8 GB, an RTX 5060 Laptop / 8 GB or better recommended, driver ≥ 570.144, see [Host requirements](../pc/install.md#host-spec). A machine without one can turn off streaming encoding and still record, but writing to disk is slow and frames drop more easily, so it is only a stopgap, see [Recording on a host with no NVIDIA GPU](../pc/recording.md#no-gpu).
+    An NVIDIA GPU is recommended for real collection, see [Host requirements](../pc/install.md#host-spec). It still records without one, but saving is slower and frames drop more easily, see [Recording on a host with no NVIDIA GPU](../pc/recording.md#no-gpu).
 
-??? question "Is the headset required"
+??? question "Is the headset required?"
 
-    Both configurations need it. The 6-DoF pose comes from the headset and the two trackers fitted on top of the grippers, so without the headset there is no pose. The "+ stereo headset" and "+ right mono headset" in the Backpack Kit's capture modes mean additionally recording the headset's views, not whether the headset is needed at all.
+    On the Backpack Kit, yes: every capture mode takes its poses from the headset and trackers. On the Developer Kit you can record grippers only (tactile, wrist views, opening) without the headset.
 
-??? question "Can a phone be the Backpack Kit's console"
+??? question "Can a phone be the Backpack Kit console?"
 
-    Yes — a tablet, phone or PC all act purely as a browser. Join the backpack hotspot and open `http://192.168.44.1`, or use the device name `http://xense-<last 6 of the serial>.local`. On iOS Safari you have to type the full `http://` prefix or the device name is treated as a search term; some Android models cannot open `.local` names, so use the IP directly.
+    Yes. Tablets, phones and computers all open the console in a browser; how to connect is in [Network and console access](../backpack/network.md).
 
-??? question "Does the Backpack Kit need an internet connection"
+??? question "Does the Backpack Kit need internet access?"
 
-    Not for collecting. The backpack keeps its own 5 GHz hotspot up with the gateway fixed at `192.168.44.1`, independent of any site network. Only "upload to remote" at export time requires the backpack to reach the upload target: cloud targets such as ModelScope or S3 usually need internet access, while an FTP / NFS server on the local network only needs the backpack on the same network; plug in a cable, or put the backpack on the site's 5 GHz WiFi from the System page. Downloading to the device needs no network.
+    Not for collection; the backpack has its own hotspot. You only need a network to upload: ModelScope and S3 need internet access, while FTP / NFS on your LAN only need the same LAN.
 
 ## Getting started and after-sales support
 
