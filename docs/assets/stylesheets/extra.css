@@ -459,7 +459,8 @@ html[lang="en"] .md-typeset .tc-hero h1 {
   --arch-read: #00897b;
   --arch-core: #ef6c00;
   --arch-out: #2e7d32;
-  --arch-video: #d81b60;
+  --arch-up: #e91e63;
+  --arch-video: #8e24aa;
   --arch-line: rgba(0, 0, 0, .28);
   --arch-panel: var(--md-code-bg-color);
   margin: 1.2rem 0 1.4rem;
@@ -469,7 +470,8 @@ html[lang="en"] .md-typeset .tc-hero h1 {
   --arch-read: #4db6ac;
   --arch-core: #ffb74d;
   --arch-out: #81c784;
-  --arch-video: #f48fb1;
+  --arch-up: #f48fb1;
+  --arch-video: #ce93d8;
   --arch-line: rgba(255, 255, 255, .3);
 }
 /* 没有 JS 时 JSON 不显示 */
@@ -587,6 +589,7 @@ html[lang="en"] .md-typeset .tc-hero h1 {
 .md-typeset .tc-arch__node.is-read { --k: var(--arch-read); }
 .md-typeset .tc-arch__node.is-core { --k: var(--arch-core); }
 .md-typeset .tc-arch__node.is-out  { --k: var(--arch-out); }
+.md-typeset .tc-arch__node.is-up   { --k: var(--arch-up); }
 .md-typeset .tc-arch__title {
   font-size: 15px;
   font-weight: 700;
@@ -840,4 +843,16 @@ html[lang="en"] .md-typeset .tc-hero h1 {
   .md-typeset .tc-pair--wiring {
     grid-template-columns: 1fr;
   }
+}
+
+/* 上传链路:粉红色连线与光点 */
+.md-typeset .tc-arch__edge.is-up .tc-arch__flow {
+  stroke: var(--arch-up);
+}
+.md-typeset .tc-arch__edge.is-hit.is-up .tc-arch__line {
+  stroke: var(--arch-up);
+}
+.md-typeset .tc-arch__dot.is-up {
+  fill: var(--arch-up);
+  filter: drop-shadow(0 0 3px var(--arch-up));
 }

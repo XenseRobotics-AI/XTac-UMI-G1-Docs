@@ -28,7 +28,7 @@
     { id: "pair",    col: "core", y: 425, h: 60,  kind: "core", tier: 1 },
     { id: "rerun",   col: "out",  y: 120, h: 60,  kind: "out",  tier: 1 },
     { id: "ds",      col: "out",  y: 425, h: 84,  kind: "out",  tier: 1 },
-    { id: "hub",     col: "up",   y: 425, h: 60,  kind: "out",  tier: 1 }
+    { id: "hub",     col: "up",   y: 425, h: 60,  kind: "up",   tier: 1 }
   ];
 
   /* 端点:r = 右边、l = 左边、b = 下边、t = 上边,dy/dx 为相对节点中心的偏移 */
@@ -46,7 +46,7 @@
     { id: "e-pair",    from: "obs",     to: "pair",   tier: 1, a: "b", b: "t" },
     { id: "e-ds",      from: "pair",    to: "ds",     tier: 1, a: "r", b: "l" },
     { id: "e-rerun",   from: "obs",     to: "rerun",  tier: 1, a: "r", b: "l", ady: -60 },
-    { id: "e-hub",     from: "ds",      to: "hub",    tier: 1, a: "r", b: "l" }
+    { id: "e-hub",     from: "ds",      to: "hub",    tier: 1, a: "r", b: "l", up: true }
   ];
 
   /* 有标签的连线:标签放在直段上方 */
@@ -74,8 +74,8 @@
     { id: "console", col: "out",  y: 120, h: 60,  kind: "out",  tier: 1 },
     { id: "mcap",    col: "out",  y: 300, h: 60,  kind: "out",  tier: 1 },
     { id: "export",  col: "out",  y: 440, h: 76,  kind: "out",  tier: 1 },
-    { id: "dl",      col: "up",   y: 395, h: 52,  kind: "out",  tier: 1 },
-    { id: "upload",  col: "up",   y: 475, h: 60,  kind: "out",  tier: 1 }
+    { id: "dl",      col: "up",   y: 395, h: 52,  kind: "up",   tier: 1 },
+    { id: "upload",  col: "up",   y: 475, h: 60,  kind: "up",   tier: 1 }
   ];
 
   var BP_EDGES = [
@@ -94,8 +94,8 @@
     { id: "e-enc",      from: "enc",     to: "console", tier: 1, a: "r", b: "l" },
     { id: "e-rec",      from: "rec",     to: "mcap",    tier: 1, a: "r", b: "l", ady: -45 },
     { id: "e-export",   from: "mcap",    to: "export",  tier: 1, a: "b", b: "t" },
-    { id: "e-dl",       from: "export",  to: "dl",      tier: 1, a: "r", b: "l", ady: -20 },
-    { id: "e-upload",   from: "export",  to: "upload",  tier: 1, a: "r", b: "l", ady: 20 }
+    { id: "e-dl",       from: "export",  to: "dl",      tier: 1, a: "r", b: "l", ady: -20, up: true },
+    { id: "e-upload",   from: "export",  to: "upload",  tier: 1, a: "r", b: "l", ady: 20, up: true }
   ];
 
   var BP_LABELS = {
@@ -155,7 +155,7 @@
       var dur = Math.max(0.8, path.getTotalLength() / 170);
       for (var i = 0; i < 3; i++) {
         var c = el("circle", { r: p.video ? 4 : 3.2,
-          class: "tc-arch__dot" + (p.video ? " is-video" : "") }, layer);
+          class: "tc-arch__dot" + (p.video ? " is-video" : "") + (p.up ? " is-up" : "") }, layer);
         var am = el("animateMotion", {
           dur: dur.toFixed(2) + "s", repeatCount: "indefinite",
           begin: "indefinite", calcMode: "linear"
@@ -264,7 +264,7 @@
     var nodeLayer = el("g", { class: "tc-arch__nodes" }, svg);
 
     EDGES.forEach(function (e) {
-      var g = el("g", { class: "tc-arch__edge" + (e.video ? " is-video" : "") }, edgeLayer);
+      var g = el("g", { class: "tc-arch__edge" + (e.video ? " is-video" : "") + (e.up ? " is-up" : "") }, edgeLayer);
       var d = pathFor(e, boxes);
       el("path", { d: d, id: uid + "-" + e.id, class: "tc-arch__line",
         "marker-end": "url(#" + uid + "-arrow)" }, g);
@@ -344,7 +344,8 @@
 
     function spawnDots(edgeIds) {
       runDots(dotLayer, uid, edgeIds.map(function (id) {
-        return { id: id, video: EDGES.filter(function (e) { return e.id === id; })[0].video };
+        var e = EDGES.filter(function (x) { return x.id === id; })[0];
+        return { id: id, video: e.video, up: e.up };
       }));
     }
 
