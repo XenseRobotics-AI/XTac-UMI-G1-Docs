@@ -16,8 +16,8 @@ hide:
 
 <p class="tc-note">XTac-UMI&nbsp;G1 双夹爪配合 Pico4&nbsp;Ultra&nbsp;企业版头显<br>背包版、PC 版两种配置可选</p>
 
-[选择配置](product/editions.md){ .md-button .md-button--primary }
-[认识 XTac-UMI G1](product/g1.md){ .md-button }
+[认识 XTac-UMI G1](product/g1.md){ .md-button .md-button--primary }
+[选择配置](product/editions.md){ .md-button }
 
 </div>
 

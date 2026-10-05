@@ -16,8 +16,8 @@ hide:
 
 <p class="tc-note">XTac-UMI&nbsp;G1 grippers with the Pico4&nbsp;Ultra&nbsp;Enterprise headset<br>in a Backpack Kit or a Developer Kit</p>
 
-[Choose a kit](product/editions.md){ .md-button .md-button--primary }
-[About XTac-UMI G1](product/g1.md){ .md-button }
+[About XTac-UMI G1](product/g1.md){ .md-button .md-button--primary }
+[Choose a kit](product/editions.md){ .md-button }
 
 </div>
 
