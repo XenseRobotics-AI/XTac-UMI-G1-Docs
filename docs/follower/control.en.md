@@ -1,6 +1,6 @@
 # Motion control
 
-Before you start, make sure you have completed the five steps in [Setup and self-check](setup.md), **especially writing the motion safety envelope**.
+Before you start, make sure you have completed the four steps in [Setup and self-check](setup.md), **especially the step 4 motion check**.
 
 !!! danger "This drives a real motor"
     Before running, clear the jaws' range of motion, keep your fingers away from the gripper, and make sure you can cut the 24V at any moment. For a follower gripper on a robot, test first with the robot stationary.

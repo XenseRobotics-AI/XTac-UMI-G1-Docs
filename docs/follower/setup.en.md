@@ -1,6 +1,6 @@
 # Setup and self-check
 
-Complete these five steps in order before putting the follower gripper to work. Hardware mounting and wiring are in [Gripper connection and serial numbers → Follower gripper mounting and connection](../common/gripper.md#follower-install);
+Complete these four steps in order before putting the follower gripper to work. Hardware mounting and wiring are in [Gripper connection and serial numbers → Follower gripper mounting and connection](../common/gripper.md#follower-install);
 the follower gripper needs **both USB Type-C and 24V connected**.
 
 ## 1. Install the SDK {#install}
@@ -71,34 +71,9 @@ This script is read-only and does not move the motor. The lines to look at in no
 | `[故障]` (fault) | All 0 | See [Troubleshooting](troubleshooting.md#fault) |
 | `[开流读]` (stream read) | About 100 Hz, shows `OK` | Power-cycle and try again; if still not normal, see [Troubleshooting](troubleshooting.md#self-check) |
 
-## 4. Write the motion safety envelope {#envelope}
+## 4. Motion check {#motion-check}
 
-The envelope is the torque and overheating protection in the firmware. Write it once per follower gripper; it is retained across power loss. The values are generated automatically by the SDK for the motor, so there is nothing to fill in.
-From gripper firmware 1.2.12 on, the firmware runs a default envelope if none has been written; older firmware has no protection at all. In both cases, write it once.
-
-Check first:
-
-```bash
-python python/examples/impedance_control.py left --show-envelope
-```
-
-If the `effective` line contains `flags=0x2003 ENFORCE` and there is no `[warn]` line, it has already been written and you can skip this step. Otherwise write it:
-(On firmware 1.2.12 or later with no envelope written, the `effective` line also contains `ENFORCE`, but there is an extra `[warn]` line; in that case you still need to write it.)
-
-```bash
-python python/examples/impedance_control.py left --set-envelope --show-envelope
-```
-
-It is done when it shows `已写入` (written) or `已正确,未写入` (already correct, not written).
-
-!!! danger "Always use `--set-envelope` together with `--show-envelope`"
-    With `--set-envelope` alone, the script **goes on to move the motor** after writing.
-
-Then continue with step 5.
-
-## 5. Motion check {#motion-check}
-
-With the envelope written, use the keyboard console to move the follower gripper once and confirm opening, torque and temperature are all normal:
+Use the keyboard console to move the follower gripper once and confirm the safety protection is active and opening, torque and temperature are all normal:
 
 ```bash
 python python/examples/gripper_console.py left
@@ -111,9 +86,9 @@ The top line of the console shows the gripper and its motion safety envelope; th
 
 | Where to look | Normal |
 |---|---|
-| Top `envelope:` | Ends with `ENFORCED`; if it says `未生效` (not in effect), go back to [step 4](#envelope) and write it |
+| Top `envelope:` | Ends with `ENFORCED`: the firmware's torque and overheating protection is active; if it says `未生效` (not in effect), the firmware is too old, so [upgrade it](firmware.md#mcu-ota) first |
 | `Act[0-1]` | Near 1 after `o`, near 0 after `c`; `N/A` means not calibrated, so power-cycle |
-| `Torq(+闭合)` | Near 0 when opening and closing empty; with a pen held between the fingers press `c`: it settles at about 1.1 N·m and does not keep rising |
+| `Torq(+闭合)` | Near 0 when opening and closing empty; with a pen held between the fingers press `c`: it settles at 1.1 N·m and does not keep rising |
 | `Temp(C)` | Near room temperature; it rises slowly while gripping, and above 90 °C the firmware lowers the torque automatically |
 | `State` | `EN` while moving; for `FAULT` and the like see [Troubleshooting](troubleshooting.md#fault) |
 

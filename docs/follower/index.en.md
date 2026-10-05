@@ -42,17 +42,15 @@ The **continuous stall rating** is the torque the jaws can hold indefinitely whi
 
 ## Safety notes {#safety-model}
 
-- The gripper firmware has a built-in **motion safety envelope** (torque limit, thermal derating) that no program can bypass.
-  From gripper firmware 1.2.12 on, a follower gripper that has never had an envelope written runs a default one; **older firmware has no protection unless one is written**,
-  and when the jaws press against something hard they can drag down the 24V supply, so **the gripper lets go and USB disconnects**. Whatever the version, before the first motion write the envelope once, following
-  [Write the motion safety envelope](setup.md#envelope).
+- The gripper firmware has a built-in **motion safety envelope** (torque limit, thermal derating) that no program can bypass; it is active automatically from firmware 1.2.12.
+  **Older firmware lacks this protection**: pressing against something hard can drag down the 24V supply and make the gripper let go, so [upgrade](firmware.md#mcu-ota) to the firmware bundled with the SDK before use.
 - When control stops, the program exits or USB disconnects, the gripper releases and whatever it is holding will drop.
 - After power-on the gripper opens and closes once by itself to calibrate (about 10 seconds). During that time do not put anything in it and do not send commands.
 
 ## Next steps {#next}
 
 1. Mounting and wiring: [Gripper connection and serial numbers → Follower gripper mounting and connection](../common/gripper.md#follower-install)
-2. Install the SDK, run the self-check, write the envelope: [Setup and self-check](setup.md)
+2. Install the SDK and run the self-check: [Setup and self-check](setup.md)
 3. Make it move: [Motion control](control.md)
 4. Upgrade the firmware: [Firmware and motor upgrades](firmware.md)
 5. When something goes wrong: [Follower gripper troubleshooting](troubleshooting.md)

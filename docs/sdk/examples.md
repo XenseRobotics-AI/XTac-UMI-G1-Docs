@@ -36,7 +36,7 @@ python python/examples/impedance_control.py left
 python python/examples/force_position_control.py left --grasp-torque 0.6
 ```
 
-第一次使用前先按 [准备与自检](../follower/setup.md) 写好运动安全包络。
+第一次使用前先按 [准备与自检](../follower/setup.md) 完成自检。
 
 ## 主夹爪 {#leader}
 

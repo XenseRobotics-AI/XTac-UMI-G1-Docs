@@ -69,8 +69,8 @@
     排除后调用 `g.motor.clear_fault()` 和 `c.reset()` 继续；反复出现时联系[技术支持](../common/reference.md#support)，附上 `fault_report()` 的输出。
 
 ??? failure "夹紧硬物时夹爪突然松开，USB 断开"
-    **原因**：运动安全包络没有生效，力矩过大把 24V 拉垮。
-    **解决**：断电重启，按 [写入运动安全包络](setup.md#envelope) 检查并写入；确认 24V 电源适配器符合规格。
+    **原因**：固件太旧，运动安全包络没有生效，力矩过大把 24V 拉垮。
+    **解决**：断电重启，[升级固件](firmware.md#mcu-ota)到随 SDK 附带的版本，再按[运动自检](setup.md#motion-check)确认显示 `ENFORCED`；确认 24V 电源适配器符合规格。
 
 ??? failure "长时间夹持后夹持力变小"
     **原因**：电机发热后固件自动降低输出，这是保护，不是故障。

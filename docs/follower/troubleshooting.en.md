@@ -69,8 +69,8 @@ On this page, **power-cycle** means unplugging the 24V power cable, waiting abou
     Once the cause is removed, call `g.motor.clear_fault()` and `c.reset()` to continue. If it keeps happening, contact [technical support](../common/reference.md#support) and include the output of `fault_report()`.
 
 ??? failure "While clamping something hard, the gripper suddenly lets go and USB disconnects"
-    **Cause**: the motion safety envelope is not in effect, and excessive torque dragged down the 24V supply.
-    **Fix**: power-cycle, then check and write the envelope following [Write the motion safety envelope](setup.md#envelope); make sure the 24V power adapter meets the specification.
+    **Cause**: the firmware is too old, so the motion safety envelope is not in effect, and excessive torque dragged down the 24V supply.
+    **Fix**: power-cycle, [upgrade the firmware](firmware.md#mcu-ota) to the version bundled with the SDK, then confirm `ENFORCED` in the [motion check](setup.md#motion-check); make sure the 24V power adapter meets the specification.
 
 ??? failure "The grip force drops after holding for a long time"
     **Cause**: as the motor heats up, the firmware automatically reduces output. This is protection, not a fault.

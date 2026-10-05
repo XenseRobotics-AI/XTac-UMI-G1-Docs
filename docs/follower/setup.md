@@ -1,6 +1,6 @@
 # 准备与自检
 
-按顺序做完五步再投入使用。硬件安装与接线见 [夹爪连接与序列号 → 从夹爪安装与连接](../common/gripper.md#follower-install)，
+按顺序做完四步再投入使用。硬件安装与接线见 [夹爪连接与序列号 → 从夹爪安装与连接](../common/gripper.md#follower-install)，
 从夹爪要 **USB Type-C 和 24V 两路都接上**。
 
 ## 1. 安装 SDK {#install}
@@ -71,34 +71,9 @@ python python/examples/follower_status.py left
 | `[故障]` | 全 0 | 见[故障排查](troubleshooting.md#fault) |
 | `[开流读]` | 约 100 Hz，显示 `OK` | 断电重启后再试，仍不正常见[故障排查](troubleshooting.md#self-check) |
 
-## 4. 写入运动安全包络 {#envelope}
+## 4. 运动自检 {#motion-check}
 
-包络是固件里的力矩与过热保护，每只从夹爪写一次，掉电保留。数值由 SDK 按电机自动生成，不用填。
-夹爪固件 1.2.12 起，没写过包络时固件会执行一套默认包络，更旧的固件则完全不保护；两种情况都要写一次。
-
-先查看：
-
-```bash
-python python/examples/impedance_control.py left --show-envelope
-```
-
-`effective` 一行有 `flags=0x2003 ENFORCE`，且没有 `[warn]` 行，说明已经写过，可以跳过。否则写入：
-（没写过包络的 1.2.12 及以上固件，`effective` 一行同样有 `ENFORCE`，但会多一行 `[warn]`，这时仍要写入。）
-
-```bash
-python python/examples/impedance_control.py left --set-envelope --show-envelope
-```
-
-显示 `已写入` 或 `已正确,未写入` 即完成。
-
-!!! danger "`--set-envelope` 一定要和 `--show-envelope` 一起用"
-    只加 `--set-envelope` 时，脚本写完后**会接着让电机运动**。
-
-完成后继续第 5 步。
-
-## 5. 运动自检 {#motion-check}
-
-写完包络后，用键盘控制台让从夹爪实际动一次，确认开合、力矩和温度都正常：
+用键盘控制台让从夹爪实际动一次，确认安全保护已生效，开合、力矩和温度都正常：
 
 ```bash
 python python/examples/gripper_console.py left
@@ -111,9 +86,9 @@ python python/examples/gripper_console.py left
 
 | 看哪里 | 正常 |
 |---|---|
-| 顶部 `envelope:` | 末尾是 `ENFORCED`；显示 `未生效` 时回到[第 4 步](#envelope)写入 |
+| 顶部 `envelope:` | 末尾是 `ENFORCED`，表示固件的力矩与过热保护已生效；显示 `未生效` 说明固件太旧，先[升级固件](firmware.md#mcu-ota) |
 | `Act[0-1]` | 按 `o` 接近 1、按 `c` 接近 0；显示 `N/A` 说明没标定，断电重启 |
-| `Torq(+闭合)` | 空载开合时接近 0；用一根笔挡在指间按 `c`，稳定在约 1.1 N·m，不会继续上涨 |
+| `Torq(+闭合)` | 空载开合时接近 0；用一根笔挡在指间按 `c`，稳定在 1.1 N·m，不会继续上涨 |
 | `Temp(C)` | 室温附近；持续夹持会慢慢升高，超过 90 °C 固件会自动降低力矩 |
 | `State` | 运动中是 `EN`；出现 `FAULT` 等见[故障排查](troubleshooting.md#fault) |
 

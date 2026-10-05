@@ -36,7 +36,7 @@ python python/examples/impedance_control.py left
 python python/examples/force_position_control.py left --grasp-torque 0.6
 ```
 
-Before first use, write the motion safety envelope per [Setup and self-check](../follower/setup.md).
+Before first use, run through [Setup and self-check](../follower/setup.md).
 
 ## Leader gripper {#leader}
 
