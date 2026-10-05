@@ -866,3 +866,11 @@ html[lang="en"] .md-typeset .tc-hero h1 {
     grid-template-columns: 1fr;
   }
 }
+
+/* 全站表格水平居中(Material 默认靠左);单元格内文字仍左对齐 */
+.md-typeset .md-typeset__scrollwrap {
+  text-align: center;
+}
+.md-typeset .md-typeset__table {
+  text-align: left;
+}
