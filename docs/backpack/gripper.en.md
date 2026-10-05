@@ -22,24 +22,24 @@ Which gripper does what (right starts / left stops), the press timings and the L
 
 ## LEDs {#leds}
 
-| LED | Meaning |
-|---|---|
-| Solid green | Standby: ready to record |
-| Breathing green | Recording (one bright-dim cycle per second) |
-| White blink | Saved normally (0.4 s on, once) |
-| Solid yellow | Failed to start recording (2 s), or a fatal problem while recording (stays lit) |
-| Pulsing yellow | Data suspect: still recording, but that episode's quality is questionable (0.2 s on, 0.8 s off, 3 times) |
-| Fast yellow blink | Action refused, e.g. pressing start while already recording (0.1 s on/off, 3 times) |
-| Purple blink | Delete confirmation pending, waiting for your second double-press; 0.3 s on/off, cancels itself on timeout |
-| Solid purple | The 3 s cool-down right after a delete; double-presses do nothing during it |
-| Solid red | System problem (e.g. a gripper dropped off; lit by the backpack side) |
-| Red strobe | Gripper-side problem (lit by the gripper MCU itself, not routed through the backpack) |
+| LED | Colour and pattern | Meaning |
+|---|---|---|
+| <span class="tc-lamp green solid"></span> | Green Solid | Standby: ready to record |
+| <span class="tc-lamp green breathe"></span> | Green Breathing | Recording (one bright-dark cycle per second) |
+| <span class="tc-lamp white flash"></span> | White One flash | Saved (on for 0.4 s) |
+| <span class="tc-lamp amber solid"></span> | Yellow Solid | Recording failed to start (on for 2 s), or a fatal problem while recording (stays on) |
+| <span class="tc-lamp amber pulse"></span> | Yellow Pulse | Suspect data: still recording, but that take is questionable (on 0.2 s, off 0.8 s, 3 times) |
+| <span class="tc-lamp amber strobe"></span> | Yellow Fast blink | Action refused, e.g. start pressed while already recording (0.1 s on/off, 3 times) |
+| <span class="tc-lamp purple blink"></span> | Purple Blink | Delete confirmation, waiting for your second double-click; 0.3 s on/off, cancels on timeout |
+| <span class="tc-lamp purple solid"></span> | Purple Solid | The 3-second cool-down just after deleting; double-clicks are ignored |
+| <span class="tc-lamp red solid"></span> | Red Solid | System problem (e.g. a gripper dropped out, lit by the backpack) |
+| <span class="tc-lamp red burst"></span> | Red Burst | Gripper-side problem (lit by the gripper itself, not via the backpack) |
 
 Recording is breathing green; red only ever means a fault. Fast blink and pulse are both yellow and differ only in rhythm: the fast blink is dense, the pulse sparse. The console's System → Capture settings page renders this table as an animated legend that plays each shape and rhythm, so the two are easy to tell apart (see [System settings](system.md)).
 
 ## Voice prompts {#voice-cues}
 
-Backpack Kit only: while collecting, both hands are on the grippers and your eyes are on the scene, so reading the LED means looking up at the gripper. The device therefore speaks up at key moments, complementing the LED patterns. Prompts play through the headset by default; when the headset is disconnected or unsupported they fall back to the backpack's speaker, and the "Pico connection failed" prompt always uses the backpack's speaker. No tablet needs to be nearby and the browser is not involved.
+While collecting, both hands are on the grippers and your eyes on the scene, so the device **announces key moments through the Pico headset**, which you hear while wearing it, complementing the LEDs; no tablet is needed nearby and the browser plays no part. When the headset is not connected (for example the "Pico disconnected" announcement), the backpack's speaker plays it instead.
 
 | When | What it says |
 |---|---|
