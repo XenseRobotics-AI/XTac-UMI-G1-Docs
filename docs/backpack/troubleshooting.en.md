@@ -220,11 +220,6 @@ This page is organised by symptom, with a cause and a fix for each. The three mo
 
     **Fix:** read the line in "Last error"; download the bundle again and re-upload, and for an upgrade that skips versions, ask technical support for the intermediate bundles. A refusal does not affect the version currently running.
 
-??? failure "The card at the bottom right says “Update preparation failed”"
-    **Cause:** the bundle pushed from the remote end failed to download or verify.
-
-    **Fix:** there is no need to retry by hand — the device re-attempts on its next round. If it keeps failing, first confirm the backpack can reach the internet (by cable or site WiFi). See [Remote forced updates](update.md#remote).
-
 ??? failure "After flashing the gripper firmware the gripper works intermittently and frames go missing quietly"
     **Cause:** the restart after flashing is a soft reset, so the gripper's USB-to-serial chip never lost power and sits in a degraded state.
 

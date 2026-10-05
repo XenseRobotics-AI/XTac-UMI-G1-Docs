@@ -15,7 +15,6 @@ Open "System" from the console's top bar; the items down the left are ordered by
 | [Network](#wifi) | `/system/wifi` | Joining site WiFi, wired IP, hotspot entry point | Changing venue, giving several people access |
 | [Camera profiles](#camera-profiles) | `/system/camera-profiles` | Import or restore a camera profile pack (.xpack) | Technical support has sent a new pack |
 | [System update](#update) | `/system/update` | Upgrade and rollback | When there is a new version |
-| [Fleet management](#matrix) | `/system/matrix` | Multi-device management enrolment | Not needed at present |
 
 !!! warning "Stop recording first"
     While a recording is in progress, the device refuses all of these: switching project, gripper travel calibration, gripper firmware upgrades, camera profile upload / restore, and applying a system update (the interface says "Recording in progress"). When you see that message, stop the recording on the Live monitor page first.
@@ -258,8 +257,5 @@ Uploading applies immediately — there is no intermediate "stage then apply" st
 
 ## System update {#update}
 
-Importing an upgrade bundle for the collection unit, A/B rollback and remote updates have their own page, see [Upgrades and OTA](update.md).
+Importing an upgrade bundle for the collection unit and A/B rollback have their own page, see [Upgrades and OTA](update.md).
 
-## Fleet management {#matrix}
-
-Reserved for multi-device management; nothing to configure at present.

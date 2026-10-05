@@ -1,33 +1,35 @@
 ---
-description: Replay a single recording in the console: views, poses and gripper opening play back in sync, with quality marks, per-take statistics and the MCAP channel list
+description: Replay a single recording online in the console and check its views, poses and quality flags
 ---
 
-# Replay
+# Playback
 
-You do not have to download a finished take to look at it: the XTac-UMI Collector console (below, "the console") replays them one at a time, with the views, the poses and the gripper opening playing back at the pace they were recorded. Use it to review whether a take is worth keeping before deciding to delete it.
+You do not need to download a recording to review it: replay it in the console and decide whether to keep it.
 
-Find the recording on the [Projects page](projects-export.md) and click "Replay" at the end of its row to open the replay page. The "Replay" tab in the top bar only has content once you have picked a take; the address bar carries the entry id, so refreshing does not lose it. The mobile layout has no replay page — open the console on a tablet or a PC.
+Find the recording on the [Projects page](projects-export.md#projects) and click Playback at the end of its row. The phone layout has no playback page; use a tablet or computer.
 
-Whether a take can be replayed depends only on **whether the raw file is still on the device**, and not on whether it has been uploaded: both [ready and uploaded](monitor-record.md#episode-state) entries replay normally (fixed in 0.3.11; before that, a take that had been uploaded once reported "not ready" even with the file intact). An [archived](monitor-record.md#episode-state) entry had its raw file cleared at archive time, so its "Replay" button on the Projects page is greyed out and hovering says "Archived, the local source has been deleted"; it can neither be opened nor exported. To see that data, fetch it from the remote repository it was uploaded to.
+![The playback page](../assets/backpack/playback-live.webp)
 
-![The replay page](../assets/backpack/playback-live.webp)
+## Playing {#controls}
 
-The layout matches the [Live monitor](monitor-record.md): the left and right columns hold each gripper's fisheye view and its two visuotactile feeds, and the centre column holds the headset's stereo pair and the "arms pose" 3D view (the top row is HEAD's coordinates in the world frame, and the two cards below the view are the left and right gripper opening angles). The bottom of each tile is labelled with its source channel (`fisheye` / `tactile_1` / `tactile_2` / `left` / `right`) and "recorded / replaying / empty". The page header and the bottom left hold this take's details: project › task, recording time, path on disk, duration, frame count and data size; the bottom right is the playback control card.
+- Click "Play online": views, poses and opening play in sync; drag the progress bar to seek.
+- "Recording info" shows the recording's duration, channels and other details.
+- "Back to project" returns to the Projects page.
 
-!!! warning "Replay and live preview cannot run at the same time"
-    Replay takes exclusive use of the backpack's hardware encoder (MPP). As long as any tablet or browser is still watching the live preview, or an export is transcoding, clicking "Play online" is refused and the status line shows "Resource busy: MPP is in use, cannot start replay right now (…)" naming what is holding it. Go to the live monitor page and click "Stop streaming" (on every connected device), wait for the export transcode to finish, then come back and play. Once replay has started, someone else opening the preview will not interrupt it.
+!!! warning "Playback and live preview cannot run at the same time"
+    While any device is watching the live preview or an export is transcoding, playback is refused with the reason. Click "Stop stream" on the live monitor page first, then come back.
 
-## Playback controls {#controls}
+Archived recordings have had their raw files cleared and cannot be replayed; fetch that data from where it was uploaded.
 
-- **Play online**: streamed replay, without downloading the whole file. Once it starts the button becomes "Play / Pause" and the status line shows "Playing online · N feeds"; the progress bar can be dragged to seek, and the views and the poses share one clock, so they stop and seek together. At the end it shows "Playback finished", and dragging the progress bar back replays it. Replay is capped at 30 fps (the tactile archive in the MCAP is 120 fps), and the tactile view is the geometrically rectified image with no difference overlay (since 0.4.2), the same as in live monitoring; the bitrate adapts on a weak network, with nothing to adjust by hand.
-- **Pose card**: during replay the poses and opening angles follow the video. The top right of the card states the actual status: static (not started) / waiting to start / following the video / no pose recorded in this take; older entries with no pose keep a static model and say so.
-- **Recording info**: pops up this MCAP's metadata — size, message count, channel count, chunk count, duration, whether there is a Summary, and the complete list of data channels.
-- **Back to projects**: returns to the Projects page and ends the replay session.
+## Quality flags {#quality}
 
-There is no download button on the replay page: both single-take download entry points (the replay page's "Download H264" and ticking individual takes in the export dialog) were removed in 0.3.10, and fetching files now goes through the task-level export — pick the destination "Download to device" and a format in the [export dialog](projects-export.md#export), and collect the archive once the device has packed it.
+Each recording on the Projects page has a Quality column:
 
-## Quality marks and per-take statistics {#quality}
+| Shows | Meaning |
+|---|---|
+| No issues found | The take is clean |
+| Lag N / Drop N / Bad N | Dropped frames, device dropouts or bad frames |
+| Collecting stats | Still recording |
+| Stats incomplete / No stats | A failed or older recording without complete statistics |
 
-The duration, frame count and data size in the replay page header are the same data as the statistics on the Projects page row. Each row on the Projects page also has a "Quality" column: when there are problems, several items are joined with `·`: "lag N" is the number of frames dropped to lag on the collection side, "Disconnects N" is the number of device dropouts, "Bad frames N" is the bad-frame count (checked once on the collection side and once on the transcode side, taking the larger), followed by whatever the stop-recording quality check wrote down — for example "Pico tracker missing", a camera channel with no frames, the share of the take in which tracking was lost, or a missing tactile rectification recipe. With no problems, it shows how complete the statistics are: "No issues detected" means all counters are present and zero; "Collecting statistics" means it is still recording; "Incomplete statistics" means the recording failed and the counters are partial; "No statistics" means there are no statistics (for example an older recording). Missing counters are not treated as zero, so only "No issues detected" means the take really is clean. The take that was judged "data suspect" at stop time, with the gripper pulsing yellow, is the one with a mark in this column; the criteria are in [After stopping](monitor-record.md#record-stop).
-
-Replay a marked entry before doing anything else: where a tracker left the field of view, the pose card visibly stops following the video; an entry with missing feeds or zero frames will be blocked by the LeRobot export pre-check anyway, so keeping it gains nothing — delete it on the Projects page. Tracking confidence is written frame by frame into the LeRobot dataset's `observation.tracker_confidence`, leaving it to the training side to drop or mask those samples, see [Export](projects-export.md#lerobot).
+Replay flagged takes first and delete the ones you cannot use on the Projects page; recordings with missing streams or zero frames are also blocked at export.

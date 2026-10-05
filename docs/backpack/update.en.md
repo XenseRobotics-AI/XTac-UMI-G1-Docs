@@ -1,12 +1,10 @@
 # Upgrades and OTA
 
-This page covers upgrading the XTac-UMI Collector console (below, "the console") itself: importing an upgrade bundle on the System page, getting back to the previous version when an upgrade fails, and how a forced update pushed from a management end behaves on site. By the end you can carry out an upgrade on your own and verify the result. Flashing gripper firmware has its own section at the end of the page.
+This page covers upgrading the XTac-UMI Collector console (below, "the console") itself: importing an upgrade bundle on the System page and getting back to the previous version when an upgrade fails. By the end you can carry out an upgrade on your own and verify the result. Flashing gripper firmware has its own section at the end of the page.
 
-Console upgrades are all done on the console's System → System update page, and that page is authoritative for the version (this page is written against 0.4.3). From top to bottom the page has a metrics card (current version, git, build time, architecture, and status: idle / ready / applying / error) and four cards: "Upload firmware package", "Version pending application", "Rollback" and "Remote update".
+Console upgrades are all done on the console's System → System update page, and that page is authoritative for the version (this page is written against 0.4.3). From top to bottom the page has a metrics card (current version, git, build time, architecture, and status: idle / ready / applying / error) and cards such as "Upload firmware package", "Version pending application" and "Rollback".
 
 ![System update page](../assets/backpack/update.webp)
-
-The screenshot shows an older version of the page; the current one also has "Cloud OTA push" and "matrix push" remote-update cards to the right of "Rollback".
 
 ## Importing an upgrade bundle {#bundle}
 
@@ -50,33 +48,6 @@ Automatic rollback happens in these cases, with no intervention:
 Manual rollback: when the "Rollback" card shows "Rollback available", click "Roll back to previous version" → confirm, and the service restarts on the old version. "Unavailable" means this device has never successfully applied an update (first install from the factory), so there is no previous version to fall back to. Rollback likewise requires that no recording is in progress.
 
 Rollback and upgrade only swap the console program; recorded data, projects / tasks, upload configurations and the network configuration are stored elsewhere and are unaffected.
-
-## Remote forced updates {#remote}
-
-This section applies only to deployments connected to a management end; a device that is not connected will not show these remote-update cards, and upgrades follow [Importing an upgrade bundle](#bundle) above.
-
-Since 0.3.9 a management end can push a specified version to a device and force the install, so operators do not have to import the bundle on each unit one by one; it can also roll out in batches, validating on a few devices before going wider. The prerequisite is that the backpack can reach the remote end: connect it [by cable or to the site WiFi](network.md#lan); a backpack running only its own hotspot will not receive anything.
-
-Once a device receives a push it goes through a fixed sequence, and "when it actually restarts" is decided solely by the device:
-
-1. Download: the bundle downloads in the background and a card at the bottom right shows progress (if the source does not give a total size, it shows only how much has been downloaded).
-2. Staging: once downloaded it goes through exactly the same verification as a manual import; only after it passes does the countdown start, and the download time is not counted.
-3. Countdown: the grace period is set by the pushing end, 5 minutes by default and 30 seconds at the shortest. The card shows "Will update and restart automatically in N min NN s"; to go early, click "Update now" (refused while recording).
-4. At the deadline: if nothing is recording it applies and restarts immediately; if a recording is in progress the card changes to "Update waiting for collection to finish" and it restarts once the current episode has ended normally — it never interrupts collection. Upgrading a few minutes later is far cheaper than an episode cut in half.
-5. The first time you open the interface on the new version, the card shows "Updated to the new version" together with this release's changes; click "Got it" to dismiss it.
-
-The card stays pinned at the bottom right and deliberately avoids a full-screen overlay: during the grace period the operator may well be collecting, and neither the view nor the stop button may be covered. Two one-off prompts do grab attention: a confirmation dialog when the new version is first pushed ("Update now?" — "Cancel" lets the countdown continue), and one "About to update automatically, please wrap up" as the countdown runs out.
-
-| Card status | What it means | What you do |
-|---|---|---|
-| Management end has pushed an update, downloading | Downloading in the background | Nothing; you can keep collecting |
-| Management end requires an update, will update automatically in … | Staged, counting down | Wrap up what you are doing, or click "Update now" |
-| Update waiting for collection to finish | Deadline reached but recording | Finish this episode normally; it restarts once you stop |
-| Updating | The service is about to restart | Wait for the interface to drop briefly and come back |
-| Update preparation failed | The download or verification failed | No need to retry by hand; the device re-attempts on its next round. If it keeps failing, check the network first |
-| Updated to the new version | Upgrade complete | Glance at the changes and click "Got it" |
-
-The System update page's "Remote update" card shows the same state (source, stage, seconds remaining), and displays "No remote update pushed" when there is none. Restarts and rollbacks pushed from the remote end obey the same recording protection.
 
 ## Gripper firmware {#gripper-firmware}
 
