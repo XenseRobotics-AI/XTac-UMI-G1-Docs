@@ -94,7 +94,7 @@ Both kits use the same grippers and headset and produce the same data. The Backp
     Turnkey, closed-source collection software; for large-scale collection teams and data factories
     { .xu-card__fit }
 
-    [Quick start](backpack/index.md){ .md-button .md-button--primary }
+    [Quick start](backpack/quickstart.md){ .md-button .md-button--primary }
     [About the backpack](product/backpack.md){ .md-button }
     { .xu-card__actions }
 

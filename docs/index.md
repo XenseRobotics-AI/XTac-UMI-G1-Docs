@@ -94,7 +94,7 @@ hide:
     整机交付、开箱即用，采集软件不开源；适用于规模化数据采集团队与数采工厂
     { .xu-card__fit }
 
-    [快速开始](backpack/index.md){ .md-button .md-button--primary }
+    [快速开始](backpack/quickstart.md){ .md-button .md-button--primary }
     [了解背包](product/backpack.md){ .md-button }
     { .xu-card__actions }
 

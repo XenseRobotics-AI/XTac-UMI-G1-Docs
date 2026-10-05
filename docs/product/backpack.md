@@ -4,7 +4,7 @@
 
 ![XTac-UMI 数采背包前面板](../assets/product/backpack-ports-front.webp){ width="720" }
 
-[快速开始](../backpack/index.md){ .md-button .md-button--primary }
+[一页速通](../backpack/quickstart.md){ .md-button .md-button--primary }
 [对比两种配置](editions.md){ .md-button }
 
 ## 它是什么

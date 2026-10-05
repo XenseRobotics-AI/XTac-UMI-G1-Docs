@@ -272,6 +272,7 @@ nav:
       - 安全与合规: product/safety.md
   - 背包版:
       - backpack/index.md
+      - 一页速通: backpack/quickstart.md
       - 开箱、接线与供电: backpack/unbox-connect.md
       - 网络与控制台入口: backpack/network.md
       - 实时监控与录制: backpack/monitor-record.md

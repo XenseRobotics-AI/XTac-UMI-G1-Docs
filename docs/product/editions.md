@@ -19,7 +19,7 @@ XTac-UMI 提供两种配置，使用同一套 XTac-UMI G1 夹爪与 Pico4 Ultra 
 
     背包即主机、平板即控制台，夹爪按键录制，数据一键发布到 ModelScope。
 
-    [快速开始](../backpack/index.md){ .md-button .md-button--primary }
+    [快速开始](../backpack/quickstart.md){ .md-button .md-button--primary }
 
 -   ![PC 版采集中的 Rerun 实时预览](../assets/dataset/rerun-xtac-umi-g1.webp){ .xu-card__img }
 
@@ -134,6 +134,6 @@ XTac-UMI 提供两种配置，使用同一套 XTac-UMI G1 夹爪与 Pico4 Ultra 
 
 ## 开始使用与售后
 
-- **开始使用**：背包版见[快速开始](../backpack/index.md)，PC 版见[一页速通](../pc/quickstart.md)。
+- **开始使用**：背包版见[一页速通](../backpack/quickstart.md)，PC 版见[一页速通](../pc/quickstart.md)。
 - **开箱缺件或配件损坏**：请联系售后团队补发，不要用其他线缆或电源替代。
 - **使用中遇到问题**：先查对应版本的故障排查，仍未解决请联系售后团队，并按[支持与反馈](../common/reference.md#support)附上设备序列号与日志。

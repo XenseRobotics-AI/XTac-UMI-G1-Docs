@@ -29,13 +29,9 @@ Read [Safety and compliance](../product/safety.md) before you start. The detaile
 
 ## Daily collection cheat sheet {#daily}
 
-1. Power up: [connect the grippers first, then power the backpack](unbox-connect.md#order); stand at the work position facing the working direction, and only then open XTac-UMI XR and connect — the [world-frame origin](../common/pico4.md#pico-frame) is set by where you are when XR first starts.
-2. Open the console: plug the tablet into the backpack's `HOST` port and the console opens, see [The tablet over USB](network.md#tablet).
-3. [Pick a project / task](monitor-record.md#project-task): the two drop-downs at the bottom of the Live monitor page, whose last entries "New project…" and "New task…" let you create one on the spot. A task's "task instruction / prompt" is required and should be a complete natural-language instruction (for example *open the lid of the container, take out the chips, place them into the box*); the target count and target duration may be left blank.
-4. [Check on the Live monitor page](monitor-record.md#checks): all six camera feeds (left and right fisheye, two visuotactile feeds per gripper) and the headset's stereo pair have images, and the fisheye views are sharp — the focus ring is easy to knock out of place. The pose view follows your hand and the left and right trackers are not swapped. The gripper opening changes with your hand, reading about 0.02 rad closed, normalised to 0. When the record button is not ready it gives the reason (no project / task selected, or "Pico not ready" / "Tracker not ready" with the specific cause); the full set of [recording gates](monitor-record.md#record-gates) also covers disk usage and the task's target count.
-5. [Record with the gripper buttons](monitor-record.md#record): long-press the right gripper to start (the LED turns to breathing green), long-press the left gripper to stop when the take is done (one white flash means it is saved), and double-click the left gripper to delete the previous take. The buttons are handled by a state machine on the backpack, so you can record with no browser online; the full gesture table is in [Buttons](gripper.md#buttons) and the LED patterns are in [LEDs](gripper.md#leds).
+Every working day, follow the [Quickstart](quickstart.md): wire and power up → tablet over USB to open the console → connect the headset → pick a project and task → check before recording → record with the buttons → export.
 
-Never restart XTac-UMI XR during a collection run: restarting resets the world-frame origin, so poses within the same dataset no longer share a reference frame; see [Start-up and frame alignment](../common/pico4.md#pico-frame).
+Do not restart XTac-UMI XR during collection: a restart resets the world origin, so the pose reference within one dataset stops being consistent; see [Startup and frame alignment](../common/pico4.md#pico-frame).
 
 ## After recording {#after}
 

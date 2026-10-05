@@ -29,11 +29,7 @@
 
 ## 日常采集速查 {#daily}
 
-1. 开机：[先接夹爪、再给背包上电](unbox-connect.md#order)；站到作业位、面朝作业方向，再打开 XTac-UMI XR 并连接——[世界坐标系原点](../common/pico4.md#pico-frame)以首次启动 XR 时的位置为准。
-2. 打开控制台：平板插背包 `HOST` 口，自动打开控制台，见[平板插 USB](network.md#tablet)。
-3. [选项目 / 任务](monitor-record.md#project-task)：监控页底部两个下拉，末项「新建项目…」「新建任务…」可就地新建。任务的「任务指令 / prompt」必填，写完整的自然语言指令（如 *open the lid of the container, take out the chips, place them into the box*）；目标条数与目标时长可留空。
-4. [实时监控里确认](monitor-record.md#checks)：六路相机画面（左右鱼眼、左右爪各两路视触觉）与头显双目都有图像，鱼眼画面清晰——旋钮容易被误碰跑焦；位姿视图跟手动，左右追踪器没有接错；夹爪开合度随手部动作变化，闭合时约 0.02 rad、归一化为 0。录制按钮未就绪时会给出原因（未选项目 / 任务，或「Pico 未就绪」「Tracker 未就绪」并写明具体原因），完整的[开录门槛](monitor-record.md#record-gates)还包括磁盘占用与任务目标条数。
-5. [用夹爪按键录制](monitor-record.md#record)：右爪长按开始（灯转绿呼吸），做完一条左爪长按停止（白闪一次表示已保存），左爪双击删上一条。按键由背包端状态机接管，浏览器不在线也能录；完整手势表见[按键](gripper.md#buttons)，灯语见[指示灯](gripper.md#leds)。
+每天开工照[一页速通](quickstart.md)走一遍：接线上电 → 平板插 USB 打开控制台 → 连接头显 → 选项目与任务 → 开录前检查 → 按键录制 → 导出。
 
 采集全程不要重启 XTac-UMI XR：重启会重设世界坐标系原点，同一数据集内的位姿参考系就不一致了，见[启动与坐标系对齐](../common/pico4.md#pico-frame)。
 

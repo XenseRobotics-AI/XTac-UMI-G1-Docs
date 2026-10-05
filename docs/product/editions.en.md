@@ -19,7 +19,7 @@ This page compares the two and lists each kit's box contents and wiring.
 
     The backpack is the host and a tablet the console; record with the gripper buttons and publish to ModelScope in one click.
 
-    [Quickstart](../backpack/index.md){ .md-button .md-button--primary }
+    [Quickstart](../backpack/quickstart.md){ .md-button .md-button--primary }
 
 -   ![Developer Kit live Rerun preview while recording](../assets/dataset/rerun-xtac-umi-g1.webp){ .xu-card__img }
 
@@ -134,6 +134,6 @@ This page compares the two and lists each kit's box contents and wiring.
 
 ## Getting started and after-sales support
 
-- **Getting started**: see the [Backpack Kit quickstart](../backpack/index.md) or the [Developer Kit quickstart](../pc/quickstart.md).
+- **Getting started**: see the [Backpack Kit quickstart](../backpack/quickstart.md) or the [Developer Kit quickstart](../pc/quickstart.md).
 - **Missing or damaged items in the box**: contact our after-sales team for a replacement; do not substitute other cables or power supplies.
 - **Problems in use**: check the troubleshooting page for your kit first; if that does not solve it, contact our after-sales team with the device serial numbers and logs described in [Support and feedback](../common/reference.md#support).

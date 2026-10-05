@@ -4,7 +4,7 @@ The **XTac-UMI Backpack** is the Backpack Kit's collection host, worn by the ope
 
 ![The XTac-UMI Backpack's front panel](../assets/product/backpack-ports-front.webp){ width="720" }
 
-[Quickstart](../backpack/index.md){ .md-button .md-button--primary }
+[Quickstart](../backpack/quickstart.md){ .md-button .md-button--primary }
 [Compare the two kits](editions.md){ .md-button }
 
 ## What it is
