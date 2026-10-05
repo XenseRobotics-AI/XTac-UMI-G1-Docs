@@ -14,31 +14,7 @@ Connect the tablet to the backpack's front `HOST1` or `HOST2` port with a data c
 
 ![The Network page the tablet opens over USB](../assets/backpack/tablet-usb-network-settings.webp)
 
-**Before a tablet's first use**, turn on USB debugging and trust the backpack (the bundled REDMI Pad 2 SE shown here):
-
-=== "1. Developer mode"
-
-    Settings → My device, tap "OS version" about 7 times until it says developer mode is on.
-
-    ![Tap OS version](../assets/backpack/tablet-adb-1-os-version.webp)
-
-=== "2. Developer options"
-
-    Settings → Additional settings → Developer options.
-
-    ![Developer options under Additional settings](../assets/backpack/tablet-adb-2-developer-entry.webp)
-
-=== "3. USB debugging"
-
-    In the Debugging group, turn on "USB debugging" and confirm.
-
-    ![Turn on USB debugging](../assets/backpack/tablet-adb-3-usb-debugging.webp)
-
-=== "4. Trust the backpack"
-
-    When the tablet asks "Allow USB debugging?" after you plug into the backpack, tick "Always allow from this computer" and tap Allow. Later connections need no confirmation.
-
-After authorisation the backpack turns off the tablet's debugging-authorisation timeout, so there is nothing more to maintain. A factory reset or revoking debugging authorisations means trusting it again.
+The bundled tablet is authorised on the production line before shipping, so it works as soon as you plug it in. After a factory reset or revoking USB debugging authorisations, plugging in no longer opens the console; re-authorise it as described in [Troubleshooting](troubleshooting.md#tablet-adb).
 
 ### Putting the backpack on WiFi from the tablet {#tablet-wifi}
 

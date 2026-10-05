@@ -14,31 +14,7 @@
 
 ![平板插 USB 后自动打开的网络 / 配网页](../assets/backpack/tablet-usb-network-settings.webp)
 
-**每台平板第一次使用前**，要在平板上打开 USB 调试并信任背包（随箱平板以 REDMI Pad 2 SE 为例）：
-
-=== "1. 打开开发者模式"
-
-    设置 → 我的设备，连续点「OS 版本」约 7 次，直到提示已进入开发者模式。
-
-    ![连续点 OS 版本](../assets/backpack/tablet-adb-1-os-version.webp)
-
-=== "2. 找到开发者选项"
-
-    设置 → 更多设置 → 开发者选项。
-
-    ![更多设置里的开发者选项](../assets/backpack/tablet-adb-2-developer-entry.webp)
-
-=== "3. 打开 USB 调试"
-
-    在「调试」分组打开「USB 调试」，按提示确认。
-
-    ![打开 USB 调试](../assets/backpack/tablet-adb-3-usb-debugging.webp)
-
-=== "4. 信任背包"
-
-    插上背包后，平板弹出「允许 USB 调试？」时勾选「始终允许使用这台计算机进行调试」，再点「允许」。之后再插就不用确认了。
-
-授权后背包会自动关闭平板的调试授权超时，平时不用再管。平板恢复出厂、撤销调试授权后需要重新信任。
+随箱平板出厂前已在产线完成授权，插上即可使用。平板恢复出厂设置或撤销了 USB 调试授权后，插上不会自动打开控制台，按[故障排查](troubleshooting.md#tablet-adb)重新授权。
 
 ### 用平板给背包配网 {#tablet-wifi}
 

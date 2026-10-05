@@ -7,6 +7,39 @@ This page is organised by symptom, with a cause and a fix for each. The three mo
 
 ## Connecting and reaching the console {#connect}
 
+<span id="tablet-adb"></span>
+
+??? failure "The tablet does not open the console when plugged into the backpack"
+    **Cause**: the bundled tablet is authorised before shipping; after a factory reset, turning off USB debugging or revoking debugging authorisations, the backpack can no longer control it.
+
+    **Fix**: first check that the cable is in the backpack's `HOST1` / `HOST2` port and the tablet is unlocked. If it still fails, turn USB debugging back on and trust the backpack (the bundled REDMI Pad 2 SE shown here):
+
+    === "1. Developer mode"
+
+        Settings → My device, tap "OS version" about 7 times until it says developer mode is on.
+
+        ![Tap OS version](../assets/backpack/tablet-adb-1-os-version.webp)
+
+    === "2. Developer options"
+
+        Settings → Additional settings → Developer options.
+
+        ![Developer options under Additional settings](../assets/backpack/tablet-adb-2-developer-entry.webp)
+
+    === "3. USB debugging"
+
+        In the Debugging group, turn on "USB debugging" and confirm.
+
+        ![Turn on USB debugging](../assets/backpack/tablet-adb-3-usb-debugging.webp)
+
+    === "4. Trust the backpack"
+
+        When the tablet asks "Allow USB debugging?" after you plug into the backpack, tick "Always allow from this computer" and tap Allow. Later connections need no confirmation.
+
+    After authorisation the backpack turns off the tablet's debugging-authorisation timeout, and plugging in opens the console again.
+
+
+
 ??? failure "Joined the backpack hotspot, but the console will not open"
     **Cause:** three common ones. You joined a different backpack (every hotspot on site starts with `xense-`); the address had no `http://`, and iOS / Safari hands a bare device name to a search engine, which looks like "it will not open" when in fact no request was made; or some Android models cannot resolve `.local` device names.
 

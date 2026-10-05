@@ -1,9 +1,8 @@
 # Quickstart (TL;DR)
 
-From power-on to your first exported dataset. Before you start, make sure these three are done:
+From power-on to your first exported dataset. Before you start, make sure these two are done:
 
 - The headset is updated, XTac-UMI XR is installed and both trackers are paired → [Pico4 headset and trackers](../common/pico4.md)
-- The tablet has USB debugging on and trusts the backpack (once only) → [The tablet over USB](network.md#tablet)
 - The leader grippers are calibrated → console System → [Gripper](system.md#gripper)
 
 ## 1. Wiring and power {#power-on}
@@ -16,7 +15,7 @@ From power-on to your first exported dataset. Before you start, make sure these 
 
 ## 2. Open the console {#console}
 
-Cable the tablet to the backpack's `HOST1` or `HOST2` port and the backpack opens the console on it.
+Cable the tablet to the backpack's `HOST1` or `HOST2` port and the backpack opens the console on it. If it does not, see [Troubleshooting](troubleshooting.md#tablet-adb).
 
 ## 3. Connect the headset {#headset}
 
