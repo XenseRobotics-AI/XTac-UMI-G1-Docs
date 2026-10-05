@@ -1,6 +1,6 @@
 # Setup and self-check
 
-Complete these four steps in order before letting the follower gripper move. Hardware mounting and wiring are in [Gripper connection and serial numbers → Follower gripper mounting and connection](../common/gripper.md#follower-install);
+Complete these five steps in order before putting the follower gripper to work. Hardware mounting and wiring are in [Gripper connection and serial numbers → Follower gripper mounting and connection](../common/gripper.md#follower-install);
 the follower gripper needs **both USB Type-C and 24V connected**.
 
 ## 1. Install the SDK {#install}
@@ -94,4 +94,31 @@ It is done when it shows `已写入` (written) or `已正确,未写入` (already
 !!! danger "Always use `--set-envelope` together with `--show-envelope`"
     With `--set-envelope` alone, the script **goes on to move the motor** after writing.
 
-Once this is done, you can move on to [Motion control](control.md).
+Then continue with step 5.
+
+## 5. Motion check {#motion-check}
+
+With the envelope written, use the keyboard console to move the follower gripper once and confirm opening, torque and temperature are all normal:
+
+```bash
+python python/examples/gripper_console.py left
+```
+
+!!! danger "This drives the real motor"
+    Clear the space around the fingers, keep your hands away, and be ready to pull the 24V.
+
+The top line of the console shows the gripper and its motion safety envelope; the line below is live data:
+
+| Where to look | Normal |
+|---|---|
+| Top `envelope:` | Ends with `ENFORCED`; if it says `未生效` (not in effect), go back to [step 4](#envelope) and write it |
+| `Act[0-1]` | Near 1 after `o`, near 0 after `c`; `N/A` means not calibrated, so power-cycle |
+| `Torq(+闭合)` | Near 0 when opening and closing empty; with a pen held between the fingers press `c`: it settles at about 1.1 N·m and does not keep rising |
+| `Temp(C)` | Near room temperature; it rises slowly while gripping, and above 90 °C the firmware lowers the torque automatically |
+| `State` | `EN` while moving; for `FAULT` and the like see [Troubleshooting](troubleshooting.md#fault) |
+
+Common keys: `o` / `c` fully open / close, `j` / `k` open / close one step, `d` release the motor, `q` quit. All keys are in [Motion control](control.md#first-motion).
+
+If all of this checks out, the follower gripper is ready to use.
+
+Next, see [Motion control](control.md).

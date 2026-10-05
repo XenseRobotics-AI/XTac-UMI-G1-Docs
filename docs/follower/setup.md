@@ -1,6 +1,6 @@
 # 准备与自检
 
-按顺序做完四步再让从夹爪运动。硬件安装与接线见 [夹爪连接与序列号 → 从夹爪安装与连接](../common/gripper.md#follower-install)，
+按顺序做完五步再投入使用。硬件安装与接线见 [夹爪连接与序列号 → 从夹爪安装与连接](../common/gripper.md#follower-install)，
 从夹爪要 **USB Type-C 和 24V 两路都接上**。
 
 ## 1. 安装 SDK {#install}
@@ -94,4 +94,31 @@ python python/examples/impedance_control.py left --set-envelope --show-envelope
 !!! danger "`--set-envelope` 一定要和 `--show-envelope` 一起用"
     只加 `--set-envelope` 时，脚本写完后**会接着让电机运动**。
 
-完成后就可以开始[运动控制](control.md)了。
+完成后继续第 5 步。
+
+## 5. 运动自检 {#motion-check}
+
+写完包络后，用键盘控制台让从夹爪实际动一次，确认开合、力矩和温度都正常：
+
+```bash
+python python/examples/gripper_console.py left
+```
+
+!!! danger "会驱动真实电机"
+    先清空爪子周围，手指远离夹爪，随时可以拔掉 24V。
+
+控制台顶部一行显示夹爪信息和运动安全包络，下面一行是实时数据：
+
+| 看哪里 | 正常 |
+|---|---|
+| 顶部 `envelope:` | 末尾是 `ENFORCED`；显示 `未生效` 时回到[第 4 步](#envelope)写入 |
+| `Act[0-1]` | 按 `o` 接近 1、按 `c` 接近 0；显示 `N/A` 说明没标定，断电重启 |
+| `Torq(+闭合)` | 空载开合时接近 0；用一根笔挡在指间按 `c`，稳定在约 1.1 N·m，不会继续上涨 |
+| `Temp(C)` | 室温附近；持续夹持会慢慢升高，超过 90 °C 固件会自动降低力矩 |
+| `State` | 运动中是 `EN`；出现 `FAULT` 等见[故障排查](troubleshooting.md#fault) |
+
+常用按键：`o` / `c` 全开 / 全合，`j` / `k` 张开 / 闭合一步，`d` 松开电机，`q` 退出。全部按键见[运动控制](control.md#first-motion)。
+
+以上都正常，从夹爪就可以投入使用了。
+
+接下来见[运动控制](control.md)。
