@@ -66,6 +66,8 @@ theme:
     - navigation.top
     - navigation.footer
     - toc.follow
+    # 页内目录并进左侧导航,右侧栏让出给正文
+    - toc.integrate
     - search.suggest
     - search.highlight
     - search.share
