@@ -74,7 +74,7 @@ On the same network as the backpack you can use its device name instead of an IP
 
 ### Wired {#wired}
 
-Run the backpack's Ethernet port to a router LAN port and it works as soon as it is plugged in; a computer on the same router uses the wired IP shown in the [network drop-down](#status) or the device name. The topology is in [A fixed workstation](unbox-connect.md#desk). On Ubuntu, remember to tick Wired in the system settings:
+Run the backpack's Ethernet port to a router LAN port and it works as soon as it is plugged in; a computer on the same router uses the wired IP shown in the [network drop-down](#status) or the device name. On Ubuntu, remember to tick Wired in the system settings:
 
 ![The Ubuntu wired network switch](../assets/backpack/ubuntu-wired.webp){ width="480" }
 

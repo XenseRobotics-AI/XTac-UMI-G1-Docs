@@ -74,7 +74,7 @@
 
 ### 有线 {#wired}
 
-背包网口接路由器 LAN 口，插上即用；同一路由器下的电脑用[网络下拉](#status)里显示的有线 IP 或设备名访问。接线拓扑见[固定工位的布置](unbox-connect.md#desk)。Ubuntu 电脑记得在系统设置里勾选 Wired：
+背包网口接路由器 LAN 口，插上即用；同一路由器下的电脑用[网络下拉](#status)里显示的有线 IP 或设备名访问。Ubuntu 电脑记得在系统设置里勾选 Wired：
 
 ![Ubuntu 有线网络开关](../assets/backpack/ubuntu-wired.webp){ width="480" }
 

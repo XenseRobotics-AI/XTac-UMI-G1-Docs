@@ -80,18 +80,6 @@ XR 右上角是折叠按钮；追踪器精度不准或与背包断开时，XR �
 !!! warning "头显灭屏与休眠必须设为永不"
     头显灭屏后停止工作，位姿数据随之中断。在头显的 开发者选项 → 企业设置 → 电源策略 里把系统休眠和灭屏时间都改为永不，步骤见[Pico4 头显与追踪器](../common/pico4.md#pico-system)。
 
-## 固定工位的布置 {#desk}
-
-实验室里常把背包、PC 与路由器接成一个局域网，PC 用浏览器开控制台：
-
-![接线拓扑：路由器 ↔ 背包 ↔ PC，夹爪走 C2C](../assets/backpack/hardware-topology.webp)
-
-- 背包网口与 PC 网线都接路由器 LAN 口；背包有线口出厂 DHCP，插上即用。
-- 头显仍用 Type-C 线接背包 PICO 口，走 USB网络，不走路由器。
-- PC 浏览器打开背包 IP 或 `http://xense-<序列号后 6 位>.local`。IP 看控制台顶栏的[网络下拉](network.md#status)；Ubuntu 的 PC 记得在系统设置里勾选 Wired，见[有线](network.md#wired)。
-
-![桌面实物连接](../assets/backpack/desk-setup.webp)
-
 ## 上电后核对 {#verify}
 
 打开控制台后看三处，任何一处不对回头查接线：

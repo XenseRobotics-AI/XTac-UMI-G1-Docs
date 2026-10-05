@@ -80,18 +80,6 @@ Stand at the work position facing the working direction before you open XR: wher
 !!! warning "The headset's screen timeout and system sleep must be set to \"Never\""
     Once the headset's screen turns off it stops working, and the pose data stops with it. In the headset's Developer options → Enterprise settings → Power policy, set both the system sleep and the screen timeout to "Never"; the steps are in [Pico4 headset and tracker setup](../common/pico4.md#pico-system).
 
-## A fixed workstation layout {#desk}
-
-In a lab the backpack, a PC and a router are often wired into one local network, with the PC opening the console in a browser:
-
-![Wiring topology: router ↔ backpack ↔ PC, with the grippers on C-to-C cables](../assets/backpack/hardware-topology.webp)
-
-- The backpack's Ethernet port and the PC's cable both go to the router's LAN ports; the backpack's wired port ships on DHCP and works as soon as you plug it in.
-- The headset still connects to the backpack's PICO port by Type-C cable over the USB Network, not through the router.
-- The PC's browser opens the backpack's IP or `http://xense-<last 6 of the serial>.local`. The IP is shown in the console's top-bar [network dropdown](network.md#status); on an Ubuntu PC remember to tick Wired in the system settings, see [Wired](network.md#wired).
-
-![The desk setup in the flesh](../assets/backpack/desk-setup.webp)
-
 ## Checks after powering up {#verify}
 
 Once the console is open, look at three things; if any of them is wrong, go back and check the cabling:
