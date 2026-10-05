@@ -44,7 +44,7 @@ XTac-UMI 提供两种配置，使用同一套 XTac-UMI G1 夹爪与 Pico4 Ultra 
 | 头显连接 | Type-C 线接背包，只能有线 | Type-C 线接工作站，默认有线 |
 | 录制控制 | 夹爪按键为主，控制台也可操作 | `lerobot-record` 命令行 |
 | 采集模式 | 双爪 / 单爪 / 仅头显，可加头显画面；目前只有双爪类可导出 | 单爪 / 双爪，可加头显画面 |
-| 落盘格式 | 每条示教一个 MCAP 原始记录 | 直接写 LeRobotDataset v3 |
+| 落盘格式 | 每条人类示范一个 MCAP 原始记录 | 直接写 LeRobotDataset v3 |
 | 导出与上传 | 按任务导出 LeRobot v3 / MCAP，下载或上传到 ModelScope、S3、FTP、NFS 等 | 推送到 Hugging Face Hub |
 | 升级 | 控制台导入升级包，可回滚 | 更新仓库或镜像 |
 | 二次开发 | 不开源；基于导出数据定制 | 开源（Apache-2.0），可改代码、接自定义机器人 |

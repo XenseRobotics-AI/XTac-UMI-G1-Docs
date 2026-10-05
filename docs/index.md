@@ -12,7 +12,7 @@ hide:
 
 # 让机器人数据集<br>拥有触觉
 
-<p class="tc-sub">双手触觉、视觉与位姿同步记录<br>一次手持示教，直接得到可训练的数据集</p>
+<p class="tc-sub">双手触觉、视觉与位姿同步记录<br>一次人类示范，直接得到可训练的数据集</p>
 
 <p class="tc-note">XTac-UMI&nbsp;G1 双夹爪配合 Pico4&nbsp;Ultra&nbsp;企业版头显<br>背包版、PC 版两种配置可选</p>
 
@@ -152,7 +152,7 @@ hide:
 用 XTac-UMI G1 双夹爪采集的视触觉操作数据，以 LeRobotDataset v3 格式按 CC BY-SA 4.0 协议开放，可直接下载训练。
 
 - **122 个任务**：覆盖办公、家庭、工作台三类场景
-- **17,690 条示教**：共 370 小时、约 4,000 万帧
+- **17,690 条人类示范**：共 370 小时、约 4,000 万帧
 - **双手视触觉**：每帧四路触觉、两路腕部画面与夹爪位姿
 
 [Hugging Face](https://huggingface.co/TacVerse){ .md-button .md-button--primary }

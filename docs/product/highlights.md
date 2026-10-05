@@ -1,6 +1,6 @@
 # 产品亮点
 
-**XTac-UMI G1** 是一款多模态 UMI 数采夹爪，指尖搭载千觉自研的**视触觉传感器**，能看清每一次接触的位置、力度与滑移。手持示教即可同步录下触觉、视觉与位姿，轻松产出高质量的机器人操作数据，助力模仿学习、VLA 模型训练与触觉研究。
+**XTac-UMI G1** 是一款多模态 UMI 数采夹爪，指尖搭载千觉自研的**视触觉传感器**，能看清每一次接触的位置、力度与滑移。手持完成人类示范，即可同步录下触觉、视觉与位姿，轻松产出高质量的机器人操作数据，助力模仿学习、VLA 模型训练与触觉研究。
 
 <figure class="tc-video">
 <video controls preload="none" playsinline poster="../../assets/highlights/video-poster.webp">
