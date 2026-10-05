@@ -51,6 +51,6 @@ While collecting, both hands are on the grippers and your eyes on the scene, so 
 | A tracker drops off while recording | "Tracker connection failed." — the headset may still be connected, so check the tracker on your hand first |
 | Right gripper single press to mark a subtask | Subtask marker tone (no speech) |
 
-The audio language can be Chinese or English. When the page loads or the console's interface language changes, the audio language follows the interface language; an audio language chosen separately in the settings lasts until the next page load or interface language change. For English playback through the headset, XTac-UMI XR on the headset must include the English audio; if it is missing, that prompt plays from the backpack's speaker instead, still in English.
-
-The toggle, the audio language, the per-line preview and the 0–100 volume slider are all on the console's System → [Capture settings](system.md#voice) page; the preview also shows where the sound played and why. The toggle and volume survive a reboot. The wording and the timing are fixed values that cannot be changed on site, so every device in a fleet behaves the same.
+- **Language**: Chinese or English, following the console's interface language by default.
+- **Settings**: on/off, language, volume and per-phrase preview are in System → [Capture settings](system.md#voice).
+- The phrases and when they play are fixed and cannot be changed on site.
