@@ -183,11 +183,6 @@ This page is organised by symptom, with a cause and a fix for each. The three mo
 
     **Fix:** keep one capture mode from start to finish within a task; for data that is already mixed, delete the entries whose channels differ from the first episode and export again, or split them into separate tasks.
 
-??? failure "Data recorded in single-gripper or headset-only mode does not pass the export pre-check"
-    **Cause:** in the current version the export (LeRobot dataset and mcap alike) is organised around the dual-gripper layout and supports only the Dual gripper, Dual gripper + stereo headset and Dual gripper + right mono headset modes; recordings in the single-gripper and headset-only modes are rejected by the pre-check. This is expected, not corruption.
-
-    **Fix:** these recordings replay normally but cannot be exported for now; for data you need to export, create a project in a dual-gripper mode and record again. The capture mode is chosen when the project is created, see [Current project capture config](system.md#capture-mode).
-
 ??? failure "After archiving, those recordings cannot be replayed or exported in the other format"
     **Cause:** expected behaviour, not a fault. Archiving deletes the local raw file and keeps only the catalogue record, and both replay and export need the raw file, so neither is possible; on the Projects page those entries' "Replay" buttons are greyed out and say "Archived, the local source has been deleted". If a take had been uploaded in only one format, the other format can never be exported after archiving — the archive confirmation lists those takes first.
 

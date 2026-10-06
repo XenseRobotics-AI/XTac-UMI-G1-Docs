@@ -84,23 +84,18 @@ This page covers **how recording is triggered on site and how the device reports
 
 This block at the top of the page shows, read-only, the five capture and export parameters of the current project. They are chosen when the project is created and cannot be changed afterwards, so there is nothing clickable here — to use a different set, create a new project.
 
-The **project capture mode** decides how many grippers are recorded and whether the headset is included, and with it the Live monitor layout, what gets recorded and the channel contract of the export. There are six presets:
+The **project capture mode** decides how many grippers are recorded and whether the headset is included, and with it the Live monitor layout, what gets recorded and the channel contract of the export. There are three:
 
 | Mode | Grippers | Headset | Camera feeds |
 |---|---|---|---|
 | Dual gripper | 2 grippers | No headset | 6 |
 | Dual gripper + stereo headset | 2 grippers | PICO stereo pair | 8 |
 | Dual gripper + right mono headset | 2 grippers | PICO right eye | 7 |
-| Single gripper | 1 gripper | No headset | 3 |
-| Single gripper + stereo headset | 1 gripper | PICO stereo pair | 5 |
-| Stereo headset only | No gripper | PICO stereo pair | 2 |
-
-For "single gripper" you do not choose the side: the device works it out from which side the gripper is actually plugged into, so changing grippers needs no configuration change.
 
 The other four: the **project PICO resolution** (`640x480` or `1024x768` per eye, only for modes that include the headset), the **project tactile rectified-image export orientation** ("current orientation · 700 × 400 (landscape)" by default, with "rotated 90° counter-clockwise · 400 × 700 (aligned with the SDK)" as the alternative), and the **PICO image source** (the raw fisheye frame or the undistorted one) together with the wrist fisheye rectification switch. Think these through before creating the project, because you cannot change them afterwards. When a project is selected (or the headset reconnects), the device automatically syncs the headset's mono / stereo setting, resolution and image source to the project's settings, and checks again before recording starts; recording begins only once the configuration has taken effect.
 
 !!! warning "The capture config freezes when the project is created; getting it wrong means creating a new project"
-    These five cannot be changed once the project exists, and the device will not change them for you during recording. Pick too few channels and every later recording in this project has fewer channels; moreover, **in the current version only recordings from the dual-gripper modes (Dual gripper, Dual gripper + stereo headset, Dual gripper + right mono headset) can be exported** — data recorded in the single-gripper and headset-only modes can be replayed, but the export pre-check rejects it, and neither LeRobot nor mcap can be produced. Historical projects keep whatever they had for fields they never specified, and can still be viewed, exported and uploaded; to use the new parameters, create a new project — and **an empty project with nothing recorded in it can simply be deleted and recreated** if you picked wrong.
+    These five cannot be changed once the project exists, and the device will not change them for you during recording. Pick too few channels and every later recording in this project has fewer channels. Historical projects keep whatever they had for fields they never specified, and can still be viewed, exported and uploaded; to use the new parameters, create a new project — and **an empty project with nothing recorded in it can simply be deleted and recreated** if you picked wrong.
 
 ### Wrist fisheye rectification and tactile orientation {#undistort}
 

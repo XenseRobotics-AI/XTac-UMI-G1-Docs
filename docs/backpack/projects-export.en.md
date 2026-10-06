@@ -17,7 +17,7 @@ The hierarchy is **project → task → recording**. Each recording shows frames
 
 ### New projects and tasks {#new}
 
-- **New project**: enter a name and pick a capture mode (one of six); modes with the headset also pick headset resolution and image type; optionally set tactile export orientation, wrist fisheye correction, upload backend and default export format. **It cannot be changed afterwards**; if it is wrong, delete the empty project and create it again.
+- **New project**: enter a name and pick a capture mode (one of three); modes with the headset also pick headset resolution and image type; optionally set tactile export orientation, wrist fisheye correction, upload backend and default export format. **It cannot be changed afterwards**; if it is wrong, delete the empty project and create it again.
 - **New task**: task name (lowercase letters, digits and hyphens, e.g. `pick-cube`) and task instruction (required; it is the LeRobot language instruction); target count and target duration are optional.
 
 ## Export {#export}
@@ -31,9 +31,6 @@ Click Export on a task row to open "Export task data":
 3. **Pick where it goes**: "Download to device" or "Upload to remote".
 4. **Pick the format**: follow the project setting, LeRobot dataset or MCAP.
 5. **Start**: click "Download …" or "Upload …". Progress runs precheck → transcode → build → pack / upload → done; closing the dialog leaves it running in the background.
-
-!!! note "Only two-gripper modes can be exported today"
-    Recordings in "Two grippers", "Two grippers + headset stereo" and "Two grippers + headset right eye" can be exported; one-gripper and headset-only recordings can be replayed but not yet exported.
 
 ### Download to device {#download}
 

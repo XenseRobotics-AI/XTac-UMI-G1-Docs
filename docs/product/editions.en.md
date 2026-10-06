@@ -43,7 +43,7 @@ This page compares the two and lists each kit's box contents and wiring.
 | Interface | Browser console; a tablet is enough | Terminal + Rerun preview window |
 | Headset link | Type-C to the backpack, wired only | Type-C to the workstation, wired by default |
 | Recording control | Mainly the gripper buttons; the console works too | `lerobot-record` command line |
-| Capture modes | Two grippers / one gripper / headset only, optionally with headset images; only two-gripper modes export today | One or two grippers, optionally with headset images |
+| Capture modes | Two grippers, optionally with headset stereo or right-eye images | One or two grippers, optionally with headset images |
 | On disk | One MCAP raw recording per take | LeRobotDataset v3 directly |
 | Export and upload | Export per task as LeRobot v3 / MCAP; download, or upload to ModelScope, S3, FTP, NFS and more | Push to the Hugging Face Hub |
 | Upgrades | Import an update package in the console; can roll back | Update the repo or image |

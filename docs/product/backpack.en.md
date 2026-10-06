@@ -103,11 +103,6 @@ The capture mode is **chosen when you create a project** and cannot be changed a
 | Two grippers | 6 |
 | Two grippers + headset stereo | 8 |
 | Two grippers + headset right eye | 7 |
-| One gripper | 3 |
-| One gripper + headset | 5 |
-| Headset only | 2 |
-
-Only the three two-gripper modes can be exported today.
 
 ## Data and export
 

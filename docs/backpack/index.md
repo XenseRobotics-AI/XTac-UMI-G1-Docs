@@ -24,7 +24,7 @@
 2. 接线与供电：[顺序固定](unbox-connect.md#order)夹爪 → 头显 → 背包上电，左右夹爪分别接 UMI-L / UMI-R，头显用头显连接线（Pico → Pack）接背包 PICO 口。供电二选一：[适配器供电](unbox-connect.md#adapter)时适配器接背包 DC 口；[充电宝供电](unbox-connect.md#powerbank)时充电宝经 0.3 m 12 V PD 电源线接背包 DC 口。夹爪的连接与供电要求见[夹爪连接与序列号](../common/gripper.md#power)。
 3. 连上背包：用数据线把平板接到背包的 `HOST1` 或 `HOST2` 口，背包会自动在平板上打开控制台，见[平板插 USB](network.md#tablet)。没有平板时可用[背包热点](network.md#softap)。
 4. [头显连背包](unbox-connect.md#pico-link)：戴上头显打开 XTac-UMI XR，勾选「USB网络」点连接，背包会自动在 USB 链路上建网（地址 `192.168.58.1`），不用手填。界面与连接状态见 [Pico4 头显与追踪器](../common/pico4.md#pico-toolkit-ui)。
-5. 定[采集模式](system.md#capture-mode)：采集模式是项目的属性，在[新建项目](monitor-record.md#project-task)时按实际接了什么选「双爪」「双爪 + 头显双目」「双爪 + 头显右单目」「单爪」「单爪 + 头显」「仅头显」之一，建完不可更改；系统页只做只读展示。每种模式都需要头显与追踪器提供位姿；单爪的左右侧由设备按实际连接自动判定。
+5. 定[采集模式](system.md#capture-mode)：采集模式是项目的属性，在[新建项目](monitor-record.md#project-task)时按实际接了什么选「双爪」「双爪 + 头显双目」「双爪 + 头显右单目」之一，建完不可更改；系统页只做只读展示。每种模式都需要头显与追踪器提供位姿。
 6. 可选：控制台 → 系统 → [上传配置](system.md#upload)，新建一档上传后端并填好凭据（获取步骤在同一节）。新建项目时可以绑定它，之后该项目导出选「上传到远端」默认走这档配置；凭据只在这一页填一次，导出窗口里不再重复填。
 
 ## 日常采集速查 {#daily}
