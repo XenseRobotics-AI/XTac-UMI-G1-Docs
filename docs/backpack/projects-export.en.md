@@ -55,9 +55,7 @@ You can export both formats; they do not affect each other.
 
 ### LeRobot dataset {#lerobot}
 
-A standard LeRobotDataset v3.0 at 30 fps, with `meta/`, `data/` and `videos/`.
-
-![LeRobot dataset layout](../assets/backpack/lerobot-tree.webp)
+A standard LeRobotDataset v3.0 at 30 fps, with `meta/`, `data/` and `videos/`. The directory layout and how to load it are in the [LeRobotDataset v3.0 documentation](https://huggingface.co/docs/lerobot/lerobot-dataset-v3).
 
 | Capture mode | `robot_type` | Video streams | State / action dims |
 |---|---|---|---|
@@ -65,7 +63,7 @@ A standard LeRobotDataset v3.0 at 30 fps, with `meta/`, `data/` and `videos/`.
 | Two grippers + headset stereo | `xtac_umi_g1` | 8 | 29 |
 | Two grippers + headset right eye | `xtac_umi_g1` | 7 | 29 |
 
-It also includes `meta/taccap_extrinsics.json` (tracker extrinsics) and `meta/xumi_collection_devices.json` (which devices recorded each episode). The format and how to load it are in [LeRobotDataset at a glance](../pc/dataset.md#61).
+It also includes `meta/taccap_extrinsics.json` (tracker extrinsics) and `meta/xumi_collection_devices.json` (which devices recorded each episode).
 
 ### MCAP {#mcap}
 

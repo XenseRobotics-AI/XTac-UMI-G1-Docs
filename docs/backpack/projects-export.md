@@ -55,9 +55,7 @@
 
 ### LeRobot 数据集 {#lerobot}
 
-标准 LeRobotDataset v3.0，30 fps，包含 `meta/`、`data/`、`videos/`。
-
-![LeRobot 数据集目录结构](../assets/backpack/lerobot-tree.webp)
+标准 LeRobotDataset v3.0，30 fps，包含 `meta/`、`data/`、`videos/`。目录结构与读取方法见 [LeRobotDataset v3.0 官方文档](https://huggingface.co/docs/lerobot/lerobot-dataset-v3)。
 
 | 采集模式 | `robot_type` | 视频路数 | 状态 / 动作维度 |
 |---|---|---|---|
@@ -65,7 +63,7 @@
 | 双爪 + 头显双目 | `xtac_umi_g1` | 8 | 29 |
 | 双爪 + 头显右单目 | `xtac_umi_g1` | 7 | 29 |
 
-另附 `meta/taccap_extrinsics.json`（追踪器外参）与 `meta/xumi_collection_devices.json`（每条数据由哪套设备采集）。格式与读取方法见 [LeRobotDataset 格式速览](../pc/dataset.md#61)。
+另附 `meta/taccap_extrinsics.json`（追踪器外参）与 `meta/xumi_collection_devices.json`（每条数据由哪套设备采集）。
 
 ### MCAP {#mcap}
 
