@@ -23,15 +23,14 @@
 
 2026-10-07 用 0.4.3 真机重截了 12 张(采集设置、网络 / 配网、上传配置、夹爪配置、新建项目、
 项目页、实时监控、系统更新、顶栏网络下拉、设备信息、回放、相机参数包),**同名覆盖**,引用路径不变。
+同日又补了导出对话框两张(`export-precheck-live`、新增 `export-options`)与删除录制两张(`delete-select`、`delete-confirm`)。
 `wifi.webp` 与 `network-dropdown-live.webp` 里的热点密码已打码。
 
 下面几张仍是 0.3.x 的旧界面,重截后同名覆盖即可:
 
 | 文件 | 应当拍什么 | 用在 |
 |---|---|---|
-| `export-precheck-live.webp` | 0.4.3 导出对话框:预检、选录制、去向、格式 | projects-export |
 | `new-task-live.webp` | 0.4.3 新建任务对话框 | monitor-record |
-| `delete-select.webp`、`delete-confirm.webp` | 0.4.3 删除录制的选择与确认弹窗 | monitor-record |
 
 ## 从 docs/follower-gripper 带入的素材来源
 
