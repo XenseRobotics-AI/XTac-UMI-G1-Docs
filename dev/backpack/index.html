@@ -2106,7 +2106,7 @@
     "e-tact": "USB",
     "e-wrist": "USB",
     "e-track": "无线",
-    "e-head": "USB网络"
+    "e-head": "Type-C 有线"
   },
   "nodes": {
     "grip": {
@@ -2132,7 +2132,7 @@
     "headset": {
       "title": "头显",
       "sub": "Pico4 Ultra 企业版",
-      "desc": "运行 XTac-UMI XR，经 Type-C 线以 USB网络把位姿送到背包，只能有线连接；录头显画面的模式下还送来双目或右单目画面（每眼 640 × 480 或 1024 × 768）。"
+      "desc": "运行 XTac-UMI XR，经 Type-C 线把位姿送到背包，只能有线连接；录头显画面的模式下还送来双目或右单目画面（每眼 640 × 480 或 1024 × 768）。"
     },
     "mcu": {
       "title": "夹爪数据",
@@ -2201,7 +2201,7 @@
 
 <ul>
 <li><strong>主夹爪</strong>接背包的 <code>UMI-L</code> / <code>UMI-R</code>：开合度、IMU 与按键经 USB 上报，视触觉与腕部鱼眼按原始画面保存。</li>
-<li><strong>追踪器</strong>装在夹爪顶部，由<strong>头显</strong>跟踪；头显用一根线以 USB网络接背包，送来位姿，录头显画面的模式下还送来双目或右单目画面。</li>
+<li><strong>追踪器</strong>装在夹爪顶部，由<strong>头显</strong>跟踪；头显用一根 Type-C 线接背包，送来位姿，录头显画面的模式下还送来双目或右单目画面。</li>
 <li><strong>背包</strong>把每条录制存成一个 MCAP 原始记录；按任务导出 LeRobotDataset v3 或 MCAP，下载到本地或上传到远端。控制台用平板、手机或电脑的浏览器打开。</li>
 </ul>
 <h2 id="frame">每帧记录什么<a class="headerlink" href="#frame" title="锚点链接">¶</a></h2>
@@ -2358,7 +2358,7 @@
 <li>头显配置：把 Pico OS 升到 5.15.5.U 以上并<a href="../common/pico4/#pico-system">开启开发者模式、把灭屏与休眠设为永不</a>；两只追踪器按「左奇右偶」<a href="../common/pico4/#pico-tracker-bind">配对到头显</a>并切到独立追踪模式；<a href="../common/pico4/#pico-app">安装 XTac-UMI XR</a>。</li>
 <li>接线与供电：<a href="unbox-connect/#order">顺序固定</a>夹爪 → 头显 → 背包上电，左右夹爪分别接 UMI-L / UMI-R，头显用头显连接线（Pico → Pack）接背包 PICO 口。供电二选一：<a href="unbox-connect/#adapter">适配器供电</a>时适配器接背包 DC 口；<a href="unbox-connect/#powerbank">充电宝供电</a>时充电宝经 0.3 m 12 V PD 电源线接背包 DC 口。夹爪的连接与供电要求见<a href="../common/gripper/#power">夹爪连接与序列号</a>。</li>
 <li>连上背包：用数据线把平板接到背包的 <code>HOST1</code> 或 <code>HOST2</code> 口，背包会自动在平板上打开控制台，见<a href="network/#tablet">平板插 USB</a>。没有平板时可用<a href="network/#softap">背包热点</a>。</li>
-<li><a href="unbox-connect/#pico-link">头显连背包</a>：戴上头显打开 XTac-UMI XR，勾选「USB网络」点连接，背包会自动在 USB 链路上建网（地址 <code>192.168.58.1</code>），不用手填。界面与连接状态见 <a href="../common/pico4/#pico-toolkit-ui">Pico4 头显与追踪器</a>。</li>
+<li><a href="unbox-connect/#pico-link">头显连背包</a>：戴上头显打开 XTac-UMI XR，不勾选「USB网络」，「PC IP」留空（默认连接背包的 <code>192.168.100.1</code>），点「连接」。界面与连接状态见 <a href="../common/pico4/#pico-toolkit-ui">Pico4 头显与追踪器</a>。</li>
 <li>定<a href="system/#capture-mode">采集模式</a>：采集模式是项目的属性，在<a href="monitor-record/#project-task">新建项目</a>时按实际接了什么选「双爪」「双爪 + 头显双目」「双爪 + 头显右单目」之一，建完不可更改；系统页只做只读展示。每种模式都需要头显与追踪器提供位姿。</li>
 <li>可选：控制台 → 系统 → <a href="system/#upload">上传配置</a>，新建一档上传后端并填好凭据（获取步骤在同一节）。新建项目时可以绑定它，之后该项目导出选「上传到远端」默认走这档配置；凭据只在这一页填一次，导出窗口里不再重复填。</li>
 </ol>

@@ -2106,7 +2106,7 @@
     "e-tact": "USB",
     "e-wrist": "USB",
     "e-track": "Wireless",
-    "e-head": "USB Network"
+    "e-head": "Type-C cable"
   },
   "nodes": {
     "grip": {
@@ -2132,7 +2132,7 @@
     "headset": {
       "title": "Headset",
       "sub": "Pico4 Ultra Enterprise",
-      "desc": "Runs XTac-UMI XR and sends poses to the backpack over a Type-C cable on the USB Network (wired only); in modes that record the headset it also sends stereo or right-eye images (640 × 480 or 1024 × 768 per eye)."
+      "desc": "Runs XTac-UMI XR and sends poses to the backpack over a Type-C cable (wired only); in modes that record the headset it also sends stereo or right-eye images (640 × 480 or 1024 × 768 per eye)."
     },
     "mcu": {
       "title": "Gripper data",
@@ -2201,7 +2201,7 @@
 
 <ul>
 <li>The <strong>leader grippers</strong> plug into the backpack's <code>UMI-L</code> / <code>UMI-R</code>: opening, IMU and button presses are reported over USB, and the visuotactile and wrist fisheye images are stored as raw frames.</li>
-<li>The <strong>trackers</strong> sit on top of the grippers and are tracked by the <strong>headset</strong>; the headset connects to the backpack over a single cable using USB Network and sends the poses, plus stereo or right-eye images in the modes that record them.</li>
+<li>The <strong>trackers</strong> sit on top of the grippers and are tracked by the <strong>headset</strong>; the headset connects to the backpack over a single Type-C cable and sends the poses, plus stereo or right-eye images in the modes that record them.</li>
 <li>The <strong>backpack</strong> stores each recording as one raw MCAP file; export per task to LeRobotDataset v3 or MCAP, then download it or upload it to a remote backend. The console opens in the browser of a tablet, phone or computer.</li>
 </ul>
 <h2 id="frame">What each frame records<a class="headerlink" href="#frame" title="锚点链接">¶</a></h2>
@@ -2358,7 +2358,7 @@
 <li>Headset setup: bring Pico OS to 5.15.5.U or above, then <a href="../common/pico4/#pico-system">enable developer mode and set the screen timeout and system sleep to "Never"</a>; <a href="../common/pico4/#pico-tracker-bind">pair both trackers to the headset</a> following "odd is left, even is right" and switch them to standalone tracking mode; <a href="../common/pico4/#pico-app">install XTac-UMI XR</a>.</li>
 <li>Cabling and power: <a href="unbox-connect/#order">the order is fixed</a> — grippers → headset → power up the backpack, with the left and right grippers going to UMI-L / UMI-R and the headset going to the backpack's PICO port over the headset cable (Pico → Pack). Pick one of the two power options: with <a href="unbox-connect/#adapter">adapter power</a>, the adapter goes to the backpack's DC port; with <a href="unbox-connect/#powerbank">power-bank power</a>, the power bank feeds the backpack's DC port over the 0.3 m 12 V PD power cable. The grippers' connection and power requirements are in <a href="../common/gripper/#power">Gripper connection and serial numbers</a>.</li>
 <li>Connect to the backpack: cable the tablet to the backpack's <code>HOST1</code> or <code>HOST2</code> port and the backpack opens the console on it, see <a href="network/#tablet">The tablet over USB</a>. Without a tablet, use the <a href="network/#softap">backpack hotspot</a>.</li>
-<li><a href="unbox-connect/#pico-link">Connect the headset to the backpack</a>: put the headset on, open XTac-UMI XR, tick "USB Network" and tap Connect. The backpack brings up the network on the USB link automatically (address <code>192.168.58.1</code>) with nothing to type. The interface and the connection states are in <a href="../common/pico4/#pico-toolkit-ui">Pico4 headset and tracker setup</a>.</li>
+<li><a href="unbox-connect/#pico-link">Connect the headset to the backpack</a>: put the headset on, open XTac-UMI XR, leave "USB Network" unticked and "PC IP" empty (it connects to the backpack at <code>192.168.100.1</code> by default), then tap "Connect". The interface and the connection states are in <a href="../common/pico4/#pico-toolkit-ui">Pico4 headset and tracker setup</a>.</li>
 <li>Set the <a href="system/#capture-mode">capture mode</a>: the capture mode belongs to the project. When you <a href="monitor-record/#project-task">create a project</a>, pick "Dual gripper", "Dual gripper + headset stereo" or "Dual gripper + headset right eye" according to what is actually connected; it cannot be changed afterwards, and the System page only displays it. Every mode needs the headset and trackers for pose.</li>
 <li>Optional: console → System → <a href="system/#upload">Upload configuration</a>, create an upload backend and fill in its credentials (how to obtain them is in the same section). You can bind it when you create a project, after which that project's "upload to remote" exports use it by default; the credentials are entered on this page once and never again in the export dialog.</li>
 </ol>
