@@ -2237,8 +2237,8 @@
 </tr>
 <tr>
 <td>APP 里怎么连</td>
-<td>勾选「USB网络」→ 点「连接」</td>
-<td>勾选「USB网络」→ 点「连接」；走 WiFi 时不勾，在「PC IP」填数采主机 IP</td>
+<td><strong>不勾选</strong>「USB网络」，「PC IP」留空 → 点「连接」（默认连 <code>192.168.100.1</code>）</td>
+<td>有线：<strong>勾选</strong>「USB网络」→ 点「连接」（默认连 <code>192.168.58.1</code>）；WiFi：不勾，在「PC IP」填数采主机 IP</td>
 </tr>
 </tbody>
 </table>
@@ -2311,7 +2311,7 @@
 <ol>
 <li>头显连接线（Pico → Pack，双 Type-C）一端接头显侧面的 Type-C 口，另一端接背包的 <code>PICO</code> 口。适配器供电与充电宝供电都是这样接，接线见<a href="../../backpack/unbox-connect/#order">开箱、接线与供电</a>。</li>
 <li>背包开机。XenseVR 运行时内置在 Collector 里，随背包一起启动，不需要单独开服务。</li>
-<li>打开 XTac-UMI XR，勾选「USB网络」点「连接」，背包会自动在 USB 链路上建网（地址 <code>192.168.58.1</code>），不用手填。</li>
+<li>打开 XTac-UMI XR，不勾选「USB网络」，「PC IP」留空（默认连接背包的 <code>192.168.100.1</code>），点「连接」。</li>
 </ol>
 <p>背包版不支持头显走 WiFi，头显必须用 Type-C 线接背包。</p>
 </div>
@@ -2320,7 +2320,7 @@
 <ol>
 <li>电脑端先启动服务（见<a href="../../pc/host-setup/#35">启动 XenseVR PC Service</a>）：<code>runService.sh</code>。服务没起来，APP 连不上。</li>
 <li>Type-C 线直连头显与数采主机，头显给主机分配 IP。</li>
-<li>打开 XTac-UMI XR，勾选「USB网络」，点「连接」，网络状态变成「连接成功」（见<a href="#pico-toolkit-ui">打开 App 后的界面</a>）。勾选后 APP 自动连接数采主机（<code>192.168.1.58</code>），不用填 IP。</li>
+<li>打开 XTac-UMI XR，勾选「USB网络」，点「连接」，网络状态变成「连接成功」（见<a href="#pico-toolkit-ui">打开 App 后的界面</a>）。勾选后 APP 自动连接数采主机（<code>192.168.58.1</code>），不用填 IP。</li>
 </ol>
 <p>走 WiFi 时头显和数采主机接同一网络，不勾选「USB网络」，在「PC IP」里填数采主机的 IP，再点「连接」。</p>
 <div class="admonition warning">
@@ -2415,11 +2415,11 @@
 </tr>
 <tr>
 <td>USB网络</td>
-<td>有线连接时勾选，APP 自动连接有线链路另一端的采集单元，不用填 IP</td>
+<td>PC 版有线连接时勾选，APP 自动连接数采主机（<code>192.168.58.1</code>）；<strong>背包版不勾选</strong></td>
 </tr>
 <tr>
 <td>PC IP</td>
-<td>仅 PC 版走 WiFi 时填数采主机的 IP；有线连接不用填</td>
+<td>背包版留空（默认连接背包的 <code>192.168.100.1</code>）；PC 版走 WiFi 时填数采主机的 IP，有线连接不用填</td>
 </tr>
 <tr>
 <td>连接 / 断开</td>
@@ -2430,7 +2430,7 @@
 <div class="tabbed-set tabbed-alternate" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio"><input id="__tabbed_3_2" name="__tabbed_3" type="radio"><div class="tabbed-labels"><label for="__tabbed_3_1">未连接</label><label for="__tabbed_3_2">连接成功</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<p>刚打开时网络状态是「未连接」。有线连接勾选「USB网络」，再点「连接」。</p>
+<p>刚打开时网络状态是「未连接」。背包版不勾选「USB网络」、「PC IP」留空；PC 版有线连接勾选「USB网络」。然后点「连接」。</p>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/pico4/xr-console-idle.webp" data-desc-position="bottom"><img alt="XTac-UMI XR 控制台：未连接" src="../../assets/pico4/xr-console-idle.webp" width="560"></a></p>
 </div>
 <div class="tabbed-block">
@@ -2443,11 +2443,11 @@
 <div class="tabbed-set tabbed-alternate" data-tabs="4:2"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio"><input id="__tabbed_4_2" name="__tabbed_4" type="radio"><div class="tabbed-labels"><label for="__tabbed_4_1">背包版</label><label for="__tabbed_4_2">PC 版</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<p>面板里勾选「USB网络」→ 点「连接」，背包版只能有线连接。追踪器数据精度不准、与背包断开时，面板上会出现图标提示。</p>
+<p>面板里<strong>不勾选</strong>「USB网络」，「PC IP」留空（默认连接背包的 <code>192.168.100.1</code>），点「连接」；背包版只能有线连接。追踪器数据精度不准、与背包断开时，面板上会出现图标提示。</p>
 <p>连上后打开控制台「实时监控」页，位姿视图应出现头显与左右爪的位姿；录制按钮未就绪时会给出原因：「Pico 未就绪」后面跟的是头显这一侧的原因（如未连接或连接超时、位姿数据缺失或超时、时钟同步缺失或超时），「Tracker 未就绪」后面跟的是追踪器的原因（如不在视野内或静止超过 5 秒），两者可以同时出现。录制中头显断开会立即停止这条录制，见<a href="../../backpack/monitor-record/#pico-disconnect">录制中头显断联</a>。</p>
 </div>
 <div class="tabbed-block">
-<p>有线连接勾选「USB网络」，APP 自动连接数采主机（<code>192.168.1.58</code>）；走 WiFi 时不勾，在「PC IP」里填数采主机的 IP，再点「连接」。</p>
+<p>有线连接勾选「USB网络」，APP 自动连接数采主机（<code>192.168.58.1</code>）；走 WiFi 时不勾，在「PC IP」里填数采主机的 IP，再点「连接」。</p>
 <p>一直连不上，多半是<a href="#pico-network">网络</a>没接好或电脑 WiFi 没关。显示「连接成功」后，在主机上用 <code>/opt/apps/roboticsservice/</code> 的 <code>ConsoleDemo</code> 或 <code>python -m lerobot.robots.taccap_gripper.check_tracker</code> 确认能读到带 <code>sn</code> 的位姿：头显显示连上和主机真的收到数据是两件事。</p>
 </div>
 </div>

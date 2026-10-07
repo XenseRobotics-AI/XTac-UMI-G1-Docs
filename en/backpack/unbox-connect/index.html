@@ -2213,7 +2213,7 @@
 <tr>
 <td>PICO</td>
 <td>Front panel</td>
-<td>The headset, Type-C, over the USB Network</td>
+<td>The headset, wired over Type-C</td>
 </tr>
 <tr>
 <td>HOST1 / HOST2</td>
@@ -2255,7 +2255,7 @@
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/product/backpack-wiring-adapter.webp" data-desc-position="bottom"><img alt="Adapter wiring: left and right grippers to the sides of the backpack, the headset's Type-C to the PICO port, the adapter to the DC port" src="../../../assets/product/backpack-wiring-adapter.webp"></a></p>
 <ol>
 <li>Connect the left / right grippers to UMI-L / UMI-R.</li>
-<li>Connect the headset to the backpack's PICO port with the headset cable (Pico → Pack), carrying the USB network. That one cable is all the headset needs and the backpack powers the headset through it, but the headset battery still drains slowly, so charge the headset fully before you start.</li>
+<li>Connect the headset to the backpack's PICO port with the headset cable (Pico → Pack). That one cable is all the headset needs and the backpack powers the headset through it, but the headset battery still drains slowly, so charge the headset fully before you start.</li>
 <li>Connect the 12 V 3 A adapter to the backpack's DC port, then plug it into the mains.</li>
 </ol>
 <h2 id="powerbank">Power-bank power<a class="headerlink" href="#powerbank" title="锚点链接">¶</a></h2>
@@ -2285,7 +2285,7 @@
 </table>
 <ol>
 <li>Connect the left / right grippers to UMI-L / UMI-R.</li>
-<li>Connect the headset to the backpack's PICO port with the headset cable, carrying the USB network. That one cable is all the headset needs and the backpack powers the headset through it, but the headset battery still drains slowly, so charge the headset fully before you start.</li>
+<li>Connect the headset to the backpack's PICO port with the headset cable. That one cable is all the headset needs and the backpack powers the headset through it, but the headset battery still drains slowly, so charge the headset fully before you start.</li>
 <li>Connect the 12 V PD power cable from the power bank to the backpack's DC port.</li>
 </ol>
 <p>The power the backpack supplies does not fully cover the headset's draw, so the headset battery still drains slowly (a net draw of about 1–2 W); when it runs out the headset shuts down and collection stops. Charge the headset fully before you start and, on long sessions, keep an eye on its battery icon (set it to always show under <a href="../../common/pico4/#pico-system">power policy</a>). The backpack draws up to 36 W and runs about 3.5–4 hours on the power bank, see <a href="../../product/specs/#backpack">Specifications</a>.</p>
@@ -2294,7 +2294,7 @@
 <p>Some power banks shut down an existing output port when a second device is plugged in, and the backpack loses power on the spot. Connect every cable before you start recording.</p>
 </div>
 <h2 id="pico-link">Connecting the headset to the backpack<a class="headerlink" href="#pico-link" title="锚点链接">¶</a></h2>
-<p>Put the headset on and open XTac-UMI XR. The headset and the backpack <strong>connect by cable only</strong>: the headset's Type-C port is already wired to the backpack's PICO port by the steps above. In XR, tick "USB Network" and tap "Connect"; the backpack brings the network up on the USB link automatically (address <code>192.168.58.1</code>) with nothing to type.</p>
+<p>Put the headset on and open XTac-UMI XR. The headset and the backpack <strong>connect by cable only</strong>: the headset's Type-C port is already wired to the backpack's PICO port by the steps above. In XR, leave "USB Network" unticked and "PC IP" empty (it connects to the backpack at <code>192.168.100.1</code> by default), then tap "Connect".</p>
 <p>The fold button is at the top right of XR; when tracking accuracy degrades or a tracker disconnects from the backpack, both XR and the console's live monitor page show an icon. The interface is described in <a href="../../common/pico4/#pico-toolkit-ui">The XTac-UMI XR interface</a>.</p>
 <p>Leave this cable alone while recording: pulling it or letting it work loose makes the device stop and fail the current recording at once, see <a href="../monitor-record/#pico-disconnect">Headset disconnects while recording</a>.</p>
 <p>Stand at the work position facing the working direction before you open XR: where you are when XR first starts becomes the <a href="../../common/pico4/#pico-frame">world-frame origin</a>, and you must not restart XR during a collection run.</p>
