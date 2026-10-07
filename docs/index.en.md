@@ -37,7 +37,10 @@ hide:
 
 </div>
 
+<div class="tc-brandline">
+<img class="tc-brandline__logo" src="assets/brand/logo-light.svg" alt="XENSE">
 <p class="tc-slogan">Touch lights up physical intelligence</p>
+</div>
 
 <div class="xu-stats" markdown>
 

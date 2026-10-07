@@ -215,7 +215,21 @@ html[lang="en"] .md-typeset .tc-hero h1 {
   --xu-tag-pc-fg: #A8BEDB;
 }
 
-/* ---- 公司标语:首屏与数据点行之间 ---- */
+/* ---- 公司字标 + 标语:首屏与数据点行之间 ---- */
+.md-typeset .tc-brandline {
+  text-align: center;
+}
+.md-typeset .tc-brandline__logo {
+  display: block;
+  height: 1.5rem;
+  width: auto;
+  margin: 0 auto .9rem;
+}
+/* 字标是白色的,浅色主题下反成深色 */
+[data-md-color-scheme="default"] .md-typeset .tc-brandline__logo {
+  filter: invert(1);
+}
+/* ---- 标语:首屏与数据点行之间 ---- */
 .md-typeset .tc-slogan {
   margin: 0;
   text-align: center;
@@ -233,7 +247,7 @@ html[lang="en"] .md-typeset .tc-slogan {
   letter-spacing: .02em;
   text-indent: 0;
 }
-.md-typeset .tc-slogan + .xu-stats {
+.md-typeset .tc-brandline + .xu-stats {
   margin-top: 2.9rem; /* 与首屏底部留白相等,标语上下居中 */
 }
 @media screen and (max-width: 44.9375em) {
@@ -246,7 +260,7 @@ html[lang="en"] .md-typeset .tc-slogan {
 
 /* 首屏单列时底部留白变小,数据点行的上边距跟着收 */
 @media screen and (max-width: 59.9375em) {
-  .md-typeset .tc-slogan + .xu-stats {
+  .md-typeset .tc-brandline + .xu-stats {
     margin-top: 1.6rem;
   }
 }
@@ -944,4 +958,16 @@ html[lang="en"] .md-typeset .tc-slogan {
 .md-typeset .tc-lamp.burst   { animation: tc-lamp-burst 1200ms steps(1, end) infinite; }
 @media (prefers-reduced-motion: reduce) {
   .md-typeset .tc-lamp { animation: none !important; }
+}
+
+/* ---- 页脚:版权信息前加公司字标(页脚底色两种主题都是深色) ---- */
+.md-copyright__highlight::before {
+  content: "";
+  display: inline-block;
+  width: 5.2rem;
+  height: .8rem;
+  margin-right: .6rem;
+  vertical-align: -.1rem;
+  background: url("../brand/logo-light.svg") no-repeat left center / contain;
+  opacity: .85;
 }
