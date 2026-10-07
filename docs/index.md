@@ -37,6 +37,8 @@ hide:
 
 </div>
 
+<p class="tc-slogan">触觉点亮物理智能</p>
+
 <div class="xu-stats" markdown>
 
 **8 路画面** 4 视触觉 + 2 腕部鱼眼 + 2 头显

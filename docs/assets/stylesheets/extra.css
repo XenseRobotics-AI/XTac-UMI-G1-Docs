@@ -215,6 +215,36 @@ html[lang="en"] .md-typeset .tc-hero h1 {
   --xu-tag-pc-fg: #A8BEDB;
 }
 
+/* ---- 公司标语:首屏与数据点行之间 ---- */
+.md-typeset .tc-slogan {
+  margin: 2.6rem 0 0;
+  text-align: center;
+  font-size: 2.1rem;
+  font-weight: 800;
+  line-height: 1.3;
+  letter-spacing: .35em;
+  text-indent: .35em;
+  background: linear-gradient(90deg, var(--md-primary-fg-color), #7c4dff 55%, #e91e63);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+html[lang="en"] .md-typeset .tc-slogan {
+  letter-spacing: .02em;
+  text-indent: 0;
+}
+.md-typeset .tc-slogan + .xu-stats {
+  margin-top: 1.4rem;
+}
+@media screen and (max-width: 44.9375em) {
+  .md-typeset .tc-slogan {
+    margin-top: 1.6rem;
+    font-size: 1.45rem;
+    letter-spacing: .2em;
+    text-indent: .2em;
+  }
+}
+
 /* ---- 数据点行:四格 / 窄屏两格 ---- */
 .md-typeset .xu-stats {
   display: grid;
