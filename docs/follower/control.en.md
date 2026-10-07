@@ -49,7 +49,7 @@ with t.ImpedanceController(g, cfg) as c:   # stops and releases the motor automa
     g.motor.enable()
     c.set_target(0.0)                       # close
     time.sleep(2)
-    print("开度", c.snapshot().observation.position)
+    print("opening", c.snapshot().observation.position)
     c.set_target(1.0)                       # open
     time.sleep(2)
 ```
@@ -67,7 +67,7 @@ with t.ForcePositionController(g, cfg) as c:
     g.motor.enable()
     c.set_target(0.0)                       # close to grasp
     time.sleep(2)
-    print("夹住了" if c.snapshot().holding else "没有夹到东西")
+    print("holding" if c.snapshot().holding else "nothing gripped")
     c.release()                             # release
     time.sleep(2)
 ```
