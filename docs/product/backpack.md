@@ -46,7 +46,7 @@
 | ⑤ | 耳机 | 后面板 | 3.5 mm 耳机口 |
 | ⑥ | `UMI-L` | 左侧 | 左主夹爪，Type-C 锁紧线，兼作夹爪供电 |
 | ⑦ | `UMI-R` | 右侧 | 右主夹爪，Type-C 锁紧线，兼作夹爪供电 |
-| ⑧ | `PICO` | 前面板 | Pico4 Ultra 头显，Type-C。XR 里勾选「USB网络」点「连接」即可，不用手填地址 |
+| ⑧ | `PICO` | 前面板 | Pico4 Ultra 头显，Type-C。XR 里不勾选「USB网络」、「PC IP」留空，点「连接」即可 |
 | ⑨ ⑩ | `HOST1` / `HOST2` | 前面板 | USB 主机接口，可接平板等设备 |
 
 接什么线、按什么顺序接见[开箱、接线与供电](../backpack/unbox-connect.md#order)。

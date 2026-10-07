@@ -46,7 +46,7 @@ No computer and no site network needed; it is ready to collect once it boots.
 | ⑤ | Headphone | Rear panel | 3.5 mm headphone jack |
 | ⑥ | `UMI-L` | Left side | Left leader gripper, Type-C locking cable, which also powers the gripper |
 | ⑦ | `UMI-R` | Right side | Right leader gripper, Type-C locking cable, which also powers the gripper |
-| ⑧ | `PICO` | Front panel | Pico4 Ultra headset, Type-C. Tick "USB Network" in XR and tap Connect; no address to type |
+| ⑧ | `PICO` | Front panel | Pico4 Ultra headset, Type-C. In XR leave "USB Network" unticked and "PC IP" empty, then tap Connect |
 | ⑨ ⑩ | `HOST1` / `HOST2` | Front panel | USB host ports, for a tablet or other devices |
 
 Which cables to use and in what order is in [Unboxing, cabling and power](../backpack/unbox-connect.md#order).

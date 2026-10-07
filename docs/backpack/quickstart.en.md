@@ -19,7 +19,7 @@ Cable the tablet to the backpack's `HOST1` or `HOST2` port and the backpack open
 
 ## 3. Connect the headset {#headset}
 
-**Facing the work area**, put on the headset, open XTac-UMI XR, tick "USB Network" and tap Connect; Status turns to Connected.
+**Facing the work area**, put on the headset, open XTac-UMI XR, leave "USB Network" unticked and "PC IP" empty (it connects to the backpack at `192.168.100.1` by default), then tap "Connect"; Status turns to Connected.
 
 ![XTac-UMI XR console: Connected](../assets/pico4/xr-console-connected-en.webp){ width="560" }
 

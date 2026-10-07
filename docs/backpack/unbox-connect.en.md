@@ -15,7 +15,7 @@ The box contents and quantities are in [Product line and configuration compariso
 | Port | Location | What goes in it |
 |---|---|---|
 | UMI-L / UMI-R | Both sides | Left / right gripper, Type-C locking cable |
-| PICO | Front panel | The headset, Type-C, over the USB Network |
+| PICO | Front panel | The headset, wired over Type-C |
 | HOST1 / HOST2 | Front panel | USB host ports, for a tablet or other devices |
 | DC IN | Rear panel | 12 V power input, from the adapter or the power bank |
 | Ethernet | Rear panel | RJ45, to a router's LAN port |
@@ -43,7 +43,7 @@ Use this at a fixed workstation with a mains socket: one cable from the headset 
 ![Adapter wiring: left and right grippers to the sides of the backpack, the headset's Type-C to the PICO port, the adapter to the DC port](../assets/product/backpack-wiring-adapter.webp)
 
 1. Connect the left / right grippers to UMI-L / UMI-R.
-2. Connect the headset to the backpack's PICO port with the headset cable (Pico → Pack), carrying the USB network. That one cable is all the headset needs and the backpack powers the headset through it, but the headset battery still drains slowly, so charge the headset fully before you start.
+2. Connect the headset to the backpack's PICO port with the headset cable (Pico → Pack). That one cable is all the headset needs and the backpack powers the headset through it, but the headset battery still drains slowly, so charge the headset fully before you start.
 3. Connect the 12 V 3 A adapter to the backpack's DC port, then plug it into the mains.
 
 ## Power-bank power {#powerbank}
@@ -59,7 +59,7 @@ Use this for mobile collection away from a socket: the single power bank in the 
 | 12 V PD power cable (0.3 m) | Power bank ↔ the backpack's DC port, using the power bank's 12 V output |
 
 1. Connect the left / right grippers to UMI-L / UMI-R.
-2. Connect the headset to the backpack's PICO port with the headset cable, carrying the USB network. That one cable is all the headset needs and the backpack powers the headset through it, but the headset battery still drains slowly, so charge the headset fully before you start.
+2. Connect the headset to the backpack's PICO port with the headset cable. That one cable is all the headset needs and the backpack powers the headset through it, but the headset battery still drains slowly, so charge the headset fully before you start.
 3. Connect the 12 V PD power cable from the power bank to the backpack's DC port.
 
 The power the backpack supplies does not fully cover the headset's draw, so the headset battery still drains slowly (a net draw of about 1–2 W); when it runs out the headset shuts down and collection stops. Charge the headset fully before you start and, on long sessions, keep an eye on its battery icon (set it to always show under [power policy](../common/pico4.md#pico-system)). The backpack draws up to 36 W and runs about 3.5–4 hours on the power bank, see [Specifications](../product/specs.md#backpack).
@@ -69,7 +69,7 @@ The power the backpack supplies does not fully cover the headset's draw, so the 
 
 ## Connecting the headset to the backpack {#pico-link}
 
-Put the headset on and open XTac-UMI XR. The headset and the backpack **connect by cable only**: the headset's Type-C port is already wired to the backpack's PICO port by the steps above. In XR, tick "USB Network" and tap "Connect"; the backpack brings the network up on the USB link automatically (address `192.168.58.1`) with nothing to type.
+Put the headset on and open XTac-UMI XR. The headset and the backpack **connect by cable only**: the headset's Type-C port is already wired to the backpack's PICO port by the steps above. In XR, leave "USB Network" unticked and "PC IP" empty (it connects to the backpack at `192.168.100.1` by default), then tap "Connect".
 
 The fold button is at the top right of XR; when tracking accuracy degrades or a tracker disconnects from the backpack, both XR and the console's live monitor page show an icon. The interface is described in [The XTac-UMI XR interface](../common/pico4.md#pico-toolkit-ui).
 

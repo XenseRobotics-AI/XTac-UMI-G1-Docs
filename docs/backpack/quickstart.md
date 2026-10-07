@@ -19,7 +19,7 @@
 
 ## 3. 连接头显 {#headset}
 
-**面朝作业方向**戴上头显，打开 XTac-UMI XR，勾选「USB网络」，点「连接」，网络状态变为「连接成功」。
+**面朝作业方向**戴上头显，打开 XTac-UMI XR，不勾选「USB网络」，「PC IP」留空（默认连接背包的 `192.168.100.1`），点「连接」，网络状态变为「连接成功」。
 
 ![XTac-UMI XR 控制台：连接成功](../assets/pico4/xr-console-connected.webp){ width="560" }
 
