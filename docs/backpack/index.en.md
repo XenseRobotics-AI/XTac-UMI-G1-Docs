@@ -49,7 +49,7 @@ The whole capture happens in the backpack: every device plugs into it, it stores
     "e-tact": "USB",
     "e-wrist": "USB",
     "e-track": "Wireless",
-    "e-head": "USB Network"
+    "e-head": "Type-C cable"
   },
   "nodes": {
     "grip": {
@@ -75,7 +75,7 @@ The whole capture happens in the backpack: every device plugs into it, it stores
     "headset": {
       "title": "Headset",
       "sub": "Pico4 Ultra Enterprise",
-      "desc": "Runs XTac-UMI XR and sends poses to the backpack over a Type-C cable on the USB Network (wired only); in modes that record the headset it also sends stereo or right-eye images (640 × 480 or 1024 × 768 per eye)."
+      "desc": "Runs XTac-UMI XR and sends poses to the backpack over a Type-C cable (wired only); in modes that record the headset it also sends stereo or right-eye images (640 × 480 or 1024 × 768 per eye)."
     },
     "mcu": {
       "title": "Gripper data",
@@ -143,7 +143,7 @@ The whole capture happens in the backpack: every device plugs into it, it stores
 </script></div>
 
 - The **leader grippers** plug into the backpack's `UMI-L` / `UMI-R`: opening, IMU and button presses are reported over USB, and the visuotactile and wrist fisheye images are stored as raw frames.
-- The **trackers** sit on top of the grippers and are tracked by the **headset**; the headset connects to the backpack over a single cable using USB Network and sends the poses, plus stereo or right-eye images in the modes that record them.
+- The **trackers** sit on top of the grippers and are tracked by the **headset**; the headset connects to the backpack over a single Type-C cable and sends the poses, plus stereo or right-eye images in the modes that record them.
 - The **backpack** stores each recording as one raw MCAP file; export per task to LeRobotDataset v3 or MCAP, then download it or upload it to a remote backend. The console opens in the browser of a tablet, phone or computer.
 
 ## What each frame records {#frame}
@@ -303,7 +303,7 @@ Read [Safety and compliance](../product/safety.md) before you start. The detaile
 1. Headset setup: bring Pico OS to 5.15.5.U or above, then [enable developer mode and set the screen timeout and system sleep to "Never"](../common/pico4.md#pico-system); [pair both trackers to the headset](../common/pico4.md#pico-tracker-bind) following "odd is left, even is right" and switch them to standalone tracking mode; [install XTac-UMI XR](../common/pico4.md#pico-app).
 2. Cabling and power: [the order is fixed](unbox-connect.md#order) — grippers → headset → power up the backpack, with the left and right grippers going to UMI-L / UMI-R and the headset going to the backpack's PICO port over the headset cable (Pico → Pack). Pick one of the two power options: with [adapter power](unbox-connect.md#adapter), the adapter goes to the backpack's DC port; with [power-bank power](unbox-connect.md#powerbank), the power bank feeds the backpack's DC port over the 0.3 m 12 V PD power cable. The grippers' connection and power requirements are in [Gripper connection and serial numbers](../common/gripper.md#power).
 3. Connect to the backpack: cable the tablet to the backpack's `HOST1` or `HOST2` port and the backpack opens the console on it, see [The tablet over USB](network.md#tablet). Without a tablet, use the [backpack hotspot](network.md#softap).
-4. [Connect the headset to the backpack](unbox-connect.md#pico-link): put the headset on, open XTac-UMI XR, tick "USB Network" and tap Connect. The backpack brings up the network on the USB link automatically (address `192.168.58.1`) with nothing to type. The interface and the connection states are in [Pico4 headset and tracker setup](../common/pico4.md#pico-toolkit-ui).
+4. [Connect the headset to the backpack](unbox-connect.md#pico-link): put the headset on, open XTac-UMI XR, leave "USB Network" unticked and "PC IP" empty (it connects to the backpack at `192.168.100.1` by default), then tap "Connect". The interface and the connection states are in [Pico4 headset and tracker setup](../common/pico4.md#pico-toolkit-ui).
 5. Set the [capture mode](system.md#capture-mode): the capture mode belongs to the project. When you [create a project](monitor-record.md#project-task), pick "Dual gripper", "Dual gripper + headset stereo" or "Dual gripper + headset right eye" according to what is actually connected; it cannot be changed afterwards, and the System page only displays it. Every mode needs the headset and trackers for pose.
 6. Optional: console → System → [Upload configuration](system.md#upload), create an upload backend and fill in its credentials (how to obtain them is in the same section). You can bind it when you create a project, after which that project's "upload to remote" exports use it by default; the credentials are entered on this page once and never again in the export dialog.
 

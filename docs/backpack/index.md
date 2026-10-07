@@ -49,7 +49,7 @@
     "e-tact": "USB",
     "e-wrist": "USB",
     "e-track": "无线",
-    "e-head": "USB网络"
+    "e-head": "Type-C 有线"
   },
   "nodes": {
     "grip": {
@@ -75,7 +75,7 @@
     "headset": {
       "title": "头显",
       "sub": "Pico4 Ultra 企业版",
-      "desc": "运行 XTac-UMI XR，经 Type-C 线以 USB网络把位姿送到背包，只能有线连接；录头显画面的模式下还送来双目或右单目画面（每眼 640 × 480 或 1024 × 768）。"
+      "desc": "运行 XTac-UMI XR，经 Type-C 线把位姿送到背包，只能有线连接；录头显画面的模式下还送来双目或右单目画面（每眼 640 × 480 或 1024 × 768）。"
     },
     "mcu": {
       "title": "夹爪数据",
@@ -143,7 +143,7 @@
 </script></div>
 
 - **主夹爪**接背包的 `UMI-L` / `UMI-R`：开合度、IMU 与按键经 USB 上报，视触觉与腕部鱼眼按原始画面保存。
-- **追踪器**装在夹爪顶部，由**头显**跟踪；头显用一根线以 USB网络接背包，送来位姿，录头显画面的模式下还送来双目或右单目画面。
+- **追踪器**装在夹爪顶部，由**头显**跟踪；头显用一根 Type-C 线接背包，送来位姿，录头显画面的模式下还送来双目或右单目画面。
 - **背包**把每条录制存成一个 MCAP 原始记录；按任务导出 LeRobotDataset v3 或 MCAP，下载到本地或上传到远端。控制台用平板、手机或电脑的浏览器打开。
 
 ## 每帧记录什么 {#frame}
@@ -303,7 +303,7 @@
 1. 头显配置：把 Pico OS 升到 5.15.5.U 以上并[开启开发者模式、把灭屏与休眠设为永不](../common/pico4.md#pico-system)；两只追踪器按「左奇右偶」[配对到头显](../common/pico4.md#pico-tracker-bind)并切到独立追踪模式；[安装 XTac-UMI XR](../common/pico4.md#pico-app)。
 2. 接线与供电：[顺序固定](unbox-connect.md#order)夹爪 → 头显 → 背包上电，左右夹爪分别接 UMI-L / UMI-R，头显用头显连接线（Pico → Pack）接背包 PICO 口。供电二选一：[适配器供电](unbox-connect.md#adapter)时适配器接背包 DC 口；[充电宝供电](unbox-connect.md#powerbank)时充电宝经 0.3 m 12 V PD 电源线接背包 DC 口。夹爪的连接与供电要求见[夹爪连接与序列号](../common/gripper.md#power)。
 3. 连上背包：用数据线把平板接到背包的 `HOST1` 或 `HOST2` 口，背包会自动在平板上打开控制台，见[平板插 USB](network.md#tablet)。没有平板时可用[背包热点](network.md#softap)。
-4. [头显连背包](unbox-connect.md#pico-link)：戴上头显打开 XTac-UMI XR，勾选「USB网络」点连接，背包会自动在 USB 链路上建网（地址 `192.168.58.1`），不用手填。界面与连接状态见 [Pico4 头显与追踪器](../common/pico4.md#pico-toolkit-ui)。
+4. [头显连背包](unbox-connect.md#pico-link)：戴上头显打开 XTac-UMI XR，不勾选「USB网络」，「PC IP」留空（默认连接背包的 `192.168.100.1`），点「连接」。界面与连接状态见 [Pico4 头显与追踪器](../common/pico4.md#pico-toolkit-ui)。
 5. 定[采集模式](system.md#capture-mode)：采集模式是项目的属性，在[新建项目](monitor-record.md#project-task)时按实际接了什么选「双爪」「双爪 + 头显双目」「双爪 + 头显右单目」之一，建完不可更改；系统页只做只读展示。每种模式都需要头显与追踪器提供位姿。
 6. 可选：控制台 → 系统 → [上传配置](system.md#upload)，新建一档上传后端并填好凭据（获取步骤在同一节）。新建项目时可以绑定它，之后该项目导出选「上传到远端」默认走这档配置；凭据只在这一页填一次，导出窗口里不再重复填。
 

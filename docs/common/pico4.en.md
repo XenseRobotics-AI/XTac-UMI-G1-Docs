@@ -6,7 +6,7 @@ The standalone motion tracker that ships with the Pico4 Ultra Enterprise mounts 
 |---|---|---|
 | Where the headset plugs in | The backpack's `PICO` port, **wired only** | The collection PC's Type-C port (wired USB shared network), or the same WiFi as the PC |
 | Where the pose service runs | The XenseVR runtime is built into XTac-UMI Collector; it is up as soon as the backpack boots, nothing to start | The [XenseVR PC Service](../pc/host-setup.md#35) on the collection PC, started by hand before every session |
-| How the app connects | Tick "USB Network" → tap "Connect" | Tick "USB Network" → tap "Connect"; over WiFi leave it unticked and enter the collection PC's IP under "PC IP" |
+| How the app connects | **Leave "USB Network" unticked** and "PC IP" empty → tap "Connect" (connects to `192.168.100.1` by default) | Wired: **tick "USB Network"** → tap "Connect" (connects to `192.168.58.1` by default); WiFi: leave it unticked and enter the collection PC's IP under "PC IP" |
 
 On a factory-configured headset, developer mode, the power policy, the app, the tracker binding and the tracking mode are already set and survive power cycles (redo them only after a factory reset or a headset swap), so start at [Network connection](#pico-network). Plugging in, short-pressing the tracker's power button until the blue light comes on, [connecting in the app](#pico-toolkit-ui) and [startup alignment](#pico-frame) are needed before every session.
 
@@ -80,7 +80,7 @@ On both editions, set USB up on the headset first: Settings → Developer option
 
     1. Run the headset cable (Pico → Pack, Type-C to Type-C) from the Type-C port on the side of the headset to the backpack's `PICO` port. It is connected the same way with adapter power and with power-bank power; wiring in [Unboxing, cabling and power](../backpack/unbox-connect.md#order).
     2. Power on the backpack. The XenseVR runtime is built into Collector and starts with it; there is no separate service to launch.
-    3. Open XTac-UMI XR, tick "USB Network" and tap "Connect": the backpack brings up its own network on the USB link (address `192.168.58.1`), nothing to enter by hand.
+    3. Open XTac-UMI XR, leave "USB Network" unticked and "PC IP" empty (it connects to the backpack at `192.168.100.1` by default), then tap "Connect".
 
     The Backpack Kit does not support the headset over WiFi; the headset must be cabled to the backpack.
 
@@ -90,7 +90,7 @@ On both editions, set USB up on the headset first: Settings → Developer option
 
     1. Start the service on the PC first (see [Start the XenseVR PC Service](../pc/host-setup.md#35)): `runService.sh`. With the service down, the app cannot connect.
     2. Run a Type-C cable straight from the headset to the collection PC; the headset assigns the PC an IP.
-    3. Open XTac-UMI XR, tick "USB Network", tap "Connect", and Status changes to "Connected" (see [The app's screen](#pico-toolkit-ui)). With USB Network ticked the app connects to the collection PC (`192.168.1.58`) by itself; no IP to enter.
+    3. Open XTac-UMI XR, tick "USB Network", tap "Connect", and Status changes to "Connected" (see [The app's screen](#pico-toolkit-ui)). With USB Network ticked the app connects to the collection PC (`192.168.58.1`) by itself; no IP to enter.
 
     Over WiFi, put the headset and the collection PC on the same network, leave "USB Network" unticked, type the collection PC's IP into "PC IP", then tap "Connect".
 
@@ -161,13 +161,13 @@ With the headset on, open XTac-UMI XR from the Library to reach the "XENSE XR Co
 | Tracker Mode | Should read "Independent Tracking"; if not, go back to [Tracking mode](#pico-tracker) and set it again |
 | Pico Hardware | Should read "Enterprise" |
 | Status | Until it reads "Connected", the collection side reads no pose at all |
-| USB Network | Tick it for a wired connection: the app connects to the collection side at the other end of the cable by itself, no IP to enter |
-| PC IP | Only for the Developer Kit over WiFi: the collection PC's IP; not needed when wired |
+| USB Network | Tick it for a Developer Kit wired connection: the app connects to the collection PC (`192.168.58.1`) by itself. **Leave it unticked on the Backpack Kit** |
+| PC IP | Backpack Kit: leave empty (connects to the backpack at `192.168.100.1` by default); Developer Kit: the collection PC's IP over WiFi, not needed when wired |
 | Connect / Disconnect | Tap "Connect" to start connecting; once connected the button turns into "Disconnect" |
 
 === "Not connected"
 
-    It opens with Status at "Not connected". For a wired connection tick "USB Network", then tap "Connect".
+    It opens with Status at "Not connected". On the Backpack Kit leave "USB Network" unticked and "PC IP" empty; on the Developer Kit tick "USB Network" for a wired connection. Then tap "Connect".
 
     ![XTac-UMI XR console: not connected](../assets/pico4/xr-console-idle-en.webp){ width="560" }
 
@@ -181,13 +181,13 @@ How the two editions differ when connecting:
 
 === "Backpack Kit"
 
-    In the panel, tick "USB Network" → tap "Connect"; the Backpack Kit only connects over the cable. When tracker accuracy degrades or the link to the backpack drops, an icon appears on the panel.
+    In the panel, **leave "USB Network" unticked** and "PC IP" empty (it connects to the backpack at `192.168.100.1` by default), then tap "Connect"; the Backpack Kit only connects over the cable. When tracker accuracy degrades or the link to the backpack drops, an icon appears on the panel.
 
     Once connected, open the console's "Live monitor" page: the pose view should show the headset and both gripper poses. When the record button is not ready it states the reason: "Pico not ready" is followed by the headset-side cause (for example disconnected or timed out, pose data missing or timed out, clock synchronization missing or timed out), and "Tracker not ready" by the tracker's cause (for example out of view or stationary for over 5 seconds); both can appear together. If the headset disconnects while recording, that recording stops at once, see [Headset disconnects while recording](../backpack/monitor-record.md#pico-disconnect).
 
 === "Developer Kit"
 
-    For a wired connection tick "USB Network" and the app connects to the collection PC (`192.168.1.58`) by itself; over WiFi leave it unticked, type the collection PC's IP into "PC IP", then tap "Connect".
+    For a wired connection tick "USB Network" and the app connects to the collection PC (`192.168.58.1`) by itself; over WiFi leave it unticked, type the collection PC's IP into "PC IP", then tap "Connect".
 
     If it never connects, the cause is usually the [network](#pico-network) not being up or the PC's WiFi still on. Once it reads "Connected", confirm on the host that a pose with an `sn` comes through, via `ConsoleDemo` in `/opt/apps/roboticsservice/` or `python -m lerobot.robots.taccap_gripper.check_tracker`. The headset saying it is connected and the host actually receiving data are two different things.
 
