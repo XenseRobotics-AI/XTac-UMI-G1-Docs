@@ -80,7 +80,7 @@ hide:
 
 <div class="grid cards xu-cards" markdown>
 
--   ![XTac-UMI 数采背包正面接口](assets/product/backpack-ports-front.webp){ .xu-card__img }
+-   ![XTac-UMI 数采背包](assets/product/backpack-card.webp){ .xu-card__img }
 
     <span class="xu-tag xu-tag--backpack">背包版</span>
 

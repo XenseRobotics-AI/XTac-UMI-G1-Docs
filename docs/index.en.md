@@ -80,7 +80,7 @@ Both kits use the same grippers and headset and produce the same data. The Backp
 
 <div class="grid cards xu-cards" markdown>
 
--   ![Front ports of the XTac-UMI data collection backpack](assets/product/backpack-ports-front.webp){ .xu-card__img }
+-   ![The XTac-UMI data collection backpack](assets/product/backpack-card.webp){ .xu-card__img }
 
     <span class="xu-tag xu-tag--backpack">Backpack Kit</span>
 
