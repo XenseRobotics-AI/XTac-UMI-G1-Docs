@@ -16,6 +16,286 @@ See it before you record: the console shows all six cameras, both visuotactile s
 
 The product positioning and an introduction to the console are in [The Backpack](../product/backpack.md); the [backpack's ports](unbox-connect.md#ports), the [adapter](unbox-connect.md#adapter) and [power-bank](unbox-connect.md#powerbank) wiring options, and the [body label](network.md#label) are each on their own page.
 
+## System composition {#system}
+
+The whole capture happens in the backpack: every device plugs into it, it stores the raw recordings, and datasets are generated per task at export. Hover over (or tap) any block to see where its data comes from and where it goes; the buttons above switch between the three capture modes.
+
+<div class="tc-arch" data-layout="backpack"><script type="application/json">
+{
+  "defaultTier": 2,
+  "title": "Backpack Kit collection architecture",
+  "tiers": [
+    "Dual gripper",
+    "Dual gripper + headset stereo",
+    "Dual gripper + headset right eye"
+  ],
+  "cols": {
+    "dev": "Devices",
+    "read": "Backpack · read",
+    "core": "Backpack · process",
+    "out": "Output",
+    "up": "Retrieve and upload"
+  },
+  "group": "Leader grippers ×2 (left / right)",
+  "hint": "Hover over (or tap) any block to see where its data comes from and where it goes.",
+  "sep": ": ",
+  "offNote": " (not used in the selected mode)",
+  "legend": [
+    "Data and poses",
+    "Headset images"
+  ],
+  "edges": {
+    "e-grip": "USB serial",
+    "e-tact": "USB",
+    "e-wrist": "USB",
+    "e-track": "Wireless",
+    "e-head": "USB Network"
+  },
+  "nodes": {
+    "grip": {
+      "title": "MCU · encoder",
+      "sub": "Opening · IMU · buttons",
+      "desc": "The leader gripper's MCU reports the jaw angle and IMU (100 Hz each) and button gestures to the backpack over USB."
+    },
+    "tact": {
+      "title": "Visuotactile ×2",
+      "sub": "One per finger",
+      "desc": "One visuotactile sensor per finger, captured at 640 × 480, 120 fps."
+    },
+    "wrist": {
+      "title": "Wrist camera",
+      "sub": "Wrist-view fisheye",
+      "desc": "The wrist-view fisheye image, 640 × 480 at 30 fps."
+    },
+    "tracker": {
+      "title": "Motion tracker ×2",
+      "sub": "Pico4 Ultra",
+      "desc": "Mounted on top of each gripper; the headset tracks its 6-DoF pose. Every Backpack Kit capture mode needs it."
+    },
+    "headset": {
+      "title": "Headset",
+      "sub": "Pico4 Ultra Enterprise",
+      "desc": "Runs XTac-UMI XR and sends poses to the backpack over a Type-C cable on the USB Network (wired only); in modes that record the headset it also sends stereo or right-eye images (640 × 480 or 1024 × 768 per eye)."
+    },
+    "mcu": {
+      "title": "Gripper data",
+      "sub": "Opening · IMU · buttons",
+      "desc": "Reads the opening and IMU; button gestures control recording."
+    },
+    "tcam": {
+      "title": "Tactile capture",
+      "sub": "Raw frames · 120 fps",
+      "desc": "Captured and saved as raw frames; rectified at export with the sensor's own calibration, in the orientation chosen for the project (700 × 400 by default)."
+    },
+    "fcam": {
+      "title": "Fisheye capture",
+      "sub": "Raw frames · 30 fps",
+      "desc": "Saved as raw fisheye frames; the undistortion parameters are frozen at record start and applied at export."
+    },
+    "xvr": {
+      "title": "Built-in pose service",
+      "sub": "Starts with the backpack",
+      "desc": "A pose service built into the backpack, up as soon as it boots with nothing to start; clocks are synced with the headset before recording, and headset frames carry capture timestamps."
+    },
+    "enc": {
+      "title": "Hardware encoding",
+      "sub": "H.264 · preview only",
+      "desc": "The backpack hardware-encodes each view once and pushes it to every device with the console open for live preview; recordings keep the raw frames and skip this step."
+    },
+    "rec": {
+      "title": "Recording",
+      "sub": "Buttons or console",
+      "desc": "Checks that every camera and the gripper data are ready before recording; while recording it saves raw frames, opening, IMU and poses, counts bad frames and tracking loss, and flags quality issues afterwards."
+    },
+    "console": {
+      "title": "Browser console",
+      "sub": "Tablet · phone · computer",
+      "desc": "Open the backpack's console in a browser: live monitor, projects, playback and system settings."
+    },
+    "mcap": {
+      "title": "MCAP raw recording",
+      "sub": "One file per take · NVMe",
+      "desc": "Each demonstration is one MCAP file on the backpack's NVMe data disk, holding every raw frame, sensor stream and calibration."
+    },
+    "export": {
+      "title": "Export per task",
+      "sub": [
+        "LeRobot v3 / MCAP",
+        "Pre-checked first"
+      ],
+      "desc": "Export a task as LeRobotDataset v3 or MCAP; recordings are checked for completeness first, then you download them or upload to a remote backend."
+    },
+    "dl": {
+      "title": "Download",
+      "sub": "Packed archive",
+      "desc": "Pack the export in the console and download it to a tablet or computer."
+    },
+    "upload": {
+      "title": "Upload",
+      "sub": [
+        "ModelScope · S3",
+        "FTP · NFS"
+      ],
+      "desc": "Upload to a backend configured beforehand: ModelScope, S3, FTP / FTPS or NFS; local files are kept by default, archive them when you need the space."
+    }
+  }
+}
+</script></div>
+
+- The **leader grippers** plug into the backpack's `UMI-L` / `UMI-R`: opening, IMU and button presses are reported over USB, and the visuotactile and wrist fisheye images are stored as raw frames.
+- The **trackers** sit on top of the grippers and are tracked by the **headset**; the headset connects to the backpack over a single cable using USB Network and sends the poses, plus stereo or right-eye images in the modes that record them.
+- The **backpack** stores each recording as one raw MCAP file; export per task to LeRobotDataset v3 or MCAP, then download it or upload it to a remote backend. The console opens in the browser of a tablet, phone or computer.
+
+## What each frame records {#frame}
+
+In an exported LeRobot dataset, each row is the **observation** from frame t-1 plus the **action** from frame t. Hover over (or tap) any data item, source or storage block to see where it comes from and where it is stored; the buttons switch between the three capture modes.
+
+<div class="tc-arch" data-diagram="frame"><script type="application/json">
+{
+  "title": "What makes up one row of a LeRobot dataset exported from the backpack",
+  "tiers": [
+    "Dual gripper",
+    "Dual gripper + headset stereo",
+    "Dual gripper + headset right eye"
+  ],
+  "defaultTier": 2,
+  "on": {
+    "ltrk": [
+      1,
+      2,
+      3
+    ],
+    "rtrk": [
+      1,
+      2,
+      3
+    ],
+    "o_ltcp": [
+      1,
+      2,
+      3
+    ],
+    "o_rtcp": [
+      1,
+      2,
+      3
+    ],
+    "a_ltcp": [
+      1,
+      2,
+      3
+    ],
+    "a_rtcp": [
+      1,
+      2,
+      3
+    ],
+    "head": [
+      2,
+      3
+    ],
+    "o_head": [
+      2,
+      3
+    ],
+    "a_head": [
+      2,
+      3
+    ],
+    "L_h": [
+      2
+    ],
+    "R_h": [
+      2,
+      3
+    ]
+  },
+  "keyNames": {
+    "L_h": "head_left",
+    "R_h": "head_right",
+    "o_head": "head.*",
+    "a_head": "head.*"
+  },
+  "cols": {
+    "src": "Source",
+    "obs": "Observation · frame t-1",
+    "act": "Action · frame t",
+    "out": "Stored as"
+  },
+  "groups": {
+    "img": "observation.images · {n} streams",
+    "state": "observation.state · {n}-D",
+    "act": "action · {n}-D"
+  },
+  "timeline": {
+    "caption": "time →",
+    "obs": "obs",
+    "act": "action",
+    "row": "one dataset row"
+  },
+  "hint": "Hover over (or tap) any data item, source or storage block to see where it comes from and where it is stored.",
+  "sep": ": ",
+  "offNote": " (not recorded in the selected mode)",
+  "dims": " {n} dimensions in total.",
+  "obsNote": " The observation holds the value from frame t-1.",
+  "actNote": " The action holds the value from frame t, one step ahead of the observation.",
+  "keys": {
+    "tactile": "The visuotactile image from one finger of this gripper, rectified at export: 700 × 400 landscape by default (400 × 700 can be chosen per project), 30 fps.",
+    "wrist": "This gripper's wrist fisheye view, 640 × 480; exported rectified when the project turns on wrist fisheye rectification.",
+    "headimg": "One eye of the headset camera, 640 × 480 or 1024 × 768 per eye (set per project). Stereo mode records both eyes; right-eye mode records the right eye only.",
+    "tcp": "The pose of this gripper's tip (midpoint between the fingers) in the world frame: position x, y, z (metres) plus the 6-D rotation r1–r6, derived from the tracker pose. Recorded in all three modes.",
+    "grip": "This gripper's opening, closed = 0, open = 1.",
+    "headpose": "The headset pose in the world frame, same format as tcp.*; written only in the modes that record headset images."
+  },
+  "nodes": {
+    "lgrip": {
+      "title": "Left gripper",
+      "sub": "Tactile · wrist · encoder",
+      "desc": "Provides two visuotactile images, the wrist fisheye view and the opening."
+    },
+    "ltrk": {
+      "title": "Left tracker",
+      "sub": "Via headset + backpack",
+      "desc": "Its pose is transformed to the left gripper tip as left_tcp.*, stored once in the observation and once in the action. Recorded in all three modes."
+    },
+    "rgrip": {
+      "title": "Right gripper",
+      "sub": "Tactile · wrist · encoder",
+      "desc": "Provides two visuotactile images, the wrist fisheye view and the opening."
+    },
+    "rtrk": {
+      "title": "Right tracker",
+      "sub": "Via headset + backpack",
+      "desc": "Its pose is transformed to the right gripper tip as right_tcp.*, stored once in the observation and once in the action. Recorded in all three modes."
+    },
+    "head": {
+      "title": "Headset",
+      "sub": "Stereo camera · head pose",
+      "desc": "Provides the headset images (stereo or right eye) and the head pose head.*, which is stored in both the observation and the action. Not recorded in Dual gripper mode."
+    },
+    "mp4": {
+      "title": "MP4 video",
+      "sub": "videos/ · one key each",
+      "desc": "Each image stream is one video key, observation.images.<key>, encoded to MP4 at export and stored under videos/."
+    },
+    "pq": {
+      "title": "Parquet table",
+      "sub": [
+        "data/ · one row per frame",
+        "state + action + index"
+      ],
+      "desc": "One row per frame: the observation.state and action vectors, plus index columns such as timestamp, frame index and episode index, stored under data/."
+    }
+  }
+}
+</script></div>
+
+- The observation comes from frame t-1 and the action from frame t, so the action leads by one step; the first frame of each episode has nothing to pair with, so each episode is one frame shorter.
+- The poses `*_tcp.*` and `head.*` are 9-D each: position x, y, z plus a 6-D rotation, in a world frame of X forward / Y left / Z up.
+- Dimensions per mode: Dual gripper, state and action 20-D each, 6 image streams; Dual gripper + headset stereo, 29-D each, 8 streams; Dual gripper + headset right eye, 29-D each, 7 streams (`head_right` only).
+
+Export formats and the extra files are in [LeRobot dataset](projects-export.md#lerobot).
+
 ## First deployment checklist {#first-deploy}
 
 Read [Safety and compliance](../product/safety.md) before you start. The detailed steps live on their own pages; this page only says what to do and where.
