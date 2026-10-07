@@ -221,9 +221,9 @@ html[lang="en"] .md-typeset .tc-hero h1 {
 }
 .md-typeset .tc-brandline__logo {
   display: block;
-  height: 1.5rem;
+  height: 1.3rem;
   width: auto;
-  margin: 0 auto .9rem;
+  margin: 0 auto 1rem;
 }
 /* 字标是白色的,浅色主题下反成深色 */
 [data-md-color-scheme="default"] .md-typeset .tc-brandline__logo {
@@ -972,9 +972,9 @@ html[lang="en"] .md-typeset .tc-slogan {
   content: "";
   order: 99;
   flex: none;
-  width: 5.2rem;
-  height: .8rem;
-  margin: .6rem .6rem .6rem 1rem;
-  background: url("../brand/logo-light.svg") no-repeat right center / contain;
+  width: 5.5rem;
+  height: 1.8rem;
+  margin: .5rem .6rem .5rem 1rem;
+  background: url("../brand/logo-footer.png") no-repeat right center / contain;
   opacity: .85;
 }

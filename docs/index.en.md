@@ -38,7 +38,7 @@ hide:
 </div>
 
 <div class="tc-brandline">
-<img class="tc-brandline__logo" src="assets/brand/logo-light.svg" alt="XENSE">
+<img class="tc-brandline__logo" src="assets/brand/logo-full.png" alt="XENSE 千觉">
 <p class="tc-slogan">Touch lights up physical intelligence</p>
 </div>
 
