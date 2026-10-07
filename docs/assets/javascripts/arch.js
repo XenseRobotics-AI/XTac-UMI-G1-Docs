@@ -376,7 +376,7 @@
       focus(pinned);
     }
 
-    setTier(spec.tiers.length);
+    setTier(spec.defaultTier || spec.tiers.length);
   }
 
 
@@ -451,6 +451,10 @@
     var srcEls = {}, chipEls = {}, sEdgeEls = {}, gEdgeEls = {}, destEls = {}, groupLabels = {};
     var chipById = {};
     F_CHIPS.forEach(function (c) { chipById[c.id] = c; });
+    /* 可选:on 按档位列出某项在哪几档出现(档位不是逐级累加时用,如背包版的三种模式);
+       keyNames 改写数据项的键名 */
+    var onTiers = spec.on || {}, keyNames = spec.keyNames || {};
+    function keyOf(c) { return keyNames[c.id] || c.key; }
 
     var tierBtns = tierBar(root, spec.tiers, function (t) { setTier(t); });
     var scroller = document.createElement("div");
@@ -558,11 +562,11 @@
 
     F_CHIPS.forEach(function (c) {
       var w = c.w || (c.grp === "act" ? 150 : 145), h = 28;
-      var g = el("g", { class: "tc-arch__node tc-frame__chip", "data-id": c.id, "aria-label": c.key,
+      var g = el("g", { class: "tc-arch__node tc-frame__chip", "data-id": c.id, "aria-label": keyOf(c),
         style: "--k:" + SIDE_K[F_SRC.filter(function (n) { return n.id === c.src; })[0].side] }, nodeLayer);
       el("rect", { x: c.x - w / 2, y: c.y - h / 2, width: w, height: h, rx: 6, class: "tc-arch__box" }, g);
       var t = el("text", { x: c.x, y: c.y + 4, class: "tc-frame__key" }, g);
-      t.textContent = c.key;
+      t.textContent = keyOf(c);
       interactive(g, function () {
         focusChips([c.id].concat(c.twin && active(chipById[c.twin]) ? [c.twin] : []), c.id);
       });
@@ -587,7 +591,10 @@
     root.appendChild(info);
     root.classList.add("is-ready");
 
-    function active(item) { return (item.tier || 1) <= tier; }
+    function active(item) {
+      if (onTiers[item.id]) return onTiers[item.id].indexOf(tier) >= 0;
+      return (item.tier || 1) <= tier;
+    }
 
     function chipsWhere(fn) {
       return F_CHIPS.filter(function (c) { return active(c) && fn(c); })
@@ -599,7 +606,7 @@
         var c = chipById[id];
         var desc = spec.keys[c.d] + (c.dim ? spec.dims.replace("{n}", c.dim) : "") +
           (c.grp === "act" ? spec.actNote : spec.obsNote);
-        return { title: c.key, desc: desc, off: !active(c) };
+        return { title: keyOf(c), desc: desc, off: !active(c) };
       }
       var src = F_SRC.filter(function (n) { return n.id === id; })[0];
       var txt = spec.nodes[id];
@@ -679,7 +686,7 @@
       focus(pinned);
     }
 
-    setTier(3);
+    setTier(spec.defaultTier || spec.tiers.length);
   }
 
   function init() {
