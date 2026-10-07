@@ -1638,17 +1638,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#motor-primitives" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Low-level motor interfaces
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#camera" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1739,6 +1728,8 @@
       
         
           
+        
+      
         
       
         
@@ -1848,6 +1839,34 @@
     
   
     Motion Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../follower/api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API &amp; Examples
   
 
     
@@ -2182,53 +2201,9 @@
 </span></code></pre></div>
 <p><code>normalize_position=True</code> requires the leader gripper's travel calibration to be done; see <a href="../../pc/calibration/">Calibration and self-check</a>.</p>
 <h2 id="follower">Follower gripper: control<a class="headerlink" href="#follower" title="锚点链接">¶</a></h2>
-<p>For usage and precautions see <a href="../../follower/control/">Follower gripper → Motion control</a>.</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Impedance control (default)</th>
-<th>Force-position control</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Controller</td>
-<td><code>ImpedanceController</code></td>
-<td><code>ForcePositionController</code></td>
-</tr>
-<tr>
-<td>Config</td>
-<td><code>ImpedanceConfig.for_spec(g.motor.get_spec())</code></td>
-<td><code>ForcePositionConfig.for_spec(g.motor.get_spec())</code></td>
-</tr>
-<tr>
-<td>Tunable parameters</td>
-<td>Usually left alone</td>
-<td><code>grasp_torque_nm</code> (grip force, ≤ 1.1 N·m)</td>
-</tr>
-<tr>
-<td>Common calls</td>
-<td><code>set_target(opening)</code></td>
-<td><code>set_target(opening)</code>, <code>release()</code>, <code>hold_position()</code></td>
-</tr>
-<tr>
-<td>Is it holding</td>
-<td>—</td>
-<td><code>snapshot().holding</code></td>
-</tr>
-</tbody>
-</table>
-<p>Both controllers have <code>start()</code> / <code>stop()</code> (or use <code>with</code>), <code>snapshot()</code> and <code>reset()</code>. Call order:
-<code>g.motor.clear_fault()</code> → start the controller → <code>g.motor.enable()</code> → <code>set_target()</code> → stop the controller.</p>
-<p><code>snapshot().observation</code> contains <code>position</code> (opening), <code>velocity</code>, <code>torque</code> (positive = toward closing) and <code>motor_temp_c</code>.</p>
-<p>To read the opening when not controlling: <code>g.position()</code>. Motor firmware version: <code>g.motor.motor_version()</code>, see
-<a href="../../follower/firmware/#motor-version">Firmware and motor upgrades</a>.</p>
-<h2 id="motor-primitives">Low-level motor interfaces<a class="headerlink" href="#motor-primitives" title="锚点链接">¶</a></h2>
-<p><code>g.motor.submit_*</code> and the other low-level interfaces send commands straight to the motor, bypassing the controller's protection. <strong>Use a controller</strong> and do not call them.</p>
-<p>The following interfaces change configuration stored in the gripper or the motor; <strong>use them only under technical support's guidance</strong>:
-<code>set_model()</code>, <code>set_startup_limit_torque()</code>, <code>switch_protocol()</code>, <code>set_can_id()</code>, <code>set_private_param()</code>,
-<code>set_zero()</code>, <code>set_gripper_config()</code>, <code>set_envelope()</code>, <code>set_auto_cal_config()</code>, <code>set_motor_fw_version()</code>.</p>
+<p>The follower gripper's controllers, state reading and example scripts are in <a href="../../follower/api/">Follower gripper → API and examples</a>.</p>
+<p><span id="motor-primitives"></span>
+The low-level motor interfaces bypass the controller's protection and must not be called directly; see <a href="../../follower/api/#motor-primitives">Low-level motor interfaces</a>.</p>
 <h2 id="camera">Wrist camera and fisheye undistortion<a class="headerlink" href="#camera" title="锚点链接">¶</a></h2>
 <p>Gripper objects do not open the wrist camera by default. When you need it:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">g</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">FollowerGripper</span><span class="p">(</span><span class="n">ep</span><span class="o">.</span><span class="n">mcu_device</span><span class="p">,</span> <span class="n">wrist_video</span><span class="o">=</span><span class="s2">"/dev/v4l/by-id/&lt;camera&gt;-video-index0"</span><span class="p">,</span>
