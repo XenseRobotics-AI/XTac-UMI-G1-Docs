@@ -7,33 +7,113 @@
 
 ## 目录约定
 
-| 子目录 | 用途 | 对应章节 |
+| 子目录 | 用途 | 对应页面 |
 |---|---|---|
-| `brand/` | 站点 logo、favicon | 主题 |
-| `pico4/` | Pico4 Ultra 企业版 APP 使用截图 | §3.4 |
-| `bringup/` | 数采启动流程截图 | §3.6 |
-| `hardware/` | 设备/串口/接线/发现规则示意 | §3 |
-| `record/` | 录制终端/界面、Rerun 截图 | §4 / §5 |
-| `dataset/` | 数据集结构、校验、可视化 | §6 |
+| `brand/` | 站点 logo(`logo.svg` 深色版、`logo-light.svg` 白色版给黑色页眉)、favicon | 主题 |
+| `product/` | 产品渲染图、背包接口与标签照片、接线图 | 首页、product/ |
+| `backpack/` | XTac-UMI Collector 控制台截图(2026-10-07 起按 0.4.3 重截,仍是旧图的见下方[待重截](#placeholder);文件名沿用 Taccap-User-Doc;首页与 product/ 的控制台展示图也从这里取) | 首页、product/、backpack/ |
+| `pico4/` | Pico4 Ultra 企业版系统与 APP 截图 | common/pico4 |
+| `hardware/` | 夹爪接口、锁紧、指示灯示意 | common/gripper、product/g1 |
+| `bringup/` `record/` `dataset/` | PC 版启动、录制、数据集截图与示意图 | 首页、pc/ |
+| `highlights/` | 产品视频的封面与截帧 | product/highlights |
+| `video/` | 产品宣传视频 | product/highlights |
+| `javascripts/` | PC 版总览的交互式架构图(`arch.js`) | pc/index |
+
+## 待重截 {#placeholder}
+
+2026-10-07 用 0.4.3 真机重截了 12 张(采集设置、网络 / 配网、上传配置、夹爪配置、新建项目、
+项目页、实时监控、系统更新、顶栏网络下拉、设备信息、回放、相机参数包),**同名覆盖**,引用路径不变。
+`wifi.webp` 与 `network-dropdown-live.webp` 里的热点密码已打码。
+
+下面几张仍是 0.3.x 的旧界面,重截后同名覆盖即可:
+
+| 文件 | 应当拍什么 | 用在 |
+|---|---|---|
+| `export-precheck-live.webp` | 0.4.3 导出对话框:预检、选录制、去向、格式 | projects-export |
+| `new-task-live.webp` | 0.4.3 新建任务对话框 | monitor-record |
+| `delete-select.webp`、`delete-confirm.webp` | 0.4.3 删除录制的选择与确认弹窗 | monitor-record |
+
+## 从 docs/follower-gripper 带入的素材来源
+
+### product/ 渲染图
+
+原图(高分辨率 PNG)在 `materials/product-renders-orig/`,同名不同后缀;这里是发布用的 webp,
+最长边 1400 px(五视图 2000 px),保留透明背景。
+
+| 文件 | 内容 |
+|---|---|
+| `g1-family-scene.webp` | 整套产品合影:两只主夹爪、一只从夹爪、数采背包,白色台阶场景 |
+| `leader-five-views.webp` | 主夹爪五视图 |
+| `leader-front-open.webp` | 主夹爪前斜视,手指张开,可见腕部相机 |
+| `leader-front-open-cutout.webp` | 同上,去掉柔光阴影并裁到主体,首页首屏用 |
+| `leader-side-camera.webp` | 主夹爪侧视,腕部相机一侧,手指闭合 |
+| `leader-side-port.webp` | 主夹爪侧视,Type-C 接口与手部绑带一侧 |
+| `leader-rear-tracker.webp` | 主夹爪后斜视,追踪器与手柄 |
+| `follower-five-views.webp` | 从夹爪五视图 |
+| `follower-rear-ports.webp` | 从夹爪后斜视,Type-C 与 24V 电源口、法兰电机 |
+| `follower-scene-front.webp` | 从夹爪场景图,前斜视,手指张开 |
+| `follower-scene-side.webp` | 从夹爪场景图,侧视,可见接口(4:3) |
+| `follower-scene-pedestal.webp` | 从夹爪场景图,置于台面,侧视(16:9) |
+
+### pico4/ 产品图
+
+| 文件 | 内容 | 来源 |
+|---|---|---|
+| `pico4-ultra-enterprise.webp` | Pico4 Ultra 企业版头显与手柄,已去背景 | PICO 官方产品图,原图与抠图在 `materials/pico4-orig/` |
+| `pico4-motion-trackers.webp` | Pico4 Ultra 运动追踪器(出厂腕带形态),已去背景 | 同上 |
+| `xr-console-idle.webp` / `xr-console-connected.webp`（及 `-en`） | XTac-UMI XR 0.3.2 控制台主界面，企业版、独立追踪，未连接 / 连接成功 | 用浏览器渲染安装包内的界面网页（`assets/html/index.html`）得到，原图在 `materials/pico4-orig/` |
+
+这两张是第三方官方图片,不是我们自己拍摄或渲染的;替换或新增同类图片时注意来源与使用授权。
+
+### highlights/ 与 video/ 产品视频
+
+`video/xtac-umi-g1-market.mp4` 是产品宣传视频正式版（原文件 `XTac-UMI-High.qt`，1280×720、1 分 46 秒、带背景音乐与烧录的中文字幕），
+只把封装从 `.qt` 换成带 faststart 的 `.mp4`，未重新编码；原文件备份在 `materials/market-video/`。
+`highlights/` 下的图都从这段视频截帧，裁成 16:9 后存为 webp，场景图去掉了底部字幕：
+
+| 文件 | 内容 | 视频时间 |
+|---|---|---|
+| `video-poster.webp` | 视频封面，主夹爪张开，配「XTac UMI G1」字样 | 0:02 |
+| `visuotactile.webp` | 指尖特写，配「集成视触觉传感能力」字样 | 0:06 |
+| `handheld.webp` | 单手握持主夹爪 | 0:28 |
+| `fingertip.webp` | 指尖夹取包链 | 0:54 |
+| `system-sync.webp` | 双手持主夹爪，叠加位姿坐标轴，配「高精度位姿数据」字样 | 1:00 |
+| `scene-office.webp` / `scene-workshop.webp` / `scene-retail.webp` | 办公桌面、工具工位、货架取物三个场景 | 1:06 / 1:11 / 1:20 |
+| `backpack.webp` | 背负采集背包、手持主夹爪的背影 | 1:16 |
+| `toolchain.webp` | 「打通主流生态 数据即刻可用」：主爪 → 背包 → 工具链 → 云端 | 1:38 |
+
+### dataset/ 数据示意图
+
+| 文件 | 内容 | 来源 |
+|---|---|---|
+| `viewer-3d-replay.webp` | xense-lerobot-viewer 的 3D REPLAY 页，数据集 `XTac-UMI/xtac-umi-g1-insert-optical-module` | 本公司截图，原图 `materials/dataset-card-orig/XTac-UMI-G1-3D-REPLAY.jpg` |
+| `tacverse-scenes.webp` | TacVerse 三类场景（办公、家庭、工作台）示意图 | 公司公开数据集 `TacVerse/opendata` 卡片的 `assets/scenes.png`（CC BY-SA 4.0），原图 `materials/dataset-card-orig/tacverse-scenes.png` |
+| `../product/backpack-wiring-powerbank.webp` | 背包版充电宝供电接线：左右主夹爪、头显接数采背包，单只充电宝接 DC 口（Leader / Pico / Bank → Pack 标注） | 本公司实拍示意图，原图 `materials/backpack-wiring-powerbank-v2.jpg`，替换了旧的双充电宝、二合一线版本 |
+| `sensor-key-map.webp` | 八路画面与数据集键名的对应图 | TacVerse 数据集卡片的 `sensor_key_map.png`（公开于 Hugging Face `TacVerse/TacVerse`，CC BY-SA 4.0；数采仓库 v0.0.8 上传数据集时也附带同一张图） |
+| `rerun-xtac-umi-g1.webp` | Rerun 实时预览，`xtac_umi_g1`（双夹爪 + 头显）：四路视触觉、头显双目、左右腕部相机与动作 / 状态曲线 | 本公司实机截图 |
+| `rerun-bi-taccap-gripper.webp` | Rerun 实时预览，`bi_taccap_gripper`（双夹爪，不带头显）：四路视触觉、左右腕部相机与状态 / 动作曲线 | 本公司实机截图 |
+
+原图在 `materials/dataset-card-orig/`。
+
 
 ## 命名约定
 
 - 全小写、连字符分隔、带章节前缀,便于定位:
-  `pico4/3-4-pair-tracker.png`、`bringup/3-6-step2-unity-client.png`
-- 优先 `.png`(截图)/`.svg`(矢量图示);大图控制在合理体积(建议 < 500 KB)。
+  `pico4/3-4-pair-tracker.webp`、`bringup/3-6-step2-unity-client.webp`
+- 截图与照片统一转成 `.webp`(最长边 ≤ 1400 px,质量 80 左右,单张一般 < 100 KB);矢量图示用 `.svg`。
 
 ## 在文档里引用
 
 Markdown 里用**相对 docs 根**的路径。例如在 `docs/03-host-hardware.md` 中:
 
 ```markdown
-![Pico4 Ultra 企业版配对追踪器](assets/pico4/3-4-pair-tracker.png)
+![Pico4 Ultra 企业版配对追踪器](assets/pico4/3-4-pair-tracker.webp)
 ```
 
 加说明/宽度(需要 `attr_list`,已启用):
 
 ```markdown
-![启动 Unity 客户端](assets/bringup/3-6-step3-unity.png){ width="480" }
+![启动 Unity 客户端](assets/bringup/3-6-step3-unity.webp){ width="480" }
 ```
 
 点击放大(`glightbox` 已启用,默认对内容区图片生效,无需额外语法)。
@@ -47,3 +127,17 @@ theme:
   logo: assets/brand/logo.png
   favicon: assets/brand/favicon.png
 ```
+
+## 来自硬件部门《TC-GU-01：数采盒子使用说明 v0.0.1》
+
+原文与全部附图备份在 `materials/box-manual-v0.0.1/`。
+
+| 文件 | 内容 |
+|---|---|
+| `product/backpack-ports-drawing.webp` | 数采背包六视图，标注 ① DC IN 至 ⑩ HOST2 十个接口位置 |
+| `product/backpack-belt-drawing.webp` | 腰带固定结构示意图 |
+| `product/follower-dimensions.webp` | 从夹爪外形尺寸图（157 × 111 / 200 mm） |
+
+## 背包版接线示意图
+
+`product/backpack-wiring-adapter-diagram.webp`、`product/backpack-wiring-powerbank-diagram.webp`（及 `-en` 英文版）是用产品渲染图拼成的示意图，脚本与素材在 `materials/wiring-diagram/`；改文字或线缆规格时改 `compose.py` 里的 `T` 表，在仓库根目录运行 `python3 materials/wiring-diagram/compose.py docs/assets/product`。

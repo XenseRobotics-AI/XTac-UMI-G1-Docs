@@ -1,0 +1,155 @@
+# 一页速通（TL;DR）
+
+从上电到录出第一条数据，照着做即可。开始前确认这五项都已完成：
+
+- 硬件已接好 → [夹爪连接](../common/gripper.md#install)
+- 环境已安装，已进入采集环境（`mamba activate xense-taccap` 或 Docker 容器） → [安装](install.md)
+- 主机已配置串口权限并关闭 ModemManager 抢占 → [主机配置](host-setup.md#31)
+- 每只主夹爪已标定（没标定会被拒绝连接） → [夹爪标定](calibration.md#41)
+- 仓库、SDK 与夹爪固件都是最新版本 → [必须升级到最新版本](versions.md#required)
+
+## 1. 上电与连接 {#power-on}
+
+1. 插上夹爪 USB。
+2. 头显接上有线网络，**关闭电脑 WiFi**。
+3. 打开头显，短按追踪器电源键至蓝灯亮起。
+4. 启动 XenseVR PC Service：`/opt/apps/roboticsservice/runService.sh`
+5. **面朝机器人**打开 XTac-UMI XR，点「连接」，网络状态变为「连接成功」。
+
+<div class="tc-pair" markdown>
+
+<figure class="tc-shot" markdown>
+![夹爪经 USB 连接到电脑](../assets/hardware/master-connection.webp)
+<figcaption>夹爪经 USB Type-C 连接电脑</figcaption>
+</figure>
+
+<figure class="tc-shot" markdown>
+![XTac-UMI XR 控制台：连接成功](../assets/pico4/xr-console-connected.webp)
+<figcaption>XTac-UMI XR 网络状态变为「连接成功」</figcaption>
+</figure>
+
+</div>
+
+!!! warning "三个容易出错的地方"
+    - 先启动 PC Service，再打开 XR 应用，否则连不上。
+    - 头显走有线时必须关闭电脑 WiFi，否则追踪不稳。见 [网络连接](../common/pico4.md#pico-network)。
+    - 采集期间不要重启 XR 应用：重启会重设世界原点，同一数据集里的位姿就对不上了。
+
+下电按相反顺序：先停止录制并等当前这一集存盘，再退出 XR 应用、停掉 PC Service，最后拔线，拔线顺序见[供电与连接要求](../common/gripper.md#power)。
+
+## 2. 自检 {#self-check}
+
+```bash
+python -c "from xense.taccap import scan_grippers
+for g in scan_grippers(): print(g.side.name, g.role.name, repr(g.firmware_sn))"
+```
+
+每只夹爪一行，`role` 为 `Leader` 或 `Follower`，序列号不为空。出问题见 [故障排查](troubleshooting.md)。
+
+## 3. 预览检查
+
+=== "② 带腕部位姿"
+
+    ```bash
+    lerobot-teleoperate \
+        --robot.type=bi_taccap_gripper \
+        --robot.id=0 \
+        --fps=30 \
+        --display_data=true
+    ```
+
+    ![Rerun 实时预览：四路视触觉、左右腕部相机与状态、动作曲线](../assets/dataset/rerun-bi-taccap-gripper.webp)
+
+=== "③ 完全体"
+
+    ```bash
+    lerobot-teleoperate \
+        --robot.type=xtac_umi_g1 \
+        --robot.id=0 \
+        --fps=30 \
+        --display_data=true
+    ```
+
+    ![Rerun 实时预览：四路视触觉、头显双目、左右腕部相机与动作曲线](../assets/dataset/rerun-xtac-umi-g1.webp)
+
+移动、开合夹爪，确认各路画面、触觉和位姿都在更新，然后按 Ctrl+C 退出。
+
+三档用 `--robot.type` 区分，**预览用哪一档，录制就用哪一档**：
+
+<div class="tc-tiers" markdown>
+
+| 档位 | 写法 | 包含的数据 |
+|---|---|---|
+| ① 只有夹爪 | `--robot.type=bi_taccap_gripper`<br>`--robot.enable_tracker=false` | 触觉、腕部相机、开合度；不需要 PC Service |
+| ② 带腕部位姿 | `--robot.type=bi_taccap_gripper` | 再加夹爪位姿 `tcp.*` |
+| ③ 完全体 | `--robot.type=xtac_umi_g1` | 再加头显双目画面与头部位姿 |
+
+</div>
+
+启动前把追踪器放在头显视野内，被遮挡会丢跟踪。
+
+## 4. 正式录制
+
+=== "② 带腕部位姿"
+
+    ```bash
+    lerobot-record \
+        --robot.type=bi_taccap_gripper \
+        --robot.id=0 \
+        --dataset.repo_id=<你的org>/<数据集名> \
+        --dataset.single_task='Pick up the object' \
+        --dataset.num_episodes=1 \
+        --dataset.fps=30 \
+        --dataset.episode_time_s=120 \
+        --dataset.reset_time_s=60 \
+        --dataset.push_to_hub=false
+    ```
+
+    每帧记录 6 路画面：四路视触觉与左右腕部相机，以及开合度和夹爪位姿。
+
+=== "③ 完全体"
+
+    ```bash
+    lerobot-record \
+        --robot.type=xtac_umi_g1 \
+        --robot.id=0 \
+        --dataset.repo_id=<你的org>/<数据集名> \
+        --dataset.single_task='Pick up the object' \
+        --dataset.num_episodes=1 \
+        --dataset.fps=30 \
+        --dataset.episode_time_s=120 \
+        --dataset.reset_time_s=60 \
+        --dataset.push_to_hub=false
+    ```
+
+    每帧记录 8 路画面，在上一档基础上多了头显双目，以及头部位姿：
+
+    <figure class="tc-shot tc-shot--narrow" markdown>
+    ![八路画面与数据键的对应](../assets/dataset/sensor-key-map.webp)
+    <figcaption>八路画面及其在数据集里的键名</figcaption>
+    </figure>
+
+- `--robot.id` 必填，直接填工位号数字（`0`、`1`…），一套设备一个。
+- `--robot.type`（以及是否加 `--robot.enable_tracker=false`）与预览时保持一致；只有夹爪时在 ② 的命令里加上这个开关。
+- 单夹爪：`--robot.type=taccap_gripper`，两只夹爪都接着时再加 `--robot.side=left` 或 `right`。
+
+全部参数见 [录制参数](recording.md#params)。
+
+## 5. 检查与上传
+
+检查数据集完整性：
+
+```bash
+lerobot-check-dataset --repo-id <你的org>/<数据集名>
+```
+
+需要时上传到 Hugging Face Hub：
+
+```bash
+lerobot-push-dataset-to-hub \
+    --repo-id <你的org>/<数据集名> \
+    --dataset-path ~/.cache/huggingface/lerobot/<你的org>/<数据集名> \
+    --upload-large-folder
+```
+
+数据集的结构与字段见 [数据集](dataset.md)。
