@@ -37,7 +37,11 @@ hide:
 
 </div>
 
+<div class="tc-brandline">
+<img class="tc-brandline__logo tc-only-dark" src="assets/brand/logo-green-light.png" alt="XENSE 千觉">
+<img class="tc-brandline__logo tc-only-light" src="assets/brand/logo-green-dark.png" alt="XENSE 千觉">
 <p class="tc-slogan">Touch lights up physical intelligence</p>
+</div>
 
 <div class="xu-stats" markdown>
 
@@ -80,7 +84,7 @@ Both kits use the same grippers and headset and produce the same data. The Backp
 
 <div class="grid cards xu-cards" markdown>
 
--   ![Front ports of the XTac-UMI data collection backpack](assets/product/backpack-ports-front.webp){ .xu-card__img }
+-   ![The XTac-UMI data collection backpack](assets/product/backpack-card.webp){ .xu-card__img }
 
     <span class="xu-tag xu-tag--backpack">Backpack Kit</span>
 
@@ -100,7 +104,7 @@ Both kits use the same grippers and headset and produce the same data. The Backp
     [About the backpack](product/backpack.md){ .md-button }
     { .xu-card__actions }
 
--   ![XTac-UMI G1 visuotactile gripper](assets/product/g1-render-hero.webp){ .xu-card__img }
+-   ![XTac-UMI G1 visuotactile gripper](assets/product/g1-card.webp){ .xu-card__img }
 
     <span class="xu-tag xu-tag--pc">Developer Kit</span>
 

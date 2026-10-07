@@ -37,7 +37,11 @@ hide:
 
 </div>
 
+<div class="tc-brandline">
+<img class="tc-brandline__logo tc-only-dark" src="assets/brand/logo-green-light.png" alt="XENSE 千觉">
+<img class="tc-brandline__logo tc-only-light" src="assets/brand/logo-green-dark.png" alt="XENSE 千觉">
 <p class="tc-slogan">触觉点亮物理智能</p>
+</div>
 
 <div class="xu-stats" markdown>
 
@@ -80,7 +84,7 @@ hide:
 
 <div class="grid cards xu-cards" markdown>
 
--   ![XTac-UMI 数采背包正面接口](assets/product/backpack-ports-front.webp){ .xu-card__img }
+-   ![XTac-UMI 数采背包](assets/product/backpack-card.webp){ .xu-card__img }
 
     <span class="xu-tag xu-tag--backpack">背包版</span>
 
@@ -100,7 +104,7 @@ hide:
     [了解背包](product/backpack.md){ .md-button }
     { .xu-card__actions }
 
--   ![XTac-UMI G1 视触觉夹爪](assets/product/g1-render-hero.webp){ .xu-card__img }
+-   ![XTac-UMI G1 视触觉夹爪](assets/product/g1-card.webp){ .xu-card__img }
 
     <span class="xu-tag xu-tag--pc">PC 版</span>
 
