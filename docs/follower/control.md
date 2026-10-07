@@ -78,7 +78,7 @@ with t.ForcePositionController(g, cfg) as c:
 - **先启动控制器，再 `g.motor.enable()`**，上面的写法已经是这个顺序。
 - **一只夹爪同时只运行一个控制器。**
 - 控制过程中读开度、速度、力矩、温度，用 `c.snapshot().observation`，不要另外去读电机状态。
-- 接口细节见 [SDK 附录 → API 要点](../sdk/api.md#follower)。
+- 接口细节与示例脚本见 [API 与示例](api.md)。
 
 !!! danger "停止控制或断链时夹爪会松开"
     控制器停止（退出 `with`、程序结束）、控制台按 `d` / `q`，或者 USB 断开，夹爪都会松开，**夹着的东西会掉**。

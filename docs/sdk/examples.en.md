@@ -11,12 +11,6 @@ Every script selects a gripper with `left`, `right` or a full serial number, whi
 
 | Script | Purpose | Moves the motor or rewrites the gripper? |
 |---|---|---|
-| `follower_status.py` | Follower gripper self-check | Read-only |
-| `gripper_console.py` | Keyboard control of the follower gripper | **Moves the motor** |
-| `impedance_control.py` | Impedance control test; view / write the motion safety envelope | **Moves the motor**; `--set-envelope` rewrites the gripper |
-| `force_position_control.py` | Force-position control grasp test | **Moves the motor** |
-| `control_and_read.py` | Read state while controlling | **Moves the motor** |
-| `control_ripple.py` | Measure motion smoothness | **Moves the motor** |
 | `calibrate.py` | Leader gripper travel calibration | Rewrites the gripper |
 | `leader_normalized_position.py` | Read the leader gripper's opening | Read-only |
 | `fisheye_cal.py` | View / write fisheye intrinsics | `show` is read-only, the rest rewrite the gripper |
@@ -25,18 +19,11 @@ Every script selects a gripper with `left`, `right` or a full serial number, whi
 | `ota_update.py` | Gripper firmware upgrade | **Flashes firmware** |
 | `motor_ota_update.py` | Motor firmware upgrade | **Flashes firmware** |
 
-Every script accepts `--help` to list its arguments.
+Every script accepts `--help` to list its arguments. The follower gripper's scripts (self-check, keyboard control, impedance and force-position control and so on) are in [Follower gripper → Example scripts](../follower/api.md#examples).
 
 ## Follower gripper {#follower}
 
-```bash
-python python/examples/follower_status.py left
-python python/examples/gripper_console.py left
-python python/examples/impedance_control.py left
-python python/examples/force_position_control.py left --grasp-torque 0.6
-```
-
-Before first use, run through [Setup and self-check](../follower/setup.md).
+See [Follower gripper → Example scripts](../follower/api.md#examples).
 
 ## Leader gripper {#leader}
 

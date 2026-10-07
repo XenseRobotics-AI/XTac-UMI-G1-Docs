@@ -41,31 +41,10 @@ g.stop_streaming()
 
 ## 从夹爪：控制 {#follower}
 
-用法与注意事项见 [从夹爪 → 运动控制](../follower/control.md)。
+从夹爪的控制器、状态读取与示例脚本见 [从夹爪 → API 与示例](../follower/api.md)。
 
-| | 阻抗控制（默认） | 力位控制 |
-|---|---|---|
-| 控制器 | `ImpedanceController` | `ForcePositionController` |
-| 配置 | `ImpedanceConfig.for_spec(g.motor.get_spec())` | `ForcePositionConfig.for_spec(g.motor.get_spec())` |
-| 可调参数 | 一般不调 | `grasp_torque_nm`（夹持力，≤ 1.1 N·m） |
-| 常用调用 | `set_target(开度)` | `set_target(开度)`、`release()`、`hold_position()` |
-| 是否夹住 | — | `snapshot().holding` |
-
-两种控制器都有 `start()` / `stop()`（或用 `with`）、`snapshot()`、`reset()`。调用顺序：
-`g.motor.clear_fault()` → 启动控制器 → `g.motor.enable()` → `set_target()` → 停止控制器。
-
-`snapshot().observation` 里有 `position`（开度）、`velocity`、`torque`（正值 = 往闭合方向）、`motor_temp_c`。
-
-不控制时读开度：`g.position()`。电机固件版本：`g.motor.motor_version()`，见
-[固件与电机升级](../follower/firmware.md#motor-version)。
-
-## 电机底层接口 {#motor-primitives}
-
-`g.motor.submit_*` 等底层接口直接向电机下发命令，不经过控制器的保护。**请使用控制器**，不要调用它们。
-
-以下接口会修改夹爪或电机里保存的配置，**只在技术支持指导下使用**：
-`set_model()`、`set_startup_limit_torque()`、`switch_protocol()`、`set_can_id()`、`set_private_param()`、
-`set_zero()`、`set_gripper_config()`、`set_envelope()`、`set_auto_cal_config()`、`set_motor_fw_version()`。
+<span id="motor-primitives"></span>
+电机底层接口不经过控制器的保护，不要直接调用，见[电机底层接口](../follower/api.md#motor-primitives)。
 
 ## 腕部相机与鱼眼矫正 {#camera}
 

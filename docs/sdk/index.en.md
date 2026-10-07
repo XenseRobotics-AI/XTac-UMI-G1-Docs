@@ -27,5 +27,6 @@ Visuotactile images are captured by `xensesdk` and are not part of this SDK. Tel
 ## Other pages in this appendix {#pages}
 
 - [Install and build](install.md): installing for Python, and integrating into C++ / ROS 2 projects.
-- [API essentials](api.md): device discovery, reading the leader gripper, controlling the follower gripper, calibration and the wrist camera.
-- [Examples](examples.md): the example scripts at a glance, and migrating from older versions.
+- [API essentials](api.md): device discovery, reading the leader gripper, calibration and the wrist camera.
+- [Examples](examples.md): example scripts for the leader gripper and wrist camera, and migrating from older versions.
+- The follower gripper's controllers, state reading and example scripts: [Follower gripper → API and examples](../follower/api.md).

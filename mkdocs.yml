@@ -135,6 +135,7 @@ plugins:
             从夹爪概览: Overview
             准备与自检: Setup & Self-check
             运动控制: Motion Control
+            API 与示例: API & Examples
             固件与电机升级: Firmware & Motor Upgrades
             SDK 与二次开发: SDK & Development
             SDK 概览: SDK Overview
@@ -305,6 +306,7 @@ nav:
       - 从夹爪概览: follower/index.md
       - 准备与自检: follower/setup.md
       - 运动控制: follower/control.md
+      - API 与示例: follower/api.md
       - 固件与电机升级: follower/firmware.md
       - 故障排查: follower/troubleshooting.md
   - 通用:
