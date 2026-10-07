@@ -960,14 +960,21 @@ html[lang="en"] .md-typeset .tc-slogan {
   .md-typeset .tc-lamp { animation: none !important; }
 }
 
-/* ---- 页脚:版权信息前加公司字标(页脚底色两种主题都是深色) ---- */
-.md-copyright__highlight::before {
+/* ---- 页脚:最右侧放公司字标(页脚底色两种主题都是深色) ---- */
+.md-footer-meta__inner {
+  align-items: center;
+  justify-content: flex-start;
+}
+.md-footer-meta__inner .md-social {
+  margin-left: auto;
+}
+.md-footer-meta__inner::after {
   content: "";
-  display: inline-block;
+  order: 99;
+  flex: none;
   width: 5.2rem;
   height: .8rem;
-  margin-right: .6rem;
-  vertical-align: -.1rem;
-  background: url("../brand/logo-light.svg") no-repeat left center / contain;
+  margin: .6rem .6rem .6rem 1rem;
+  background: url("../brand/logo-light.svg") no-repeat right center / contain;
   opacity: .85;
 }
