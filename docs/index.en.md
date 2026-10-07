@@ -37,6 +37,8 @@ hide:
 
 </div>
 
+<p class="tc-slogan">Touch lights up physical intelligence</p>
+
 <div class="xu-stats" markdown>
 
 **8 image streams** 4 tactile + 2 wrist + 2 headset
