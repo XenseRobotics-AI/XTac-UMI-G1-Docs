@@ -147,6 +147,7 @@ The ways to open the console are in [Network and console access](network.md); th
 | Block | Contents |
 |---|---|
 | Local hotspot | Hotspot switch, name and password |
+| Wireless address | Device name (`.local`); give each backpack a different name |
 | Current WiFi | Joined network, IP, "Disconnect and forget" |
 | Nearby WiFi | Scan for and join a site network |
 | Wired connection | Automatic (DHCP) or static IP |

@@ -64,7 +64,7 @@
 
 控制台顶栏左侧的 IP 下拉汇总本机全部入口：有线 IP、无线 IP 与所连热点、自身热点的 SSID / 密码 / 网关、mDNS 设备名。折叠态只显示一条「此刻最该用来连它的地址」（按 有线 > 无线 > 热点 取第一个可用的），点开可见全部。换了网络环境、不确定该用哪个地址时先看这里。
 
-![顶栏网络下拉](../assets/backpack/network-dropdown-live.webp){ width="520" }
+![顶栏网络下拉](../assets/backpack/network-dropdown-live.webp)
 
 ## 按场景选接入方式 {#choose}
 

@@ -30,7 +30,7 @@ Recordings land under a two-level "project → task" hierarchy. The two drop-dow
 
 Besides the name, a new project also fixes this project's **capture config** in one go: the capture mode (one of three: "Dual gripper", "Dual gripper + stereo headset", "Dual gripper + headset right eye"), the PICO resolution per eye (640 × 480 or 1024 × 768, only for modes that record headset video), the PICO image source (fisheye or undistorted images), the tactile rectified image export orientation (700 × 400 landscape by default, or an additional 90° counterclockwise for 400 × 700) and whether to rectify wrist fisheye distortion on export. **Once created they are frozen and cannot be changed** — to use a different set, create a new project; what each one means is in [Current project capture config](system.md#capture-mode). If you have already configured an upload backend at [System → Upload configuration](system.md#upload), you can also bind one to the project here and that project will use it by default when publishing; without a binding you pick one at publish time.
 
-![Creating a project](../assets/backpack/new-project.webp)
+![Creating a project](../assets/backpack/new-project.webp){ width="360" }
 
 The fields for a new task:
 

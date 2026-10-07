@@ -64,7 +64,7 @@ The easiest way is [WiFi setup from the tablet over USB](#tablet-wifi), which jo
 
 The IP drop-down at the left of the console's top bar gathers every way into this unit: the wired IP, the wireless IP and the hotspot it is joined to, and its own hotspot's SSID / password / gateway, plus the mDNS device name. Collapsed it shows only "the one address you should use to reach it right now" (the first available of wired > wireless > hotspot), and expanding it shows them all. When the network environment has changed and you are not sure which address to use, look here first.
 
-![The top-bar network drop-down](../assets/backpack/network-dropdown-live.webp){ width="520" }
+![The top-bar network drop-down](../assets/backpack/network-dropdown-live.webp)
 
 ## Choosing a method by scenario {#choose}
 

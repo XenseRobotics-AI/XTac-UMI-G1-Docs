@@ -11,7 +11,7 @@
 |---|---|---|
 | `brand/` | 站点 logo(`logo.svg` 深色版、`logo-light.svg` 白色版给黑色页眉)、favicon | 主题 |
 | `product/` | 产品渲染图、背包接口与标签照片、接线图 | 首页、product/ |
-| `backpack/` | XTac-UMI Collector 控制台截图(多数仍是 0.3.16 拍的;界面已变的四张换成了占位图,见下方[占位图待补](#placeholder);文件名沿用 Taccap-User-Doc;首页与 product/ 的控制台展示图也从这里取) | 首页、product/、backpack/ |
+| `backpack/` | XTac-UMI Collector 控制台截图(2026-10-07 起按 0.4.3 重截,仍是旧图的见下方[待重截](#placeholder);文件名沿用 Taccap-User-Doc;首页与 product/ 的控制台展示图也从这里取) | 首页、product/、backpack/ |
 | `pico4/` | Pico4 Ultra 企业版系统与 APP 截图 | common/pico4 |
 | `hardware/` | 夹爪接口、锁紧、指示灯示意 | common/gripper、product/g1 |
 | `bringup/` `record/` `dataset/` | PC 版启动、录制、数据集截图与示意图 | 首页、pc/ |
@@ -19,25 +19,19 @@
 | `video/` | 产品宣传视频 | product/highlights |
 | `javascripts/` | PC 版总览的交互式架构图(`arch.js`) | pc/index |
 
-## 占位图待补 {#placeholder}
+## 待重截 {#placeholder}
 
-文档已同步到 Collector 0.4.1,下面四张的界面在 0.4.1 结构性改过(不只是细节差异),
-原图会误导读者,所以**先用占位图顶替**。拿到 0.4.1 真机后按「应当拍什么」重截,
-**覆盖同名文件即可**,文档里的引用路径不用动;原图在 git 历史里可取回。
+2026-10-07 用 0.4.3 真机重截了 12 张(采集设置、网络 / 配网、上传配置、夹爪配置、新建项目、
+项目页、实时监控、系统更新、顶栏网络下拉、设备信息、回放、相机参数包),**同名覆盖**,引用路径不变。
+`wifi.webp` 与 `network-dropdown-live.webp` 里的热点密码已打码。
 
-| 文件 | 应当拍什么 | 为什么原图失效 |
+下面几张仍是 0.3.x 的旧界面,重截后同名覆盖即可:
+
+| 文件 | 应当拍什么 | 用在 |
 |---|---|---|
-| `capture-mode.webp` | 系统 → 采集设置页首的「当前项目采集配置」只读块 | 原图是设备级、可点击切换的模式卡片;0.4.1 改成项目级、建项目时冻结,这一页只读展示 |
-| `new-project.webp` | 新建项目对话框(含采集模式、PICO 分辨率、触觉导出方向、图像源、鱼眼矫正) | 原图只有项目名与上传后端;0.4.1 把采集配置挪进了建项目这一步 |
-| `upload.webp` | 系统 → 上传配置,展开后端种类下拉 | 原图是三档后端;0.4.1 是五档(多了 FTP / FTPS 与 NFS) |
-| `wifi.webp` | 系统 → 网络 / 配网,含热点开关与「域名」字段 | 原图的热点块是只读展示;0.4.1 可开关热点、可改 mDNS 域名 |
-
-占位图是**双语**的(中文 + English):这四张在中英两套页面里共用同一个文件,
-一份双语图两边都读得懂,省掉一套英文专用图和两边的引用改动。真机截图拍的是
-控制台界面,界面本身是中文,与站内其余截图一致,不需要再出英文版。
-
-其余截图暂按原样保留 —— 它们与 0.4.1 的差异还没有核实到「结构性改变」的程度,
-拿真图换掉一张能看的旧图,不如先留着。重截时可一并核对。
+| `export-precheck-live.webp` | 0.4.3 导出对话框:预检、选录制、去向、格式 | projects-export |
+| `new-task-live.webp` | 0.4.3 新建任务对话框 | monitor-record |
+| `delete-select.webp`、`delete-confirm.webp` | 0.4.3 删除录制的选择与确认弹窗 | monitor-record |
 
 ## 从 docs/follower-gripper 带入的素材来源
 
