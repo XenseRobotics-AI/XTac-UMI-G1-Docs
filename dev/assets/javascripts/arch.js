@@ -7,14 +7,14 @@
   "use strict";
 
   var NS = "http://www.w3.org/2000/svg";
-  var W = 1000, H = 520;
+  var W = 1170, H = 520;
 
   /* 列中心与节点尺寸 */
-  var COL = { dev: 110, read: 355, core: 640, out: 885 };
-  var NW = { dev: 180, read: 175, core: 170, out: 190 };
+  var PC_COL = { dev: 110, read: 350, core: 615, out: 860, up: 1075 };
+  var PC_NW = { dev: 180, read: 175, core: 170, out: 180, up: 170 };
 
   /* kind 决定配色;tier 是开始出现的档位 */
-  var NODES = [
+  var PC_NODES = [
     { id: "grip",    col: "dev",  y: 104, h: 52,  kind: "dev",  tier: 1 },
     { id: "tact",    col: "dev",  y: 176, h: 52,  kind: "dev",  tier: 1 },
     { id: "wrist",   col: "dev",  y: 248, h: 52,  kind: "dev",  tier: 1 },
@@ -27,11 +27,12 @@
     { id: "obs",     col: "core", y: 245, h: 170, kind: "core", tier: 1 },
     { id: "pair",    col: "core", y: 425, h: 60,  kind: "core", tier: 1 },
     { id: "rerun",   col: "out",  y: 120, h: 60,  kind: "out",  tier: 1 },
-    { id: "ds",      col: "out",  y: 425, h: 84,  kind: "out",  tier: 1 }
+    { id: "ds",      col: "out",  y: 425, h: 84,  kind: "out",  tier: 1 },
+    { id: "hub",     col: "up",   y: 425, h: 60,  kind: "up",   tier: 1 }
   ];
 
   /* 端点:r = 右边、l = 左边、b = 下边、t = 上边,dy/dx 为相对节点中心的偏移 */
-  var EDGES = [
+  var PC_EDGES = [
     { id: "e-grip",    from: "grip",    to: "sdk",    tier: 1, a: "r", b: "l" },
     { id: "e-tact",    from: "tact",    to: "xsdk",   tier: 1, a: "r", b: "l" },
     { id: "e-wrist",   from: "wrist",   to: "cam",    tier: 1, a: "r", b: "l" },
@@ -44,16 +45,73 @@
     { id: "e-stereo",  from: "pcs",     to: "obs",    tier: 3, a: "r", b: "l", ady: 10, bdy: 60, video: true },
     { id: "e-pair",    from: "obs",     to: "pair",   tier: 1, a: "b", b: "t" },
     { id: "e-ds",      from: "pair",    to: "ds",     tier: 1, a: "r", b: "l" },
-    { id: "e-rerun",   from: "obs",     to: "rerun",  tier: 1, a: "r", b: "l", ady: -60 }
+    { id: "e-rerun",   from: "obs",     to: "rerun",  tier: 1, a: "r", b: "l", ady: -60 },
+    { id: "e-hub",     from: "ds",      to: "hub",    tier: 1, a: "r", b: "l", up: true }
   ];
 
   /* 有标签的连线:标签放在直段上方 */
-  var LABEL_POS = {
-    "e-grip":   { x: 234, dy: -7, anchor: "middle" },
-    "e-tact":   { x: 234, dy: -7, anchor: "middle" },
-    "e-wrist":  { x: 234, dy: -7, anchor: "middle" },
+  var PC_LABELS = {
+    "e-grip":   { x: 232, dy: -7, anchor: "middle" },
+    "e-tact":   { x: 232, dy: -7, anchor: "middle" },
+    "e-wrist":  { x: 232, dy: -7, anchor: "middle" },
     "e-track":  { x: 122, y: 414, anchor: "start" },
-    "e-head":   { x: 234, dy: -7, anchor: "middle" }
+    "e-head":   { x: 232, dy: -7, anchor: "middle" }
+  };
+
+  /* 背包版:设备列相同;背包内读取 → 录制 / 预览编码两路 → 控制台、MCAP、导出 */
+  var BP_NODES = [
+    { id: "grip",    col: "dev",  y: 104, h: 52,  kind: "dev",  tier: 1 },
+    { id: "tact",    col: "dev",  y: 176, h: 52,  kind: "dev",  tier: 1 },
+    { id: "wrist",   col: "dev",  y: 248, h: 52,  kind: "dev",  tier: 1 },
+    { id: "tracker", col: "dev",  y: 360, h: 52,  kind: "dev",  tier: 1 },
+    { id: "headset", col: "dev",  y: 460, h: 52,  kind: "dev",  tier: 1 },
+    { id: "mcu",     col: "read", y: 104, h: 52,  kind: "read", tier: 1 },
+    { id: "tcam",    col: "read", y: 176, h: 52,  kind: "read", tier: 1 },
+    { id: "fcam",    col: "read", y: 248, h: 52,  kind: "read", tier: 1 },
+    { id: "xvr",     col: "read", y: 460, h: 52,  kind: "read", tier: 1 },
+    { id: "enc",     col: "core", y: 120, h: 60,  kind: "core", tier: 1 },
+    { id: "rec",     col: "core", y: 345, h: 170, kind: "core", tier: 1 },
+    { id: "console", col: "out",  y: 120, h: 60,  kind: "out",  tier: 1 },
+    { id: "mcap",    col: "out",  y: 300, h: 60,  kind: "out",  tier: 1 },
+    { id: "export",  col: "out",  y: 440, h: 76,  kind: "out",  tier: 1 },
+    { id: "dl",      col: "up",   y: 395, h: 52,  kind: "up",   tier: 1 },
+    { id: "upload",  col: "up",   y: 475, h: 60,  kind: "up",   tier: 1 }
+  ];
+
+  var BP_EDGES = [
+    { id: "e-grip",     from: "grip",    to: "mcu",     tier: 1, a: "r", b: "l" },
+    { id: "e-tact",     from: "tact",    to: "tcam",    tier: 1, a: "r", b: "l" },
+    { id: "e-wrist",    from: "wrist",   to: "fcam",    tier: 1, a: "r", b: "l" },
+    { id: "e-track",    from: "tracker", to: "headset", tier: 1, a: "b", b: "t" },
+    { id: "e-head",     from: "headset", to: "xvr",     tier: 1, a: "r", b: "l" },
+    { id: "e-mcu",      from: "mcu",     to: "rec",     tier: 1, a: "r", b: "l", bdy: -60 },
+    { id: "e-tcam",     from: "tcam",    to: "rec",     tier: 1, a: "r", b: "l", bdy: -30 },
+    { id: "e-fcam",     from: "fcam",    to: "rec",     tier: 1, a: "r", b: "l", bdy: 0 },
+    { id: "e-pose",     from: "xvr",     to: "rec",     tier: 1, a: "r", b: "l", ady: -10, bdy: 30 },
+    { id: "e-stereo",   from: "xvr",     to: "rec",     tier: 2, a: "r", b: "l", ady: 10, bdy: 60, video: true },
+    { id: "e-tcam-enc", from: "tcam",    to: "enc",     tier: 1, a: "r", b: "l", ady: -12, bdy: -10 },
+    { id: "e-fcam-enc", from: "fcam",    to: "enc",     tier: 1, a: "r", b: "l", ady: -12, bdy: 10 },
+    { id: "e-enc",      from: "enc",     to: "console", tier: 1, a: "r", b: "l" },
+    { id: "e-rec",      from: "rec",     to: "mcap",    tier: 1, a: "r", b: "l", ady: -45 },
+    { id: "e-export",   from: "mcap",    to: "export",  tier: 1, a: "b", b: "t" },
+    { id: "e-dl",       from: "export",  to: "dl",      tier: 1, a: "r", b: "l", ady: -20, up: true },
+    { id: "e-upload",   from: "export",  to: "upload",  tier: 1, a: "r", b: "l", ady: 20, up: true }
+  ];
+
+  var BP_LABELS = {
+    "e-grip":   { x: 232, dy: -7, anchor: "middle" },
+    "e-tact":   { x: 232, dy: -7, anchor: "middle" },
+    "e-wrist":  { x: 232, dy: -7, anchor: "middle" },
+    "e-track":  { x: 122, y: 414, anchor: "start" },
+    "e-head":   { x: 232, dy: -7, anchor: "middle" }
+  };
+
+  /* 每套布局:列、节点、连线、连线标签,以及设备分组框与图例的位置 */
+  var LAYOUTS = {
+    pc: { col: PC_COL, nw: PC_NW, nodes: PC_NODES, edges: PC_EDGES, labels: PC_LABELS,
+          group: { x: 14, y: 52, w: 192, h: 232 }, legend: { y: 500 } },
+    backpack: { col: PC_COL, nw: PC_NW, nodes: BP_NODES, edges: BP_EDGES, labels: BP_LABELS,
+          group: { x: 14, y: 52, w: 192, h: 232 }, legend: { y: 535 }, h: 552 }
   };
 
   function el(name, attrs, parent) {
@@ -63,8 +121,8 @@
     return e;
   }
 
-  function box(n) {
-    var w = NW[n.col], cx = COL[n.col];
+  function box(n, L) {
+    var w = L.nw[n.col], cx = L.col[n.col];
     return { x: cx - w / 2, y: n.y - n.h / 2, w: w, h: n.h, cx: cx, cy: n.y };
   }
 
@@ -97,7 +155,7 @@
       var dur = Math.max(0.8, path.getTotalLength() / 170);
       for (var i = 0; i < 3; i++) {
         var c = el("circle", { r: p.video ? 4 : 3.2,
-          class: "tc-arch__dot" + (p.video ? " is-video" : "") }, layer);
+          class: "tc-arch__dot" + (p.video ? " is-video" : "") + (p.up ? " is-up" : "") }, layer);
         var am = el("animateMotion", {
           dur: dur.toFixed(2) + "s", repeatCount: "indefinite",
           begin: "indefinite", calcMode: "linear"
@@ -150,6 +208,8 @@
   }
 
   function renderPipeline(root) {
+    var L = LAYOUTS[root.getAttribute("data-layout") || "pc"];
+    var NODES = L.nodes, EDGES = L.edges, LABEL_POS = L.labels, COL = L.col;
     var spec;
     try {
       spec = JSON.parse(root.querySelector("script[type='application/json']").textContent);
@@ -158,7 +218,7 @@
     }
     var uid = "tca" + Math.random().toString(36).slice(2, 7);
     var boxes = {}, nodeEls = {}, edgeEls = {};
-    NODES.forEach(function (n) { boxes[n.id] = box(n); });
+    NODES.forEach(function (n) { boxes[n.id] = box(n, L); });
 
     /* 档位切换 */
     var tierBtns = tierBar(root, spec.tiers, function (t) { setTier(t); });
@@ -167,7 +227,7 @@
     scroller.className = "tc-arch__scroll";
     root.appendChild(scroller);
     var svg = el("svg", {
-      viewBox: "0 0 " + W + " " + H, role: "img",
+      viewBox: "0 0 " + W + " " + (L.h || H), role: "img",
       "aria-label": spec.title, class: "tc-arch__svg"
     }, scroller);
 
@@ -179,22 +239,24 @@
     el("path", { d: "M0,0 L10,5 L0,10 z", class: "tc-arch__arrow" }, mk);
 
     /* 列标题与夹爪分组框 */
-    ["dev", "read", "core", "out"].forEach(function (c) {
+    Object.keys(COL).forEach(function (c) {
       var t = el("text", { x: COL[c], y: 24, class: "tc-arch__col" }, svg);
       t.textContent = spec.cols[c];
     });
-    el("rect", { x: 14, y: 52, width: 192, height: 232, rx: 12, class: "tc-arch__group" }, svg);
-    var gl = el("text", { x: 26, y: 70, class: "tc-arch__grouplabel" }, svg);
+    var G = L.group;
+    el("rect", { x: G.x, y: G.y, width: G.w, height: G.h, rx: 12, class: "tc-arch__group" }, svg);
+    var gl = el("text", { x: G.x + 12, y: G.y + 18, class: "tc-arch__grouplabel" }, svg);
     gl.textContent = spec.group;
 
     /* 图例:实线是数据与位姿,粉色虚线是 ③ 档的头显双目画面 */
     var lg = el("g", { class: "tc-arch__legend" }, svg);
-    el("path", { d: "M560,500 h34", class: "tc-arch__line" }, lg);
-    var l1 = el("text", { x: 602, y: 504, class: "tc-arch__elabel" }, lg);
+    var LY = L.legend.y;
+    el("path", { d: "M700," + LY + " h34", class: "tc-arch__line" }, lg);
+    var l1 = el("text", { x: 742, y: LY + 4, class: "tc-arch__elabel" }, lg);
     l1.textContent = spec.legend[0];
     var lv = el("g", { class: "tc-arch__edge is-video" }, lg);
-    el("path", { d: "M760,500 h34", class: "tc-arch__line" }, lv);
-    var l2 = el("text", { x: 802, y: 504, class: "tc-arch__elabel" }, lg);
+    el("path", { d: "M900," + LY + " h34", class: "tc-arch__line" }, lv);
+    var l2 = el("text", { x: 942, y: LY + 4, class: "tc-arch__elabel" }, lg);
     l2.textContent = spec.legend[1];
 
     var edgeLayer = el("g", { class: "tc-arch__edges" }, svg);
@@ -202,7 +264,7 @@
     var nodeLayer = el("g", { class: "tc-arch__nodes" }, svg);
 
     EDGES.forEach(function (e) {
-      var g = el("g", { class: "tc-arch__edge" + (e.video ? " is-video" : "") }, edgeLayer);
+      var g = el("g", { class: "tc-arch__edge" + (e.video ? " is-video" : "") + (e.up ? " is-up" : "") }, edgeLayer);
       var d = pathFor(e, boxes);
       el("path", { d: d, id: uid + "-" + e.id, class: "tc-arch__line",
         "marker-end": "url(#" + uid + "-arrow)" }, g);
@@ -282,7 +344,8 @@
 
     function spawnDots(edgeIds) {
       runDots(dotLayer, uid, edgeIds.map(function (id) {
-        return { id: id, video: EDGES.filter(function (e) { return e.id === id; })[0].video };
+        var e = EDGES.filter(function (x) { return x.id === id; })[0];
+        return { id: id, video: e.video, up: e.up };
       }));
     }
 
@@ -313,7 +376,7 @@
       focus(pinned);
     }
 
-    setTier(3);
+    setTier(spec.tiers.length);
   }
 
 

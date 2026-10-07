@@ -399,7 +399,9 @@
   
 
 
-<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="导航栏" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href="../.." title="XTac-UMI 文档 (预览)" class="md-nav__button md-logo" aria-label="XTac-UMI 文档 (预览)" data-md-component="logo">
       
@@ -512,6 +514,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../product/g1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    认识 XTac-UMI G1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../product/highlights/" class="md-nav__link">
         
   
@@ -548,34 +578,6 @@
     
   
     产品线与配置对比
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../product/g1/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    认识 XTac-UMI G1
   
 
     
@@ -713,6 +715,8 @@
       
         
       
+        
+      
     
     
     
@@ -767,6 +771,34 @@
           </label>
           <ul class="md-nav__list" data-md-scrollfix="">
             
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../backpack/quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    一页速通
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
               
             
               
@@ -895,7 +927,7 @@
   <span class="md-ellipsis">
     
   
-    项目、导出与发布
+    项目、导出与上传
   
 
     
@@ -1751,10 +1783,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#envelope" class="md-nav__link">
+  <a href="#motion-check" class="md-nav__link">
     <span class="md-ellipsis">
       
-        4. 写入运动安全包络
+        4. 运动自检
       
     </span>
   </a>
@@ -2081,76 +2113,6 @@
               </div>
             
             
-              
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    
-
-<nav class="md-nav md-nav--secondary" aria-label="目录">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      目录
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
-      
-        <li class="md-nav__item">
-  <a href="#install" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        1. 安装 SDK
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#discover" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        2. 找到设备
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#self-check" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3. 自检
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#envelope" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        4. 写入运动安全包络
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-                  </div>
-                </div>
-              </div>
-            
           
           
             <div class="md-content" data-md-component="content">
@@ -2162,7 +2124,7 @@
 
 
 <h1 id="准备与自检">准备与自检<a class="headerlink" href="#准备与自检" title="锚点链接">¶</a></h1>
-<p>按顺序做完四步再让从夹爪运动。硬件安装与接线见 <a href="../../common/gripper/#follower-install">夹爪连接与序列号 → 从夹爪安装与连接</a>，
+<p>按顺序做完四步再投入使用。硬件安装与接线见 <a href="../../common/gripper/#follower-install">夹爪连接与序列号 → 从夹爪安装与连接</a>，
 从夹爪要 <strong>USB Type-C 和 24V 两路都接上</strong>。</p>
 <h2 id="install">1. 安装 SDK<a class="headerlink" href="#install" title="锚点链接">¶</a></h2>
 <p>装好数采环境（<a href="../../pc/install/">安装</a>）就已经带有 SDK 0.4.1，不需要另外安装。示例脚本在数采仓库的
@@ -2237,22 +2199,48 @@
 </tr>
 </tbody>
 </table>
-<h2 id="envelope">4. 写入运动安全包络<a class="headerlink" href="#envelope" title="锚点链接">¶</a></h2>
-<p>包络是固件里的力矩与过热保护，每只从夹爪写一次，掉电保留。数值由 SDK 按电机自动生成，不用填。
-夹爪固件 1.2.12 起，没写过包络时固件会执行一套默认包络，更旧的固件则完全不保护；两种情况都要写一次。</p>
-<p>先查看：</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>python<span class="w"> </span>python/examples/impedance_control.py<span class="w"> </span>left<span class="w"> </span>--show-envelope
+<h2 id="motion-check">4. 运动自检<a class="headerlink" href="#motion-check" title="锚点链接">¶</a></h2>
+<p>用键盘控制台让从夹爪实际动一次，确认安全保护已生效，开合、力矩和温度都正常：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>python<span class="w"> </span>python/examples/gripper_console.py<span class="w"> </span>left
 </span></code></pre></div>
-<p><code>effective</code> 一行有 <code>flags=0x2003 ENFORCE</code>，且没有 <code>[warn]</code> 行，说明已经写过，可以跳过。否则写入：
-（没写过包络的 1.2.12 及以上固件，<code>effective</code> 一行同样有 <code>ENFORCE</code>，但会多一行 <code>[warn]</code>，这时仍要写入。）</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>python<span class="w"> </span>python/examples/impedance_control.py<span class="w"> </span>left<span class="w"> </span>--set-envelope<span class="w"> </span>--show-envelope
-</span></code></pre></div>
-<p>显示 <code>已写入</code> 或 <code>已正确,未写入</code> 即完成。</p>
 <div class="admonition danger">
-<p class="admonition-title"><code>--set-envelope</code> 一定要和 <code>--show-envelope</code> 一起用</p>
-<p>只加 <code>--set-envelope</code> 时，脚本写完后<strong>会接着让电机运动</strong>。</p>
+<p class="admonition-title">会驱动真实电机</p>
+<p>先清空爪子周围，手指远离夹爪，随时可以拔掉 24V。</p>
 </div>
-<p>完成后就可以开始<a href="../control/">运动控制</a>了。</p>
+<p>控制台顶部一行显示夹爪信息和运动安全包络，下面一行是实时数据：</p>
+<table>
+<thead>
+<tr>
+<th>看哪里</th>
+<th>正常</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>顶部 <code>envelope:</code></td>
+<td>末尾是 <code>ENFORCED</code>，表示固件的力矩与过热保护已生效；显示 <code>未生效</code> 说明固件太旧，先<a href="../firmware/#mcu-ota">升级固件</a></td>
+</tr>
+<tr>
+<td><code>Act[0-1]</code></td>
+<td>按 <code>o</code> 接近 1、按 <code>c</code> 接近 0；显示 <code>N/A</code> 说明没标定，断电重启</td>
+</tr>
+<tr>
+<td><code>Torq(+闭合)</code></td>
+<td>空载开合时接近 0；用一根笔挡在指间按 <code>c</code>，稳定在 1.1 N·m，不会继续上涨</td>
+</tr>
+<tr>
+<td><code>Temp(C)</code></td>
+<td>室温附近；持续夹持会慢慢升高，超过 90 °C 固件会自动降低力矩</td>
+</tr>
+<tr>
+<td><code>State</code></td>
+<td>运动中是 <code>EN</code>；出现 <code>FAULT</code> 等见<a href="../troubleshooting/#fault">故障排查</a></td>
+</tr>
+</tbody>
+</table>
+<p>常用按键：<code>o</code> / <code>c</code> 全开 / 全合，<code>j</code> / <code>k</code> 张开 / 闭合一步，<code>d</code> 松开电机，<code>q</code> 退出。全部按键见<a href="../control/#first-motion">运动控制</a>。</p>
+<p>以上都正常，从夹爪就可以投入使用了。</p>
+<p>接下来见<a href="../control/">运动控制</a>。</p>
 
 
 
@@ -2370,7 +2358,7 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.tracking", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "navigation.footer", "toc.follow", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.tooltips"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.tracking", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "navigation.footer", "toc.follow", "toc.integrate", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.tooltips"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
     
     
       <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>

@@ -399,7 +399,9 @@
   
 
 
-<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href="../../" title="XTac-UMI Docs" class="md-nav__button md-logo" aria-label="XTac-UMI Docs" data-md-component="logo">
       
@@ -512,6 +514,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../product/g1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    XTac-UMI G1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../product/highlights/" class="md-nav__link">
         
   
@@ -548,34 +578,6 @@
     
   
     Editions
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../product/g1/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    XTac-UMI G1
   
 
     
@@ -713,6 +715,8 @@
       
         
       
+        
+      
     
     
     
@@ -767,6 +771,34 @@
           </label>
           <ul class="md-nav__list" data-md-scrollfix="">
             
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../backpack/quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
               
             
               
@@ -895,7 +927,7 @@
   <span class="md-ellipsis">
     
   
-    Projects, Export &amp; Publish
+    Projects, Export &amp; Upload
   
 
     
@@ -2156,148 +2188,6 @@
               </div>
             
             
-              
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
-      
-        <li class="md-nav__item">
-  <a href="#logs" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Attach the full log when reporting a problem
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#environment-and-installation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Environment and installation
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#hardware" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Hardware faults
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#serial-permissions-and-device-discovery" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Serial permissions and device discovery
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Serial permissions and device discovery">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#usb-bandwidth" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Not enough USB bandwidth
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#pico4-tracker-and-pose" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Pico4 tracker and pose
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#head-camera" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Head camera
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#collecting-and-recording" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Collecting and recording
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#data-and-disk" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Data and disk
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#docker" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Docker image
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-                  </div>
-                </div>
-              </div>
-            
           
           
             <div class="md-content" data-md-component="content">
@@ -2352,11 +2242,11 @@
 <details class="failure">
 <summary>The follower gripper does not power on / communication errors</summary>
 <p><strong>Cause:</strong> the follower gripper takes power from the 24V adapter and communicates over Type-C. No power means the 24V is not connected or the adapter is faulty; communication errors mean the Type-C is not connected or not recognised, or the cable is being pulled by the robot's motion.</p>
-<p><strong>Fix:</strong> check the 24V adapter, the outlet, the power connector and its rating; connect the 24V first, then the Type-C, and lock it (see <a href="../quickstart/#power-on">Power-on sequence</a>). Reconnect the Type-C and tighten the locking screws, route the cable away from the joints and the gripper's range of motion, and test at low speed before the first run.</p>
+<p><strong>Fix:</strong> check the 24V adapter, the outlet, the power connector and its rating; connect the 24V first, then the Type-C, and lock it (see <a href="../../common/gripper/#power">Power and connection requirements</a>). Reconnect the Type-C and tighten the locking screws, route the cable away from the joints and the gripper's range of motion, and test at low speed before the first run.</p>
 </details>
 <details class="failure">
 <summary>Binding the follower fails with <code>从爪固件版本过低,必须升级后才能使用本 SDK</code> / <code>Follower firmware too old</code></summary>
-<p><strong>Cause:</strong> the follower firmware is older than 1.2.5. Both <code>--robot.role=follower</code> and the SDK refuse older firmware (only from 1.2.5 does the closed zero sit on the mechanical stop); between 1.2.5 and 1.2.11 it connects but warns you to upgrade.</p>
+<p><strong>Cause:</strong> the follower firmware is older than 1.2.5. Both <code>--robot.role=follower</code> and the SDK refuse older firmware (only from 1.2.5 does the closed zero sit on the mechanical stop); 1.2.5–1.2.10 connects but warns you to upgrade.</p>
 <p><strong>Fix:</strong> flash the follower image bundled with the SDK, then <strong>unplug the 24V power cable, wait about 2 seconds and plug it back in</strong> (the USB cable can stay connected):</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>python<span class="w"> </span>third_party/taccap-gripper/python/examples/ota_update.py<span class="w"> </span>slave
 </span></code></pre></div>
@@ -2513,7 +2403,7 @@
 <details class="failure">
 <summary><code>AttributeError: module 'xensevr_pc_service_sdk' has no attribute 'has_pico_camera_frame'</code></summary>
 <p><strong>Cause:</strong> an older interface is being loaded (the camera interface arrived with v0.2.0). This module links the C SDK taken from the installed <code>.deb</code>, so start by checking which version is installed: <code>dpkg -s xensevr-pc-service | grep -E '^(Status|Version):'</code>.</p>
-<p><strong>Fix:</strong> pull the latest main repo and re-run <code>./setup_env.sh --install</code>, which upgrades the <code>.deb</code> to the baseline version as well. If it is still <code>False</code>, use <code>python -c "import xensevr_pc_service_sdk as x; print(x.__file__)"</code> to see which copy is being loaded. If <code>Status</code> is not <code>install ok installed</code> (for example it was removed with <code>dpkg -r</code>, leaving <code>deinstall ok config-files</code>), reinstall the same way.</p>
+<p><strong>Fix:</strong> update to the release tag (see <a href="../versions/#repo-update">Repo and submodule update</a>) and re-run <code>./setup_env.sh --install</code>, which upgrades the <code>.deb</code> to the baseline version as well. If it is still <code>False</code>, use <code>python -c "import xensevr_pc_service_sdk as x; print(x.__file__)"</code> to see which copy is being loaded. If <code>Status</code> is not <code>install ok installed</code> (for example it was removed with <code>dpkg -r</code>, leaving <code>deinstall ok config-files</code>), reinstall the same way.</p>
 </details>
 <details class="failure">
 <summary>Repeated left/right eye skew warnings in the log</summary>
@@ -2759,7 +2649,7 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.tracking", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "navigation.footer", "toc.follow", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.tooltips"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.tracking", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "navigation.footer", "toc.follow", "toc.integrate", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.tooltips"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
       <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>

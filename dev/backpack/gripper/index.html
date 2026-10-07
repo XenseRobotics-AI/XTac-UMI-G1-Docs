@@ -399,7 +399,9 @@
   
 
 
-<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="导航栏" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href="../.." title="XTac-UMI 文档 (预览)" class="md-nav__button md-logo" aria-label="XTac-UMI 文档 (预览)" data-md-component="logo">
       
@@ -512,6 +514,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../product/g1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    认识 XTac-UMI G1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../product/highlights/" class="md-nav__link">
         
   
@@ -548,34 +578,6 @@
     
   
     产品线与配置对比
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../product/g1/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    认识 XTac-UMI G1
   
 
     
@@ -715,6 +717,8 @@
       
         
       
+        
+      
     
     
     
@@ -770,6 +774,34 @@
           </label>
           <ul class="md-nav__list" data-md-scrollfix="">
             
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    一页速通
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
               
             
               
@@ -978,7 +1010,7 @@
   <span class="md-ellipsis">
     
   
-    项目、导出与发布
+    项目、导出与上传
   
 
     
@@ -2070,65 +2102,6 @@
               </div>
             
             
-              
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    
-
-<nav class="md-nav md-nav--secondary" aria-label="目录">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      目录
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
-      
-        <li class="md-nav__item">
-  <a href="#buttons" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        按键
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#leds" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        指示灯
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#voice-cues" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        语音播报
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-                  </div>
-                </div>
-              </div>
-            
           
           
             <div class="md-content" data-md-component="content">
@@ -2140,7 +2113,7 @@
 
 
 <h1 id="buttons-leds">夹爪按键、指示灯与语音<a class="headerlink" href="#buttons-leds" title="锚点链接">¶</a></h1>
-<p>背包版里，夹爪的两个侧边按键用来开始、停止和删除录制，指示灯反馈当前状态，数采背包的喇叭还会做语音播报。按键与灯语由背包上的 XTac-UMI Collector 接管，不需要浏览器在线。夹爪怎么接、序列号怎么分左右见<a href="../../common/gripper/">夹爪连接与序列号</a>。</p>
+<p>背包版里，夹爪的两个侧边按键用来开始、停止和删除录制，指示灯反馈当前状态，设备还会做语音播报。按键与灯语由背包上的 XTac-UMI Collector 接管，不需要浏览器在线。夹爪怎么接、序列号怎么分左右见<a href="../../common/gripper/">夹爪连接与序列号</a>。</p>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/hardware/master-controls.webp" data-desc-position="bottom"><img alt="主夹爪操作部件示意图（接口 / 按键 / 指示灯）" src="../../assets/hardware/master-controls.webp" width="480"></a></p>
 <h2 id="buttons">按键<a class="headerlink" href="#buttons" title="锚点链接">¶</a></h2>
 <p>按键状态机跑在背包上，<strong>不需要浏览器在线</strong>；录制中双击、右爪长按一律静默忽略（防手抖）；没有可删条目时双击会被拒绝（黄快闪）。</p>
@@ -2176,6 +2149,10 @@
 <td>确认态<strong>右爪长按</strong></td>
 <td>放弃删除并立即开始新录制（上一条保留）</td>
 </tr>
+<tr>
+<td>录制中<strong>右爪单击</strong></td>
+<td>在这条录制里打一个 subtask 标记（子任务分段点），响一声提示音</td>
+</tr>
 </tbody>
 </table>
 <p>绑定爪位（右开 / 左停）、键位时序与灯语是全机队固定值，现场不可调、控制台里也没有改的入口；当前生效值在控制台 系统 → 采集设置 页查看（见<a href="../system/">系统设置</a>）。</p>
@@ -2184,55 +2161,66 @@
 <thead>
 <tr>
 <th>灯</th>
+<th>颜色与显示模式</th>
 <th>含义</th>
 </tr>
 </thead>
 <tbody>
 <tr>
+<td><span class="tc-lamp green solid"></span></td>
 <td>绿 常亮</td>
 <td>待机：可以开录</td>
 </tr>
 <tr>
+<td><span class="tc-lamp green breathe"></span></td>
 <td>绿 呼吸</td>
 <td>录制中（1 秒一个明暗周期）</td>
 </tr>
 <tr>
-<td>白 闪</td>
-<td>保存正常（亮 0.4 秒，闪一次）</td>
+<td><span class="tc-lamp white flash"></span></td>
+<td>白 闪一次</td>
+<td>保存正常（亮 0.4 秒）</td>
 </tr>
 <tr>
+<td><span class="tc-lamp amber solid"></span></td>
 <td>黄 常亮</td>
 <td>开录失败（亮 2 秒），或录制中出现致命问题（长亮不灭）</td>
 </tr>
 <tr>
+<td><span class="tc-lamp amber pulse"></span></td>
 <td>黄 脉冲</td>
 <td>数据可疑：录着，但那条质量存疑（亮 0.2 秒、灭 0.8 秒，共 3 次）</td>
 </tr>
 <tr>
+<td><span class="tc-lamp amber strobe"></span></td>
 <td>黄 快闪</td>
-<td>动作被拒，如正在录时又按开录（0.1 秒明灭，共 3 次）</td>
+<td>动作被拒，如没有可删条目时双击（0.1 秒明灭，共 3 次）</td>
 </tr>
 <tr>
+<td><span class="tc-lamp purple blink"></span></td>
 <td>紫 闪</td>
 <td>删除确认中，等你再双击；0.3 秒明灭，超时自动取消</td>
 </tr>
 <tr>
+<td><span class="tc-lamp purple solid"></span></td>
 <td>紫 常亮</td>
 <td>刚删完的 3 秒冷却期，期间双击不响应</td>
 </tr>
 <tr>
+<td><span class="tc-lamp red solid"></span></td>
 <td>红 常亮</td>
 <td>系统问题（如夹爪掉线，由背包侧点亮）</td>
 </tr>
 <tr>
+<td><span class="tc-lamp red burst"></span></td>
 <td>红 爆闪</td>
-<td>夹爪端问题（夹爪 MCU 自己点，不经过背包）</td>
+<td>夹爪端问题（夹爪自己点亮，不经过背包）</td>
 </tr>
 </tbody>
 </table>
 <p>录制中是绿呼吸，红色只代表故障。「快闪」和「脉冲」都是黄色，差别在节奏：快闪密集、脉冲稀疏。控制台 系统 → 采集设置 页把这张表做成了会动的对照表，按实际形状与节奏演示，一眼可辨（见<a href="../system/">系统设置</a>）。</p>
 <h2 id="voice-cues">语音播报<a class="headerlink" href="#voice-cues" title="锚点链接">¶</a></h2>
-<p>背包版专有：采集时双手都在夹爪上、眼睛盯着现场，看灯要专门抬头，所以数采背包会在四个时机用自己的喇叭出声提示，与灯语互补。语音从背包喇叭发出，不需要平板在旁边，也不受浏览器影响。</p>
+<p>采集时双手都在夹爪上、眼睛盯着现场，所以设备会在关键时机<strong>从 Pico 头显里播报语音</strong>，戴着头显就能听到，与灯语互补；不需要平板在旁边，也不受浏览器影响。头显未连接时（例如「pico连接失败」这一句）改由数采背包的喇叭播放。</p>
 <table>
 <thead>
 <tr>
@@ -2254,12 +2242,28 @@
 <td>「录制失败」，这一条录废了</td>
 </tr>
 <tr>
-<td>录制中夹爪或头显掉线</td>
-<td>「夹爪连接失败」或「pico连接失败」</td>
+<td>录制中夹爪掉线</td>
+<td>「夹爪连接失败」</td>
+</tr>
+<tr>
+<td>录制中头显掉线</td>
+<td>「pico连接失败」</td>
+</tr>
+<tr>
+<td>录制中追踪器掉线</td>
+<td>「Tracker 连接失败」：头显可能仍在线，先检查手上的追踪器</td>
+</tr>
+<tr>
+<td>录制中右爪单击打标记</td>
+<td>subtask 标记提示音（不含语音）</td>
 </tr>
 </tbody>
 </table>
-<p>开关、逐句试听与 0–100 音量滑块都在控制台 系统 → <a href="../system/#voice">采集设置</a> 页（音量滑块 0.3.16 起提供），设置重启后保留。播报的内容与时机是固定值，现场不可更改，保证同一批设备行为一致。</p>
+<ul>
+<li><strong>语言</strong>：中文或英文，默认跟随控制台界面语言。</li>
+<li><strong>设置</strong>：开关、语言、音量与逐句试听在 系统 → <a href="../system/#voice">采集设置</a>。</li>
+<li>播报内容与时机固定，现场不可更改。</li>
+</ul>
 
 
 
@@ -2314,13 +2318,13 @@
         
         
           
-          <a href="../projects-export/" class="md-footer__link md-footer__link--next" aria-label="下一页: 项目、导出与发布">
+          <a href="../projects-export/" class="md-footer__link md-footer__link--next" aria-label="下一页: 项目、导出与上传">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 下一页
               </span>
               <div class="md-ellipsis">
-                项目、导出与发布
+                项目、导出与上传
               </div>
             </div>
             <div class="md-footer__button md-icon">
@@ -2377,7 +2381,7 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.tracking", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "navigation.footer", "toc.follow", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.tooltips"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.tracking", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "navigation.footer", "toc.follow", "toc.integrate", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.tooltips"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
     
     
       <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>

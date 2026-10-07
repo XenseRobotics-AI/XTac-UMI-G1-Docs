@@ -399,7 +399,9 @@
   
 
 
-<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="导航栏" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href="../.." title="XTac-UMI 文档 (预览)" class="md-nav__button md-logo" aria-label="XTac-UMI 文档 (预览)" data-md-component="logo">
       
@@ -512,6 +514,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../product/g1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    认识 XTac-UMI G1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../product/highlights/" class="md-nav__link">
         
   
@@ -548,34 +578,6 @@
     
   
     产品线与配置对比
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../product/g1/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    认识 XTac-UMI G1
   
 
     
@@ -713,6 +715,8 @@
       
         
       
+        
+      
     
     
     
@@ -767,6 +771,34 @@
           </label>
           <ul class="md-nav__list" data-md-scrollfix="">
             
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../backpack/quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    一页速通
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
               
             
               
@@ -895,7 +927,7 @@
   <span class="md-ellipsis">
     
   
-    项目、导出与发布
+    项目、导出与上传
   
 
     
@@ -2112,104 +2144,6 @@
               </div>
             
             
-              
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    
-
-<nav class="md-nav md-nav--secondary" aria-label="目录">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      目录
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
-      
-        <li class="md-nav__item">
-  <a href="#41" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        夹爪标定（零点 + 行程）
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="夹爪标定（零点 + 行程）">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#什么时候需要标" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        什么时候需要标
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#怎么标" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        怎么标
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#413" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        确认标定生效
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#适用范围" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        适用范围
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#pico4-ultra-追踪器自检" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Pico4 Ultra 追踪器自检
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-                  </div>
-                </div>
-              </div>
-            
           
           
             <div class="md-content" data-md-component="content">
@@ -2346,11 +2280,7 @@
 <p>以 10 Hz 打印 <code>raw</code>（追踪器自身位姿）与 <code>ee</code>（经刚性安装变换后的 TCP）。挥动夹爪，<code>raw xyz</code> 应平滑变化、SN 与预期一致（<a href="../../common/pico4/#pico-tracker-sn">读取追踪器 SN</a>）。</p>
 <p>安装变换不需要你测：追踪器到 TCP 的刚性偏移已内置在采集程序里（取自 CAD 装配实测），左右各自实测，接近镜像但不完全相同（旋转差 0.03°、平移差 1.27 mm）。<code>--side</code> 决定套用哪一侧；不带 <code>--side</code> 时变换是单位阵，<code>ee</code> 完全跟随 <code>raw</code>。只有重新加工过安装座之类才需覆盖，设 <code>--robot.tracker_to_ee_pos</code> / <code>--robot.tracker_to_ee_quat</code>，两者独立，可只钉平移、旋转仍用内置值。</p>
 <p>支点检查不需额外硬件：把两指中点抵在一个固定点上，握着手柄尽量多变换姿态摆动。<code>ee xyz</code> 应基本不动而 <code>raw xyz</code> 大幅摆动，看到的漂移量即该变换的误差。左右都要测；左侧镜像方向错了，表现为 <code>ee</code> 摆动幅度约为应有的两倍。</p>
-<p>要在 Rerun 单视图里看双夹爪 IMU/编码器和追踪器 6-DoF 位姿，用 SDK 示例 <code>rerun_dual_with_tracker.py</code>（需 <code>xensevr_pc_service_sdk</code> 与 XenseVR PC Service 运行）。它不走 LeRobot 的 SN 自动匹配，必须显式传 SN；SN 属于具体机台，换机要换成你那台报出的，并逐个摇晃夹爪验证左右：</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>python<span class="w"> </span>third_party/taccap-gripper/python/examples/rerun_dual_with_tracker.py<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">    </span>--left-tracker-sn<span class="w">  </span>&lt;左追踪器SN&gt;<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span>--right-tracker-sn<span class="w"> </span>&lt;右追踪器SN&gt;
-</span></code></pre></div>
+<p>要在 Rerun 里同时看夹爪数据和追踪器位姿，<a href="../recording/#preview">开录前预览</a>时加 <code>--display_data=true</code>。</p>
 <p>四元数半球翻转（符号跳变）在位姿读取内部已有连续性修正，仍看到跳变请报 bug。</p>
 <p>下一步 → <a href="../recording/">数据采集</a>。</p>
 
@@ -2470,7 +2400,7 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.tracking", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "navigation.footer", "toc.follow", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.tooltips"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.tracking", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "navigation.footer", "toc.follow", "toc.integrate", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.tooltips"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
     
     
       <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>

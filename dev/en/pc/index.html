@@ -399,7 +399,9 @@
   
 
 
-<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href="../" title="XTac-UMI Docs" class="md-nav__button md-logo" aria-label="XTac-UMI Docs" data-md-component="logo">
       
@@ -512,6 +514,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../product/g1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    XTac-UMI G1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../product/highlights/" class="md-nav__link">
         
   
@@ -548,34 +578,6 @@
     
   
     Editions
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../product/g1/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    XTac-UMI G1
   
 
     
@@ -713,6 +715,8 @@
       
         
       
+        
+      
     
     
     
@@ -767,6 +771,34 @@
           </label>
           <ul class="md-nav__list" data-md-scrollfix="">
             
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../backpack/quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
               
             
               
@@ -895,7 +927,7 @@
   <span class="md-ellipsis">
     
   
-    Projects, Export &amp; Publish
+    Projects, Export &amp; Upload
   
 
     
@@ -1993,65 +2025,6 @@
               </div>
             
             
-              
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
-      
-        <li class="md-nav__item">
-  <a href="#start" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Where to start
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#system" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        System components
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#frame" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        What each frame records
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-                  </div>
-                </div>
-              </div>
-            
           
           
             <div class="md-content" data-md-component="content">
@@ -2063,45 +2036,161 @@
 
 
 <h1 id="xtac-umi-g1-developer-kit">XTac-UMI G1 Developer Kit<a class="headerlink" href="#xtac-umi-g1-developer-kit" title="锚点链接">¶</a></h1>
-<p>The Developer Kit (the PC edition) puts the compute on your own x86 workstation (NVIDIA GPU recommended; Mamba source install or the Docker image): the grippers plug straight into the host over USB, the Pico4 Ultra Enterprise headset plugs into the host over a Type-C cable as a wired shared network (wired by default; WiFi is for quick debugging only), its pose comes in through the XenseVR PC Service running on the host, and the whole chain runs on the LeRobot framework.
-The hardware you need is the XTac-UMI G1 leader gripper (one or a pair), the Pico4 Ultra Enterprise with its trackers, and that workstation.
-The operator's interface is the terminal plus a Rerun preview window; <code>lerobot-record</code> writes a LeRobotDataset v3 straight to disk, ready to push to the Hugging Face Hub.
-Built on the open-source lerobot ecosystem, it suits research and algorithm teams with their own training pipelines; it is fully open to customization, whether that means changing the Python code or hooking up a custom robot.
-If you want no PC at all, with a collection team driving it from a tablet and the gripper buttons in the field, that is the <a href="../backpack/">Backpack Kit</a>; the two editions are compared in <a href="../product/editions/">Editions</a>.</p>
-<h2 id="start">Where to start<a class="headerlink" href="#start" title="锚点链接">¶</a></h2>
-<p>First time through, go in order: <a href="install/">Installation</a> → <a href="host-setup/">Host setup</a> → <a href="../common/pico4/">Pico4 headset and trackers</a> → <a href="calibration/">Calibration and self-check</a>;
-after that, every collection session follows the <a href="quickstart/">Quickstart</a>. To drive the follower gripper on a robot see <a href="../follower/">Follower gripper</a>; to write your own programs against the grippers see <a href="../sdk/">SDK &amp; development</a>.</p>
+<p>The Developer Kit runs collection on your own x86 workstation: the grippers and headset cable straight into it, recording runs on open-source LeRobot and produces a LeRobotDataset v3 you can push to the Hugging Face Hub. The collection software and gripper SDK are open source, built for research and algorithm teams who want to customise freely.</p>
+<p>For no computer, with a tablet in the field, choose the <a href="../backpack/">Backpack Kit</a>; the two are compared in <a href="../product/editions/">Editions</a>.</p>
+<h2 id="workflow">The collection workflow<a class="headerlink" href="#workflow" title="锚点链接">¶</a></h2>
+<div class="tc-flow">
+<div class="tc-flow__group">
+<h3 id="①-getting-ready">① Getting ready<a class="headerlink" href="#①-getting-ready" title="锚点链接">¶</a></h3>
+<p class="tc-flow__lead">Once per computer and per device</p>
+<ol>
+<li><strong><a href="../common/gripper/">Know the hardware</a></strong><br>
+   Parts, wiring and power-on order</li>
+<li><strong><a href="install/">Install the environment</a></strong><br>
+   <code>setup_env.sh</code> or the Docker image</li>
+<li><strong><a href="host-setup/#31">Configure the host</a></strong><br>
+   Serial access, ModemManager off</li>
+<li><strong><a href="../common/pico4/">Set up the Pico4 Ultra Enterprise</a></strong><br>
+   Developer mode, XR app, trackers</li>
+<li><strong><a href="calibration/#41">Calibrate the leaders</a></strong><br>
+   Zero and travel span, once each</li>
+</ol>
+</div>
+<div class="tc-flow__group">
+<h3 id="②-collecting">② Collecting<a class="headerlink" href="#②-collecting" title="锚点链接">¶</a></h3>
+<p class="tc-flow__lead">In this order, every session</p>
+<ol>
+<li><strong><a href="quickstart/#power-on">Power on and connect</a></strong><br>
+   Grippers in, trackers on, PC WiFi off</li>
+<li><strong><a href="host-setup/#35">Start the service and XR app</a></strong><br>
+   PC Service, then the XR app</li>
+<li><strong><a href="recording/#preview">Preview check</a></strong><br>
+   <code>lerobot-teleoperate</code> in Rerun</li>
+<li><strong><a href="recording/#52">Full recording</a></strong><br>
+   <code>lerobot-record</code>, keep XR running</li>
+</ol>
+</div>
+<div class="tc-flow__group">
+<h3 id="③-the-data">③ The data<a class="headerlink" href="#③-the-data" title="锚点链接">¶</a></h3>
+<p class="tc-flow__lead">After recording</p>
+<ol>
+<li><strong><a href="dataset/#62">Check completeness</a></strong><br>
+   <code>lerobot-check-dataset</code></li>
+<li><strong><a href="dataset/#64">Upload to the Hub (optional)</a></strong><br>
+   <code>lerobot-push-dataset-to-hub</code></li>
+<li><strong><a href="dataset/#61">Understand the format</a></strong><br>
+   What each frame records</li>
+</ol>
+</div>
+</div>
+<p class="tc-flow__more">To mount the follower gripper on a robot and drive it from code, see <a href="../follower/">Follower gripper</a>; to call the gripper SDK directly, see <a href="../sdk/">SDK &amp; development</a>.</p>
 <h2 id="system">System components<a class="headerlink" href="#system" title="锚点链接">¶</a></h2>
 <p>Collection runs inside one <code>lerobot-record</code> process on the collection PC: each device is read independently, every frame takes the latest value from each stream, and the paired frames are written to the dataset.
 Hover over (or tap) any block to see where its data comes from and where it goes; the buttons above switch between the three tiers.</p>
 <div class="tc-arch"><script type="application/json">
 {
   "title": "XTac-UMI G1 collection system architecture",
-  "tiers": ["① Grippers only", "② With wrist pose", "③ Full rig"],
-  "cols": {"dev": "Devices", "read": "Collection PC · read", "core": "Collection PC · process", "out": "Output"},
+  "tiers": [
+    "① Grippers only",
+    "② With wrist pose",
+    "③ Full rig"
+  ],
+  "cols": {
+    "dev": "Devices",
+    "read": "Collection PC · read",
+    "core": "Collection PC · process",
+    "out": "Output",
+    "up": "Upload"
+  },
   "group": "Leader grippers ×2 (left / right)",
   "hint": "Hover over (or tap) any block to see where its data comes from and where it goes.",
   "sep": ": ",
   "offNote": " (not used in the selected tier)",
-  "legend": ["Data and poses", "Headset stereo images (tier ③)"],
+  "legend": [
+    "Data and poses",
+    "Headset stereo images (tier ③)"
+  ],
   "edges": {
-    "e-grip": "USB serial", "e-tact": "USB", "e-wrist": "USB",
-    "e-track": "Wireless", "e-head": "Wired / WiFi"
+    "e-grip": "USB serial",
+    "e-tact": "USB",
+    "e-wrist": "USB",
+    "e-track": "Wireless",
+    "e-head": "Wired / WiFi"
   },
   "nodes": {
-    "grip": {"title": "MCU · encoder", "sub": "Jaw angle", "desc": "The leader gripper's MCU reads the encoder for the jaw angle and pushes it to the PC over USB serial. The MCU also carries an IMU, reserved and not recorded by default."},
-    "tact": {"title": "Visuotactile ×2", "sub": "One per finger", "desc": "One visuotactile sensor on each finger, imaging the contact between the finger surface and the object."},
-    "wrist": {"title": "Wrist camera", "sub": "Wrist-view RGB", "desc": "A fisheye camera on the gripper giving the wrist view."},
-    "tracker": {"title": "Motion tracker ×2", "sub": "Pico4 Ultra", "desc": "Mounted on top of each gripper; the headset tracks its 6-DoF pose. Not needed in tier ①."},
-    "headset": {"title": "Headset", "sub": "Pico4 Ultra Enterprise", "desc": "Runs XTac-UMI XR, tracks both trackers and sends the poses to the PC over a cable (recommended) or WiFi; in tier ③ it also streams its own stereo cameras as a first-person view, plus the head pose. The world origin is where the headset was when the XR app started."},
-    "sdk": {"title": "xense.taccap", "sub": "Serial · 100 Hz push", "desc": "The gripper SDK receives the readings the MCU pushes (100 Hz by default) and normalises the jaw angle with the calibration into gripper.pos (closed = 0, open = 1)."},
-    "xsdk": {"title": "xensesdk", "sub": "Rectified · 30 fps", "desc": "The visuotactile sensor SDK reads each sensor independently and outputs the rectified visuotactile image (about 400 × 700) at 30 fps by default."},
-    "cam": {"title": "Camera capture", "sub": "640 × 480 · 30 fps", "desc": "Finds each gripper's wrist camera by serial number and reads each one independently, 640 × 480 at 30 fps by default. Fisheye undistortion is optional and off by default."},
-    "pcs": {"title": "XenseVR PC Service", "sub": "Pose · ~90 Hz", "desc": "A service on the PC that receives the tracker poses from the headset (refreshed at about 90 Hz); the collection program transforms them to the gripper tip (TCP) to get tcp.*. In tier ③ it also relays the headset stereo images (left and right paired by frame number) and the head pose."},
-    "obs": {"title": "Frame assembly", "sub": "Latest of each stream", "desc": "Each frame (30 fps by default) takes the latest value of every stream as one observation: opening, gripper pose, visuotactile images and wrist view; tier ③ adds the headset stereo images and head pose."},
-    "pair": {"title": "Shifted pairing", "sub": "Obs t-1 + action t", "desc": "Pairs the previous frame's observation with this frame's gripper pose and opening (plus the head pose in tier ③), so the action leads the observation by one step. The first frame of each episode has nothing to pair with, so each episode is one frame shorter."},
-    "rerun": {"title": "Rerun live preview", "sub": "--display_data=true", "desc": "Add --display_data=true when previewing or recording to see every image stream, value curves and a 3D view of the gripper trajectories live. Display only; nothing here goes into the dataset."},
-    "ds": {"title": "LeRobotDataset v3.0", "sub": ["Parquet + MP4", "+ meta/hardware.json"], "desc": "State and action go to Parquet; every camera is encoded to MP4 while recording, using hardware encoding automatically when an NVIDIA GPU is present. The hardware manifest, such as the serial numbers of this kit, is stored separately in meta/hardware.json."}
+    "grip": {
+      "title": "MCU · encoder",
+      "sub": "Jaw angle",
+      "desc": "The leader gripper's MCU reads the encoder for the jaw angle and pushes it to the PC over USB serial. The MCU also carries an IMU, reserved and not recorded by default."
+    },
+    "tact": {
+      "title": "Visuotactile ×2",
+      "sub": "One per finger",
+      "desc": "One visuotactile sensor on each finger, imaging the contact between the finger surface and the object."
+    },
+    "wrist": {
+      "title": "Wrist camera",
+      "sub": "Wrist-view RGB",
+      "desc": "A fisheye camera on the gripper giving the wrist view."
+    },
+    "tracker": {
+      "title": "Motion tracker ×2",
+      "sub": "Pico4 Ultra",
+      "desc": "Mounted on top of each gripper; the headset tracks its 6-DoF pose. Not needed in tier ①."
+    },
+    "headset": {
+      "title": "Headset",
+      "sub": "Pico4 Ultra Enterprise",
+      "desc": "Runs XTac-UMI XR, tracks both trackers and sends the poses to the PC over a cable (recommended) or WiFi; in tier ③ it also streams its own stereo cameras as a first-person view, plus the head pose. The world origin is where the headset was when the XR app started."
+    },
+    "sdk": {
+      "title": "xense.taccap",
+      "sub": "Serial · 100 Hz push",
+      "desc": "The gripper SDK receives the readings the MCU pushes (100 Hz by default) and normalises the jaw angle with the calibration into gripper.pos (closed = 0, open = 1)."
+    },
+    "xsdk": {
+      "title": "xensesdk",
+      "sub": "Rectified · 30 fps",
+      "desc": "The visuotactile sensor SDK reads each sensor independently and outputs the rectified visuotactile image (about 400 × 700) at 30 fps by default."
+    },
+    "cam": {
+      "title": "Camera capture",
+      "sub": "640 × 480 · 30 fps",
+      "desc": "Finds each gripper's wrist camera by serial number and reads each one independently, 640 × 480 at 30 fps by default. Fisheye undistortion is optional and off by default."
+    },
+    "pcs": {
+      "title": "XenseVR PC Service",
+      "sub": "Pose · ~90 Hz",
+      "desc": "A service on the PC that receives the tracker poses from the headset (refreshed at about 90 Hz); the collection program transforms them to the gripper tip (TCP) to get tcp.*. In tier ③ it also relays the headset stereo images (left and right paired by frame number) and the head pose."
+    },
+    "obs": {
+      "title": "Frame assembly",
+      "sub": "Latest of each stream",
+      "desc": "Each frame (30 fps by default) takes the latest value of every stream as one observation: opening, gripper pose, visuotactile images and wrist view; tier ③ adds the headset stereo images and head pose."
+    },
+    "pair": {
+      "title": "Shifted pairing",
+      "sub": "Obs t-1 + action t",
+      "desc": "Pairs the previous frame's observation with this frame's gripper pose and opening (plus the head pose in tier ③), so the action leads the observation by one step. The first frame of each episode has nothing to pair with, so each episode is one frame shorter."
+    },
+    "rerun": {
+      "title": "Rerun live preview",
+      "sub": "--display_data=true",
+      "desc": "Add --display_data=true when previewing or recording to see every image stream, value curves and a 3D view of the gripper trajectories live. Display only; nothing here goes into the dataset."
+    },
+    "ds": {
+      "title": "LeRobotDataset v3.0",
+      "sub": [
+        "Parquet + MP4",
+        "+ meta/hardware.json"
+      ],
+      "desc": "State and action go to Parquet; every camera is encoded to MP4 while recording, using hardware encoding automatically when an NVIDIA GPU is present. The hardware manifest, such as the serial numbers of this kit, is stored separately in meta/hardware.json."
+    },
+    "hub": {
+      "title": "Hugging Face Hub",
+      "sub": "Push the dataset",
+      "desc": "When needed, lerobot-push-dataset-to-hub pushes the local dataset to the Hugging Face Hub, public or private."
+    }
   }
 }
 </script></div>
@@ -2181,6 +2270,44 @@ Hover over (or tap) any block to see where its data comes from and where it goes
 <li>With a single gripper (<code>--robot.type=taccap_gripper</code>) the keys have no <code>left_</code> / <code>right_</code> prefix and the wrist camera is <code>wrist_cam</code>.</li>
 </ul>
 <p>Field details are in <a href="recording/#53">What each frame records</a>, the dataset format in <a href="dataset/">Dataset</a>.</p>
+<h2 id="repos">Developer Kit open-source repositories<a class="headerlink" href="#repos" title="锚点链接">¶</a></h2>
+<p>Everything the Developer Kit runs on is open source except <code>xensesdk</code>, whose license is not stated; the table lists each repository and what it is for. The Backpack Kit's collection software is not open source and is not listed here.</p>
+<table>
+<thead>
+<tr>
+<th>Repo / package</th>
+<th>License</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/XenseRobotics-AI/xense-taccap-lerobot"><code>xense-taccap-lerobot</code></a></td>
+<td>Apache-2.0</td>
+<td>Data-collection repo, customized from lerobot 0.5.1</td>
+</tr>
+<tr>
+<td><a href="https://github.com/XenseRobotics-AI/TacCap-Gripper"><code>xense.taccap</code></a></td>
+<td>Apache-2.0</td>
+<td>Gripper SDK, included in the data-collection repo as a submodule; <a href="../sdk/">developer docs</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/XenseRobotics-AI/XenseVR-PC-Service"><code>xensevr_pc_service_sdk</code></a></td>
+<td>Apache-2.0</td>
+<td>Pico4 Ultra Enterprise PC service, installed as a <code>.deb</code></td>
+</tr>
+<tr>
+<td><a href="https://github.com/XenseRobotics/xensesdk"><code>xensesdk</code></a></td>
+<td>not stated</td>
+<td>Visuotactile sensor SDK, installed by the setup script; <a href="https://docs.xenserobotics.com/">developer docs</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/XenseRobotics-AI/xense-lerobot-viewer"><code>xense-lerobot-viewer</code></a></td>
+<td>Apache-2.0</td>
+<td>Open-source local visualization tool for browsing LeRobot datasets in the browser</td>
+</tr>
+</tbody>
+</table>
 
 
 
@@ -2298,7 +2425,7 @@ Hover over (or tap) any block to see where its data comes from and where it goes
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.tracking", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "navigation.footer", "toc.follow", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.tooltips"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.tracking", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "navigation.footer", "toc.follow", "toc.integrate", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.tooltips"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
       <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>

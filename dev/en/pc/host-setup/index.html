@@ -399,7 +399,9 @@
   
 
 
-<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href="../../" title="XTac-UMI Docs" class="md-nav__button md-logo" aria-label="XTac-UMI Docs" data-md-component="logo">
       
@@ -512,6 +514,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../product/g1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    XTac-UMI G1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../product/highlights/" class="md-nav__link">
         
   
@@ -548,34 +578,6 @@
     
   
     Editions
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../product/g1/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    XTac-UMI G1
   
 
     
@@ -713,6 +715,8 @@
       
         
       
+        
+      
     
     
     
@@ -767,6 +771,34 @@
           </label>
           <ul class="md-nav__list" data-md-scrollfix="">
             
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../backpack/quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
               
             
               
@@ -895,7 +927,7 @@
   <span class="md-ellipsis">
     
   
-    Projects, Export &amp; Publish
+    Projects, Export &amp; Upload
   
 
     
@@ -2145,137 +2177,6 @@
               </div>
             
             
-              
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
-      
-        <li class="md-nav__item">
-  <a href="#31" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Serial permissions (dialout)
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#32" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Stop ModemManager grabbing the port (udev)
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#33" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Device auto-discovery and the odd-left/even-right rule
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Device auto-discovery and the odd-left/even-right rule">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#serial-grammar" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Serial grammar
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#side-rule" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Side rule
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#usb-budget" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        USB bandwidth budget
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#pico4-headset-and-trackers" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Pico4 headset and trackers
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#35" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Start the XenseVR PC Service
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#36" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Power-on sequence
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-                  </div>
-                </div>
-              </div>
-            
           
           
             <div class="md-content" data-md-component="content">
@@ -2371,11 +2272,12 @@
 <p>The tracker talks to the host's XenseVR PC Service (RoboticsService) daemon, which handles device discovery, status monitoring and live tracking-data distribution. Collection reads poses from it. The <a href="../install/#docker">Docker image</a> container launches it automatically on start; when you only work on data and do not need the tracker, turn it off with <code>START_XENSEVR_SERVICE=0</code>.</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>/opt/apps/roboticsservice/runService.sh
 </span></code></pre></div>
+<p>The two ends are named asymmetrically, so do not mix them up: the app on the headset is <strong>XTac-UMI XR</strong> (formerly XenseVR-Toolkit), while the service on the computer is still called <strong>XenseVR PC Service</strong>. The package <code>XenseVR-PC-Service_&lt;version&gt;_amd64.deb</code> installs into <code>/opt/apps/roboticsservice/</code>, and the Python package is <code>xensevr_pc_service_sdk</code>.</p>
 <p>Only one instance can run at a time; starting a second one fails or conflicts.</p>
 <p>The service can supply several kinds of data (Head / controllers / hand tracking / full-body mocap / standalone Tracker). Collection uses two of them: the standalone Tracker pose (the gripper pose, carrying an <code>sn</code> that distinguishes the trackers) and the head pose (the headset's own pose, used together with the <a href="../recording/#56">headset's stereo frames</a>). The headset sends each eye's frames and its own pose to the PC Service, which forwards them to collection; they share one connection with the trackers, so with the service down neither works. This path needs a service at v0.2.0 or later (see <a href="../versions/#required">Version baseline</a>); if you only use trackers, the version makes no difference.</p>
 <p>The service directory <code>/opt/apps/roboticsservice/</code> ships the <code>ConsoleDemo</code> / <code>RobotDemoQt</code> demos for confirming that the headset was discovered and tracking data looks right (they need the same runtime environment as the service).</p>
 <h2 id="36">Power-on sequence<a class="headerlink" href="#36" title="锚点链接">¶</a></h2>
-<p>The power-on and power-off sequence is described once, in <a href="../quickstart/#power-on">Quickstart · Power-on and power-off sequence</a>; follow the 7 steps there. On a bimanual rig, read the <a href="#usb-budget">USB bandwidth budget</a> before plugging in the cables.</p>
+<p>The power-on and power-off sequence is described once, in <a href="../quickstart/#power-on">Quickstart · Power on and connect</a>; follow the steps there. On a bimanual rig, read the <a href="#usb-budget">USB bandwidth budget</a> before plugging in the cables.</p>
 <p>Next → <a href="../calibration/">Calibration and self-check</a></p>
 
 
@@ -2494,7 +2396,7 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.tracking", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "navigation.footer", "toc.follow", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.tooltips"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.tracking", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "navigation.footer", "toc.follow", "toc.integrate", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.tooltips"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
       <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>

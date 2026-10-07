@@ -399,7 +399,9 @@
   
 
 
-<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href="../../" title="XTac-UMI Docs" class="md-nav__button md-logo" aria-label="XTac-UMI Docs" data-md-component="logo">
       
@@ -512,6 +514,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../product/g1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    XTac-UMI G1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../product/highlights/" class="md-nav__link">
         
   
@@ -548,34 +578,6 @@
     
   
     Editions
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../product/g1/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    XTac-UMI G1
   
 
     
@@ -713,6 +715,8 @@
       
         
       
+        
+      
     
     
     
@@ -767,6 +771,34 @@
           </label>
           <ul class="md-nav__list" data-md-scrollfix="">
             
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../backpack/quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
               
             
               
@@ -895,7 +927,7 @@
   <span class="md-ellipsis">
     
   
-    Projects, Export &amp; Publish
+    Projects, Export &amp; Upload
   
 
     
@@ -1751,10 +1783,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#envelope" class="md-nav__link">
+  <a href="#motion-check" class="md-nav__link">
     <span class="md-ellipsis">
       
-        4. Write the motion safety envelope
+        4. Motion check
       
     </span>
   </a>
@@ -2081,76 +2113,6 @@
               </div>
             
             
-              
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
-      
-        <li class="md-nav__item">
-  <a href="#install" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        1. Install the SDK
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#discover" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        2. Find the device
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#self-check" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3. Self-check
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#envelope" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        4. Write the motion safety envelope
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-                  </div>
-                </div>
-              </div>
-            
           
           
             <div class="md-content" data-md-component="content">
@@ -2162,7 +2124,7 @@
 
 
 <h1 id="setup-and-self-check">Setup and self-check<a class="headerlink" href="#setup-and-self-check" title="锚点链接">¶</a></h1>
-<p>Complete these four steps in order before letting the follower gripper move. Hardware mounting and wiring are in <a href="../../common/gripper/#follower-install">Gripper connection and serial numbers → Follower gripper mounting and connection</a>;
+<p>Complete these four steps in order before putting the follower gripper to work. Hardware mounting and wiring are in <a href="../../common/gripper/#follower-install">Gripper connection and serial numbers → Follower gripper mounting and connection</a>;
 the follower gripper needs <strong>both USB Type-C and 24V connected</strong>.</p>
 <h2 id="install">1. Install the SDK<a class="headerlink" href="#install" title="锚点链接">¶</a></h2>
 <p>Once the collection environment is installed (<a href="../../pc/install/">Installation</a>), SDK 0.4.1 is already included; there is nothing extra to install. The example scripts are in the data-collection repository under
@@ -2237,22 +2199,48 @@ if only the leader gripper is connected, the control scripts will open it as if 
 </tr>
 </tbody>
 </table>
-<h2 id="envelope">4. Write the motion safety envelope<a class="headerlink" href="#envelope" title="锚点链接">¶</a></h2>
-<p>The envelope is the torque and overheating protection in the firmware. Write it once per follower gripper; it is retained across power loss. The values are generated automatically by the SDK for the motor, so there is nothing to fill in.
-From gripper firmware 1.2.12 on, the firmware runs a default envelope if none has been written; older firmware has no protection at all. In both cases, write it once.</p>
-<p>Check first:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>python<span class="w"> </span>python/examples/impedance_control.py<span class="w"> </span>left<span class="w"> </span>--show-envelope
+<h2 id="motion-check">4. Motion check<a class="headerlink" href="#motion-check" title="锚点链接">¶</a></h2>
+<p>Use the keyboard console to move the follower gripper once and confirm the safety protection is active and opening, torque and temperature are all normal:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>python<span class="w"> </span>python/examples/gripper_console.py<span class="w"> </span>left
 </span></code></pre></div>
-<p>If the <code>effective</code> line contains <code>flags=0x2003 ENFORCE</code> and there is no <code>[warn]</code> line, it has already been written and you can skip this step. Otherwise write it:
-(On firmware 1.2.12 or later with no envelope written, the <code>effective</code> line also contains <code>ENFORCE</code>, but there is an extra <code>[warn]</code> line; in that case you still need to write it.)</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>python<span class="w"> </span>python/examples/impedance_control.py<span class="w"> </span>left<span class="w"> </span>--set-envelope<span class="w"> </span>--show-envelope
-</span></code></pre></div>
-<p>It is done when it shows <code>已写入</code> (written) or <code>已正确,未写入</code> (already correct, not written).</p>
 <div class="admonition danger">
-<p class="admonition-title">Always use <code>--set-envelope</code> together with <code>--show-envelope</code></p>
-<p>With <code>--set-envelope</code> alone, the script <strong>goes on to move the motor</strong> after writing.</p>
+<p class="admonition-title">This drives the real motor</p>
+<p>Clear the space around the fingers, keep your hands away, and be ready to pull the 24V.</p>
 </div>
-<p>Once this is done, you can move on to <a href="../control/">Motion control</a>.</p>
+<p>The top line of the console shows the gripper and its motion safety envelope; the line below is live data:</p>
+<table>
+<thead>
+<tr>
+<th>Where to look</th>
+<th>Normal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Top <code>envelope:</code></td>
+<td>Ends with <code>ENFORCED</code>: the firmware's torque and overheating protection is active; if it says <code>未生效</code> (not in effect), the firmware is too old, so <a href="../firmware/#mcu-ota">upgrade it</a> first</td>
+</tr>
+<tr>
+<td><code>Act[0-1]</code></td>
+<td>Near 1 after <code>o</code>, near 0 after <code>c</code>; <code>N/A</code> means not calibrated, so power-cycle</td>
+</tr>
+<tr>
+<td><code>Torq(+闭合)</code></td>
+<td>Near 0 when opening and closing empty; with a pen held between the fingers press <code>c</code>: it settles at 1.1 N·m and does not keep rising</td>
+</tr>
+<tr>
+<td><code>Temp(C)</code></td>
+<td>Near room temperature; it rises slowly while gripping, and above 90 °C the firmware lowers the torque automatically</td>
+</tr>
+<tr>
+<td><code>State</code></td>
+<td><code>EN</code> while moving; for <code>FAULT</code> and the like see <a href="../troubleshooting/#fault">Troubleshooting</a></td>
+</tr>
+</tbody>
+</table>
+<p>Common keys: <code>o</code> / <code>c</code> fully open / close, <code>j</code> / <code>k</code> open / close one step, <code>d</code> release the motor, <code>q</code> quit. All keys are in <a href="../control/#first-motion">Motion control</a>.</p>
+<p>If all of this checks out, the follower gripper is ready to use.</p>
+<p>Next, see <a href="../control/">Motion control</a>.</p>
 
 
 
@@ -2370,7 +2358,7 @@ From gripper firmware 1.2.12 on, the firmware runs a default envelope if none ha
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.tracking", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "navigation.footer", "toc.follow", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.tooltips"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.tracking", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "navigation.footer", "toc.follow", "toc.integrate", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.tooltips"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
       <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>

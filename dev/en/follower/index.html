@@ -399,7 +399,9 @@
   
 
 
-<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href="../" title="XTac-UMI Docs" class="md-nav__button md-logo" aria-label="XTac-UMI Docs" data-md-component="logo">
       
@@ -512,6 +514,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../product/g1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    XTac-UMI G1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../product/highlights/" class="md-nav__link">
         
   
@@ -548,34 +578,6 @@
     
   
     Editions
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../product/g1/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    XTac-UMI G1
   
 
     
@@ -713,6 +715,8 @@
       
         
       
+        
+      
     
     
     
@@ -767,6 +771,34 @@
           </label>
           <ul class="md-nav__list" data-md-scrollfix="">
             
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../backpack/quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
               
             
               
@@ -895,7 +927,7 @@
   <span class="md-ellipsis">
     
   
-    Projects, Export &amp; Publish
+    Projects, Export &amp; Upload
   
 
     
@@ -1990,87 +2022,6 @@
               </div>
             
             
-              
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
-      
-        <li class="md-nav__item">
-  <a href="#vs-leader" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        How it differs from the leader gripper
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#sn" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Serial number
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#motor-model" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Motor
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#safety-model" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Safety notes
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#next" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Next steps
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-                  </div>
-                </div>
-              </div>
-            
           
           
             <div class="md-content" data-md-component="content">
@@ -2150,16 +2101,12 @@ the version bundled with the collection environment; see <a href="setup/#install
 <thead>
 <tr>
 <th>Continuous stall rating</th>
-<th>Rated torque</th>
-<th>Torque range</th>
 <th>Speed range</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>1.1 N·m</td>
-<td>1.8 N·m</td>
-<td>6.0 N·m</td>
 <td>50 rad/s</td>
 </tr>
 </tbody>
@@ -2167,17 +2114,15 @@ the version bundled with the collection environment; see <a href="setup/#install
 <p>The <strong>continuous stall rating</strong> is the torque the jaws can hold indefinitely while pressing against an object; it is also the default grip force and its upper limit.</p>
 <h2 id="safety-model">Safety notes<a class="headerlink" href="#safety-model" title="锚点链接">¶</a></h2>
 <ul>
-<li>The gripper firmware has a built-in <strong>motion safety envelope</strong> (torque limit, thermal derating) that no program can bypass.
-  From gripper firmware 1.2.12 on, a follower gripper that has never had an envelope written runs a default one; <strong>older firmware has no protection unless one is written</strong>,
-  and when the jaws press against something hard they can drag down the 24V supply, so <strong>the gripper lets go and USB disconnects</strong>. Whatever the version, before the first motion write the envelope once, following
-  <a href="setup/#envelope">Write the motion safety envelope</a>.</li>
+<li>The gripper firmware has a built-in <strong>motion safety envelope</strong> (torque limit, thermal derating) that no program can bypass; it is active automatically from firmware 1.2.12.
+  <strong>Older firmware lacks this protection</strong>: pressing against something hard can drag down the 24V supply and make the gripper let go, so <a href="firmware/#mcu-ota">upgrade</a> to the firmware bundled with the SDK before use.</li>
 <li>When control stops, the program exits or USB disconnects, the gripper releases and whatever it is holding will drop.</li>
 <li>After power-on the gripper opens and closes once by itself to calibrate (about 10 seconds). During that time do not put anything in it and do not send commands.</li>
 </ul>
 <h2 id="next">Next steps<a class="headerlink" href="#next" title="锚点链接">¶</a></h2>
 <ol>
 <li>Mounting and wiring: <a href="../common/gripper/#follower-install">Gripper connection and serial numbers → Follower gripper mounting and connection</a></li>
-<li>Install the SDK, run the self-check, write the envelope: <a href="setup/">Setup and self-check</a></li>
+<li>Install the SDK and run the self-check: <a href="setup/">Setup and self-check</a></li>
 <li>Make it move: <a href="control/">Motion control</a></li>
 <li>Upgrade the firmware: <a href="firmware/">Firmware and motor upgrades</a></li>
 <li>When something goes wrong: <a href="troubleshooting/">Follower gripper troubleshooting</a></li>
@@ -2299,7 +2244,7 @@ the version bundled with the collection environment; see <a href="setup/#install
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.tracking", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "navigation.footer", "toc.follow", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.tooltips"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.tracking", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "navigation.footer", "toc.follow", "toc.integrate", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.tooltips"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
       <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>

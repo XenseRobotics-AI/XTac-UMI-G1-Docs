@@ -399,7 +399,9 @@
   
 
 
-<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href="../../" title="XTac-UMI Docs" class="md-nav__button md-logo" aria-label="XTac-UMI Docs" data-md-component="logo">
       
@@ -512,6 +514,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../product/g1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    XTac-UMI G1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../product/highlights/" class="md-nav__link">
         
   
@@ -548,34 +578,6 @@
     
   
     Editions
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../product/g1/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    XTac-UMI G1
   
 
     
@@ -715,6 +717,8 @@
       
         
       
+        
+      
     
     
     
@@ -770,6 +774,34 @@
           </label>
           <ul class="md-nav__list" data-md-scrollfix="">
             
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
               
             
               
@@ -898,7 +930,7 @@
   <span class="md-ellipsis">
     
   
-    Projects, Export &amp; Publish
+    Projects, Export &amp; Upload
   
 
     
@@ -1043,41 +1075,13 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Importing an upgrade bundle">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#system-patch" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Updates a console bundle does not cover
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
   <a href="#rollback" class="md-nav__link">
     <span class="md-ellipsis">
       
-        A/B slots and rollback
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#remote" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Remote forced updates
+        Rollback
       
     </span>
   </a>
@@ -2098,93 +2102,6 @@
               </div>
             
             
-              
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
-      
-        <li class="md-nav__item">
-  <a href="#bundle" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Importing an upgrade bundle
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Importing an upgrade bundle">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#system-patch" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Updates a console bundle does not cover
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#rollback" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        A/B slots and rollback
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#remote" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Remote forced updates
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#gripper-firmware" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Gripper firmware
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-                  </div>
-                </div>
-              </div>
-            
           
           
             <div class="md-content" data-md-component="content">
@@ -2196,107 +2113,38 @@
 
 
 <h1 id="upgrades-and-ota">Upgrades and OTA<a class="headerlink" href="#upgrades-and-ota" title="锚点链接">¶</a></h1>
-<p>This page covers upgrading the XTac-UMI Collector console (below, "the console") itself: importing an upgrade bundle on the System page, getting back to the previous version when an upgrade fails, and how a forced update pushed from a management end behaves on site. By the end you can carry out an upgrade on your own and verify the result. Flashing gripper firmware has its own section at the end of the page.</p>
-<p>Console upgrades are all done on the console's System → System update page, and that page is authoritative for the version (this page is written against 0.4.1). From top to bottom the page has a metrics card (current version, git, build time, architecture, and status: idle / ready / applying / error) and four cards: "Upload firmware bundle", "Pending version", "Rollback" and "Remote update".</p>
+<p>Console upgrades are done on System → System update; gripper firmware is flashed on System → Gripper, see <a href="#gripper-firmware">Gripper firmware</a>.</p>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/backpack/update.webp" data-desc-position="bottom"><img alt="System update page" src="../../../assets/backpack/update.webp"></a></p>
-<p>The screenshot shows an older version of the page; the current one also has "Cloud OTA push" and "matrix push" remote-update cards to the right of "Rollback".</p>
 <h2 id="bundle">Importing an upgrade bundle<a class="headerlink" href="#bundle" title="锚点链接">¶</a></h2>
-<p>An upgrade bundle is a <code>.tar.zst</code> file supplied by technical support, named like <code>taccap-collector-v0.4.1-245dd270d88f-aarch64.tar.zst</code>: the version number comes first, then 12 characters of git hash, then the architecture. The bundle holds only the console program (front end and back end in a single binary) plus a <code>manifest.json</code> — no gripper firmware, no camera profiles and no collected data. Fixes that need the device's system components updated therefore do not ship with this console bundle, see <a href="#system-patch">Updates a console bundle does not cover</a>.</p>
-<p>A version's identity is its <strong>version number plus the 12-character git hash</strong>: a higher version number upgrades; the same version number with a different hash also upgrades (a revision build of the same version); if both match, nothing happens. Check both when you verify a version.</p>
+<p>An upgrade bundle is a <code>.tar.zst</code> file from technical support, with the version in its name, such as <code>taccap-collector-v0.4.3-….tar.zst</code>. It updates only the console program: no gripper firmware, no camera profiles, and your collected data is untouched.</p>
 <ol>
-<li>Stop recording. The service restarts when an update is applied, and a recording in progress is refused outright.</li>
-<li>"Upload firmware bundle" → pick the <code>.tar.zst</code> → "Upload and verify", with an upload progress bar. Once it passes you get "Uploaded and verified: &lt;version&gt;" and the status becomes "ready".</li>
-<li>On the "Pending version" card, check the version number, the git hash and the <code>sha256</code>.</li>
-<li>"Apply update and restart" → confirm. The page shows "Service restarting, waiting to reconnect…", and once the new version is up you get "Update applied, service restarted". The front end waits at most 90 seconds; on timeout it says "Service restart timed out, refresh manually to confirm the status", and a refresh usually brings it back.</li>
-<li>Go to <a href="../system/#device-info">Device info</a> and check that the collector version / git / build time really did change.</li>
+<li>Stop recording.</li>
+<li>"Upload firmware package" → pick the <code>.tar.zst</code> → "Upload and verify".</li>
+<li>Once it passes, check the version on the "Version pending application" card.</li>
+<li>"Apply update and restart" → confirm. The restart takes about a minute; "Update applied" means done. If it times out, refresh the page.</li>
+<li>On <a href="../system/#device-info">Device info</a>, confirm the version and build time have changed.</li>
 </ol>
-<p>The device runs three checks and refuses the bundle if any of them fails, writing the reason into "Last error": the <code>sha256</code> must reconcile with the bundle's <code>manifest.json</code> (a corrupt or incomplete transfer); the architecture must match the device (the backpack is <code>aarch64</code>); and the current version must not be below the minimum starting version the bundle declares (no jumping major versions and no downgrades). Uploading by itself changes nothing, and after a refusal the current version keeps running.</p>
-<h3 id="system-patch">Updates a console bundle does not cover<a class="headerlink" href="#system-patch" title="锚点链接">¶</a></h3>
-<p>A console upgrade bundle updates the console program itself. A few fixes change the device's system components instead; the System update page has no entry point for those, and only technical support can carry them out on the device.</p>
-<p>The 0.4.x networking changes are partly of this kind: after upgrading, the new networking behaviour is only complete once the device's system components have been updated too. On a device that lacks them the upgrade still completes normally and <strong>the network settings are left as they are</strong> — the connection you are using will not be changed out from under you.</p>
-<div class="admonition warning">
-<p class="admonition-title">Not every update can be done from the System update page</p>
-<p>A console upgrade bundle does not cover the device's system components. The fix in 0.3.19 for "the backpack's internet route is taken over by the Pico when it is plugged in" is one of these: after you upgrade the console program to 0.3.19 or later, that fix does not necessarily take effect at the same time, and earlier units may not have the corresponding system fix.</p>
-<p>One more thing to watch when upgrading to 0.4.x: the network settings migration runs <strong>after the upgrade has passed its self-check</strong>, so what you see right after the restart may still be the old settings and change a little later. If you cannot connect after an upgrade, work through <a href="../network/">Network and console access</a> to find the address again.</p>
-<p>Whether a given device needs anything extra <strong>is for technical support to tell you</strong>. When technical support says it does, they handle it; there is nothing to do on site, and no way to do it there. The version shown in the console still refers only to the console program.</p>
-<p>Do <strong>not</strong> upload any other file technical support gives you into "Upload firmware bundle" — it accepts only <code>.tar.zst</code> console upgrade bundles, and anything else is refused by the verification step.</p>
+<p>If verification fails, the device refuses the bundle, writes the reason into "Last error" and keeps running the current version. Common causes: a corrupt or incomplete file, or a version that jumps too far or is older than the current one.</p>
+<div class="admonition note">
+<p class="admonition-title">Some fixes are handled by technical support</p>
+<p>A few fixes involve the device's system components, are not in the upgrade bundle and cannot be done on site. Whether a device needs one is for technical support to tell you. "Upload firmware package" accepts only <code>.tar.zst</code> bundles; do not upload any other file technical support gives you there.</p>
 </div>
-<h2 id="rollback">A/B slots and rollback<a class="headerlink" href="#rollback" title="锚点链接">¶</a></h2>
-<p>When an update is applied, the device keeps the running program as the previous version, then atomically swaps in the new one and restarts. The new version has to actually listen, stay alive for 30 seconds and pass the local health check before the upgrade counts as committed. After a commit the previous version is still kept for a manual rollback; the next upgrade overwrites it, so you can only go back one step.</p>
-<p>Automatic rollback happens in these cases, with no intervention:</p>
-<ul>
-<li>The new program does not come up, crashes early in start-up or fails its health check: after 3 consecutive failures it switches back to the previous version and restarts.</li>
-<li>At start-up the swapped-in file does not match the record (corrupt or the wrong bundle): it switches back immediately.</li>
-<li>Power loss mid-upgrade: the order is keep the old version first, then swap atomically, so at every moment there is a complete, runnable program on disk. After power returns, either the new version passes its self-check and commits, or it falls back under the rules above. It cannot be bricked. After power returns, open the System update page to see the current version and "Last operation / Last error", and re-import the bundle if you need to.</li>
-</ul>
-<p>Manual rollback: when the "Rollback" card shows "Rollback available", click "Roll back to previous version" → confirm, and the service restarts on the old version. "Unavailable" means this device has never successfully applied an update (first install from the factory), so there is no previous version to fall back to. Rollback likewise requires that no recording is in progress.</p>
-<p>Rollback and upgrade only swap the console program; recorded data, projects / tasks, upload configurations and the network configuration are stored elsewhere and are unaffected.</p>
-<h2 id="remote">Remote forced updates<a class="headerlink" href="#remote" title="锚点链接">¶</a></h2>
-<p>This section applies only to deployments connected to a management end; a device that is not connected will not show these remote-update cards, and upgrades follow <a href="#bundle">Importing an upgrade bundle</a> above.</p>
-<p>Since 0.3.9 a management end can push a specified version to a device and force the install, so operators do not have to import the bundle on each unit one by one; it can also roll out in batches, validating on a few devices before going wider. The prerequisite is that the backpack can reach the remote end: connect it <a href="../network/#lan">by cable or to the site WiFi</a>; a backpack running only its own hotspot will not receive anything.</p>
-<p>Once a device receives a push it goes through a fixed sequence, and "when it actually restarts" is decided solely by the device:</p>
-<ol>
-<li>Download: the bundle downloads in the background and a card at the bottom right shows progress (if the source does not give a total size, it shows only how much has been downloaded).</li>
-<li>Staging: once downloaded it goes through exactly the same verification as a manual import; only after it passes does the countdown start, and the download time is not counted.</li>
-<li>Countdown: the grace period is set by the pushing end, 5 minutes by default and 30 seconds at the shortest. The card shows "Will update and restart automatically in N min NN s"; to go early, click "Update now" (refused while recording).</li>
-<li>At the deadline: if nothing is recording it applies and restarts immediately; if a recording is in progress the card changes to "Update waiting for collection to finish" and it restarts once the current episode has ended normally — it never interrupts collection. Upgrading a few minutes later is far cheaper than an episode cut in half.</li>
-<li>The first time you open the interface on the new version, the card shows "Updated to the new version" together with this release's changes; click "Got it" to dismiss it.</li>
-</ol>
-<p>The card stays pinned at the bottom right and deliberately avoids a full-screen overlay: during the grace period the operator may well be collecting, and neither the view nor the stop button may be covered. Two one-off prompts do grab attention: a confirmation dialog when the new version is first pushed ("Update now?" — "Cancel" lets the countdown continue), and one "About to update automatically, please wrap up" as the countdown runs out.</p>
-<table>
-<thead>
-<tr>
-<th>Card status</th>
-<th>What it means</th>
-<th>What you do</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Management end has pushed an update, downloading</td>
-<td>Downloading in the background</td>
-<td>Nothing; you can keep collecting</td>
-</tr>
-<tr>
-<td>Management end requires an update, will update automatically in …</td>
-<td>Staged, counting down</td>
-<td>Wrap up what you are doing, or click "Update now"</td>
-</tr>
-<tr>
-<td>Update waiting for collection to finish</td>
-<td>Deadline reached but recording</td>
-<td>Finish this episode normally; it restarts once you stop</td>
-</tr>
-<tr>
-<td>Updating</td>
-<td>The service is about to restart</td>
-<td>Wait for the interface to drop briefly and come back</td>
-</tr>
-<tr>
-<td>Update preparation failed</td>
-<td>The download or verification failed</td>
-<td>No need to retry by hand; the device re-attempts on its next round. If it keeps failing, check the network first</td>
-</tr>
-<tr>
-<td>Updated to the new version</td>
-<td>Upgrade complete</td>
-<td>Glance at the changes and click "Got it"</td>
-</tr>
-</tbody>
-</table>
-<p>The System update page's "Remote update" card shows the same state (source, stage, seconds remaining), and displays "No remote update pushed" when there is none. Restarts and rollbacks pushed from the remote end obey the same recording protection.</p>
+<h2 id="rollback">Rollback<a class="headerlink" href="#rollback" title="锚点链接">¶</a></h2>
+<p>The device keeps the previous version when it upgrades. If the new version fails to start, the file is corrupt or power is lost mid-upgrade, it falls back to the previous version automatically and cannot be bricked.</p>
+<p>Manual rollback: when the "Rollback" card shows "Rollback available", click "Roll back to previous version" → confirm. You can go back only one step; a device that has never been upgraded since leaving the factory has no previous version.</p>
+<p>Upgrades and rollbacks do not affect recorded data, projects, upload configurations or network settings.</p>
 <h2 id="gripper-firmware">Gripper firmware<a class="headerlink" href="#gripper-firmware" title="锚点链接">¶</a></h2>
-<p>The gripper's (XTac-UMI G1) MCU firmware does not go through the upgrade bundle above. On the Backpack Kit you flash it from the console directly: the "Gripper firmware upgrade" panel on the console's System → <a href="../system/#gripper">Gripper</a> page, with no PC or SDK script needed. The firmware images, the rule for picking an image by role, the current released version (leader 1.2.2) and how to judge "do I need to flash?" are in <a href="../../pc/versions/#ota">the Developer Kit's firmware OTA upgrade</a>; both configurations flash the same image.</p>
+<p>Gripper firmware does not use the upgrade bundle; flash it from "Gripper firmware upgrade" at the bottom of System → <a href="../system/#gripper">Gripper</a>, with no computer needed. The firmware files and whether you need to flash are covered in the Developer Kit's <a href="../../pc/versions/#ota">firmware OTA upgrade</a>.</p>
 <ol>
-<li>Stop recording, and make sure no travel calibration is running. Firmware upgrades take exclusive use of the serial port, and either one in progress will be refused.</li>
-<li>"Gripper firmware upgrade" → pick the target gripper (left / right; the panel shows that gripper's SN, and the firmware only ever goes to the one you select — its role, leader or follower, is on the calibration card on the same page) → pick the <code>.bin</code> → "Upload and flash" → confirm.</li>
-<li>Watch the upload progress and the flashing stages (starting → writing → verifying → applying → done); when it finishes you get "Firmware flashed, the device is restarting". You can "Abort" part-way: the new firmware is written to the spare partition and does not overwrite the running copy until it verifies, so aborting or a failed transfer cannot brick it — just start again.</li>
-<li>Once the gripper has restarted, power the backpack off and on again (or unplug and replug that gripper's Type-C cable). The restart after flashing is a soft reset, so the gripper's USB-to-serial chip never loses power and it sits in a degraded state quietly dropping status frames; the reason is in <a href="../../pc/versions/#ota">the Developer Kit's notes</a>.</li>
-<li>Check the firmware version under "Gripper MCU" on <a href="../system/#device-info">Device info</a>; after a leader gripper goes above 1.2.0, go back to <a href="../system/#gripper">Gripper</a> and redo the zero and travel calibration.</li>
+<li>Stop recording, and make sure no travel calibration is in progress.</li>
+<li>Pick the target gripper (left / right) → pick the <code>.bin</code> → "Upload and flash" → confirm.</li>
+<li>After "Firmware flashed, the device is restarting", <strong>power the backpack off and on again</strong> (or replug that gripper's Type-C cable); otherwise the gripper drops data.</li>
+<li>Check the firmware version on <a href="../system/#device-info">Device info</a>; if the calibration card shows "Not calibrated", recalibrate on <a href="../system/#gripper">Gripper</a>.</li>
 </ol>
+<p>You can "Abort" while flashing; if it fails, just start again — it cannot brick the gripper.</p>
 <div class="admonition danger">
-<p class="admonition-title">Pick the image by role, and never cut power or unplug while flashing</p>
-<p>The leader gripper (SN ending in <code>m</code>) takes <code>tc-gu-01-master.bin</code> and the follower (SN ending in <code>s</code>) takes <code>tc-gu-01-slave.bin</code> — by role, not by left or right. The console does not check that the image matches the role; flash the wrong role and the gripper will not start, and only the factory can recover it. Cutting power or unplugging during the writing and applying stages will corrupt the firmware.</p>
+<p class="admonition-title">Pick the firmware by role, and never cut power while flashing</p>
+<p>The leader gripper (SN ending in <code>m</code>) takes <code>tc-gu-01-master.bin</code> and the follower (SN ending in <code>s</code>) takes <code>tc-gu-01-slave.bin</code> — by role, not by left or right. Flash the wrong one and the gripper will not start, and only the factory can recover it; cutting power or unplugging during writing also corrupts the firmware.</p>
 </div>
 
 
@@ -2415,7 +2263,7 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.tracking", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "navigation.footer", "toc.follow", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.tooltips"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.tracking", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "navigation.footer", "toc.follow", "toc.integrate", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.tooltips"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
       <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>

@@ -399,7 +399,9 @@
   
 
 
-<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href="../../" title="XTac-UMI Docs" class="md-nav__button md-logo" aria-label="XTac-UMI Docs" data-md-component="logo">
       
@@ -512,6 +514,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../product/g1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    XTac-UMI G1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../product/highlights/" class="md-nav__link">
         
   
@@ -548,34 +578,6 @@
     
   
     Editions
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../product/g1/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    XTac-UMI G1
   
 
     
@@ -715,6 +717,8 @@
       
         
       
+        
+      
     
     
     
@@ -770,6 +774,34 @@
           </label>
           <ul class="md-nav__list" data-md-scrollfix="">
             
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
               
             
               
@@ -978,7 +1010,7 @@
   <span class="md-ellipsis">
     
   
-    Projects, Export &amp; Publish
+    Projects, Export &amp; Upload
   
 
     
@@ -2070,65 +2102,6 @@
               </div>
             
             
-              
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
-      
-        <li class="md-nav__item">
-  <a href="#buttons" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Buttons
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#leds" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        LEDs
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#voice-cues" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Voice prompts
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-                  </div>
-                </div>
-              </div>
-            
           
           
             <div class="md-content" data-md-component="content">
@@ -2140,7 +2113,7 @@
 
 
 <h1 id="buttons-leds">Gripper buttons, LEDs and voice<a class="headerlink" href="#buttons-leds" title="锚点链接">¶</a></h1>
-<p>On the Backpack Kit the gripper's two side buttons start, stop and delete recordings, the LED reports the current state, and the backpack's speaker gives voice announcements. The buttons and LED patterns are handled by XTac-UMI Collector on the backpack, so no browser needs to be online. How to connect the grippers and tell left from right by serial number is in <a href="../../common/gripper/">Gripper connection and serial numbers</a>.</p>
+<p>On the Backpack Kit the gripper's two side buttons start, stop and delete recordings, the LED reports the current state, and the device gives voice announcements. The buttons and LED patterns are handled by XTac-UMI Collector on the backpack, so no browser needs to be online. How to connect the grippers and tell left from right by serial number is in <a href="../../common/gripper/">Gripper connection and serial numbers</a>.</p>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/hardware/master-controls.webp" data-desc-position="bottom"><img alt="Leader gripper controls (port / buttons / LED)" src="../../../assets/hardware/master-controls.webp" width="480"></a></p>
 <h2 id="buttons">Buttons<a class="headerlink" href="#buttons" title="锚点链接">¶</a></h2>
 <p>The button state machine runs on the backpack and <strong>does not need the browser to be open</strong>. While recording, a double-press or a right-gripper hold is silently ignored (against accidental presses); with nothing to delete, a double-press is refused (fast yellow blink).</p>
@@ -2176,6 +2149,10 @@
 <td><strong>Right gripper hold</strong> while confirming</td>
 <td>Abandon the delete and start a new recording right away (the previous episode is kept)</td>
 </tr>
+<tr>
+<td><strong>Right gripper single press</strong> while recording</td>
+<td>Place a subtask marker (a sub-step boundary) in this recording, with a tone</td>
+</tr>
 </tbody>
 </table>
 <p>Which gripper does what (right starts / left stops), the press timings and the LED patterns are fixed fleet-wide and cannot be changed on site, and the console offers no way to change them; the values in effect are shown on the console's System → Capture settings page (see <a href="../system/">System settings</a>).</p>
@@ -2184,55 +2161,66 @@
 <thead>
 <tr>
 <th>LED</th>
+<th>Colour and pattern</th>
 <th>Meaning</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Solid green</td>
+<td><span class="tc-lamp green solid"></span></td>
+<td>Green Solid</td>
 <td>Standby: ready to record</td>
 </tr>
 <tr>
-<td>Breathing green</td>
-<td>Recording (one bright-dim cycle per second)</td>
+<td><span class="tc-lamp green breathe"></span></td>
+<td>Green Breathing</td>
+<td>Recording (one bright-dark cycle per second)</td>
 </tr>
 <tr>
-<td>White blink</td>
-<td>Saved normally (0.4 s on, once)</td>
+<td><span class="tc-lamp white flash"></span></td>
+<td>White One flash</td>
+<td>Saved (on for 0.4 s)</td>
 </tr>
 <tr>
-<td>Solid yellow</td>
-<td>Failed to start recording (2 s), or a fatal problem while recording (stays lit)</td>
+<td><span class="tc-lamp amber solid"></span></td>
+<td>Yellow Solid</td>
+<td>Recording failed to start (on for 2 s), or a fatal problem while recording (stays on)</td>
 </tr>
 <tr>
-<td>Pulsing yellow</td>
-<td>Data suspect: still recording, but that episode's quality is questionable (0.2 s on, 0.8 s off, 3 times)</td>
+<td><span class="tc-lamp amber pulse"></span></td>
+<td>Yellow Pulse</td>
+<td>Suspect data: still recording, but that take is questionable (on 0.2 s, off 0.8 s, 3 times)</td>
 </tr>
 <tr>
-<td>Fast yellow blink</td>
-<td>Action refused, e.g. pressing start while already recording (0.1 s on/off, 3 times)</td>
+<td><span class="tc-lamp amber strobe"></span></td>
+<td>Yellow Fast blink</td>
+<td>Action refused, e.g. a double-press with nothing to delete (0.1 s on/off, 3 times)</td>
 </tr>
 <tr>
-<td>Purple blink</td>
-<td>Delete confirmation pending, waiting for your second double-press; 0.3 s on/off, cancels itself on timeout</td>
+<td><span class="tc-lamp purple blink"></span></td>
+<td>Purple Blink</td>
+<td>Delete confirmation, waiting for your second double-click; 0.3 s on/off, cancels on timeout</td>
 </tr>
 <tr>
-<td>Solid purple</td>
-<td>The 3 s cool-down right after a delete; double-presses do nothing during it</td>
+<td><span class="tc-lamp purple solid"></span></td>
+<td>Purple Solid</td>
+<td>The 3-second cool-down just after deleting; double-clicks are ignored</td>
 </tr>
 <tr>
-<td>Solid red</td>
-<td>System problem (e.g. a gripper dropped off; lit by the backpack side)</td>
+<td><span class="tc-lamp red solid"></span></td>
+<td>Red Solid</td>
+<td>System problem (e.g. a gripper dropped out, lit by the backpack)</td>
 </tr>
 <tr>
-<td>Red strobe</td>
-<td>Gripper-side problem (lit by the gripper MCU itself, not routed through the backpack)</td>
+<td><span class="tc-lamp red burst"></span></td>
+<td>Red Burst</td>
+<td>Gripper-side problem (lit by the gripper itself, not via the backpack)</td>
 </tr>
 </tbody>
 </table>
 <p>Recording is breathing green; red only ever means a fault. Fast blink and pulse are both yellow and differ only in rhythm: the fast blink is dense, the pulse sparse. The console's System → Capture settings page renders this table as an animated legend that plays each shape and rhythm, so the two are easy to tell apart (see <a href="../system/">System settings</a>).</p>
 <h2 id="voice-cues">Voice prompts<a class="headerlink" href="#voice-cues" title="锚点链接">¶</a></h2>
-<p>Backpack Kit only: while collecting, both hands are on the grippers and your eyes are on the scene, so reading the LED means looking up at the gripper. The backpack therefore speaks up at four moments through its own speaker, complementing the LED patterns. The audio comes out of the backpack speaker, so no tablet needs to be nearby and the browser is not involved.</p>
+<p>While collecting, both hands are on the grippers and your eyes on the scene, so the device <strong>announces key moments through the Pico headset</strong>, which you hear while wearing it, complementing the LEDs; no tablet is needed nearby and the browser plays no part. When the headset is not connected (for example the "Pico disconnected" announcement), the backpack's speaker plays it instead.</p>
 <table>
 <thead>
 <tr>
@@ -2243,23 +2231,39 @@
 <tbody>
 <tr>
 <td>Recording starts</td>
-<td>"Recording started"</td>
+<td>"Recording started."</td>
 </tr>
 <tr>
 <td>An episode finishes</td>
-<td>"Recording finished, please reset the environment" — reset the scene and get ready for the next one</td>
+<td>"Recording complete. Please reset the scene." — reset the scene and get ready for the next one</td>
 </tr>
 <tr>
 <td>A fatal problem while recording</td>
-<td>"Recording failed" — that episode is a write-off</td>
+<td>"Recording failed." — that episode is a write-off</td>
 </tr>
 <tr>
-<td>A gripper or the headset drops off while recording</td>
-<td>"Gripper connection failed" or "Pico connection failed"</td>
+<td>A gripper drops off while recording</td>
+<td>"Gripper connection failed."</td>
+</tr>
+<tr>
+<td>The headset drops off while recording</td>
+<td>"Pico connection failed."</td>
+</tr>
+<tr>
+<td>A tracker drops off while recording</td>
+<td>"Tracker connection failed." — the headset may still be connected, so check the tracker on your hand first</td>
+</tr>
+<tr>
+<td>Right gripper single press to mark a subtask</td>
+<td>Subtask marker tone (no speech)</td>
 </tr>
 </tbody>
 </table>
-<p>The toggle, the per-line preview and the 0-100 volume slider are all on the console's System → <a href="../system/#voice">Capture settings</a> page (the volume slider since 0.3.16); the settings survive a reboot. The wording and the timing are fixed values that cannot be changed on site, so every device in a fleet behaves the same.</p>
+<ul>
+<li><strong>Language</strong>: Chinese or English, following the console's interface language by default.</li>
+<li><strong>Settings</strong>: on/off, language, volume and per-phrase preview are in System → <a href="../system/#voice">Capture settings</a>.</li>
+<li>The phrases and when they play are fixed and cannot be changed on site.</li>
+</ul>
 
 
 
@@ -2314,13 +2318,13 @@
         
         
           
-          <a href="../projects-export/" class="md-footer__link md-footer__link--next" aria-label="Next: Projects, Export &amp; Publish">
+          <a href="../projects-export/" class="md-footer__link md-footer__link--next" aria-label="Next: Projects, Export &amp; Upload">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Projects, Export &amp; Publish
+                Projects, Export &amp; Upload
               </div>
             </div>
             <div class="md-footer__button md-icon">
@@ -2377,7 +2381,7 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.tracking", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "navigation.footer", "toc.follow", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.tooltips"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.tracking", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "navigation.footer", "toc.follow", "toc.integrate", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.tooltips"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
       <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>

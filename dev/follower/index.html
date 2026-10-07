@@ -399,7 +399,9 @@
   
 
 
-<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="导航栏" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href=".." title="XTac-UMI 文档 (预览)" class="md-nav__button md-logo" aria-label="XTac-UMI 文档 (预览)" data-md-component="logo">
       
@@ -512,6 +514,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../product/g1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    认识 XTac-UMI G1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../product/highlights/" class="md-nav__link">
         
   
@@ -548,34 +578,6 @@
     
   
     产品线与配置对比
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../product/g1/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    认识 XTac-UMI G1
   
 
     
@@ -713,6 +715,8 @@
       
         
       
+        
+      
     
     
     
@@ -767,6 +771,34 @@
           </label>
           <ul class="md-nav__list" data-md-scrollfix="">
             
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../backpack/quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    一页速通
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
               
             
               
@@ -895,7 +927,7 @@
   <span class="md-ellipsis">
     
   
-    项目、导出与发布
+    项目、导出与上传
   
 
     
@@ -1990,87 +2022,6 @@
               </div>
             
             
-              
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    
-
-<nav class="md-nav md-nav--secondary" aria-label="目录">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      目录
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
-      
-        <li class="md-nav__item">
-  <a href="#vs-leader" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        和主夹爪的区别
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#sn" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        序列号
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#motor-model" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        电机
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#safety-model" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        安全须知
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#next" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        接下来
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-                  </div>
-                </div>
-              </div>
-            
           
           
             <div class="md-content" data-md-component="content">
@@ -2150,16 +2101,12 @@
 <thead>
 <tr>
 <th>持续堵转额定</th>
-<th>额定力矩</th>
-<th>力矩量程</th>
 <th>速度量程</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>1.1 N·m</td>
-<td>1.8 N·m</td>
-<td>6.0 N·m</td>
 <td>50 rad/s</td>
 </tr>
 </tbody>
@@ -2167,17 +2114,16 @@
 <p><strong>持续堵转额定</strong>是爪子顶住物体时可以一直保持的力矩，也是默认的夹持力和上限。</p>
 <h2 id="safety-model">安全须知<a class="headerlink" href="#safety-model" title="锚点链接">¶</a></h2>
 <ul>
-<li>夹爪固件内置<strong>运动安全包络</strong>（力矩上限、过热降额），任何程序都绕不过去。
-  夹爪固件 1.2.12 起，没写过包络的从夹爪会自动执行一套默认包络；<strong>更旧的固件不写就没有保护</strong>，
-  爪子顶住硬物时会把 24V 电源拉垮，<strong>夹爪松手、USB 断开</strong>。不论哪个版本，第一次运动前都按
-  <a href="setup/#envelope">写入运动安全包络</a> 写一次。</li>
+<li>夹爪固件内置<strong>运动安全包络</strong>（力矩上限、过热降额），任何程序都绕不过去，固件 1.2.12 起自动生效。
+  <strong>更旧的固件没有这层保护</strong>，爪子顶住硬物时会把 24V 电源拉垮、夹爪松手，所以使用前务必把固件
+  <a href="firmware/#mcu-ota">升级</a>到随 SDK 附带的版本。</li>
 <li>停止控制、程序退出或 USB 断开时，夹爪会松开，夹着的东西会掉。</li>
 <li>上电后夹爪会自己开合一次做标定（约 10 秒），期间不要放东西、不要发命令。</li>
 </ul>
 <h2 id="next">接下来<a class="headerlink" href="#next" title="锚点链接">¶</a></h2>
 <ol>
 <li>安装与接线：<a href="../common/gripper/#follower-install">夹爪连接与序列号 → 从夹爪安装与连接</a></li>
-<li>安装 SDK、自检、写入包络：<a href="setup/">准备与自检</a></li>
+<li>安装 SDK 与自检：<a href="setup/">准备与自检</a></li>
 <li>让它动起来：<a href="control/">运动控制</a></li>
 <li>升级固件：<a href="firmware/">固件与电机升级</a></li>
 <li>出问题时：<a href="troubleshooting/">从夹爪故障排查</a></li>
@@ -2299,7 +2245,7 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.tracking", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "navigation.footer", "toc.follow", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.tooltips"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.tracking", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "navigation.footer", "toc.follow", "toc.integrate", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.tooltips"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
     
     
       <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>

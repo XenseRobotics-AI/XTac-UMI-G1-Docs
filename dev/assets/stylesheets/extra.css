@@ -1,41 +1,164 @@
-/* ===== 首页 Hero(浅色居中,产品图在下) ===== */
-.tc-hero {
-  text-align: center;
-  padding: 2.2rem 0 1.2rem;
+/* =====================================================================
+   首页首屏:左栏标题与入口,右栏三块同色展台拼成的产品图
+   ===================================================================== */
+
+.md-typeset .tc-hero {
+  display: grid;
+  grid-template-columns: 5fr 7fr;
+  gap: 2.4rem;
+  align-items: center;
+  padding: 1.2rem 0 1.6rem;
 }
-.tc-hero .tc-eyebrow {
+.md-typeset .tc-hero h1 {
+  margin: 0 0 .9rem;
+  font-size: 2.4rem;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -.01em;
+  color: var(--md-default-fg-color);
+}
+/* 英文标题更长,字号小一档,保证每个短语一行 */
+html[lang="en"] .md-typeset .tc-hero h1 {
+  font-size: 1.9rem;
+}
+/* 首屏标题的 ¶ 锚点用不上 */
+.md-typeset .tc-hero h1 .headerlink {
+  display: none;
+}
+/* 说明文字两层:主句说能得到什么,小字交代设备。行已在文案里手动断好;
+   中文只在标点、空格处折行,产品名内部用 &nbsp; 连住 */
+.md-typeset .tc-hero .tc-sub,
+.md-typeset .tc-hero .tc-note {
+  word-break: keep-all;
+}
+.md-typeset .tc-hero .tc-sub {
+  margin: 0 0 .5rem;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--md-default-fg-color);
+}
+.md-typeset .tc-hero .tc-note {
+  margin: 0 0 1.5rem;
+  font-size: .8rem;
+  line-height: 1.6;
+  color: var(--md-default-fg-color--light);
+}
+.md-typeset .tc-hero .md-button {
+  margin: 0 .5rem .5rem 0;
+}
+
+/* 右栏:主夹爪、从夹爪两张透明底渲染图并排,图注在同一行。
+   两栏宽度按宽高比分配:主夹爪 1400×1365 → 1.026;从夹爪 1400×781 → 1.793,
+   再乘 k = 0.65,让从夹爪显示为主夹爪高度的 65%。
+   从夹爪图下方留白 (1-k)/(2×1.793×k) = 15% 栏宽,使它与主夹爪上下居中对齐。
+   换图或改 k 时同步改这几个数 */
+.md-typeset .tc-stage {
+  display: grid;
+  grid-template-columns: 1.026fr 1.165fr;
+  gap: 1.6rem;
+  align-items: end;
+}
+.md-typeset .tc-tile--follower img {
+  margin-bottom: 15%;
+}
+.md-typeset .tc-tile {
+  margin: 0;
+}
+/* md_in_html 生成 figure > p > a.glightbox > img */
+.md-typeset .tc-tile > p {
+  margin: 0;
+}
+.md-typeset .tc-tile img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 0;
+}
+.md-typeset .tc-tile figcaption {
+  max-width: none;
+  margin: .6rem 0 0;
+  font-size: .75rem;
+  font-style: normal;
+  font-weight: 600;
+  text-align: left;
+}
+.md-typeset .tc-tile figcaption p {
+  margin: 0;
+}
+
+@media screen and (max-width: 59.9375em) {
+  .md-typeset .tc-hero {
+    grid-template-columns: 1fr;
+    gap: 1.6rem;
+  }
+}
+@media screen and (max-width: 30em) {
+  .md-typeset .tc-hero h1 {
+    font-size: 1.9rem;
+  }
+  html[lang="en"] .md-typeset .tc-hero h1 {
+    font-size: 1.5rem;
+  }
+}
+
+/* 首页「采集全流程」:准备工作、采集、数据三段,对应左侧导航的三组。
+   桌面三栏并排,窄屏上下排;每步「标题链接一行 + 说明一行」 */
+.md-typeset .tc-flow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-top: 1rem;
+}
+.md-typeset .tc-flow__group h3 {
+  margin: 0;
+  padding-top: .8rem;
+  border-top: 2px solid var(--md-default-fg-color--lightest);
+  font-size: 1rem;
+  font-weight: 700;
+}
+/* 「采集」是每次都要走的主线,顶线用主题色区分 */
+.md-typeset .tc-flow__group:nth-child(2) h3 {
+  border-top-color: var(--md-primary-fg-color);
+}
+.md-typeset .tc-flow__lead {
+  margin: .2rem 0 .8rem;
+  font-size: .75rem;
+  color: var(--md-default-fg-color--light);
+}
+.md-typeset .tc-flow ol {
+  margin: 0;
+  padding-left: 1.3em;
+}
+.md-typeset .tc-flow li {
+  margin: 0 0 .8em;
+  font-size: .78rem;
+  line-height: 1.6;
+}
+.md-typeset .tc-flow li strong {
+  font-size: .82rem;
+}
+.md-typeset .tc-flow__more {
+  margin-top: .6rem;
+  font-size: .78rem;
+  color: var(--md-default-fg-color--light);
+}
+@media screen and (max-width: 63.9375em) {
+  .md-typeset .tc-flow {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+  }
+}
+
+/* 首屏标题上方的小字 */
+.md-typeset .tc-hero .tc-eyebrow {
+  display: block;
+  margin-bottom: .4rem;
   text-transform: uppercase;
   letter-spacing: .12em;
   font-size: .72rem;
-  color: var(--md-primary-fg-color);
   font-weight: 700;
+  color: var(--md-primary-fg-color);
 }
-.tc-hero h1 {
-  font-weight: 800;
-  font-size: 2.1rem;
-  line-height: 1.15;
-  margin: .3rem 0 .5rem;
-}
-.tc-hero .tc-sub {
-  color: var(--md-default-fg-color--light);
-  font-size: 1.05rem;
-  max-width: 42rem;
-  margin: 0 auto 1.1rem;
-}
-.tc-hero .md-button {
-  margin: .3rem .3rem 0;
-}
-
-/* 首页 Hero 产品图 */
-.tc-hero-img {
-  display: block;
-  max-width: min(760px, 100%);
-  height: auto;
-  margin: 1.4rem auto 0;
-  border-radius: .6rem;
-  box-shadow: 0 8px 28px rgba(0, 0, 0, .14);
-}
-
 /* 卡片网格里的图标略放大 */
 .md-typeset .grid.cards :is(.twemoji, .emojione, .gemoji) svg {
   height: 1.4rem;
@@ -241,11 +364,11 @@
 
 /* ===== 以下来自 docs/follower-gripper 分支 ===== */
 
-/* 首页「采集到的数据」:XR 控制台、传感器映射图、Rerun 预览三图并排。
-   列宽按三张图的宽高比(1.50 : 1.15 : 1.59)分配,三张图显示高度相同 */
+/* 首页「采集到的数据」:传感器映射图、Rerun 预览、3D 回放三图并排。
+   列宽按三张图的宽高比(1.15 : 1.59 : 1.74)分配,三张图显示高度相同 */
 .md-typeset .tc-data {
   display: grid;
-  grid-template-columns: 1.5fr 1.15fr 1.59fr;
+  grid-template-columns: 1.15fr 1.59fr 1.74fr;
   gap: 1.6rem;
   align-items: center;
   margin-top: 1rem;
@@ -336,7 +459,8 @@
   --arch-read: #00897b;
   --arch-core: #ef6c00;
   --arch-out: #2e7d32;
-  --arch-video: #d81b60;
+  --arch-up: #e91e63;
+  --arch-video: #8e24aa;
   --arch-line: rgba(0, 0, 0, .28);
   --arch-panel: var(--md-code-bg-color);
   margin: 1.2rem 0 1.4rem;
@@ -346,7 +470,8 @@
   --arch-read: #4db6ac;
   --arch-core: #ffb74d;
   --arch-out: #81c784;
-  --arch-video: #f48fb1;
+  --arch-up: #f48fb1;
+  --arch-video: #ce93d8;
   --arch-line: rgba(255, 255, 255, .3);
 }
 /* 没有 JS 时 JSON 不显示 */
@@ -464,6 +589,7 @@
 .md-typeset .tc-arch__node.is-read { --k: var(--arch-read); }
 .md-typeset .tc-arch__node.is-core { --k: var(--arch-core); }
 .md-typeset .tc-arch__node.is-out  { --k: var(--arch-out); }
+.md-typeset .tc-arch__node.is-up   { --k: var(--arch-up); }
 .md-typeset .tc-arch__title {
   font-size: 15px;
   font-weight: 700;
@@ -657,4 +783,129 @@
 .md-typeset .tc-pair--products figure:last-child img {
   height: 10.5rem;
   margin-bottom: 1.2rem;
+}
+
+/* 首页「产品亮点」:左视频右要点,窄屏上下排 */
+.md-typeset .tc-feature {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 1.6rem;
+  align-items: center;
+  margin: 1rem 0 1.6rem;
+}
+.md-typeset .tc-feature .tc-video {
+  margin: 0;
+}
+.md-typeset .tc-feature__text ul {
+  margin: 0 0 1rem;
+  padding: 0;
+  list-style: none;
+}
+.md-typeset .tc-feature__text li {
+  margin: 0 0 .7rem;
+  padding-left: .8rem;
+  border-left: 3px solid var(--md-primary-fg-color);
+  line-height: 1.6;
+}
+@media screen and (max-width: 59.9375em) {
+  .md-typeset .tc-feature {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 首页「公开数据集」:左场景图右要点,场景图是方图,给窄一点的栏 */
+.md-typeset .tc-feature--dataset {
+  grid-template-columns: 1fr 1.5fr;
+}
+.md-typeset .tc-feature--dataset img {
+  display: block;
+  width: 100%;
+  max-width: 22rem;
+  margin: 0 auto;
+}
+
+/* 全站表格:单元格内容上下居中(Material 默认顶对齐) */
+.md-typeset table:not([class]) th,
+.md-typeset table:not([class]) td {
+  vertical-align: middle;
+}
+
+/* 标签页内的并排图:md_in_html 在缩进块里会给 figure 套出空 <p>,不让它们占格子 */
+.md-typeset .tc-pair > p:empty {
+  display: none;
+}
+/* 背包版两张接线图:列宽按宽高比(1338×1002 → 1.335,1377×865 → 1.592)分配,两图等高 */
+.md-typeset .tc-pair--wiring {
+  grid-template-columns: 1.335fr 1.592fr;
+  align-items: start;
+}
+@media screen and (max-width: 44.9375em) {
+  .md-typeset .tc-pair--wiring {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 上传链路:粉红色连线与光点 */
+.md-typeset .tc-arch__edge.is-up .tc-arch__flow {
+  stroke: var(--arch-up);
+}
+.md-typeset .tc-arch__edge.is-hit.is-up .tc-arch__line {
+  stroke: var(--arch-up);
+}
+.md-typeset .tc-arch__dot.is-up {
+  fill: var(--arch-up);
+  filter: drop-shadow(0 0 3px var(--arch-up));
+}
+
+/* 三张并排的卡片(如认识数采背包「它是什么」);窄屏改单列 */
+.md-typeset .grid.cards.tc-cards3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+@media screen and (max-width: 44.9375em) {
+  .md-typeset .grid.cards.tc-cards3 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 全站表格水平居中(Material 默认靠左);单元格内文字仍左对齐 */
+.md-typeset .md-typeset__scrollwrap {
+  text-align: center;
+}
+.md-typeset .md-typeset__table {
+  text-align: left;
+}
+
+/* 背包版灯语:与 XTac-UMI Collector 系统页的灯语对照同一套颜色与节奏(取自设备端灯语定义),
+   带次数的效果(白闪、脉冲、快闪)循环播放 */
+.md-typeset .tc-lamp {
+  display: inline-block;
+  width: 32px;
+  height: 8px;
+  border-radius: 999px;
+  background: currentColor;
+  box-shadow: 0 0 9px currentColor;
+  vertical-align: middle;
+}
+.md-typeset .tc-lamp.green  { color: #00e83c; }
+.md-typeset .tc-lamp.white  { color: #c9ced6; }
+[data-md-color-scheme="slate"] .md-typeset .tc-lamp.white { color: #f4f7fb; }
+.md-typeset .tc-lamp.amber  { color: #ffd000; }
+.md-typeset .tc-lamp.purple { color: #a04cff; }
+.md-typeset .tc-lamp.red    { color: #ff2f2f; }
+@keyframes tc-lamp-breathe { 0%, 100% { opacity: .14; } 50% { opacity: 1; } }
+@keyframes tc-lamp-sq80 { 0%, 79.9% { opacity: 1; } 80%, 100% { opacity: .14; } }
+@keyframes tc-lamp-sq50 { 0%, 49.9% { opacity: 1; } 50%, 100% { opacity: .14; } }
+@keyframes tc-lamp-sq20 { 0%, 19.9% { opacity: 1; } 20%, 100% { opacity: .14; } }
+@keyframes tc-lamp-burst {
+  0%, 5% { opacity: 1; } 5.1%, 12% { opacity: .14; }
+  12.1%, 17% { opacity: 1; } 17.1%, 100% { opacity: .14; }
+}
+.md-typeset .tc-lamp.breathe { animation: tc-lamp-breathe 1000ms ease-in-out infinite; }
+.md-typeset .tc-lamp.flash   { animation: tc-lamp-sq80 500ms steps(1, end) infinite; }
+.md-typeset .tc-lamp.pulse   { animation: tc-lamp-sq20 1000ms steps(1, end) infinite; }
+.md-typeset .tc-lamp.strobe  { animation: tc-lamp-sq50 200ms steps(1, end) infinite; }
+.md-typeset .tc-lamp.blink   { animation: tc-lamp-sq50 600ms steps(1, end) infinite; }
+.md-typeset .tc-lamp.burst   { animation: tc-lamp-burst 1200ms steps(1, end) infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .md-typeset .tc-lamp { animation: none !important; }
 }

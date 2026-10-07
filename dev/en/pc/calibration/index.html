@@ -399,7 +399,9 @@
   
 
 
-<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href="../../" title="XTac-UMI Docs" class="md-nav__button md-logo" aria-label="XTac-UMI Docs" data-md-component="logo">
       
@@ -512,6 +514,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../product/g1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    XTac-UMI G1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../product/highlights/" class="md-nav__link">
         
   
@@ -548,34 +578,6 @@
     
   
     Editions
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../product/g1/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    XTac-UMI G1
   
 
     
@@ -713,6 +715,8 @@
       
         
       
+        
+      
     
     
     
@@ -767,6 +771,34 @@
           </label>
           <ul class="md-nav__list" data-md-scrollfix="">
             
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../backpack/quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
               
             
               
@@ -895,7 +927,7 @@
   <span class="md-ellipsis">
     
   
-    Projects, Export &amp; Publish
+    Projects, Export &amp; Upload
   
 
     
@@ -2112,104 +2144,6 @@
               </div>
             
             
-              
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
-      
-        <li class="md-nav__item">
-  <a href="#41" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Gripper calibration (zero + travel)
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Gripper calibration (zero + travel)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#when-you-need-it" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        When you need it
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#how-to-calibrate" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        How to calibrate
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#413" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Confirm it took effect
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#scope" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Scope
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#pico4-ultra-tracker-self-check" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Pico4 Ultra tracker self-check
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-                  </div>
-                </div>
-              </div>
-            
           
           
             <div class="md-content" data-md-component="content">
@@ -2346,11 +2280,7 @@
 <p>Prints <code>raw</code> (the tracker's own pose) and <code>ee</code> (the TCP after the rigid mount transform) at 10 Hz. Wave the gripper: <code>raw xyz</code> should change smoothly and the SN should match what you expect (<a href="../../common/pico4/#pico-tracker-sn">Reading a tracker SN</a>).</p>
 <p>You do not measure the mount transform: the rigid offset from tracker to TCP is built into the collection program (measured off the CAD assembly), with each side measured separately; the two are close to mirror images but not identical (0.03° apart in rotation, 1.27 mm in translation). <code>--side</code> picks which side's value to apply; without <code>--side</code> the transform is identity and <code>ee</code> simply follows <code>raw</code>. Override it only after something like re-machining the mount, via <code>--robot.tracker_to_ee_pos</code> / <code>--robot.tracker_to_ee_quat</code>; the two are independent, so you can pin just the translation and keep the built-in rotation.</p>
 <p>The pivot check needs no extra hardware: rest the midpoint of the two fingers on a fixed point and, holding the handle, sweep through as many orientations as you can. <code>ee xyz</code> should barely move while <code>raw xyz</code> swings widely; the drift you see is the transform's error. Test both sides; a left value mirrored the wrong way shows up as <code>ee</code> swinging about twice as far as it should.</p>
-<p>To see both grippers' IMU/encoder and the trackers' 6-DoF pose in a single Rerun view, use the SDK example <code>rerun_dual_with_tracker.py</code> (needs <code>xensevr_pc_service_sdk</code> and a running XenseVR PC Service). It skips LeRobot's automatic SN matching, so you must pass the SNs explicitly. SNs belong to a specific unit: on another unit, use the ones it reports, and shake each gripper in turn to verify left and right:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>python<span class="w"> </span>third_party/taccap-gripper/python/examples/rerun_dual_with_tracker.py<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">    </span>--left-tracker-sn<span class="w">  </span>&lt;left<span class="w"> </span>tracker<span class="w"> </span>SN&gt;<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span>--right-tracker-sn<span class="w"> </span>&lt;right<span class="w"> </span>tracker<span class="w"> </span>SN&gt;
-</span></code></pre></div>
+<p>To see the gripper data and the tracker poses together in Rerun, add <code>--display_data=true</code> when you <a href="../recording/#preview">preview before recording</a>.</p>
 <p>Quaternion hemisphere flips (sign jumps) are already handled by a continuity fix inside the pose reader; if you still see jumps, file a bug.</p>
 <p>Next → <a href="../recording/">Data collection</a>.</p>
 
@@ -2470,7 +2400,7 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.tracking", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "navigation.footer", "toc.follow", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.tooltips"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.tracking", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "navigation.footer", "toc.follow", "toc.integrate", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.tooltips"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
       <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>

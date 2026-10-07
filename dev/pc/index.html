@@ -399,7 +399,9 @@
   
 
 
-<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="导航栏" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href=".." title="XTac-UMI 文档 (预览)" class="md-nav__button md-logo" aria-label="XTac-UMI 文档 (预览)" data-md-component="logo">
       
@@ -512,6 +514,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../product/g1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    认识 XTac-UMI G1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../product/highlights/" class="md-nav__link">
         
   
@@ -548,34 +578,6 @@
     
   
     产品线与配置对比
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../product/g1/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    认识 XTac-UMI G1
   
 
     
@@ -713,6 +715,8 @@
       
         
       
+        
+      
     
     
     
@@ -767,6 +771,34 @@
           </label>
           <ul class="md-nav__list" data-md-scrollfix="">
             
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../backpack/quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    一页速通
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
               
             
               
@@ -895,7 +927,7 @@
   <span class="md-ellipsis">
     
   
-    项目、导出与发布
+    项目、导出与上传
   
 
     
@@ -1993,65 +2025,6 @@
               </div>
             
             
-              
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    
-
-<nav class="md-nav md-nav--secondary" aria-label="目录">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      目录
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
-      
-        <li class="md-nav__item">
-  <a href="#start" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        从哪开始
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#system" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        数采系统组成
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#frame" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        每帧记录什么
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-                  </div>
-                </div>
-              </div>
-            
           
           
             <div class="md-content" data-md-component="content">
@@ -2063,45 +2036,161 @@
 
 
 <h1 id="pc-版xtac-umi-g1-开发套件">PC 版：XTac-UMI G1 开发套件<a class="headerlink" href="#pc-版xtac-umi-g1-开发套件" title="锚点链接">¶</a></h1>
-<p>PC 版把计算放在你自己的 x86 工作站上（推荐 NVIDIA GPU，Mamba 源码安装或 Docker 镜像二选一）：夹爪 USB 直连主机，Pico4 Ultra 企业版头显也用 Type-C 线直连主机走有线共享网络（默认有线，WiFi 仅供临时调试），位姿经主机上的 XenseVR PC Service 接入，整条链路走 LeRobot 框架。
-需要的硬件是 XTac-UMI G1 主夹爪（单只或一对）、Pico4 Ultra 企业版加追踪器，以及这台工作站。
-操作界面是终端命令加 Rerun 预览窗口，<code>lerobot-record</code> 直接落盘 LeRobotDataset v3，可推到 Hugging Face Hub。
-基于 lerobot 开源生态，适合研究与算法团队、自建训练管线；完全开放二次开发，改 Python 代码或接自定义机器人都可以。
-不需要 PC、由采集团队在现场用平板和夹爪按键操作的是<a href="../backpack/">背包版</a>；两种配置的对比见<a href="../product/editions/">产品线与配置对比</a>。</p>
-<h2 id="start">从哪开始<a class="headerlink" href="#start" title="锚点链接">¶</a></h2>
-<p>第一次使用，按顺序走一遍：<a href="install/">安装</a> → <a href="host-setup/">主机配置</a> → <a href="../common/pico4/">Pico4 头显与追踪器</a> → <a href="calibration/">标定与自检</a>；
-之后每次采集照着 <a href="quickstart/">一页速通</a> 做即可。要让从夹爪在机器人上执行动作，见 <a href="../follower/">从夹爪</a>；自己写程序读写夹爪，见 <a href="../sdk/">SDK 与二次开发</a>。</p>
+<p>PC 版把采集交给您自己的 x86 工作站：夹爪和头显用线直连工作站，基于开源 LeRobot 录制，直接得到 LeRobotDataset v3，可推送到 Hugging Face Hub。采集软件与夹爪 SDK 开源，适合科研与算法团队自由二次开发。</p>
+<p>不想接电脑、在现场用平板操作的选<a href="../backpack/">背包版</a>，两者对比见<a href="../product/editions/">产品线与配置对比</a>。</p>
+<h2 id="workflow">采集全流程<a class="headerlink" href="#workflow" title="锚点链接">¶</a></h2>
+<div class="tc-flow">
+<div class="tc-flow__group">
+<h3 id="①-准备工作">① 准备工作<a class="headerlink" href="#①-准备工作" title="锚点链接">¶</a></h3>
+<p class="tc-flow__lead">每台电脑、每台设备做一次</p>
+<ol>
+<li><strong><a href="../common/gripper/">认识硬件</a></strong><br>
+   部件、接线与上电顺序</li>
+<li><strong><a href="install/">安装环境</a></strong><br>
+   <code>setup_env.sh</code> 或 Docker 镜像</li>
+<li><strong><a href="host-setup/#31">配置主机</a></strong><br>
+   串口权限、关闭 ModemManager</li>
+<li><strong><a href="../common/pico4/">配置 Pico4 Ultra 企业版</a></strong><br>
+   开发者模式、XR 应用、追踪器</li>
+<li><strong><a href="calibration/#41">标定主夹爪</a></strong><br>
+   零点与行程上限，每只一次</li>
+</ol>
+</div>
+<div class="tc-flow__group">
+<h3 id="②-采集">② 采集<a class="headerlink" href="#②-采集" title="锚点链接">¶</a></h3>
+<p class="tc-flow__lead">每次采集按这个顺序</p>
+<ol>
+<li><strong><a href="quickstart/#power-on">上电与连接</a></strong><br>
+   插夹爪、开追踪器，关电脑 WiFi</li>
+<li><strong><a href="host-setup/#35">启动服务与 XR 应用</a></strong><br>
+   先启 PC Service，再开 XR 应用</li>
+<li><strong><a href="recording/#preview">预览检查</a></strong><br>
+   <code>lerobot-teleoperate</code> 确认数据流</li>
+<li><strong><a href="recording/#52">正式录制</a></strong><br>
+   <code>lerobot-record</code>，中途不重启 XR</li>
+</ol>
+</div>
+<div class="tc-flow__group">
+<h3 id="③-数据">③ 数据<a class="headerlink" href="#③-数据" title="锚点链接">¶</a></h3>
+<p class="tc-flow__lead">录完之后</p>
+<ol>
+<li><strong><a href="dataset/#62">检查完整性</a></strong><br>
+   <code>lerobot-check-dataset</code></li>
+<li><strong><a href="dataset/#64">上传 Hub（可选）</a></strong><br>
+   <code>lerobot-push-dataset-to-hub</code></li>
+<li><strong><a href="dataset/#61">了解数据格式</a></strong><br>
+   每帧记录了什么、怎么读取</li>
+</ol>
+</div>
+</div>
+<p class="tc-flow__more">把从夹爪装到机器人上、用程序控制开合与夹持，见<a href="../follower/">从夹爪</a>；直接调用夹爪 SDK，见<a href="../sdk/">SDK 与二次开发</a>。</p>
 <h2 id="system">数采系统组成<a class="headerlink" href="#system" title="锚点链接">¶</a></h2>
 <p>整套采集在数采电脑上的一个 <code>lerobot-record</code> 进程里完成：各路设备各自独立读取，每一帧取各路的最新值合成一帧，配对后写成数据集。
 把鼠标移到（手机上点按）任一模块，可以看到它的数据从哪来、到哪去；上方按钮切换三档。</p>
 <div class="tc-arch"><script type="application/json">
 {
   "title": "XTac-UMI G1 数采系统架构",
-  "tiers": ["① 只有夹爪", "② 带腕部位姿", "③ 完全体"],
-  "cols": {"dev": "设备", "read": "数采电脑 · 读取", "core": "数采电脑 · 处理", "out": "输出"},
+  "tiers": [
+    "① 只有夹爪",
+    "② 带腕部位姿",
+    "③ 完全体"
+  ],
+  "cols": {
+    "dev": "设备",
+    "read": "数采电脑 · 读取",
+    "core": "数采电脑 · 处理",
+    "out": "输出",
+    "up": "上传"
+  },
   "group": "主夹爪 ×2（左 / 右）",
   "hint": "把鼠标移到（或点按）任一模块，查看它的数据从哪来、到哪去。",
   "sep": "：",
   "offNote": "（当前档位不使用）",
-  "legend": ["数据与位姿", "头显双目画面（③ 档）"],
+  "legend": [
+    "数据与位姿",
+    "头显双目画面（③ 档）"
+  ],
   "edges": {
-    "e-grip": "USB 串口", "e-tact": "USB", "e-wrist": "USB",
-    "e-track": "无线", "e-head": "有线 / WiFi"
+    "e-grip": "USB 串口",
+    "e-tact": "USB",
+    "e-wrist": "USB",
+    "e-track": "无线",
+    "e-head": "有线 / WiFi"
   },
   "nodes": {
-    "grip": {"title": "主控板 · 编码器", "sub": "开合角度", "desc": "主夹爪主控板读取编码器得到开合角度，经 USB 串口主动推送给数采电脑。主控板上还有 IMU，预留，默认不录。"},
-    "tact": {"title": "视触觉传感器 ×2", "sub": "左右指各一", "desc": "左右指各一个视触觉传感器，拍摄指面与物体接触处的视触觉图像。"},
-    "wrist": {"title": "腕部相机", "sub": "手腕视角 RGB", "desc": "装在夹爪上的鱼眼相机，提供手腕视角画面。"},
-    "tracker": {"title": "运动追踪器 ×2", "sub": "Pico4 Ultra", "desc": "装在每只夹爪顶部，由头显跟踪它的 6-DoF 位姿。① 档不需要。"},
-    "headset": {"title": "头显", "sub": "Pico4 Ultra 企业版", "desc": "运行 XTac-UMI XR，跟踪两个追踪器，经有线（推荐）或 WiFi 把位姿发给数采电脑；③ 档还用自带双目相机拍第一视角画面并提供头部位姿。世界坐标原点是 XR 应用启动时头显所在的位置。"},
-    "sdk": {"title": "xense.taccap", "sub": "串口 · 100 Hz 推送", "desc": "夹爪 SDK 接收主控板推送的读数（默认 100 Hz），按标定结果把开合角度归一化为 gripper.pos（闭合 = 0、张开 = 1）。"},
-    "xsdk": {"title": "xensesdk", "sub": "校正图 · 30 fps", "desc": "视触觉传感器 SDK，每个传感器独立读取，默认输出校正后的视触觉图像（约 400 × 700），30 fps。"},
-    "cam": {"title": "相机采集", "sub": "640 × 480 · 30 fps", "desc": "按序列号找到对应夹爪的腕部相机，每台独立读取，默认 640 × 480、30 fps。鱼眼矫正可选，默认关闭。"},
-    "pcs": {"title": "XenseVR PC Service", "sub": "位姿 · 约 90 Hz", "desc": "数采电脑上的服务，接收头显发来的追踪器位姿（约 90 Hz 刷新），由采集程序换算到夹爪末端（TCP），得到 tcp.*。③ 档同时转发头显双目画面（左右眼按帧序配对）与头部位姿。"},
-    "obs": {"title": "帧组装", "sub": "取各路最新值", "desc": "每一帧（默认 30 fps）取各路的最新值合成一帧观测：开合度、夹爪位姿、视触觉图像、腕部画面；③ 档再加头显双目画面与头部位姿。"},
-    "pair": {"title": "错帧配对", "sub": "观测 t-1 + 动作 t", "desc": "把上一帧的观测与这一帧的夹爪位姿、开合度（③ 档再加头部位姿）配成一行，动作领先观测一步。每集第一帧没有可配对的上一帧，因此少 1 帧。"},
-    "rerun": {"title": "Rerun 实时预览", "sub": "--display_data=true", "desc": "预览或录制时加 --display_data=true，实时显示各路画面、数值曲线和夹爪轨迹的 3D 视图。只用于查看，不写进数据集。"},
-    "ds": {"title": "LeRobotDataset v3.0", "sub": ["Parquet + MP4", "+ meta/hardware.json"], "desc": "状态与动作写入 Parquet；每路相机边录边编码成 MP4，有 NVIDIA GPU 时自动用硬件编码。这套设备的序列号等硬件清单另存在 meta/hardware.json。"}
+    "grip": {
+      "title": "主控板 · 编码器",
+      "sub": "开合角度",
+      "desc": "主夹爪主控板读取编码器得到开合角度，经 USB 串口主动推送给数采电脑。主控板上还有 IMU，预留，默认不录。"
+    },
+    "tact": {
+      "title": "视触觉传感器 ×2",
+      "sub": "左右指各一",
+      "desc": "左右指各一个视触觉传感器，拍摄指面与物体接触处的视触觉图像。"
+    },
+    "wrist": {
+      "title": "腕部相机",
+      "sub": "手腕视角 RGB",
+      "desc": "装在夹爪上的鱼眼相机，提供手腕视角画面。"
+    },
+    "tracker": {
+      "title": "运动追踪器 ×2",
+      "sub": "Pico4 Ultra",
+      "desc": "装在每只夹爪顶部，由头显跟踪它的 6-DoF 位姿。① 档不需要。"
+    },
+    "headset": {
+      "title": "头显",
+      "sub": "Pico4 Ultra 企业版",
+      "desc": "运行 XTac-UMI XR，跟踪两个追踪器，经有线（推荐）或 WiFi 把位姿发给数采电脑；③ 档还用自带双目相机拍第一视角画面并提供头部位姿。世界坐标原点是 XR 应用启动时头显所在的位置。"
+    },
+    "sdk": {
+      "title": "xense.taccap",
+      "sub": "串口 · 100 Hz 推送",
+      "desc": "夹爪 SDK 接收主控板推送的读数（默认 100 Hz），按标定结果把开合角度归一化为 gripper.pos（闭合 = 0、张开 = 1）。"
+    },
+    "xsdk": {
+      "title": "xensesdk",
+      "sub": "校正图 · 30 fps",
+      "desc": "视触觉传感器 SDK，每个传感器独立读取，默认输出校正后的视触觉图像（约 400 × 700），30 fps。"
+    },
+    "cam": {
+      "title": "相机采集",
+      "sub": "640 × 480 · 30 fps",
+      "desc": "按序列号找到对应夹爪的腕部相机，每台独立读取，默认 640 × 480、30 fps。鱼眼矫正可选，默认关闭。"
+    },
+    "pcs": {
+      "title": "XenseVR PC Service",
+      "sub": "位姿 · 约 90 Hz",
+      "desc": "数采电脑上的服务，接收头显发来的追踪器位姿（约 90 Hz 刷新），由采集程序换算到夹爪末端（TCP），得到 tcp.*。③ 档同时转发头显双目画面（左右眼按帧序配对）与头部位姿。"
+    },
+    "obs": {
+      "title": "帧组装",
+      "sub": "取各路最新值",
+      "desc": "每一帧（默认 30 fps）取各路的最新值合成一帧观测：开合度、夹爪位姿、视触觉图像、腕部画面；③ 档再加头显双目画面与头部位姿。"
+    },
+    "pair": {
+      "title": "错帧配对",
+      "sub": "观测 t-1 + 动作 t",
+      "desc": "把上一帧的观测与这一帧的夹爪位姿、开合度（③ 档再加头部位姿）配成一行，动作领先观测一步。每集第一帧没有可配对的上一帧，因此少 1 帧。"
+    },
+    "rerun": {
+      "title": "Rerun 实时预览",
+      "sub": "--display_data=true",
+      "desc": "预览或录制时加 --display_data=true，实时显示各路画面、数值曲线和夹爪轨迹的 3D 视图。只用于查看，不写进数据集。"
+    },
+    "ds": {
+      "title": "LeRobotDataset v3.0",
+      "sub": [
+        "Parquet + MP4",
+        "+ meta/hardware.json"
+      ],
+      "desc": "状态与动作写入 Parquet；每路相机边录边编码成 MP4，有 NVIDIA GPU 时自动用硬件编码。这套设备的序列号等硬件清单另存在 meta/hardware.json。"
+    },
+    "hub": {
+      "title": "Hugging Face Hub",
+      "sub": "推送数据集",
+      "desc": "需要时用 lerobot-push-dataset-to-hub 把本地数据集推送到 Hugging Face Hub，公开或私有均可。"
+    }
   }
 }
 </script></div>
@@ -2181,6 +2270,44 @@
 <li>单夹爪（<code>--robot.type=taccap_gripper</code>）的键名不带 <code>left_</code> / <code>right_</code> 前缀，腕部相机叫 <code>wrist_cam</code>。</li>
 </ul>
 <p>字段明细见 <a href="recording/#53">每帧记录内容</a>，数据集格式见 <a href="dataset/">数据集</a>。</p>
+<h2 id="repos">PC 版开源仓库<a class="headerlink" href="#repos" title="锚点链接">¶</a></h2>
+<p>PC 版用到的软件除 <code>xensesdk</code>（许可证未声明）外均开源，下表是各仓库及其用途。背包版的采集软件不开源，不在此列。</p>
+<table>
+<thead>
+<tr>
+<th>仓库 / 包</th>
+<th>许可证</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/XenseRobotics-AI/xense-taccap-lerobot"><code>xense-taccap-lerobot</code></a></td>
+<td>Apache-2.0</td>
+<td>数采主仓库，基于 lerobot 0.5.1 定制</td>
+</tr>
+<tr>
+<td><a href="https://github.com/XenseRobotics-AI/TacCap-Gripper"><code>xense.taccap</code></a></td>
+<td>Apache-2.0</td>
+<td>夹爪 SDK，数采仓库以子模块引入；<a href="../sdk/">开发文档</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/XenseRobotics-AI/XenseVR-PC-Service"><code>xensevr_pc_service_sdk</code></a></td>
+<td>Apache-2.0</td>
+<td>Pico4 Ultra 企业版 PC 服务，以 <code>.deb</code> 安装</td>
+</tr>
+<tr>
+<td><a href="https://github.com/XenseRobotics/xensesdk"><code>xensesdk</code></a></td>
+<td>未声明</td>
+<td>视触觉传感器 SDK，由安装脚本安装；<a href="https://docs.xenserobotics.com/">开发文档</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/XenseRobotics-AI/xense-lerobot-viewer"><code>xense-lerobot-viewer</code></a></td>
+<td>Apache-2.0</td>
+<td>开源的本地可视化工具，在浏览器里查看本地 LeRobot 数据集</td>
+</tr>
+</tbody>
+</table>
 
 
 
@@ -2298,7 +2425,7 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.tracking", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "navigation.footer", "toc.follow", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.tooltips"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.tracking", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "navigation.footer", "toc.follow", "toc.integrate", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.tooltips"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
     
     
       <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
