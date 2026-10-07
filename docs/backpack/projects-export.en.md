@@ -24,7 +24,13 @@ The hierarchy is **project → task → recording**. Each recording shows frames
 
 Click Export on a task row to open "Export task data":
 
-![The export dialog](../assets/backpack/export-precheck-live.webp)
+<div class="tc-pair" markdown>
+
+![The export dialog: precheck and picking recordings](../assets/backpack/export-precheck-live.webp)
+
+![The export dialog: destination, format and upload settings](../assets/backpack/export-options.webp)
+
+</div>
 
 1. **Precheck**: the task's recordings are checked automatically; on success it says the export can go ahead, otherwise it lists the blockers to fix before clicking "Export again".
 2. **Pick recordings**: nothing ticked means all; ticking only narrows the scope.

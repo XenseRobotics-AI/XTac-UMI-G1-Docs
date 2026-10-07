@@ -24,7 +24,13 @@
 
 任务行点「导出」打开「导出任务数据」：
 
-![导出对话框](../assets/backpack/export-precheck-live.webp)
+<div class="tc-pair" markdown>
+
+![导出对话框：预检与选录制](../assets/backpack/export-precheck-live.webp)
+
+![导出对话框：去向、格式与上传设置](../assets/backpack/export-options.webp)
+
+</div>
 
 1. **预检**：自动检查任务下的录制，通过显示「预检通过，可导出或上传」；未通过时列出阻塞项，按提示处理后点「重新导出」。
 2. **选录制**：不勾选就是全部，勾选只用来缩小范围。
