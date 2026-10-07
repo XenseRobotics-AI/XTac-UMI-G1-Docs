@@ -5,6 +5,40 @@ This page is organised by symptom, with a cause and a fix for each. The three mo
 !!! danger "Odour, smoke, obvious overheating, structural damage or damaged cable insulation"
     Cut the power and stop using the device immediately, note the serial number on the body and contact support.
 
+## Power and connectors {#power}
+
+??? failure "The headset loses power and shuts down part-way"
+    **Cause:** the headset is underpowered, or the power bank shut down its original output port when a second device was plugged in.
+
+    **Fix:** wire and choose the parts as described in [Power-bank power](unbox-connect.md#powerbank); do not add devices to the power bank part-way through a collection run.
+
+??? failure "Poor contact in the DC, PICO or USB port"
+    **Cause:** on individual units the board has shifted under load; this is a hardware fault.
+
+    **Fix:** do not force or lever the connector; note the serial number on the body and contact support for repair.
+
+??? failure "A gripper's LED is dark, or the system log repeatedly shows `mcu ... disconnected / reconnected`"
+    **Cause:** poor contact in the gripper's cable, or it is not plugged into UMI-L / UMI-R. When one gripper drops out, the one still online goes solid red (a system problem).
+
+    **Fix:** check that both ends of the Type-C cable are seated and the locking screws are tight; if it keeps disconnecting, note the SN and when it happened and report it to support. The LED patterns are in [LEDs](gripper.md#buttons-leds).
+
+## Headset and trackers {#tracker}
+
+??? failure "The status dot on the live monitor's pose card is yellow, with “tracker out of view” or “pose stale” beside it"
+    **Cause:** the headset is connected but the tracker pose is invalid: the tracker has left the headset's field of view, tracking has gone wrong, or the tracker is not powered on or not paired. "Pico offline" instead means the headset is not connected to the backpack. Poses recorded while tracking was lost cannot be trusted — do not use that stretch of data.
+
+    **Fix:** bring the grippers back into the headset's field of view; confirm both trackers show a blue light, are [paired to the headset](../common/pico4.md#pico-tracker-bind) and are in standalone tracking mode. For "Pico offline", check whether XTac-UMI XR in the headset is connected, see [The app interface](../common/pico4.md#pico-toolkit-ui).
+
+??? failure "It says the pose is online, but the 3D model does not move"
+    **Cause:** the tracker app inside the headset never really started (first use of the day, the button on the tracker was not pressed), and the status badge can still show online.
+
+    **Fix:** before collecting, move a gripper and the headset and confirm the 3D model on the live monitor page follows. If it does not, hold the tracker's power button to reactivate it and restart the app in the headset.
+
+??? failure "The left and right gripper poses are swapped"
+    **Cause:** the two trackers were fitted the wrong way round, or swapped during pairing. The tracker SN rule is odd on the left, even on the right.
+
+    **Fix:** check them against [Tracker serial numbers](../common/pico4.md#pico-tracker-sn) and swap them back; before recording, move one gripper on its own on the live monitor page to confirm.
+
 ## Connecting and reaching the console {#connect}
 
 <span id="tablet-adb"></span>
@@ -69,40 +103,6 @@ This page is organised by symptom, with a cause and a fix for each. The three mo
     **Cause:** overheating.
 
     **Fix:** restarting the backpack recovers it; check whether the fan outlet is blocked and whether the fan is turning, and report it if it keeps happening.
-
-## Power and connectors {#power}
-
-??? failure "The headset loses power and shuts down part-way"
-    **Cause:** the headset is underpowered, or the power bank shut down its original output port when a second device was plugged in.
-
-    **Fix:** wire and choose the parts as described in [Power-bank power](unbox-connect.md#powerbank); do not add devices to the power bank part-way through a collection run.
-
-??? failure "Poor contact in the DC, PICO or USB port"
-    **Cause:** on individual units the board has shifted under load; this is a hardware fault.
-
-    **Fix:** do not force or lever the connector; note the serial number on the body and contact support for repair.
-
-??? failure "A gripper's LED is dark, or the system log repeatedly shows `mcu ... disconnected / reconnected`"
-    **Cause:** poor contact in the gripper's cable, or it is not plugged into UMI-L / UMI-R. When one gripper drops out, the one still online goes solid red (a system problem).
-
-    **Fix:** check that both ends of the Type-C cable are seated and the locking screws are tight; if it keeps disconnecting, note the SN and when it happened and report it to support. The LED patterns are in [LEDs](gripper.md#buttons-leds).
-
-## Headset and trackers {#tracker}
-
-??? failure "The status dot on the live monitor's pose card is yellow, with “tracker out of view” or “pose stale” beside it"
-    **Cause:** the headset is connected but the tracker pose is invalid: the tracker has left the headset's field of view, tracking has gone wrong, or the tracker is not powered on or not paired. "Pico offline" instead means the headset is not connected to the backpack. Poses recorded while tracking was lost cannot be trusted — do not use that stretch of data.
-
-    **Fix:** bring the grippers back into the headset's field of view; confirm both trackers show a blue light, are [paired to the headset](../common/pico4.md#pico-tracker-bind) and are in standalone tracking mode. For "Pico offline", check whether XTac-UMI XR in the headset is connected, see [The app interface](../common/pico4.md#pico-toolkit-ui).
-
-??? failure "It says the pose is online, but the 3D model does not move"
-    **Cause:** the tracker app inside the headset never really started (first use of the day, the button on the tracker was not pressed), and the status badge can still show online.
-
-    **Fix:** before collecting, move a gripper and the headset and confirm the 3D model on the live monitor page follows. If it does not, hold the tracker's power button to reactivate it and restart the app in the headset.
-
-??? failure "The left and right gripper poses are swapped"
-    **Cause:** the two trackers were fitted the wrong way round, or swapped during pairing. The tracker SN rule is odd on the left, even on the right.
-
-    **Fix:** check them against [Tracker serial numbers](../common/pico4.md#pico-tracker-sn) and swap them back; before recording, move one gripper on its own on the live monitor page to confirm.
 
 ## Collection and recording {#record}
 
