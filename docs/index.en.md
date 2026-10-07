@@ -100,7 +100,7 @@ Both kits use the same grippers and headset and produce the same data. The Backp
     [About the backpack](product/backpack.md){ .md-button }
     { .xu-card__actions }
 
--   ![XTac-UMI G1 visuotactile gripper](assets/product/g1-render-hero.webp){ .xu-card__img }
+-   ![XTac-UMI G1 visuotactile gripper](assets/product/g1-card.webp){ .xu-card__img }
 
     <span class="xu-tag xu-tag--pc">Developer Kit</span>
 

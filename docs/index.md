@@ -100,7 +100,7 @@ hide:
     [了解背包](product/backpack.md){ .md-button }
     { .xu-card__actions }
 
--   ![XTac-UMI G1 视触觉夹爪](assets/product/g1-render-hero.webp){ .xu-card__img }
+-   ![XTac-UMI G1 视触觉夹爪](assets/product/g1-card.webp){ .xu-card__img }
 
     <span class="xu-tag xu-tag--pc">PC 版</span>
 
