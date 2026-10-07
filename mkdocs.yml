@@ -34,8 +34,8 @@ edit_uri: ""
 theme:
   name: material
   language: zh
-  # 顶栏是主题色,用白色字标;favicon 待方形标志到位后再加
-  logo: assets/brand/logo-light.svg
+  # TODO: 正式方形标志与 favicon 到位后启用(文件放 docs/assets/brand/;千觉 wordmark 已在 logo.svg / logo-light.svg)
+  # logo: assets/brand/logo.svg
   # favicon: assets/brand/favicon.png
   icon:
     repo: fontawesome/brands/github
