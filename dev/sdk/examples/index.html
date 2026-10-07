@@ -1743,6 +1743,8 @@
       
         
       
+        
+      
     
     
     
@@ -1842,6 +1844,34 @@
     
   
     运动控制
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../follower/api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API 与示例
   
 
     
@@ -2165,36 +2195,6 @@
 </thead>
 <tbody>
 <tr>
-<td><code>follower_status.py</code></td>
-<td>从夹爪自检</td>
-<td>只读</td>
-</tr>
-<tr>
-<td><code>gripper_console.py</code></td>
-<td>键盘控制从夹爪</td>
-<td><strong>会动电机</strong></td>
-</tr>
-<tr>
-<td><code>impedance_control.py</code></td>
-<td>阻抗控制测试；查看 / 写入运动安全包络</td>
-<td><strong>会动电机</strong>；<code>--set-envelope</code> 改写夹爪</td>
-</tr>
-<tr>
-<td><code>force_position_control.py</code></td>
-<td>力位控制夹持测试</td>
-<td><strong>会动电机</strong></td>
-</tr>
-<tr>
-<td><code>control_and_read.py</code></td>
-<td>控制中读取状态</td>
-<td><strong>会动电机</strong></td>
-</tr>
-<tr>
-<td><code>control_ripple.py</code></td>
-<td>测量运动平稳度</td>
-<td><strong>会动电机</strong></td>
-</tr>
-<tr>
 <td><code>calibrate.py</code></td>
 <td>主夹爪行程标定</td>
 <td>改写夹爪</td>
@@ -2231,22 +2231,17 @@
 </tr>
 </tbody>
 </table>
-<p>每个脚本都可以用 <code>--help</code> 查看参数。</p>
+<p>每个脚本都可以用 <code>--help</code> 查看参数。从夹爪的脚本（自检、键盘控制、阻抗与力位控制等）见 <a href="../../follower/api/#examples">从夹爪 → 示例脚本</a>。</p>
 <h2 id="follower">从夹爪<a class="headerlink" href="#follower" title="锚点链接">¶</a></h2>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>python<span class="w"> </span>python/examples/follower_status.py<span class="w"> </span>left
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>python<span class="w"> </span>python/examples/gripper_console.py<span class="w"> </span>left
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>python<span class="w"> </span>python/examples/impedance_control.py<span class="w"> </span>left
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>python<span class="w"> </span>python/examples/force_position_control.py<span class="w"> </span>left<span class="w"> </span>--grasp-torque<span class="w"> </span><span class="m">0</span>.6
-</span></code></pre></div>
-<p>第一次使用前先按 <a href="../../follower/setup/">准备与自检</a> 完成自检。</p>
+<p>见 <a href="../../follower/api/#examples">从夹爪 → 示例脚本</a>。</p>
 <h2 id="leader">主夹爪<a class="headerlink" href="#leader" title="锚点链接">¶</a></h2>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>python<span class="w"> </span>python/examples/calibrate.py<span class="w"> </span>right
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>python<span class="w"> </span>python/examples/leader_normalized_position.py<span class="w"> </span>right
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>python<span class="w"> </span>python/examples/calibrate.py<span class="w"> </span>right
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>python<span class="w"> </span>python/examples/leader_normalized_position.py<span class="w"> </span>right
 </span></code></pre></div>
 <p>标定流程见 <a href="../../pc/calibration/">标定与自检</a>。</p>
 <h2 id="camera">腕部相机<a class="headerlink" href="#camera" title="锚点链接">¶</a></h2>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>python<span class="w"> </span>python/examples/wrist_camera.py<span class="w"> </span>--list<span class="w">                  </span><span class="c1"># 列出相机及其序列号</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>python<span class="w"> </span>python/examples/wrist_camera.py<span class="w"> </span>&lt;相机序列号&gt;<span class="w"> </span>--undistort<span class="w">   </span><span class="c1"># 矫正后的画面</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>python<span class="w"> </span>python/examples/wrist_camera.py<span class="w"> </span>--list<span class="w">                  </span><span class="c1"># 列出相机及其序列号</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>python<span class="w"> </span>python/examples/wrist_camera.py<span class="w"> </span>&lt;相机序列号&gt;<span class="w"> </span>--undistort<span class="w">   </span><span class="c1"># 矫正后的画面</span>
 </span></code></pre></div>
 <h2 id="firmware">固件<a class="headerlink" href="#firmware" title="锚点链接">¶</a></h2>
 <p>从夹爪的步骤见<a href="../../follower/firmware/">固件与电机升级</a>，主夹爪见<a href="../../pc/versions/#ota">固件 OTA 升级</a>。</p>

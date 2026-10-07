@@ -1743,6 +1743,8 @@
       
         
       
+        
+      
     
     
     
@@ -1842,6 +1844,34 @@
     
   
     Motion Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../follower/api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API &amp; Examples
   
 
     
@@ -2165,36 +2195,6 @@ with a standalone install it is <code>TacCap-Gripper</code>.</p>
 </thead>
 <tbody>
 <tr>
-<td><code>follower_status.py</code></td>
-<td>Follower gripper self-check</td>
-<td>Read-only</td>
-</tr>
-<tr>
-<td><code>gripper_console.py</code></td>
-<td>Keyboard control of the follower gripper</td>
-<td><strong>Moves the motor</strong></td>
-</tr>
-<tr>
-<td><code>impedance_control.py</code></td>
-<td>Impedance control test; view / write the motion safety envelope</td>
-<td><strong>Moves the motor</strong>; <code>--set-envelope</code> rewrites the gripper</td>
-</tr>
-<tr>
-<td><code>force_position_control.py</code></td>
-<td>Force-position control grasp test</td>
-<td><strong>Moves the motor</strong></td>
-</tr>
-<tr>
-<td><code>control_and_read.py</code></td>
-<td>Read state while controlling</td>
-<td><strong>Moves the motor</strong></td>
-</tr>
-<tr>
-<td><code>control_ripple.py</code></td>
-<td>Measure motion smoothness</td>
-<td><strong>Moves the motor</strong></td>
-</tr>
-<tr>
 <td><code>calibrate.py</code></td>
 <td>Leader gripper travel calibration</td>
 <td>Rewrites the gripper</td>
@@ -2231,22 +2231,17 @@ with a standalone install it is <code>TacCap-Gripper</code>.</p>
 </tr>
 </tbody>
 </table>
-<p>Every script accepts <code>--help</code> to list its arguments.</p>
+<p>Every script accepts <code>--help</code> to list its arguments. The follower gripper's scripts (self-check, keyboard control, impedance and force-position control and so on) are in <a href="../../follower/api/#examples">Follower gripper → Example scripts</a>.</p>
 <h2 id="follower">Follower gripper<a class="headerlink" href="#follower" title="锚点链接">¶</a></h2>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>python<span class="w"> </span>python/examples/follower_status.py<span class="w"> </span>left
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>python<span class="w"> </span>python/examples/gripper_console.py<span class="w"> </span>left
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>python<span class="w"> </span>python/examples/impedance_control.py<span class="w"> </span>left
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>python<span class="w"> </span>python/examples/force_position_control.py<span class="w"> </span>left<span class="w"> </span>--grasp-torque<span class="w"> </span><span class="m">0</span>.6
-</span></code></pre></div>
-<p>Before first use, run through <a href="../../follower/setup/">Setup and self-check</a>.</p>
+<p>See <a href="../../follower/api/#examples">Follower gripper → Example scripts</a>.</p>
 <h2 id="leader">Leader gripper<a class="headerlink" href="#leader" title="锚点链接">¶</a></h2>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>python<span class="w"> </span>python/examples/calibrate.py<span class="w"> </span>right
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>python<span class="w"> </span>python/examples/leader_normalized_position.py<span class="w"> </span>right
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>python<span class="w"> </span>python/examples/calibrate.py<span class="w"> </span>right
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>python<span class="w"> </span>python/examples/leader_normalized_position.py<span class="w"> </span>right
 </span></code></pre></div>
 <p>The calibration procedure is in <a href="../../pc/calibration/">Calibration and self-check</a>.</p>
 <h2 id="camera">Wrist camera<a class="headerlink" href="#camera" title="锚点链接">¶</a></h2>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>python<span class="w"> </span>python/examples/wrist_camera.py<span class="w"> </span>--list<span class="w">                  </span><span class="c1"># list cameras and their serial numbers</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>python<span class="w"> </span>python/examples/wrist_camera.py<span class="w"> </span>&lt;camera<span class="w"> </span>serial&gt;<span class="w"> </span>--undistort<span class="w">   </span><span class="c1"># undistorted image</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>python<span class="w"> </span>python/examples/wrist_camera.py<span class="w"> </span>--list<span class="w">                  </span><span class="c1"># list cameras and their serial numbers</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>python<span class="w"> </span>python/examples/wrist_camera.py<span class="w"> </span>&lt;camera<span class="w"> </span>serial&gt;<span class="w"> </span>--undistort<span class="w">   </span><span class="c1"># undistorted image</span>
 </span></code></pre></div>
 <h2 id="firmware">Firmware<a class="headerlink" href="#firmware" title="锚点链接">¶</a></h2>
 <p>For a follower gripper see <a href="../../follower/firmware/">Firmware and motor upgrades</a>; for a leader gripper see <a href="../../pc/versions/#ota">Firmware OTA upgrade</a>.</p>

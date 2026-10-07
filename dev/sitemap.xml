@@ -134,6 +134,13 @@
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/en/follower/"/>
     </url>
     <url>
+        <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/follower/api/</loc>
+        <lastmod>2026-10-07</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/follower/api/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/en/follower/api/"/>
+    </url>
+    <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/follower/control/</loc>
         <lastmod>2026-10-07</lastmod>
         <changefreq>daily</changefreq>
@@ -433,6 +440,13 @@
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/en/follower/"/>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/follower/"/>
+    </url>
+    <url>
+        <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/en/follower/api/</loc>
+        <lastmod>2026-10-07</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/en/follower/api/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/follower/api/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/en/follower/control/</loc>

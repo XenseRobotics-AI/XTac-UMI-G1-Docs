@@ -1638,17 +1638,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#motor-primitives" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        电机底层接口
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#camera" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1739,6 +1728,8 @@
       
         
           
+        
+      
         
       
         
@@ -1848,6 +1839,34 @@
     
   
     运动控制
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../follower/api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API 与示例
   
 
     
@@ -2182,53 +2201,9 @@
 </span></code></pre></div>
 <p><code>normalize_position=True</code> 需要主夹爪已完成行程标定，见 <a href="../../pc/calibration/">标定与自检</a>。</p>
 <h2 id="follower">从夹爪：控制<a class="headerlink" href="#follower" title="锚点链接">¶</a></h2>
-<p>用法与注意事项见 <a href="../../follower/control/">从夹爪 → 运动控制</a>。</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>阻抗控制（默认）</th>
-<th>力位控制</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>控制器</td>
-<td><code>ImpedanceController</code></td>
-<td><code>ForcePositionController</code></td>
-</tr>
-<tr>
-<td>配置</td>
-<td><code>ImpedanceConfig.for_spec(g.motor.get_spec())</code></td>
-<td><code>ForcePositionConfig.for_spec(g.motor.get_spec())</code></td>
-</tr>
-<tr>
-<td>可调参数</td>
-<td>一般不调</td>
-<td><code>grasp_torque_nm</code>（夹持力，≤ 1.1 N·m）</td>
-</tr>
-<tr>
-<td>常用调用</td>
-<td><code>set_target(开度)</code></td>
-<td><code>set_target(开度)</code>、<code>release()</code>、<code>hold_position()</code></td>
-</tr>
-<tr>
-<td>是否夹住</td>
-<td>—</td>
-<td><code>snapshot().holding</code></td>
-</tr>
-</tbody>
-</table>
-<p>两种控制器都有 <code>start()</code> / <code>stop()</code>（或用 <code>with</code>）、<code>snapshot()</code>、<code>reset()</code>。调用顺序：
-<code>g.motor.clear_fault()</code> → 启动控制器 → <code>g.motor.enable()</code> → <code>set_target()</code> → 停止控制器。</p>
-<p><code>snapshot().observation</code> 里有 <code>position</code>（开度）、<code>velocity</code>、<code>torque</code>（正值 = 往闭合方向）、<code>motor_temp_c</code>。</p>
-<p>不控制时读开度：<code>g.position()</code>。电机固件版本：<code>g.motor.motor_version()</code>，见
-<a href="../../follower/firmware/#motor-version">固件与电机升级</a>。</p>
-<h2 id="motor-primitives">电机底层接口<a class="headerlink" href="#motor-primitives" title="锚点链接">¶</a></h2>
-<p><code>g.motor.submit_*</code> 等底层接口直接向电机下发命令，不经过控制器的保护。<strong>请使用控制器</strong>，不要调用它们。</p>
-<p>以下接口会修改夹爪或电机里保存的配置，<strong>只在技术支持指导下使用</strong>：
-<code>set_model()</code>、<code>set_startup_limit_torque()</code>、<code>switch_protocol()</code>、<code>set_can_id()</code>、<code>set_private_param()</code>、
-<code>set_zero()</code>、<code>set_gripper_config()</code>、<code>set_envelope()</code>、<code>set_auto_cal_config()</code>、<code>set_motor_fw_version()</code>。</p>
+<p>从夹爪的控制器、状态读取与示例脚本见 <a href="../../follower/api/">从夹爪 → API 与示例</a>。</p>
+<p><span id="motor-primitives"></span>
+电机底层接口不经过控制器的保护，不要直接调用，见<a href="../../follower/api/#motor-primitives">电机底层接口</a>。</p>
 <h2 id="camera">腕部相机与鱼眼矫正<a class="headerlink" href="#camera" title="锚点链接">¶</a></h2>
 <p>夹爪对象默认不打开腕部相机。需要时：</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">g</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">FollowerGripper</span><span class="p">(</span><span class="n">ep</span><span class="o">.</span><span class="n">mcu_device</span><span class="p">,</span> <span class="n">wrist_video</span><span class="o">=</span><span class="s2">"/dev/v4l/by-id/&lt;相机&gt;-video-index0"</span><span class="p">,</span>
