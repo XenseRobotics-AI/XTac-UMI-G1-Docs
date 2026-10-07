@@ -19,15 +19,29 @@ Upgrading the Backpack Kit's collection unit is done entirely in the console, wi
 
 ## Version highlights {#history}
 
-This page lists only the highlights of recent versions. **For earlier versions, go by what the device shows**: since 0.3.9, the first time you enter the console after an upgrade it displays that version's changes, so they are not repeated here version by version.
+Only recent versions are listed here. For earlier versions, the device shows each version's changes the first time you enter the console after upgrading.
 
-| Version | Date | Highlights |
-|---|---|---|
-| 0.4.3 | 2026-09-29 | The console is available in Chinese and English: it follows the browser language by default, can be switched temporarily on the System page, and shows English for any other language; the voice announcement language follows the interface language and can also be chosen separately. Recordings are made sure to be written to disk when they are finalised; after a power loss or system restart mid-recording, the failure reason distinguishes a power loss / system restart from a restart of the capture service, and a failed recording's data size reflects the files actually left on the device. The reason a recording failed is shown directly on both the desktop and phone interfaces; quality statistics now distinguish "No issues detected", "Collecting statistics", "Incomplete statistics" and "No statistics", and missing statistics are no longer treated as zero. Project and task storage no longer counts archived recordings, whose data size is shown separately; the disk reading in the top bar is now the percentage measured on the device, with used, total and free space on hover. This version ships as a console upgrade bundle and does not update the device's system components or the headset app |
-| 0.4.2 | 2026-09-28 | Headset disconnect protection during recording: when the headset's USB link drops, its connection breaks, or its pose / images stop updating for about 3 seconds, the take is immediately marked failed and capture stops; the data so far is finalised safely and kept for diagnosis, does not count as a successful take, and is left out of normal export and upload. Recording does not resume automatically after the headset recovers — start a new recording; one incident raises only one notice. Voice announcements can be switched between Chinese and English (existing settings default to Chinese) and tell a Tracker dropout apart from a headset dropout; if the headset lacks the chosen language's audio, the onboard speaker plays it. The live monitor shows "Pico not ready" and "Tracker not ready" separately, with the specific reason. Replay no longer draws an extra difference overlay on the tactile images; existing recordings and exports are unchanged. Pages respond more smoothly on desktop and tablet when a task holds many recordings. This version ships as a console upgrade bundle and does not change the MCAP or LeRobot data formats |
-| 0.4.1 | 2026-09-22 | After you select a project or the headset reconnects, the headset's mono / stereo setting, resolution and image source are read and synchronised automatically; they are checked once more before recording starts, and recording is refused if no confirmation arrives, the check times out, or a reconnection happens in the meantime. A new project can choose the headset's raw fisheye frame or its undistorted view, and older projects that never chose keep what they had. Device configuration is not changed automatically during recording, and the existing frame-size, tracking and clock checks run as before. This version ships as a console upgrade bundle and does not rewrite the device's system partitions |
+### 0.4.3 (2026-09-29) {#v043}
 
-!!! warning "Not every page on this site has been synced to 0.4.3 yet"
-    The baseline has moved to 0.4.3, but the pages are being synced one at a time. **A page that has not been synced states the version it is written against in its footer**, and the steps on those pages may differ from what 0.4.3 actually shows — go by what you see on the device, and contact [support](../common/reference.md#support) if you are unsure.
+1. The console is available in Chinese and English, following the browser language by default and switchable on the System page; the voice announcement language follows the interface and can also be chosen separately.
+2. Recordings are guaranteed to reach the disk when they finish; a recording that fails because of a power loss or restart states the specific cause.
+3. The reason a recording failed is shown directly on desktop and phone.
+4. Quality statistics distinguish "No issues detected", "Collecting statistics", "Incomplete statistics" and "No statistics"; missing statistics are no longer treated as zero.
+5. Project and task storage no longer counts archived recordings, whose size is shown separately.
+6. The top-bar disk reading is now a measured percentage, with used, total and free space on hover.
+
+### 0.4.2 (2026-09-28) {#v042}
+
+1. If the headset disconnects, or its pose / images stop updating for about 3 seconds while recording, the take is marked failed and stops; the data so far is kept for diagnosis, does not count as a successful take and is left out of export and upload. After the headset recovers, start a new recording.
+2. Voice announcements can be in Chinese or English, and tell a Tracker dropout apart from a headset dropout.
+3. The live monitor shows "Pico not ready" and "Tracker not ready" separately, with the reason.
+4. Replay no longer draws a difference overlay on the tactile images; existing recordings and exports are unaffected.
+5. Pages respond more smoothly when a task holds many recordings.
+6. Data formats (MCAP, LeRobot) are unchanged.
+
+### 0.4.1 (2026-09-22) {#v041}
+
+1. After you select a project or the headset reconnects, the headset's mono / stereo setting, resolution and image source sync automatically; they are checked again before recording, and recording does not start without confirmation.
+2. A new project can choose the headset's raw fisheye frame or its undistorted view.
 
 The upgrade steps and rollback are in [Upgrades and OTA](update.md); if an upgrade goes wrong, contact [support](../common/reference.md#support).
