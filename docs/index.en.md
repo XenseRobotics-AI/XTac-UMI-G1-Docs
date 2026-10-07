@@ -38,8 +38,9 @@ hide:
 </div>
 
 <div class="tc-brandline">
-<img class="tc-brandline__logo tc-only-dark" src="assets/brand/logo-green-light.png" alt="XENSE 千觉">
-<img class="tc-brandline__logo tc-only-light" src="assets/brand/logo-green-dark.png" alt="XENSE 千觉">
+<!-- 原始 HTML 的路径不会被 i18n 改写；英文首页在 /en/ 下，所以要加 ../ -->
+<img class="tc-brandline__logo tc-only-dark" src="../assets/brand/logo-green-light.png" alt="XENSE 千觉">
+<img class="tc-brandline__logo tc-only-light" src="../assets/brand/logo-green-dark.png" alt="XENSE 千觉">
 <p class="tc-slogan">Touch lights up physical intelligence</p>
 </div>
 
