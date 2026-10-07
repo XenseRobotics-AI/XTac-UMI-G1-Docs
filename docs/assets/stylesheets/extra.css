@@ -217,7 +217,7 @@ html[lang="en"] .md-typeset .tc-hero h1 {
 
 /* ---- 公司标语:首屏与数据点行之间 ---- */
 .md-typeset .tc-slogan {
-  margin: 2.6rem 0 0;
+  margin: 0;
   text-align: center;
   font-size: 2.1rem;
   font-weight: 800;
@@ -234,14 +234,20 @@ html[lang="en"] .md-typeset .tc-slogan {
   text-indent: 0;
 }
 .md-typeset .tc-slogan + .xu-stats {
-  margin-top: 1.4rem;
+  margin-top: 2.9rem; /* 与首屏底部留白相等,标语上下居中 */
 }
 @media screen and (max-width: 44.9375em) {
   .md-typeset .tc-slogan {
-    margin-top: 1.6rem;
     font-size: 1.45rem;
     letter-spacing: .2em;
     text-indent: .2em;
+  }
+}
+
+/* 首屏单列时底部留白变小,数据点行的上边距跟着收 */
+@media screen and (max-width: 59.9375em) {
+  .md-typeset .tc-slogan + .xu-stats {
+    margin-top: 1.6rem;
   }
 }
 
