@@ -225,9 +225,10 @@ html[lang="en"] .md-typeset .tc-hero h1 {
   width: auto;
   margin: 0 auto 1rem;
 }
-/* 字标是白色的,浅色主题下反成深色 */
-[data-md-color-scheme="default"] .md-typeset .tc-brandline__logo {
-  filter: invert(1);
+/* 白字绿点用于深色主题,黑字绿点用于浅色主题 */
+[data-md-color-scheme="default"] .md-typeset .tc-only-dark,
+[data-md-color-scheme="slate"] .md-typeset .tc-only-light {
+  display: none;
 }
 /* ---- 标语:首屏与数据点行之间 ---- */
 .md-typeset .tc-slogan {
