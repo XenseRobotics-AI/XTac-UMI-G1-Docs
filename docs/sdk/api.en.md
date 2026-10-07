@@ -41,31 +41,10 @@ g.stop_streaming()
 
 ## Follower gripper: control {#follower}
 
-For usage and precautions see [Follower gripper → Motion control](../follower/control.md).
+The follower gripper's controllers, state reading and example scripts are in [Follower gripper → API and examples](../follower/api.md).
 
-| | Impedance control (default) | Force-position control |
-|---|---|---|
-| Controller | `ImpedanceController` | `ForcePositionController` |
-| Config | `ImpedanceConfig.for_spec(g.motor.get_spec())` | `ForcePositionConfig.for_spec(g.motor.get_spec())` |
-| Tunable parameters | Usually left alone | `grasp_torque_nm` (grip force, ≤ 1.1 N·m) |
-| Common calls | `set_target(opening)` | `set_target(opening)`, `release()`, `hold_position()` |
-| Is it holding | — | `snapshot().holding` |
-
-Both controllers have `start()` / `stop()` (or use `with`), `snapshot()` and `reset()`. Call order:
-`g.motor.clear_fault()` → start the controller → `g.motor.enable()` → `set_target()` → stop the controller.
-
-`snapshot().observation` contains `position` (opening), `velocity`, `torque` (positive = toward closing) and `motor_temp_c`.
-
-To read the opening when not controlling: `g.position()`. Motor firmware version: `g.motor.motor_version()`, see
-[Firmware and motor upgrades](../follower/firmware.md#motor-version).
-
-## Low-level motor interfaces {#motor-primitives}
-
-`g.motor.submit_*` and the other low-level interfaces send commands straight to the motor, bypassing the controller's protection. **Use a controller** and do not call them.
-
-The following interfaces change configuration stored in the gripper or the motor; **use them only under technical support's guidance**:
-`set_model()`, `set_startup_limit_torque()`, `switch_protocol()`, `set_can_id()`, `set_private_param()`,
-`set_zero()`, `set_gripper_config()`, `set_envelope()`, `set_auto_cal_config()`, `set_motor_fw_version()`.
+<span id="motor-primitives"></span>
+The low-level motor interfaces bypass the controller's protection and must not be called directly; see [Low-level motor interfaces](../follower/api.md#motor-primitives).
 
 ## Wrist camera and fisheye undistortion {#camera}
 

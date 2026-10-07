@@ -52,5 +52,6 @@ The **continuous stall rating** is the torque the jaws can hold indefinitely whi
 1. Mounting and wiring: [Gripper connection and serial numbers → Follower gripper mounting and connection](../common/gripper.md#follower-install)
 2. Install the SDK and run the self-check: [Setup and self-check](setup.md)
 3. Make it move: [Motion control](control.md)
-4. Upgrade the firmware: [Firmware and motor upgrades](firmware.md)
-5. When something goes wrong: [Follower gripper troubleshooting](troubleshooting.md)
+4. Write your own program: [API and examples](api.md)
+5. Upgrade the firmware: [Firmware and motor upgrades](firmware.md)
+6. When something goes wrong: [Follower gripper troubleshooting](troubleshooting.md)

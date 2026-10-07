@@ -53,5 +53,6 @@
 1. 安装与接线：[夹爪连接与序列号 → 从夹爪安装与连接](../common/gripper.md#follower-install)
 2. 安装 SDK 与自检：[准备与自检](setup.md)
 3. 让它动起来：[运动控制](control.md)
-4. 升级固件：[固件与电机升级](firmware.md)
-5. 出问题时：[从夹爪故障排查](troubleshooting.md)
+4. 写自己的程序：[API 与示例](api.md)
+5. 升级固件：[固件与电机升级](firmware.md)
+6. 出问题时：[从夹爪故障排查](troubleshooting.md)

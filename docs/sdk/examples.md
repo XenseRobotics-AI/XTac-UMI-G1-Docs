@@ -11,12 +11,6 @@ SDK 源码的 `python/examples/` 下有一组可以直接运行的脚本。先�
 
 | 脚本 | 用途 | 是否会动电机或改写夹爪 |
 |---|---|---|
-| `follower_status.py` | 从夹爪自检 | 只读 |
-| `gripper_console.py` | 键盘控制从夹爪 | **会动电机** |
-| `impedance_control.py` | 阻抗控制测试；查看 / 写入运动安全包络 | **会动电机**；`--set-envelope` 改写夹爪 |
-| `force_position_control.py` | 力位控制夹持测试 | **会动电机** |
-| `control_and_read.py` | 控制中读取状态 | **会动电机** |
-| `control_ripple.py` | 测量运动平稳度 | **会动电机** |
 | `calibrate.py` | 主夹爪行程标定 | 改写夹爪 |
 | `leader_normalized_position.py` | 读取主夹爪开度 | 只读 |
 | `fisheye_cal.py` | 查看 / 写入鱼眼内参 | `show` 只读，其余改写夹爪 |
@@ -25,18 +19,11 @@ SDK 源码的 `python/examples/` 下有一组可以直接运行的脚本。先�
 | `ota_update.py` | 夹爪固件升级 | **刷写固件** |
 | `motor_ota_update.py` | 电机固件升级 | **刷写固件** |
 
-每个脚本都可以用 `--help` 查看参数。
+每个脚本都可以用 `--help` 查看参数。从夹爪的脚本（自检、键盘控制、阻抗与力位控制等）见 [从夹爪 → 示例脚本](../follower/api.md#examples)。
 
 ## 从夹爪 {#follower}
 
-```bash
-python python/examples/follower_status.py left
-python python/examples/gripper_console.py left
-python python/examples/impedance_control.py left
-python python/examples/force_position_control.py left --grasp-torque 0.6
-```
-
-第一次使用前先按 [准备与自检](../follower/setup.md) 完成自检。
+见 [从夹爪 → 示例脚本](../follower/api.md#examples)。
 
 ## 主夹爪 {#leader}
 

@@ -78,7 +78,7 @@ Key points:
 - **Start the controller first, then `g.motor.enable()`**; the code above already follows this order.
 - **Run only one controller per gripper at a time.**
 - While controlling, read opening, velocity, torque and temperature from `c.snapshot().observation`; do not read the motor state separately.
-- For interface details, see [SDK appendix → API essentials](../sdk/api.md#follower).
+- Interface details and example scripts are in [API and examples](api.md).
 
 !!! danger "The gripper releases when control stops or the link drops"
     When the controller stops (leaving the `with` block, program exit), when you press `d` / `q` in the console, or when USB disconnects, the gripper releases, and **whatever it is holding will drop**.
