@@ -1,0 +1,2485 @@
+<!DOCTYPE html><html lang="en" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="XTac-UMI 手持式多模态数据采集系统:XTac-UMI G1 视触觉夹爪、数采背包与 PC 开发套件的产品介绍与使用手册">
+      
+      
+        <meta name="author" content="XenseRobotics">
+      
+      
+        <link rel="canonical" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/backpack/troubleshooting/">
+      
+      
+        <link rel="prev" href="../update/">
+      
+      
+        <link rel="next" href="../versions/">
+      
+      
+        
+          <link rel="alternate" href="../../../backpack/troubleshooting/" hreflang="zh">
+        
+          <link rel="alternate" href="./" hreflang="en">
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Troubleshooting - XTac-UMI Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  <link href="../../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#troubleshooting" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../" title="XTac-UMI Docs" class="md-header__button md-logo" aria-label="XTac-UMI Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            XTac-UMI Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Troubleshooting
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo" aria-label="切换到暗色模式" type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换到暗色模式" for="__palette_1" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"></path></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo" aria-label="切换到亮色模式" type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换到亮色模式" for="__palette_0" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"></path></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="Select language">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"></path></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="../../../backpack/troubleshooting/" hreflang="zh" class="md-select__link">
+              简体中文
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required="">
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard="" data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"></path></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix="">
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/XenseRobotics-AI/XTac-UMI-G1-Docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    XenseRobotics-AI/XTac-UMI-G1-Docs
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Product
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Backpack Kit
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../pc/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Developer Kit
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../follower/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Follower Gripper
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../common/pico4/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Common
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../" title="XTac-UMI Docs" class="md-nav__button md-logo" aria-label="XTac-UMI Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    XTac-UMI Docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/XenseRobotics-AI/XTac-UMI-G1-Docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    XenseRobotics-AI/XTac-UMI-G1-Docs
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix="">
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Product
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_1" id="__nav_1_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Product
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../product/g1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    XTac-UMI G1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../product/highlights/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Highlights
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../product/editions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Editions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../product/backpack/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The Backpack
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../product/specs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Specifications
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../product/safety/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Safety &amp; Compliance
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked="">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Backpack Kit
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Backpack Kit
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../unbox-connect/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unboxing, Wiring &amp; Power
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../network/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Network &amp; Console Access
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../monitor-record/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Live Monitor &amp; Recording
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gripper/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gripper Buttons, LEDs &amp; Voice
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../projects-export/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Projects, Export &amp; Upload
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../playback/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Playback
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../system/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    System Settings
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../update/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Upgrades &amp; OTA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#power" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Power and connectors
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tracker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Headset and trackers
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#connect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Connecting and reaching the console
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#record" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Collection and recording
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#export" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Replay, export and data
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#update" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Upgrades
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../versions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Versions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../pc/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Developer Kit
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Developer Kit
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pc/quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pc/install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pc/host-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Host Setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pc/calibration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Calibration &amp; Self-check
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pc/recording/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Collection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pc/dataset/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dataset
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pc/troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pc/versions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Versions &amp; Upgrades
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pc/reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RobotConfig Options
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_11">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../sdk/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SDK &amp; Development
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_11" id="__nav_3_11_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_11">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    SDK &amp; Development
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sdk/install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install &amp; Build
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sdk/api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Essentials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sdk/examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Examples
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../follower/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Follower Gripper
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Follower Gripper
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../follower/setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Setup &amp; Self-check
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../follower/control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Motion Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../follower/firmware/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Firmware &amp; Motor Upgrades
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../follower/troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5">
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Common
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Common
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../common/pico4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pico4 Headset &amp; Trackers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../common/gripper/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gripper Connection &amp; Serials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../common/coordinates/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Coordinate Frames
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../common/maintenance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Maintenance
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../common/reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary &amp; Support
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="锚点链接">¶</a></h1>
+<p>This page is organised by symptom, with a cause and a fix for each. The three most common on site are not being able to reach the XTac-UMI Collector console (below, "the console"), recording being refused, and the export pre-check failing. Before touching anything, listen for the device's voice announcement, look at the gripper LEDs and check the status dots on the live monitor page, then match the symptom. The full meaning of the LED patterns is in <a href="../gripper/#buttons-leds">Gripper buttons, LEDs and voice</a>.</p>
+<div class="admonition danger">
+<p class="admonition-title">Odour, smoke, obvious overheating, structural damage or damaged cable insulation</p>
+<p>Cut the power and stop using the device immediately, note the serial number on the body and contact support.</p>
+</div>
+<h2 id="power">Power and connectors<a class="headerlink" href="#power" title="锚点链接">¶</a></h2>
+<details class="failure">
+<summary>The headset loses power and shuts down part-way</summary>
+<p><strong>Cause:</strong> the headset is underpowered, or the power bank shut down its original output port when a second device was plugged in.</p>
+<p><strong>Fix:</strong> wire and choose the parts as described in <a href="../unbox-connect/#powerbank">Power-bank power</a>; do not add devices to the power bank part-way through a collection run.</p>
+</details>
+<details class="failure">
+<summary>Poor contact in the DC, PICO or USB port</summary>
+<p><strong>Cause:</strong> on individual units the board has shifted under load; this is a hardware fault.</p>
+<p><strong>Fix:</strong> do not force or lever the connector; note the serial number on the body and contact support for repair.</p>
+</details>
+<details class="failure">
+<summary>A gripper's LED is dark, or the system log repeatedly shows <code>mcu ... disconnected / reconnected</code></summary>
+<p><strong>Cause:</strong> poor contact in the gripper's cable, or it is not plugged into UMI-L / UMI-R. When one gripper drops out, the one still online goes solid red (a system problem).</p>
+<p><strong>Fix:</strong> check that both ends of the Type-C cable are seated and the locking screws are tight; if it keeps disconnecting, note the SN and when it happened and report it to support. The LED patterns are in <a href="../gripper/#buttons-leds">LEDs</a>.</p>
+</details>
+<h2 id="tracker">Headset and trackers<a class="headerlink" href="#tracker" title="锚点链接">¶</a></h2>
+<details class="failure">
+<summary>The status dot on the live monitor's pose card is yellow, with “tracker out of view” or “pose stale” beside it</summary>
+<p><strong>Cause:</strong> the headset is connected but the tracker pose is invalid: the tracker has left the headset's field of view, tracking has gone wrong, or the tracker is not powered on or not paired. "Pico offline" instead means the headset is not connected to the backpack. Poses recorded while tracking was lost cannot be trusted — do not use that stretch of data.</p>
+<p><strong>Fix:</strong> bring the grippers back into the headset's field of view; confirm both trackers show a blue light, are <a href="../../common/pico4/#pico-tracker-bind">paired to the headset</a> and are in standalone tracking mode. For "Pico offline", check whether XTac-UMI XR in the headset is connected, see <a href="../../common/pico4/#pico-toolkit-ui">The app interface</a>.</p>
+</details>
+<details class="failure">
+<summary>It says the pose is online, but the 3D model does not move</summary>
+<p><strong>Cause:</strong> the tracker app inside the headset never really started (first use of the day, the button on the tracker was not pressed), and the status badge can still show online.</p>
+<p><strong>Fix:</strong> before collecting, move a gripper and the headset and confirm the 3D model on the live monitor page follows. If it does not, hold the tracker's power button to reactivate it and restart the app in the headset.</p>
+</details>
+<details class="failure">
+<summary>The left and right gripper poses are swapped</summary>
+<p><strong>Cause:</strong> the two trackers were fitted the wrong way round, or swapped during pairing. The tracker SN rule is odd on the left, even on the right.</p>
+<p><strong>Fix:</strong> check them against <a href="../../common/pico4/#pico-tracker-sn">Tracker serial numbers</a> and swap them back; before recording, move one gripper on its own on the live monitor page to confirm.</p>
+</details>
+<h2 id="connect">Connecting and reaching the console<a class="headerlink" href="#connect" title="锚点链接">¶</a></h2>
+<p><span id="tablet-adb"></span></p>
+<details class="failure">
+<summary>The tablet does not open the console when plugged into the backpack</summary>
+<p><strong>Cause</strong>: the bundled tablet is authorised before shipping; after a factory reset, turning off USB debugging or revoking debugging authorisations, the backpack can no longer control it.</p>
+<p><strong>Fix</strong>: first check that the cable is in the backpack's <code>HOST1</code> / <code>HOST2</code> port and the tablet is unlocked. If it still fails, turn USB debugging back on and trust the backpack (the bundled REDMI Pad 2 SE shown here):</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:4"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><input id="__tabbed_1_3" name="__tabbed_1" type="radio"><input id="__tabbed_1_4" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">1. Developer mode</label><label for="__tabbed_1_2">2. Developer options</label><label for="__tabbed_1_3">3. USB debugging</label><label for="__tabbed_1_4">4. Trust the backpack</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p>Settings → My device, tap "OS version" about 7 times until it says developer mode is on.</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/backpack/tablet-adb-1-os-version.webp" data-desc-position="bottom"><img alt="Tap OS version" src="../../../assets/backpack/tablet-adb-1-os-version.webp"></a></p>
+</div>
+<div class="tabbed-block">
+<p>Settings → Additional settings → Developer options.</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/backpack/tablet-adb-2-developer-entry.webp" data-desc-position="bottom"><img alt="Developer options under Additional settings" src="../../../assets/backpack/tablet-adb-2-developer-entry.webp"></a></p>
+</div>
+<div class="tabbed-block">
+<p>In the Debugging group, turn on "USB debugging" and confirm.</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/backpack/tablet-adb-3-usb-debugging.webp" data-desc-position="bottom"><img alt="Turn on USB debugging" src="../../../assets/backpack/tablet-adb-3-usb-debugging.webp"></a></p>
+</div>
+<div class="tabbed-block">
+<p>When the tablet asks "Allow USB debugging?" after you plug into the backpack, tick "Always allow from this computer" and tap Allow. Later connections need no confirmation.</p>
+</div>
+</div>
+</div>
+<p>After authorisation the backpack turns off the tablet's debugging-authorisation timeout, and plugging in opens the console again.</p>
+</details>
+<details class="failure">
+<summary>Joined the backpack hotspot, but the console will not open</summary>
+<p><strong>Cause:</strong> three common ones. You joined a different backpack (every hotspot on site starts with <code>xense-</code>); the address had no <code>http://</code>, and iOS / Safari hands a bare device name to a search engine, which looks like "it will not open" when in fact no request was made; or some Android models cannot resolve <code>.local</code> device names.</p>
+<p><strong>Fix:</strong> check that the hotspot name matches the WiFi line on the body label, whose password is printed on it too. Type the address in full, <code>http://192.168.44.1</code> (the hotspot gateway is fixed and works whenever you are on the hotspot) or the <code>http://xense-xxxxxx.local</code> on the last line of the body label. If you are far from the backpack and the signal is weak, move closer; power-cycle the backpack if it becomes unresponsive. The ways in are listed in <a href="../network/#softap">Network and console access</a>.</p>
+</details>
+<details class="failure">
+<summary>The tablet or phone cannot find the backpack hotspot</summary>
+<p><strong>Cause:</strong> the hotspot is 5 GHz only, so a device that supports only 2.4 GHz cannot see it.</p>
+<p><strong>Fix:</strong> use a tablet / phone / PC that supports 5 GHz WiFi, or put the backpack on the site network and reach it over the LAN, see <a href="../network/#lan">Joining site WiFi and wired</a>.</p>
+</details>
+<details class="failure">
+<summary>A PC cannot open <code>xense-xxxxxx.local</code> but a phone can</summary>
+<p><strong>Cause:</strong> Windows has unreliable mDNS name resolution; this is a known environment difference.</p>
+<p><strong>Fix:</strong> use the IP address instead: plug the tablet into USB to open the console and read the backpack's current IP in the top-bar <a href="../network/#status">network dropdown</a>; on the backpack hotspot use <code>http://192.168.44.1</code> directly.</p>
+</details>
+<details class="failure">
+<summary>The console drops mid-collection and the WiFi has hopped to another network</summary>
+<p><strong>Cause:</strong> Windows and tablets switch automatically to a saved network with a "better signal".</p>
+<p><strong>Fix:</strong> turn off "auto-connect" for the other saved networks, or forget them outright, and keep only the backpack hotspot.</p>
+</details>
+<details class="failure">
+<summary>The backpack's network page cannot find the site WiFi</summary>
+<p><strong>Cause:</strong> the backpack only joins 5 GHz WiFi and the scan list shows only 5 GHz networks; a 2.4 GHz-only router is neither visible nor connectable.</p>
+<p><strong>Fix:</strong> use the wired connection instead, or stay on the backpack hotspot.</p>
+</details>
+<details class="failure">
+<summary>After long use the WiFi drops outright and the body is hot</summary>
+<p><strong>Cause:</strong> overheating.</p>
+<p><strong>Fix:</strong> restarting the backpack recovers it; check whether the fan outlet is blocked and whether the fan is turning, and report it if it keeps happening.</p>
+</details>
+<h2 id="record">Collection and recording<a class="headerlink" href="#record" title="锚点链接">¶</a></h2>
+<details class="failure">
+<summary>The record button is greyed out, or the gripper button refuses to start (solid yellow LED)</summary>
+<p><strong>Cause:</strong> a pre-recording gate did not pass, and the browser pops up the reason: no project / task selected; "Pico not ready" or "Tracker not ready" (followed by the specific reason, such as a connection timeout, missing pose or video from one eye, missing clock sync, a headset configuration change awaiting confirmation, or a Tracker out of view or still for more than 5 seconds without active tracking); no gripper MCU online; the task has reached its cumulative collection target; the recording disk is 80 % used.</p>
+<p><strong>Fix:</strong> deal with whichever one the dialog names: pick a <a href="../monitor-record/#project-task">project and task</a> at the bottom of the live monitor page; wait for the headset to connect and the pose dot to turn green, and for "Tracker not ready" bring the grippers back into the headset's view and move them a little; a full disk is the next entry; a met target is the "cumulative collection target" entry below.</p>
+</details>
+<details class="failure">
+<summary>Recording refused: “Task '…' has reached its cumulative collection target (N/M)”</summary>
+<p><strong>Cause:</strong> this gate counts <strong>cumulative collection</strong>: both "ready" and "uploaded" count towards it, and archiving only deletes local files without changing the state, so <strong>neither uploading nor archiving frees up room</strong>.</p>
+<p><strong>Fix:</strong> raise that task's target count, or delete recordings on the Projects page that should not count towards it (misfired short takes, the ones already judged suspect); you can also create a new task and start counting again. "Upload a batch and keep recording" does not free up room. The basis is in <a href="../monitor-record/#project-task">Picking a project and task</a>.</p>
+</details>
+<details class="failure">
+<summary>Recording refused: “Recording disk is N% used, at the 80% limit”</summary>
+<p><strong>Cause:</strong> the capacity gate before recording refuses at 80 %, leaving 20 % for transcode intermediates and exports; better not to start this take than to record a truncated MCAP when the disk fills.</p>
+<p><strong>Fix:</strong> export the data you have (download or upload) and then <a href="../projects-export/#archive">archive</a> to free space, or delete recordings you do not need on the Projects page. Note that uploading by itself frees nothing — local files are kept by default after an upload, and you have to click "Archive" separately. Deleting removes the MCAP and the H264 with it and cannot be undone.</p>
+</details>
+<details class="failure">
+<summary>The gripper LED turns solid yellow during recording</summary>
+<p><strong>Cause:</strong> something fatal went wrong in this take (a camera or a required channel dropped, say) and the take is already spoiled; the LED stays yellow until this recording finishes.</p>
+<p><strong>Fix:</strong> after stopping, look at that take's quality annotation on the Projects page, delete it and record again; check which feed dropped on the live monitor page and inspect that cable. The meanings are in <a href="../gripper/#buttons-leds">LEDs</a>.</p>
+</details>
+<details class="failure">
+<summary>The headset disconnected during recording, and the take was interrupted and marked failed</summary>
+<p><strong>Cause:</strong> if during recording the headset's USB link drops, its connection breaks, or its pose / images stop updating for about 3 seconds, the device immediately marks the take failed and stops capture, announces "Pico connection failed" ("Tracker connection failed" if it was a Tracker that dropped), and the interface pops up "Pico issue: recording interrupted". The data captured so far is finalised safely and kept on the device for diagnosis, but it does not count towards the collected total and is left out of normal export and upload.</p>
+<p><strong>Fix:</strong> check the cable between the headset and the backpack's <code>PICO</code> port, the headset's battery, and whether XTac-UMI XR is still running in the headset; for a Tracker dropout, check the Tracker on your hand. Recording <strong>does not resume automatically</strong> once the headset recovers — wait until the live monitor shows ready and start a new recording. One incident raises only one notice.</p>
+</details>
+<details class="failure">
+<summary>A recording shows as failed, with power loss or a system restart as the reason</summary>
+<p><strong>Cause:</strong> the backpack lost power, the system restarted, or the capture service restarted while recording, so the take was not finalised normally. After power returns the reason distinguishes a power loss / system restart from a restart of the capture service, and the data size reflects the files actually left on the device.</p>
+<p><strong>Fix:</strong> such a recording file may be incomplete, so do not treat it as valid data — confirm, delete and record again; if power losses keep happening, check the power supply and cabling, see <a href="#power">Power and ports</a>.</p>
+</details>
+<details class="failure">
+<summary>The gripper LED is solid red</summary>
+<p><strong>Cause:</strong> a system problem, lit by the backpack: a gripper dropped out, a camera dropped out, or a required channel is missing; it stays until the problem clears. Red only ever means a fault, not that recording is in progress.</p>
+<p><strong>Fix:</strong> see which feed is offline on the live monitor page and re-seat that cable; check <a href="../system/#device-info">Device info</a> for which camera is marked "(offline)" and whether both gripper MCUs are there; power-cycle the backpack if it does not recover.</p>
+</details>
+<details class="failure">
+<summary>The gripper LED flashes red rapidly</summary>
+<p><strong>Cause:</strong> a problem in the gripper itself, lit by its own MCU self-check (a sensor fault, say); while it lasts, the gripper ignores the backpack's LED commands.</p>
+<p><strong>Fix:</strong> unplug and replug that gripper's Type-C cable, or power-cycle the backpack; if it keeps happening, note the gripper's SN and contact support.</p>
+</details>
+<details class="failure">
+<summary>The buttons do nothing: a double-click is refused (fast yellow flash), a long press during recording has no effect</summary>
+<p><strong>Cause:</strong> this is how the state machine is designed: during recording a double-click and a long press on the right gripper are silently ignored (to guard against a shaky hand); a double-click is refused when there is nothing to delete; and a double-click does nothing during the 3-second cooldown after a deletion.</p>
+<p><strong>Fix:</strong> follow the gesture table in <a href="../gripper/#buttons">Buttons</a>; the bindings currently in effect are shown at System → <a href="../system/#capture-settings">Capture settings</a>.</p>
+</details>
+<details class="failure">
+<summary>The device is silent — no voice announcement when recording starts or stops</summary>
+<p><strong>Cause:</strong> announcements play through the headset by default and fall back to the backpack's onboard speaker only when the headset is unavailable, so first make sure you are listening in the right place: the headset when it is on, the backpack when no headset is connected. If it is still silent, it is almost always the settings: voice is muted, or the volume is at 0.</p>
+<p><strong>Fix:</strong> go to System → <a href="../system/#voice">Capture settings › Voice announcements</a> and check whether the switch says "Muted" and whether the volume slider is at 0, then use "Preview" next to each line to check them one by one; the preview result says where the sound came out and why. With English announcements selected and the headset app lacking the English assets, that line plays through the onboard speaker instead. The wording and the timing of the announcements are fixed and cannot be changed on site; only the switch, the volume and the announcement language are adjustable.</p>
+</details>
+<details class="failure">
+<summary>The fisheye view is blurred</summary>
+<p><strong>Cause:</strong> the fisheye camera's focus ring is easy to knock out of place.</p>
+<p><strong>Fix:</strong> check both fisheye views for sharpness before every collection run and turn the ring back if one is blurred; clean a dirty lens with a lint-free cloth, see <a href="../../common/maintenance/">Maintenance</a>.</p>
+</details>
+<details class="failure">
+<summary>Switching project, gripper calibration, a firmware upgrade or a system update is refused with “Recording in progress”</summary>
+<p><strong>Cause:</strong> the device refuses all of these outright while a recording is in progress.</p>
+<p><strong>Fix:</strong> stop the recording on the live monitor page first (or long-press the left gripper), then try again.</p>
+</details>
+<h2 id="export">Replay, export and data<a class="headerlink" href="#export" title="锚点链接">¶</a></h2>
+<details class="failure">
+<summary>“Replay” is refused, saying the camera preview is holding it</summary>
+<p><strong>Cause:</strong> replay and live preview share the backpack's hardware encoder and replay needs it exclusively, so it is refused while the live monitor is open in another tab or on another device. For up to 15 seconds after a camera disconnects it still counts as held. Opening the monitor page after replay has started is fine — the preview comes up and replay is not taken away.</p>
+<p><strong>Fix:</strong> close the monitor page in other tabs and on other tablets / phones, wait a few seconds and click replay again. See <a href="../playback/">Replay</a>.</p>
+</details>
+<details class="failure">
+<summary>After archiving, those recordings cannot be replayed or exported in the other format</summary>
+<p><strong>Cause:</strong> expected behaviour, not a fault. Archiving deletes the local raw file and keeps only the catalogue record, and both replay and export need the raw file, so neither is possible; on the Projects page those entries' "Replay" buttons are greyed out and say "Archived, the local source has been deleted". If a take had been uploaded in only one format, the other format can never be exported after archiving — the archive confirmation lists those takes first.</p>
+<p><strong>Fix:</strong> decide which formats you want before archiving and export them all; after that, the copy in the remote repository you uploaded to is the one that counts. A recording that was never uploaded can also be archived, but then the data has no copy at all, and the confirmation gives a more emphatic warning. The entry point and the criteria are in <a href="../projects-export/#archive">Archive</a>, and the state definitions are in <a href="../monitor-record/#episode-state">Entry states</a>.</p>
+</details>
+<details class="failure">
+<summary>The upload finished but the recording disk has no more free space</summary>
+<p><strong>Cause:</strong> expected behaviour. After a successful upload the local files are <strong>not deleted automatically by default</strong>; without ticking the box it only uploads and keeps every file.</p>
+<p><strong>Fix:</strong> to free space, tick "Archive automatically after uploading (delete the local source, keep only the metadata)" before uploading, or click "Archive" in the task's export dialog afterwards. Every recording uploaded in any format is archived; for one uploaded in only one format, the other format can never be exported once its source is gone, so if you want both, export or upload the other one first.</p>
+</details>
+<details class="failure">
+<summary>An NFS / FTP upload fails, or “Check read/write” does not pass</summary>
+<p><strong>Cause:</strong> usually the target does not meet the requirements — the target directory does not exist yet; the account or the device account lacks write, rename or delete permission; the NFS protocol version does not match the server; the FTPS server address does not match the certificate, or the private CA is missing or wrong; or the target path or port is wrong. Not every upload failure comes from these, and the hints shown by the check are what to go by.</p>
+<p><strong>Fix:</strong> open that entry at console → System → <a href="../system/#upload">Upload configuration</a> and work through the hints: whether the target directory (and the NFS target subdirectory) already exists, because the device will not create it for you; whether the NAS or the FTP / FTPS service allows that account to write, read back, rename and delete; for NFS, also the protocol version and UID / GID; for FTPS, also whether the server address matches the certificate and whether a private CA is needed. Save the changes and click "Check read/write" again. If it still fails, contact support with the exact text of the check's message, the device SN, the console version and that entry's backend kind.</p>
+</details>
+<details class="failure">
+<summary>The LeRobot dataset is bigger than expected</summary>
+<p><strong>Cause:</strong> several video feeds are recorded at once; 1.5 GB for a task of around 3 minutes is within the normal range, and the hardware encoder's capability means it will not be much smaller.</p>
+<p><strong>Fix:</strong> budget transfer and storage at that scale.</p>
+</details>
+<h2 id="update">Upgrades<a class="headerlink" href="#update" title="锚点链接">¶</a></h2>
+<details class="failure">
+<summary>The power went out mid-upgrade / the console will not connect after applying an update</summary>
+<p><strong>Cause:</strong> the collection software restarts when an update is applied and the page waits at most 90 seconds. The device keeps the previous version during an upgrade; if the new version fails to start or power is lost midway, it falls back to the previous version automatically and cannot be bricked.</p>
+<p><strong>Fix:</strong> refresh the page first; if it still will not connect, power-cycle the backpack, then open the System update page to see the current version and "Last operation / Last error". If it rolled back, import the bundle again, see <a href="../update/#rollback">Rollback</a>.</p>
+</details>
+<details class="failure">
+<summary>The upgrade bundle fails verification on upload</summary>
+<p><strong>Cause:</strong> the file is corrupt or did not finish uploading, or its version jumps too far or is older than the current one.</p>
+<p><strong>Fix:</strong> read the line in "Last error"; download the bundle again and re-upload, and for an upgrade that skips versions, ask technical support for the intermediate bundles. A refusal does not affect the version currently running.</p>
+</details>
+<details class="failure">
+<summary>After flashing the gripper firmware the gripper works intermittently and frames go missing quietly</summary>
+<p><strong>Cause:</strong> the restart after flashing is a soft reset, so the gripper's USB-to-serial chip never lost power and sits in a degraded state.</p>
+<p><strong>Fix:</strong> power the backpack off and on again (or unplug and replug that gripper's Type-C cable), then check the firmware version on Device info, see <a href="../update/#gripper-firmware">Gripper firmware</a>.</p>
+</details>
+<hr>
+<p>Still stuck? First get the error out of the console: the block of readings at the top right of the top bar opens the "system log", and it carries a red badge with the error count when there are errors. That panel can only be viewed — it does not export a log file — so <strong>a screenshot is enough and there is no log file to look for on the device</strong>.</p>
+<p>Report it through the channels in <a href="../../common/reference/#support">Support and feedback</a>, with:</p>
+<ul>
+<li>A screenshot of the system-log panel, and roughly when the error appeared;</li>
+<li>The complete error text as shown on screen;</li>
+<li>The device SN and the console version, both on the System → <a href="../system/#device-info">Device info</a> page;</li>
+<li>What you were doing when it happened;</li>
+<li>The project / task / episode number, if a recording was involved;</li>
+<li>The gripper LED state and a screenshot of the live monitor page, if it involves a gripper or the views.</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden="">
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer">
+        
+          
+          <a href="../update/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Upgrades &amp; OTA">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Upgrades &amp; OTA
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../versions/" class="md-footer__link md-footer__link--next" aria-label="Next: Versions">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Versions
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © 2026 XenseRobotics Co., Ltd. · Docs v0.1.0
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/XenseRobotics-AI/XTac-UMI-G1-Docs" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.tracking", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "navigation.footer", "toc.follow", "toc.integrate", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.tooltips"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../../assets/javascripts/arch.js"></script>
+      
+    
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>
