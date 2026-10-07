@@ -38,6 +38,8 @@
 
 ## 局部坐标系
 
-头显本体坐标系的三轴与世界系同一约定：X 前（前部相机安装面法线方向）、Y 左、Z 上，右手系；原点定义待补。
+头显本体坐标系的三轴与世界系同一约定：X 前（前部相机安装面法线方向）、Y 左、Z 上，右手系。<!-- 待补：原点定义 -->
 
-夹爪局部坐标系定义待补。目前已知的是 PC 版落盘的 `tcp.*` 由追踪器位姿经每侧内置的实测 tracker→EE 变换得到，可用 `robot.tracker_to_ee_pos` / `robot.tracker_to_ee_quat` 覆盖，见 [RobotConfig 配置项](../pc/reference.md#robotconfig)。
+<!-- 待补：夹爪局部坐标系定义 -->
+
+PC 版落盘的 `tcp.*` 由追踪器位姿经每侧内置的实测 tracker→EE 变换得到，可用 `robot.tracker_to_ee_pos` / `robot.tracker_to_ee_quat` 覆盖，见 [RobotConfig 配置项](../pc/reference.md#robotconfig)。

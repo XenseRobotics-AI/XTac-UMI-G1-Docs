@@ -6,7 +6,7 @@ This page covers how to open the XTac-UMI Collector console (below, "the console
 
 ![The body label: SN, WiFi name, password, IP and mDNS address](../assets/product/backpack-label.webp){ width="420" }
 
-The body label carries the backpack's SN, hotspot name and password, and device name. The backpack's IP changes and differs from unit to unit, so never write an IP into a procedure; identify a unit by its SN (shown on the console's System → [Device info](system.md#device-info) page) and its hotspot name.
+The body label carries the backpack's SN, hotspot name and password, IP and device name. The IP on the label is the hotspot's fixed address `192.168.44.1` and only works while you are on the backpack hotspot; once the backpack joins a site network its IP changes and differs from unit to unit, so never write such an IP into a procedure. Identify a unit by its SN (shown on the console's System → [Device info](system.md#device-info) page) and its hotspot name.
 
 ## Recommended: the tablet over USB {#tablet}
 
@@ -44,7 +44,7 @@ Without a tablet, use the backpack hotspot to reach the console:
 
 ## Device name {#mdns}
 
-On the same network as the backpack you can use its device name instead of an IP: `http://xense-<name>.local` (see the body label). The name can be changed or turned off in System → [Network](system.md#wifi). Windows and some Android phones cannot open `.local` names; use the IP from the [network drop-down](#status) instead.
+On the same network as the backpack you can use its device name instead of an IP: the `http://xense-xxxxxx.local` on the last line of the body label. The name can be changed or turned off in System → [Network](system.md#wifi). Windows and some Android phones cannot open `.local` names; use the IP from the [network drop-down](#status) instead.
 
 ## Joining a site network {#lan}
 

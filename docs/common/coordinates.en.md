@@ -38,6 +38,8 @@ Every pose in a dataset is referenced to this world frame: the Developer Kit wri
 
 ## Local frames
 
-The three axes of the headset's own body frame follow the same convention as the world frame: X forward (along the normal of the front camera mounting face), Y left, Z up, right-handed; the origin definition is to be added.
+The three axes of the headset's own body frame follow the same convention as the world frame: X forward (along the normal of the front camera mounting face), Y left, Z up, right-handed. <!-- TBD: origin definition -->
 
-The gripper's local frame definition is to be added. What is known so far is that the `tcp.*` the Developer Kit writes is derived from the tracker pose through the measured tracker→EE transform built in for each side, which can be overridden with `robot.tracker_to_ee_pos` / `robot.tracker_to_ee_quat`, see [RobotConfig options](../pc/reference.md#robotconfig).
+<!-- TBD: gripper local frame definition -->
+
+The `tcp.*` the Developer Kit writes is derived from the tracker pose through the measured tracker→EE transform built in for each side, which can be overridden with `robot.tracker_to_ee_pos` / `robot.tracker_to_ee_quat`, see [RobotConfig options](../pc/reference.md#robotconfig).

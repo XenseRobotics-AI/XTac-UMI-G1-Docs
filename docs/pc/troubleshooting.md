@@ -48,10 +48,10 @@
 ??? failure "从夹爪不上电 / 通信异常"
     **原因**：从夹爪供电走 24V 适配器、通信走 Type-C。不上电是 24V 未连或适配器异常；通信异常是 Type-C 未连、未识别，或线缆被机器人运动拉扯。
 
-    **解决**：检查 24V 适配器、插座、电源接口与规格，先连 24V 再连 Type-C 并锁紧（见[上电顺序](quickstart.md#power-on)）；重连 Type-C 并旋紧锁紧螺钉，走线避开关节与夹爪运动区，首次运行前低速测试。
+    **解决**：检查 24V 适配器、插座、电源接口与规格，先连 24V 再连 Type-C 并锁紧（见[供电与连接要求](../common/gripper.md#power)）；重连 Type-C 并旋紧锁紧螺钉，走线避开关节与夹爪运动区，首次运行前低速测试。
 
 ??? failure "绑定从夹爪时报 `从爪固件版本过低,必须升级后才能使用本 SDK` / `Follower firmware too old`"
-    **原因**：从夹爪固件低于 1.2.5，`--robot.role=follower` 和 SDK 都会拒绝更早的固件（1.2.5 起闭合零位才落在机械止点上）；1.2.5 到 1.2.11 之间能连上，但会提示升级。
+    **原因**：从夹爪固件低于 1.2.5，`--robot.role=follower` 和 SDK 都会拒绝更早的固件（1.2.5 起闭合零位才落在机械止点上）；1.2.5–1.2.10 能连上但会提示升级。
 
     **解决**：刷随 SDK 附带的从夹爪镜像，然后**拔下 24V 电源线，等约 2 秒再插回**（USB 线不用拔）：
 
@@ -207,7 +207,7 @@
 ??? failure "`AttributeError: module 'xensevr_pc_service_sdk' has no attribute 'has_pico_camera_frame'`"
     **原因**：加载的是旧版接口（相机接口随 v0.2.0 加入）。这个模块链接的 C SDK 取自已安装的 `.deb`，先看装的是哪一版：`dpkg -s xensevr-pc-service | grep -E '^(Status|Version):'`。
 
-    **解决**：拉最新主仓库后重跑 `./setup_env.sh --install`，它会把 `.deb` 一并升到基线版本；仍为 `False` 时用 `python -c "import xensevr_pc_service_sdk as x; print(x.__file__)"` 确认加载的是哪一份。`Status` 不是 `install ok installed`（例如 `dpkg -r` 删过，残留 `deinstall ok config-files`）时同样重装一次。
+    **解决**：更新到发布 tag（见[仓库与子模块更新](versions.md#repo-update)）后重跑 `./setup_env.sh --install`，它会把 `.deb` 一并升到基线版本；仍为 `False` 时用 `python -c "import xensevr_pc_service_sdk as x; print(x.__file__)"` 确认加载的是哪一份。`Status` 不是 `install ok installed`（例如 `dpkg -r` 删过，残留 `deinstall ok config-files`）时同样重装一次。
 
 ??? failure "日志反复出现左右眼偏差（skew）告警"
     **原因**：两只眼是两条独立消息，时间戳差超过 `--robot.head_camera_pair_max_skew_ms`（默认 20 ms）；常见于主机负载过高，或头显与 PC 之间链路抖动。

@@ -256,7 +256,7 @@ lerobot-record \
 !!! warning "这是给不达标机器的临时办法，不是推荐做法"
     [采集主机最低要求](install.md#host-spec)是 NVIDIA RTX 3060 / 8 GB 显存及以上。纯 CPU 服务器、虚拟机或无 NVIDIA 显卡的笔记本用下面这条能把数据录下来，但存盘慢、更容易掉帧；正式采集请换达标主机。
 
-0.0.8 修掉了无显卡路径上的内存增长（此前 `libsvtav1` 每集多占约 1.3 GB，长时间录制会耗尽内存），这类机器请先升级到 0.0.8。
+0.0.8 修掉了无显卡路径上的内存增长（此前 `libsvtav1` 每集多占约 1.3 GB，长时间录制会耗尽内存），这类机器请先升级到 v0.1.0。
 
 `--dataset.vcodec=auto` + `--dataset.streaming_encoding=true` 这两个默认值是按装了 NVIDIA 显卡配的。没有显卡时关掉流式编码：
 

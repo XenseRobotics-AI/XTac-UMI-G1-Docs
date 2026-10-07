@@ -63,7 +63,7 @@ How to use it is in [Follower gripper](../follower/index.md).
 | Multi-device time sync | 5 ms |
 | Coordinate frame | X forward, Y left, Z up, see [Coordinate frames](../common/coordinates.md) |
 
-## The backpack
+## The backpack {#backpack}
 
 The Backpack Kit's collection unit: the grippers and headset plug into it and the console opens in a browser. See [The Backpack](backpack.md).
 

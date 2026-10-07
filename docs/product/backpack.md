@@ -29,7 +29,7 @@
 
     ---
 
-    导出 LeRobot 数据集或 MCAP，下载或一键发布到 ModelScope
+    导出 LeRobot 数据集或 MCAP，下载或一键上传到 ModelScope
 
 </div>
 
@@ -111,7 +111,7 @@
 - **取回方式**：下载压缩包，或上传到 ModelScope、S3、FTP / FTPS、NFS。
 - **数据量**：一个 3 分钟左右的任务导出约 1.5 GB。
 
-详见[项目、导出与发布](../backpack/projects-export.md)。
+详见[项目、导出与上传](../backpack/projects-export.md)。
 
 ## 升级
 

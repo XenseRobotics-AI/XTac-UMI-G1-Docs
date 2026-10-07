@@ -89,7 +89,7 @@ Both kits use the same grippers and headset and produce the same data. The Backp
     - The backpack runs all collection; no computer needed
     - A tablet browser is the console; gripper buttons start and stop recording
     - One person wears it, suited to field work and long sessions
-    - Publish datasets to ModelScope in one click, as MCAP or LeRobotDataset v3
+    - Upload datasets to ModelScope in one click, as MCAP or LeRobotDataset v3
 
     Turnkey, closed-source collection software; for large-scale collection teams and data factories
     { .xu-card__fit }

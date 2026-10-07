@@ -190,4 +190,4 @@ For traceability, keep one line of record per dataset. The gripper and tactile s
 
 | `repo_id` | Task description | Station number `--robot.id` | Gripper / tracker SN | Calibration date | Software version / commit | World-frame session | Integrity check | Episodes / episode length | Notes |
 |---|---|---|---|---|---|---|---|---|---|
-| `Xense/pick_object_20260703` | `Pick up the object` | `0` (stored in the dataset as `bi_taccap_0`) | `TCGU01A24Z0001m` / `PC2310MLL...` | 2026-07-03 | The `xense-taccap-lerobot main@<SHA>` and `xense.taccap <version>` in use at the time | When XTac-UMI XR was started / which way the operator faced | `lerobot-check-dataset` passed; list of anomalous episodes | 50 / 15s | Lighting / scene / anomalous episodes |
+| `Xense/pick_object_20260703` | `Pick up the object` | `0` (stored in the dataset as `bi_taccap_0`) | `TCGU01A24Z0001m` / `PC2310MLL...` | 2026-07-03 | The `xense-taccap-lerobot v0.1.0` and `xense.taccap <version>` in use at the time | When XTac-UMI XR was started / which way the operator faced | `lerobot-check-dataset` passed; list of anomalous episodes | 50 / 15s | Lighting / scene / anomalous episodes |

@@ -77,14 +77,14 @@ This page is organised by symptom, with a cause and a fix for each. The three mo
 ??? failure "Joined the backpack hotspot, but the console will not open"
     **Cause:** three common ones. You joined a different backpack (every hotspot on site starts with `xense-`); the address had no `http://`, and iOS / Safari hands a bare device name to a search engine, which looks like "it will not open" when in fact no request was made; or some Android models cannot resolve `.local` device names.
 
-    **Fix:** check that the last 6 characters of the hotspot name match the last 6 of the serial on the body label, whose password is printed on it too. Type the address in full, `http://192.168.44.1` (the hotspot gateway is fixed and always works) or `http://xense-<last 6>.local`. If you are far from the backpack and the signal is weak, move closer; power-cycle the backpack if it becomes unresponsive. The ways in are listed in [Network and console access](network.md#softap).
+    **Fix:** check that the hotspot name matches the WiFi line on the body label, whose password is printed on it too. Type the address in full, `http://192.168.44.1` (the hotspot gateway is fixed and works whenever you are on the hotspot) or the `http://xense-xxxxxx.local` on the last line of the body label. If you are far from the backpack and the signal is weak, move closer; power-cycle the backpack if it becomes unresponsive. The ways in are listed in [Network and console access](network.md#softap).
 
 ??? failure "The tablet or phone cannot find the backpack hotspot"
     **Cause:** the hotspot is 5 GHz only, so a device that supports only 2.4 GHz cannot see it.
 
     **Fix:** use a tablet / phone / PC that supports 5 GHz WiFi, or put the backpack on the site network and reach it over the LAN, see [Joining site WiFi and wired](network.md#lan).
 
-??? failure "A PC cannot open `xense-xxx.local` but a phone can"
+??? failure "A PC cannot open `xense-xxxxxx.local` but a phone can"
     **Cause:** Windows has unreliable mDNS name resolution; this is a known environment difference.
 
     **Fix:** use the IP address instead: plug the tablet into USB to open the console and read the backpack's current IP in the top-bar [network dropdown](network.md#status); on the backpack hotspot use `http://192.168.44.1` directly.
@@ -112,9 +112,9 @@ This page is organised by symptom, with a cause and a fix for each. The three mo
     **Fix:** deal with whichever one the dialog names: pick a [project and task](monitor-record.md#project-task) at the bottom of the live monitor page; wait for the headset to connect and the pose dot to turn green, and for "Tracker not ready" bring the grippers back into the headset's view and move them a little; a full disk is the next entry; a met target is the "cumulative collection target" entry below.
 
 ??? failure "Recording refused: “Task '…' has reached its cumulative collection target (N/M)”"
-    **Cause:** since 0.3.14 this gate counts **cumulative collection**: both "ready" and "uploaded" count towards it, and archiving only deletes local files without changing the state, so **neither uploading nor archiving frees up room any more**. It used to count only the ones not yet uploaded, so uploading a batch bought you a few more takes and it never matched the task's progress; that basis has been retired.
+    **Cause:** this gate counts **cumulative collection**: both "ready" and "uploaded" count towards it, and archiving only deletes local files without changing the state, so **neither uploading nor archiving frees up room**.
 
-    **Fix:** raise that task's target count, or delete recordings on the Projects page that should not count towards it (misfired short takes, the ones already judged suspect); you can also create a new task and start counting again. Do not expect "upload a batch and keep recording" to work. The basis is in [Picking a project and task](monitor-record.md#project-task).
+    **Fix:** raise that task's target count, or delete recordings on the Projects page that should not count towards it (misfired short takes, the ones already judged suspect); you can also create a new task and start counting again. "Upload a batch and keep recording" does not free up room. The basis is in [Picking a project and task](monitor-record.md#project-task).
 
 ??? failure "Recording refused: “Recording disk is N% used, at the 80% limit”"
     **Cause:** the capacity gate before recording refuses at 80 %, leaving 20 % for transcode intermediates and exports; better not to start this take than to record a truncated MCAP when the disk fills.
@@ -127,12 +127,12 @@ This page is organised by symptom, with a cause and a fix for each. The three mo
     **Fix:** after stopping, look at that take's quality annotation on the Projects page, delete it and record again; check which feed dropped on the live monitor page and inspect that cable. The meanings are in [LEDs](gripper.md#buttons-leds).
 
 ??? failure "The headset disconnected during recording, and the take was interrupted and marked failed"
-    **Cause:** a protection added in 0.4.2: if during recording the headset's USB link drops, its connection breaks, or its pose / images stop updating for about 3 seconds, the device immediately marks the take failed and stops capture, announces "Pico connection failed" ("Tracker connection failed" if it was a Tracker that dropped), and the interface pops up "Pico issue: recording interrupted". The data captured so far is finalised safely and kept on the device for diagnosis, but it does not count towards the collected total and is left out of normal export and upload.
+    **Cause:** if during recording the headset's USB link drops, its connection breaks, or its pose / images stop updating for about 3 seconds, the device immediately marks the take failed and stops capture, announces "Pico connection failed" ("Tracker connection failed" if it was a Tracker that dropped), and the interface pops up "Pico issue: recording interrupted". The data captured so far is finalised safely and kept on the device for diagnosis, but it does not count towards the collected total and is left out of normal export and upload.
 
     **Fix:** check the cable between the headset and the backpack's `PICO` port, the headset's battery, and whether XTac-UMI XR is still running in the headset; for a Tracker dropout, check the Tracker on your hand. Recording **does not resume automatically** once the headset recovers — wait until the live monitor shows ready and start a new recording. One incident raises only one notice.
 
 ??? failure "A recording shows as failed, with power loss or a system restart as the reason"
-    **Cause:** the backpack lost power, the system restarted, or the capture service restarted while recording, so the take was not finalised normally. Since 0.4.3, after power returns the reason distinguishes a power loss / system restart from a restart of the capture service, and the data size reflects the files actually left on the device.
+    **Cause:** the backpack lost power, the system restarted, or the capture service restarted while recording, so the take was not finalised normally. After power returns the reason distinguishes a power loss / system restart from a restart of the capture service, and the data size reflects the files actually left on the device.
 
     **Fix:** such a recording file may be incomplete, so do not treat it as valid data — confirm, delete and record again; if power losses keep happening, check the power supply and cabling, see [Power and ports](#power).
 
@@ -149,7 +149,7 @@ This page is organised by symptom, with a cause and a fix for each. The three mo
 ??? failure "The buttons do nothing: a double-click is refused (fast yellow flash), a long press during recording has no effect"
     **Cause:** this is how the state machine is designed: during recording a double-click and a long press on the right gripper are silently ignored (to guard against a shaky hand); a double-click is refused when there is nothing to delete; and a double-click does nothing during the 3-second cooldown after a deletion.
 
-    **Fix:** follow the gesture table in [Buttons](gripper.md#buttons); the bindings currently in effect are shown at console → System → [Capture settings › Recording shortcut](system.md#keybinding).
+    **Fix:** follow the gesture table in [Buttons](gripper.md#buttons); the bindings currently in effect are shown at System → [Capture settings](system.md#capture-settings).
 
 ??? failure "The device is silent — no voice announcement when recording starts or stops"
     **Cause:** announcements play through the headset by default and fall back to the backpack's onboard speaker only when the headset is unavailable, so first make sure you are listening in the right place: the headset when it is on, the backpack when no headset is connected. If it is still silent, it is almost always the settings: voice is muted, or the volume is at 0.
@@ -173,23 +173,13 @@ This page is organised by symptom, with a cause and a fix for each. The three mo
 
     **Fix:** close the monitor page in other tabs and on other tablets / phones, wait a few seconds and click replay again. See [Replay](playback.md).
 
-??? failure "The pre-check or export reports “timestamps do not overlap” or “camera timestamps are not monotonic”"
-    **Cause:** the system clock jumped during recording (typically: the backpack sat unpowered for days, and on boot NTP moved the system time by hours in one step, so cameras that started before and after ended up on two timelines). Since 0.3.3 the time base is frozen during recording and the hardware has an RTC battery, so newly recorded data will not hit this.
-
-    **Fix:** the affected historical data cannot be exported, which is expected — delete those episodes. If it recurs after upgrading, note the `episode_id` in the error and report it.
-
-??? failure "The export reports “the camera set does not match the first episode”"
-    **Cause:** capture modes were mixed within one task (recorded at 6 feeds, then switched to 8 and carried on).
-
-    **Fix:** keep one capture mode from start to finish within a task; for data that is already mixed, delete the entries whose channels differ from the first episode and export again, or split them into separate tasks.
-
 ??? failure "After archiving, those recordings cannot be replayed or exported in the other format"
     **Cause:** expected behaviour, not a fault. Archiving deletes the local raw file and keeps only the catalogue record, and both replay and export need the raw file, so neither is possible; on the Projects page those entries' "Replay" buttons are greyed out and say "Archived, the local source has been deleted". If a take had been uploaded in only one format, the other format can never be exported after archiving — the archive confirmation lists those takes first.
 
     **Fix:** decide which formats you want before archiving and export them all; after that, the copy in the remote repository you uploaded to is the one that counts. A recording that was never uploaded can also be archived, but then the data has no copy at all, and the confirmation gives a more emphatic warning. The entry point and the criteria are in [Archive](projects-export.md#archive), and the state definitions are in [Entry states](monitor-record.md#episode-state).
 
 ??? failure "The upload finished but the recording disk has no more free space"
-    **Cause:** expected behaviour (a change since 0.3.10). After a successful upload the local files are **no longer deleted automatically**; without ticking the box it only uploads and keeps every file. The old 0.3.5 default of clearing the disk on upload is out of date.
+    **Cause:** expected behaviour. After a successful upload the local files are **not deleted automatically by default**; without ticking the box it only uploads and keeps every file.
 
     **Fix:** to free space, tick "Archive automatically after uploading (delete the local source, keep only the metadata)" before uploading, or click "Archive" in the task's export dialog afterwards. Every recording uploaded in any format is archived; for one uploaded in only one format, the other format can never be exported once its source is gone, so if you want both, export or upload the other one first.
 
@@ -206,12 +196,12 @@ This page is organised by symptom, with a cause and a fix for each. The three mo
 ## Upgrades {#update}
 
 ??? failure "The power went out mid-upgrade / the console will not connect after applying an update"
-    **Cause:** the service restarts when an update is applied and the page waits at most 90 seconds; a new version has to pass its start-up self-check before it counts as committed, and one that does not come up falls back to the previous version automatically. There is a complete, runnable program on disk at every moment, so a power cut cannot brick it.
+    **Cause:** the collection software restarts when an update is applied and the page waits at most 90 seconds. The device keeps the previous version during an upgrade; if the new version fails to start or power is lost midway, it falls back to the previous version automatically and cannot be bricked.
 
-    **Fix:** refresh the page first; if it still will not connect, power-cycle the backpack, then open the System update page to see the current version and "Last operation / Last error". If it rolled back, import the bundle again, see [A/B slots and rollback](update.md#rollback).
+    **Fix:** refresh the page first; if it still will not connect, power-cycle the backpack, then open the System update page to see the current version and "Last operation / Last error". If it rolled back, import the bundle again, see [Rollback](update.md#rollback).
 
 ??? failure "The upgrade bundle fails verification on upload"
-    **Cause:** the bundle is corrupt or the transfer was incomplete (`sha256` mismatch), it is not a bundle for this device's architecture (the backpack is `aarch64`), or the current version is below the minimum starting version the bundle requires.
+    **Cause:** the file is corrupt or did not finish uploading, or its version jumps too far or is older than the current one.
 
     **Fix:** read the line in "Last error"; download the bundle again and re-upload, and for an upgrade that skips versions, ask technical support for the intermediate bundles. A refusal does not affect the version currently running.
 

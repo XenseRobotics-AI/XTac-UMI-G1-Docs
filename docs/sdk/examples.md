@@ -56,7 +56,7 @@ python python/examples/wrist_camera.py <相机序列号> --undistort   # 矫正�
 
 ## 固件 {#firmware}
 
-步骤见 [固件与电机升级](../follower/firmware.md)，主夹爪升级时把 `slave` 换成 `master`。
+从夹爪的步骤见[固件与电机升级](../follower/firmware.md)，主夹爪见[固件 OTA 升级](../pc/versions.md#ota)。
 
 ## 从旧版本迁移 {#migrate}
 

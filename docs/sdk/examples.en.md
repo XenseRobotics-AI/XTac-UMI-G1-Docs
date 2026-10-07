@@ -56,7 +56,7 @@ python python/examples/wrist_camera.py <camera serial> --undistort   # undistort
 
 ## Firmware {#firmware}
 
-For the steps see [Firmware and motor upgrades](../follower/firmware.md); when upgrading a leader gripper, replace `slave` with `master`.
+For a follower gripper see [Firmware and motor upgrades](../follower/firmware.md); for a leader gripper see [Firmware OTA upgrade](../pc/versions.md#ota).
 
 ## Migrating from older versions {#migrate}
 

@@ -110,6 +110,8 @@ The tracker talks to the host's XenseVR PC Service (RoboticsService) daemon, whi
 /opt/apps/roboticsservice/runService.sh
 ```
 
+The two ends are named asymmetrically, so do not mix them up: the app on the headset is **XTac-UMI XR** (formerly XenseVR-Toolkit), while the service on the computer is still called **XenseVR PC Service**. The package `XenseVR-PC-Service_<version>_amd64.deb` installs into `/opt/apps/roboticsservice/`, and the Python package is `xensevr_pc_service_sdk`.
+
 Only one instance can run at a time; starting a second one fails or conflicts.
 
 The service can supply several kinds of data (Head / controllers / hand tracking / full-body mocap / standalone Tracker). Collection uses two of them: the standalone Tracker pose (the gripper pose, carrying an `sn` that distinguishes the trackers) and the head pose (the headset's own pose, used together with the [headset's stereo frames](recording.md#56)). The headset sends each eye's frames and its own pose to the PC Service, which forwards them to collection; they share one connection with the trackers, so with the service down neither works. This path needs a service at v0.2.0 or later (see [Version baseline](versions.md#required)); if you only use trackers, the version makes no difference.
@@ -118,6 +120,6 @@ The service directory `/opt/apps/roboticsservice/` ships the `ConsoleDemo` / `Ro
 
 ## Power-on sequence {#36}
 
-The power-on and power-off sequence is described once, in [Quickstart · Power-on and power-off sequence](quickstart.md#power-on); follow the 7 steps there. On a bimanual rig, read the [USB bandwidth budget](#usb-budget) before plugging in the cables.
+The power-on and power-off sequence is described once, in [Quickstart · Power on and connect](quickstart.md#power-on); follow the steps there. On a bimanual rig, read the [USB bandwidth budget](#usb-budget) before plugging in the cables.
 
 Next → [Calibration and self-check](calibration.md)

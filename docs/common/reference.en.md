@@ -47,7 +47,7 @@ Please include:
 
 ## References {#references}
 
-The repositories below belong to the Developer Kit and are all open source; the Backpack Kit's collection software is not open source and is not listed.
+The repositories below belong to the Developer Kit and are all open source except `xensesdk`, whose license is not stated; the Backpack Kit's collection software is not open source and is not listed.
 
 | Resource | URL | Notes |
 |---|---|---|

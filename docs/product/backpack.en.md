@@ -29,7 +29,7 @@ No computer and no site network needed; it is ready to collect once it boots.
 
     ---
 
-    Export as a LeRobot dataset or MCAP; download, or publish to ModelScope in one click
+    Export as a LeRobot dataset or MCAP; download, or upload to ModelScope in one click
 
 </div>
 
@@ -100,9 +100,9 @@ The capture mode is **chosen when you create a project** and cannot be changed a
 
 | Mode | Cameras |
 |---|---|
-| Two grippers | 6 |
-| Two grippers + headset stereo | 8 |
-| Two grippers + headset right eye | 7 |
+| Dual gripper | 6 |
+| Dual gripper + headset stereo | 8 |
+| Dual gripper + headset right eye | 7 |
 
 ## Data and export
 
@@ -111,7 +111,7 @@ The capture mode is **chosen when you create a project** and cannot be changed a
 - **Getting it out**: download an archive, or upload to ModelScope, S3, FTP / FTPS or NFS.
 - **Size**: a task of about 3 minutes exports to roughly 1.5 GB.
 
-Details are in [Projects, export and publishing](../backpack/projects-export.md).
+Details are in [Projects, export and upload](../backpack/projects-export.md).
 
 ## Upgrading
 

@@ -1,22 +1,23 @@
 # Safety and compliance
 
-This page collects the safety requirements shared by both configurations, in four sections: the gripper, the backpack and its power, the headset and trackers, and data safety. Read it through before first use, and re-read the relevant section before connecting, powering up or dismantling anything. Liabilities and limitations, environmental requirements and compliance statements that the vendor has not yet supplied are marked "To be added"; this page does not invent content in their place.
+This page collects the safety requirements shared by both configurations, in four sections: the gripper, the backpack and its power, the headset and trackers, and data safety. Read it through before first use, and re-read the relevant section before connecting, powering up or dismantling anything.
 
 !!! danger "Any odour, smoke, obvious overheating, structural damage or damaged cable insulation"
     Cut the power and stop using the device immediately, note the serial number on the body and contact [support](../common/reference.md#support).
 
 ## Liabilities and limitations
 
-To be added.
+- Install, use and maintain the product as described in this manual. Damage or loss caused by not following the instructions, by dismantling or modifying the product, by using non-matching accessories, or by use outside the specified environment is not covered by the warranty.
+- This product collects human demonstration data for research and development. Users are responsible for assessing the safety of the collected data, and of any model trained on it, in real-world applications.
+- The product software and documentation are updated continuously; the latest version applies.
 
 ## Environmental requirements
 
 | Item | Requirement |
 |---|---|
-| Operating temperature | To be added |
-| Relative humidity | To be added |
-| Ingress protection rating | To be added |
-| Magnetic field strength | To be added |
+| Operating temperature | Grippers 0–50 °C, backpack 0–40 °C; see [Specifications](specs.md) |
+| Environment | Dry indoor use; keep away from rain, splashes and condensation |
+| Interference | Keep away from strong magnetic fields and heat sources; headset tracking needs good lighting without direct strong light |
 
 ## Gripper {#gripper}
 
@@ -59,7 +60,7 @@ If the headset is underpowered it will lose power and shut down, and collection 
 - Cooling: do not block the fan outlet. After long use, overheating can drop the WiFi, which a restart recovers; check that the fan is turning, and report it if it keeps happening.
 - System updates: confirm no collection is in progress before applying one; the service restarts when it is applied.
 - Device back end: the device back end is for technical support only. Do not log in or change the system configuration yourself; when back-end diagnosis is needed, contact technical support, see [Advanced diagnosis](../backpack/network.md#ssh).
-- Battery, power draw and ingress protection rating: to be added.
+- Power draw and power-bank runtime are in [Specifications](specs.md).
 
 ## Headset and trackers {#headset}
 
@@ -79,10 +80,12 @@ If the headset is underpowered it will lose power and shut down, and collection 
 - The backpack console has no login gate: anyone on the backpack's network (its hotspot, wired, or site WiFi) can operate the device and download or delete data. The hotspot password is printed on the body label; keep this in mind when the device leaves your hands or joins an uncontrolled network.
 - "Delete permanently" is a hard delete: it cascades through every recording under the task and removes the MCAP, H264 and LeRobot export files from disk. It cannot be undone, and the confirmation dialog asks you to type the name.
 - After an upload completes the entries are marked "Uploaded" and the local files are kept by default; the raw files are removed only if you tick the clean-up before uploading or [archive](../backpack/projects-export.md#archive) afterwards, and once removed the take can no longer be replayed or exported in any format. If you need a local copy, pick the "Download to device" destination in the export dialog and collect the archive before cleaning up or archiving.
-- The credentials in an upload configuration (ModelScope token, S3 keys, FTP password and so on) are stored on the device and are not shown again after saving. Choose a "private" repository when creating an upload configuration — publishing publicly cannot be undone. After publishing to the wrong account, programmatic deletion is limited and you have to sort it out in the ModelScope web console, so check which configuration a project is bound to when you create it.
+- The credentials in an upload configuration (ModelScope token, S3 keys, FTP password and so on) are stored on the device and are not shown again after saving. Choose a "private" repository when creating an upload configuration — publishing publicly cannot be undone. After uploading to the wrong account, programmatic deletion is limited and you have to sort it out in the ModelScope web console, so check which configuration a project is bound to when you create it.
 - When uploading to the Hugging Face Hub on the Developer Kit, add `--private` for a private repository, see [Uploading to the Hub and backups](../pc/dataset.md#64).
-- Privacy protection: to be added.
+- Privacy: collected data is stored only on your local device and on upload destinations you configure yourself. Recordings may capture faces, screens or other personal information; inform the people involved and obtain their consent beforehand, and handle and store data in line with local laws and regulations.
 
 ## Compliance statement
 
-To be added.
+- Comply with the laws and regulations where the product is used, including those on radio, data protection and privacy.
+- Certification information for this product is given by the markings on the product label and packaging.
+- For the headset and trackers, see PICO's official documentation.

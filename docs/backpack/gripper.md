@@ -29,7 +29,7 @@
 | <span class="tc-lamp white flash"></span> | 白 闪一次 | 保存正常（亮 0.4 秒） |
 | <span class="tc-lamp amber solid"></span> | 黄 常亮 | 开录失败（亮 2 秒），或录制中出现致命问题（长亮不灭） |
 | <span class="tc-lamp amber pulse"></span> | 黄 脉冲 | 数据可疑：录着，但那条质量存疑（亮 0.2 秒、灭 0.8 秒，共 3 次） |
-| <span class="tc-lamp amber strobe"></span> | 黄 快闪 | 动作被拒，如正在录时又按开录（0.1 秒明灭，共 3 次） |
+| <span class="tc-lamp amber strobe"></span> | 黄 快闪 | 动作被拒，如没有可删条目时双击（0.1 秒明灭，共 3 次） |
 | <span class="tc-lamp purple blink"></span> | 紫 闪 | 删除确认中，等你再双击；0.3 秒明灭，超时自动取消 |
 | <span class="tc-lamp purple solid"></span> | 紫 常亮 | 刚删完的 3 秒冷却期，期间双击不响应 |
 | <span class="tc-lamp red solid"></span> | 红 常亮 | 系统问题（如夹爪掉线，由背包侧点亮） |

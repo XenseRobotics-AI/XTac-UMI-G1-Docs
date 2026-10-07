@@ -17,7 +17,7 @@ XTac-UMI 提供两种配置，使用同一套 XTac-UMI G1 夹爪与 Pico4 Ultra 
 
     ---
 
-    背包即主机、平板即控制台，夹爪按键录制，数据一键发布到 ModelScope。
+    背包即主机、平板即控制台，夹爪按键录制，数据一键上传到 ModelScope。
 
     [快速开始](../backpack/quickstart.md){ .md-button .md-button--primary }
 
@@ -61,7 +61,7 @@ XTac-UMI 提供两种配置，使用同一套 XTac-UMI G1 夹爪与 Pico4 Ultra 
     | Pico4 Ultra 企业版头显 | 1 | 含手柄与运动追踪器，追踪器装在两只主夹爪顶部 |
     | 追踪器充电底座 | 1 | 一拖三 |
     | 头显连接线（Pico → Pack） | 1 | 双 Type-C，1.5 m，头显接背包 `PICO` 口 |
-    | 数采背包 | 1 | 计算节点，常开 5 GHz 热点 |
+    | 数采背包 | 1 | 计算节点，自带 5 GHz 热点（默认关闭） |
     | 腰带组件 | 1 | 佩戴数采背包 |
     | 12 V 电源适配器 | 1 | 12 V 3 A，线长 1.5 m，接背包 `DC` 口 |
     | 充电宝 | 1 | 20000 mAh，45 W |
@@ -79,7 +79,7 @@ XTac-UMI 提供两种配置，使用同一套 XTac-UMI G1 夹爪与 Pico4 Ultra 
 
         ![充电宝供电接线：左右主夹爪与头显接数采背包，充电宝接背包 DC 口](../assets/product/backpack-wiring-powerbank-diagram.webp)
 
-    接线步骤见[适配器供电](../backpack/unbox-connect.md#adapter)与[充电宝供电](../backpack/unbox-connect.md#powerbank)；供电与拔线顺序的安全要求见[数采背包与供电](safety.md#backpack-power)；连上背包、打开控制台见[背包热点](../backpack/network.md#softap)。
+    接线步骤见[适配器供电](../backpack/unbox-connect.md#adapter)与[充电宝供电](../backpack/unbox-connect.md#powerbank)；供电与拔线顺序的安全要求见[数采背包与供电](safety.md#backpack-power)；打开控制台见[平板插 USB](../backpack/network.md#tablet)，没有平板时用[背包热点](../backpack/network.md#softap)。
 
 === "PC 版"
 

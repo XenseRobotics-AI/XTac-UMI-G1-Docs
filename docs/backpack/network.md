@@ -6,7 +6,7 @@
 
 ![机身标签：SN、WiFi 名、密码、IP 与 mDNS 地址](../assets/product/backpack-label.webp){ width="420" }
 
-机身标签印着这台背包的 SN、热点名与密码、设备名。背包的 IP 会变且每台不同，不要把 IP 写进任何流程；认机用 SN（控制台 系统 → [设备信息](system.md#device-info)可查）和热点名。
+机身标签印着这台背包的 SN、热点名与密码、IP 与设备名。标签上的 IP 是热点的固定地址 `192.168.44.1`，只在连背包热点时可用；背包接入现场网络后的 IP 会变且每台不同，不要把这类 IP 写进任何流程。认机用 SN（控制台 系统 → [设备信息](system.md#device-info)可查）和热点名。
 
 ## 推荐：平板插 USB {#tablet}
 
@@ -44,7 +44,7 @@
 
 ## 设备名访问 {#mdns}
 
-与背包在同一网络时，可以用设备名访问，免记 IP：`http://xense-<设备名>.local`（见机身标签）。设备名可在 系统 → [网络 / 配网](system.md#wifi) 里改名或关闭。Windows 与部分安卓手机打不开 `.local` 设备名，改用[网络下拉](#status)里的 IP。
+与背包在同一网络时，可以用设备名访问，免记 IP：机身标签最后一行的 `http://xense-xxxxxx.local`。设备名可在 系统 → [网络 / 配网](system.md#wifi) 里改名或关闭。Windows 与部分安卓手机打不开 `.local` 设备名，改用[网络下拉](#status)里的 IP。
 
 ## 接入现场网络 {#lan}
 

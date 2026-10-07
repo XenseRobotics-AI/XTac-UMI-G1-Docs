@@ -43,7 +43,7 @@ Use this at a fixed workstation with a mains socket: one cable from the headset 
 ![Adapter wiring: left and right grippers to the sides of the backpack, the headset's Type-C to the PICO port, the adapter to the DC port](../assets/product/backpack-wiring-adapter.webp)
 
 1. Connect the left / right grippers to UMI-L / UMI-R.
-2. Connect the headset to the backpack's PICO port with the headset cable (Pico → Pack), carrying the USB network; whether that one cable can also power the headset depends on the notes shipped with your unit.
+2. Connect the headset to the backpack's PICO port with the headset cable (Pico → Pack), carrying the USB network. That one cable is all the headset needs and the backpack powers the headset through it, but the headset battery still drains slowly, so charge the headset fully before you start.
 3. Connect the 12 V 3 A adapter to the backpack's DC port, then plug it into the mains.
 
 ## Power-bank power {#powerbank}
@@ -59,10 +59,10 @@ Use this for mobile collection away from a socket: the single power bank in the 
 | 12 V PD power cable (0.3 m) | Power bank ↔ the backpack's DC port, using the power bank's 12 V output |
 
 1. Connect the left / right grippers to UMI-L / UMI-R.
-2. Connect the headset to the backpack's PICO port with the headset cable, carrying the USB network; whether that one cable can also power the headset depends on the notes shipped with your unit.
+2. Connect the headset to the backpack's PICO port with the headset cable, carrying the USB network. That one cable is all the headset needs and the backpack powers the headset through it, but the headset battery still drains slowly, so charge the headset fully before you start.
 3. Connect the 12 V PD power cable from the power bank to the backpack's DC port.
 
-If the headset is underpowered it will lose power and shut down, which interrupts collection; make sure the headset is well charged before you start and keep an eye on its battery icon during collection (set it to always show under [power policy](../common/pico4.md#pico-system)). The backpack's own battery, runtime and power figures are to be added.
+The power the backpack supplies does not fully cover the headset's draw, so the headset battery still drains slowly (a net draw of about 1–2 W); when it runs out the headset shuts down and collection stops. Charge the headset fully before you start and, on long sessions, keep an eye on its battery icon (set it to always show under [power policy](../common/pico4.md#pico-system)). The backpack draws up to 36 W and runs about 3.5–4 hours on the power bank, see [Specifications](../product/specs.md#backpack).
 
 !!! warning "Do not add devices to a power bank during collection"
     Some power banks shut down an existing output port when a second device is plugged in, and the backpack loses power on the spot. Connect every cable before you start recording.
@@ -86,6 +86,6 @@ Once the console is open, look at three things; if any of them is wrong, go back
 
 - The "Cameras" counter at the top right shows online / total, which should be 6 / 6 in "Dual gripper" mode; one missing usually means a gripper cable is not tightened or not fully seated.
 - The gripper LEDs are solid green. A rapid red flash means the gripper's own self-check found a problem; solid red means the backpack detected that the gripper dropped out.
-- The current project's [capture mode](system.md#capture-mode) matches how the system is actually wired ("Dual gripper", "Dual gripper + stereo headset" or "Dual gripper + headset right eye"; the System page shows it); once the headset is connected, the pose view on the live monitor page should follow your hand, see [Camera and pose checks](monitor-record.md#checks).
+- The current project's [capture mode](system.md#capture-mode) matches how the system is actually wired ("Dual gripper", "Dual gripper + headset stereo" or "Dual gripper + headset right eye"; the System page shows it); once the headset is connected, the pose view on the live monitor page should follow your hand, see [Camera and pose checks](monitor-record.md#checks).
 
 If nothing happens when you power up, or the headset keeps dropping in and out, try a different cable and a different port first. Poor contact in the `DC`, `PICO` or `USB` port itself is a hardware fault: note the serial number on the body and contact support, and do not force or lever the connector — see [Troubleshooting](troubleshooting.md).

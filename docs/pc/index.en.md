@@ -236,7 +236,7 @@ Field details are in [What each frame records](recording.md#53), the dataset for
 
 ## Developer Kit open-source repositories {#repos}
 
-Everything the Developer Kit runs on is open source; the table lists each repository and what it is for. The Backpack Kit's collection software is not open source and is not listed here.
+Everything the Developer Kit runs on is open source except `xensesdk`, whose license is not stated; the table lists each repository and what it is for. The Backpack Kit's collection software is not open source and is not listed here.
 
 | Repo / package | License | Notes |
 |---|---|---|

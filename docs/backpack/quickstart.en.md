@@ -28,7 +28,7 @@ Cable the tablet to the backpack's `HOST1` or `HOST2` port and the backpack open
 
 ## 4. Pick a project and task {#project}
 
-At the bottom of the console's Live monitor page, pick a project and a task, or choose "New project…" / "New task…". Choose the [capture mode](monitor-record.md#project-task) when creating the project (for example "Two grippers + headset stereo"); a task needs a natural-language instruction.
+At the bottom of the console's Live monitor page, pick a project and a task, or choose "New project…" / "New task…". Choose the [capture mode](monitor-record.md#project-task) when creating the project (for example "Dual gripper + headset stereo"); a task needs a natural-language instruction.
 
 ## 5. Check before recording {#checks}
 
@@ -58,4 +58,4 @@ On the console's Projects page, select a task and click Export:
 2. Pick where it goes: download an archive, or upload to a backend configured beforehand (ModelScope, S3, FTP, NFS).
 3. Pick the format: LeRobotDataset v3 or MCAP.
 
-Details are in [Projects, export and publishing](projects-export.md).
+Details are in [Projects, export and upload](projects-export.md).

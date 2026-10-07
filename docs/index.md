@@ -89,7 +89,7 @@ hide:
     - 背包完成全部采集计算，无需电脑
     - 平板浏览器即控制台，夹爪按键开始、停止录制
     - 单人背负即可作业，适合现场与长时间采集
-    - 一键将数据集发布到 ModelScope，支持 MCAP 与 LeRobotDataset v3 两种格式
+    - 一键将数据集上传到 ModelScope，支持 MCAP 与 LeRobotDataset v3 两种格式
 
     整机交付、开箱即用，采集软件不开源；适用于规模化数据采集团队与数采工厂
     { .xu-card__fit }

@@ -58,4 +58,4 @@
 2. 选去向：下载压缩包，或上传到事先配置好的后端（ModelScope、S3、FTP、NFS）。
 3. 选格式：LeRobotDataset v3 或 MCAP。
 
-详见[项目、导出与发布](projects-export.md)。
+详见[项目、导出与上传](projects-export.md)。

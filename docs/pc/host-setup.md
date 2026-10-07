@@ -120,6 +120,6 @@ Pico4 Ultra 企业版配套的独立运动追踪器装在夹爪顶部提供 6-Do
 
 ## 上电顺序 {#36}
 
-上电与下电顺序只在[快速开始 · 上电与下电顺序](quickstart.md#power-on)讲一次，上电按那里的 7 步执行；双夹爪插线前先看[USB 带宽预算](#usb-budget)。
+上电与下电顺序只在[一页速通 · 上电与连接](quickstart.md#power-on)讲一次，上电按那里的步骤执行；双夹爪插线前先看[USB 带宽预算](#usb-budget)。
 
 下一步 → [标定与自检](calibration.md)

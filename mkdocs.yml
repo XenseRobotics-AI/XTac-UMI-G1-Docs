@@ -114,7 +114,7 @@ plugins:
             开箱、接线与供电: Unboxing, Wiring & Power
             网络与控制台入口: Network & Console Access
             实时监控与录制: Live Monitor & Recording
-            项目、导出与发布: Projects, Export & Publish
+            项目、导出与上传: Projects, Export & Upload
             回放: Playback
             系统设置: System Settings
             升级与 OTA: Upgrades & OTA
@@ -279,7 +279,7 @@ nav:
       - 网络与控制台入口: backpack/network.md
       - 实时监控与录制: backpack/monitor-record.md
       - 夹爪按键、指示灯与语音: backpack/gripper.md
-      - 项目、导出与发布: backpack/projects-export.md
+      - 项目、导出与上传: backpack/projects-export.md
       - 回放: backpack/playback.md
       - 系统设置: backpack/system.md
       - 升级与 OTA: backpack/update.md

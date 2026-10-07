@@ -256,7 +256,7 @@ lerobot-record \
 !!! warning "This is a workaround for an underspecified machine, not a recommendation"
     The [data-collection host minimum](install.md#host-spec) is an NVIDIA RTX 3060 / 8 GB VRAM or better. A CPU-only server, a VM or a laptop with no NVIDIA card can get data recorded with the command below, but saves are slow and frames drop sooner. For real collection, use a host that meets the minimum.
 
-0.0.8 fixed the memory growth on this path (with `libsvtav1` each episode used to hold about 1.3 GB more, so long sessions ran out of memory); upgrade such machines to 0.0.8 first.
+0.0.8 fixed the memory growth on this path (with `libsvtav1` each episode used to hold about 1.3 GB more, so long sessions ran out of memory); upgrade such machines to v0.1.0 first.
 
 The two defaults `--dataset.vcodec=auto` + `--dataset.streaming_encoding=true` assume an NVIDIA card. Without one, turn streaming encoding off:
 

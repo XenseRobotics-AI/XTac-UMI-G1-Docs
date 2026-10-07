@@ -29,7 +29,7 @@ Which gripper does what (right starts / left stops), the press timings and the L
 | <span class="tc-lamp white flash"></span> | White One flash | Saved (on for 0.4 s) |
 | <span class="tc-lamp amber solid"></span> | Yellow Solid | Recording failed to start (on for 2 s), or a fatal problem while recording (stays on) |
 | <span class="tc-lamp amber pulse"></span> | Yellow Pulse | Suspect data: still recording, but that take is questionable (on 0.2 s, off 0.8 s, 3 times) |
-| <span class="tc-lamp amber strobe"></span> | Yellow Fast blink | Action refused, e.g. start pressed while already recording (0.1 s on/off, 3 times) |
+| <span class="tc-lamp amber strobe"></span> | Yellow Fast blink | Action refused, e.g. a double-press with nothing to delete (0.1 s on/off, 3 times) |
 | <span class="tc-lamp purple blink"></span> | Purple Blink | Delete confirmation, waiting for your second double-click; 0.3 s on/off, cancels on timeout |
 | <span class="tc-lamp purple solid"></span> | Purple Solid | The 3-second cool-down just after deleting; double-clicks are ignored |
 | <span class="tc-lamp red solid"></span> | Red Solid | System problem (e.g. a gripper dropped out, lit by the backpack) |

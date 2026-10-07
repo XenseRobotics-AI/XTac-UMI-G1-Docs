@@ -63,9 +63,9 @@ Shows the current project's capture config, read-only. These are chosen when you
 
 | Mode | Grippers | Headset | Camera feeds |
 |---|---|---|---|
-| Dual gripper | 2 grippers | No headset | 6 |
-| Dual gripper + stereo headset | 2 grippers | PICO stereo pair | 8 |
-| Dual gripper + right mono headset | 2 grippers | PICO right eye | 7 |
+| Dual gripper | 2 grippers | No headset video (headset still tracks pose) | 6 |
+| Dual gripper + headset stereo | 2 grippers | PICO stereo pair | 8 |
+| Dual gripper + headset right eye | 2 grippers | PICO right eye | 7 |
 
 The other four:
 

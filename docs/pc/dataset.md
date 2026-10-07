@@ -190,4 +190,4 @@ mv -- ~/.cache/huggingface/lerobot/<your_org>/<old_dataset> /data/lerobot-trash/
 
 | `repo_id` | 任务描述 | 工位号 `--robot.id` | 夹爪 / 追踪器 SN | 标定时间 | 软件版本 / commit | 世界系会话 | 完整性检查 | 集数 / 单集时长 | 备注 |
 |---|---|---|---|---|---|---|---|---|---|
-| `Xense/pick_object_20260703` | `Pick up the object` | `0`（数据集里记为 `bi_taccap_0`） | `TCGU01A24Z0001m` / `PC2310MLL...` | 2026-07-03 | 采集当时的 `xense-taccap-lerobot main@<SHA>` 与 `xense.taccap <版本>` | XTac-UMI XR 启动时间 / 操作者朝向 | `lerobot-check-dataset` 通过；异常 episode 列表 | 50 / 15s | 光照/场景/异常集 |
+| `Xense/pick_object_20260703` | `Pick up the object` | `0`（数据集里记为 `bi_taccap_0`） | `TCGU01A24Z0001m` / `PC2310MLL...` | 2026-07-03 | 采集当时的 `xense-taccap-lerobot v0.1.0` 与 `xense.taccap <版本>` | XTac-UMI XR 启动时间 / 操作者朝向 | `lerobot-check-dataset` 通过；异常 episode 列表 | 50 / 15s | 光照/场景/异常集 |

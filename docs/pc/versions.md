@@ -4,8 +4,8 @@
 
 ## 必须升级到最新版本 {#required}
 
-!!! warning "采集前先把四项都升到下表版本，这不是可选项"
-    整条链路是配套的：固件带[命令集 V2.1](#v21) 才支持行程标定，SDK 0.4.1 附带的固件镜像已修掉[三个已知缺陷](#ota-when)，也要用它来刷固件，`gripper.pos` 的归一化要三者齐了才成立。主夹爪缺标定或固件过低时采集程序会拒绝连接；其它不配套的组合仍可能"正常"落盘，只是数据和别人对不上，事后看不出来。
+!!! warning "采集前先把各项都升到下表版本，这不是可选项"
+    整条链路是配套的：固件带[命令集 V2.1](#v21) 才支持行程标定，SDK 0.4.1 附带的固件镜像已修掉[已知缺陷](#ota-when)，也要用它来刷固件，`gripper.pos` 的归一化要三者齐了才成立。主夹爪缺标定或固件过低时采集程序会拒绝连接；其它不配套的组合仍可能"正常"落盘，只是数据和别人对不上，事后看不出来。
 
 | 组件 | 最低要求 | 怎么查 |
 |---|---|---|
@@ -13,6 +13,7 @@
 | `xense.taccap` SDK | **0.4.1** | `python -c "import xense.taccap as t; print(t.__version__)"` |
 | 夹爪固件 | **命令集 V2.1**，即 leader ≥ 1.2.0 / follower ≥ 1.1.0；用从夹爪（`--robot.role=follower`）时 follower 须 ≥ 1.2.5（低于 1.2.11 会提示升级） | 跑 [`calibrate.py`](calibration.md#41)，版本不够会打印当前版本并退出；或[直接读](#check-versions) |
 | 每台 leader 的编码器标定 | 零点 + 行程上限已写入 flash | [夹爪标定](calibration.md#41) |
+| XenseVR PC Service | ≥ v0.2.0，装机直接用 v0.2.1 | `dpkg -s xensevr-pc-service`，看 `Version` 一行 |
 
 升级顺序不能乱：先[拉仓库与子模块](#repo-update)并重编 SDK（否则 `import xense.taccap` 失败），再[刷固件](#ota)，最后[夹爪标定](calibration.md#41)，升级本身不产生标定值。
 
@@ -41,7 +42,7 @@ flowchart LR
 | `opencv-python` | `==4.12.0.88` | 4.12.0.88 |
 | NumPy | `>=1.26.4` | 2.2.6 |
 | `xense-taccap-lerobot` | 基于 lerobot 0.5.1，版本号 `0.5.1+xtac.0.1.0` | `v0.1.0` |
-| `xense.taccap` SDK | 与主仓库子模块 `third_party/taccap-gripper` 配套 | 0.4.1（tag `v0.4.1`，子模块 `afff1b7`），附带固件 leader 1.2.6 / follower 1.2.14 |
+| `xense.taccap` SDK | 与主仓库子模块 `third_party/taccap-gripper` 配套 | 0.4.1（tag `v0.4.1`），附带固件 leader 1.2.6 / follower 1.2.14 |
 | 夹爪固件 | 命令集 V2.1（帧格式 V1.8），leader ≥ 1.2.0 / follower ≥ 1.1.0 | leader 1.2.6 / follower 1.2.14，随 SDK 走，以 `firmware/manifest.json` 为准，见 [OTA](#ota)；从夹爪低于 1.2.5 时 SDK 拒绝连接，低于 1.2.11 时提示升级 |
 | `xensesdk` | 由安装脚本提供 | 2.1.2 |
 | XenseVR PC Service(`.deb`) | ≥ v0.2.0，装机直接用 v0.2.1 | v0.2.1 |
@@ -75,12 +76,12 @@ for ep in scan_grippers():
 EOF
 ```
 
-刷固件前的一次输出（所以 `fw` 还是 1.2.1，刷完应读到 1.2.2）：
+刷固件前的一次输出（两只都是主夹爪，`fw` 还是旧版本 1.2.5，刷完应读到 1.2.6）：
 
 ```text
-xense.taccap 0.1.9 (需要 >= 0.1.9)
-  TCGU01A28Z0023m  Left   fw=1.2.1
-  TCGU01A28Z0024m  Right  fw=1.2.1
+xense.taccap 0.4.1 (需要 >= 0.4.1)
+  TCGU01A28Z0023m  Left   fw=1.2.5
+  TCGU01A28Z0024m  Right  fw=1.2.5
 ```
 
 主从夹爪都用 `LeaderGripper` 打开：它只读版本，而 `FollowerGripper` 会拒绝打开固件低于 1.2.5 的从夹爪。只传 `mcu_device`、`normalize_position` 保持默认 `False`，没做行程标定的夹爪也能读到版本。SN 只看末位：`m` 主夹爪，`s` 从夹爪，决定刷哪个镜像。ACK 第 4 个字节 `build` 恒为 0，版本按 `MAJOR.MINOR.PATCH` 三段比较。
@@ -123,7 +124,7 @@ git fetch --tags
 git checkout v0.1.0
 git submodule update --init --recursive --progress
 ./setup_env.sh --install     # 对齐依赖并重编 xense.taccap
-git submodule status         # 子模块应显示 afff1b7…（v0.4.1）
+git submodule status         # 子模块应对应 v0.4.1
 ```
 
 !!! warning "拉完子模块必须重新编译 `xense.taccap`"
@@ -146,24 +147,18 @@ git submodule status         # 子模块应显示 afff1b7…（v0.4.1）
 
 跑一次 [`calibrate.py`](calibration.md#41) 就知道：它先验固件，不够就原样退出并打印当前版本（报错样例见[夹爪标定](calibration.md#41)）。看到任意一条就要刷：`calibrate.py` 报 `needs command set >= V2.1` 退出；主夹爪连不上且报错提示先做 OTA；固件低于命令集 V2.1。固件不会退化，刷过一次后除非换主板或擦除固件，不用再刷。
 
-但 V2.1 只是能用的底线，leader 1.2.2 / follower 1.1.6 修掉了三个更早固件（主从共用代码）都有的缺陷：
-
-| 缺陷 | 表现 |
-|---|---|
-| 命令通道活锁 | 持续高速率下发命令后夹爪不再响应任何命令，数据流却一切正常，只能断电恢复 |
-| 日志阻塞实时任务 | 空载时以约 35 KB/s 打阻塞日志，拖住发出它的任务 |
-| 启动时越界写 | 每次上电在数组末尾之外写一个字节 |
-
-第一条坏掉时和正常几乎无法区分，遇到过莫名卡住的值得升。这两版镜像由本地工具链编译（`manifest.json` 的 `build` 为 `local`），已在两台实机验证；`manifest.json` 里的版本比 `GetVersion` 读回的高就刷。当前 SDK 0.4.1 附带的镜像是 leader `1.2.6` / follower `1.2.14`，在此基础上又加了运动安全包络，并修掉了控制串口一次溢出后不再接收命令的问题。
-
-从夹爪的 `1.1.6` 在 `1.1.5` 之上又加了一层**运动安全包络**（误差与力矩钳位、可配温度墙、零速持续力矩降额），用来兜住夹爪硬顶到全闭把整机拖到掉电重启这类情况；命令与协议不变。
+但 V2.1 只是能用的底线，旧固件有已知缺陷：请刷到 SDK 0.4.1 附带的 leader 1.2.6 / follower 1.2.14（各版本说明见[从夹爪固件版本表](../follower/firmware.md#check-version)）。
 
 ### 怎么刷
 
 !!! warning "先升级 SDK，再刷固件"
-    刷写与刷后校验请用数采环境自带的 SDK 0.4.1，低于 0.1.7 的 SDK 绝不要用来刷固件；新 SDK 与旧固件通信不变，先升 SDK 总是安全的。附带哪版镜像跟着 SDK 走，要刷到 1.2.6 / 1.2.14 得先把子模块升到 SDK 0.4.1，否则刷完等于没修。但**SDK 版本号本身不足以确定镜像版本**：0.1.9 这个号下先后附带过 follower `1.1.5` 和 `1.1.6`（前者是后者的基础），唯一权威是 `firmware/manifest.json` 里的 `version`，不要从 SDK 版本号去推。
+    刷写与刷后校验请用数采环境自带的 SDK 0.4.1，低于 0.1.7 的 SDK 绝不要用来刷固件；新 SDK 与旧固件通信不变，先升 SDK 总是安全的。附带哪版镜像跟着 SDK 走，要刷到 1.2.6 / 1.2.14 得先把子模块升到 SDK 0.4.1，否则刷完等于没修。镜像版本以 `firmware/manifest.json` 里的 `version` 为准，不要从 SDK 版本号去推。
 
-SDK 自 0.1.7 起随仓库附带固件镜像，路径 `third_party/taccap-gripper/firmware/`，只保留当前发布版。文件名带版本号、随 SDK 升级而变，所以下面优先按角色让脚本自己挑镜像，不用记文件名。镜像版本随 SDK 走，以同目录 `manifest.json`（各镜像的版本、字节数与 CRC32）为准：`cat third_party/taccap-gripper/firmware/manifest.json`。
+SDK 自 0.1.7 起随仓库附带固件镜像，路径 `third_party/taccap-gripper/firmware/`，只保留当前发布版。文件名带版本号、随 SDK 升级而变，所以下面优先按角色让脚本自己挑镜像，不用记文件名。镜像版本随 SDK 走，以同目录 `manifest.json` 为准，查看各镜像的文件名与版本：
+
+```bash
+python -c "import json;m=json.load(open('third_party/taccap-gripper/firmware/manifest.json'));[print(i['file'],i['version']) for i in m['images'].values()]"
+```
 
 | 镜像 | 适用角色 |
 |---|---|

@@ -1,6 +1,6 @@
-# Projects, export and publishing
+# Projects, export and upload
 
-Manage recorded data on the console's Projects page: export a task as a LeRobot dataset or MCAP, download it or upload it to a remote (for example publish to ModelScope), then free up space with Archive.
+Manage recorded data on the console's Projects page: export a task as a LeRobot dataset or MCAP, download it or upload it to a remote (for example ModelScope), then free up space with Archive.
 
 ## The Projects page {#projects}
 
@@ -59,9 +59,9 @@ A standard LeRobotDataset v3.0 at 30 fps, with `meta/`, `data/` and `videos/`. T
 
 | Capture mode | `robot_type` | Video streams | State / action dims |
 |---|---|---|---|
-| Two grippers | `bi_taccap_gripper` | 6 | 20 |
-| Two grippers + headset stereo | `xtac_umi_g1` | 8 | 29 |
-| Two grippers + headset right eye | `xtac_umi_g1` | 7 | 29 |
+| Dual gripper | `bi_taccap_gripper` | 6 | 20 |
+| Dual gripper + headset stereo | `xtac_umi_g1` | 8 | 29 |
+| Dual gripper + headset right eye | `xtac_umi_g1` | 7 | 29 |
 
 It also includes `meta/taccap_extrinsics.json` (tracker extrinsics) and `meta/xumi_collection_devices.json` (which devices recorded each episode).
 

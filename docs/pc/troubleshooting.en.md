@@ -48,10 +48,10 @@ First note down the device serial number, how it is connected, the software erro
 ??? failure "The follower gripper does not power on / communication errors"
     **Cause:** the follower gripper takes power from the 24V adapter and communicates over Type-C. No power means the 24V is not connected or the adapter is faulty; communication errors mean the Type-C is not connected or not recognised, or the cable is being pulled by the robot's motion.
 
-    **Fix:** check the 24V adapter, the outlet, the power connector and its rating; connect the 24V first, then the Type-C, and lock it (see [Power-on sequence](quickstart.md#power-on)). Reconnect the Type-C and tighten the locking screws, route the cable away from the joints and the gripper's range of motion, and test at low speed before the first run.
+    **Fix:** check the 24V adapter, the outlet, the power connector and its rating; connect the 24V first, then the Type-C, and lock it (see [Power and connection requirements](../common/gripper.md#power)). Reconnect the Type-C and tighten the locking screws, route the cable away from the joints and the gripper's range of motion, and test at low speed before the first run.
 
 ??? failure "Binding the follower fails with `从爪固件版本过低,必须升级后才能使用本 SDK` / `Follower firmware too old`"
-    **Cause:** the follower firmware is older than 1.2.5. Both `--robot.role=follower` and the SDK refuse older firmware (only from 1.2.5 does the closed zero sit on the mechanical stop); between 1.2.5 and 1.2.11 it connects but warns you to upgrade.
+    **Cause:** the follower firmware is older than 1.2.5. Both `--robot.role=follower` and the SDK refuse older firmware (only from 1.2.5 does the closed zero sit on the mechanical stop); 1.2.5–1.2.10 connects but warns you to upgrade.
 
     **Fix:** flash the follower image bundled with the SDK, then **unplug the 24V power cable, wait about 2 seconds and plug it back in** (the USB cable can stay connected):
 
@@ -207,7 +207,7 @@ First note down the device serial number, how it is connected, the software erro
 ??? failure "`AttributeError: module 'xensevr_pc_service_sdk' has no attribute 'has_pico_camera_frame'`"
     **Cause:** an older interface is being loaded (the camera interface arrived with v0.2.0). This module links the C SDK taken from the installed `.deb`, so start by checking which version is installed: `dpkg -s xensevr-pc-service | grep -E '^(Status|Version):'`.
 
-    **Fix:** pull the latest main repo and re-run `./setup_env.sh --install`, which upgrades the `.deb` to the baseline version as well. If it is still `False`, use `python -c "import xensevr_pc_service_sdk as x; print(x.__file__)"` to see which copy is being loaded. If `Status` is not `install ok installed` (for example it was removed with `dpkg -r`, leaving `deinstall ok config-files`), reinstall the same way.
+    **Fix:** update to the release tag (see [Repo and submodule update](versions.md#repo-update)) and re-run `./setup_env.sh --install`, which upgrades the `.deb` to the baseline version as well. If it is still `False`, use `python -c "import xensevr_pc_service_sdk as x; print(x.__file__)"` to see which copy is being loaded. If `Status` is not `install ok installed` (for example it was removed with `dpkg -r`, leaving `deinstall ok config-files`), reinstall the same way.
 
 ??? failure "Repeated left/right eye skew warnings in the log"
     **Cause:** the two eyes arrive as two independent messages, and their timestamps differ by more than `--robot.head_camera_pair_max_skew_ms` (20 ms by default). Usually a heavily loaded host, or jitter on the link between the headset and the PC.

@@ -17,7 +17,7 @@ This page compares the two and lists each kit's box contents and wiring.
 
     ---
 
-    The backpack is the host and a tablet the console; record with the gripper buttons and publish to ModelScope in one click.
+    The backpack is the host and a tablet the console; record with the gripper buttons and upload to ModelScope in one click.
 
     [Quickstart](../backpack/quickstart.md){ .md-button .md-button--primary }
 
@@ -61,7 +61,7 @@ This page compares the two and lists each kit's box contents and wiring.
     | Pico4 Ultra Enterprise headset | 1 | With controllers and motion trackers; the trackers mount on top of the two leader grippers |
     | Tracker charging dock | 1 | Three-way |
     | Headset cable (Pico → Pack) | 1 | Type-C to Type-C, 1.5 m, headset to the backpack's `PICO` port |
-    | Backpack | 1 | Compute node with an always-on 5 GHz hotspot |
+    | Backpack | 1 | Compute node with a built-in 5 GHz hotspot (off by default) |
     | Waist belt | 1 | For wearing the backpack |
     | 12 V power adapter | 1 | 12 V 3 A, 1.5 m lead, into the backpack's `DC` port |
     | Power bank | 1 | 20000 mAh, 45 W |
@@ -79,7 +79,7 @@ This page compares the two and lists each kit's box contents and wiring.
 
         ![Power-bank wiring: both leader grippers and the headset to the backpack, the power bank to the backpack's DC port](../assets/product/backpack-wiring-powerbank-diagram-en.webp)
 
-    The wiring steps are in [Adapter power](../backpack/unbox-connect.md#adapter) and [Power-bank power](../backpack/unbox-connect.md#powerbank); the safety requirements for powering and unplugging in order are in [The backpack and its power](safety.md#backpack-power); connecting to the backpack and opening the console is in [The backpack hotspot](../backpack/network.md#softap).
+    The wiring steps are in [Adapter power](../backpack/unbox-connect.md#adapter) and [Power-bank power](../backpack/unbox-connect.md#powerbank); the safety requirements for powering and unplugging in order are in [The backpack and its power](safety.md#backpack-power); opening the console is in [The tablet over USB](../backpack/network.md#tablet), or use [the backpack hotspot](../backpack/network.md#softap) without a tablet.
 
 === "Developer Kit"
 
