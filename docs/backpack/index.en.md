@@ -1,6 +1,10 @@
 # Backpack Kit: the XTac-UMI Backpack
 
-This page is the Backpack Kit's entry point: work through the "First deployment checklist" the first time you get the equipment, and after that look only at the "Daily collection cheat sheet" each day. By the end you can carry out a complete collection run on your own, from powering up to exporting a dataset.
+Welcome to the XTac-UMI Backpack. This page is the getting-started guide for the Backpack Kit:
+
+- **First deployment**: when you first receive the kit, work through the [first deployment checklist](#first-deploy) on this page.
+- **Daily collection**: before each collection session, check the [daily collection cheat sheet](#daily).
+- **Goal**: by the end of this page you will be able to complete one full collection on your own, from powering on to exporting a dataset.
 
 ## What this kit is {#overview}
 
@@ -298,14 +302,61 @@ Export formats and the extra files are in [LeRobot dataset](projects-export.md#l
 
 ## First deployment checklist {#first-deploy}
 
-Read [Safety and compliance](../product/safety.md) before you start. The detailed steps live on their own pages; this page only says what to do and where.
+!!! note "Before you start"
+    Read [Safety and compliance](../product/safety.md) first. This page is an overview of the deployment: it says only what to do and where to do it; each step's detailed walkthrough is on its own page.
 
-1. Headset setup: bring Pico OS to 5.15.5.U or above, then [enable developer mode and set the screen timeout and system sleep to "Never"](../common/pico4.md#pico-system); [pair both trackers to the headset](../common/pico4.md#pico-tracker-bind) following "odd is left, even is right" and switch them to standalone tracking mode; [install XTac-UMI XR](../common/pico4.md#pico-app).
-2. Cabling and power: [the order is fixed](unbox-connect.md#order) — grippers → headset → power up the backpack, with the left and right grippers going to UMI-L / UMI-R and the headset going to the backpack's PICO port over the headset cable (Pico → Pack). Pick one of the two power options: with [adapter power](unbox-connect.md#adapter), the adapter goes to the backpack's DC port; with [power-bank power](unbox-connect.md#powerbank), the power bank feeds the backpack's DC port over the 0.3 m 12 V PD power cable. The grippers' connection and power requirements are in [Gripper connection and serial numbers](../common/gripper.md#power).
-3. Connect to the backpack: cable the tablet to the backpack's `HOST1` or `HOST2` port and the backpack opens the console on it, see [The tablet over USB](network.md#tablet). Without a tablet, use the [backpack hotspot](network.md#softap).
-4. [Connect the headset to the backpack](unbox-connect.md#pico-link): put the headset on, open XTac-UMI XR, leave "USB Network" unticked and "PC IP" empty (it connects to the backpack at `192.168.100.1` by default), then tap "Connect". The interface and the connection states are in [Pico4 headset and tracker setup](../common/pico4.md#pico-toolkit-ui).
-5. Set the [capture mode](system.md#capture-mode): the capture mode belongs to the project. When you [create a project](monitor-record.md#project-task), pick "Dual gripper", "Dual gripper + headset stereo" or "Dual gripper + headset right eye" according to what is actually connected; it cannot be changed afterwards, and the System page only displays it. Every mode needs the headset and trackers for pose.
-6. Optional: console → System → [Upload configuration](system.md#upload), create an upload backend and fill in its credentials (how to obtain them is in the same section). You can bind it when you create a project, after which that project's "upload to remote" exports use it by default; the credentials are entered on this page once and never again in the export dialog.
+### 1. Headset setup {#deploy-headset}
+
+- **System update**: update Pico OS to 5.15.5.U or later.
+- **System settings**: [turn on developer mode and set screen-off and sleep to "Never"](../common/pico4.md#pico-system).
+- **Trackers**: [pair the two trackers with the headset](../common/pico4.md#pico-tracker-bind) by the "odd left, even right" rule and switch them to independent tracking mode.
+- **Software**: [install XTac-UMI XR](../common/pico4.md#pico-app) on the headset.
+
+### 2. Wiring and power {#deploy-wiring}
+
+Connect in the [fixed order](unbox-connect.md#order): grippers → headset → power the backpack on.
+
+**Cables**
+
+- Plug the left and right grippers into the backpack's `UMI-L` and `UMI-R` ports.
+- Connect the headset to the backpack's `PICO` port with the headset cable (Pico → Pack).
+
+**Power (choose one)**
+
+- **Option A**: [adapter power](unbox-connect.md#adapter), with the power adapter plugged into the backpack's `DC` port.
+- **Option B**: [power-bank power](unbox-connect.md#powerbank), with the power bank connected to the backpack's `DC` port through the 0.3 m 12 V PD power cable.
+
+The grippers' connection and power requirements are in [Gripper connection and serial numbers](../common/gripper.md#power).
+
+### 3. Open the console {#deploy-console}
+
+- **Tablet**: cable the tablet to the backpack's `HOST1` or `HOST2` port and the backpack opens the console on it; see [Tablet over USB](network.md#tablet).
+- **No tablet**: connect to the [backpack hotspot](network.md#softap) instead.
+
+### 4. Connect the headset to the backpack {#deploy-headset-link}
+
+1. Put on the headset and open XTac-UMI XR.
+2. **Leave "USB Network" unticked** and "PC IP" empty (it connects to the backpack at `192.168.100.1` by default).
+3. Tap "Connect".
+
+The interface and connection states are in [Pico4 headset and trackers](../common/pico4.md#pico-toolkit-ui); detailed steps are in [Connecting the headset to the backpack](unbox-connect.md#pico-link).
+
+### 5. Choose the capture mode {#deploy-mode}
+
+The [capture mode](system.md#capture-mode) is a fixed property of a project. When you [create a project](monitor-record.md#project-task), choose one of these three modes to match what is connected:
+
+- "Dual gripper"
+- "Dual gripper + headset stereo"
+- "Dual gripper + headset right eye"
+
+!!! warning "The capture mode cannot be changed after the project is created"
+    The System page only displays it. Whichever mode you choose, the headset and trackers must provide poses.
+
+### 6. Upload configuration (optional) {#deploy-upload}
+
+- **Where**: console → System → [Upload configuration](system.md#upload).
+- **What to do**: create an upload backend and fill in its credentials (how to get them is in the same section).
+- **Binding**: bind it when you create a project; that project's exports with "Upload to remote" then use it by default, with no credentials to enter in the export dialog.
 
 ## Daily collection cheat sheet {#daily}
 
@@ -313,13 +364,48 @@ Every working day, follow the [Quickstart](quickstart.md): wire and power up →
 
 Do not restart XTac-UMI XR during collection: a restart resets the world origin, so the pose reference within one dataset stops being consistent; see [Startup and frame alignment](../common/pico4.md#pico-frame).
 
-## After recording {#after}
+## After recording: replay, review and export {#after}
 
-- Replay and review: console → Projects, with the hierarchy project → task → recording, each entry showing duration, frame count, data size and quality annotations. Click "Replay" for [streamed replay](playback.md) in the browser, with a draggable progress bar; [delete](projects-export.md#delete) a bad entry on the spot, which also removes its MCAP and H264 export files and cannot be undone.
-- Export: select a task and click "Export" to open the [export dialog](projects-export.md#export). It first pre-checks data integrity — if that fails it lists each blocking item, and you re-run the pre-check after deleting or fixing them. Once it passes, pick the "export destination" first and then the "export format":
-    - Destination, one of two: "Download to device" packs the data on the backpack first and then gives you a button to fetch the [archive](projects-export.md#export); "Upload to remote" takes an [upload backend](system.md#upload) you configured beforehand from a drop-down, following the project default, temporarily using another one, or creating one on the spot.
-    - Format, one of two: [`LeRobot dataset`](projects-export.md#lerobot) and [`mcap`](projects-export.md#mcap) are equals — the same task can produce one now and the other later, and both outputs are kept. A project can have a default format, and a single export can override it.
-    - After an upload completes the local files are **kept by default**; to free space, tick the clean-up before uploading, or [archive](projects-export.md#archive) at any point afterwards. Archiving keeps only the record and removes the raw files, and the clean-up protects any format that has not been used yet.
+Once recording is done, you can replay, review, delete and export recordings from the console.
+
+### 1. Replay and review {#after-review}
+
+- **Hierarchy**: console → Projects, organised as project → task → recording.
+- **Overview**: each recording shows its duration, frame count, data size and quality flags.
+- **Streaming replay**: click "Replay" to [stream it in the browser](playback.md), with a draggable progress bar.
+- **Clean-up**: delete a problem recording on the spot with ["Delete"](projects-export.md#delete).
+
+!!! danger "Deletion cannot be undone"
+    Deleting a recording also deletes its MCAP and H264 export files.
+
+### 2. Export {#after-export}
+
+Select the task to export and click "Export" to open the [export dialog](projects-export.md#export).
+
+**Precheck**: data integrity is checked automatically first.
+
+- **Failed**: the blocking items are listed one by one; delete or fix them as prompted, then run the precheck again.
+- **Passed**: choose the "Export destination" and then the "Export format".
+
+**Destination (choose one)**
+
+- **Download to device**: the backpack packages the result, then a button lets you fetch the [archive](projects-export.md#download).
+- **Upload to remote**: pick a pre-configured [upload backend](system.md#upload) from the drop-down: follow the project default, switch to another configuration for this export, or create one on the spot.
+
+**Format (choose one)**
+
+- **Equal formats**: [LeRobot dataset](projects-export.md#lerobot) and [MCAP](projects-export.md#mcap) have equal standing.
+- **Export both**: one task can be exported in one format and later in the other; both outputs are kept.
+- **Default and override**: a project can set a default format, which you can override for a single export.
+
+### 3. Storage and clean-up {#after-storage}
+
+After uploading, **local files are kept by default**. To free space:
+
+- **Archive on upload**: tick "Archive automatically after upload" before uploading.
+- **Archive any time**: [archive](projects-export.md#archive) manually later.
+
+Archiving keeps only the record and clears the raw files; clean-up protects formats that have not been exported yet.
 
 ## Common questions {#faq}
 
