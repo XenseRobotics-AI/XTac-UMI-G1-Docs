@@ -73,7 +73,15 @@ It also includes `meta/taccap_extrinsics.json` (tracker extrinsics) and `meta/xu
 
 ### MCAP {#mcap}
 
-One `.train.mcap` file per recording, with 30 Hz state and action, every video stream and the sensor data; open it directly in Foxglove and similar tools.
+The export is a training MCAP: one `.train.mcap` file per recording, built from the same data as the LeRobot dataset in a different container. It holds the state and action aligned to 30 Hz, every video stream and the sensor data, and opens directly in Foxglove and similar tools.
+
+It is not the same file as the raw recording on the backpack:
+
+| | Raw recording | Exported `.train.mcap` |
+|---|---|---|
+| Where | On the backpack's data drive, for replay and export | Downloaded or uploaded to a remote backend |
+| Rate | Each stream at its device's native rate: visuotactile 120 fps, wrist fisheye 30 fps, gripper opening and IMU 100 Hz | All aligned to 30 Hz |
+| Images | Raw frames, not rectified | Rectified according to the project settings |
 
 ## Archive {#archive}
 
