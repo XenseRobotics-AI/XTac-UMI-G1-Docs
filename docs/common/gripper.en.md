@@ -1,6 +1,9 @@
 # Gripper connection and serial numbers
 
-This page covers how to connect the XTac-UMI G1 leader and follower grippers, how to verify they are detected, and how the serial number tells left from right. The gripper itself is identical in both editions; only where the cable goes and how detection is checked differ, and those parts are split into "Backpack Kit / Developer Kit" tabs. The Backpack Kit's buttons, LEDs and voice announcements are in [Gripper buttons, LEDs and voice](../backpack/gripper.md). Product positioning and the system components are in [XTac-UMI G1](../product/g1.md); specifications in [Specifications](../product/specs.md#specs).
+The gripper is the same on both editions; only where the cable goes and how detection is checked are split into "Backpack Kit / Developer Kit" tabs.
+
+- Backpack Kit buttons, LEDs and voice: [Gripper buttons, LEDs and voice](../backpack/gripper.md).
+- Product positioning and components: [XTac-UMI G1](../product/g1.md); specs: [Specifications](../product/specs.md#specs).
 
 ## Leader gripper connection and use {#install}
 
@@ -12,22 +15,22 @@ This page covers how to connect the XTac-UMI G1 leader and follower grippers, ho
 
     ![Right leader gripper diagram](../assets/hardware/master-right.webp){ width="360" }
 
-The leader gripper takes both power and communication over USB Type-C; it needs no separate power supply.
+The leader gripper takes power and communication over USB Type-C.
 
 ### Before connecting
 
-- Have ready the left and right leader grippers, two USB locking cables (a Type-C locking connector on the gripper end, Type-C or Type-A on the other end to match the terminal's port) and the collection terminal (the backpack on the Backpack Kit; the collection PC on the Developer Kit, requirements in [Collection host requirements](../pc/install.md#host-spec)).
-- Make sure no 9V/12V fast-charging adapter is connected directly to the leader gripper.
-- The Type-C locking end is intact and there is nothing foreign inside the gripper's port.
-- The visuotactile sensor surfaces are free of dirt, scratches, looseness and foreign objects.
+- Left and right leader grippers, two USB locking cables, and the collection terminal (the backpack or the collection PC; for the PC see [Collection host requirements](../pc/install.md#host-spec)).
+- No 9V/12V fast-charging adapter connected directly to the leader gripper.
+- Type-C locking end intact, nothing foreign in the port.
+- Visuotactile sensor surfaces free of dirt, scratches, looseness and foreign objects.
 
 ### Connection steps
 
 ![Leader gripper connection diagram](../assets/hardware/master-connection.webp){ width="560" }
 
 1. Take out the USB Type-C communication cable.
-2. Plug it into the Type-C port on the leader gripper body and **tighten the locking screws**.
-3. Plug the other end into the collection terminal: on the Backpack Kit the left gripper goes to the backpack's `UMI-L` port and the right one to `UMI-R`; on the Developer Kit either a Type-C or a Type-A port on the PC works.
+2. Plug it into the leader gripper body's Type-C port and **tighten the locking screws**.
+3. Plug the other end into the collection terminal: Backpack Kit left gripper to `UMI-L`, right to `UMI-R`; Developer Kit to a Type-C or Type-A port on the PC.
 
 ![Leader gripper connected](../assets/hardware/master-connect.webp){ width="480" }
 
@@ -35,11 +38,14 @@ The leader gripper takes both power and communication over USB Type-C; it needs 
 
 === "Backpack Kit"
 
-    Once connected, the LED should be solid green (standby). Open the console: in the system metrics area at the top right, the "cameras" counter should show online equal to total, the gripper side accounting for 6 (2 wrist cameras + 4 visuotactile); the "Live monitor" page should show both fisheye views and all four tactile views. If one is missing, the camera list on the System → Device info page marks it "(offline)".
+    - LED solid green (standby).
+    - The "cameras" counter at the console's top right shows online equal to total, 6 on the gripper side (2 wrist cameras + 4 visuotactile).
+    - The "Live monitor" page shows both fisheye views and all four tactile views.
+    - Offline cameras are marked "(offline)" on the System → Device info page.
 
 === "Developer Kit"
 
-    Once connected, check the UVC device count with `lsusb`: a dual-gripper setup should show 6 (2 wrist cameras + 4 visuotactile sensors), a single arm 3.
+    Check the UVC device count with `lsusb`: 6 for two grippers (2 wrist cameras + 4 visuotactile sensors), 3 for a single arm.
 
     ```bash
     lsusb
@@ -47,33 +53,36 @@ The leader gripper takes both power and communication over USB Type-C; it needs 
 
     ![lsusb output with both grippers connected](../assets/hardware/lsusb.webp){ width="720" }
 
-    Each of the two red boxes is one leader gripper; inside it are that gripper's 3 UVC devices:
+    Each red box is one leader gripper:
 
     | Text in the box | What it is | Per leader gripper |
     |---|---|---|
     | `Xense Robotics ... GSPS01…` | Visuotactile sensor | 2 |
     | `Sunplus ... XCA…` | Wrist fisheye camera | 1 |
 
-    The last digit of the serial number tells the side (odd = left, even = right, see [Serial numbers and side identification](#sn)): in the picture `…0069`/`…0071` are left and `…0070`/`…0072` are right. If the count is wrong, check the cable locking and the USB port contact; if it is still wrong, see [Hardware faults](../pc/troubleshooting.md#hardware).
+    - **Telling sides**: by the serial number's last digit (odd-left / even-right, see [Serial numbers and side identification](#sn)); in the picture `…0069`/`…0071` are left, `…0070`/`…0072` right.
+    - **Wrong count**: check cable locking and USB contact; if still wrong, see [Hardware faults](../pc/troubleshooting.md#hardware).
 
-A leader gripper needs its travel calibrated before it yields a normalised opening: on the Backpack Kit this is done on the console's System → Gripper page (write the zero closed → write the maximum travel fully open); on the Developer Kit see [Gripper calibration](../pc/calibration.md#41), where an uncalibrated leader is refused at connect, and with two grippers both sides must be calibrated. Firmware, SDK and repository versions must match; see [You must upgrade to the latest versions](../pc/versions.md#required).
+A leader gripper needs travel calibration for a normalised opening:
+
+- **Backpack Kit**: console System → Gripper page (write zero closed → write maximum travel fully open).
+- **Developer Kit**: see [Gripper calibration](../pc/calibration.md#41); an uncalibrated leader is refused at connect, and both sides of a pair must be calibrated.
+- Firmware, SDK and repository versions must match; see [You must upgrade to the latest versions](../pc/versions.md#required).
 
 ## Follower gripper mounting and connection {#follower-install}
 
 ![Follower gripper diagram](../assets/hardware/follower-gripper.webp){ width="360" }
 
-The follower gripper mounts on the robot's end effector and is not side-specific. When mounting, mind the flange orientation, the cable routing and the robot's workspace.
+The follower gripper mounts on the robot's end effector and is not side-specific; mind flange orientation, cable routing and workspace.
 
 ### Before mounting
 
 - The robot is stopped and in a safe pose.
-- The end-effector flange size, screw specification, mounting orientation and end-effector payload meet the project requirements.
-- The 24V adapter, the Type-C communication cable and the locking parts are intact.
-- Plan the cable routing so it does not interfere with the joints, the gripper's range of motion or obstacles.
+- Flange size, screw spec, mounting orientation and end-effector payload meet the project requirements.
+- 24V adapter, Type-C communication cable and locking parts intact.
+- Cables routed clear of joints, the gripper's range of motion and obstacles.
 
 ### Flange mounting
-
-It mounts on the robot's end effector through a flange; dimensions and hole positions are in the figures below.
 
 === "Flange mounting"
 
@@ -85,19 +94,19 @@ It mounts on the robot's end effector through a flange; dimensions and hole posi
 
 ### Power and communication connection
 
-The follower gripper has separate communication and power: communication over Type-C, power from the 24V adapter.
-
 ![Follower gripper connection diagram](../assets/hardware/follower-connection.webp){ width="560" }
 
 1. Take out the USB Type-C communication cable and the 24V power adapter.
-2. Connect the 24V power adapter to the follower gripper body.
-3. Plug the screw end of the Type-C locking cable into the follower gripper body and **tighten the locking screws**.
-4. Plug the other end into the collection terminal and confirm in the software that the follower gripper is communicating.
+2. Connect the 24V power adapter to the gripper body.
+3. Plug the screw end of the Type-C locking cable into the body and **tighten the locking screws**.
+4. Plug the other end into the collection terminal and confirm communication in the software.
 
 ![Follower gripper connected](../assets/hardware/follower-connect.webp){ width="480" }
 
 !!! warning "Cable and mounting check"
-    Make sure the follower gripper is firmly fixed, the 24V connection is secure, the Type-C is locked with enough slack, and the cables cannot be pulled, bent or tangled while the robot moves. Before the first run, test at low speed to confirm nothing interferes.
+    - Gripper firmly fixed, 24V secure, Type-C locked with enough slack.
+    - Cables cannot be pulled, bent or tangled during motion.
+    - First run at low speed to confirm nothing interferes.
 
 ## Power and connection requirements {#power}
 
@@ -107,16 +116,24 @@ The follower gripper has separate communication and power: communication over Ty
 | Cables | Supplied locking cable: Type-C on the gripper end, Type-C or Type-A on the other | Type-C communication cable + 24V power cable |
 | Connect and lock order | Connect the gripper end and tighten the locking screws first, then the collection terminal | Connect 24V power first, then Type-C, and tighten the locking screws |
 | Disconnect order | Unplug the collection terminal end first, then loosen the screws and unplug the gripper end | Unplug the collection terminal end first, then cut 24V, and finally loosen the screws and unplug the gripper-end Type-C |
-| Static | Take anti-static precautions when powering on/off and when removing or fitting sensors | Same as leader |
+| Static | Anti-static precautions when powering on/off and removing or fitting sensors | Same as leader |
 
-Stop collection, recording, robot motion and replay before unplugging anything. The power-on and power-off order for the whole system is in the Backpack Kit's [Connection and disconnection order](../backpack/unbox-connect.md#order) or, for the Developer Kit, [Power-on and power-off order](../pc/quickstart.md#power-on). On an unexpected reboot or a device that is not detected, stop immediately and follow [Hardware faults](../pc/troubleshooting.md#hardware).
+- Before unplugging, stop collection, recording, robot motion and replay.
+- Whole-system power order: Backpack Kit [Connection and disconnection order](../backpack/unbox-connect.md#order), Developer Kit [Power-on and power-off order](../pc/quickstart.md#power-on).
+- On an unexpected reboot or no detection, stop immediately; see [Hardware faults](../pc/troubleshooting.md#hardware).
 
 ## Serial numbers and side identification {#sn}
 
-The side is given by whether the last digit of the serial number's running number is odd or even: **odd = left, even = right**. Grippers, visuotactile sensors, wrist cameras and Pico trackers all follow this rule. On the Developer Kit the collection software assigns sides automatically from it (see [Device discovery rules](../pc/host-setup.md#33)), so you normally do not need to tell them apart by hand; to check manually, run `lsusb` and look at the last digit. On the Backpack Kit the console's System → Device info page shows each gripper's left / right badge and SN.
+Last digit of the serial's running number: **odd = left, even = right**.
+
+- Applies to grippers, visuotactile sensors, wrist cameras and Pico trackers.
+- **Developer Kit**: the collection software assigns sides automatically (see [Device discovery rules](../pc/host-setup.md#33)); to check by hand, run `lsusb` and read the last digit.
+- **Backpack Kit**: the console's System → Device info page shows each gripper's left / right badge and SN.
 
 ## Safety notes {#safety}
 
-Power ratings, the ban on direct fast charging, plugging and unplugging, static and sensor-surface requirements are collected in [Safety and compliance](../product/safety.md).
+Power, the ban on direct fast charging, plugging, static and sensor-surface requirements: [Safety and compliance](../product/safety.md).
 
-Cleaning, storage and removal/refitting of the visuotactile sensors are in [Maintenance](maintenance.md). Once the follower gripper is connected, run its [self-check](../follower/setup.md) before letting it move. Once everything is connected and detected, run your first collection with the [Backpack Kit quickstart](../backpack/index.md) or the [Developer Kit quickstart](../pc/quickstart.md).
+- Sensor cleaning, storage and removal/refitting: [Maintenance](maintenance.md).
+- Run the follower's [self-check](../follower/setup.md) before letting it move.
+- Once detected, run a first collection with the [Backpack Kit quickstart](../backpack/index.md) or the [Developer Kit quickstart](../pc/quickstart.md).
