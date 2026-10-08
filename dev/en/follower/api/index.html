@@ -2176,22 +2176,22 @@
 
 
 <h1 id="api-and-examples">API and examples<a class="headerlink" href="#api-and-examples" title="锚点链接">¶</a></h1>
-<p>The SDK interfaces and example scripts used with the follower gripper. Examples are in Python; the C++ interfaces have the same names, and <code>help(t.FollowerGripper)</code> shows the full reference. Installation is in <a href="../setup/#install">Setup and self-check</a>; how to make the gripper move is in <a href="../control/">Motion control</a>.</p>
+<p>Examples are in Python; the C++ interfaces share the names, and <code>help(t.FollowerGripper)</code> has the full reference. Installation: <a href="../setup/#install">Setup and self-check</a>; motion: <a href="../control/">Motion control</a>.</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">xense.taccap</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">t</span>
 </span></code></pre></div>
 <h2 id="open">Opening the follower gripper<a class="headerlink" href="#open" title="锚点链接">¶</a></h2>
-<p>With only one follower gripper connected:</p>
+<p>With one connected:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">g</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">FollowerGripper</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">find_follower</span><span class="p">()</span><span class="o">.</span><span class="n">mcu_device</span><span class="p">)</span>
 </span></code></pre></div>
-<p>With several grippers connected, pick the one you want by side and role:</p>
+<p>With several, pick by side and role:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">ep</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">e</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">t</span><span class="o">.</span><span class="n">scan_grippers</span><span class="p">()</span>
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>          <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">side</span> <span class="o">==</span> <span class="n">t</span><span class="o">.</span><span class="n">Side</span><span class="o">.</span><span class="n">Left</span> <span class="ow">and</span> <span class="n">e</span><span class="o">.</span><span class="n">role</span> <span class="o">==</span> <span class="n">t</span><span class="o">.</span><span class="n">Role</span><span class="o">.</span><span class="n">Follower</span><span class="p">)</span>
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">g</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">FollowerGripper</span><span class="p">(</span><span class="n">ep</span><span class="o">.</span><span class="n">mcu_device</span><span class="p">)</span>
 </span></code></pre></div>
-<p>Follower serial numbers end in <code>s</code>; see <a href="../#sn">Serial number</a>.</p>
+<p>Follower serials end in <code>s</code>; see <a href="../#sn">Serial number</a>.</p>
 <div class="admonition danger">
 <p class="admonition-title">Scanning interrupts other programs</p>
-<p>A scan stops the gripper data streams other programs are using, and a follower gripper that is holding something goes limp. In your own program, scan only once, at start-up.</p>
+<p>It stops other programs' gripper data streams, and a holding follower goes limp; scan only once, at start-up.</p>
 </div>
 <h2 id="controllers">Controllers<a class="headerlink" href="#controllers" title="锚点链接">¶</a></h2>
 <table>
@@ -2214,25 +2214,20 @@
 <td><code>ForcePositionConfig.for_spec(g.motor.get_spec())</code></td>
 </tr>
 <tr>
-<td>Tunable parameters</td>
+<td>Tunable</td>
 <td>Usually left alone</td>
 <td><code>grasp_torque_nm</code> (grip force, ≤ 1.1 N·m)</td>
 </tr>
 <tr>
-<td>Common calls</td>
+<td>Common</td>
 <td><code>set_target(opening)</code></td>
 <td><code>set_target(opening)</code>, <code>release()</code>, <code>hold_position()</code></td>
 </tr>
-<tr>
-<td>Is it holding</td>
-<td>—</td>
-<td><code>snapshot().holding</code></td>
-</tr>
 </tbody>
 </table>
-<p>Both controllers have <code>start()</code> / <code>stop()</code> (or use <code>with</code>), <code>snapshot()</code> and <code>reset()</code>. Call order:</p>
+<p>Both have <code>start()</code> / <code>stop()</code> (or <code>with</code>), <code>snapshot()</code> and <code>reset()</code>. Order:</p>
 <p><code>g.motor.clear_fault()</code> → start the controller → <code>g.motor.enable()</code> → <code>set_target()</code> → stop the controller</p>
-<p>The full code is in <a href="../control/#basic">Control from a program</a>.</p>
+<p>Code: <a href="../control/#basic">Control from a program</a>.</p>
 <h2 id="state">Reading state<a class="headerlink" href="#state" title="锚点链接">¶</a></h2>
 <table>
 <thead>
@@ -2246,12 +2241,12 @@
 <tr>
 <td>While controlling</td>
 <td><code>c.snapshot().observation</code></td>
-<td><code>position</code> (opening), <code>velocity</code>, <code>torque</code> (positive = toward closing), <code>motor_temp_c</code></td>
+<td><code>position</code> (opening), <code>velocity</code>, <code>torque</code> (positive = closing), <code>motor_temp_c</code></td>
 </tr>
 <tr>
 <td>While controlling</td>
 <td><code>c.snapshot().holding</code></td>
-<td>Whether force-position control is holding something</td>
+<td>Holding (force-position control)</td>
 </tr>
 <tr>
 <td>Not controlling</td>
@@ -2261,26 +2256,29 @@
 <tr>
 <td>Any time</td>
 <td><code>g.motor.motor_version()</code></td>
-<td>Motor firmware version; see <a href="../firmware/#motor-version">Motor firmware version</a></td>
+<td>See <a href="../firmware/#motor-version">Motor firmware version</a></td>
 </tr>
 </tbody>
 </table>
-<p>While a controller is running, always read state through <code>snapshot()</code> rather than reading the motor directly, which would compete with the control commands on the same link.</p>
+<p>While controlling, read only through <code>snapshot()</code>; reading the motor separately competes for the link.</p>
 <h2 id="motor-primitives">Low-level motor interfaces<a class="headerlink" href="#motor-primitives" title="锚点链接">¶</a></h2>
-<p><code>g.motor.submit_*</code> and the other low-level interfaces send commands straight to the motor, bypassing the controller's protection. <strong>Use a controller</strong> and do not call them.</p>
-<p>The following interfaces change configuration stored in the gripper or the motor; <strong>use them only under technical support's guidance</strong>:
+<p><code>g.motor.submit_*</code> and other low-level interfaces bypass the controller's protection. <strong>Use a controller</strong>.</p>
+<p>These rewrite gripper or motor configuration; <strong>only under technical support's guidance</strong>:
 <code>set_model()</code>, <code>set_startup_limit_torque()</code>, <code>switch_protocol()</code>, <code>set_can_id()</code>, <code>set_private_param()</code>,
 <code>set_zero()</code>, <code>set_gripper_config()</code>, <code>set_envelope()</code>, <code>set_auto_cal_config()</code>, <code>set_motor_fw_version()</code>.</p>
 <h2 id="camera">Wrist camera<a class="headerlink" href="#camera" title="锚点链接">¶</a></h2>
-<p>The follower gripper also has a wrist camera, closed by default. It opens the same way as on the leader gripper; see <a href="../../sdk/api/#camera">Wrist camera and fisheye undistortion</a> in the SDK appendix.</p>
+<p>Closed by default; it opens as on the leader gripper, see <a href="../../sdk/api/#camera">Wrist camera and fisheye undistortion</a>.</p>
 <h2 id="examples">Example scripts<a class="headerlink" href="#examples" title="锚点链接">¶</a></h2>
-<p>The scripts live under <code>python/examples/</code> in the SDK source and run from the SDK source directory: <code>third_party/taccap-gripper</code> in the collection repository when you use the collection environment, or <code>TacCap-Gripper</code> for a standalone install. Choose the gripper with <code>left</code>, <code>right</code> or the full serial number (optional when only one is connected); every script accepts <code>--help</code>.</p>
+<ul>
+<li>Scripts are in <code>python/examples/</code>; run them from the SDK source directory (the collection repository's <code>third_party/taccap-gripper</code>, or a standalone <code>TacCap-Gripper</code>).</li>
+<li>Pick the gripper with <code>left</code>, <code>right</code> or the full serial, optional with only one connected; options via <code>--help</code>.</li>
+</ul>
 <table>
 <thead>
 <tr>
 <th>Script</th>
 <th>Purpose</th>
-<th>Moves the motor or rewrites the gripper?</th>
+<th>Effect</th>
 </tr>
 </thead>
 <tbody>
@@ -2292,37 +2290,37 @@
 <tr>
 <td><code>gripper_console.py</code></td>
 <td>Keyboard control</td>
-<td><strong>Moves the motor</strong></td>
+<td><strong>Moves motor</strong></td>
 </tr>
 <tr>
 <td><code>impedance_control.py</code></td>
-<td>Impedance control test; view / write the motion safety envelope</td>
-<td><strong>Moves the motor</strong>; <code>--set-envelope</code> rewrites the gripper</td>
+<td>Impedance test; view / write the motion safety envelope</td>
+<td><strong>Moves motor</strong>; <code>--set-envelope</code> rewrites the gripper</td>
 </tr>
 <tr>
 <td><code>force_position_control.py</code></td>
 <td>Force-position grasp test</td>
-<td><strong>Moves the motor</strong></td>
+<td><strong>Moves motor</strong></td>
 </tr>
 <tr>
 <td><code>control_and_read.py</code></td>
 <td>Read state while controlling</td>
-<td><strong>Moves the motor</strong></td>
+<td><strong>Moves motor</strong></td>
 </tr>
 <tr>
 <td><code>control_ripple.py</code></td>
 <td>Measure motion smoothness</td>
-<td><strong>Moves the motor</strong></td>
+<td><strong>Moves motor</strong></td>
 </tr>
 <tr>
 <td><code>ota_update.py</code></td>
 <td>Gripper firmware upgrade</td>
-<td><strong>Flashes firmware</strong></td>
+<td><strong>Flashes</strong></td>
 </tr>
 <tr>
 <td><code>motor_ota_update.py</code></td>
 <td>Motor firmware upgrade</td>
-<td><strong>Flashes firmware</strong></td>
+<td><strong>Flashes</strong></td>
 </tr>
 </tbody>
 </table>
@@ -2334,7 +2332,11 @@
 </span></code></pre></div>
 <div class="admonition warning">
 <p class="admonition-title">Before running the examples</p>
-<p>On first use, finish the <a href="../setup/">Setup and self-check</a> first. A script interrupts any other program using the gripper when it starts, so do not run the examples while control or collection is running. Firmware upgrade steps are in <a href="../firmware/">Firmware and motor upgrades</a>.</p>
+<ul>
+<li>First time: run the <a href="../setup/">self-check</a>.</li>
+<li>A script scans at start-up; do not run one while control or collection is running.</li>
+<li>Upgrades: <a href="../firmware/">Firmware and motor upgrades</a>.</li>
+</ul>
 </div>
 
 

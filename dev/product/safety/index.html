@@ -2187,16 +2187,16 @@
 
 
 <h1 id="安全与合规">安全与合规<a class="headerlink" href="#安全与合规" title="锚点链接">¶</a></h1>
-<p>本页汇总两种配置共用的安全要求，分夹爪、数采背包与供电、头显与追踪器、数据安全四节。首次使用前读完；连接、上电、拆装前再看一遍对应的那节。</p>
+<p>两种配置共用的安全要求：首次使用前读完，连接、上电、拆装前再看对应一节。</p>
 <div class="admonition danger">
 <p class="admonition-title">出现异味、冒烟、明显发热、结构破损或线缆破皮</p>
 <p>立即断电并停止使用，记下机身序列号联系<a href="../../common/reference/#support">支持</a>。</p>
 </div>
 <h2 id="责任与限制">责任与限制<a class="headerlink" href="#责任与限制" title="锚点链接">¶</a></h2>
 <ul>
-<li>请按本手册说明安装、使用和维护产品。因未按说明操作、擅自拆解或改装、使用非配套配件，或在规定环境之外使用造成的损坏与损失，不在保修范围内。</li>
-<li>本产品用于采集人类示范数据，用于科研与开发。使用者应自行评估采集数据及据此训练的模型在实际应用中的安全性。</li>
-<li>产品软件与文档会持续更新，以最新版本为准。</li>
+<li>按本手册安装、使用和维护产品；未按说明操作、擅自拆解或改装、使用非配套配件或在规定环境外使用造成的损坏与损失，不在保修范围内。</li>
+<li>本产品采集人类示范数据，供科研与开发；数据及据此训练的模型在实际应用中的安全性由使用者自行评估。</li>
+<li>软件与文档持续更新，以最新版本为准。</li>
 </ul>
 <h2 id="环境要求">环境要求<a class="headerlink" href="#环境要求" title="锚点链接">¶</a></h2>
 <table>
@@ -2213,16 +2213,16 @@
 </tr>
 <tr>
 <td>使用环境</td>
-<td>室内干燥环境；避免雨淋、液体溅入和凝露</td>
+<td>室内干燥；避免雨淋、液体溅入和凝露</td>
 </tr>
 <tr>
 <td>干扰</td>
-<td>远离强磁场与强热源；头显定位需要光线充足、避免强光直射</td>
+<td>远离强磁场与强热源；头显定位需光线充足、避免强光直射</td>
 </tr>
 </tbody>
 </table>
 <h2 id="gripper">夹爪<a class="headerlink" href="#gripper" title="锚点链接">¶</a></h2>
-<p>采集时主夹爪不驱动电机（电机始终不使能），操作员手持机械地完成动作；安全要求集中在供电、线缆和传感器表面。</p>
+<p>采集时主夹爪电机始终不使能，由操作员手持完成动作，安全要点在供电、线缆和传感器表面。</p>
 <table>
 <thead>
 <tr>
@@ -2239,18 +2239,18 @@
 </tr>
 <tr>
 <td>从夹爪供电</td>
-<td>供电与通信分开：24 V 适配器供电，Type-C 只做通信；勿用规格不匹配或有故障的电源</td>
+<td>24 V 适配器供电，Type-C 只做通信；勿用规格不匹配或有故障的电源</td>
 <td>电源接错可能损坏硬件</td>
 </tr>
 <tr>
 <td>线缆插拔</td>
-<td>插拔带锁紧螺钉的 Type-C 前先停止采集；拔出前先松螺钉</td>
+<td>插拔锁紧 Type-C 前先停止采集，拔出前先松螺钉</td>
 <td>接口受力、数据中断</td>
 </tr>
 <tr>
 <td>静电</td>
 <td>上下电、拆装传感器时防静电</td>
-<td>静电影响传感器与通信</td>
+<td>影响传感器与通信</td>
 </tr>
 <tr>
 <td>传感器表面</td>
@@ -2261,9 +2261,8 @@
 </table>
 <div class="admonition danger">
 <p class="admonition-title">禁止 9 V / 12 V 快充适配器直连主夹爪</p>
-<p>主夹爪只接数采终端的 USB 口取电，快充电压会烧毁控制板。</p>
+<p>快充电压会烧毁主夹爪控制板。</p>
 </div>
-<p>接线与拔线顺序：</p>
 <table>
 <thead>
 <tr>
@@ -2285,51 +2284,57 @@
 </tr>
 </tbody>
 </table>
-<p>从夹爪装在机器人末端：安装前机器人停机、处于安全姿态；线缆走线避开关节与夹爪运动区并留足余量，不会在运动中被拉扯、弯折或缠绕；首次运行前低速测试，确认无干涉。</p>
+<p>从夹爪安装前机器人停机、处于安全姿态；线缆避开关节与夹爪运动区并留足余量，不被拉扯、弯折或缠绕；首次运行先低速测试确认无干涉。</p>
 <div class="admonition danger">
 <p class="admonition-title">刷夹爪固件：刷错角色返厂，刷完必须断电重插</p>
-<p>主 / 从夹爪的固件镜像不通用，刷错角色夹爪无法启动，只能返厂恢复。刷写期间不要断电或拔线；刷完后必须给夹爪断电重插一次，否则它停在版本号正确却悄悄丢帧的降级状态。PC 版用 SDK 脚本刷，见<a href="../../pc/versions/#ota">固件 OTA</a>；背包版在 系统 → 夹爪配置 里刷，刷完等夹爪重启后给背包断电再上电，见<a href="../../backpack/update/#gripper-firmware">夹爪固件</a>。</p>
-</div>
-<p>夹爪的接线与序列号规则见<a href="../../common/gripper/">夹爪连接与序列号</a>，背包版的按键与灯语见<a href="../../backpack/gripper/">夹爪按键、指示灯与语音</a>；传感器的清洁、存放与拆装见<a href="../../common/maintenance/">维护保养</a>。</p>
-<h2 id="backpack-power">数采背包与供电<a class="headerlink" href="#backpack-power" title="锚点链接">¶</a></h2>
-<p>背包的 <code>DC</code> 口只接配套的 12 V 3 A（36 W）适配器，或配套充电宝经随货 0.3 m 12 V PD 电源线供电；不要换用其他电源或线缆。夹爪接 <code>UMI-L</code> / <code>UMI-R</code>，由背包供电，不需要外接电源。</p>
-<p>接线顺序与 PC 版相同：先接夹爪端并旋紧锁紧螺钉，再接背包的 <code>UMI-L</code> / <code>UMI-R</code>。拔线时先停止录制（控制台「结束录制」或左爪长按），再拔背包端，最后松螺钉拔夹爪端。两种供电方式的完整接线见<a href="../../backpack/unbox-connect/#adapter">适配器供电</a>与<a href="../../backpack/unbox-connect/#powerbank">充电宝供电</a>。</p>
-<p>头显供电不足会掉电关机，采集随之中断；充电宝供电的接法见<a href="../../backpack/unbox-connect/#powerbank">充电宝供电</a>，采集中途不要往充电宝上加设备。</p>
 <ul>
-<li>接口：个别设备的 <code>DC</code> 口、<code>PICO</code> 口或 <code>USB</code> 口可能接触不良，属硬件问题；不要用力掰扯接口，记下机身 SN 报修。</li>
-<li>散热：不要遮挡风扇出风口。长时间使用后过热会让 WiFi 断开，重启即可恢复；检查风扇是否转动，持续出现请报修。</li>
-<li>系统更新：应用前确认没有进行中的采集，应用时服务会重启。</li>
-<li>后台：设备后台仅供技术支持使用。请勿自行登录或修改系统配置；需要后台诊断时联系技术支持，见<a href="../../backpack/network/#ssh">高级排查</a>。</li>
+<li>主 / 从夹爪镜像不通用，刷错角色无法启动；刷写期间不要断电或拔线。</li>
+<li>刷完不断电重插，夹爪会停在版本号正确却悄悄丢帧的降级状态。</li>
+<li>PC 版用 SDK 脚本刷，见<a href="../../pc/versions/#ota">固件 OTA</a>；背包版在 系统 → 夹爪配置 里刷，等夹爪重启后给背包断电再上电，见<a href="../../backpack/update/#gripper-firmware">夹爪固件</a>。</li>
+</ul>
+</div>
+<p>另见<a href="../../common/gripper/">夹爪连接与序列号</a>、背包版<a href="../../backpack/gripper/">夹爪按键、指示灯与语音</a>、传感器<a href="../../common/maintenance/">维护保养</a>。</p>
+<h2 id="backpack-power">数采背包与供电<a class="headerlink" href="#backpack-power" title="锚点链接">¶</a></h2>
+<ul>
+<li>背包 <code>DC</code> 口只接配套 12 V 3 A（36 W）适配器，或配套充电宝经随货 0.3 m 12 V PD 电源线，勿换用其他电源或线缆；接法见<a href="../../backpack/unbox-connect/#adapter">适配器供电</a>与<a href="../../backpack/unbox-connect/#powerbank">充电宝供电</a>。</li>
+<li>夹爪接 <code>UMI-L</code> / <code>UMI-R</code> 由背包供电，接拔顺序同<a href="#gripper">夹爪</a>一节的表，拔线前先停止录制（控制台「结束录制」或左爪长按）。</li>
+<li>头显供电不足会掉电关机、中断采集，中途勿往充电宝上加设备。</li>
+<li>个别设备 <code>DC</code>、<code>PICO</code> 或 <code>USB</code> 口可能接触不良，属硬件问题，勿用力掰扯，记下机身 SN 报修。</li>
+<li>勿挡风扇出风口；长时间使用后过热会断 WiFi，重启即恢复，检查风扇是否转动，持续出现请报修。</li>
+<li>应用系统更新会重启服务，先确认无进行中的采集。</li>
+<li>设备后台仅供技术支持使用，勿自行登录或改配置，需诊断时联系技术支持，见<a href="../../backpack/network/#ssh">高级排查</a>。</li>
 <li>功耗与充电宝续航见<a href="../specs/">技术参数</a>。</li>
 </ul>
 <h2 id="headset">头显与追踪器<a class="headerlink" href="#headset" title="锚点链接">¶</a></h2>
 <div class="admonition danger">
 <p class="admonition-title">采集全程不要重启 XTac-UMI XR</p>
-<p>重启会重设世界坐标系的原点与方向，同一数据集里前后 episode 的位姿参考系不一致，而数据里看不出异常。分集之间也不要重启；头显灭屏或休眠同样会把它挂起。</p>
+<p>重启会重设世界坐标系原点与方向，同一数据集前后 episode 的位姿参考系不一致，数据里却看不出异常。分集之间也不要重启；灭屏或休眠同样会把它挂起。</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">把头显的系统休眠与灭屏都设为「永不」</p>
-<p>先设系统休眠，再设灭屏，顺序反了灭屏的「永不」会被钳回有限值。设置步骤见 <a href="../../common/pico4/#pico-system">Pico4 头显与追踪器</a>。</p>
+<p>先设系统休眠再设灭屏，反了灭屏的「永不」会被钳回有限值，步骤见 <a href="../../common/pico4/#pico-system">Pico4 头显与追踪器</a>。</p>
 </div>
 <ul>
-<li>追踪器按序列号末位分左右：单数装左爪，双数装右爪；装反了，记录的位姿就对不上夹爪。绑定与核对见<a href="../../common/pico4/#pico-tracker-bind">追踪器绑定</a>。</li>
-<li>追踪器短按电源键到蓝灯亮即开机；长按约 6 秒会进入蓝红交替的配对状态。</li>
-<li>头显的供电要求见<a href="#backpack-power">数采背包与供电</a>。</li>
-<li>头显自身的佩戴、充电与视觉健康按 Pico 官方的《PICO 4 Ultra 用户指南》执行，本站不重复。</li>
+<li>追踪器序列号末位单数装左爪、双数装右爪，装反则位姿对不上夹爪；绑定与核对见<a href="../../common/pico4/#pico-tracker-bind">追踪器绑定</a>。</li>
+<li>追踪器短按电源键到蓝灯亮为开机，长按约 6 秒进入蓝红交替的配对状态。</li>
+<li>头显供电见<a href="#backpack-power">数采背包与供电</a>。</li>
+<li>头显佩戴、充电与视觉健康按 Pico 官方《PICO 4 Ultra 用户指南》执行。</li>
 </ul>
 <h2 id="data">数据安全<a class="headerlink" href="#data" title="锚点链接">¶</a></h2>
 <ul>
-<li>背包控制台没有登录门：连上背包网络（热点、有线或现场 WiFi）的任何人都能操作设备、下载和删除数据。热点密码印在机身标签上，设备离手或接入不受控网络时留意。</li>
-<li>「彻底删除」是硬删：级联删除任务下全部录制条目及磁盘上的 MCAP、H264 与 LeRobot 导出文件，不可恢复，确认框会要求输入名称。</li>
-<li>上传完成后条目标为「已上传」，本地文件默认保留；只有上传前勾选了清理，或之后手动<a href="../../backpack/projects-export/#archive">归档</a>，才会删掉原始文件，删掉后这条就回放不了，也导不出任何格式。需要本地留档的，在导出对话框里选去向「下载到设备」取回压缩包，再清理或归档。</li>
-<li>上传配置里的凭据（ModelScope 令牌、S3 密钥、FTP 密码等）保存在设备上，保存后不再回显。新建上传配置时选「私有」仓库，公开发布不可逆；上传到错误账号后程序化删除受限，只能去 ModelScope 网页控制台处理，建项目时核对绑定的是哪一档。</li>
-<li>PC 版上传 Hugging Face Hub 时，要私有仓库加 <code>--private</code>，见<a href="../../pc/dataset/#64">上传 Hub 与备份</a>。</li>
-<li>隐私保护：采集的数据只保存在本地设备和你自己配置的上传目标中。采集画面可能拍到人脸、屏幕或其他个人信息，请事先告知并取得相关人员同意，依照当地法律法规处理和存储数据。</li>
+<li><strong>控制台没有登录门</strong>：连上背包网络（热点、有线或现场 WiFi）的人都能操作设备、下载和删除数据；热点密码印在机身标签上，设备离手或接入不受控网络时留意。</li>
+<li><strong>「彻底删除」是硬删</strong>：级联删除任务下全部录制条目及磁盘上的 MCAP、H264 与 LeRobot 导出文件，不可恢复，确认框要求输入名称。</li>
+<li>上传后条目标为「已上传」，本地文件默认保留，仅上传前勾选清理或之后手动<a href="../../backpack/projects-export/#archive">归档</a>才删，删后无法回放，也导不出任何格式。</li>
+<li>要本地留档，导出对话框选去向「下载到设备」取回压缩包，再清理或归档。</li>
+<li>上传凭据（ModelScope 令牌、S3 密钥、FTP 密码等）存在设备上，保存后不回显。</li>
+<li>新建上传配置选「私有」仓库，公开发布不可逆；传错账号后程序化删除受限，只能去 ModelScope 网页控制台处理，建项目时核对绑定哪一档。</li>
+<li>PC 版上传 Hugging Face Hub 时私有仓库加 <code>--private</code>，见<a href="../../pc/dataset/#64">上传 Hub 与备份</a>。</li>
+<li>数据只存在本地设备和你配置的上传目标中。画面可能拍到人脸、屏幕等个人信息，事先告知并取得同意，依当地法律法规处理和存储。</li>
 </ul>
 <h2 id="合规声明">合规声明<a class="headerlink" href="#合规声明" title="锚点链接">¶</a></h2>
 <ul>
-<li>请遵守使用地的法律法规，包括无线电、数据保护与隐私相关规定。</li>
-<li>本产品的认证信息以产品标签和包装上的标识为准。</li>
+<li>遵守使用地法律法规，包括无线电、数据保护与隐私规定。</li>
+<li>认证信息以产品标签和包装上的标识为准。</li>
 <li>头显与追踪器的合规信息见 PICO 官方文档。</li>
 </ul>
 

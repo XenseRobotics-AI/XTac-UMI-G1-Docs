@@ -2218,9 +2218,9 @@
 
 
 <h1 id="host-setup">Host setup<a class="headerlink" href="#host-setup" title="锚点链接">¶</a></h1>
-<p>A gripper being listed is not the same as it being openable. This page covers the two one-off host-side settings (serial permissions and ModemManager), explains how devices are assigned to left and right by serial number, and starts the XenseVR PC Service; after that you can move on to calibration and collection. The headset and trackers are set up in <a href="../../common/pico4/">Pico4 headset and trackers</a>, shared by both editions.</p>
+<p>A gripper being listed is not the same as it being openable. This page covers two one-off settings (serial permissions and ModemManager), how devices are assigned to left and right by serial number, and starting the XenseVR PC Service. Headset and tracker setup is in <a href="../../common/pico4/">Pico4 headset and trackers</a>.</p>
 <h2 id="31">Serial permissions (dialout)<a class="headerlink" href="#31" title="锚点链接">¶</a></h2>
-<p>The gripper MCU enumerates as <code>/dev/ttyACM*</code>, owned by group <code>dialout</code>. A user outside that group can have the SDK list grippers but cannot open the port to read the firmware serial, so <code>scan_grippers()</code> reports <code>role=Unknown</code> with an empty <code>firmware_sn</code>:</p>
+<p>The gripper MCU enumerates as <code>/dev/ttyACM*</code>, owned by group <code>dialout</code>. Outside that group the SDK cannot open the port, so <code>scan_grippers()</code> reports <code>role=Unknown</code> with an empty <code>firmware_sn</code>:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>RuntimeError: No leader gripper discovered for the left side.
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a># underneath: IoError: SerialBus: open(/dev/serial/by-id/...): Permission denied
 </span></code></pre></div>
@@ -2229,20 +2229,24 @@
 </span></code></pre></div>
 <div class="admonition warning">
 <p class="admonition-title">Log back in after changing the group, or this step did nothing</p>
-<p>Group membership only applies to newly created login sessions. The current terminal still holds the old permissions and keeps reporting <code>role=Unknown</code>. Log out and back in (or run <code>newgrp dialout</code>), re-plug the gripper, then verify.</p>
+<p>The current terminal keeps the old permissions. Log out and back in (or run <code>newgrp dialout</code>), re-plug the gripper, then verify.</p>
 </div>
-<p>Verify: <code>role</code> must be <code>Leader</code>/<code>Follower</code> (not <code>Unknown</code>) and <code>firmware_sn</code> non-empty:</p>
+<p>Verify: <code>role</code> is <code>Leader</code>/<code>Follower</code> and <code>firmware_sn</code> is non-empty:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"from xense.taccap import scan_grippers</span>
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="s2">for g in scan_grippers(): print(g.side.name, g.role.name, repr(g.firmware_sn))"</span>
 </span></code></pre></div>
-<p>If <code>firmware_sn</code> stays empty after fixing permissions, the SN may not be burned in, the serial read may still be failing, or firmware communication may be faulty. An empty SN alone is not enough to infer a firmware version. Save the full error, retest with a different cable and port, and contact the device or firmware team if it persists.</p>
+<p>If <code>firmware_sn</code> stays empty after fixing permissions, the SN may not be burned in, the serial read may be failing, or firmware communication may be faulty; it does not tell you the firmware version. Save the full error, retest with another cable and port, and contact the device or firmware team if it persists.</p>
 <h2 id="32">Stop ModemManager grabbing the port (udev)<a class="headerlink" href="#32" title="锚点链接">¶</a></h2>
-<p>With the <a href="../install/#docker">Docker image</a>, <code>install_customer.sh</code> has already installed this udev rule on the host (a container cannot manage the host's hot-plug rules), so you do not need to redo it.</p>
-<p>The gripper MCU is a CH343 USB-serial device (<code>1a86:55d2</code>, CDC-ACM). On every hot-plug, ModemManager (the default cellular-modem service on Ubuntu/GNOME) probes the fresh port with AT commands and holds it for a few seconds, so connecting fails during that window:</p>
+<p>With the <a href="../install/#docker">Docker image</a>, <code>install_customer.sh</code> has already installed this rule on the host.</p>
+<p>The gripper MCU is a CH343 USB-serial device (<code>1a86:55d2</code>, CDC-ACM). On every hot-plug, ModemManager (the default cellular-modem service on Ubuntu/GNOME) probes the fresh port with AT commands and holds it for a few seconds, so connecting fails:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>IoError: SerialBus: open(/dev/serial/by-id/usb-1a86_USB_Dual_Serial_..-if02): Device or resource busy
 </span></code></pre></div>
-<p>Typical symptom: the first launch works, but unplugging, moving to another port and relaunching immediately gives busy. This is not a tactile, camera or bandwidth problem. The braille driver <code>brltty</code> grabs <code>1a86</code> the same way. Stopgap: wait about 3 s after plugging in before launching.</p>
-<p>Permanent fix: a udev rule telling ModemManager to ignore these devices (real modems are unaffected):</p>
+<ul>
+<li><strong>Symptom</strong>: the first launch works, but relaunching right after moving to another port gives busy. It is not a tactile, camera or bandwidth problem.</li>
+<li><strong>brltty</strong>: the braille driver <code>brltty</code> grabs <code>1a86</code> too.</li>
+<li><strong>Stopgap</strong>: wait about 3 s after plugging in before launching.</li>
+</ul>
+<p>Permanent fix (real modems are unaffected):</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/udev/rules.d/99-taccap-ignore-modemmanager.rules<span class="w"> </span>&gt;/dev/null<span class="w"> </span><span class="s">&lt;&lt;'EOF'</span>
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="s"># XTac-UMI G1 MCUs are CH343 USB-serial (1a86:55d2) — keep ModemManager off them</span>
 </span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="s">ACTION=="add|change", SUBSYSTEMS=="usb", ATTRS{idVendor}=="1a86", ENV{ID_MM_DEVICE_IGNORE}="1"</span>
@@ -2253,9 +2257,9 @@
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>udevadm<span class="w"> </span>info<span class="w"> </span>-q<span class="w"> </span>property<span class="w"> </span>-n<span class="w"> </span>/dev/ttyACM0<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>ID_MM_DEVICE_IGNORE<span class="w">   </span><span class="c1"># -&gt; ID_MM_DEVICE_IGNORE=1</span>
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>mmcli<span class="w"> </span>-L<span class="w">                                                               </span><span class="c1"># gripper no longer listed</span>
 </span></code></pre></div>
-<p>Delete the rule file and reload to revert. On a dedicated host with no cellular module you can also <code>sudo systemctl disable --now ModemManager</code>.</p>
+<p>Delete the rule file and reload to revert; a dedicated host with no cellular module can also <code>sudo systemctl disable --now ModemManager</code>.</p>
 <h2 id="33">Device auto-discovery and the odd-left/even-right rule<a class="headerlink" href="#33" title="锚点链接">¶</a></h2>
-<p>Every device is auto-discovered by serial number + USB topology and assigned to <code>left</code>/<code>right</code>. No serials are hand-listed.</p>
+<p>Every device is assigned to <code>left</code>/<code>right</code> by serial number + USB topology. No serials are hand-listed.</p>
 <h3 id="serial-grammar">Serial grammar<a class="headerlink" href="#serial-grammar" title="锚点链接">¶</a></h3>
 <table>
 <thead>
@@ -2285,29 +2289,41 @@
 </table>
 <p><code>&lt;seq&gt;</code> is 4 digits; <code>m</code> → leader gripper, <code>s</code> → follower gripper.</p>
 <h3 id="side-rule">Side rule<a class="headerlink" href="#side-rule" title="锚点链接">¶</a></h3>
-<p>The last digit of the 4-digit sequence: odd → left, even → right. This applies to grippers, wrist cameras, and which of a gripper's two fingertip tactile sensors is left or right.</p>
-<p>Tactile sensors map to <code>{side}_tactile_{left,right}</code>: the two GSPS sensors sharing a gripper's USB hub are that gripper's pair, and the gripper's side is read from its firmware SN (the side in the <code>scan_grippers()</code> output), not from the CH343 <code>mcu_serial</code>, so hub → gripper → side. Which of the two is left/right comes from the last digit of the GSPS serial.</p>
-<p>The Pico4 Ultra Enterprise tracker uses a different serial system, shaped like <code>PC2310MLL3200496G</code>. The side is the digit in front of the trailing <code>G</code>, odd-left / even-right: here it is <code>6</code>, so the tracker is on the right. This SN is not shown on the headset, see <a href="../../common/pico4/#pico-tracker-sn">Reading a tracker SN</a>.</p>
-<p>A non-conforming serial, the wrong count on a side, two fingertip sensors mapping to the same side, two grippers claiming the same tactile side, or a tactile hub with no matching gripper all make discovery fail outright and name the offending hub/serial. Duplicates are reported before gaps: a side coming up empty usually means its device put itself on the other side, so re-check the side that has two first.</p>
+<p>Last digit of <code>&lt;seq&gt;</code>: odd → left, even → right. This applies to grippers, wrist cameras, and the two fingertip tactile sensors on one gripper.</p>
+<ul>
+<li><strong>Tactile</strong>: maps to <code>{side}_tactile_{left,right}</code>. The two GSPS sensors sharing a gripper's USB hub belong to that gripper, whose side comes from its firmware SN (the side in the <code>scan_grippers()</code> output), not the CH343 <code>mcu_serial</code>.</li>
+<li><strong>Tracker</strong>: the Pico4 Ultra Enterprise tracker SN looks like <code>PC2310MLL3200496G</code>; the digit before the trailing <code>G</code> is odd-left / even-right, so this <code>6</code> is on the right. The headset does not show it, see <a href="../../common/pico4/#pico-tracker-sn">Reading a tracker SN</a>.</li>
+<li><strong>Errors</strong>: a non-conforming serial, the wrong count on a side, two fingertip sensors on one side, two grippers claiming one tactile side, or a tactile hub with no gripper all fail outright, naming the hub/serial.</li>
+<li><strong>Order</strong>: duplicates are reported before gaps; an empty side usually means its device landed on the other side, so re-check the side with two first.</li>
+</ul>
 <h3 id="usb-budget">USB bandwidth budget<a class="headerlink" href="#usb-budget" title="锚点链接">¶</a></h3>
-<p>Whether a camera can be opened at all is decided by bandwidth the moment you plug the cables in. When a camera will not open, measure this first.</p>
-<p>Every UVC camera reserves its own share of isochronous bandwidth for as long as it is open, and the budget is per USB 2.0 bus: 480 Mbit/s per bus, of which about 384 Mbit/s goes to isochronous transfers. A bimanual rig puts six cameras on it (four tactile + two wrist cameras), plus the laptop's built-in webcam.</p>
+<p>When a camera will not open, check bandwidth first. Every open UVC camera reserves its own share of isochronous bandwidth: a USB 2.0 bus has 480 Mbit/s, about 384 Mbit/s of it for isochronous transfers. A bimanual rig has six cameras (four tactile + two wrist cameras), plus the laptop's built-in webcam.</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>lsusb<span class="w"> </span>-t
 </span></code></pre></div>
-<p>Each <code>480M</code> <code>root_hub</code> line is one budget; count the cameras under each. Two buses with three cameras each is comfortable. Six on one bus has to be measured, because different sensor batches request different amounts. The tactile sensors and wrist cameras are USB 2.0 devices, so a blue USB 3 port still puts them on that controller's USB 2.0 bus. Splitting them means plugging into a second host controller (a Thunderbolt / USB4 dock brings its own, a plain hub does not).</p>
-<p><code>Not enough bandwidth for altsetting N</code> in the kernel log when collection starts is this problem. How to watch the log, the full diagnosis, the measured numbers and three fixes that look promising and are not: see <a href="../troubleshooting/#usb-bandwidth">Troubleshooting · Not enough USB bandwidth</a>.</p>
+<ul>
+<li><strong>Count cameras</strong>: each <code>480M</code> <code>root_hub</code> line is one budget. Three per bus on two buses is comfortable; six on one bus must be measured, as sensor batches request different amounts.</li>
+<li><strong>USB 3 ports</strong>: the tactile sensors and wrist cameras are USB 2.0 devices, so a blue USB 3 port still lands them on that controller's USB 2.0 bus. Splitting needs a second host controller (a Thunderbolt / USB4 dock brings its own, a plain hub does not).</li>
+<li><strong>Error</strong>: <code>Not enough bandwidth for altsetting N</code> in the kernel log; the full diagnosis is in <a href="../troubleshooting/#usb-bandwidth">Troubleshooting · Not enough USB bandwidth</a>.</li>
+</ul>
 <h2 id="pico4-headset-and-trackers">Pico4 headset and trackers<a class="headerlink" href="#pico4-headset-and-trackers" title="锚点链接">¶</a></h2>
-<p>The standalone motion tracker that ships with the Pico4 Ultra Enterprise mounts on top of the gripper and provides the 6-DoF pose; XTac-UMI XR runs on the headset, and the pose reaches collection via the <a href="#35">XenseVR PC Service</a> below. Unboxing and system settings, installing XTac-UMI XR, the network connection, tracker binding, tracking mode and startup alignment are shared by both editions and live in <a href="../../common/pico4/">Pico4 headset and trackers</a>. On a factory-configured headset start at <a href="../../common/pico4/#pico-network">Network connection</a>; before every session you only need to plug in the USB, short-press the tracker's power button until the blue light comes on, <a href="../../common/pico4/#pico-toolkit-ui">tap "Connect"</a> and do the <a href="../../common/pico4/#pico-frame">startup alignment</a>.</p>
+<p>The Pico4 Ultra Enterprise tracker on top of the gripper provides the 6-DoF pose; the headset runs XTac-UMI XR, and the pose reaches collection via the <a href="#35">XenseVR PC Service</a> below. Unboxing, installing XTac-UMI XR, network, tracker binding, tracking mode and startup alignment are in <a href="../../common/pico4/">Pico4 headset and trackers</a>.</p>
+<ul>
+<li><strong>Factory-configured headset</strong>: start at <a href="../../common/pico4/#pico-network">Network connection</a>.</li>
+<li><strong>Before every session</strong>: plug in the USB, short-press the tracker's power button until the blue light comes on, <a href="../../common/pico4/#pico-toolkit-ui">tap "Connect"</a> and do the <a href="../../common/pico4/#pico-frame">startup alignment</a>.</li>
+</ul>
 <h2 id="35">Start the XenseVR PC Service<a class="headerlink" href="#35" title="锚点链接">¶</a></h2>
-<p>The tracker talks to the host's XenseVR PC Service (RoboticsService) daemon, which handles device discovery, status monitoring and live tracking-data distribution. Collection reads poses from it. The <a href="../install/#docker">Docker image</a> container launches it automatically on start; when you only work on data and do not need the tracker, turn it off with <code>START_XENSEVR_SERVICE=0</code>.</p>
+<p>Collection reads poses from the XenseVR PC Service (RoboticsService) daemon. The <a href="../install/#docker">Docker image</a> launches it on start; without the tracker, turn it off with <code>START_XENSEVR_SERVICE=0</code>.</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>/opt/apps/roboticsservice/runService.sh
 </span></code></pre></div>
-<p>The two ends are named asymmetrically, so do not mix them up: the app on the headset is <strong>XTac-UMI XR</strong> (formerly XenseVR-Toolkit), while the service on the computer is still called <strong>XenseVR PC Service</strong>. The package <code>XenseVR-PC-Service_&lt;version&gt;_amd64.deb</code> installs into <code>/opt/apps/roboticsservice/</code>, and the Python package is <code>xensevr_pc_service_sdk</code>.</p>
-<p>Only one instance can run at a time; starting a second one fails or conflicts.</p>
-<p>The service can supply several kinds of data (Head / controllers / hand tracking / full-body mocap / standalone Tracker). Collection uses two of them: the standalone Tracker pose (the gripper pose, carrying an <code>sn</code> that distinguishes the trackers) and the head pose (the headset's own pose, used together with the <a href="../recording/#56">headset's stereo frames</a>). The headset sends each eye's frames and its own pose to the PC Service, which forwards them to collection; they share one connection with the trackers, so with the service down neither works. This path needs a service at v0.2.0 or later (see <a href="../versions/#required">Version baseline</a>); if you only use trackers, the version makes no difference.</p>
-<p>The service directory <code>/opt/apps/roboticsservice/</code> ships the <code>ConsoleDemo</code> / <code>RobotDemoQt</code> demos for confirming that the headset was discovered and tracking data looks right (they need the same runtime environment as the service).</p>
+<ul>
+<li><strong>Naming</strong>: the headset app is <strong>XTac-UMI XR</strong>; the computer service is <strong>XenseVR PC Service</strong>. The package <code>XenseVR-PC-Service_&lt;version&gt;_amd64.deb</code> installs into <code>/opt/apps/roboticsservice/</code>, and the Python package is <code>xensevr_pc_service_sdk</code>.</li>
+<li><strong>Single instance</strong>: starting a second one fails or conflicts.</li>
+<li><strong>Data</strong>: the service supplies Head / controllers / hand tracking / full-body mocap / Tracker data; collection uses the Tracker pose (with an <code>sn</code> per tracker) and the head pose (paired with the <a href="../recording/#56">headset's stereo frames</a>).</li>
+<li><strong>Headset frames</strong>: they share one connection with the trackers, so with the service down neither works; this needs the service at v0.2.0 or later (see <a href="../versions/#required">Version baseline</a>), while tracker-only use works with any version.</li>
+<li><strong>Demos</strong>: the service directory ships <code>ConsoleDemo</code> / <code>RobotDemoQt</code> to confirm the headset was discovered and tracking data looks right (they need the same runtime environment as the service).</li>
+</ul>
 <h2 id="36">Power-on sequence<a class="headerlink" href="#36" title="锚点链接">¶</a></h2>
-<p>The power-on and power-off sequence is described once, in <a href="../quickstart/#power-on">Quickstart · Power on and connect</a>; follow the steps there. On a bimanual rig, read the <a href="#usb-budget">USB bandwidth budget</a> before plugging in the cables.</p>
+<p>Follow <a href="../quickstart/#power-on">Quickstart · Power on and connect</a>. On a bimanual rig, read the <a href="#usb-budget">USB bandwidth budget</a> before plugging in the cables.</p>
 <p>Next → <a href="../calibration/">Calibration and self-check</a></p>
 
 

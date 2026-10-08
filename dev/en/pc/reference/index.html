@@ -2135,7 +2135,7 @@
 
 
 <h1 id="robotconfig-options">RobotConfig options<a class="headerlink" href="#robotconfig-options" title="锚点链接">¶</a></h1>
-<p>A lookup appendix: the <code>RobotConfig</code> options. The collection workflow is in <a href="../recording/">Data collection</a>; errors are in <a href="../troubleshooting/">Troubleshooting</a>.</p>
+<p>Workflow: <a href="../recording/">Data collection</a>; errors: <a href="../troubleshooting/">Troubleshooting</a>.</p>
 <h2 id="robotconfig">Common <code>RobotConfig</code> options<a class="headerlink" href="#robotconfig" title="锚点链接">¶</a></h2>
 <table>
 <thead>
@@ -2149,17 +2149,17 @@
 <tr>
 <td><code>robot.id</code></td>
 <td><strong>required</strong></td>
-<td>The station number for this rig; pass a bare number (<code>0</code> / <code>1</code> ...) and the prefix is filled in from <code>robot.type</code> to give <code>taccap_0</code> / <code>bi_taccap_0</code> / <code>xtac_umi_g1_0</code>. Leaving it out fails at command-line parse time → <a href="../recording/#robot-id"><code>--robot.id</code> and the hardware manifest</a></td>
+<td>Station number (<code>0</code> / <code>1</code> ...); leaving it out fails when the command line is parsed; the prefix from <code>robot.type</code> gives <code>taccap_0</code> / <code>bi_taccap_0</code> / <code>xtac_umi_g1_0</code> → <a href="../recording/#robot-id"><code>--robot.id</code> and the hardware manifest</a></td>
 </tr>
 <tr>
 <td><code>robot.side</code></td>
 <td>auto</td>
-<td><code>left</code>/<code>right</code>; required in <strong>single-gripper mode</strong> when both grippers are plugged in, picked automatically when only one is</td>
+<td><code>left</code>/<code>right</code>; required in <strong>single-gripper mode</strong> when both are plugged in</td>
 </tr>
 <tr>
 <td><code>robot.role</code></td>
 <td><code>leader</code></td>
-<td>Set <code>follower</code> to bind the follower gripper; the follower firmware must be ≥ 1.2.5 (below 1.2.11 it warns you to upgrade), see <a href="../versions/#ota">Firmware OTA</a></td>
+<td><code>follower</code> binds the follower gripper; firmware must be ≥ 1.2.5 (below 1.2.11 it warns to upgrade), see <a href="../versions/#ota">Firmware OTA</a></td>
 </tr>
 <tr>
 <td><code>robot.enable_tracker</code></td>
@@ -2169,7 +2169,7 @@
 <tr>
 <td><code>robot.tracker_serial</code></td>
 <td>unset</td>
-<td>Pin a tracker by SN, bypassing the side rule; used verbatim and not validated, so a typo reports not found at connect</td>
+<td>Pin a tracker by SN, bypassing the side rule, unvalidated; a typo reports not found at connect</td>
 </tr>
 <tr>
 <td><code>robot.enable_wrist_camera</code></td>
@@ -2184,52 +2184,52 @@
 <tr>
 <td><code>robot.wrist_camera_fourcc</code></td>
 <td><code>MJPG</code></td>
-<td>Wrist camera pixel format; the MJPG default leaves USB bandwidth for the tactile sensors on the same hub, <code>YUYV</code> is uncompressed and only for when bandwidth allows</td>
+<td>MJPG saves USB bandwidth for the tactile sensors; <code>YUYV</code> is uncompressed, only when bandwidth allows</td>
 </tr>
 <tr>
 <td><code>robot.wrist_undistort</code> / <code>_balance</code></td>
 <td><code>false</code> / <code>0.0</code></td>
-<td>Undistort the wrist camera fisheye before writing to disk, and its field-of-view setting, see <a href="../recording/#57">Fisheye undistortion</a></td>
+<td>Wrist camera fisheye undistortion and its field-of-view setting, see <a href="../recording/#57">Fisheye undistortion</a></td>
 </tr>
 <tr>
 <td><code>robot.enable_head_camera</code></td>
 <td><code>false</code></td>
-<td><strong>Single gripper only</strong>: head camera (first-person view + headset pose); bimanual uses <code>--robot.type=xtac_umi_g1</code>, see <a href="../recording/#56">Head camera</a></td>
+<td><strong>Single gripper only</strong>: records the headset first-person view + pose; bimanual uses <code>--robot.type=xtac_umi_g1</code>, see <a href="../recording/#56">Head camera</a></td>
 </tr>
 <tr>
 <td><code>robot.head_camera_eyes</code></td>
 <td><code>both</code></td>
-<td><code>both</code> = one key per eye; <code>left</code> / <code>right</code> records only that eye</td>
+<td><code>both</code> one key per eye; <code>left</code> / <code>right</code> records only that eye</td>
 </tr>
 <tr>
 <td><code>robot.head_camera_width/_height</code></td>
 <td><code>640</code> / <code>480</code></td>
-<td>Size <strong>per eye</strong>; only <code>640x480</code> / <code>1024x768</code> / <code>1280x960</code> are accepted, and it must match the resolution the headset outputs (both default to 640x480)</td>
+<td>Size <strong>per eye</strong>; only <code>640x480</code> / <code>1024x768</code> / <code>1280x960</code>, must match the headset output</td>
 </tr>
 <tr>
 <td><code>robot.head_camera_fps</code></td>
 <td><code>30</code></td>
-<td>Head camera frame rate</td>
+<td>Headset frame rate</td>
 </tr>
 <tr>
 <td><code>robot.head_camera_pair_max_skew_ms</code></td>
 <td><code>20.0</code></td>
-<td>When the two eyes carry different frame numbers, the largest time difference still treated as one exposure</td>
+<td>Largest gap between the two eyes still treated as one exposure</td>
 </tr>
 <tr>
 <td><code>robot.head_camera_startup_timeout_s</code></td>
 <td><code>5.0</code></td>
-<td>Seconds to wait for the first frame at connect</td>
+<td>Seconds connect waits for the first frame</td>
 </tr>
 <tr>
 <td><code>robot.head_camera_stale_after_s</code></td>
 <td><code>0.2</code></td>
-<td>A cached frame older than this counts as stale and warns</td>
+<td>A cached frame older than this warns as stale</td>
 </tr>
 <tr>
 <td><code>robot.enable_tactile</code></td>
 <td><code>true</code></td>
-<td>Off leaves the whole tactile chain unconnected (no discovery, nothing written). <strong>A diagnostic, not a recording mode</strong></td>
+<td>Off means no tactile discovery and nothing written. <strong>Diagnostic only</strong></td>
 </tr>
 <tr>
 <td><code>robot.tactile_fps</code></td>
@@ -2239,22 +2239,22 @@
 <tr>
 <td><code>robot.tactile_output_types</code></td>
 <td><code>["rectify"]</code></td>
-<td>The tactile stream <strong>written to disk</strong>; <strong>exactly one</strong>, more than one is an error</td>
+<td>The tactile stream <strong>written to disk</strong>; <strong>exactly one</strong>, more is an error</td>
 </tr>
 <tr>
 <td><code>robot.tactile_display_output_types</code></td>
 <td><code>["rectify"]</code></td>
-<td>Which tactile stream Rerun shows: <strong>the recorded one by default</strong> (an empty list means the same); <code>["difference"]</code> adds a display-only stream that is never recorded</td>
+<td>Rerun display stream, <strong>same as recorded by default</strong> (empty list likewise); <code>["difference"]</code> adds a display-only stream</td>
 </tr>
 <tr>
 <td><code>robot.tactile_diff_gain</code></td>
 <td><code>1.0</code></td>
-<td>Linear gain on the <code>difference</code> image; <strong>inert by default</strong>, since <code>difference</code> is not requested; <code>None</code> = the sensor's factory value</td>
+<td>Linear gain on the <code>difference</code> image, <strong>inert by default</strong>; <code>None</code> uses the factory value</td>
 </tr>
 <tr>
 <td><code>robot.expected_tactiles_per_side</code></td>
 <td><code>2</code></td>
-<td>How many tactile sensors each side should have; a mismatch is an error</td>
+<td>Tactile sensors per side; a mismatch is an error</td>
 </tr>
 <tr>
 <td><code>robot.enable_gripper</code> / <code>robot.enable_imu</code></td>
@@ -2264,35 +2264,34 @@
 <tr>
 <td><code>robot.gripper_stream_hz</code></td>
 <td><code>100</code></td>
-<td>Rate at which the leader's firmware pushes encoder (and, when enabled, IMU) readings; <code>0</code> polls every frame; falls back to polling with a warning if the stream cannot start. Shared by both sides</td>
+<td>Leader encoder (incl. IMU) push rate; <code>0</code> polls every frame; on stream failure it falls back and warns</td>
 </tr>
 <tr>
 <td><code>robot.gripper_open_rad</code></td>
 <td><code>1.7</code></td>
-<td><strong>Follower only.</strong> A leader always uses the measured travel limit in its own firmware, and this option does nothing for it: an uncalibrated leader is refused a connection rather than falling back to this constant. See <a href="../calibration/#41">Gripper calibration</a></td>
+<td><strong>Follower only</strong>; a leader uses the measured travel limit in its firmware and is refused if uncalibrated, see <a href="../calibration/#41">Gripper calibration</a></td>
 </tr>
 <tr>
 <td><code>robot.tracker_to_ee_pos</code></td>
 <td><code>None</code></td>
-<td>Override the tracker→EE translation; <code>None</code> = that side's <strong>built-in measured value</strong></td>
+<td>Override the tracker→EE translation; <code>None</code> = <strong>built-in measured value</strong></td>
 </tr>
 <tr>
 <td><code>robot.tracker_to_ee_quat</code></td>
 <td><code>None</code></td>
-<td>Override the tracker→EE rotation (same idea; the two can be overridden independently)</td>
+<td>Override the tracker→EE rotation</td>
 </tr>
 <tr>
 <td><code>robot.tracker_wait_timeout</code></td>
 <td><code>10.0</code></td>
-<td>Seconds to wait for tracker data while connecting devices</td>
+<td>Seconds to wait for tracker data</td>
 </tr>
 </tbody>
 </table>
-<p>The table above is the commonly used subset; the device notes shipped with the main repo are authoritative for the complete field list.</p>
-<p>The table is written for a single gripper. On <code>bi_taccap_gripper</code>, <code>enable_wrist_camera</code>, <code>tracker_serial</code>, <code>enable_gripper</code>, <code>enable_imu</code>, <code>gripper_open_rad</code> and <code>tracker_to_ee_pos/_quat</code> are one per side and take a <code>left_</code> / <code>right_</code> prefix (for example <code>--robot.left_enable_wrist_camera</code>); the rest are shared by both sides, see <a href="../recording/#params">Parameters</a>.</p>
+<p>The table is written for a single gripper; the full field list is in the main repo's device notes. On <code>bi_taccap_gripper</code>, <code>enable_wrist_camera</code>, <code>tracker_serial</code>, <code>enable_gripper</code>, <code>enable_imu</code>, <code>gripper_open_rad</code> and <code>tracker_to_ee_pos/_quat</code> are per side with a <code>left_</code> / <code>right_</code> prefix (for example <code>--robot.left_enable_wrist_camera</code>); the rest are shared by both sides, see <a href="../recording/#params">Parameters</a>.</p>
 <h2 id="sdk-and-custom-development">SDK and custom development<a class="headerlink" href="#sdk-and-custom-development" title="锚点链接">¶</a></h2>
-<p>To write your own programs that read the leader gripper or drive the follower gripper, see <a href="../../sdk/">SDK &amp; development</a>.</p>
-<p>Terms are in the <a href="../../common/reference/#glossary">Glossary</a>; feedback channels and related repositories are in <a href="../../common/reference/#support">Support and feedback</a>.</p>
+<p>See <a href="../../sdk/">SDK &amp; development</a>.</p>
+<p>Terms are in the <a href="../../common/reference/#glossary">Glossary</a>; feedback in <a href="../../common/reference/#support">Support and feedback</a>.</p>
 
 
 

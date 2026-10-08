@@ -2295,10 +2295,14 @@
 
 
 <h1 id="installation">Installation<a class="headerlink" href="#installation" title="锚点链接">¶</a></h1>
-<p>This page installs <code>xense-taccap-lerobot</code> and the three hardware SDKs on an <strong>Ubuntu 22.04 / 24.04 LTS (amd64)</strong> data-collection host and verifies them; once it is done you can run <code>lerobot-info</code>. Serial permissions and device discovery are on the next page, <a href="../host-setup/">Host setup</a>.</p>
-<p>Verified environment: Ubuntu 22.04.5 / 24.04.4 LTS, kernel 6.8 / 6.14 / 7.0 series all fine, <code>x86_64</code>, Python <code>3.12.13</code> (≥ 3.12 required), mamba environment name <code>xense-taccap</code>; the repo commit and per-package versions are those in <a href="../versions/">Versions and upgrades</a>. Other distributions or architectures need verifying separately for driver, UVC, serial-permission and <code>.deb</code> support.</p>
+<p>This page installs <code>xense-taccap-lerobot</code> and the three hardware SDKs on an <strong>Ubuntu 22.04 / 24.04 LTS (amd64)</strong> data-collection host and verifies them up to <code>lerobot-info</code>. Serial permissions and device discovery are in <a href="../host-setup/">Host setup</a>.</p>
+<ul>
+<li><strong>Verified</strong>: Ubuntu 22.04.5 / 24.04.4 LTS, kernel 6.8 / 6.14 / 7.0 series, <code>x86_64</code>, Python <code>3.12.13</code> (≥ 3.12 required), mamba environment name <code>xense-taccap</code>.</li>
+<li>The repo commit and per-package versions are those in <a href="../versions/">Versions and upgrades</a>.</li>
+<li><strong>Other distributions or architectures</strong>: verify driver, UVC, serial-permission and <code>.deb</code> support yourself.</li>
+</ul>
 <h2 id="host-spec">Data-collection host requirements<a class="headerlink" href="#host-spec" title="锚点链接">¶</a></h2>
-<p>Collection is real time: on a bimanual rig six cameras are streamed and encoded at once, and a frame has only a 33.3 ms budget (30 fps). An underspecified machine shows up as dropped frames and slow recording, not as an error.</p>
+<p>On a bimanual rig six cameras are streamed and encoded at once, with only 33.3 ms per frame (30 fps). An underspecified machine drops frames without raising an error.</p>
 <table>
 <thead>
 <tr>
@@ -2345,16 +2349,15 @@
 </tr>
 </tbody>
 </table>
-<p>Where each number comes from:</p>
 <ul>
-<li><strong>CPU</strong>: the main loop, tactile decoding and feeding the encoder all run on the CPU, and a bimanual frame is six to eight images. A 12th-gen i7 is the lowest part measured to hold 30 fps.</li>
-<li><strong>GPU</strong>: <code>--dataset.vcodec=auto</code> hands H.264 encoding to the card's encoder chip. Without an NVIDIA card the CPU has to encode instead: it records, but saving to disk is slower and <code>[slow_frame]</code> comes sooner, see <a href="../recording/#no-gpu">Recording with no NVIDIA GPU</a>. The Docker image requires an NVIDIA card; check the driver version with <code>nvidia-smi --query-gpu=driver_version,name --format=csv,noheader</code>.</li>
-<li><strong>Memory</strong>: 8 GB covers collection itself; 32 GB is recommended once you watch the live data in Rerun with <code>--display_data</code> or process data while collecting.</li>
-<li><strong>Disk</strong>: at full load raw video off the cameras is about 280 MB/s (bimanual); what lands on disk is in <a href="../dataset/#storage-planning">Disk planning</a>. Do not record straight onto a spinning disk or a USB external drive.</li>
-<li><strong>USB</strong>: tactile sensors and wrist cameras are USB 2.0 devices, and a bimanual rig's 6 cameras must be split across two 480M buses, see <a href="../host-setup/#usb-budget">USB bandwidth budget</a>.</li>
+<li><strong>CPU</strong>: the main loop, tactile decoding and feeding the encoder all run on the CPU, and a bimanual frame is six to eight images; a 12th-gen i7 is the lowest part measured to hold 30 fps.</li>
+<li><strong>GPU</strong>: <code>--dataset.vcodec=auto</code> encodes H.264 on the card. Without an NVIDIA card the CPU encodes, so saving is slower and <code>[slow_frame]</code> is likelier, see <a href="../recording/#no-gpu">Recording with no NVIDIA GPU</a>. Check the driver: <code>nvidia-smi --query-gpu=driver_version,name --format=csv,noheader</code>.</li>
+<li><strong>Memory</strong>: use 32 GB when you watch Rerun with <code>--display_data</code> or process data while collecting.</li>
+<li><strong>Disk</strong>: bimanual raw video is about 280 MB/s, what lands on disk is in <a href="../dataset/#storage-planning">Disk planning</a>. Do not record straight onto a spinning disk or a USB external drive.</li>
+<li><strong>USB</strong>: a bimanual rig's 6 cameras are split across two 480M buses, see <a href="../host-setup/#usb-budget">USB bandwidth budget</a>.</li>
 </ul>
 <h2 id="choose">Choosing an install path<a class="headerlink" href="#choose" title="锚点链接">¶</a></h2>
-<p>The two paths produce the same collection environment; pick one and follow it through.</p>
+<p>Both paths produce the same collection environment; pick one.</p>
 <table>
 <thead>
 <tr>
@@ -2391,35 +2394,42 @@
 </tr>
 </tbody>
 </table>
-<p>Default to Mamba: it puts no extra demand on the graphics driver, editing the collection program is easy, and the commands on the following pages are written for this path. Choose Docker when you already have the NVIDIA driver and would rather not build an environment yourself.</p>
-<p>Both paths need internet access: Mamba fetches conda-forge and PyPI packages, clones the GitHub repo and its submodules and downloads the XenseVR PC Service <code>.deb</code>; Docker installs Docker Engine and the NVIDIA Container Toolkit and pulls the image. On an offline machine Mamba does not work at all, and Docker only works from a <code>.tar</code> delivery bundle. On a restricted network set up a proxy first; the Docker script accepts <code>XENSE_PROXY_URL</code>.</p>
+<ul>
+<li><strong>Default to Mamba</strong>: the commands on the following pages are written for it. Choose Docker when you have the NVIDIA driver and would rather not build an environment.</li>
+<li><strong>Internet</strong>: both paths need it; an offline machine can only use Docker's <code>.tar</code> delivery bundle.</li>
+<li><strong>Proxy</strong>: the Docker script accepts <code>XENSE_PROXY_URL</code>.</li>
+</ul>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">Mamba (from source)</label><label for="__tabbed_1_2">Docker image</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <h3 id="apt">System packages<a class="headerlink" href="#apt" title="锚点链接">¶</a></h3>
-<p>The hardware SDKs are compiled during <code>setup_env.sh --install</code>, and a fresh Ubuntu install does not even have a compiler, so install these first:</p>
+<p>The hardware SDKs are compiled during <code>setup_env.sh --install</code>; install the build tools first:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>build-essential<span class="w"> </span>cmake<span class="w"> </span>pkg-config<span class="w"> </span>git<span class="w"> </span>curl
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>libusb-dev<span class="w">    </span><span class="c1"># cameras do not connect with a stale libusb, see the box below</span>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>v4l-utils<span class="w">     </span><span class="c1"># not needed to record, but this is how you debug a camera</span>
 </span></code></pre></div>
-<p><code>setup_env.sh</code> checks for these commands before it starts and stops with the exact apt line if any are missing; a missing <code>v4l-utils</code> only warns, but <code>v4l2-ctl --list-formats-ext</code> is the handiest instrument when <a href="../troubleshooting/#usb-bandwidth">a camera will not open</a>. You do not need a system <code>ffmpeg</code> (<code>torchcodec</code> uses the FFmpeg shared libraries in the conda environment) or <code>libudev-dev</code> (at runtime the <code>libudev1</code> that ships with Ubuntu is used).</p>
+<ul>
+<li><code>setup_env.sh</code> checks these commands first and stops with the matching apt line if any are missing; a missing <code>v4l-utils</code> only warns.</li>
+<li><code>v4l2-ctl --list-formats-ext</code> is for debugging <a href="../troubleshooting/#usb-bandwidth">a camera that will not open</a>.</li>
+<li>No system <code>ffmpeg</code> needed (<code>torchcodec</code> uses the FFmpeg shared libraries in the conda environment), nor <code>libudev-dev</code> (the bundled <code>libudev1</code> is used at runtime).</li>
+</ul>
 <div class="admonition warning">
 <p class="admonition-title">Install <code>libusb-dev</code>, and keep it current with the kernel</p>
-<p>Recent Linux kernel updates require a matching libusb update. With a stale or missing libusb the cameras will not connect, and nothing in the error message points at libusb. <code>sudo apt install -y libusb-dev</code> also pulls in the <code>libusb-0.1-4</code> runtime (<code>libusb-0.1.so.4</code>), which is exactly what the prebuilt camera stack loads. After a kernel upgrade, upgrade it again and reboot:</p>
+<p>With a stale or missing libusb the cameras will not connect, and the error does not mention libusb. <code>sudo apt install -y libusb-dev</code> also brings the <code>libusb-0.1-4</code> runtime (<code>libusb-0.1.so.4</code>) the camera stack loads. After a kernel upgrade, upgrade it again and reboot:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>update<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>--only-upgrade<span class="w"> </span>libusb-dev<span class="w"> </span>libusb-1.0-0
 </span></code></pre></div>
-<p><code>setup_env.sh</code> only warns about it and does not stop, because it is a runtime dependency: when it is missing the failure only comes at <code>connect()</code>.</p>
+<p><code>setup_env.sh</code> only warns about it; when missing, the failure only comes at <code>connect()</code>.</p>
 </div>
 <h3 id="install-miniforge">Install Miniforge<a class="headerlink" href="#install-miniforge" title="锚点链接">¶</a></h3>
-<p>Mamba's dependency solving is about 10× faster than stock conda:</p>
+<p>Mamba solves dependencies about 10× faster than conda:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>curl<span class="w"> </span>-L<span class="w"> </span>-O<span class="w"> </span><span class="s2">"https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-</span><span class="k">$(</span>uname<span class="k">)</span><span class="s2">-</span><span class="k">$(</span>uname<span class="w"> </span>-m<span class="k">)</span><span class="s2">.sh"</span>
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>bash<span class="w"> </span>Miniforge3-<span class="k">$(</span>uname<span class="k">)</span>-<span class="k">$(</span>uname<span class="w"> </span>-m<span class="k">)</span>.sh
 </span></code></pre></div>
 <h3 id="22">Clone the repo and its submodules<a class="headerlink" href="#22" title="锚点链接">¶</a></h3>
-<p>The repo keeps the hardware SDKs in <code>third_party/</code> submodules, so the clone must be recursive, at the release tag:</p>
+<p>The hardware SDKs are <code>third_party/</code> submodules; clone recursively at the tag:</p>
 <div class="admonition warning">
 <p class="admonition-title">On a machine without a GitHub SSH key, run this once before cloning</p>
-<p>The submodule is addressed as <code>git@github.com:</code>; without an SSH key the main repo clones but fetching the submodule fails. Switch to HTTPS first, see <a href="../versions/#submodule-ssh">The submodule URL is SSH</a>:</p>
+<p>The submodule is addressed as <code>git@github.com:</code>, and without an SSH key fetching it fails. Switch to HTTPS, see <a href="../versions/#submodule-ssh">The submodule URL is SSH</a>:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>url.<span class="s2">"https://github.com/"</span>.insteadOf<span class="w"> </span><span class="s2">"git@github.com:"</span>
 </span></code></pre></div>
 </div>
@@ -2432,10 +2442,31 @@
 <p>Already cloned without the submodules:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>git<span class="w"> </span>submodule<span class="w"> </span>update<span class="w"> </span>--init<span class="w"> </span>--recursive<span class="w"> </span>--progress
 </span></code></pre></div>
-<p>There is only one submodule, <a href="https://github.com/XenseRobotics-AI/TacCap-Gripper"><code>third_party/taccap-gripper</code></a>, which installs the package <code>xense.taccap</code> (the tactile gripper SDK). <code>xensesdk</code> (the visuotactile sensor SDK) is installed automatically by <code>setup_env.sh --install</code>. The Python bindings of <code>xensevr_pc_service_sdk</code> (Pico4) live in the main repo, and the C SDK they link against (<code>PXREARobotSDK.h</code> + <code>libPXREARobotSDK.so</code>) comes out of the <a href="#24">XenseVR PC Service <code>.deb</code></a> installed in the next step; from now on that C SDK is updated through a new <code>.deb</code> release, not by re-running <code>--install</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Package</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>xense.taccap</code> (tactile gripper SDK)</td>
+<td>The only submodule, <a href="https://github.com/XenseRobotics-AI/TacCap-Gripper"><code>third_party/taccap-gripper</code></a></td>
+</tr>
+<tr>
+<td><code>xensesdk</code> (visuotactile sensor SDK)</td>
+<td>Installed automatically by <code>setup_env.sh --install</code></td>
+</tr>
+<tr>
+<td><code>xensevr_pc_service_sdk</code> (Pico4)</td>
+<td>Python bindings in the main repo; the C SDK (<code>PXREARobotSDK.h</code> + <code>libPXREARobotSDK.so</code>) comes from the <a href="#24">XenseVR PC Service <code>.deb</code></a> and is updated by a new <code>.deb</code>, not by re-running <code>--install</code></td>
+</tr>
+</tbody>
+</table>
 <div class="admonition warning">
 <p class="admonition-title">Rebuild <code>xense.taccap</code> after updating the submodule</p>
-<p>The <code>taccap-gripper</code> Python package ships a compiled build artefact. <code>git submodule update</code> only updates the files and does not rebuild, after which <code>import xense.taccap</code> fails with an error like <code>AttributeError: module 'xense.taccap._taccap_native' has no attribute 'GripperAutoCalConfig'</code>. Such changes can arrive even when the SDK version number stays the same, so rebuild after every submodule pull (no sudo needed), or just run <code>bash setup_env.sh --install</code>:</p>
+<p><code>git submodule update</code> does not rebuild, after which <code>import xense.taccap</code> fails with an error like <code>AttributeError: module 'xense.taccap._taccap_native' has no attribute 'GripperAutoCalConfig'</code>. This can happen without a version bump, so rebuild after every submodule pull (no sudo needed), or run <code>bash setup_env.sh --install</code>:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nb">cd</span><span class="w"> </span>~/xense-taccap-lerobot
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="nv">LIBRARY_PATH</span><span class="o">=</span><span class="s2">"</span><span class="si">${</span><span class="nv">CONDA_PREFIX</span><span class="si">}</span><span class="s2">/lib"</span><span class="w"> </span><span class="se">\</span>
 </span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">  </span>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>third_party/taccap-gripper<span class="w"> </span>--no-deps<span class="w"> </span>--no-build-isolation
@@ -2443,39 +2474,48 @@
 </span></code></pre></div>
 </div>
 <h3 id="create-and-activate-the-environment">Create and activate the environment<a class="headerlink" href="#create-and-activate-the-environment" title="锚点链接">¶</a></h3>
-<p><code>--mamba</code> creates the <code>xense-taccap</code> environment by default; to use your own name, append it after <code>--mamba</code>:</p>
+<p><code>--mamba</code> creates the <code>xense-taccap</code> environment by default; append a custom name after <code>--mamba</code>:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>./setup_env.sh<span class="w"> </span>--mamba
 </span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>mamba<span class="w"> </span>activate<span class="w"> </span>xense-taccap
 </span></code></pre></div>
 <h3 id="24">One-shot install<a class="headerlink" href="#24" title="锚点链接">¶</a></h3>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>./setup_env.sh<span class="w"> </span>--install
 </span></code></pre></div>
-<p>This step updates the environment from <code>conda_environment.yaml</code>, installs the main package from <code>pyproject.toml</code>, installs <code>xensesdk</code> and the XenseVR PC Service daemon, then builds <code>xensevr_pc_service_sdk</code> (Pico4, linked against the C SDK from the <code>.deb</code>) and <code>xense.taccap</code> (gripper, from the submodule).</p>
-<p>XenseVR PC Service is a <code>.deb</code> of about 110 MB. The script downloads the package for the current architecture from the <a href="https://github.com/XenseRobotics-AI/XenseVR-PC-Service/releases/tag/v0.2.1">v0.2.1 release</a> (<code>$XENSEVR_DEB_URL</code> overrides the download URL) and installs it with <code>sudo dpkg -i</code> into <code>/opt/apps/roboticsservice</code>; when the same version is already installed it skips, and a partial download is reused. The C SDK the Pico4 bindings link against comes from this package, so a failed download stops <code>--install</code>; for an offline or patched package, point <code>$XENSEVR_DEB</code> at a local file. The baseline is v0.2.1 because it rebuilt the C SDK; v0.2.0 would build the Pico4 bindings against the old SDK. The <a href="../recording/#56">headset stereo view and head pose</a> need PC Service ≥ v0.2.0; the tracker is unaffected.</p>
+<p>It updates the environment from <code>conda_environment.yaml</code>, installs the main package from <code>pyproject.toml</code>, installs <code>xensesdk</code> and the XenseVR PC Service daemon, then builds <code>xensevr_pc_service_sdk</code> and <code>xense.taccap</code>.</p>
+<ul>
+<li><strong>Download</strong>: the <code>.deb</code> for the current architecture (about 110 MB) comes from the <a href="https://github.com/XenseRobotics-AI/XenseVR-PC-Service/releases/tag/v0.2.1">v0.2.1 release</a>; <code>$XENSEVR_DEB_URL</code> overrides the URL.</li>
+<li><strong>Install</strong>: <code>sudo dpkg -i</code> into <code>/opt/apps/roboticsservice</code>; skipped if the same version is installed, and a partial download is reused.</li>
+<li><strong>Failed download</strong>: <code>--install</code> stops; for an offline or patched package, point <code>$XENSEVR_DEB</code> at a local file.</li>
+<li><strong>Version</strong>: v0.2.1 rebuilt the C SDK, while v0.2.0 would build the Pico4 bindings against the old SDK. The <a href="../recording/#56">headset stereo view and head pose</a> need PC Service ≥ v0.2.0; the tracker is unaffected.</li>
+</ul>
 <h3 id="25">Verify the install<a class="headerlink" href="#25" title="锚点链接">¶</a></h3>
-<p>All three packages importing means success:</p>
+<p>All three packages import:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">'import xensevr_pc_service_sdk; print("xensevr_pc_service_sdk OK -&gt;", xensevr_pc_service_sdk.__file__)'</span>
 </span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">'import xensesdk; print("xensesdk OK -&gt;", xensesdk.__file__)'</span>
 </span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">'import xense.taccap; print("xense.taccap OK -&gt;", xense.taccap.__file__)'</span>
 </span></code></pre></div>
-<p>Then confirm the collection program works and the devices are discovered:</p>
+<p>Then confirm the devices are discovered:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>lerobot-find-cameras
 </span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>lerobot-info
 </span></code></pre></div>
-<p>One more if you use the <a href="../recording/#56">head camera</a>; <code>False</code> means an older version is still being loaded, so re-run <code>./setup_env.sh --install</code>:</p>
+<p>One more for the <a href="../recording/#56">head camera</a>; <code>False</code> means an older version is loaded, so re-run <code>./setup_env.sh --install</code>:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">'import xensevr_pc_service_sdk as xrt; print("pico camera API:", hasattr(xrt, "has_pico_camera_frame"))'</span>
 </span></code></pre></div>
-<p>Optional: confirm the video codec dependencies load. <code>torchcodec</code> is pinned by the PyTorch compatibility matrix, PyAV is pinned to <code>15.1.0</code>, and FFmpeg is not part of the conda solve. If you need a system ffmpeg with <code>libsvtav1</code>, install it separately; the default encoding path does not depend on it:</p>
+<p>Optional: confirm the codec dependencies load. <code>torchcodec</code> is pinned by the PyTorch compatibility matrix and PyAV to <code>15.1.0</code>. The default encoding path does not need a system ffmpeg with <code>libsvtav1</code>; install it separately if you want one:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">'import torchcodec; print("torchcodec OK -&gt;", torchcodec.__version__)'</span>
 </span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">'import av; print("PyAV OK -&gt;", av.__version__)'</span>
 </span></code></pre></div>
 </div>
 <div class="tabbed-block">
 <h3 id="docker">Image contents and host requirements<a class="headerlink" href="#docker" title="锚点链接">¶</a></h3>
-<p>The image already contains the full <code>xense-taccap</code> environment, the CUDA user-space libraries, the collection program and the three hardware SDKs (XenseSDK, TacCap-Gripper, the Pico4 bindings); the container starts XenseVR PC Service on launch, and no submodules or host environment are needed. So that tactile sensors, wrist cameras, the gripper serial port and the Pico4 can be hot-plugged mid-collection, the container runs in <strong>privileged mode</strong> and shares the host's network and IPC. Only run it on a data-collection host you trust.</p>
-<p>Host requirements: Ubuntu 22.04 / 24.04 <strong>amd64</strong>, <strong>NVIDIA driver ≥ 570.144</strong> (check with <code>nvidia-smi --query-gpu=driver_version --format=csv,noheader</code>). The script will not install or upgrade the GPU driver for you (that depends on the card, Secure Boot and a reboot) and stops if the requirement is not met; Docker Engine, the Compose plugin and the NVIDIA Container Toolkit are installed automatically if absent.</p>
+<ul>
+<li><strong>Contents</strong>: the full <code>xense-taccap</code> environment, the CUDA user-space libraries, the collection program and the three hardware SDKs (XenseSDK, TacCap-Gripper, the Pico4 bindings). XenseVR PC Service starts on launch.</li>
+<li>To hot-plug tactile sensors, wrist cameras, the gripper serial port and the Pico4, the container runs in <strong>privileged mode</strong> and shares the host's network and IPC. Use it only on a host you trust.</li>
+<li><strong>Host</strong>: Ubuntu 22.04 / 24.04 <strong>amd64</strong>, <strong>NVIDIA driver ≥ 570.144</strong> (check with <code>nvidia-smi --query-gpu=driver_version --format=csv,noheader</code>).</li>
+<li><strong>Driver</strong>: the script neither installs nor upgrades the GPU driver (that depends on the card, Secure Boot and a reboot) and stops if it falls short.</li>
+</ul>
 <h3 id="ghcr">One-shot install<a class="headerlink" href="#ghcr" title="锚点链接">¶</a></h3>
-<p>The image is published to the GitHub Container Registry. It is public, so pulling needs no login:</p>
+<p>The image is public on the GitHub Container Registry; pulling needs no login:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>ghcr.io/xenserobotics-ai/xense-taccap-lerobot
 </span></code></pre></div>
 <p>Run as a normal user (not root):</p>
@@ -2483,43 +2523,43 @@
 </span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="nb">cd</span><span class="w"> </span>xense-taccap-lerobot
 </span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>./docker/install_customer.sh
 </span></code></pre></div>
-<p>The script, in order: checks the system and GPU driver → installs Docker and the NVIDIA Container Toolkit as needed (and registers the NVIDIA runtime with Docker) → installs the gripper serial udev rule (the ModemManager blocking rule from <a href="../host-setup/#32">Serial permissions</a>) → pulls the image → runs a CUDA and graphics smoke test. Cloning the repo is only how you get <code>compose.yaml</code> and the script.</p>
+<p>The script, in order: checks the system and GPU driver → installs Docker and the NVIDIA Container Toolkit as needed (and registers the NVIDIA runtime) → installs the ModemManager blocking rule from <a href="../host-setup/#32">Serial permissions</a> → pulls the image → runs a CUDA and graphics smoke test. Cloning the repo is only how you get <code>compose.yaml</code> and the script.</p>
 <p>Behind a proxy:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="nv">XENSE_PROXY_URL</span><span class="o">=</span>http://127.0.0.1:7897<span class="w"> </span>./docker/install_customer.sh
 </span></code></pre></div>
-<p>For a fully offline machine, ask your delivery channel for the image <code>.tar</code> bundle, drop it in the repo root or pass it as the first argument, and the script verifies and imports it instead:</p>
+<p>Offline, ask your delivery channel for the image <code>.tar</code> bundle, drop it in the repo root or pass it as the first argument; the script then verifies and imports it:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>./docker/install_customer.sh<span class="w"> </span>xense-taccap-lerobot-0.1.0-linux-amd64.tar
 </span></code></pre></div>
-<p>Pulling online is still the default: most of the image's twenty-odd GB is dependency layers that rarely change, so an upgrade fetches only the few layers that moved.</p>
+<p>Pulling online stays the default: an upgrade fetches only the layers that changed.</p>
 <h3 id="docker-pin">Pin a version before you record<a class="headerlink" href="#docker-pin" title="锚点链接">¶</a></h3>
-<p>The default <code>latest</code> tag floats: the next release repoints it to a new image. Before real collection, pin a version in the repo root's <code>.env</code>. <code>compose.yaml</code> already points at the official GHCR image, so only the tag line is needed and there is no need to set <code>LEROBOT_IMAGE</code> (only for a different image name). The repository name shown by <code>docker compose config --images</code> may differ from the one above; check the tag, it is the same image:</p>
+<p>The default <code>latest</code> floats with each release. Before real collection, pin a version in the repo root's <code>.env</code>; <code>compose.yaml</code> already points at the official image, so write only the tag line. <code>LEROBOT_IMAGE</code> is only for a different image name:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>LEROBOT_IMAGE_TAG=0.1.0
 </span></code></pre></div>
-<p>Confirm that this is the version that resolves, then pull:</p>
+<p>Confirm this version resolves, then pull; the repository name shown by <code>docker compose config --images</code> may differ from the one above, so check the tag:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>config<span class="w"> </span>--images
 </span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>docker<span class="w"> </span>compose<span class="w"> </span>pull
 </span></code></pre></div>
-<p>Pin <code>0.0.6</code> or newer and neither of these applies; pinning <code>0.0.5</code> or earlier has two known issues (neither affects the recorded data): record with <code>--play_sounds=false</code> (the image has no <code>spd-say</code>, see <a href="../troubleshooting/#docker">Troubleshooting</a>), and export by copying as root and then <code>chown</code>, see <a href="#docker-data">Where the data lives</a>.</p>
+<p>Pinned at <code>0.0.5</code> or earlier (fixed from <code>0.0.6</code>): record with <code>--play_sounds=false</code> (the image has no <code>spd-say</code>, see <a href="../troubleshooting/#docker">Troubleshooting</a>), and export by copying as root and then <code>chown</code>, see <a href="#docker-data">Where the data lives</a>.</p>
 <h3 id="docker-host">Host setup after installing<a class="headerlink" href="#docker-host" title="锚点链接">¶</a></h3>
-<p>The script has already added you to the <code>docker</code> group, but that does not take effect in the current terminal. Type these two on the host:</p>
+<p>The script added you to the <code>docker</code> group, not yet active in this terminal. On the host:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>newgrp<span class="w"> </span>docker<span class="w">                    </span><span class="c1"># make docker group membership active in this terminal</span>
 </span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>xhost<span class="w"> </span>+si:localuser:root<span class="w">         </span><span class="c1"># needed to show Rerun and other windows from the container</span>
 </span></code></pre></div>
 <div class="admonition warning">
 <p class="admonition-title">Type them one at a time, do not paste the block</p>
-<p><code>newgrp</code> opens a subshell, and when the block is pasted the commands after it get swallowed by that subshell; <code>xhost</code> must be typed separately after <code>newgrp</code> returns. Entering the container without <code>newgrp docker</code> gives <code>permission denied</code>. Logging out and back in is cleaner: it avoids the side effect of <code>newgrp</code>, where files created afterwards get group <code>docker</code>.</p>
+<p><code>newgrp</code> opens a subshell that swallows the pasted commands after it. Entering the container without <code>newgrp docker</code> gives <code>permission denied</code>. Logging out and back in is cleaner, without new files getting group <code>docker</code>.</p>
 </div>
-<p><code>docker</code> group membership is close to root; add only the users who need to collect. Revoke the <code>xhost</code> grant when you are done: <code>xhost -si:localuser:root</code>.</p>
+<p><code>docker</code> group membership is close to root; add only users who collect. Revoke the grant when done: <code>xhost -si:localuser:root</code>.</p>
 <h3 id="enter-the-container-and-verify">Enter the container and verify<a class="headerlink" href="#enter-the-container-and-verify" title="锚点链接">¶</a></h3>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>xense-taccap
 </span></code></pre></div>
-<p>Inside the container, confirm all four imports pass and the GPU is visible:</p>
+<p>Inside the container, all four imports pass and the GPU is visible:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">'import torch; print(torch.__version__, torch.cuda.is_available())'</span>
 </span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">'import xensesdk; print("xensesdk -&gt;", xensesdk.__file__)'</span>
 </span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">'import xense.taccap; print("taccap -&gt;", xense.taccap.__file__)'</span>
 </span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">'import xensevr_pc_service_sdk; print("pico4 -&gt;", xensevr_pc_service_sdk.__file__)'</span>
 </span></code></pre></div>
-<p>Then confirm the Pico4 bindings and the daemon are the same version:</p>
+<p>The Pico4 bindings and the daemon must be the same version:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">'import importlib.metadata as M; print("pico4 -&gt;", M.version("xensevr_pc_service_sdk"))'</span>
 </span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>dpkg-query<span class="w"> </span>-W<span class="w"> </span>-f<span class="o">=</span><span class="s1">'daemon -&gt; ${Version}\n'</span><span class="w"> </span>xensevr-pc-service
 </span></code></pre></div>
@@ -2528,17 +2568,17 @@
 </span></code></pre></div>
 <div class="admonition warning">
 <p class="admonition-title">These two lines must match; if they do not, do not record with this image</p>
-<p>The C SDK the Pico4 bindings link against comes from that <code>.deb</code>; a mismatch means the image is a half-updated build and the tracker data may be wrong. Switch to another tag and <code>docker compose pull</code> again, or contact your delivery channel.</p>
+<p>A mismatch means an incomplete image build, and the tracker data may be wrong. Switch to another tag and <code>docker compose pull</code> again, or contact your delivery channel.</p>
 </div>
-<p>Finally, confirm the devices are discovered:</p>
+<p>Confirm the devices are discovered:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>lerobot-find-cameras
 </span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>lerobot-info
 </span></code></pre></div>
-<p>You can also run a command directly without an interactive shell:</p>
+<p>Or run a command without an interactive shell:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>xense-taccap<span class="w"> </span>lerobot-info
 </span></code></pre></div>
 <h3 id="docker-data">Where the data lives, and why removing the container does not lose it<a class="headerlink" href="#docker-data" title="锚点链接">¶</a></h3>
-<p>Four directories inside the container are mounted on Docker volumes; removing the temporary container with <code>--rm</code> does not touch them:</p>
+<p>Four directories sit on Docker volumes, so <code>--rm</code> removing the container does not touch them:</p>
 <table>
 <thead>
 <tr>
@@ -2556,7 +2596,7 @@
 <tr>
 <td><code>/root/.xensesdk</code></td>
 <td><code>xensesdk-cache</code></td>
-<td>Per-serial sensor configuration cache. Do not delete it: with it a container restart does not have to re-read sensor flash and does not re-enumerate USB</td>
+<td>Per-serial sensor configuration cache. Do not delete it: a container restart then skips re-reading flash and re-enumerating USB</td>
 </tr>
 <tr>
 <td><code>/root/.cache/huggingface</code></td>
@@ -2570,14 +2610,14 @@
 </tr>
 </tbody>
 </table>
-<p>On the host the volumes live at <code>/var/lib/docker/volumes/xense-taccap-lerobot_&lt;volume&gt;/_data</code>, owned by root, so a plain <code>ls</code> needs sudo; going through the container is easier:</p>
+<p>The host path <code>/var/lib/docker/volumes/xense-taccap-lerobot_&lt;volume&gt;/_data</code> is root-owned, so <code>ls</code> needs sudo; going through the container is easier:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>xense-taccap<span class="w"> </span>bash<span class="w"> </span>-lc<span class="w"> </span><span class="s1">'ls -la /data/lerobot'</span>
 </span></code></pre></div>
 <div class="admonition danger">
 <p class="admonition-title">Do not run <code>docker volume prune</code></p>
-<p>It removes volumes that "no container is currently using", which is exactly the state the data volume is normally in (the containers are <code>--rm</code>), so recorded data is deleted and cannot be recovered. Use <code>docker image prune</code> to clean up images and <code>docker builder prune</code> for build cache; neither touches volumes.</p>
+<p>It removes volumes that "no container is currently using"; with <code>--rm</code> containers that is the data volume's normal state, so the data is deleted for good. Use <code>docker image prune</code> for images and <code>docker builder prune</code> for build cache; neither touches volumes.</p>
 </div>
-<p>Exporting to the host: read as root, and hand ownership back in the same command once copied:</p>
+<p>Export to the host as root, handing ownership back in the same command:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>mkdir<span class="w"> </span>-p<span class="w"> </span><span class="nb">export</span>
 </span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>docker<span class="w"> </span>compose<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>--no-deps<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-27-3"><a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a><span class="w">    </span>--entrypoint<span class="w"> </span>/bin/bash<span class="w"> </span><span class="se">\</span>
@@ -2585,45 +2625,57 @@
 </span><span id="__span-27-5"><a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a><span class="w">    </span>xense-taccap<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-27-6"><a id="__codelineno-27-6" name="__codelineno-27-6" href="#__codelineno-27-6"></a><span class="w">    </span>-lc<span class="w"> </span><span class="s2">"cp -a /data/lerobot /export/ &amp;&amp; chown -R </span><span class="k">$(</span>id<span class="w"> </span>-u<span class="k">)</span><span class="s2">:</span><span class="k">$(</span>id<span class="w"> </span>-g<span class="k">)</span><span class="s2"> /export"</span>
 </span></code></pre></div>
-<p>None of the three parts can be dropped: <code>--entrypoint /bin/bash</code> skips the default startup script (which does <code>chmod 0700</code> on the runtime directory); <code>chown</code> is in the same command, otherwise the exported files are owned by root and cannot be changed on the host; <code>mkdir -p export</code> comes first, because a mount point Docker creates itself is root-owned and a non-root write into it fails. <code>cp -a</code> carries the permissions across, so data recorded by <code>0.0.5</code> and earlier is still <code>0600</code> after export; to let other users read it too, append this to the end of the command above:</p>
+<p>None of the three parts can be dropped:</p>
+<ul>
+<li><code>--entrypoint /bin/bash</code> skips the default startup script (which does <code>chmod 0700</code> on the runtime directory).</li>
+<li><code>chown</code> is in the same command, otherwise the exported files are root-owned and cannot be changed on the host.</li>
+<li><code>mkdir -p export</code> comes first: a mount point Docker creates is root-owned, and a non-root write into it fails.</li>
+</ul>
+<p>Data recorded by <code>0.0.5</code> and earlier is still <code>0600</code> after <code>cp -a</code>; to make it readable for other users, append:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a><span class="w">    </span><span class="o">&amp;&amp;</span><span class="w"> </span>chmod<span class="w"> </span>-R<span class="w"> </span>u+rwX,go+rX<span class="w"> </span>/export
 </span></code></pre></div>
 <div class="admonition warning">
 <p class="admonition-title">Do not switch to <code>--user</code> to copy as yourself</p>
-<p><code>docker compose run --user ...</code> still runs the startup script, and a non-root user cannot change the runtime directory's permissions, so it fails with <code>chmod: changing permissions of '/tmp/xdg-runtime': Operation not permitted</code>. Videos recorded by the <code>0.0.5</code> and earlier images are <code>-rw------- root</code>, so a non-root copy reports <code>Permission denied</code> on every <code>.mp4</code> (the <code>0644</code> metadata copies fine, which looks like a few damaged files). From <code>0.0.6</code> on, videos land as <code>0644</code>, but upgrading does not rewrite files already recorded.</p>
+<ul>
+<li><code>docker compose run --user ...</code> still runs the startup script and fails with <code>chmod: changing permissions of '/tmp/xdg-runtime': Operation not permitted</code>.</li>
+<li>Videos recorded by <code>0.0.5</code> and earlier are <code>-rw------- root</code>, so a non-root copy reports <code>Permission denied</code> on every <code>.mp4</code> (the <code>0644</code> metadata copies fine, which looks like a few damaged files). From <code>0.0.6</code> on, videos land as <code>0644</code>; upgrading does not rewrite recorded files.</li>
+</ul>
 </div>
 <h3 id="docker-data-dir">Writing data straight to a host directory<a class="headerlink" href="#docker-data-dir" title="锚点链接">¶</a></h3>
-<p>If you look at or delete data often, or have a large disk mounted elsewhere, this is easier than copying out every time. Set it in <code>.env</code>; do not edit <code>compose.yaml</code> (it is tracked by the repo, and an absolute path written into it conflicts on the next <code>git pull</code>; <code>.env</code> is never committed):</p>
+<p>If you often look at or delete data, or have a large disk mounted elsewhere, set it in <code>.env</code>; editing <code>compose.yaml</code> conflicts on <code>git pull</code>, and <code>.env</code> is never committed:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>LEROBOT_DATA_DIR=/home/&lt;user&gt;/.cache/huggingface/docker_data
 </span></code></pre></div>
-<p>A value containing <code>/</code> is treated as a bind mount, one without as a named volume, and unset means the default <code>lerobot-data</code>. After changing it, confirm with <code>docker compose config</code> before recording; the data appears under <code>&lt;that directory&gt;/lerobot/</code>.</p>
+<p>A value with <code>/</code> is a bind mount, without one a named volume, unset the default <code>lerobot-data</code>. Confirm with <code>docker compose config</code> before recording; data appears under <code>&lt;that directory&gt;/lerobot/</code>.</p>
 <div class="admonition warning">
 <p class="admonition-title">A bind mount fixes the location, not the ownership</p>
-<p>Recording still runs as root, so the files are still root-owned. Hand them back to yourself when you are done, or on the host run <code>sudo chown -R "$(id -u):$(id -g)" ~/.cache/huggingface/docker_data</code>; <code>ls -ln</code> prints numeric uid/gid, so it shows whether the chown took:</p>
+<p>Recording runs as root, so the files are root-owned. Hand them back with the command below, or on the host run <code>sudo chown -R "$(id -u):$(id -g)" ~/.cache/huggingface/docker_data</code>; <code>ls -ln</code> prints numeric uid/gid to check:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>--no-deps<span class="w"> </span>--entrypoint<span class="w"> </span>/bin/bash<span class="w"> </span>--user<span class="w"> </span><span class="m">0</span>:0<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-30-2"><a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a><span class="w">    </span>xense-taccap<span class="w"> </span>-lc<span class="w"> </span><span class="s2">"chown -R </span><span class="k">$(</span>id<span class="w"> </span>-u<span class="k">)</span><span class="s2">:</span><span class="k">$(</span>id<span class="w"> </span>-g<span class="k">)</span><span class="s2"> /data"</span>
 </span><span id="__span-30-3"><a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a>ls<span class="w"> </span>-ln<span class="w"> </span>~/.cache/huggingface/docker_data/lerobot
 </span></code></pre></div>
 </div>
-<p>Compose passes the host's <code>/dev</code> and <code>/run/udev</code> through, so <code>/dev/v4l/by-id</code>, <code>/dev/v4l/by-path</code> and <code>/dev/serial/by-path</code> are readable inside the container too; <a href="../host-setup/#33">device auto-discovery</a> is built on them.</p>
-<p>To <a href="../dataset/#64">push to the Hub</a> from inside the container, put the token in the same <code>.env</code>; it reaches the container as <code>HF_TOKEN</code>. Otherwise, because the container is <code>--rm</code>, you have to <code>hf auth login</code> again every time:</p>
+<p>Compose passes the host's <code>/dev</code> and <code>/run/udev</code> through, so <code>/dev/v4l/by-id</code>, <code>/dev/v4l/by-path</code> and <code>/dev/serial/by-path</code> are readable in the container for <a href="../host-setup/#33">device auto-discovery</a>.</p>
+<p>To <a href="../dataset/#64">push to the Hub</a> from the container, put the token in the same <code>.env</code>; it arrives as <code>HF_TOKEN</code>, sparing you <code>hf auth login</code> every time:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>HF_TOKEN=hf_xxxxxxxxxxxxxxxx
 </span></code></pre></div>
 <h3 id="docker-gui">Graphics inside the container<a class="headerlink" href="#docker-gui" title="锚点链接">¶</a></h3>
-<p>The image ships the XKB / Vulkan / XDG runtime libraries Rerun needs, defaults to <code>WGPU_BACKEND=vulkan</code>, and Compose passes <code>DISPLAY</code> and the X11 socket through. If no window appears, do the <a href="#docker-host"><code>xhost</code> authorisation</a> first, then confirm the GPU is visible inside the container:</p>
+<p>The image ships the XKB / Vulkan / XDG runtime libraries Rerun needs and defaults to <code>WGPU_BACKEND=vulkan</code>; Compose passes <code>DISPLAY</code> and the X11 socket through. If no window appears, do the <a href="#docker-host"><code>xhost</code> authorisation</a> first, then confirm the GPU is visible in the container:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>vulkaninfo<span class="w"> </span>--summary
 </span></code></pre></div>
 <div class="admonition warning">
 <p class="admonition-title">Do not change <code>runtime: nvidia</code> in <code>compose.yaml</code> to <code>gpus: all</code></p>
-<p><code>gpus: all</code> only requests compute + utility: the container runs CUDA and <code>nvidia-smi</code> works, but NVIDIA's Vulkan ICD is not injected and Rerun fails with <code>WGPU error: Failed to create surface for any enabled backend</code>. <code>runtime: nvidia</code> requires the NVIDIA runtime to be registered with Docker (<code>install_customer.sh</code> does this); if it is not, Compose fails with <code>Unknown runtime specified nvidia</code>, see <a href="../troubleshooting/#docker">Troubleshooting</a>.</p>
+<ul>
+<li><code>gpus: all</code> only requests compute + utility: CUDA and <code>nvidia-smi</code> work, but the Vulkan ICD is not injected and Rerun fails with <code>WGPU error: Failed to create surface for any enabled backend</code>.</li>
+<li><code>runtime: nvidia</code> needs the NVIDIA runtime registered (<code>install_customer.sh</code> does this), otherwise Compose fails with <code>Unknown runtime specified nvidia</code>, see <a href="../troubleshooting/#docker">Troubleshooting</a>.</li>
+</ul>
 </div>
-<p>When you only process data and no Pico4 is attached, you can skip starting XenseVR PC Service; its log is at <code>/tmp/xensevr-service.log</code> inside the container:</p>
+<p>Without a Pico4 you can skip starting XenseVR PC Service (its log is at <code>/tmp/xensevr-service.log</code> in the container):</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a><span class="nv">START_XENSEVR_SERVICE</span><span class="o">=</span><span class="m">0</span><span class="w"> </span>docker<span class="w"> </span>compose<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>xense-taccap
 </span></code></pre></div>
 </div>
 </div>
 </div>
-<p>With the environment installed, do the <a href="../host-setup/">Host setup</a> next (serial permissions, device discovery); otherwise grippers get listed but cannot be opened.</p>
+<p>Next, do the <a href="../host-setup/">Host setup</a>; otherwise grippers get listed but cannot be opened.</p>
 
 
 

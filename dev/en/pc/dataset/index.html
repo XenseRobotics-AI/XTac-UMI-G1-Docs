@@ -2218,15 +2218,15 @@
 
 
 <h1 id="dataset">Dataset<a class="headerlink" href="#dataset" title="锚点链接">¶</a></h1>
-<p>What the data looks like after recording, how to check it, replay it and upload it to the Hub, how to plan disk space, and how to clear out old data. After reading this you can take a dataset from the local cache, check it and deliver it to the Hub.</p>
+<p>Format, checking, replay, Hub upload, disk planning and cleanup.</p>
 <h2 id="61">The LeRobotDataset format at a glance<a class="headerlink" href="#61" title="锚点链接">¶</a></h2>
-<p>Collection produces a standard <strong>LeRobotDataset v3.0</strong>: many episodes merged into large Parquet/MP4 files, relational metadata to locate episode boundaries, and native streaming from the Hub. Compared with v2 it means far fewer small files and a faster startup. If you have not worked with lerobot before, read the official documentation first and then come back here for what is specific to the XTac-UMI G1:</p>
+<p>Collection produces a standard <strong>LeRobotDataset v3.0</strong>: episodes merged into large Parquet/MP4 files, relational metadata locating episode boundaries, and native Hub streaming, with fewer small files and faster startup than v2. Official documentation:</p>
 <ul>
 <li><a href="https://huggingface.co/docs/lerobot/lerobot-dataset-v3">LeRobotDataset v3.0 documentation</a> (format design, directory layout, recording, loading/streaming, migrating v2.1→v3.0)</li>
 <li><a href="https://huggingface.co/docs/lerobot/il_robots#record-a-dataset">lerobot recording guide</a></li>
 <li><a href="https://huggingface.co/docs/lerobot">lerobot documentation home</a></li>
 </ul>
-<p>The dataset indexes like any Hugging Face / PyTorch dataset:</p>
+<p>It indexes like any Hugging Face / PyTorch dataset:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">lerobot.datasets.lerobot_dataset</span><span class="w"> </span><span class="kn">import</span> <span class="n">LeRobotDataset</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">ds</span> <span class="o">=</span> <span class="n">LeRobotDataset</span><span class="p">(</span><span class="s2">"&lt;your_org&gt;/&lt;your_dataset&gt;"</span><span class="p">)</span>
@@ -2235,32 +2235,33 @@
 <p>How it is serialised:</p>
 <ul>
 <li><code>hf_dataset</code>: Hugging Face datasets → parquet</li>
-<li>Video (tactile + wrist camera): mp4, to save space</li>
-<li>Metadata: plain json / jsonl (<code>info</code> / <code>episodes</code> / <code>stats</code> / <code>tasks</code>); the fields that matter in <code>info</code> are <code>fps</code>, <code>features</code>, <code>total_episodes</code>, <code>total_frames</code>, <code>robot_type</code>, <code>data_path</code>, <code>video_path</code>. <code>robot_type</code> is the <code>--robot.type</code> used for recording (<code>taccap_gripper</code> / <code>bi_taccap_gripper</code> / <code>xtac_umi_g1</code>); right after it, <code>collection_stack</code> is always <code>"xense-taccap-lerobot"</code>, marking the data as recorded directly by this collection program</li>
+<li>Video (tactile + wrist camera): mp4</li>
+<li>Metadata: json / jsonl (<code>info</code> / <code>episodes</code> / <code>stats</code> / <code>tasks</code>); key fields in <code>info</code> are <code>fps</code>, <code>features</code>, <code>total_episodes</code>, <code>total_frames</code>, <code>robot_type</code>, <code>data_path</code>, <code>video_path</code></li>
+<li><code>robot_type</code> is the <code>--robot.type</code> used for recording (<code>taccap_gripper</code> / <code>bi_taccap_gripper</code> / <code>xtac_umi_g1</code>); right after it, <code>collection_stack</code> is always <code>"xense-taccap-lerobot"</code>, marking data recorded directly by this program</li>
 <li>Temporal queries: <code>delta_timestamps = {"observation.image": [-1, -0.5, -0.2, 0]}</code> returns the current frame plus the ones 1 s, 0.5 s and 0.2 s before it in one call</li>
 </ul>
-<p>For the observation and action keys recorded in each frame, see <a href="../recording/#53">What each frame records</a>.</p>
-<p>A standard LeRobotDataset records only <code>robot_type</code> in <code>info</code>, so recording writes an extra, separate hardware manifest, <code>meta/hardware.json</code> (it does not touch the upstream <code>info</code> structure), recording which rig produced the data (station number, gripper and tactile SNs, whether the wrist camera was undistorted; split into <code>epochs</code>, and a hardware swap part-way through starts a new epoch). Rebuilding depth / force / difference from the <code>rectify</code> stream needs only the sensor model and the first <code>rectify</code> frame of each episode, which the dataset already holds; a <code>meta/runtimes/</code> in a dataset recorded on an earlier version is ignored. Field meanings, resume behaviour and what to watch out for when reconstructing are in <a href="../recording/#robot-id"><code>--robot.id</code> and the hardware manifest</a>. Datasets derived with <code>lerobot-edit-dataset</code> (deleting or splitting episodes, removing features, 8 → 6 camera conversion) carry <code>hardware.json</code> along; <strong><code>merge</code> refuses outright</strong>, because no single manifest could describe every episode's real sensors after a merge.</p>
+<p>For the per-frame observation and action keys, see <a href="../recording/#53">What each frame records</a>.</p>
+<p>Recording also writes a separate hardware manifest, <code>meta/hardware.json</code> (upstream <code>info</code> is untouched): station number, gripper and tactile SNs, whether the wrist camera was undistorted, split into <code>epochs</code>. Fields and resume behaviour are in <a href="../recording/#robot-id"><code>--robot.id</code> and the hardware manifest</a>. Datasets derived with <code>lerobot-edit-dataset</code> (deleting or splitting episodes, removing features, 8 → 6 camera conversion) carry <code>hardware.json</code> along; <strong><code>merge</code> refuses outright</strong>, because no single manifest could describe every episode's real sensors after a merge.</p>
 <p><span id="stats-std"></span></p>
 <div class="admonition warning">
 <p class="admonition-title">Datasets recorded before 0.0.8: the image <code>std</code> statistic is 0</p>
 <p>In datasets recorded before 0.0.8, the <code>std</code> of image and video features in <code>meta/stats.json</code> is always 0 (<code>mean</code>, <code>min</code>, <code>max</code> and quantiles are unaffected). If you normalise images by <code>std</code> during training, recompute the statistics first.</p>
 </div>
 <h2 id="where-it-lands-and-naming-convention">Where it lands and naming convention<a class="headerlink" href="#where-it-lands-and-naming-convention" title="锚点链接">¶</a></h2>
-<p>Collection writes by default to <code>~/.cache/huggingface/lerobot/&lt;repo_id&gt;/</code>; <code>--dataset.root &lt;path&gt;</code> puts it somewhere else (a bigger or faster disk). The layout is roughly:</p>
+<p>The default location is <code>~/.cache/huggingface/lerobot/&lt;repo_id&gt;/</code>; <code>--dataset.root &lt;path&gt;</code> moves it to a bigger or faster disk:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>&lt;repo_id&gt;/
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>├── data/     # parquet (observations, actions and other tabular data)
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>├── videos/   # mp4 (tactile + wrist camera)
 </span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>└── meta/     # json/jsonl: info · episodes · stats · tasks · hardware
 </span></code></pre></div>
-<p><code>repo_id</code> has the form <code>&lt;org&gt;/&lt;name&gt;</code>. Recommended:</p>
+<p><code>repo_id</code> has the form <code>&lt;org&gt;/&lt;name&gt;</code>:</p>
 <ul>
-<li>Lower case with hyphens or underscores, no spaces or non-ASCII characters; include the task and the date so datasets are easy to find and to deduplicate. Agree on <code>&lt;org&gt;/&lt;task&gt;_&lt;variant&gt;_&lt;YYYYMMDD&gt;</code> as a team, e.g. <code>Xense/insert_plug_left_20260703</code>.</li>
-<li>One dataset per task/variant; different tasks, or clearly different variants, get different <code>repo_id</code>s (for the trade-off between diversity and consistency see <a href="../recording/">Recording</a>).</li>
-<li>Keep the <code>--dataset.single_task</code> description identical within a dataset (it is written into <code>meta/tasks</code>).</li>
+<li>Lower case with hyphens or underscores, no spaces or non-ASCII characters; as a team use <code>&lt;org&gt;/&lt;task&gt;_&lt;variant&gt;_&lt;YYYYMMDD&gt;</code>, e.g. <code>Xense/insert_plug_left_20260703</code>.</li>
+<li>One dataset per task/variant; different tasks or clearly different variants get different <code>repo_id</code>s (trade-offs in <a href="../recording/">Recording</a>).</li>
+<li>Keep <code>--dataset.single_task</code> identical within a dataset (written into <code>meta/tasks</code>).</li>
 </ul>
 <h2 id="62">Checking the data<a class="headerlink" href="#62" title="锚点链接">¶</a></h2>
-<p><code>lerobot-check-dataset</code> is installed along with the collection program and can be typed directly on both the Mamba and the Docker path. It checks frame counts, video, field consistency and so on:</p>
+<p><code>lerobot-check-dataset</code> is installed with the collection program and works on both the Mamba and the Docker path:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>lerobot-check-dataset<span class="w"> </span>--repo-id<span class="w"> </span>&lt;your_org&gt;/&lt;your_dataset&gt;<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">    </span>--root<span class="w"> </span>~/.cache/huggingface/lerobot
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
@@ -2289,10 +2290,17 @@
 </tr>
 </tbody>
 </table>
-<p>It checks that <code>meta/</code> is complete, that the episode count agrees, that the parquet row counts and indices are contiguous, that there are no NaNs, that the video files exist and their frame counts <strong>exactly</strong> match what is declared, and the <strong>camera format</strong>: a bimanual dataset is classified as 6 cameras (four tactile streams plus two wrist cameras) or 8 (plus the headset's two eyes), and the two formats have different input dimensions at training time. The result is summarised on the last line:</p>
+<p>What it checks:</p>
+<ul>
+<li><code>meta/</code> is complete and the episode count agrees.</li>
+<li>Parquet row counts and indices are contiguous, with no NaNs.</li>
+<li>Video files exist and their frame counts <strong>exactly</strong> match what is declared.</li>
+<li><strong>Camera format</strong>: a bimanual dataset is classified as 6 cameras (four tactile streams plus two wrist cameras) or 8 (plus the headset's two eyes); the two have different training input dimensions.</li>
+</ul>
+<p>The result is summarised on the last line:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Summary: 0 error(s), 0 warning(s) | Camera format: 6-camera (no headset)
 </span></code></pre></div>
-<p>Single-gripper datasets, and datasets with the wrist camera off or only one eye recorded, show <code>not recognized</code> with a warning; this check only targets the standard bimanual formats and does not affect the other checks.</p>
+<p>Single-gripper datasets, and those with the wrist camera off or only one eye recorded, show <code>not recognized</code> with a warning; the other checks are unaffected.</p>
 <p>A video frame-count mismatch is graded by direction:</p>
 <table>
 <thead>
@@ -2316,30 +2324,30 @@
 </tbody>
 </table>
 <h3 id="8to6">Bimanual 8 cameras → 6 cameras<a class="headerlink" href="#8to6" title="锚点链接">¶</a></h3>
-<p>A bimanual dataset recorded with the <a href="../recording/#56">head camera</a> on is in the 8-camera format. To reduce it to the 6-camera format (the same shape as one recorded with <code>bi_taccap_gripper</code>, and the type recorded in the dataset becomes <code>bi_taccap_gripper</code> too), use <code>lerobot-edit-dataset</code>:</p>
+<p>A bimanual dataset recorded with the <a href="../recording/#56">head camera</a> on is in the 8-camera format. <code>lerobot-edit-dataset</code> reduces it to the 6-camera format, the same shape as a <code>bi_taccap_gripper</code> recording, and the recorded type becomes <code>bi_taccap_gripper</code>:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>lerobot-edit-dataset<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">    </span>--repo_id<span class="w"> </span>&lt;your_org&gt;/&lt;dataset_8cam&gt;<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span>--new_repo_id<span class="w"> </span>&lt;your_org&gt;/&lt;dataset_6cam&gt;<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">    </span>--operation.type<span class="w"> </span>convert_8_to_6_cameras
 </span></code></pre></div>
-<p>It drops the two headset eye image keys and the <code>head_camera.*</code> dimensions from <code>action</code> / <code>observation.state</code>. <strong>The source dataset is left untouched</strong> and the result is written to <code>--new_repo_id</code>. If the source is already 6-camera, or the camera keys do not match what is expected, the command errors out and refuses rather than producing a dataset of unclear format.</p>
+<p>It drops the two headset eye image keys and the <code>head_camera.*</code> dimensions from <code>action</code> / <code>observation.state</code>; <strong>the source dataset is left untouched</strong> and the result goes to <code>--new_repo_id</code>. A source that is already 6-camera, or whose camera keys are unexpected, is refused with an error.</p>
 <div class="admonition warning">
 <p class="admonition-title">Double-check <code>--repo_id</code></p>
 <p>If the dataset is not found locally this conversion fetches it from the Hugging Face Hub, and <code>--local_files_only</code> has no effect on it. Make sure <code>--repo_id</code> is spelled correctly, or point <code>--root</code> straight at the local dataset folder.</p>
 </div>
 <h2 id="replay-and-visualisation">Replay and visualisation<a class="headerlink" href="#replay-and-visualisation" title="锚点链接">¶</a></h2>
 <ul>
-<li>Online: once the dataset is on the Hub, the <a href="https://huggingface.co/spaces/lerobot/visualize_dataset">LeRobot Dataset Visualizer</a> browses each episode's video and data.</li>
+<li>Online: once on the Hub, browse each episode's video and data with the <a href="https://huggingface.co/spaces/lerobot/visualize_dataset">LeRobot Dataset Visualizer</a>.</li>
 <li>3D trajectory: add <code>--display_data=true</code> during the <a href="../recording/#preview">pre-recording preview</a> to see the gripper pose and trajectory in Rerun (see <a href="../../common/coordinates/#world-view">the <code>/world</code> 3D view</a>).</li>
-<li>Local, frame by frame: open the parquet + mp4 with the dataset visualisation script your local <code>lerobot</code> provides and check it frame by frame.</li>
+<li>Local, frame by frame: open the parquet + mp4 with the visualisation script your local <code>lerobot</code> provides.</li>
 </ul>
 <h2 id="64">Pushing to the Hugging Face Hub and backup<a class="headerlink" href="#64" title="锚点链接">¶</a></h2>
-<p>An upload counts as off-site backup plus delivery: run <code>lerobot-check-dataset</code> before uploading, and back up the whole <code>&lt;repo_id&gt;/</code> directory before deleting or moving an important dataset.</p>
+<p>An upload is off-site backup plus delivery. Run <code>lerobot-check-dataset</code> first; back up the whole <code>&lt;repo_id&gt;/</code> before deleting or moving an important dataset.</p>
 <div class="admonition warning">
 <p class="admonition-title">Log in to the Hub first</p>
 <p>Before uploading, run <code>hf auth login</code> (older versions also accept <code>huggingface-cli login</code>) or set <code>HF_TOKEN</code>; otherwise the push fails on authentication.</p>
 </div>
-<p>Push with the installed <code>lerobot-push-dataset-to-hub</code> console entry point:</p>
+<p>Push with <code>lerobot-push-dataset-to-hub</code>:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># basic form (--repo-id and --dataset-path are both needed)</span>
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>lerobot-push-dataset-to-hub<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span>--repo-id<span class="w"> </span>&lt;your_org&gt;/&lt;your_dataset&gt;<span class="w"> </span><span class="se">\</span>
@@ -2371,22 +2379,22 @@
 </div>
 </div>
 </div>
-<p>On success the dataset lives at <code>https://huggingface.co/datasets/&lt;repo_id&gt;</code>.</p>
+<p>On success it lives at <code>https://huggingface.co/datasets/&lt;repo_id&gt;</code>.</p>
 <ul>
-<li>The upload also generates a dataset card (README): it first writes an <code>assets/</code> folder with three images for the card (about 12 MB in total) into the local dataset folder and uploads it with the data, even with <code>--no-videos</code>.</li>
-<li><code>--dataset-path</code> reads local files only; a wrong path fails with <code>Cannot find dataset metadata in local directory</code> rather than downloading from the Hub.</li>
+<li>The upload generates a dataset card (README) and writes <code>assets/</code> (three card images, about 12 MB in total) into the local dataset folder, uploading it too, even with <code>--no-videos</code>.</li>
+<li><code>--dataset-path</code> reads local files only; a wrong path fails with <code>Cannot find dataset metadata in local directory</code> and nothing is downloaded from the Hub.</li>
 </ul>
 <h2 id="storage-planning">Planning and estimating disk usage<a class="headerlink" href="#storage-planning" title="锚点链接">¶</a></h2>
 <ul>
-<li>A bimanual rig with several cameras can produce around <strong>280 MB/s</strong> of raw video throughput. That is not the encoded write rate to disk, so do not extrapolate the on-disk size from it. The size after real-time encoding depends on resolution, scene content, <code>fps</code>, the encoder and the bitrate.</li>
-<li>A rough estimate per episode is the average bitrate of each encoded video stream × the duration, plus the Parquet and metadata. Camera count, resolution, <code>fps</code> and <code>episode_time_s</code> all scale it up.</li>
-<li>Before a large collection run, record 2–3 representative episodes, run the integrity check, then measure the real size and extrapolate to the number of episodes you plan:</li>
+<li>A bimanual multi-camera rig can produce around <strong>280 MB/s</strong> of raw video; that is not the encoded write rate, so do not estimate on-disk size from it.</li>
+<li>Per episode ≈ average bitrate of each encoded video stream × duration + Parquet and metadata; camera count, resolution, scene content, <code>fps</code>, encoder, bitrate and <code>episode_time_s</code> all affect it.</li>
+<li>Before a large run, record 2–3 representative episodes and run the integrity check, then extrapolate from the measured size to the planned episode count:</li>
 </ul>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>du<span class="w"> </span>-sh<span class="w"> </span>~/.cache/huggingface/lerobot/&lt;your_org&gt;/&lt;your_dataset&gt;
 </span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>df<span class="w"> </span>-h<span class="w"> </span>~/.cache/huggingface/lerobot<span class="w">          </span><span class="c1"># free space on the target disk</span>
 </span></code></pre></div>
 <h2 id="cleanup-and-maintenance">Cleanup and maintenance<a class="headerlink" href="#cleanup-and-maintenance" title="锚点链接">¶</a></h2>
-<p>When disk gets tight, first confirm the data passed <code>lerobot-check-dataset</code> and has been backed up or uploaded. To keep a way back, move the dataset into a separate quarantine directory first and only delete it through the file manager once you are sure:</p>
+<p>Before deleting, confirm the data passed <code>lerobot-check-dataset</code> and is backed up or uploaded. Move it into a quarantine directory first, and delete it through the file manager once you are sure:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>/data/lerobot-trash
 </span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>realpath<span class="w"> </span>~/.cache/huggingface/lerobot/&lt;your_org&gt;/&lt;old_dataset&gt;
 </span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>du<span class="w"> </span>-sh<span class="w"> </span>~/.cache/huggingface/lerobot/&lt;your_org&gt;/&lt;old_dataset&gt;
@@ -2396,9 +2404,9 @@
 <p class="admonition-title">Check the <code>realpath</code> output before moving</p>
 <p>It must be the single dataset directory you meant; never run a recursive delete against the cache root.</p>
 </div>
-<p>Keep an eye on the target disk with <code>df -h</code> so a collection run does not fill it mid-session (see <a href="../troubleshooting/">Troubleshooting</a>).</p>
+<p>Watch the target disk with <code>df -h</code> so a run does not fill it mid-session (see <a href="../troubleshooting/">Troubleshooting</a>).</p>
 <h2 id="collection-record">Collection record<a class="headerlink" href="#collection-record" title="锚点链接">¶</a></h2>
-<p>For traceability, keep one line of record per dataset. The gripper and tactile serial numbers are already written into <code>meta/hardware.json</code> at recording time; copying them into the record is only so they can be looked up offline, and if the two disagree, the one in the dataset wins. The tracker SN is not in the manifest, so that one has to be written down by hand.</p>
+<p>Keep one line of record per dataset. Gripper and tactile SNs are already in <code>meta/hardware.json</code>; copying them here is only for offline lookup, and the dataset wins if they disagree. The tracker SN has to be written down by hand.</p>
 <table>
 <thead>
 <tr>

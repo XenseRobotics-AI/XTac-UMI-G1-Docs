@@ -2218,11 +2218,16 @@
 
 
 <h1 id="版本与升级">版本与升级<a class="headerlink" href="#版本与升级" title="锚点链接">¶</a></h1>
-<p>本页给出采集前必须达到的版本基线，以及怎么查版本、更新仓库与 SDK、刷夹爪固件。文中的序列号和版本号都是示例，以你自己读到的为准。完整变更记录见仓库 <a href="https://github.com/XenseRobotics-AI/xense-taccap-lerobot/blob/main/CHANGELOG.md">CHANGELOG</a>，反馈问题见<a href="../../common/reference/#support">支持与反馈</a>。</p>
+<p>序列号和版本号都是示例，以实际读到的为准。完整变更见 <a href="https://github.com/XenseRobotics-AI/xense-taccap-lerobot/blob/main/CHANGELOG.md">CHANGELOG</a>，反馈见<a href="../../common/reference/#support">支持与反馈</a>。</p>
 <h2 id="required">必须升级到最新版本<a class="headerlink" href="#required" title="锚点链接">¶</a></h2>
 <div class="admonition warning">
 <p class="admonition-title">采集前先把各项都升到下表版本，这不是可选项</p>
-<p>整条链路是配套的：固件带<a href="#v21">命令集 V2.1</a> 才支持行程标定，SDK 0.4.1 附带的固件镜像已修掉<a href="#ota-when">已知缺陷</a>，也要用它来刷固件，<code>gripper.pos</code> 的归一化要三者齐了才成立。主夹爪缺标定或固件过低时采集程序会拒绝连接；其它不配套的组合仍可能"正常"落盘，只是数据和别人对不上，事后看不出来。</p>
+<ul>
+<li>固件带<a href="#v21">命令集 V2.1</a> 才支持行程标定。</li>
+<li>SDK 0.4.1 附带的镜像修掉了<a href="#ota-when">已知缺陷</a>。</li>
+<li>三者齐了 <code>gripper.pos</code> 归一化才成立。</li>
+<li>主夹爪缺标定或固件过低会被拒绝连接；其它不配套组合照常落盘，但数据对不上。</li>
+</ul>
 </div>
 <table>
 <thead>
@@ -2245,8 +2250,8 @@
 </tr>
 <tr>
 <td>夹爪固件</td>
-<td><strong>命令集 V2.1</strong>，即 leader ≥ 1.2.0 / follower ≥ 1.1.0；用从夹爪（<code>--robot.role=follower</code>）时 follower 须 ≥ 1.2.5（低于 1.2.11 会提示升级）</td>
-<td>跑 <a href="../calibration/#41"><code>calibrate.py</code></a>，版本不够会打印当前版本并退出；或<a href="#check-versions">直接读</a></td>
+<td><strong>命令集 V2.1</strong>，即 leader ≥ 1.2.0 / follower ≥ 1.1.0；用从夹爪（<code>--robot.role=follower</code>）时 follower 须 ≥ 1.2.5（低于 1.2.11 提示升级）</td>
+<td>跑 <a href="../calibration/#41"><code>calibrate.py</code></a> 或<a href="#check-versions">直接读</a></td>
 </tr>
 <tr>
 <td>每台 leader 的编码器标定</td>
@@ -2256,14 +2261,17 @@
 <tr>
 <td>XenseVR PC Service</td>
 <td>≥ v0.2.0，装机直接用 v0.2.1</td>
-<td><code>dpkg -s xensevr-pc-service</code>，看 <code>Version</code> 一行</td>
+<td><code>dpkg -s xensevr-pc-service</code> 的 <code>Version</code></td>
 </tr>
 </tbody>
 </table>
-<p>升级顺序不能乱：先<a href="#repo-update">拉仓库与子模块</a>并重编 SDK（否则 <code>import xense.taccap</code> 失败），再<a href="#ota">刷固件</a>，最后<a href="../calibration/#41">夹爪标定</a>，升级本身不产生标定值。</p>
+<p>顺序：先<a href="#repo-update">拉仓库与子模块</a>并重编 SDK（否则 <code>import xense.taccap</code> 失败），再<a href="#ota">刷固件</a>，最后<a href="../calibration/#41">夹爪标定</a>（升级不产生标定值）。</p>
 <pre class="mermaid"><code>flowchart LR
     A[拉仓库 + 子模块] --&gt; B[重新编译 xense.taccap] --&gt; C[刷固件 OTA] --&gt; D[每台 leader 标定]</code></pre>
-<p>已采过的数据不用重采；要和升级后的数据混用，先确认两批 <code>gripper.pos</code> 在同一刻度上。升级后重新做环境验证、设备自检和一条短 episode 校验。</p>
+<ul>
+<li>已采数据不用重采；与新数据混用前确认两批 <code>gripper.pos</code> 刻度一致。</li>
+<li>升级后重做环境验证、设备自检和一条短 episode 校验。</li>
+</ul>
 <h2 id="版本兼容基线">版本兼容基线<a class="headerlink" href="#版本兼容基线" title="锚点链接">¶</a></h2>
 <p>命令与字段以本地 checkout 和 SDK 附带的设备说明为准。</p>
 <table>
@@ -2312,7 +2320,7 @@
 </tr>
 <tr>
 <td>PyAV</td>
-<td><code>av&gt;=15.0.0,&lt;16.0.0</code>，安装脚本固定装 15.1.0</td>
+<td><code>av&gt;=15.0.0,&lt;16.0.0</code>，安装脚本固定 15.1.0</td>
 <td>15.1.0</td>
 </tr>
 <tr>
@@ -2343,7 +2351,7 @@
 <tr>
 <td>夹爪固件</td>
 <td>命令集 V2.1（帧格式 V1.8），leader ≥ 1.2.0 / follower ≥ 1.1.0</td>
-<td>leader 1.2.6 / follower 1.2.14，随 SDK 走，以 <code>firmware/manifest.json</code> 为准，见 <a href="#ota">OTA</a>；从夹爪低于 1.2.5 时 SDK 拒绝连接，低于 1.2.11 时提示升级</td>
+<td>leader 1.2.6 / follower 1.2.14，随 SDK 走，以 <code>firmware/manifest.json</code> 为准，见 <a href="#ota">OTA</a></td>
 </tr>
 <tr>
 <td><code>xensesdk</code></td>
@@ -2352,17 +2360,17 @@
 </tr>
 <tr>
 <td>XenseVR PC Service(<code>.deb</code>)</td>
-<td>≥ v0.2.0，装机直接用 v0.2.1</td>
+<td>≥ v0.2.0</td>
 <td>v0.2.1</td>
 </tr>
 <tr>
 <td><code>xensevr_pc_service_sdk</code></td>
-<td>绑定在主仓库内，链接 <code>.deb</code> 里的 C SDK</td>
+<td>在主仓库内，链接 <code>.deb</code> 的 C SDK</td>
 <td>0.2.1，版本号取自 <code>.deb</code></td>
 </tr>
 </tbody>
 </table>
-<p><code>.deb</code>（<code>/opt/apps/roboticsservice/SDK</code>）是 Pico4 C SDK 的唯一来源，重跑 <code>--install</code> 不会重编它；脚本跳过版本一致的包，停在 v0.2.0 的机器会拿旧 SDK 编绑定，装机直接用 v0.2.1。v0.2.0 只比 v0.1.0 多了转发<a href="../recording/#56">头显相机</a>帧，不用它就无行为变化。</p>
+<p><code>.deb</code>（<code>/opt/apps/roboticsservice/SDK</code>）是 Pico4 C SDK 唯一来源，<code>--install</code> 不重编它，停在 v0.2.0 会拿旧 SDK 编绑定。v0.2.0 起转发<a href="../recording/#56">头显相机</a>帧。</p>
 <h2 id="v21">三套编号：V2.1 是命令集，不是固件版本<a class="headerlink" href="#v21" title="锚点链接">¶</a></h2>
 <table>
 <thead>
@@ -2381,18 +2389,18 @@
 <tr>
 <td><strong>命令集</strong></td>
 <td><strong><code>V2.1</code></strong></td>
-<td>固件实现了哪些命令。行程标定用的 <code>EncoderMaxCal</code> 由 V2.1 引入（V2.0 鱼眼标定，V1.9 LED 与私有电机参数）</td>
+<td>固件实现的命令。行程标定的 <code>EncoderMaxCal</code> 由 V2.1 引入（V2.0 鱼眼标定，V1.9 LED 与私有电机参数）</td>
 </tr>
 <tr>
 <td>固件构建号</td>
 <td>leader ≥ 1.2.0 / follower ≥ 1.1.0</td>
-<td>具体哪一版镜像。这是门槛不是等号：更高的号（如 leader 1.2.2）同样支持 V2.1，不必回刷；主从号不同只因是两份固件</td>
+<td>具体镜像，是门槛不是等号：更高的号（如 leader 1.2.2）同样支持 V2.1</td>
 </tr>
 </tbody>
 </table>
-<p>本手册说的"V2.1"一律指命令集。够用不等于没缺陷，见<a href="#ota-when">我需要刷吗</a>。</p>
+<p>够用不等于没缺陷，见<a href="#ota-when">我需要刷吗</a>。</p>
 <h2 id="check-versions">如何查版本<a class="headerlink" href="#check-versions" title="锚点链接">¶</a></h2>
-<p>固件版本不在 SN 里，要用 <code>GetVersion</code> 问固件。下面一次打出 SDK 版本和每只夹爪的固件构建号：</p>
+<p>固件版本不在 SN 里，需 <code>GetVersion</code> 读取；下面同时打出 SDK 版本：</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>python<span class="w"> </span>-<span class="w"> </span><span class="s">&lt;&lt;'EOF'</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="s">import xense.taccap as t</span>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="s">from xense.taccap import scan_grippers, LeaderGripper, Cmd</span>
@@ -2403,12 +2411,16 @@
 </span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="s">    print(f"  {ep.firmware_sn}  {ep.side.name:5}  fw={ack.data[0]}.{ack.data[1]}.{ack.data[2]}")</span>
 </span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="s">EOF</span>
 </span></code></pre></div>
-<p>刷固件前的一次输出（两只都是主夹爪，<code>fw</code> 还是旧版本 1.2.5，刷完应读到 1.2.6）：</p>
+<p>刷固件前的输出（两只主夹爪，旧版 <code>fw</code> 1.2.5，刷完应为 1.2.6）：</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>xense.taccap 0.4.1 (需要 &gt;= 0.4.1)
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>  TCGU01A28Z0023m  Left   fw=1.2.5
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>  TCGU01A28Z0024m  Right  fw=1.2.5
 </span></code></pre></div>
-<p>主从夹爪都用 <code>LeaderGripper</code> 打开：它只读版本，而 <code>FollowerGripper</code> 会拒绝打开固件低于 1.2.5 的从夹爪。只传 <code>mcu_device</code>、<code>normalize_position</code> 保持默认 <code>False</code>，没做行程标定的夹爪也能读到版本。SN 只看末位：<code>m</code> 主夹爪，<code>s</code> 从夹爪，决定刷哪个镜像。ACK 第 4 个字节 <code>build</code> 恒为 0，版本按 <code>MAJOR.MINOR.PATCH</code> 三段比较。</p>
+<ul>
+<li>主从夹爪都用 <code>LeaderGripper</code> 打开；<code>FollowerGripper</code> 会拒绝固件低于 1.2.5 的从夹爪。</li>
+<li>只传 <code>mcu_device</code>、<code>normalize_position</code> 保持默认 <code>False</code>，未标定也能读。</li>
+<li>ACK 第 4 字节 <code>build</code> 恒为 0，按 <code>MAJOR.MINOR.PATCH</code> 三段比较。</li>
+</ul>
 <p>其余组件：</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>python<span class="w"> </span>-<span class="w"> </span><span class="s">&lt;&lt;'EOF'</span>
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="s">import importlib.metadata as M</span>
@@ -2423,19 +2435,19 @@
 </span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>dpkg<span class="w"> </span>-s<span class="w"> </span>xensevr-pc-service<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s1">'^(Package|Version|Architecture):'</span>
 </span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"import xensevr_pc_service_sdk as xrt; print('pico camera API:', hasattr(xrt, 'has_pico_camera_frame'))"</span>
 </span></code></pre></div>
-<p><code>pip show xensevr-pc-service-sdk</code> 显示的是构建时从 <code>dpkg</code> 读到的 <code>.deb</code> 版本；头显相机接口看 <code>has_pico_camera_frame</code>；夹爪 SN 与角色用<a href="../quickstart/#self-check">快速开始</a>的自检命令看。</p>
+<p><code>pip show xensevr-pc-service-sdk</code> 显示构建时从 <code>dpkg</code> 读到的 <code>.deb</code> 版本；头显相机接口看 <code>has_pico_camera_frame</code>；夹爪 SN 与角色见<a href="../quickstart/#self-check">快速开始</a>。</p>
 <h2 id="whats-new">0.1.0 更新要点<a class="headerlink" href="#whats-new" title="锚点链接">¶</a></h2>
 <ul>
-<li><strong>带不带头显改由 <code>--robot.type</code> 决定</strong>：双夹爪新增 <code>xtac_umi_g1</code>（录头显双目画面与头部位姿），<code>bi_taccap_gripper</code> 不再录头显；双夹爪命令里再写 <code>--robot.enable_head_camera</code> 且与类型矛盾时会直接报错。三档写法见<a href="../recording/#52">录制</a>。</li>
-<li>夹爪 SDK 升到 0.4.1，附带固件主夹爪 1.2.6 / 从夹爪 1.2.14；从夹爪固件低于 1.2.5 拒绝连接，低于 1.2.11 提示升级，见<a href="#ota">固件 OTA</a>。</li>
-<li>不再落盘 <code>meta/runtimes/</code>；<code>meta/info.json</code> 新增 <code>collection_stack</code>，标明数据由哪套采集软件录制，见<a href="../dataset/">数据集</a>。</li>
-<li><code>lerobot-check-dataset</code> 的视频帧数改为严格相等：少帧报错、多帧告警；编辑数据集时重新编码沿用采集的那套编码器。</li>
+<li><strong>带不带头显由 <code>--robot.type</code> 决定</strong>：双夹爪新增 <code>xtac_umi_g1</code>（录头显双目与头部位姿），<code>bi_taccap_gripper</code> 不录头显；<code>--robot.enable_head_camera</code> 与类型矛盾时报错，见<a href="../recording/#52">录制</a>。</li>
+<li>夹爪 SDK 升到 0.4.1，附带固件主夹爪 1.2.6 / 从夹爪 1.2.14，见<a href="#ota">固件 OTA</a>。</li>
+<li>不再落盘 <code>meta/runtimes/</code>；<code>meta/info.json</code> 新增 <code>collection_stack</code>，标明录制软件，见<a href="../dataset/">数据集</a>。</li>
+<li><code>lerobot-check-dataset</code> 视频帧数严格相等：少帧报错、多帧告警；编辑数据集重新编码沿用采集时的编码器。</li>
 <li>Docker 镜像支持在容器内语音播报。</li>
 <li>仓库、子模块与镜像地址迁到 <code>XenseRobotics-AI</code> 组织。</li>
 <li>拉到 v0.1.0 后<strong>必须重跑 <code>./setup_env.sh --install</code></strong>。</li>
 </ul>
 <h2 id="repo-update">仓库与子模块更新<a class="headerlink" href="#repo-update" title="锚点链接">¶</a></h2>
-<p>按发布版的 tag 更新，不要直接拉 <code>main</code>（<code>main</code> 上可能是未发布的改动）：</p>
+<p>按发布 tag 更新，不要直接拉 <code>main</code>（可能含未发布改动）：</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>git<span class="w"> </span>fetch<span class="w"> </span>--tags
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>git<span class="w"> </span>checkout<span class="w"> </span>v0.1.0
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>git<span class="w"> </span>submodule<span class="w"> </span>update<span class="w"> </span>--init<span class="w"> </span>--recursive<span class="w"> </span>--progress
@@ -2444,26 +2456,35 @@
 </span></code></pre></div>
 <div class="admonition warning">
 <p class="admonition-title">拉完子模块必须重新编译 <code>xense.taccap</code></p>
-<p><code>git submodule update</code> 只更新文件；不重跑 <code>./setup_env.sh --install</code>，<code>import xense.taccap</code> 直接失败。SDK 版本号相同（例如都是 0.4.1）时子模块也可能含 C++ 改动，每次拉子模块都要重跑。</p>
+<p><code>git submodule update</code> 只更新文件，不重跑 <code>./setup_env.sh --install</code> 则 <code>import xense.taccap</code> 失败。SDK 版本号不变（如 0.4.1）也可能含 C++ 改动，每次都要重跑。</p>
 </div>
 <p><span id="submodule-ssh"></span></p>
 <div class="admonition warning">
 <p class="admonition-title">子模块地址是 SSH 形式：没有 GitHub SSH key 的机器先改写一次地址</p>
-<p><code>third_party/taccap-gripper</code> 的地址写成 <code>git@github.com:</code> 形式。机器上没配 GitHub SSH key 时，主仓库能克隆，拉子模块会失败。子模块仓库是公开的，改走 HTTPS 即可，克隆或更新前执行一次：</p>
+<p><code>third_party/taccap-gripper</code> 的地址是 <code>git@github.com:</code> 形式，没配 SSH key 时拉子模块会失败。子模块仓库公开，克隆或更新前执行一次改走 HTTPS：</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>url.<span class="s2">"https://github.com/"</span>.insteadOf<span class="w"> </span><span class="s2">"git@github.com:"</span>
 </span></code></pre></div>
-<p>已经克隆好、子模块能正常更新的机器不必处理，<strong>也不要执行 <code>git submodule sync</code></strong>，否则会被切到 SSH 地址。<a href="../install/#docker">Docker 路径</a>不拉子模块，不受影响。</p>
+<p>能正常更新的机器不必处理，<strong>也不要执行 <code>git submodule sync</code></strong>，否则会切回 SSH。<a href="../install/#docker">Docker 路径</a>不受影响。</p>
 </div>
 <h2 id="ota">固件 OTA 升级<a class="headerlink" href="#ota" title="锚点链接">¶</a></h2>
 <h3 id="ota-when">我需要刷吗<a class="headerlink" href="#ota-when" title="锚点链接">¶</a></h3>
-<p>跑一次 <a href="../calibration/#41"><code>calibrate.py</code></a> 就知道：它先验固件，不够就原样退出并打印当前版本（报错样例见<a href="../calibration/#41">夹爪标定</a>）。看到任意一条就要刷：<code>calibrate.py</code> 报 <code>needs command set &gt;= V2.1</code> 退出；主夹爪连不上且报错提示先做 OTA；固件低于命令集 V2.1。固件不会退化，刷过一次后除非换主板或擦除固件，不用再刷。</p>
-<p>但 V2.1 只是能用的底线，旧固件有已知缺陷：请刷到 SDK 0.4.1 附带的 leader 1.2.6 / follower 1.2.14（各版本说明见<a href="../../follower/firmware/#check-version">从夹爪固件版本表</a>）。</p>
+<p>跑一次 <a href="../calibration/#41"><code>calibrate.py</code></a>，固件不够会退出并打印当前版本（样例见<a href="../calibration/#41">夹爪标定</a>）。任一条成立就刷：</p>
+<ul>
+<li><code>calibrate.py</code> 报 <code>needs command set &gt;= V2.1</code> 退出；</li>
+<li>主夹爪连不上，报错提示先做 OTA；</li>
+<li>固件低于命令集 V2.1。</li>
+</ul>
+<p>V2.1 只是底线，旧固件有已知缺陷，请刷到 SDK 0.4.1 附带的 leader 1.2.6 / follower 1.2.14（见<a href="../../follower/firmware/#check-version">从夹爪固件版本表</a>）。不换主板、不擦固件，刷一次即可。</p>
 <h3 id="怎么刷">怎么刷<a class="headerlink" href="#怎么刷" title="锚点链接">¶</a></h3>
 <div class="admonition warning">
 <p class="admonition-title">先升级 SDK，再刷固件</p>
-<p>刷写与刷后校验请用数采环境自带的 SDK 0.4.1，低于 0.1.7 的 SDK 绝不要用来刷固件；新 SDK 与旧固件通信不变，先升 SDK 总是安全的。附带哪版镜像跟着 SDK 走，要刷到 1.2.6 / 1.2.14 得先把子模块升到 SDK 0.4.1，否则刷完等于没修。镜像版本以 <code>firmware/manifest.json</code> 里的 <code>version</code> 为准，不要从 SDK 版本号去推。</p>
+<ul>
+<li>镜像随 SDK 走：先把子模块升到 SDK 0.4.1，用它刷写与校验，才能刷到 1.2.6 / 1.2.14；绝不要用低于 0.1.7 的 SDK 刷。</li>
+<li>新 SDK 与旧固件通信不变，先升 SDK 总是安全的。</li>
+<li>镜像版本以 <code>firmware/manifest.json</code> 里的 <code>version</code> 为准，不要从 SDK 版本号推。</li>
+</ul>
 </div>
-<p>SDK 自 0.1.7 起随仓库附带固件镜像，路径 <code>third_party/taccap-gripper/firmware/</code>，只保留当前发布版。文件名带版本号、随 SDK 升级而变，所以下面优先按角色让脚本自己挑镜像，不用记文件名。镜像版本随 SDK 走，以同目录 <code>manifest.json</code> 为准，查看各镜像的文件名与版本：</p>
+<p>镜像在 <code>third_party/taccap-gripper/firmware/</code>，只留当前发布版；文件名带版本号，优先按角色让脚本挑。各镜像文件名与版本见同目录 <code>manifest.json</code>：</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"import json;m=json.load(open('third_party/taccap-gripper/firmware/manifest.json'));[print(i['file'],i['version']) for i in m['images'].values()]"</span>
 </span></code></pre></div>
 <table>
@@ -2484,7 +2505,7 @@
 </tr>
 </tbody>
 </table>
-<p>按角色选镜像，不按左右手：<code>TCGU01A28Z0023m</code> 末位 <code>m</code>，用主夹爪镜像；同一套设备的两只夹爪常常都是主夹爪。</p>
+<p>按角色选，不按左右手：<code>TCGU01A28Z0023m</code> 末位 <code>m</code>，用主夹爪镜像；一套设备两只常都是主夹爪。</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># 1. 确认每只夹爪的角色</span>
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"from xense.taccap import scan_grippers</span>
 </span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="s2">for g in scan_grippers(): print(g.firmware_sn, '-&gt;', 'master' if g.firmware_sn.endswith('m') else 'slave')"</span>
@@ -2501,22 +2522,33 @@
 </span><span id="__span-6-14"><a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a><span class="s2">    print(f'{ep.firmware_sn}  {ep.side.name:5}  fw={ack.data[0]}.{ack.data[1]}.{ack.data[2]}')</span>
 </span><span id="__span-6-15"><a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a><span class="s2">"</span>
 </span></code></pre></div>
+<ul>
+<li>镜像名按给的路径、SDK 根目录、SDK <code>firmware/</code> 依次解析，任意目录可运行，连设备前就检查。</li>
+<li><code>--target-version</code> 通常不用写：只给校验日志和分区元数据打标记，脚本按 CRC32 在 <code>manifest.json</code> 里查出版本号，它不认识的镜像才需指定。</li>
+<li>约 1 秒写完，重启约 1–3 秒；新固件先写备用分区，校验通过才替换，传输失败不会刷坏。</li>
+<li>第 3 步读回须不低于 leader 1.2.0 / follower 1.1.0，刷当前附带镜像应为 1.2.6 / 1.2.14。</li>
+</ul>
 <p>其它写法：</p>
 <ul>
-<li>只插着一只主夹爪（或一只从夹爪）时，可以只写角色：<code>ota_update.py master</code> / <code>ota_update.py slave</code>。</li>
-<li>同一角色插着好几只、只想刷其中一只时，写镜像文件名 + 左右或 SN：<code>ota_update.py tc-gu-01-master-1.2.6.bin left</code>（文件名以 <code>firmware/</code> 里实际的为准）。</li>
-<li>不要写成 <code>slave left</code> / <code>master left</code>：第一个参数会被当成镜像文件名，报 <code>firmware file not found</code>。</li>
+<li>只插一只主夹爪（或从夹爪）时只写角色：<code>ota_update.py master</code> / <code>ota_update.py slave</code>。</li>
+<li>同角色多只里刷一只，写镜像文件名 + 左右或 SN：<code>ota_update.py tc-gu-01-master-1.2.6.bin left</code>（以 <code>firmware/</code> 里实际文件名为准）。</li>
+<li>不要写 <code>slave left</code> / <code>master left</code>：第一个参数会被当成文件名，报 <code>firmware file not found</code>。</li>
 </ul>
-<p>镜像名按给的路径、SDK 根目录、SDK <code>firmware/</code> 依次解析，在哪运行都行，连接设备前就检查。<code>--target-version</code> 通常不用写：它只给校验日志和分区元数据打标记，不影响刷的内容，脚本会按镜像的 CRC32 在 <code>manifest.json</code> 里查出版本号自动填上，只有刷 <code>manifest.json</code> 不认识的镜像时才需要手动指定。约 1 秒写完，夹爪重启约 1–3 秒；新固件写在备用分区，校验通过前不覆盖运行中的那份，传输失败不会刷坏。第 3 步读回的号必须不低于 leader 1.2.0 / follower 1.1.0，刷当前附带的镜像时读回 1.2.6 / 1.2.14。主从夹爪都用 <code>LeaderGripper</code> 读版本，<code>FollowerGripper</code> 会拒绝打开低于 1.2.5 的从夹爪。</p>
 <div class="admonition danger">
 <p class="admonition-title">刷错角色会导致夹爪无法启动，需返厂恢复</p>
-<p><code>ota_update.py</code> 按 CRC32 与 <code>manifest.json</code> 比对识别镜像，角色不匹配时直接拒绝，<code>--force</code> 才能强制；手工编译的镜像识别不出来，带提示放行。升级期间不要断电或拔线。</p>
+<p><code>ota_update.py</code> 按 CRC32 比对 <code>manifest.json</code> 识别镜像，角色不符直接拒绝，<code>--force</code> 才能强制；手工编译的镜像带提示放行。升级期间不要断电或拔线。</p>
 </div>
 <div class="admonition danger">
 <p class="admonition-title">刷完必须断电重插一次</p>
-<p>这是升级流程的一步，不是排障手段。OTA 后的重启是软复位，USB 转串口芯片没断过电，设备会停在降级状态：版本号正确、数据流在跑、错误计数为 0，只是悄悄丢状态帧。实测 60 秒一轮：只做 OTA 每轮丢 35~39 帧，断电重插后为 0。顺序是刷写 → 断电重插 → 第 3 步确认 → 标定，断电前测到的数据不可信。断电重插的做法：主夹爪拔插 USB 线；从夹爪拔下 24V 电源线，等约 2 秒再插回，USB 线不用拔（从夹爪的主控板和电机都由 24V 供电，只拔 USB 不会让它重启）。升级过程中断电会写坏，夹爪重启完成后再断电重插。</p>
+<p>这是升级流程的一步，不是排障手段。</p>
+<ul>
+<li>OTA 后是软复位，USB 转串口芯片没断电，设备停在降级状态：版本正确、数据流正常、错误计数为 0，却悄悄丢状态帧。实测 60 秒一轮，只做 OTA 丢 35~39 帧，断电重插后为 0。</li>
+<li>顺序：刷写 → 断电重插 → 第 3 步确认 → 标定，断电前的数据不可信。</li>
+<li>主夹爪拔插 USB 线；从夹爪拔下 24V 电源线，等约 2 秒插回，USB 线不用拔（主控板和电机都由 24V 供电）。</li>
+<li>等夹爪重启完成再断电重插。</li>
+</ul>
 </div>
-<p>升到 V2.1 后回到<a href="../calibration/#41">夹爪标定</a>标零点和行程上限，标完主夹爪才连得上。</p>
+<p>升到 V2.1 后回<a href="../calibration/#41">夹爪标定</a>标零点和行程上限。</p>
 
 
 

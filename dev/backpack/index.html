@@ -2071,15 +2071,15 @@
 </ul>
 <h2 id="overview">这一版是什么<a class="headerlink" href="#overview" title="锚点链接">¶</a></h2>
 <ul>
-<li>背包即主机：采集软件 XTac-UMI Collector 跑在背包里，采集、回放与 LeRobot 导出全部在背包自己的控制台里完成；平板、手机或 PC 只当浏览器用，不需要单独的数采主机。</li>
-<li>箱内：Pico4 Ultra 企业版头显（含手柄与追踪器）×1、XTac-UMI G1 ×2、夹爪连接线 ×2、头显连接线（Pico → Pack）×1、数采背包 ×1、12 V 3 A 适配器 ×1、充电宝 ×1 与 0.3 m 12 V PD 电源线 ×1、平板电脑 ×1；完整清单见<a href="../product/editions/#kit">箱内清单与接线</a>，开箱核对见<a href="unbox-connect/#unbox">开箱、接线与供电</a>。</li>
-<li>产出：每条录制一个 MCAP 原始记录，同步记录左右鱼眼、四路视触觉、头显与双追踪器 6DoF 位姿、夹爪开合度；导出按任务做，<a href="projects-export/#lerobot"><code>LeRobot 数据集</code></a> 与 <a href="projects-export/#mcap"><code>mcap</code></a> 两种格式并列，可下载成压缩包，也可上传到事先配置好的上传后端。</li>
-<li>操作：夹爪按键开录、停录，指示灯反馈状态，单人可完成整套采集。</li>
-<li>适合：规模化数采工厂与采集团队；软件闭源交付，支持轻量二次开发。需要接自己的 x86 工作站、完全走 LeRobot 框架的另一种形态见 <a href="../pc/">PC 版</a>；两种配置的差异见<a href="../product/editions/">产品线与配置对比</a>。</li>
+<li><strong>背包即主机</strong>：采集软件 XTac-UMI Collector 运行在背包里，采集、回放与导出都在背包的控制台完成。平板、手机或电脑只用浏览器打开控制台，不需要另配数采主机。</li>
+<li><strong>单人作业</strong>：夹爪按键开始、停止录制，指示灯与语音反馈状态，一个人就能完成整套采集。</li>
+<li><strong>采集内容</strong>：每条录制保存为一个 MCAP 原始记录，同步记录左右腕部鱼眼、四路视触觉、头显画面、头显与双追踪器的 6-DoF 位姿和夹爪开合度。</li>
+<li><strong>导出</strong>：按任务导出 <a href="projects-export/#lerobot">LeRobot 数据集</a>或 <a href="projects-export/#mcap">MCAP</a>，可以下载压缩包，也可以上传到 ModelScope、S3、FTP 或 NFS。</li>
+<li><strong>适合</strong>：规模化数采工厂与采集团队。软件闭源交付，支持轻量二次开发。</li>
 </ul>
-<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../assets/backpack/monitor-live.webp" data-desc-position="bottom"><img alt="控制台监控页：六路相机、两侧视触觉与头显位姿同屏" src="../assets/backpack/monitor-live.webp"></a></p>
-<p>录之前先看见：控制台同屏显示六路相机、两侧视触觉与头显位姿，夹爪开合度实时归一化；录制状态、磁盘余量与追踪器丢失都在同一屏上，平板和手机都能看。开录前该逐项确认什么见<a href="monitor-record/#checks">实时监控里确认</a>。</p>
-<p>产品定位与控制台介绍见<a href="../product/backpack/">认识数采背包</a>；<a href="unbox-connect/#ports">背包接口</a>、<a href="unbox-connect/#adapter">适配器</a>与<a href="unbox-connect/#powerbank">充电宝</a>两种接线方式、<a href="network/#label">机身标签</a>在各自的操作页里。</p>
+<p>箱内物品见<a href="../product/editions/#kit">箱内清单与接线</a>，开箱核对见<a href="unbox-connect/#unbox">开箱、接线与供电</a>。想接自己的 x86 工作站、完全基于 LeRobot 开发，见 <a href="../pc/">PC 版</a>；两种配置的区别见<a href="../product/editions/">产品线与配置对比</a>。</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../assets/backpack/monitor-live.webp" data-desc-position="bottom"><img alt="控制台实时监控页：各路相机、视触觉与位姿同屏" src="../assets/backpack/monitor-live.webp"></a></p>
+<p>控制台同屏显示各路相机、视触觉画面与位姿，夹爪开合度实时更新；录制状态、磁盘余量与追踪器丢失提示也在这一屏，平板和手机都能看。开录前的检查项见<a href="monitor-record/#checks">实时监控里确认</a>，产品介绍见<a href="../product/backpack/">认识数采背包</a>。</p>
 <h2 id="system">数采系统组成<a class="headerlink" href="#system" title="锚点链接">¶</a></h2>
 <p>整套采集在数采背包里完成：各路设备接到背包，背包保存原始记录，导出时再按任务生成数据集。把鼠标移到（手机上点按）任一模块，可以看到它的数据从哪来、到哪去；上方按钮切换三种采集模式。</p>
 <div class="tc-arch" data-layout="backpack"><script type="application/json">

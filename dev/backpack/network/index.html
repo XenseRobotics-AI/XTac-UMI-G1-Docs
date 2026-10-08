@@ -2254,16 +2254,24 @@
 
 
 <h1 id="网络与控制台入口">网络与控制台入口<a class="headerlink" href="#网络与控制台入口" title="锚点链接">¶</a></h1>
-<p>本页讲怎么打开 XTac-UMI Collector 控制台（下称控制台）。<strong>推荐用随箱平板插 USB</strong>：背包会自动在平板上打开控制台，并可一步把背包和平板都接入现场 WiFi。</p>
+<p>本页讲怎么打开 XTac-UMI Collector 控制台（下称控制台）。<strong>推荐随箱平板插 USB</strong>，还能一步把背包和平板接入现场 WiFi。</p>
 <h2 id="label">认机看标签，不记 IP<a class="headerlink" href="#label" title="锚点链接">¶</a></h2>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/product/backpack-label.webp" data-desc-position="bottom"><img alt="机身标签：SN、WiFi 名、密码、IP 与 mDNS 地址" src="../../assets/product/backpack-label.webp" width="420"></a></p>
-<p>机身标签印着这台背包的 SN、热点名与密码、IP 与设备名。标签上的 IP 是热点的固定地址 <code>192.168.44.1</code>，只在连背包热点时可用；背包接入现场网络后的 IP 会变且每台不同，不要把这类 IP 写进任何流程。认机用 SN（控制台 系统 → <a href="../system/#device-info">设备信息</a>可查）和热点名。</p>
+<p>标签印有 SN、热点名与密码、IP 与设备名。</p>
+<ul>
+<li><strong>标签上的 IP</strong>：热点固定地址 <code>192.168.44.1</code>，只在连热点时可用。</li>
+<li><strong>现场网络 IP</strong>：每台不同且会变，别写进流程。</li>
+<li><strong>认机</strong>：用 SN（系统 → <a href="../system/#device-info">设备信息</a>）和热点名。</li>
+</ul>
 <h2 id="tablet">推荐：平板插 USB<a class="headerlink" href="#tablet" title="锚点链接">¶</a></h2>
-<p>用数据线把平板接到背包前面板的 <code>HOST1</code> 或 <code>HOST2</code> 口，平板解锁后，背包会自动在平板上打开控制台的 系统 → 网络 / 配网 页，不需要连 WiFi、不需要输入地址。</p>
+<p>平板用数据线接背包前面板 <code>HOST1</code> 或 <code>HOST2</code> 口并解锁，背包自动在平板上打开 系统 → 网络 / 配网 页，免连 WiFi、免输地址。</p>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/backpack/tablet-usb-network-settings.webp" data-desc-position="bottom"><img alt="平板插 USB 后自动打开的网络 / 配网页" src="../../assets/backpack/tablet-usb-network-settings.webp"></a></p>
-<p>随箱平板出厂前已在产线完成授权，插上即可使用。平板恢复出厂设置或撤销了 USB 调试授权后，插上不会自动打开控制台，按<a href="../troubleshooting/#tablet-adb">故障排查</a>重新授权。</p>
+<ul>
+<li>随箱平板已在产线授权，插上即用。</li>
+<li>恢复出厂或撤销 USB 调试授权后不再自动打开，按<a href="../troubleshooting/#tablet-adb">故障排查</a>重新授权。</li>
+</ul>
 <h3 id="tablet-wifi">用平板给背包配网<a class="headerlink" href="#tablet-wifi" title="锚点链接">¶</a></h3>
-<p>在这个页面选择现场的 5 GHz WiFi 并输入密码，背包和平板会<strong>同时接入</strong>。背包确认平板已连上同一网络后，平板自动切到背包的 WiFi 地址，之后拔掉 USB 也能继续用。</p>
+<p>此页选现场 5 GHz WiFi、输密码，背包和平板<strong>同时接入</strong>。背包确认同网后平板切到背包 WiFi 地址，可拔 USB。</p>
 <h2 id="interfaces">背包的三个网络口<a class="headerlink" href="#interfaces" title="锚点链接">¶</a></h2>
 <table>
 <thead>
@@ -2276,7 +2284,7 @@
 <tbody>
 <tr>
 <td>有线</td>
-<td>网口接路由器，自动获取 IP，可改静态</td>
+<td>网口接路由器，自动获取 IP，可静态</td>
 <td>实验室 / 固定工位，带宽最稳</td>
 </tr>
 <tr>
@@ -2287,36 +2295,51 @@
 <tr>
 <td>热点</td>
 <td>背包自己的 5 GHz 热点，地址固定 <code>192.168.44.1</code></td>
-<td>没有平板、也没有现场网络时的入口</td>
+<td>无平板、无现场网络时用</td>
 </tr>
 </tbody>
 </table>
 <h2 id="softap">背包热点<a class="headerlink" href="#softap" title="锚点链接">¶</a></h2>
-<p>没有平板可用时，用背包热点进入控制台：</p>
+<p>无平板时：</p>
 <ol>
-<li>手机、平板或电脑连热点（名字与密码见机身标签）。</li>
+<li>手机、平板或电脑连热点（名字与密码见标签）。</li>
 <li>浏览器打开 <code>http://192.168.44.1</code>。</li>
 </ol>
 <div class="admonition note">
 <p class="admonition-title">新设备首次开机热点是关闭的</p>
-<p>在 系统 → <a href="../system/#wifi">网络 / 配网</a> 里「开启热点」，设备会记住这个选择；可以先用<a href="#tablet">平板插 USB</a> 进入控制台再打开。热点只有 5 GHz，只支持 2.4 GHz 的设备搜不到。</p>
+<p>在 系统 → <a href="../system/#wifi">网络 / 配网</a>「开启热点」，设备会记住；可先<a href="#tablet">平板插 USB</a> 进控制台再开。热点只有 5 GHz，只支持 2.4 GHz 的设备搜不到。</p>
 </div>
 <ul>
-<li>iOS / Safari 访问时要敲全 <code>http://</code> 前缀。</li>
-<li>现场多台背包时，连之前核对热点名与机身标签一致。</li>
-<li>把手机 / 平板其他已保存网络的「自动连接」关掉，免得采集中跳到别的网络。</li>
+<li>iOS / Safari 须敲全 <code>http://</code> 前缀。</li>
+<li>多台背包时，连前核对热点名与标签。</li>
+<li>关掉其他已保存网络的「自动连接」，防采集时跳网。</li>
 </ul>
 <h2 id="mdns">设备名访问<a class="headerlink" href="#mdns" title="锚点链接">¶</a></h2>
-<p>与背包在同一网络时，可以用设备名访问，免记 IP：机身标签最后一行的 <code>http://xense-xxxxxx.local</code>。设备名可在 系统 → <a href="../system/#wifi">网络 / 配网</a> 里改名或关闭。Windows 与部分安卓手机打不开 <code>.local</code> 设备名，改用<a href="#status">网络下拉</a>里的 IP。</p>
+<ul>
+<li>同网时用标签最后一行的 <code>http://xense-xxxxxx.local</code> 访问，免记 IP。</li>
+<li>改名或关闭在 系统 → <a href="../system/#wifi">网络 / 配网</a>。</li>
+<li>Windows 与部分安卓手机打不开 <code>.local</code>，改用<a href="#status">网络下拉</a>里的 IP。</li>
+</ul>
 <h2 id="lan">接入现场网络<a class="headerlink" href="#lan" title="锚点链接">¶</a></h2>
 <h3 id="wired">有线<a class="headerlink" href="#wired" title="锚点链接">¶</a></h3>
-<p>背包网口接路由器 LAN 口，插上即用；同一路由器下的电脑用<a href="#status">网络下拉</a>里显示的有线 IP 或设备名访问。Ubuntu 电脑记得在系统设置里勾选 Wired：</p>
+<ul>
+<li>网口接路由器 LAN 口即用；同路由器的电脑用<a href="#status">网络下拉</a>里的有线 IP 或设备名访问。</li>
+<li><strong>Ubuntu</strong>：系统设置里勾选 Wired：</li>
+</ul>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/backpack/ubuntu-wired.webp" data-desc-position="bottom"><img alt="Ubuntu 有线网络开关" src="../../assets/backpack/ubuntu-wired.webp" width="480"></a></p>
-<p>只有现场没有 DHCP（背包与电脑网线直连），或 IT 要求固定地址时才配静态 IP，见 系统 → <a href="../system/#wifi-wired">有线 IP</a>。</p>
+<p>无 DHCP（背包与电脑网线直连）或 IT 要求固定地址时才配静态 IP，见 系统 → <a href="../system/#wifi-wired">有线 IP</a>。</p>
 <h3 id="site-wifi">现场 WiFi<a class="headerlink" href="#site-wifi" title="锚点链接">¶</a></h3>
-<p>最简单的是用<a href="#tablet-wifi">平板插 USB 配网</a>，背包和平板一起接入。也可以在控制台 系统 → <a href="../system/#wifi-site">连现场 WiFi</a> 里单独给背包配网。背包只连 5 GHz WiFi。</p>
+<ul>
+<li><strong>最简单</strong>：<a href="#tablet-wifi">平板插 USB 配网</a>，背包和平板一起接入。</li>
+<li><strong>只配背包</strong>：系统 → <a href="../system/#wifi-site">连现场 WiFi</a>。</li>
+<li>背包只连 5 GHz WiFi。</li>
+</ul>
 <h2 id="status">核对当前网络状态<a class="headerlink" href="#status" title="锚点链接">¶</a></h2>
-<p>控制台顶栏左侧的 IP 下拉汇总本机全部入口：有线 IP、无线 IP 与所连热点、自身热点的 SSID / 密码 / 网关、mDNS 设备名。折叠态只显示一条「此刻最该用来连它的地址」（按 有线 &gt; 无线 &gt; 热点 取第一个可用的），点开可见全部。换了网络环境、不确定该用哪个地址时先看这里。</p>
+<p>顶栏左侧的 IP 下拉汇总本机全部入口，换网后不确定用哪个地址先看这里。</p>
+<ul>
+<li><strong>包含</strong>：有线 IP、无线 IP 与所连热点、自身热点的 SSID / 密码 / 网关、mDNS 设备名。</li>
+<li><strong>折叠态</strong>：只显示「此刻最该用来连它的地址」（有线 &gt; 无线 &gt; 热点 取首个可用）；点开见全部。</li>
+</ul>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/backpack/network-dropdown-live.webp" data-desc-position="bottom"><img alt="顶栏网络下拉" src="../../assets/backpack/network-dropdown-live.webp"></a></p>
 <h2 id="choose">按场景选接入方式<a class="headerlink" href="#choose" title="锚点链接">¶</a></h2>
 <table>
@@ -2341,7 +2364,7 @@
 </tr>
 <tr>
 <td>现场有 5 GHz WiFi，多人同时访问</td>
-<td>用平板把背包<a href="#site-wifi">配上现场 WiFi</a>，之后同网电脑直接访问</td>
+<td>平板把背包<a href="#site-wifi">配上现场 WiFi</a>，同网电脑直接访问</td>
 </tr>
 <tr>
 <td>背包与笔记本网线直连，无路由器</td>
@@ -2349,17 +2372,19 @@
 </tr>
 <tr>
 <td>怎么都连不上</td>
-<td>平板插 USB 进入控制台检查网络；仍不行按<a href="../troubleshooting/">故障排查</a>逐条查</td>
+<td>平板插 USB 进控制台查网络，仍不行见<a href="../troubleshooting/">故障排查</a></td>
 </tr>
 </tbody>
 </table>
 <h2 id="ssh">高级排查：由技术支持处理<a class="headerlink" href="#ssh" title="锚点链接">¶</a></h2>
-<p>日常的网络状态与连接操作都在控制台里完成：本机当前可用的全部访问地址看顶栏的<a href="#status">网络下拉</a>；有线地址、网关、「未插线」这类连接状态，以及连现场 WiFi、改有线 IP，都在 系统 → <a href="../system/#wifi">网络 / 配网</a>。</p>
-<p>设备后台只供技术支持做诊断。<strong>请勿自行登录后台或改动系统配置</strong>：那里的改动不在控制台的可见范围内，配错会让设备连热点入口一起失去。</p>
-<p>按本页的接入方式与<a href="../troubleshooting/">故障排查</a>逐条试过仍然连不上时，把这些交给技术支持，不要自己进后台：</p>
 <ul>
-<li>机身标签上的 SN，以及你用的是哪个入口（热点 / 设备名 / 有线 IP）；</li>
-<li>顶栏<a href="#status">网络下拉</a>里显示的地址，以及 系统 → <a href="../system/#wifi">网络 / 配网</a> 页上的有线状态与当前外网连接；</li>
+<li><strong>日常操作在控制台</strong>：地址看<a href="#status">网络下拉</a>；有线地址、网关、「未插线」等状态，及连现场 WiFi、改有线 IP，在 系统 → <a href="../system/#wifi">网络 / 配网</a>。</li>
+<li><strong>设备后台只供技术支持诊断</strong>，<strong>请勿自行登录或改动系统配置</strong>：控制台看不到这些改动，配错连热点入口都会失去。</li>
+</ul>
+<p>按本页与<a href="../troubleshooting/">故障排查</a>试过仍连不上，把这些交给技术支持：</p>
+<ul>
+<li>机身 SN，及所用入口（热点 / 设备名 / 有线 IP）；</li>
+<li><a href="#status">网络下拉</a>里的地址，及 系统 → <a href="../system/#wifi">网络 / 配网</a> 页的有线状态与当前外网连接；</li>
 <li>界面上的报错原文。</li>
 </ul>
 
