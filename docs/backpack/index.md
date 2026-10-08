@@ -8,17 +8,17 @@
 
 ## 这一版是什么 {#overview}
 
-- 背包即主机：采集软件 XTac-UMI Collector 跑在背包里，采集、回放与 LeRobot 导出全部在背包自己的控制台里完成；平板、手机或 PC 只当浏览器用，不需要单独的数采主机。
-- 箱内：Pico4 Ultra 企业版头显（含手柄与追踪器）×1、XTac-UMI G1 ×2、夹爪连接线 ×2、头显连接线（Pico → Pack）×1、数采背包 ×1、12 V 3 A 适配器 ×1、充电宝 ×1 与 0.3 m 12 V PD 电源线 ×1、平板电脑 ×1；完整清单见[箱内清单与接线](../product/editions.md#kit)，开箱核对见[开箱、接线与供电](unbox-connect.md#unbox)。
-- 产出：每条录制一个 MCAP 原始记录，同步记录左右鱼眼、四路视触觉、头显与双追踪器 6DoF 位姿、夹爪开合度；导出按任务做，[`LeRobot 数据集`](projects-export.md#lerobot) 与 [`mcap`](projects-export.md#mcap) 两种格式并列，可下载成压缩包，也可上传到事先配置好的上传后端。
-- 操作：夹爪按键开录、停录，指示灯反馈状态，单人可完成整套采集。
-- 适合：规模化数采工厂与采集团队；软件闭源交付，支持轻量二次开发。需要接自己的 x86 工作站、完全走 LeRobot 框架的另一种形态见 [PC 版](../pc/index.md)；两种配置的差异见[产品线与配置对比](../product/editions.md)。
+- **背包即主机**：采集软件 XTac-UMI Collector 运行在背包里，采集、回放与导出都在背包的控制台完成。平板、手机或电脑只用浏览器打开控制台，不需要另配数采主机。
+- **单人作业**：夹爪按键开始、停止录制，指示灯与语音反馈状态，一个人就能完成整套采集。
+- **采集内容**：每条录制保存为一个 MCAP 原始记录，同步记录左右腕部鱼眼、四路视触觉、头显画面、头显与双追踪器的 6-DoF 位姿和夹爪开合度。
+- **导出**：按任务导出 [LeRobot 数据集](projects-export.md#lerobot)或 [MCAP](projects-export.md#mcap)，可以下载压缩包，也可以上传到 ModelScope、S3、FTP 或 NFS。
+- **适合**：规模化数采工厂与采集团队。软件闭源交付，支持轻量二次开发。
 
-![控制台监控页：六路相机、两侧视触觉与头显位姿同屏](../assets/backpack/monitor-live.webp)
+箱内物品见[箱内清单与接线](../product/editions.md#kit)，开箱核对见[开箱、接线与供电](unbox-connect.md#unbox)。想接自己的 x86 工作站、完全基于 LeRobot 开发，见 [PC 版](../pc/index.md)；两种配置的区别见[产品线与配置对比](../product/editions.md)。
 
-录之前先看见：控制台同屏显示六路相机、两侧视触觉与头显位姿，夹爪开合度实时归一化；录制状态、磁盘余量与追踪器丢失都在同一屏上，平板和手机都能看。开录前该逐项确认什么见[实时监控里确认](monitor-record.md#checks)。
+![控制台实时监控页：各路相机、视触觉与位姿同屏](../assets/backpack/monitor-live.webp)
 
-产品定位与控制台介绍见[认识数采背包](../product/backpack.md)；[背包接口](unbox-connect.md#ports)、[适配器](unbox-connect.md#adapter)与[充电宝](unbox-connect.md#powerbank)两种接线方式、[机身标签](network.md#label)在各自的操作页里。
+控制台同屏显示各路相机、视触觉画面与位姿，夹爪开合度实时更新；录制状态、磁盘余量与追踪器丢失提示也在这一屏，平板和手机都能看。开录前的检查项见[实时监控里确认](monitor-record.md#checks)，产品介绍见[认识数采背包](../product/backpack.md)。
 
 ## 数采系统组成 {#system}
 

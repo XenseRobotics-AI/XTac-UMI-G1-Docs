@@ -8,17 +8,17 @@ Welcome to the XTac-UMI Backpack. This page is the getting-started guide for the
 
 ## What this kit is {#overview}
 
-- The backpack is the host: the collection software, XTac-UMI Collector, runs on the backpack, and collection, replay and LeRobot export all happen in the backpack's own console. A tablet, phone or PC acts purely as a browser; no separate collection host is needed.
-- In the box: one Pico4 Ultra Enterprise headset (with controller and trackers), two XTac-UMI G1 grippers, two gripper cables, one headset cable (Pico → Pack), one backpack, one 12 V 3 A adapter, one power bank with a 0.3 m 12 V PD power cable, and one tablet. The full list is in [Box contents and wiring](../product/editions.md#kit); check the contents against [Unboxing, cabling and power](unbox-connect.md#unbox).
-- Output: one MCAP raw recording per take, capturing the left and right fisheye views, four visuotactile feeds, the headset and both trackers' 6-DoF poses and the gripper opening in sync. Export is done per task, with [`LeRobot dataset`](projects-export.md#lerobot) and [`mcap`](projects-export.md#mcap) as equal formats; you can download an archive or upload to an upload backend you configured beforehand.
-- Operation: the gripper buttons start and stop recording, the LEDs report the state, and one person can carry out the whole run.
-- Suits: high-volume collection operations and collection teams; the software is delivered closed-source with support for light customisation. For the other configuration — your own x86 workstation, running entirely on the LeRobot framework — see the [Developer Kit](../pc/index.md); the differences between the two are in [Product line and configuration comparison](../product/editions.md).
+- **The backpack is the host**: the collection software, XTac-UMI Collector, runs on the backpack, and collection, replay and export all happen in its console. A tablet, phone or computer just opens the console in a browser; no separate collection host is needed.
+- **One-person operation**: the gripper buttons start and stop recording, and the LEDs and voice prompts report the state, so one person can run the whole collection.
+- **What is recorded**: each take is saved as one raw MCAP recording, capturing the left and right wrist fisheye views, four visuotactile feeds, the headset images, the 6-DoF poses of the headset and both trackers, and the gripper opening in sync.
+- **Export**: export per task as a [LeRobot dataset](projects-export.md#lerobot) or [MCAP](projects-export.md#mcap), then download an archive or upload to ModelScope, S3, FTP or NFS.
+- **Suits**: high-volume collection operations and collection teams. The software is delivered closed-source, with support for light customisation.
 
-![Console monitor page: six cameras, both visuotactile sensors and headset pose on one screen](../assets/backpack/monitor-live.webp)
+The box contents are in [Box contents and wiring](../product/editions.md#kit); check them against [Unboxing, cabling and power](unbox-connect.md#unbox). To use your own x86 workstation and build entirely on LeRobot, see the [Developer Kit](../pc/index.md); the differences are in [Product line and configuration comparison](../product/editions.md).
 
-See it before you record: the console shows all six cameras, both visuotactile sensors and the headset pose on one screen, with the gripper opening normalised in real time; recording state, free disk space and tracker loss are all on the same screen, viewable from a tablet or a phone. What to check item by item before you start recording is in [Checks on the Live monitor page](monitor-record.md#checks).
+![The console's live monitor page: every camera, the visuotactile images and the poses on one screen](../assets/backpack/monitor-live.webp)
 
-The product positioning and an introduction to the console are in [The Backpack](../product/backpack.md); the [backpack's ports](unbox-connect.md#ports), the [adapter](unbox-connect.md#adapter) and [power-bank](unbox-connect.md#powerbank) wiring options, and the [body label](network.md#label) are each on their own page.
+The console shows every camera, the visuotactile images and the poses on one screen, with the gripper opening updated in real time; recording state, free disk space and tracker-loss alerts are on the same screen, viewable from a tablet or phone. What to check before recording is in [Checks on the Live monitor page](monitor-record.md#checks), and the product introduction is in [The Backpack](../product/backpack.md).
 
 ## System composition {#system}
 
