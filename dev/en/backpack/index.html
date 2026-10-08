@@ -2063,7 +2063,12 @@
 
 
 <h1 id="backpack-kit-the-xtac-umi-backpack">Backpack Kit: the XTac-UMI Backpack<a class="headerlink" href="#backpack-kit-the-xtac-umi-backpack" title="锚点链接">¶</a></h1>
-<p>This page is the Backpack Kit's entry point: work through the "First deployment checklist" the first time you get the equipment, and after that look only at the "Daily collection cheat sheet" each day. By the end you can carry out a complete collection run on your own, from powering up to exporting a dataset.</p>
+<p>Welcome to the XTac-UMI Backpack. This page is the getting-started guide for the Backpack Kit:</p>
+<ul>
+<li><strong>First deployment</strong>: when you first receive the kit, work through the <a href="#first-deploy">first deployment checklist</a> on this page.</li>
+<li><strong>Daily collection</strong>: before each collection session, check the <a href="#daily">daily collection cheat sheet</a>.</li>
+<li><strong>Goal</strong>: by the end of this page you will be able to complete one full collection on your own, from powering on to exporting a dataset.</li>
+</ul>
 <h2 id="overview">What this kit is<a class="headerlink" href="#overview" title="锚点链接">¶</a></h2>
 <ul>
 <li>The backpack is the host: the collection software, XTac-UMI Collector, runs on the backpack, and collection, replay and LeRobot export all happen in the backpack's own console. A tablet, phone or PC acts purely as a browser; no separate collection host is needed.</li>
@@ -2353,28 +2358,100 @@
 </ul>
 <p>Export formats and the extra files are in <a href="projects-export/#lerobot">LeRobot dataset</a>.</p>
 <h2 id="first-deploy">First deployment checklist<a class="headerlink" href="#first-deploy" title="锚点链接">¶</a></h2>
-<p>Read <a href="../product/safety/">Safety and compliance</a> before you start. The detailed steps live on their own pages; this page only says what to do and where.</p>
+<div class="admonition note">
+<p class="admonition-title">Before you start</p>
+<p>Read <a href="../product/safety/">Safety and compliance</a> first. This page is an overview of the deployment: it says only what to do and where to do it; each step's detailed walkthrough is on its own page.</p>
+</div>
+<h3 id="deploy-headset">1. Headset setup<a class="headerlink" href="#deploy-headset" title="锚点链接">¶</a></h3>
+<ul>
+<li><strong>System update</strong>: update Pico OS to 5.15.5.U or later.</li>
+<li><strong>System settings</strong>: <a href="../common/pico4/#pico-system">turn on developer mode and set screen-off and sleep to "Never"</a>.</li>
+<li><strong>Trackers</strong>: <a href="../common/pico4/#pico-tracker-bind">pair the two trackers with the headset</a> by the "odd left, even right" rule and switch them to independent tracking mode.</li>
+<li><strong>Software</strong>: <a href="../common/pico4/#pico-app">install XTac-UMI XR</a> on the headset.</li>
+</ul>
+<h3 id="deploy-wiring">2. Wiring and power<a class="headerlink" href="#deploy-wiring" title="锚点链接">¶</a></h3>
+<p>Connect in the <a href="unbox-connect/#order">fixed order</a>: grippers → headset → power the backpack on.</p>
+<p><strong>Cables</strong></p>
+<ul>
+<li>Plug the left and right grippers into the backpack's <code>UMI-L</code> and <code>UMI-R</code> ports.</li>
+<li>Connect the headset to the backpack's <code>PICO</code> port with the headset cable (Pico → Pack).</li>
+</ul>
+<p><strong>Power (choose one)</strong></p>
+<ul>
+<li><strong>Option A</strong>: <a href="unbox-connect/#adapter">adapter power</a>, with the power adapter plugged into the backpack's <code>DC</code> port.</li>
+<li><strong>Option B</strong>: <a href="unbox-connect/#powerbank">power-bank power</a>, with the power bank connected to the backpack's <code>DC</code> port through the 0.3 m 12 V PD power cable.</li>
+</ul>
+<p>The grippers' connection and power requirements are in <a href="../common/gripper/#power">Gripper connection and serial numbers</a>.</p>
+<h3 id="deploy-console">3. Open the console<a class="headerlink" href="#deploy-console" title="锚点链接">¶</a></h3>
+<ul>
+<li><strong>Tablet</strong>: cable the tablet to the backpack's <code>HOST1</code> or <code>HOST2</code> port and the backpack opens the console on it; see <a href="network/#tablet">Tablet over USB</a>.</li>
+<li><strong>No tablet</strong>: connect to the <a href="network/#softap">backpack hotspot</a> instead.</li>
+</ul>
+<h3 id="deploy-headset-link">4. Connect the headset to the backpack<a class="headerlink" href="#deploy-headset-link" title="锚点链接">¶</a></h3>
 <ol>
-<li>Headset setup: bring Pico OS to 5.15.5.U or above, then <a href="../common/pico4/#pico-system">enable developer mode and set the screen timeout and system sleep to "Never"</a>; <a href="../common/pico4/#pico-tracker-bind">pair both trackers to the headset</a> following "odd is left, even is right" and switch them to standalone tracking mode; <a href="../common/pico4/#pico-app">install XTac-UMI XR</a>.</li>
-<li>Cabling and power: <a href="unbox-connect/#order">the order is fixed</a> — grippers → headset → power up the backpack, with the left and right grippers going to UMI-L / UMI-R and the headset going to the backpack's PICO port over the headset cable (Pico → Pack). Pick one of the two power options: with <a href="unbox-connect/#adapter">adapter power</a>, the adapter goes to the backpack's DC port; with <a href="unbox-connect/#powerbank">power-bank power</a>, the power bank feeds the backpack's DC port over the 0.3 m 12 V PD power cable. The grippers' connection and power requirements are in <a href="../common/gripper/#power">Gripper connection and serial numbers</a>.</li>
-<li>Connect to the backpack: cable the tablet to the backpack's <code>HOST1</code> or <code>HOST2</code> port and the backpack opens the console on it, see <a href="network/#tablet">The tablet over USB</a>. Without a tablet, use the <a href="network/#softap">backpack hotspot</a>.</li>
-<li><a href="unbox-connect/#pico-link">Connect the headset to the backpack</a>: put the headset on, open XTac-UMI XR, leave "USB Network" unticked and "PC IP" empty (it connects to the backpack at <code>192.168.100.1</code> by default), then tap "Connect". The interface and the connection states are in <a href="../common/pico4/#pico-toolkit-ui">Pico4 headset and tracker setup</a>.</li>
-<li>Set the <a href="system/#capture-mode">capture mode</a>: the capture mode belongs to the project. When you <a href="monitor-record/#project-task">create a project</a>, pick "Dual gripper", "Dual gripper + headset stereo" or "Dual gripper + headset right eye" according to what is actually connected; it cannot be changed afterwards, and the System page only displays it. Every mode needs the headset and trackers for pose.</li>
-<li>Optional: console → System → <a href="system/#upload">Upload configuration</a>, create an upload backend and fill in its credentials (how to obtain them is in the same section). You can bind it when you create a project, after which that project's "upload to remote" exports use it by default; the credentials are entered on this page once and never again in the export dialog.</li>
+<li>Put on the headset and open XTac-UMI XR.</li>
+<li><strong>Leave "USB Network" unticked</strong> and "PC IP" empty (it connects to the backpack at <code>192.168.100.1</code> by default).</li>
+<li>Tap "Connect".</li>
 </ol>
+<p>The interface and connection states are in <a href="../common/pico4/#pico-toolkit-ui">Pico4 headset and trackers</a>; detailed steps are in <a href="unbox-connect/#pico-link">Connecting the headset to the backpack</a>.</p>
+<h3 id="deploy-mode">5. Choose the capture mode<a class="headerlink" href="#deploy-mode" title="锚点链接">¶</a></h3>
+<p>The <a href="system/#capture-mode">capture mode</a> is a fixed property of a project. When you <a href="monitor-record/#project-task">create a project</a>, choose one of these three modes to match what is connected:</p>
+<ul>
+<li>"Dual gripper"</li>
+<li>"Dual gripper + headset stereo"</li>
+<li>"Dual gripper + headset right eye"</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">The capture mode cannot be changed after the project is created</p>
+<p>The System page only displays it. Whichever mode you choose, the headset and trackers must provide poses.</p>
+</div>
+<h3 id="deploy-upload">6. Upload configuration (optional)<a class="headerlink" href="#deploy-upload" title="锚点链接">¶</a></h3>
+<ul>
+<li><strong>Where</strong>: console → System → <a href="system/#upload">Upload configuration</a>.</li>
+<li><strong>What to do</strong>: create an upload backend and fill in its credentials (how to get them is in the same section).</li>
+<li><strong>Binding</strong>: bind it when you create a project; that project's exports with "Upload to remote" then use it by default, with no credentials to enter in the export dialog.</li>
+</ul>
 <h2 id="daily">Daily collection cheat sheet<a class="headerlink" href="#daily" title="锚点链接">¶</a></h2>
 <p>Every working day, follow the <a href="quickstart/">Quickstart</a>: wire and power up → tablet over USB to open the console → connect the headset → pick a project and task → check before recording → record with the buttons → export.</p>
 <p>Do not restart XTac-UMI XR during collection: a restart resets the world origin, so the pose reference within one dataset stops being consistent; see <a href="../common/pico4/#pico-frame">Startup and frame alignment</a>.</p>
-<h2 id="after">After recording<a class="headerlink" href="#after" title="锚点链接">¶</a></h2>
+<h2 id="after">After recording: replay, review and export<a class="headerlink" href="#after" title="锚点链接">¶</a></h2>
+<p>Once recording is done, you can replay, review, delete and export recordings from the console.</p>
+<h3 id="after-review">1. Replay and review<a class="headerlink" href="#after-review" title="锚点链接">¶</a></h3>
 <ul>
-<li>Replay and review: console → Projects, with the hierarchy project → task → recording, each entry showing duration, frame count, data size and quality annotations. Click "Replay" for <a href="playback/">streamed replay</a> in the browser, with a draggable progress bar; <a href="projects-export/#delete">delete</a> a bad entry on the spot, which also removes its MCAP and H264 export files and cannot be undone.</li>
-<li>Export: select a task and click "Export" to open the <a href="projects-export/#export">export dialog</a>. It first pre-checks data integrity — if that fails it lists each blocking item, and you re-run the pre-check after deleting or fixing them. Once it passes, pick the "export destination" first and then the "export format":<ul>
-<li>Destination, one of two: "Download to device" packs the data on the backpack first and then gives you a button to fetch the <a href="projects-export/#export">archive</a>; "Upload to remote" takes an <a href="system/#upload">upload backend</a> you configured beforehand from a drop-down, following the project default, temporarily using another one, or creating one on the spot.</li>
-<li>Format, one of two: <a href="projects-export/#lerobot"><code>LeRobot dataset</code></a> and <a href="projects-export/#mcap"><code>mcap</code></a> are equals — the same task can produce one now and the other later, and both outputs are kept. A project can have a default format, and a single export can override it.</li>
-<li>After an upload completes the local files are <strong>kept by default</strong>; to free space, tick the clean-up before uploading, or <a href="projects-export/#archive">archive</a> at any point afterwards. Archiving keeps only the record and removes the raw files, and the clean-up protects any format that has not been used yet.</li>
+<li><strong>Hierarchy</strong>: console → Projects, organised as project → task → recording.</li>
+<li><strong>Overview</strong>: each recording shows its duration, frame count, data size and quality flags.</li>
+<li><strong>Streaming replay</strong>: click "Replay" to <a href="playback/">stream it in the browser</a>, with a draggable progress bar.</li>
+<li><strong>Clean-up</strong>: delete a problem recording on the spot with <a href="projects-export/#delete">"Delete"</a>.</li>
 </ul>
-</li>
+<div class="admonition danger">
+<p class="admonition-title">Deletion cannot be undone</p>
+<p>Deleting a recording also deletes its MCAP and H264 export files.</p>
+</div>
+<h3 id="after-export">2. Export<a class="headerlink" href="#after-export" title="锚点链接">¶</a></h3>
+<p>Select the task to export and click "Export" to open the <a href="projects-export/#export">export dialog</a>.</p>
+<p><strong>Precheck</strong>: data integrity is checked automatically first.</p>
+<ul>
+<li><strong>Failed</strong>: the blocking items are listed one by one; delete or fix them as prompted, then run the precheck again.</li>
+<li><strong>Passed</strong>: choose the "Export destination" and then the "Export format".</li>
 </ul>
+<p><strong>Destination (choose one)</strong></p>
+<ul>
+<li><strong>Download to device</strong>: the backpack packages the result, then a button lets you fetch the <a href="projects-export/#download">archive</a>.</li>
+<li><strong>Upload to remote</strong>: pick a pre-configured <a href="system/#upload">upload backend</a> from the drop-down: follow the project default, switch to another configuration for this export, or create one on the spot.</li>
+</ul>
+<p><strong>Format (choose one)</strong></p>
+<ul>
+<li><strong>Equal formats</strong>: <a href="projects-export/#lerobot">LeRobot dataset</a> and <a href="projects-export/#mcap">MCAP</a> have equal standing.</li>
+<li><strong>Export both</strong>: one task can be exported in one format and later in the other; both outputs are kept.</li>
+<li><strong>Default and override</strong>: a project can set a default format, which you can override for a single export.</li>
+</ul>
+<h3 id="after-storage">3. Storage and clean-up<a class="headerlink" href="#after-storage" title="锚点链接">¶</a></h3>
+<p>After uploading, <strong>local files are kept by default</strong>. To free space:</p>
+<ul>
+<li><strong>Archive on upload</strong>: tick "Archive automatically after upload" before uploading.</li>
+<li><strong>Archive any time</strong>: <a href="projects-export/#archive">archive</a> manually later.</li>
+</ul>
+<p>Archiving keeps only the record and clears the raw files; clean-up protects formats that have not been exported yet.</p>
 <h2 id="faq">Common questions<a class="headerlink" href="#faq" title="锚点链接">¶</a></h2>
 <ul>
 <li><a href="troubleshooting/#connect">Cannot reach the console</a>: try the tablet over USB first; on the hotspot, confirm the device supports 5 GHz, that you are on this backpack's hotspot and that the address includes <code>http://</code>; power-cycle the backpack if it becomes unresponsive.</li>
