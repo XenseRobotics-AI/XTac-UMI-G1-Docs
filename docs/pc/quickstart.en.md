@@ -1,4 +1,4 @@
-# Quickstart (TL;DR)
+# Quickstart
 
 From power-on to your first recorded episode. Before you start, make sure these five are done:
 

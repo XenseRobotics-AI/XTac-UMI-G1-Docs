@@ -1,4 +1,4 @@
-# Quickstart (TL;DR)
+# Quickstart
 
 This page takes you from powering on to your first exported dataset; follow the steps in order.
 
