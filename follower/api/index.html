@@ -2176,22 +2176,22 @@
 
 
 <h1 id="api-与示例">API 与示例<a class="headerlink" href="#api-与示例" title="锚点链接">¶</a></h1>
-<p>从夹爪用到的 SDK 接口与示例脚本。示例为 Python；C++ 接口同名，完整说明可用 <code>help(t.FollowerGripper)</code> 查看。安装见<a href="../setup/#install">准备与自检</a>，怎样让夹爪动起来见<a href="../control/">运动控制</a>。</p>
+<p>示例为 Python，C++ 接口同名，详见 <code>help(t.FollowerGripper)</code>；安装见<a href="../setup/#install">准备与自检</a>，运动见<a href="../control/">运动控制</a>。</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">xense.taccap</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">t</span>
 </span></code></pre></div>
 <h2 id="open">打开从夹爪<a class="headerlink" href="#open" title="锚点链接">¶</a></h2>
-<p>只接一只从夹爪时：</p>
+<p>只接一只：</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">g</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">FollowerGripper</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">find_follower</span><span class="p">()</span><span class="o">.</span><span class="n">mcu_device</span><span class="p">)</span>
 </span></code></pre></div>
-<p>接着多只夹爪时，按左右和主从挑出要用的那只：</p>
+<p>多只按左右与主从挑：</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">ep</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">e</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">t</span><span class="o">.</span><span class="n">scan_grippers</span><span class="p">()</span>
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>          <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">side</span> <span class="o">==</span> <span class="n">t</span><span class="o">.</span><span class="n">Side</span><span class="o">.</span><span class="n">Left</span> <span class="ow">and</span> <span class="n">e</span><span class="o">.</span><span class="n">role</span> <span class="o">==</span> <span class="n">t</span><span class="o">.</span><span class="n">Role</span><span class="o">.</span><span class="n">Follower</span><span class="p">)</span>
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">g</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">FollowerGripper</span><span class="p">(</span><span class="n">ep</span><span class="o">.</span><span class="n">mcu_device</span><span class="p">)</span>
 </span></code></pre></div>
-<p>从夹爪的序列号以 <code>s</code> 结尾，见<a href="../#sn">序列号</a>。</p>
+<p>从夹爪序列号以 <code>s</code> 结尾，见<a href="../#sn">序列号</a>。</p>
 <div class="admonition danger">
 <p class="admonition-title">扫描会中断其他程序</p>
-<p>扫描会停掉其他程序正在使用的夹爪数据流，正在夹持的从夹爪会卸力。在自己的程序里只在启动时扫描一次。</p>
+<p>会停掉其他程序的夹爪数据流，夹持中的从夹爪卸力；只在启动时扫一次。</p>
 </div>
 <h2 id="controllers">控制器<a class="headerlink" href="#controllers" title="锚点链接">¶</a></h2>
 <table>
@@ -2214,25 +2214,20 @@
 <td><code>ForcePositionConfig.for_spec(g.motor.get_spec())</code></td>
 </tr>
 <tr>
-<td>可调参数</td>
+<td>可调</td>
 <td>一般不调</td>
 <td><code>grasp_torque_nm</code>（夹持力，≤ 1.1 N·m）</td>
 </tr>
 <tr>
-<td>常用调用</td>
+<td>常用</td>
 <td><code>set_target(开度)</code></td>
 <td><code>set_target(开度)</code>、<code>release()</code>、<code>hold_position()</code></td>
 </tr>
-<tr>
-<td>是否夹住</td>
-<td>—</td>
-<td><code>snapshot().holding</code></td>
-</tr>
 </tbody>
 </table>
-<p>两种控制器都有 <code>start()</code> / <code>stop()</code>（或用 <code>with</code>）、<code>snapshot()</code>、<code>reset()</code>。调用顺序：</p>
+<p>两种都有 <code>start()</code> / <code>stop()</code>（或 <code>with</code>）、<code>snapshot()</code>、<code>reset()</code>，顺序：</p>
 <p><code>g.motor.clear_fault()</code> → 启动控制器 → <code>g.motor.enable()</code> → <code>set_target()</code> → 停止控制器</p>
-<p>完整写法见<a href="../control/#basic">在程序里控制</a>。</p>
+<p>写法见<a href="../control/#basic">在程序里控制</a>。</p>
 <h2 id="state">读取状态<a class="headerlink" href="#state" title="锚点链接">¶</a></h2>
 <table>
 <thead>
@@ -2246,7 +2241,7 @@
 <tr>
 <td>控制中</td>
 <td><code>c.snapshot().observation</code></td>
-<td><code>position</code>（开度）、<code>velocity</code>、<code>torque</code>（正值 = 往闭合方向）、<code>motor_temp_c</code></td>
+<td><code>position</code>（开度）、<code>velocity</code>、<code>torque</code>（正 = 闭合方向）、<code>motor_temp_c</code></td>
 </tr>
 <tr>
 <td>控制中</td>
@@ -2254,33 +2249,36 @@
 <td>力位控制下是否夹住</td>
 </tr>
 <tr>
-<td>不控制时</td>
+<td>未控制</td>
 <td><code>g.position()</code></td>
 <td>开度</td>
 </tr>
 <tr>
 <td>任何时候</td>
 <td><code>g.motor.motor_version()</code></td>
-<td>电机固件版本，见<a href="../firmware/#motor-version">电机固件版本</a></td>
+<td>见<a href="../firmware/#motor-version">电机固件版本</a></td>
 </tr>
 </tbody>
 </table>
-<p>控制运行时读状态一律用 <code>snapshot()</code>，不要另外去读电机状态，否则会和控制命令抢同一条通信。</p>
+<p>控制中只用 <code>snapshot()</code> 读，另读电机会抢通信。</p>
 <h2 id="motor-primitives">电机底层接口<a class="headerlink" href="#motor-primitives" title="锚点链接">¶</a></h2>
-<p><code>g.motor.submit_*</code> 等底层接口直接向电机下发命令，不经过控制器的保护。<strong>请使用控制器</strong>，不要调用它们。</p>
-<p>以下接口会修改夹爪或电机里保存的配置，<strong>只在技术支持指导下使用</strong>：
+<p><code>g.motor.submit_*</code> 等底层接口绕过控制器保护，<strong>请用控制器</strong>。</p>
+<p>下列接口改写夹爪或电机配置，<strong>须技术支持指导</strong>：
 <code>set_model()</code>、<code>set_startup_limit_torque()</code>、<code>switch_protocol()</code>、<code>set_can_id()</code>、<code>set_private_param()</code>、
 <code>set_zero()</code>、<code>set_gripper_config()</code>、<code>set_envelope()</code>、<code>set_auto_cal_config()</code>、<code>set_motor_fw_version()</code>。</p>
 <h2 id="camera">腕部相机<a class="headerlink" href="#camera" title="锚点链接">¶</a></h2>
-<p>从夹爪也带腕部相机，默认不打开。打开方式与主夹爪相同，见 SDK 附录的<a href="../../sdk/api/#camera">腕部相机与鱼眼矫正</a>。</p>
+<p>默认关，开法同主夹爪，见<a href="../../sdk/api/#camera">腕部相机与鱼眼矫正</a>。</p>
 <h2 id="examples">示例脚本<a class="headerlink" href="#examples" title="锚点链接">¶</a></h2>
-<p>脚本在 SDK 源码的 <code>python/examples/</code> 下，在 SDK 源码目录运行：使用数采环境时是数采仓库的 <code>third_party/taccap-gripper</code>，单独安装时是 <code>TacCap-Gripper</code>。用 <code>left</code>、<code>right</code> 或完整序列号指定夹爪，只接一只时可以省略；每个脚本都可以用 <code>--help</code> 查看参数。</p>
+<ul>
+<li>脚本在 <code>python/examples/</code>，于 SDK 源码目录（数采仓库 <code>third_party/taccap-gripper</code> 或单独安装的 <code>TacCap-Gripper</code>）运行。</li>
+<li>夹爪用 <code>left</code>、<code>right</code> 或完整序列号指定，只接一只可省；参数见 <code>--help</code>。</li>
+</ul>
 <table>
 <thead>
 <tr>
 <th>脚本</th>
 <th>用途</th>
-<th>是否会动电机或改写夹爪</th>
+<th>影响</th>
 </tr>
 </thead>
 <tbody>
@@ -2292,37 +2290,37 @@
 <tr>
 <td><code>gripper_console.py</code></td>
 <td>键盘控制</td>
-<td><strong>会动电机</strong></td>
+<td><strong>动电机</strong></td>
 </tr>
 <tr>
 <td><code>impedance_control.py</code></td>
-<td>阻抗控制测试；查看 / 写入运动安全包络</td>
-<td><strong>会动电机</strong>；<code>--set-envelope</code> 改写夹爪</td>
+<td>阻抗测试；查看 / 写运动安全包络</td>
+<td><strong>动电机</strong>；<code>--set-envelope</code> 改写夹爪</td>
 </tr>
 <tr>
 <td><code>force_position_control.py</code></td>
-<td>力位控制夹持测试</td>
-<td><strong>会动电机</strong></td>
+<td>力位夹持测试</td>
+<td><strong>动电机</strong></td>
 </tr>
 <tr>
 <td><code>control_and_read.py</code></td>
-<td>边控制边读取状态</td>
-<td><strong>会动电机</strong></td>
+<td>边控制边读状态</td>
+<td><strong>动电机</strong></td>
 </tr>
 <tr>
 <td><code>control_ripple.py</code></td>
-<td>测量运动平稳度</td>
-<td><strong>会动电机</strong></td>
+<td>测运动平稳度</td>
+<td><strong>动电机</strong></td>
 </tr>
 <tr>
 <td><code>ota_update.py</code></td>
 <td>夹爪固件升级</td>
-<td><strong>刷写固件</strong></td>
+<td><strong>刷固件</strong></td>
 </tr>
 <tr>
 <td><code>motor_ota_update.py</code></td>
 <td>电机固件升级</td>
-<td><strong>刷写固件</strong></td>
+<td><strong>刷固件</strong></td>
 </tr>
 </tbody>
 </table>
@@ -2334,7 +2332,11 @@
 </span></code></pre></div>
 <div class="admonition warning">
 <p class="admonition-title">运行示例前</p>
-<p>第一次使用先按<a href="../setup/">准备与自检</a>做完自检。脚本启动时会中断其他正在使用夹爪的程序，控制或数采运行时不要运行示例脚本。固件升级的步骤见<a href="../firmware/">固件与电机升级</a>。</p>
+<ul>
+<li>首次先<a href="../setup/">自检</a>。</li>
+<li>脚本启动时会扫描设备，控制或数采运行时不要运行脚本。</li>
+<li>升级见<a href="../firmware/">固件与电机升级</a>。</li>
+</ul>
 </div>
 
 

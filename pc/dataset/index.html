@@ -2218,15 +2218,15 @@
 
 
 <h1 id="数据集">数据集<a class="headerlink" href="#数据集" title="锚点链接">¶</a></h1>
-<p>采完之后数据长什么样、怎么校验、回放、上传 Hub，磁盘怎么规划、旧数据怎么清。读完你能把一份数据集从本地缓存校验后交付到 Hub。</p>
+<p>格式、校验、回放、上传 Hub、磁盘规划与清理。</p>
 <h2 id="61">LeRobotDataset 格式速览<a class="headerlink" href="#61" title="锚点链接">¶</a></h2>
-<p>采集产出标准 <strong>LeRobotDataset v3.0</strong>：多集合并进大 Parquet/MP4 文件、关系型元数据定位集边界、支持 Hub 原生流式，相比 v2 大幅减少小文件、初始化更快。没接触过 lerobot 的用户先读官方文档，再回来看 XTac-UMI G1 的具体用法：</p>
+<p>采集产出标准 <strong>LeRobotDataset v3.0</strong>：多集合并进大 Parquet/MP4 文件，靠关系型元数据定位集边界，支持 Hub 原生流式，相比 v2 小文件更少、初始化更快。官方文档：</p>
 <ul>
 <li><a href="https://huggingface.co/docs/lerobot/lerobot-dataset-v3">LeRobotDataset v3.0 官方文档</a>（格式设计、目录结构、录制、加载/流式、v2.1→v3.0 迁移）</li>
 <li><a href="https://huggingface.co/docs/lerobot/il_robots#record-a-dataset">lerobot 录制指南</a></li>
 <li><a href="https://huggingface.co/docs/lerobot">lerobot 文档首页</a></li>
 </ul>
-<p>数据集可以像普通 Hugging Face / PyTorch 数据集一样索引：</p>
+<p>可像普通 Hugging Face / PyTorch 数据集一样索引：</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">lerobot.datasets.lerobot_dataset</span><span class="w"> </span><span class="kn">import</span> <span class="n">LeRobotDataset</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">ds</span> <span class="o">=</span> <span class="n">LeRobotDataset</span><span class="p">(</span><span class="s2">"&lt;your_org&gt;/&lt;your_dataset&gt;"</span><span class="p">)</span>
@@ -2235,32 +2235,33 @@
 <p>序列化方式：</p>
 <ul>
 <li><code>hf_dataset</code>:Hugging Face datasets → parquet</li>
-<li>视频（触觉 + 腕相机）：mp4（省空间）</li>
-<li>元数据：纯 json / jsonl(<code>info</code> / <code>episodes</code> / <code>stats</code> / <code>tasks</code>)；<code>info</code> 里的关键字段有 <code>fps</code>、<code>features</code>、<code>total_episodes</code>、<code>total_frames</code>、<code>robot_type</code>、<code>data_path</code>、<code>video_path</code>。<code>robot_type</code> 是录制时的 <code>--robot.type</code>（<code>taccap_gripper</code> / <code>bi_taccap_gripper</code> / <code>xtac_umi_g1</code>）；紧跟其后的 <code>collection_stack</code> 固定为 <code>"xense-taccap-lerobot"</code>，标明这份数据是本采集程序直接录的</li>
+<li>视频（触觉 + 腕相机）：mp4</li>
+<li>元数据：json / jsonl(<code>info</code> / <code>episodes</code> / <code>stats</code> / <code>tasks</code>)；<code>info</code> 的关键字段有 <code>fps</code>、<code>features</code>、<code>total_episodes</code>、<code>total_frames</code>、<code>robot_type</code>、<code>data_path</code>、<code>video_path</code></li>
+<li><code>robot_type</code> 是录制时的 <code>--robot.type</code>（<code>taccap_gripper</code> / <code>bi_taccap_gripper</code> / <code>xtac_umi_g1</code>）；紧跟其后的 <code>collection_stack</code> 固定为 <code>"xense-taccap-lerobot"</code>，标明由本程序直接录制</li>
 <li>时序查询：<code>delta_timestamps = {"observation.image": [-1, -0.5, -0.2, 0]}</code> 一次取当前帧及其前 1s / 0.5s / 0.2s 三帧</li>
 </ul>
-<p>每帧记录了哪些观测与动作键，见 <a href="../recording/#53">每帧记录内容</a>。</p>
-<p>标准 LeRobotDataset 只在 <code>info</code> 里记 <code>robot_type</code>，所以录制时额外写一份独立的硬件清单 <code>meta/hardware.json</code>（不动上游的 <code>info</code> 结构），记这批数据是哪套硬件采的（工位号、夹爪与触觉 SN、腕相机是否去畸变，按 <code>epochs</code> 分段，中途换硬件会另起一段）。从 <code>rectify</code> 流重建 depth / force / difference 只需要传感器型号和每个 episode 的第一帧 <code>rectify</code>，数据集里本来就有；更早版本录的数据集里的 <code>meta/runtimes/</code> 会被忽略。字段含义、续录行为与重建注意事项见 <a href="../recording/#robot-id"><code>--robot.id</code> 与硬件清单</a>。用 <code>lerobot-edit-dataset</code> 删集、拆分、去特征、8 → 6 相机转换得到的新数据集会把 <code>hardware.json</code> 一起带上；<strong>合并（<code>merge</code>）会直接报错拒绝</strong>，因为合并后没有一份清单能对应到每一集真实的传感器。</p>
+<p>每帧的观测与动作键见<a href="../recording/#53">每帧记录内容</a>。</p>
+<p>录制另写一份硬件清单 <code>meta/hardware.json</code>（不动上游 <code>info</code>），记工位号、夹爪与触觉 SN、腕相机是否去畸变，按 <code>epochs</code> 分段；字段与续录行为见 <a href="../recording/#robot-id"><code>--robot.id</code> 与硬件清单</a>。<code>lerobot-edit-dataset</code> 删集、拆分、去特征、8 → 6 相机转换得到的新数据集会带上 <code>hardware.json</code>；<strong>合并（<code>merge</code>）直接报错拒绝</strong>，因为合并后没有一份清单能对应每集的真实传感器。</p>
 <p><span id="stats-std"></span></p>
 <div class="admonition warning">
 <p class="admonition-title">0.0.8 之前录的数据集：图像的 <code>std</code> 统计量是 0</p>
 <p>0.0.8 之前录的数据集，<code>meta/stats.json</code> 里图像和视频特征的 <code>std</code> 恒为 0（<code>mean</code>、<code>min</code>、<code>max</code> 和分位数不受影响）。训练时如果按 <code>std</code> 对图像做归一化，需要先重新计算统计量。</p>
 </div>
 <h2 id="落盘位置与命名规范">落盘位置与命名规范<a class="headerlink" href="#落盘位置与命名规范" title="锚点链接">¶</a></h2>
-<p>采集默认写到 <code>~/.cache/huggingface/lerobot/&lt;repo_id&gt;/</code>，用 <code>--dataset.root &lt;path&gt;</code> 可指定其它位置（磁盘更大/更快的盘）。目录结构大致：</p>
+<p>默认写到 <code>~/.cache/huggingface/lerobot/&lt;repo_id&gt;/</code>，<code>--dataset.root &lt;path&gt;</code> 可改到更大或更快的盘：</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>&lt;repo_id&gt;/
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>├── data/     # parquet(观测/动作等表格数据)
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>├── videos/   # mp4(触觉 + 腕相机)
 </span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>└── meta/     # json/jsonl:info · episodes · stats · tasks · hardware
 </span></code></pre></div>
-<p><code>repo_id</code> 形如 <code>&lt;org&gt;/&lt;name&gt;</code>，建议：</p>
+<p><code>repo_id</code> 形如 <code>&lt;org&gt;/&lt;name&gt;</code>：</p>
 <ul>
-<li>小写 + 连字符/下划线，不含空格与中文；含任务与日期，便于检索与去重。团队内统一约定 <code>&lt;org&gt;/&lt;任务&gt;_&lt;变体&gt;_&lt;YYYYMMDD&gt;</code>，例：<code>Xense/insert_plug_left_20260703</code>。</li>
-<li>一个数据集对应一个任务/变体；不同任务或明显不同的变体拆成不同 <code>repo_id</code>（多样性与一致性的取舍见 <a href="../recording/">数据采集</a>）。</li>
-<li><code>--dataset.single_task</code> 的任务描述在同一数据集内保持一致（会写入 <code>meta/tasks</code>）。</li>
+<li>小写 + 连字符/下划线，无空格与中文；团队统一用 <code>&lt;org&gt;/&lt;任务&gt;_&lt;变体&gt;_&lt;YYYYMMDD&gt;</code>，例：<code>Xense/insert_plug_left_20260703</code>。</li>
+<li>一个数据集一个任务/变体，不同任务或明显不同的变体拆成不同 <code>repo_id</code>（取舍见<a href="../recording/">数据采集</a>）。</li>
+<li><code>--dataset.single_task</code> 同一数据集内保持一致（写入 <code>meta/tasks</code>）。</li>
 </ul>
 <h2 id="62">数据校验<a class="headerlink" href="#62" title="锚点链接">¶</a></h2>
-<p><code>lerobot-check-dataset</code> 由采集程序一起装好，Mamba 和 Docker 两条路径下都能直接敲，检查帧数、视频、字段一致性等：</p>
+<p><code>lerobot-check-dataset</code> 随采集程序装好，Mamba 和 Docker 下都能用：</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>lerobot-check-dataset<span class="w"> </span>--repo-id<span class="w"> </span>&lt;your_org&gt;/&lt;your_dataset&gt;<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">    </span>--root<span class="w"> </span>~/.cache/huggingface/lerobot
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
@@ -2289,11 +2290,18 @@
 </tr>
 </tbody>
 </table>
-<p>检查项包括 <code>meta/</code> 是否齐全、集数是否对得上、parquet 的行数与索引是否连续、有没有 NaN、视频文件是否存在且帧数与声明<strong>完全相等</strong>，以及<strong>相机格式</strong>——双臂数据集会被判为 6 相机（四路触觉 + 两路腕相机）还是 8 相机（再加头显两只眼），两种格式训练时的输入维度不同。结果汇总在最后一行：</p>
+<p>检查项：</p>
+<ul>
+<li><code>meta/</code> 是否齐全、集数是否一致。</li>
+<li>parquet 行数与索引是否连续、有没有 NaN。</li>
+<li>视频文件是否存在，帧数与声明是否<strong>完全相等</strong>。</li>
+<li><strong>相机格式</strong>：双臂数据集判为 6 相机（四路触觉 + 两路腕相机）或 8 相机（再加头显两只眼），两者训练输入维度不同。</li>
+</ul>
+<p>结果汇总在最后一行：</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Summary: 0 error(s), 0 warning(s) | Camera format: 6-camera (no headset)
 </span></code></pre></div>
-<p>单夹爪数据集、关了腕相机或只录一只眼的数据集，相机格式会显示 <code>not recognized</code> 并给一条告警；这项检查只针对标准的双臂格式，不影响其余检查项。</p>
-<p>视频帧数对不上时按方向区分：</p>
+<p>单夹爪、关了腕相机或只录一只眼的数据集，相机格式显示 <code>not recognized</code> 并告警，不影响其余检查。</p>
+<p>视频帧数不符时按方向区分：</p>
 <table>
 <thead>
 <tr>
@@ -2316,30 +2324,30 @@
 </tbody>
 </table>
 <h3 id="8to6">双臂 8 相机 → 6 相机<a class="headerlink" href="#8to6" title="锚点链接">¶</a></h3>
-<p>开了<a href="../recording/#56">头显相机</a>录的双臂数据集是 8 相机格式。要把它降成 6 相机格式（与 <code>bi_taccap_gripper</code> 录出来的同构，数据集里记录的类型也随之改为 <code>bi_taccap_gripper</code>），用 <code>lerobot-edit-dataset</code>：</p>
+<p>开了<a href="../recording/#56">头显相机</a>的双臂数据集是 8 相机格式，用 <code>lerobot-edit-dataset</code> 可降成与 <code>bi_taccap_gripper</code> 同构的 6 相机格式，记录类型也改为 <code>bi_taccap_gripper</code>：</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>lerobot-edit-dataset<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">    </span>--repo_id<span class="w"> </span>&lt;your_org&gt;/&lt;dataset_8cam&gt;<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span>--new_repo_id<span class="w"> </span>&lt;your_org&gt;/&lt;dataset_6cam&gt;<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">    </span>--operation.type<span class="w"> </span>convert_8_to_6_cameras
 </span></code></pre></div>
-<p>它丢掉头显两只眼的图像键，以及 <code>action</code> / <code>observation.state</code> 里的 <code>head_camera.*</code> 维度，<strong>原数据集不动</strong>，结果写到 <code>--new_repo_id</code>。源数据集本来就是 6 相机、或者相机键对不上预期时，命令直接报错拒绝转换，而不是转出一个说不清格式的数据集。</p>
+<p>丢掉头显两只眼的图像键，以及 <code>action</code> / <code>observation.state</code> 里的 <code>head_camera.*</code> 维度；<strong>原数据集不动</strong>，结果写到 <code>--new_repo_id</code>。源数据集已是 6 相机或相机键不符预期时直接报错。</p>
 <div class="admonition warning">
 <p class="admonition-title">先确认 <code>--repo_id</code> 拼对了</p>
 <p>这项转换在本地找不到数据集时会去 Hugging Face Hub 取，<code>--local_files_only</code> 对它不起作用。务必确认 <code>--repo_id</code> 拼写正确，或者用 <code>--root</code> 直接指向本地数据集目录。</p>
 </div>
 <h2 id="回放与可视化">回放与可视化<a class="headerlink" href="#回放与可视化" title="锚点链接">¶</a></h2>
 <ul>
-<li>在线浏览：数据集上传到 Hub 后，用 <a href="https://huggingface.co/spaces/lerobot/visualize_dataset">LeRobot Dataset Visualizer</a> 逐集查看视频与数据。</li>
-<li>3D 轨迹：<a href="../recording/#preview">开录前预览</a>时加 <code>--display_data=true</code>，在 Rerun 里查看夹爪位姿与轨迹（见 <a href="../../common/coordinates/#world-view"><code>/world</code> 3D 视图</a>）。</li>
-<li>本地逐帧：用你本地这一版 <code>lerobot</code> 提供的数据集可视化脚本打开 parquet + mp4 逐帧检查。</li>
+<li>在线浏览：上传 Hub 后用 <a href="https://huggingface.co/spaces/lerobot/visualize_dataset">LeRobot Dataset Visualizer</a> 逐集查看视频与数据。</li>
+<li>3D 轨迹：<a href="../recording/#preview">开录前预览</a>时加 <code>--display_data=true</code>，在 Rerun 里看夹爪位姿与轨迹（见 <a href="../../common/coordinates/#world-view"><code>/world</code> 3D 视图</a>）。</li>
+<li>本地逐帧：用本地 <code>lerobot</code> 自带的可视化脚本打开 parquet + mp4。</li>
 </ul>
 <h2 id="64">上传 Hugging Face Hub 与备份<a class="headerlink" href="#64" title="锚点链接">¶</a></h2>
-<p>上传即视为一次异地备份加交付：上传前先跑 <code>lerobot-check-dataset</code> 校验；重要数据集在删除或迁移前先备份整个 <code>&lt;repo_id&gt;/</code> 目录。</p>
+<p>上传即异地备份加交付，上传前先跑 <code>lerobot-check-dataset</code>；重要数据集删除或迁移前先备份整个 <code>&lt;repo_id&gt;/</code>。</p>
 <div class="admonition warning">
 <p class="admonition-title">先登录 Hub</p>
 <p>上传前执行 <code>hf auth login</code>（旧版也可使用 <code>huggingface-cli login</code>），或设置 <code>HF_TOKEN</code>，否则会因鉴权失败。</p>
 </div>
-<p>用已安装的 <code>lerobot-push-dataset-to-hub</code> 控制台入口推送：</p>
+<p>用 <code>lerobot-push-dataset-to-hub</code> 推送：</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># 基本用法(需要 --repo-id 与 --dataset-path)</span>
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>lerobot-push-dataset-to-hub<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span>--repo-id<span class="w"> </span>&lt;your_org&gt;/&lt;your_dataset&gt;<span class="w"> </span><span class="se">\</span>
@@ -2371,22 +2379,22 @@
 </div>
 </div>
 </div>
-<p>成功后数据集地址为 <code>https://huggingface.co/datasets/&lt;repo_id&gt;</code>。</p>
+<p>成功后地址为 <code>https://huggingface.co/datasets/&lt;repo_id&gt;</code>。</p>
 <ul>
-<li>上传时会自动生成数据集卡片（README），并先在本地数据集目录里写一个 <code>assets/</code>，放卡片用的三张图（共约 12 MB），与数据一起上传；加了 <code>--no-videos</code> 也照样上传这几张图。</li>
-<li><code>--dataset-path</code> 只读本地，路径不对会报 <code>Cannot find dataset metadata in local directory</code>，不会从 Hub 下载。</li>
+<li>上传时自动生成数据集卡片（README），并在本地数据集目录写 <code>assets/</code>（三张卡片图，共约 12 MB）一并上传，<code>--no-videos</code> 也照传。</li>
+<li><code>--dataset-path</code> 只读本地，路径不对报 <code>Cannot find dataset metadata in local directory</code>，不会从 Hub 下载。</li>
 </ul>
 <h2 id="storage-planning">磁盘规划与估算<a class="headerlink" href="#storage-planning" title="锚点链接">¶</a></h2>
 <ul>
-<li>双夹爪多相机的原始视频数据吞吐可达约 <strong>280 MB/s</strong>；这不是编码后的磁盘写入速度，不要直接用它推算落盘量。实时编码后的体积取决于分辨率、画面内容、<code>fps</code>、编码器和码率。</li>
-<li>粗估单条 episode 体积 ≈ 各编码视频流平均码率 × 时长 + Parquet 与元数据。相机数、分辨率、<code>fps</code>、<code>episode_time_s</code> 都会放大体积。</li>
-<li>大批量采集前先录制 2–3 条代表性 episode，运行完整性检查，再测量实际体积并按计划集数估算：</li>
+<li>双夹爪多相机的原始视频吞吐可达约 <strong>280 MB/s</strong>，不是编码后的写盘速度，不能据此推算落盘量。</li>
+<li>单条 episode 体积 ≈ 各编码视频流平均码率 × 时长 + Parquet 与元数据；相机数、分辨率、画面内容、<code>fps</code>、编码器、码率、<code>episode_time_s</code> 都影响体积。</li>
+<li>大批量采集前先录 2–3 条代表性 episode 并跑完整性检查，按实测体积和计划集数估算：</li>
 </ul>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>du<span class="w"> </span>-sh<span class="w"> </span>~/.cache/huggingface/lerobot/&lt;your_org&gt;/&lt;your_dataset&gt;
 </span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>df<span class="w"> </span>-h<span class="w"> </span>~/.cache/huggingface/lerobot<span class="w">          </span><span class="c1"># 看目标盘剩余空间</span>
 </span></code></pre></div>
 <h2 id="清理与维护">清理与维护<a class="headerlink" href="#清理与维护" title="锚点链接">¶</a></h2>
-<p>磁盘紧张时，先确认数据已通过 <code>lerobot-check-dataset</code> 校验并完成备份或上传。为保留恢复机会，先把目标数据集移动到单独的隔离目录，观察无误后再通过文件管理器删除：</p>
+<p>删除前确认已通过 <code>lerobot-check-dataset</code> 并已备份或上传；先移到隔离目录，确认无误再用文件管理器删除：</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>/data/lerobot-trash
 </span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>realpath<span class="w"> </span>~/.cache/huggingface/lerobot/&lt;your_org&gt;/&lt;old_dataset&gt;
 </span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>du<span class="w"> </span>-sh<span class="w"> </span>~/.cache/huggingface/lerobot/&lt;your_org&gt;/&lt;old_dataset&gt;
@@ -2396,9 +2404,9 @@
 <p class="admonition-title">移动前核对 <code>realpath</code> 输出</p>
 <p>必须是预期的单个数据集目录；不要对缓存根目录执行递归删除。</p>
 </div>
-<p>定期用 <code>df -h</code> 盯住目标盘，避免采集中途写满（见 <a href="../troubleshooting/">故障排查</a>）。</p>
+<p>定期用 <code>df -h</code> 盯住目标盘，免得采集中途写满（见<a href="../troubleshooting/">故障排查</a>）。</p>
 <h2 id="采集台账">采集台账<a class="headerlink" href="#采集台账" title="锚点链接">¶</a></h2>
-<p>为可追溯，建议每份数据集记一行台账。夹爪与触觉的序列号录制时已自动写进 <code>meta/hardware.json</code>，台账里照抄一份只是为了离线可查，两边不一致时以数据集里的那份为准；追踪器 SN 不在清单里，要记就得手写。</p>
+<p>每份数据集记一行台账。夹爪与触觉 SN 已自动写进 <code>meta/hardware.json</code>，照抄只为离线可查，不一致时以数据集为准；追踪器 SN 需手写。</p>
 <table>
 <thead>
 <tr>

@@ -904,6 +904,18 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#power" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        供电方式选择
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="供电方式选择">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#adapter" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -913,8 +925,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#powerbank" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -922,6 +934,11 @@
       
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -2187,14 +2204,29 @@
 
 
 <h1 id="开箱接线与供电">开箱、接线与供电<a class="headerlink" href="#开箱接线与供电" title="锚点链接">¶</a></h1>
-<p>把箱里的东西接成一套能上电的系统：夹爪接背包、头显接背包、适配器或充电宝二选一供电。读完背包已上电、夹爪指示灯绿常亮，接着翻到<a href="../network/">网络与控制台入口</a>打开控制台。</p>
+<p>本页指导您把开箱后的各部件接成一套能通电运行的系统：依次连接夹爪、头显与背包，再接通电源（电源适配器或充电宝二选一）。</p>
+<p><strong>预期状态</strong>：背包正常通电，主夹爪指示灯绿色常亮。确认后，前往<a href="../network/">网络与控制台入口</a>打开控制台。</p>
 <h2 id="unbox">开箱核对<a class="headerlink" href="#unbox" title="锚点链接">¶</a></h2>
-<p>箱内物品与数量见<a href="../../product/editions/">产品线与配置对比</a>。接线前只核对三件事：</p>
-<ul>
-<li>两只 XTac-UMI G1 一左一右：序列号末位单数为左、双数为右（<a href="../../common/gripper/#sn">序列号与左右识别</a>）；Type-C 线的锁紧接头完好，夹爪接口内无异物。</li>
-<li>背包机身标签印着这台设备的 SN、热点名与密码、设备名，认机和连网时要用，别撕（<a href="../network/#label">认机看标签</a>）。</li>
-<li>头显已按<a href="../../common/pico4/">Pico4 头显与追踪器</a>配好：开发者模式、灭屏与休眠设为永不、两只追踪器已配对、XTac-UMI XR 已安装。接线不依赖这些，但没配好头显连不上。</li>
+<p>箱内物品与数量见<a href="../../product/editions/">产品线与配置对比</a>。接线前核对以下三项：</p>
+<ol>
+<li><strong>主夹爪（XTac-UMI G1）</strong><ul>
+<li>一左一右两只：序列号末位单数为左、双数为右，见<a href="../../common/gripper/#sn">序列号与左右识别</a>。</li>
+<li>Type-C 线的锁紧接头完好，夹爪接口内无异物。</li>
 </ul>
+</li>
+<li><strong>背包机身标签</strong><ul>
+<li>印有这台设备的 SN、热点名与密码、设备名，认机与联网时要用，不要撕掉，见<a href="../network/#label">认机看标签</a>。</li>
+</ul>
+</li>
+<li><strong>头显配置</strong><ul>
+<li>已按 <a href="../../common/pico4/">Pico4 头显与追踪器</a> 完成配置：开启开发者模式、灭屏与休眠设为「永不」、两只追踪器已配对、已安装 XTac-UMI XR。</li>
+</ul>
+</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>接线本身不依赖以上软件配置，但没有提前配好，头显将无法建立连接。</p>
+</div>
 <h2 id="ports">背包接口<a class="headerlink" href="#ports" title="锚点链接">¶</a></h2>
 <table>
 <thead>
@@ -2250,17 +2282,52 @@
 <p class="admonition-title">先锁紧夹爪端，再接背包端</p>
 <p>锁紧螺钉没旋紧，采集中线缆一松动夹爪就掉线，系统日志会反复出现 <code>mcu ... disconnected / reconnected</code>，这一条数据就废了。</p>
 </div>
-<h2 id="adapter">适配器供电<a class="headerlink" href="#adapter" title="锚点链接">¶</a></h2>
-<p>有插座的固定工位用这一种：头显一根线接背包，适配器接市电。</p>
+<h2 id="power">供电方式选择<a class="headerlink" href="#power" title="锚点链接">¶</a></h2>
+<p>两种方式下，夹爪与头显的接法完全相同，只是背包的电源不同：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>适配器供电</th>
+<th>充电宝供电</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>适用场景</td>
+<td>有插座的固定工位</td>
+<td>离开插座的移动采集</td>
+</tr>
+<tr>
+<td>电源</td>
+<td>12 V 3 A 电源适配器，接市电</td>
+<td>箱内充电宝（20000 mAh，45 W）</td>
+</tr>
+<tr>
+<td>接到背包 DC 口的线</td>
+<td>适配器直连</td>
+<td>0.3 m 12 V PD 电源线，用充电宝的 12 V 输出</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">头显电量会缓慢下降</p>
+<p>头显只接一根线，背包经它给头显供电，但供电不足以完全抵消头显功耗，电量仍会以约 1–2 W 的净消耗缓慢下降；电量耗尽头显会关机，采集随之中断。开工前把头显充满电，长时间采集留意电量图标（在<a href="../../common/pico4/#pico-system">电源策略</a>里设为常驻显示）。</p>
+</div>
+<h3 id="adapter">适配器供电<a class="headerlink" href="#adapter" title="锚点链接">¶</a></h3>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/product/backpack-wiring-adapter.webp" data-desc-position="bottom"><img alt="适配器供电接线：左右夹爪接背包两侧，头显 Type-C 接 PICO 口，适配器接 DC 口" src="../../assets/product/backpack-wiring-adapter.webp"></a></p>
 <ol>
-<li>左 / 右夹爪分别接 UMI-L / UMI-R。</li>
-<li>头显用头显连接线（Pico → Pack）接背包 PICO 口；头显只接这一根线，背包经它给头显供电，但头显电量仍会缓慢下降，开工前把头显充满电。</li>
-<li>12 V 3 A 适配器接背包 DC 口，再插市电。</li>
+<li>左、右主夹爪分别接背包的 <code>UMI-L</code> 和 <code>UMI-R</code> 口。</li>
+<li>用头显连接线（Pico → Pack）把头显接到背包的 <code>PICO</code> 口。</li>
+<li>12 V 3 A 适配器接背包 <code>DC</code> 口，再插市电。</li>
 </ol>
-<h2 id="powerbank">充电宝供电<a class="headerlink" href="#powerbank" title="锚点链接">¶</a></h2>
-<p>离开插座移动采集用这一种：箱内一只充电宝（20000 mAh，45 W）经 0.3 m 12 V PD 电源线给背包供电，头显仍用头显连接线接背包 PICO 口，接法与适配器供电相同。</p>
+<h3 id="powerbank">充电宝供电<a class="headerlink" href="#powerbank" title="锚点链接">¶</a></h3>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/product/backpack-wiring-powerbank.webp" data-desc-position="bottom"><img alt="充电宝供电接线：左右夹爪接背包两侧，头显接 PICO 口，充电宝经 0.3 m 12 V PD 电源线接 DC 口" src="../../assets/product/backpack-wiring-powerbank.webp"></a></p>
+<ol>
+<li>取出箱内的充电宝（20000 mAh，45 W）。</li>
+<li>夹爪与头显的接法同<a href="#adapter">适配器供电</a>。</li>
+<li>用 0.3 m 12 V PD 电源线把充电宝接到背包 <code>DC</code> 口。</li>
+</ol>
 <table>
 <thead>
 <tr>
@@ -2279,37 +2346,37 @@
 </tr>
 <tr>
 <td>12 V PD 电源线（0.3 m）</td>
-<td>充电宝 ↔ 背包 DC 口，用充电宝的 12 V 输出</td>
+<td>充电宝 ↔ 背包 DC 口</td>
 </tr>
 </tbody>
 </table>
-<ol>
-<li>左 / 右夹爪分别接 UMI-L / UMI-R。</li>
-<li>头显用头显连接线接背包 PICO 口；头显只接这一根线，背包经它给头显供电，但头显电量仍会缓慢下降，开工前把头显充满电。</li>
-<li>12 V PD 电源线一端接充电宝，另一端接背包 DC 口。</li>
-</ol>
-<p>背包给头显的供电不足以完全抵消头显功耗，头显电量仍会缓慢下降（净消耗约 1–2 W）；电量耗尽头显会关机，采集随之中断。开工前把头显充满电，长时间采集留意头显的电量图标（在<a href="../../common/pico4/#pico-system">电源策略</a>里设为常驻显示）。背包功耗不超过 36 W，充电宝续航约 3.5–4 小时，见<a href="../../product/specs/#backpack">技术参数</a>。</p>
+<p>背包功耗不超过 36 W，充电宝续航约 3.5–4 小时，见<a href="../../product/specs/#backpack">技术参数</a>。</p>
 <div class="admonition warning">
 <p class="admonition-title">采集中不要往充电宝上加设备</p>
 <p>部分充电宝接上第二台设备时会停掉原有输出口，背包会当场断电。所有线在开录前接好。</p>
 </div>
 <h2 id="pico-link">头显接背包<a class="headerlink" href="#pico-link" title="锚点链接">¶</a></h2>
-<p>戴上头显打开 XTac-UMI XR。头显与背包<strong>只能有线连接</strong>：头显 Type-C 口已通过上面的接线连到背包 PICO 口，在 XR 里不勾选「USB网络」，「PC IP」留空（默认连接背包的 <code>192.168.100.1</code>），点「连接」。</p>
-<p>XR 右上角是折叠按钮；追踪器精度不准或与背包断开时，XR 与控制台监控页都有图标提示。界面说明见 <a href="../../common/pico4/#pico-toolkit-ui">XTac-UMI XR 界面</a>。</p>
-<p>录制中不要碰这根线：拔掉或松动会让设备立即停止并作废当前这条录制，见<a href="../monitor-record/#pico-disconnect">录制中头显断联</a>。</p>
-<p>站到作业位、面朝作业方向再打开 XR：首次启动 XR 的位置就是<a href="../../common/pico4/#pico-frame">世界坐标系原点</a>，采集过程中不要重启 XR。</p>
+<ol>
+<li><strong>启动与连接</strong>：头显与背包只能有线连接，确认头显 Type-C 口已按上面的接线连到背包 <code>PICO</code> 口。戴上头显打开 XTac-UMI XR，<strong>不勾选</strong>「USB网络」，「PC IP」留空（默认连接 <code>192.168.100.1</code>），点「连接」。</li>
+<li><strong>状态提示</strong>：XR 右上角是折叠按钮。追踪器精度不准或与背包断开时，XR 与控制台监控页都会显示图标提示，界面说明见 <a href="../../common/pico4/#pico-toolkit-ui">XTac-UMI XR 界面</a>。</li>
+<li><strong>作业准备</strong>：站到作业位、面朝作业方向再打开 XR，首次启动 XR 的位置就是<a href="../../common/pico4/#pico-frame">世界坐标系原点</a>。<strong>采集过程中不要重启 XR。</strong></li>
+</ol>
 <div class="admonition warning">
-<p class="admonition-title">头显灭屏与休眠必须设为永不</p>
-<p>头显灭屏后停止工作，位姿数据随之中断。在头显的 开发者选项 → 企业设置 → 电源策略 里把系统休眠和灭屏时间都改为永不，步骤见<a href="../../common/pico4/#pico-system">Pico4 头显与追踪器</a>。</p>
+<p class="admonition-title">头显灭屏与休眠必须设为「永不」</p>
+<p>头显灭屏后停止工作，位姿数据随之中断。在头显的 开发者选项 → 企业设置 → 电源策略 里把系统休眠和灭屏时间都设为「永不」，步骤见 <a href="../../common/pico4/#pico-system">Pico4 头显与追踪器</a>。</p>
+</div>
+<div class="admonition danger">
+<p class="admonition-title">录制中不要碰头显连接线</p>
+<p>拔掉或松动会让设备立即停止并作废当前这条录制，见<a href="../monitor-record/#pico-disconnect">录制中头显断联</a>。</p>
 </div>
 <h2 id="verify">上电后核对<a class="headerlink" href="#verify" title="锚点链接">¶</a></h2>
-<p>打开控制台后看三处，任何一处不对回头查接线：</p>
-<ul>
-<li>顶栏右侧「相机路数」显示 在线数 / 总数，「双爪」模式应为 6 / 6；少一路多半是夹爪线没锁紧或没插到底。</li>
-<li>夹爪指示灯绿常亮。红爆闪是夹爪端自检有问题，红常亮是背包侧检测到夹爪掉线。</li>
-<li>当前项目的<a href="../system/#capture-mode">采集模式</a>与实际接法一致（「双爪」「双爪 + 头显双目」「双爪 + 头显右单目」，系统页可查看）；头显连上后监控页位姿视图跟手动，见<a href="../monitor-record/#checks">画面与位姿检查</a>。</li>
-</ul>
-<p>上电没反应或头显时断时续，先换线、换口试。DC 口、PICO 口或 USB 口本身接触不良属硬件问题，记下机身 SN 联系支持，不要用力掰扯接口，见<a href="../troubleshooting/">故障排查</a>。</p>
+<p>打开控制台后核对以下三项，任何一项不对就回头检查接线：</p>
+<ol>
+<li><strong>相机路数</strong>：顶栏右侧「相机路数」显示 在线数 / 总数，「双爪」模式应为 6 / 6。少一路多半是夹爪线没锁紧或没插到底。</li>
+<li><strong>夹爪指示灯</strong>：正常为绿色常亮。红色爆闪表示夹爪端自检异常；红色常亮表示背包侧检测到夹爪掉线。</li>
+<li><strong>采集模式</strong>：当前项目的<a href="../system/#capture-mode">采集模式</a>与实际接法一致（「双爪」「双爪 + 头显双目」「双爪 + 头显右单目」，可在系统页查看）。头显连上后，监控页的位姿视图应随手移动，见<a href="../monitor-record/#checks">画面与位姿检查</a>。</li>
+</ol>
+<p><strong>异常处理</strong>：上电没反应或头显时断时续，先换线、换口试。<code>DC</code> 口、<code>PICO</code> 口或 <code>USB</code> 口本身接触不良属硬件问题，记下机身 SN 联系技术支持，不要用力掰扯接口，见<a href="../troubleshooting/">故障排查</a>。</p>
 
 
 

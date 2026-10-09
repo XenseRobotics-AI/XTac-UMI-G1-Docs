@@ -2187,16 +2187,16 @@
 
 
 <h1 id="safety-and-compliance">Safety and compliance<a class="headerlink" href="#safety-and-compliance" title="锚点链接">¶</a></h1>
-<p>This page collects the safety requirements shared by both configurations, in four sections: the gripper, the backpack and its power, the headset and trackers, and data safety. Read it through before first use, and re-read the relevant section before connecting, powering up or dismantling anything.</p>
+<p>Safety requirements shared by both configurations: read them through before first use, and re-read the relevant section before connecting, powering up or dismantling anything.</p>
 <div class="admonition danger">
 <p class="admonition-title">Any odour, smoke, obvious overheating, structural damage or damaged cable insulation</p>
 <p>Cut the power and stop using the device immediately, note the serial number on the body and contact <a href="../../common/reference/#support">support</a>.</p>
 </div>
 <h2 id="liabilities-and-limitations">Liabilities and limitations<a class="headerlink" href="#liabilities-and-limitations" title="锚点链接">¶</a></h2>
 <ul>
-<li>Install, use and maintain the product as described in this manual. Damage or loss caused by not following the instructions, by dismantling or modifying the product, by using non-matching accessories, or by use outside the specified environment is not covered by the warranty.</li>
-<li>This product collects human demonstration data for research and development. Users are responsible for assessing the safety of the collected data, and of any model trained on it, in real-world applications.</li>
-<li>The product software and documentation are updated continuously; the latest version applies.</li>
+<li>Install, use and maintain the product as described in this manual; damage or loss from not following the instructions, dismantling or modifying the product, non-matching accessories or use outside the specified environment is not covered by the warranty.</li>
+<li>This product collects human demonstration data for research and development; users assess the real-world safety of the data and of any model trained on it.</li>
+<li>Software and documentation are updated continuously; the latest version applies.</li>
 </ul>
 <h2 id="environmental-requirements">Environmental requirements<a class="headerlink" href="#environmental-requirements" title="锚点链接">¶</a></h2>
 <table>
@@ -2222,7 +2222,7 @@
 </tbody>
 </table>
 <h2 id="gripper">Gripper<a class="headerlink" href="#gripper" title="锚点链接">¶</a></h2>
-<p>During collection the leader gripper does not drive its motor (the motor is never energised); the operator performs the motion mechanically by hand. The safety requirements are therefore concentrated on power, cabling and the sensor surfaces.</p>
+<p>During collection the leader gripper's motor is never energised; the operator moves it by hand. Safety therefore centres on power, cabling and the sensor surfaces.</p>
 <table>
 <thead>
 <tr>
@@ -2239,31 +2239,30 @@
 </tr>
 <tr>
 <td>Follower gripper power</td>
-<td>Power and communication are separate: a 24 V adapter supplies power and Type-C carries communication only; never use a mismatched or faulty supply</td>
+<td>A 24 V adapter supplies power, Type-C carries communication only; never use a mismatched or faulty supply</td>
 <td>A miswired supply may damage the hardware</td>
 </tr>
 <tr>
 <td>Plugging and unplugging cables</td>
-<td>Stop collection before plugging or unplugging the Type-C connector with its locking screws; loosen the screws before pulling it out</td>
+<td>Stop collection before plugging or unplugging the locking Type-C; loosen the screws before pulling it out</td>
 <td>Strain on the connector, interrupted data</td>
 </tr>
 <tr>
 <td>Static electricity</td>
-<td>Take anti-static precautions when powering up or down and when removing or refitting a sensor</td>
-<td>Static affects the sensors and communication</td>
+<td>Anti-static precautions when powering up or down and when removing or refitting a sensor</td>
+<td>Affects the sensors and communication</td>
 </tr>
 <tr>
 <td>Sensor surface</td>
 <td>Do not touch, scratch or squeeze the visuotactile surface with anything sharp; do not peel at the bonded face; do not wipe with alcohol or solvents unless confirmed safe</td>
-<td>Damage to the elastomer or the optics can only be fixed by replacing the sensor</td>
+<td>Elastomer or optical damage means replacing the sensor</td>
 </tr>
 </tbody>
 </table>
 <div class="admonition danger">
 <p class="admonition-title">Never connect a 9 V / 12 V fast-charge adapter directly to the leader gripper</p>
-<p>The leader gripper takes power only from the collection terminal's USB port; fast-charge voltages will destroy the control board.</p>
+<p>Fast-charge voltages will destroy the leader gripper's control board.</p>
 </div>
-<p>Connection and disconnection order:</p>
 <table>
 <thead>
 <tr>
@@ -2285,52 +2284,58 @@
 </tr>
 </tbody>
 </table>
-<p>The follower gripper mounts on a robot's end effector: before fitting it, stop the robot and put it in a safe pose; route the cable clear of the joints and of the gripper's range of motion with enough slack that nothing tugs, kinks or tangles during movement; run the first motion slowly and confirm there is no interference.</p>
+<p>Before fitting the follower gripper, stop the robot in a safe pose; route the cable clear of the joints and the gripper's range of motion with enough slack that nothing tugs, kinks or tangles; run the first motion slowly to confirm there is no interference.</p>
 <div class="admonition danger">
 <p class="admonition-title">Gripper firmware: the wrong role means a factory return, and you must power-cycle after flashing</p>
-<p>The leader and follower firmware images are not interchangeable. Flash the wrong role and the gripper will not start; only the factory can recover it. Do not cut the power or unplug anything while flashing. After flashing you must power the gripper down and plug it back in once, otherwise it sits in a degraded state that reports the right version number while silently dropping frames. On the Developer Kit you flash with the SDK script, see <a href="../../pc/versions/#ota">Firmware OTA</a>; on the Backpack Kit you flash from System → Gripper, then wait for the gripper to restart and power the backpack off and on again, see <a href="../../backpack/update/#gripper-firmware">Gripper firmware</a>.</p>
-</div>
-<p>The gripper's wiring and serial-number rules are in <a href="../../common/gripper/">Gripper connection and serial numbers</a>, and the Backpack Kit's buttons and LED patterns in <a href="../../backpack/gripper/">Gripper buttons, LEDs and voice</a>; cleaning, storage and removal / refitting of the sensors are in <a href="../../common/maintenance/">Maintenance</a>.</p>
-<h2 id="backpack-power">The backpack and its power<a class="headerlink" href="#backpack-power" title="锚点链接">¶</a></h2>
-<p>The backpack's <code>DC</code> port takes only the supplied 12 V 3 A (36 W) adapter, or the supplied power bank over the supplied 0.3 m 12 V PD power cable; do not substitute another power source or cable. The grippers plug into <code>UMI-L</code> / <code>UMI-R</code> and are powered by the backpack, with no separate supply.</p>
-<p>The connection order is the same as on the Developer Kit: connect the gripper end first and tighten the locking screws, then the backpack's <code>UMI-L</code> / <code>UMI-R</code>. To disconnect, stop recording first (the console's "Stop recording", or a long press on the left gripper), then unplug the backpack end, and finally loosen the screws and unplug the gripper end. The full wiring for both power options is in <a href="../../backpack/unbox-connect/#adapter">Adapter power</a> and <a href="../../backpack/unbox-connect/#powerbank">Power-bank power</a>.</p>
-<p>If the headset is underpowered it will lose power and shut down, and collection stops with it. The power-bank wiring is in <a href="../../backpack/unbox-connect/#powerbank">Power-bank power</a>; do not add devices to the power bank part-way through a collection run.</p>
 <ul>
-<li>Connectors: on individual units the <code>DC</code>, <code>PICO</code> or <code>USB</code> port may make poor contact, which is a hardware fault; do not force or lever the connector — note the serial number on the body and send it in for repair.</li>
-<li>Cooling: do not block the fan outlet. After long use, overheating can drop the WiFi, which a restart recovers; check that the fan is turning, and report it if it keeps happening.</li>
-<li>System updates: confirm no collection is in progress before applying one; the service restarts when it is applied.</li>
-<li>Device back end: the device back end is for technical support only. Do not log in or change the system configuration yourself; when back-end diagnosis is needed, contact technical support, see <a href="../../backpack/network/#ssh">Advanced diagnosis</a>.</li>
-<li>Power draw and power-bank runtime are in <a href="../specs/">Specifications</a>.</li>
+<li>Leader and follower images are not interchangeable: flash the wrong role and the gripper will not start. Do not cut power or unplug while flashing.</li>
+<li>Without a power-cycle after flashing, the gripper sits in a degraded state that reports the right version while silently dropping frames.</li>
+<li>Developer Kit: flash with the SDK script, see <a href="../../pc/versions/#ota">Firmware OTA</a>. Backpack Kit: flash from System → Gripper, wait for the gripper to restart, then power the backpack off and on, see <a href="../../backpack/update/#gripper-firmware">Gripper firmware</a>.</li>
+</ul>
+</div>
+<p>See also <a href="../../common/gripper/">Gripper connection and serial numbers</a>, the Backpack Kit's <a href="../../backpack/gripper/">Gripper buttons, LEDs and voice</a>, and sensor care in <a href="../../common/maintenance/">Maintenance</a>.</p>
+<h2 id="backpack-power">The backpack and its power<a class="headerlink" href="#backpack-power" title="锚点链接">¶</a></h2>
+<ul>
+<li>The <code>DC</code> port takes only the supplied 12 V 3 A (36 W) adapter, or the supplied power bank over the supplied 0.3 m 12 V PD power cable; do not substitute another source or cable. Wiring: <a href="../../backpack/unbox-connect/#adapter">Adapter power</a> and <a href="../../backpack/unbox-connect/#powerbank">Power-bank power</a>.</li>
+<li>Grippers plug into <code>UMI-L</code> / <code>UMI-R</code> and are powered by the backpack; connect and disconnect as in the <a href="#gripper">Gripper</a> table, stopping recording first (the console's "Stop recording", or a long press on the left gripper).</li>
+<li>An underpowered headset shuts down and collection stops with it; do not add devices to the power bank mid-run.</li>
+<li>On individual units the <code>DC</code>, <code>PICO</code> or <code>USB</code> port may make poor contact, a hardware fault; do not force the connector — note the serial number on the body and send it in for repair.</li>
+<li>Do not block the fan outlet. After long use, overheating can drop the WiFi, which a restart recovers; check the fan is turning, and report it if it keeps happening.</li>
+<li>Applying a system update restarts the service; confirm no collection is in progress first.</li>
+<li>The device back end is for technical support only; do not log in or change the configuration yourself, and contact technical support when diagnosis is needed, see <a href="../../backpack/network/#ssh">Advanced diagnosis</a>.</li>
+<li>Power draw and power-bank runtime: <a href="../specs/">Specifications</a>.</li>
 </ul>
 <h2 id="headset">Headset and trackers<a class="headerlink" href="#headset" title="锚点链接">¶</a></h2>
 <div class="admonition danger">
 <p class="admonition-title">Never restart XTac-UMI XR during a collection run</p>
-<p>Restarting resets the origin and orientation of the world frame, so poses in earlier and later episodes of the same dataset no longer share a reference frame — and nothing in the data reveals the problem. Do not restart between episodes either; the headset's screen turning off or going to sleep suspends the app in the same way.</p>
+<p>A restart resets the world frame's origin and orientation, so earlier and later episodes of one dataset no longer share a reference frame — and nothing in the data reveals it. Do not restart between episodes either; screen-off or sleep suspends the app the same way.</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Set both the headset's system sleep and its screen timeout to \"Never\"</p>
-<p>Set the system sleep first and the screen timeout second; the other way round, the screen timeout's "Never" gets clamped back to a finite value. The steps are in <a href="../../common/pico4/#pico-system">Pico4 headset and tracker setup</a>.</p>
+<p>System sleep first, screen timeout second; the other way round, the screen timeout's "Never" is clamped back to a finite value. Steps: <a href="../../common/pico4/#pico-system">Pico4 headset and tracker setup</a>.</p>
 </div>
 <ul>
-<li>Trackers are assigned to a side by the last digit of the serial number: odd goes on the left gripper, even on the right. Fit them the wrong way round and the recorded poses will not match the grippers. Binding and verification are in <a href="../../common/pico4/#pico-tracker-bind">Tracker binding</a>.</li>
-<li>A short press of the tracker's power button until the blue light comes on turns it on; holding it for about 6 seconds puts it into pairing mode, alternating blue and red.</li>
-<li>The headset's power requirements are in <a href="#backpack-power">The backpack and its power</a>.</li>
-<li>Wearing, charging and visual health for the headset itself follow Pico's own <em>PICO 4 Ultra User Guide</em>; this site does not repeat them.</li>
+<li>Trackers go by the serial number's last digit: odd on the left gripper, even on the right; swapped, the recorded poses will not match the grippers. Binding and verification: <a href="../../common/pico4/#pico-tracker-bind">Tracker binding</a>.</li>
+<li>A short press of the tracker's power button until the blue light comes on turns it on; a ~6 s hold enters pairing mode, alternating blue and red.</li>
+<li>Headset power: see <a href="#backpack-power">The backpack and its power</a>.</li>
+<li>Headset wearing, charging and visual health follow Pico's <em>PICO 4 Ultra User Guide</em>.</li>
 </ul>
 <h2 id="data">Data safety<a class="headerlink" href="#data" title="锚点链接">¶</a></h2>
 <ul>
-<li>The backpack console has no login gate: anyone on the backpack's network (its hotspot, wired, or site WiFi) can operate the device and download or delete data. The hotspot password is printed on the body label; keep this in mind when the device leaves your hands or joins an uncontrolled network.</li>
-<li>"Delete permanently" is a hard delete: it cascades through every recording under the task and removes the MCAP, H264 and LeRobot export files from disk. It cannot be undone, and the confirmation dialog asks you to type the name.</li>
-<li>After an upload completes the entries are marked "Uploaded" and the local files are kept by default; the raw files are removed only if you tick the clean-up before uploading or <a href="../../backpack/projects-export/#archive">archive</a> afterwards, and once removed the take can no longer be replayed or exported in any format. If you need a local copy, pick the "Download to device" destination in the export dialog and collect the archive before cleaning up or archiving.</li>
-<li>The credentials in an upload configuration (ModelScope token, S3 keys, FTP password and so on) are stored on the device and are not shown again after saving. Choose a "private" repository when creating an upload configuration — publishing publicly cannot be undone. After uploading to the wrong account, programmatic deletion is limited and you have to sort it out in the ModelScope web console, so check which configuration a project is bound to when you create it.</li>
-<li>When uploading to the Hugging Face Hub on the Developer Kit, add <code>--private</code> for a private repository, see <a href="../../pc/dataset/#64">Uploading to the Hub and backups</a>.</li>
-<li>Privacy: collected data is stored only on your local device and on upload destinations you configure yourself. Recordings may capture faces, screens or other personal information; inform the people involved and obtain their consent beforehand, and handle and store data in line with local laws and regulations.</li>
+<li><strong>No console login gate</strong>: anyone on the backpack's network (hotspot, wired or site WiFi) can operate the device and download or delete data. The hotspot password is printed on the body label; mind this when the device leaves your hands or joins an uncontrolled network.</li>
+<li><strong>"Delete permanently" is a hard delete</strong>: it cascades through every recording under the task and removes the MCAP, H264 and LeRobot export files from disk, irreversibly; the confirmation dialog asks you to type the name.</li>
+<li>After upload, entries are marked "Uploaded" and local files are kept by default; they are removed only if you tick clean-up before uploading or <a href="../../backpack/projects-export/#archive">archive</a> afterwards, after which the take can no longer be replayed or exported in any format.</li>
+<li>For a local copy, pick the "Download to device" destination in the export dialog and collect the archive before cleaning up or archiving.</li>
+<li>Upload credentials (ModelScope token, S3 keys, FTP password and so on) are stored on the device and not shown again after saving.</li>
+<li>Choose a "private" repository when creating an upload configuration — publishing publicly cannot be undone. After uploading to the wrong account, programmatic deletion is limited and you must use the ModelScope web console; check which configuration a project is bound to when you create it.</li>
+<li>Developer Kit uploads to the Hugging Face Hub need <code>--private</code> for a private repository, see <a href="../../pc/dataset/#64">Uploading to the Hub and backups</a>.</li>
+<li>Collected data is stored only on your local device and upload destinations you configure. Recordings may capture faces, screens or other personal information; inform the people involved and obtain consent beforehand, and handle and store data under local law.</li>
 </ul>
 <h2 id="compliance-statement">Compliance statement<a class="headerlink" href="#compliance-statement" title="锚点链接">¶</a></h2>
 <ul>
 <li>Comply with the laws and regulations where the product is used, including those on radio, data protection and privacy.</li>
-<li>Certification information for this product is given by the markings on the product label and packaging.</li>
-<li>For the headset and trackers, see PICO's official documentation.</li>
+<li>Certification information is given by the markings on the product label and packaging.</li>
+<li>Headset and tracker compliance information is in PICO's official documentation.</li>
 </ul>
 
 

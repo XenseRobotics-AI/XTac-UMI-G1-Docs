@@ -902,7 +902,7 @@
   <a href="#label" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Identify the unit by its label, not by IP
+        Identifying the unit: by its label, not by IP
       
     </span>
   </a>
@@ -941,7 +941,7 @@
   <a href="#interfaces" class="md-nav__link">
     <span class="md-ellipsis">
       
-        The backpack's three network interfaces
+        The backpack's network interfaces
       
     </span>
   </a>
@@ -2254,17 +2254,25 @@
 
 
 <h1 id="network-and-console-access">Network and console access<a class="headerlink" href="#network-and-console-access" title="锚点链接">¶</a></h1>
-<p>This page covers how to open the XTac-UMI Collector console (below, "the console"). <strong>The recommended way is to plug the bundled tablet into USB</strong>: the backpack opens the console on the tablet by itself, and can put both the backpack and the tablet on the site WiFi in one step.</p>
-<h2 id="label">Identify the unit by its label, not by IP<a class="headerlink" href="#label" title="锚点链接">¶</a></h2>
+<p>This page explains how to open the XTac-UMI Collector console (below, "the console"). The recommended way is the bundled tablet over USB, which can also put the backpack and the tablet on the site WiFi together.</p>
+<h2 id="label">Identifying the unit: by its label, not by IP<a class="headerlink" href="#label" title="锚点链接">¶</a></h2>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/product/backpack-label.webp" data-desc-position="bottom"><img alt="The body label: SN, WiFi name, password, IP and mDNS address" src="../../../assets/product/backpack-label.webp" width="420"></a></p>
-<p>The body label carries the backpack's SN, hotspot name and password, IP and device name. The IP on the label is the hotspot's fixed address <code>192.168.44.1</code> and only works while you are on the backpack hotspot; once the backpack joins a site network its IP changes and differs from unit to unit, so never write such an IP into a procedure. Identify a unit by its SN (shown on the console's System → <a href="../system/#device-info">Device info</a> page) and its hotspot name.</p>
+<p>The body label shows the device's SN, hotspot name and password, IP and mDNS address. Keep in mind:</p>
+<ul>
+<li><strong>Hotspot IP</strong>: the IP on the label (<code>192.168.44.1</code>) is the hotspot's fixed address, usable only while connected to this unit's own hotspot.</li>
+<li><strong>Site network IP</strong>: once on a site network, every unit's IP differs and changes; never write it into a fixed procedure or configuration file.</li>
+<li><strong>Identifying a unit</strong>: always by SN (see System → <a href="../system/#device-info">Device info</a>) and hotspot name.</li>
+</ul>
 <h2 id="tablet">Recommended: the tablet over USB<a class="headerlink" href="#tablet" title="锚点链接">¶</a></h2>
-<p>Connect the tablet to the backpack's front <code>HOST1</code> or <code>HOST2</code> port with a data cable. Once the tablet is unlocked, the backpack opens the console's System → Network page on it by itself; no WiFi and no address to type.</p>
+<p>Cable the tablet to the backpack's front <code>HOST1</code> or <code>HOST2</code> port and unlock the tablet. Once connected, the backpack opens System → Network on the tablet by itself, with no WiFi to join and no address to type.</p>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/backpack/tablet-usb-network-settings.webp" data-desc-position="bottom"><img alt="The Network page the tablet opens over USB" src="../../../assets/backpack/tablet-usb-network-settings.webp"></a></p>
-<p>The bundled tablet is authorised on the production line before shipping, so it works as soon as you plug it in. After a factory reset or revoking USB debugging authorisations, plugging in no longer opens the console; re-authorise it as described in <a href="../troubleshooting/#tablet-adb">Troubleshooting</a>.</p>
+<ul>
+<li><strong>Plug and play</strong>: the bundled tablet is authorised on the production line and works as soon as USB is plugged in.</li>
+<li><strong>Re-authorising</strong>: after a factory reset of the tablet or revoked USB debugging authorisation it no longer opens; re-authorise it as in <a href="../troubleshooting/#tablet-adb">Troubleshooting</a>.</li>
+</ul>
 <h3 id="tablet-wifi">Putting the backpack on WiFi from the tablet<a class="headerlink" href="#tablet-wifi" title="锚点链接">¶</a></h3>
-<p>On this page, pick the site's 5 GHz WiFi and enter its password: the backpack and the tablet <strong>join together</strong>. Once the backpack confirms the tablet is on the same network, the tablet switches to the backpack's WiFi address and you can unplug the USB cable.</p>
-<h2 id="interfaces">The backpack's three network interfaces<a class="headerlink" href="#interfaces" title="锚点链接">¶</a></h2>
+<p>Pick the site's 5 GHz WiFi on this page and enter its password: the backpack and the tablet <strong>join that network together</strong>. Once the backpack is confirmed on the same network, the tablet switches to the backpack's WiFi address automatically and you can unplug the USB cable.</p>
+<h2 id="interfaces">The backpack's network interfaces<a class="headerlink" href="#interfaces" title="锚点链接">¶</a></h2>
 <table>
 <thead>
 <tr>
@@ -2287,36 +2295,52 @@
 <tr>
 <td>Hotspot</td>
 <td>The backpack's own 5 GHz hotspot, fixed address <code>192.168.44.1</code></td>
-<td>The way in when there is no tablet and no site network</td>
+<td>The way in with no tablet and no site network</td>
 </tr>
 </tbody>
 </table>
 <h2 id="softap">The backpack hotspot<a class="headerlink" href="#softap" title="锚点链接">¶</a></h2>
-<p>Without a tablet, use the backpack hotspot to reach the console:</p>
+<p>Without a tablet, reach the backpack over its hotspot:</p>
 <ol>
-<li>Join the hotspot from a phone, tablet or computer (name and password on the body label).</li>
+<li>Join the backpack hotspot from a phone, tablet or computer (name and password on the body label).</li>
 <li>Open <code>http://192.168.44.1</code> in a browser.</li>
 </ol>
 <div class="admonition note">
 <p class="admonition-title">On a new unit the hotspot is off at first boot</p>
-<p>Use "Turn on hotspot" in System → <a href="../system/#wifi">Network</a>; the device remembers the choice. You can reach the console with the <a href="#tablet">tablet over USB</a> to turn it on. The hotspot is 5 GHz only; 2.4 GHz-only devices will not see it.</p>
+<p>Use "Turn on hotspot" in System → <a href="../system/#wifi">Network</a>; the device remembers it. You can reach the console with the <a href="#tablet">tablet over USB</a> first to turn it on. The hotspot is 5 GHz only; 2.4 GHz-only devices will not see it.</p>
 </div>
 <ul>
-<li>On iOS / Safari, type the full <code>http://</code> prefix.</li>
-<li>With several backpacks on site, check the hotspot name against the body label before joining.</li>
-<li>Turn off auto-join for other saved networks on the phone or tablet so it does not hop away mid-collection.</li>
+<li><strong>iOS / Safari</strong>: type the full <code>http://</code> prefix in the address bar.</li>
+<li><strong>Several backpacks</strong>: check the hotspot name against the body label before joining.</li>
+<li><strong>No network hopping</strong>: turn off auto-join for other saved networks so the device does not switch away mid-collection.</li>
 </ul>
 <h2 id="mdns">Device name<a class="headerlink" href="#mdns" title="锚点链接">¶</a></h2>
-<p>On the same network as the backpack you can use its device name instead of an IP: the <code>http://xense-xxxxxx.local</code> on the last line of the body label. The name can be changed or turned off in System → <a href="../system/#wifi">Network</a>. Windows and some Android phones cannot open <code>.local</code> names; use the IP from the <a href="#status">network drop-down</a> instead.</p>
+<p>On the same network, use the <code>http://xense-xxxxxx.local</code> on the label's last line instead of remembering an IP. Rename or turn it off in System → <a href="../system/#wifi">Network</a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Windows and some Android phones cannot resolve <code>.local</code> names; use the IP from the <a href="#status">network drop-down</a> instead.</p>
+</div>
 <h2 id="lan">Joining a site network<a class="headerlink" href="#lan" title="锚点链接">¶</a></h2>
 <h3 id="wired">Wired<a class="headerlink" href="#wired" title="锚点链接">¶</a></h3>
-<p>Run the backpack's Ethernet port to a router LAN port and it works as soon as it is plugged in; a computer on the same router uses the wired IP shown in the <a href="#status">network drop-down</a> or the device name. On Ubuntu, remember to tick Wired in the system settings:</p>
+<ul>
+<li>Connect the backpack's Ethernet port to a router LAN port and it works; computers on the same router use the wired IP in the <a href="#status">network drop-down</a> or the device name.</li>
+<li><strong>Ubuntu computers</strong>: turn on the Wired switch in the system settings:</li>
+</ul>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/backpack/ubuntu-wired.webp" data-desc-position="bottom"><img alt="The Ubuntu wired network switch" src="../../../assets/backpack/ubuntu-wired.webp" width="480"></a></p>
-<p>Set a static IP only when the site has no DHCP (backpack cabled straight to a computer) or IT requires a fixed address, see System → <a href="../system/#wifi-wired">Wired IP</a>.</p>
+<p>Set a static IP only when there is no DHCP (backpack cabled straight to a computer) or IT requires a fixed address; see System → <a href="../system/#wifi-wired">Wired IP</a>.</p>
 <h3 id="site-wifi">Site WiFi<a class="headerlink" href="#site-wifi" title="锚点链接">¶</a></h3>
-<p>The easiest way is <a href="#tablet-wifi">WiFi setup from the tablet over USB</a>, which joins the backpack and the tablet together. You can also set up the backpack alone in the console's System → <a href="../system/#wifi-site">Joining the site WiFi</a>. The backpack only joins 5 GHz WiFi.</p>
+<ul>
+<li><strong>Easiest</strong>: <a href="#tablet-wifi">WiFi setup from the tablet over USB</a>, which joins both together.</li>
+<li><strong>Backpack alone</strong>: System → <a href="../system/#wifi-site">Joining the site WiFi</a>.</li>
+<li><strong>Band</strong>: the backpack only supports 5 GHz WiFi.</li>
+</ul>
 <h2 id="status">Checking the current network state<a class="headerlink" href="#status" title="锚点链接">¶</a></h2>
-<p>The IP drop-down at the left of the console's top bar gathers every way into this unit: the wired IP, the wireless IP and the hotspot it is joined to, and its own hotspot's SSID / password / gateway, plus the mDNS device name. Collapsed it shows only "the one address you should use to reach it right now" (the first available of wired &gt; wireless &gt; hotspot), and expanding it shows them all. When the network environment has changed and you are not sure which address to use, look here first.</p>
+<p>The IP drop-down at the left of the top bar gathers every way into this unit. After a network change, when you are unsure which address to use, look here first.</p>
+<ul>
+<li><strong>Contents</strong>: the wired IP, the wireless IP and the hotspot it is joined to, its own hotspot's SSID / password / gateway, and the mDNS device name.</li>
+<li><strong>Collapsed</strong>: shows only "the one address you should use to reach it right now", the first available of wired &gt; wireless &gt; hotspot.</li>
+<li><strong>Expanded</strong>: click to see all network details.</li>
+</ul>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/backpack/network-dropdown-live.webp" data-desc-position="bottom"><img alt="The top-bar network drop-down" src="../../../assets/backpack/network-dropdown-live.webp"></a></p>
 <h2 id="choose">Choosing a method by scenario<a class="headerlink" href="#choose" title="锚点链接">¶</a></h2>
 <table>
@@ -2341,7 +2365,7 @@
 </tr>
 <tr>
 <td>Site has 5 GHz WiFi and several people need access</td>
-<td>Use the tablet to <a href="#site-wifi">put the backpack on the site WiFi</a>; PCs on the same network then reach it directly</td>
+<td>Use the tablet to <a href="#site-wifi">put the backpack on the site WiFi</a>; PCs on that network reach it directly</td>
 </tr>
 <tr>
 <td>Backpack wired directly to a laptop, no router</td>
@@ -2349,19 +2373,22 @@
 </tr>
 <tr>
 <td>Nothing works at all</td>
-<td>Plug the tablet into USB to check the network in the console; if that fails, work through <a href="../troubleshooting/">Troubleshooting</a></td>
+<td>Plug the tablet into USB to check the network; if that fails, see <a href="../troubleshooting/">Troubleshooting</a></td>
 </tr>
 </tbody>
 </table>
 <h2 id="ssh">Advanced diagnosis: handled by technical support<a class="headerlink" href="#ssh" title="锚点链接">¶</a></h2>
-<p>The day-to-day network state and connection operations are all done in the console: every address currently available for reaching this unit is in the top bar's <a href="#status">network drop-down</a>, and the wired address, the gateway, connection states such as "no cable", joining the site WiFi and changing the wired IP are all in System → <a href="../system/#wifi">Network</a>.</p>
-<p>The device back end is for technical support to diagnose with. <strong>Do not log in to the back end or change the system configuration yourself</strong>: changes there are outside what the console can show you, and a bad configuration can cost you even the hotspot way in.</p>
-<p>When you have worked through this page's access methods and <a href="../troubleshooting/">Troubleshooting</a> and still cannot connect, hand these to technical support rather than going into the back end yourself:</p>
-<ul>
-<li>The SN on the body label, and which way in you were using (hotspot / device name / wired IP);</li>
-<li>The addresses shown in the top bar's <a href="#status">network drop-down</a>, and the wired state and current internet connection on the System → <a href="../system/#wifi">Network</a> page;</li>
-<li>The exact text of the error on screen.</li>
-</ul>
+<div class="admonition warning">
+<p class="admonition-title">The device back end is for technical support diagnosis only</p>
+<p><strong>Do not log in to the back end or change the system configuration yourself</strong>: the console cannot show those changes, and a bad configuration can cost you even the hotspot way in.</p>
+</div>
+<p>Day-to-day work happens in the console: addresses in the <a href="#status">network drop-down</a>; the wired address, gateway, states such as "no cable", joining the site WiFi and changing the wired IP are all in System → <a href="../system/#wifi">Network</a>.</p>
+<p>If you have worked through this page and <a href="../troubleshooting/">Troubleshooting</a> and still cannot connect, collect the following for technical support:</p>
+<ol>
+<li>The body-label SN, and which way in you used (hotspot / device name / wired IP).</li>
+<li>The addresses in the <a href="#status">network drop-down</a>, and the wired state and current internet connection on the System → <a href="../system/#wifi">Network</a> page.</li>
+<li>A screenshot of the exact error text on screen.</li>
+</ol>
 
 
 

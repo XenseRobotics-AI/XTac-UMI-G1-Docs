@@ -2176,7 +2176,7 @@
 
 
 <h1 id="故障排查">故障排查<a class="headerlink" href="#故障排查" title="锚点链接">¶</a></h1>
-<p>本页按症状分类，每条给出原因与解决办法。现场最常见的三类是连不上 XTac-UMI Collector 控制台（下称控制台）、录制不给开、导出预检不过；动手前先听设备语音、看夹爪灯语与监控页的状态点，再对照症状。灯语的完整含义见<a href="../gripper/#buttons-leds">夹爪按键、指示灯与语音</a>。</p>
+<p>本页按症状给出原因与解决。最常见的是连不上 XTac-UMI Collector 控制台（下称控制台）、录制不给开、导出预检不过。动手前先听语音、看夹爪灯语与监控页状态点，灯语见<a href="../gripper/#buttons-leds">夹爪按键、指示灯与语音</a>。</p>
 <div class="admonition danger">
 <p class="admonition-title">异味、冒烟、明显发热、结构破损或线缆破皮</p>
 <p>立即断电并停止使用，记下机身 SN 联系支持。</p>
@@ -2184,45 +2184,54 @@
 <h2 id="power">供电与接口<a class="headerlink" href="#power" title="锚点链接">¶</a></h2>
 <details class="failure">
 <summary>头显中途掉电关机</summary>
-<p><strong>原因</strong>：头显供电不足，或充电宝在接入第二台设备时停掉了原口的输出。</p>
-<p><strong>解决</strong>：按<a href="../unbox-connect/#powerbank">充电宝供电</a>的接法与选型接线；采集中途不要往充电宝上加设备。</p>
+<p><strong>原因</strong>：头显供电不足，或充电宝接入第二台设备时停了原口输出。</p>
+<p><strong>解决</strong>：按<a href="../unbox-connect/#powerbank">充电宝供电</a>选型接线；采集中别往充电宝加设备。</p>
 </details>
 <details class="failure">
 <summary>DC 供电口、PICO 口或 USB 口接触不良</summary>
-<p><strong>原因</strong>：个别设备板卡受力移位，属硬件问题。</p>
-<p><strong>解决</strong>：不要用力掰扯接口；记下机身 SN 联系支持报修。</p>
+<p><strong>原因</strong>：板卡受力移位（硬件问题）。</p>
+<p><strong>解决</strong>：别用力掰扯接口；记下机身 SN 联系支持报修。</p>
 </details>
 <details class="failure">
 <summary>夹爪指示灯不亮，或系统日志反复出现 <code>mcu ... disconnected / reconnected</code></summary>
-<p><strong>原因</strong>：夹爪线束接触不良，或没插到 UMI-L / UMI-R；一只夹爪掉线时，在线的那只会亮红常亮（系统问题）。</p>
-<p><strong>解决</strong>：检查 Type-C 两端是否插紧、旋紧锁紧螺钉；仍频繁断连，记录 SN 与发生时段反馈支持。灯语见<a href="../gripper/#buttons-leds">指示灯</a>。</p>
+<p><strong>原因</strong>：夹爪线束接触不良或没插到 UMI-L / UMI-R；一只掉线时，另一只亮红常亮（系统问题）。</p>
+<p><strong>解决</strong>：插紧 Type-C 两端、旋紧锁紧螺钉；仍频繁断连，记下 SN 与时段反馈支持。灯语见<a href="../gripper/#buttons-leds">指示灯</a>。</p>
 </details>
 <h2 id="tracker">头显与追踪器<a class="headerlink" href="#tracker" title="锚点链接">¶</a></h2>
 <details class="failure">
 <summary>监控页位姿卡的状态点是黄的，旁边写「tracker 出视野」或「位姿不新鲜」</summary>
-<p><strong>原因</strong>：头显已连上，但追踪器位姿无效：追踪器出了头显视野、追踪异常，或追踪器没开机 / 没配对。写「Pico 未上线」则是头显没连上背包。追踪器丢失期间录下的位姿不可信，这段数据不要用。</p>
-<p><strong>解决</strong>：让夹爪回到头显视野内；确认两只追踪器亮蓝灯、已<a href="../../common/pico4/#pico-tracker-bind">配对到头显</a>并切到独立追踪模式；「Pico 未上线」时看头显里 XTac-UMI XR 是否已连接，见<a href="../../common/pico4/#pico-toolkit-ui">打开 App 后的界面</a>。</p>
+<p><strong>原因</strong>：</p>
+<ul>
+<li><strong>黄点</strong>：头显已连，追踪器位姿无效（出视野、追踪异常或没开机 / 没配对）；丢失期间的位姿不可信，别用。</li>
+<li><strong>写「Pico 未上线」</strong>：头显没连上背包。</li>
+</ul>
+<p><strong>解决</strong>：</p>
+<ul>
+<li>夹爪移回头显视野。</li>
+<li>确认两只追踪器亮蓝灯、已<a href="../../common/pico4/#pico-tracker-bind">配对到头显</a>并处于独立追踪模式。</li>
+<li>「Pico 未上线」就看 XTac-UMI XR 是否已连，见<a href="../../common/pico4/#pico-toolkit-ui">打开 App 后的界面</a>。</li>
+</ul>
 </details>
 <details class="failure">
 <summary>显示位姿在线，3D 模型却不动</summary>
-<p><strong>原因</strong>：头显里的追踪器 App 没有真正开启（当日首次使用、没按追踪器上的按钮），状态徽章仍可能显示在线。</p>
-<p><strong>解决</strong>：开采前动一动夹爪与头显，确认监控页 3D 模型在跟随；不跟随就长按追踪器电源键重新激活，并重启头显里的 App。</p>
+<p><strong>原因</strong>：头显里的追踪器 App 没真正开启（当日首次使用、没按追踪器按钮），徽章仍可能显示在线。</p>
+<p><strong>解决</strong>：开采前动夹爪与头显看模型是否跟随；不跟随就长按追踪器电源键重新激活，并重启头显里的 App。</p>
 </details>
 <details class="failure">
 <summary>左右夹爪的位姿反了</summary>
-<p><strong>原因</strong>：两只追踪器装反，或配对时左右对调。追踪器 SN 规则是左单右双。</p>
-<p><strong>解决</strong>：按<a href="../../common/pico4/#pico-tracker-sn">追踪器序列号</a>核对后换回；录制前在监控页单独动一只夹爪确认。</p>
+<p><strong>原因</strong>：两只追踪器装反，或配对时左右对调。SN 规则是左单右双。</p>
+<p><strong>解决</strong>：按<a href="../../common/pico4/#pico-tracker-sn">追踪器序列号</a>核对换回；录前单独动一只夹爪确认。</p>
 </details>
 <h2 id="connect">连接与控制台入口<a class="headerlink" href="#connect" title="锚点链接">¶</a></h2>
 <p><span id="tablet-adb"></span></p>
 <details class="failure">
 <summary>平板插上背包后没有自动打开控制台</summary>
-<p><strong>原因</strong>：随箱平板出厂前已完成授权；平板恢复过出厂设置、关掉了 USB 调试或撤销了调试授权后，背包就无法再控制它。</p>
-<p><strong>解决</strong>：先确认数据线接在背包的 <code>HOST1</code> / <code>HOST2</code> 口、平板已解锁。仍不行就重新打开 USB 调试并信任背包（以随箱的 REDMI Pad 2 SE 为例）：</p>
+<p><strong>原因</strong>：平板恢复出厂、关掉 USB 调试或撤销了调试授权（随箱平板出厂已授权）。</p>
+<p><strong>解决</strong>：确认线接 <code>HOST1</code> / <code>HOST2</code> 口、平板已解锁；仍不行就重开 USB 调试并信任背包（以随箱 REDMI Pad 2 SE 为例）：</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:4"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><input id="__tabbed_1_3" name="__tabbed_1" type="radio"><input id="__tabbed_1_4" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">1. 打开开发者模式</label><label for="__tabbed_1_2">2. 找到开发者选项</label><label for="__tabbed_1_3">3. 打开 USB 调试</label><label for="__tabbed_1_4">4. 信任背包</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<p>设置 → 我的设备，连续点「OS 版本」约 7 次，直到提示已进入开发者模式。</p>
+<p>设置 → 我的设备，连续点「OS 版本」约 7 次，至提示已进入开发者模式。</p>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/backpack/tablet-adb-1-os-version.webp" data-desc-position="bottom"><img alt="连续点 OS 版本" src="../../assets/backpack/tablet-adb-1-os-version.webp"></a></p>
 </div>
 <div class="tabbed-block">
@@ -2234,155 +2243,243 @@
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/backpack/tablet-adb-3-usb-debugging.webp" data-desc-position="bottom"><img alt="打开 USB 调试" src="../../assets/backpack/tablet-adb-3-usb-debugging.webp"></a></p>
 </div>
 <div class="tabbed-block">
-<p>插上背包后，平板弹出「允许 USB 调试？」时勾选「始终允许使用这台计算机进行调试」，再点「允许」。之后再插就不用确认了。</p>
+<p>插上背包，弹出「允许 USB 调试？」时勾选「始终允许使用这台计算机进行调试」，点「允许」。</p>
 </div>
 </div>
 </div>
-<p>授权后背包会自动关闭平板的调试授权超时，之后插上就会自动打开控制台。</p>
+<p>授权后背包自动关闭平板的调试授权超时，之后插上免确认、自动打开控制台。</p>
 </details>
 <details class="failure">
 <summary>连上背包热点，但控制台打不开</summary>
-<p><strong>原因</strong>：三种常见情况：连的不是这台背包（现场多台热点前缀都是 <code>xense-</code>）；地址没带 <code>http://</code>，iOS / Safari 会把光秃秃的设备名当搜索词丢给搜索引擎，现象像「打不开」，其实没发起访问；部分安卓机解析不了 <code>.local</code> 设备名。</p>
-<p><strong>解决</strong>：核对热点名与机身标签上 WiFi 一行一致，密码印在标签上；地址敲全 <code>http://192.168.44.1</code>（热点网关固定，连着热点就能开）或机身标签最后一行的 <code>http://xense-xxxxxx.local</code>；离背包远、信号弱时先靠近；偶发无响应给背包重新上电。入口一览见<a href="../network/#softap">网络与控制台入口</a>。</p>
+<p><strong>原因</strong>：</p>
+<ul>
+<li><strong>连错背包</strong>：多台热点前缀都是 <code>xense-</code>。</li>
+<li><strong>地址没带 <code>http://</code></strong>：iOS / Safari 把设备名当搜索词，看似「打不开」，实则没发起访问。</li>
+<li><strong><code>.local</code> 解析不了</strong>：部分安卓机不支持。</li>
+</ul>
+<p><strong>解决</strong>：</p>
+<ul>
+<li>核对热点名与机身标签 WiFi 一行一致（密码也在标签上）。</li>
+<li>敲全 <code>http://192.168.44.1</code>（热点网关固定），或标签最后一行的 <code>http://xense-xxxxxx.local</code>。</li>
+<li>信号弱就靠近；偶发无响应给背包重新上电。</li>
+<li>入口见<a href="../network/#softap">网络与控制台入口</a>。</li>
+</ul>
 </details>
 <details class="failure">
 <summary>平板或手机搜不到背包热点</summary>
-<p><strong>原因</strong>：热点只有 5 GHz 频段，只支持 2.4 GHz 的设备看不到它。</p>
-<p><strong>解决</strong>：换支持 5 GHz WiFi 的平板 / 手机 / 电脑；或把背包接入现场网络后从局域网访问，见<a href="../network/#lan">接入现场 WiFi 与有线</a>。</p>
+<p><strong>原因</strong>：热点只有 5 GHz，仅支持 2.4 GHz 的设备看不到。</p>
+<p><strong>解决</strong>：换支持 5 GHz 的设备；或把背包接入现场网络后从局域网访问，见<a href="../network/#lan">接入现场 WiFi 与有线</a>。</p>
 </details>
 <details class="failure">
 <summary>电脑打不开 <code>xense-xxxxxx.local</code>，手机却可以</summary>
-<p><strong>原因</strong>：Windows 对 mDNS 名称解析支持不稳定，属已知环境差异。</p>
-<p><strong>解决</strong>：用 IP 地址访问：平板插 USB 进入控制台后，在顶栏<a href="../network/#status">网络下拉</a>里看背包当前的 IP；连背包热点时直接用 <code>http://192.168.44.1</code>。</p>
+<p><strong>原因</strong>：Windows 的 mDNS 解析不稳定。</p>
+<p><strong>解决</strong>：改用 IP，见顶栏<a href="../network/#status">网络下拉</a>（可平板插 USB 进控制台查看）；连热点时用 <code>http://192.168.44.1</code>。</p>
 </details>
 <details class="failure">
 <summary>采集中控制台突然断连，WiFi 跳到了别的网络</summary>
-<p><strong>原因</strong>：Windows / 平板会自动切到「信号更好」的已保存网络。</p>
-<p><strong>解决</strong>：把其他已保存网络的「自动连接」关掉或直接忘掉它们，只保留背包热点。</p>
+<p><strong>原因</strong>：Windows / 平板自动切到「信号更好」的已保存网络。</p>
+<p><strong>解决</strong>：关掉或忘掉其他已保存网络的「自动连接」，只留背包热点。</p>
 </details>
 <details class="failure">
 <summary>背包的网络页扫不到现场 WiFi</summary>
-<p><strong>原因</strong>：背包只连 5 GHz WiFi，扫描列表只列 5 GHz 网络；只有 2.4 GHz 的路由器看不到也连不上。</p>
-<p><strong>解决</strong>：改用有线，或直接走背包热点。</p>
+<p><strong>原因</strong>：背包只连、只列 5 GHz WiFi，只有 2.4 GHz 的路由器看不到。</p>
+<p><strong>解决</strong>：改用有线，或走背包热点。</p>
 </details>
 <details class="failure">
 <summary>背包长时间使用后 WiFi 直接断开、机身很热</summary>
 <p><strong>原因</strong>：过热。</p>
-<p><strong>解决</strong>：重启背包即可恢复；检查风扇出风口是否被遮挡、风扇是否在转，持续出现请报修。</p>
+<p><strong>解决</strong>：重启背包恢复；查出风口是否被挡、风扇是否在转，反复出现请报修。</p>
 </details>
 <h2 id="record">采集与录制<a class="headerlink" href="#record" title="锚点链接">¶</a></h2>
 <details class="failure">
 <summary>录制按钮灰的，或按夹爪按键开录被拒（夹爪黄灯常亮）</summary>
-<p><strong>原因</strong>：开录前的门控没过，浏览器会弹窗给出原因：未选项目 / 任务；「Pico 未就绪」或「Tracker 未就绪」（后面跟着具体原因，例如连接超时、位姿或某一眼的视频缺失、时钟同步缺失、头显配置切换待确认，或 Tracker 不在视野内、静止超过 5 秒未主动追踪）；没有在线的夹爪 MCU；任务已达到累计采集目标；录制盘已用达到 80%。</p>
-<p><strong>解决</strong>：按弹窗里的那一条处理：在监控页底部选好<a href="../monitor-record/#project-task">项目与任务</a>；等头显连上、位姿点变绿，Tracker 未就绪就把夹爪移回头显视野内并动一动；盘满见下一条；录满见下面「已达到累计采集目标」那条。</p>
+<p><strong>原因</strong>：开录门控没过，弹窗写明哪项（顺序见<a href="../monitor-record/#record-gates">开录门槛</a>）：</p>
+<ul>
+<li>未选项目 / 任务；</li>
+<li>「Pico 未就绪」或「Tracker 未就绪」及具体原因（如连接超时、位姿或某眼视频缺失、时钟同步缺失、头显配置切换待确认，或 Tracker 不在视野内、静止超过 5 秒未主动追踪）；</li>
+<li>没有在线的夹爪 MCU；</li>
+<li>任务已达到累计采集目标；</li>
+<li>录制盘已用达到 80%。</li>
+</ul>
+<p><strong>解决</strong>：</p>
+<ul>
+<li><strong>未选项目 / 任务</strong>：监控页底部选<a href="../monitor-record/#project-task">项目与任务</a>。</li>
+<li><strong>「Pico 未就绪」</strong>：等头显连上、位姿点变绿。</li>
+<li><strong>「Tracker 未就绪」</strong>：夹爪移回头显视野内并动一动。</li>
+<li><strong>录满 / 盘满</strong>：见下两条。</li>
+</ul>
 </details>
 <details class="failure">
 <summary>开录被拒：「任务「…」已达到累计采集目标（N/M）」</summary>
-<p><strong>原因</strong>：这道拦截按<strong>累计采集</strong>计算：「已就绪」与「已上传」都算进去，归档只删本地文件、不改状态，因此<strong>上传与归档都腾不出名额</strong>。</p>
-<p><strong>解决</strong>：提高该任务的目标条数，或在项目页删掉不该计入目标的录制（误触的短条、已判可疑的那些）；也可以新建任务重新计数。「先上传一批再接着录」腾不出名额。口径见<a href="../monitor-record/#project-task">选项目与任务</a>。</p>
+<p><strong>原因</strong>：按<strong>累计采集</strong>计，「已就绪」「已上传」都算；归档只删本地文件、不改状态，<strong>上传与归档都腾不出名额</strong>。</p>
+<p><strong>解决</strong>：</p>
+<ul>
+<li>提高该任务的目标条数；</li>
+<li>或在项目页删掉不该计入的（误触短条、已判可疑的）；</li>
+<li>或新建任务从零计。</li>
+</ul>
+<p>口径见<a href="../monitor-record/#project-task">选项目与任务</a>。</p>
 </details>
 <details class="failure">
 <summary>开录被拒：「录制盘已用 N%，达到 80% 上限」</summary>
-<p><strong>原因</strong>：开录前的容量门控，占用达到 80% 就拒绝，留 20% 给转码中间产物与导出；宁可这一条不开始，也不录一条盘满时截断的残缺 MCAP。</p>
-<p><strong>解决</strong>：先把已采数据导出（下载或上传）后<a href="../projects-export/#archive">归档</a>腾出空间，或在项目页删掉不要的录制条目。注意上传本身不腾空间 —— 上传完成后本地文件默认保留，得再点一次「归档」。删除会连同 MCAP 与 H264 一起删，不可恢复。</p>
+<p><strong>原因</strong>：占用达 80% 即拒绝开录，留 20% 给转码中间产物与导出，免得盘满截出残缺 MCAP。</p>
+<p><strong>解决</strong>：</p>
+<ul>
+<li><strong>归档</strong>：已采数据导出（下载或上传）后<a href="../projects-export/#archive">归档</a>。</li>
+<li><strong>删除</strong>：项目页删不要的条目，连同 MCAP 与 H264，不可恢复。</li>
+<li><strong>上传不腾空间</strong>：本地文件默认保留，须再点「归档」。</li>
+</ul>
 </details>
 <details class="failure">
 <summary>录制中夹爪灯变黄常亮</summary>
-<p><strong>原因</strong>：这次录制出了致命问题（某路相机或必需通道中断等），这一条已经废了；灯一直黄到本次录制收尾。</p>
-<p><strong>解决</strong>：停录后到项目页看这一条的质量标注，删掉重录；看监控页哪一路画面断了，检查对应线缆。含义见<a href="../gripper/#buttons-leds">指示灯</a>。</p>
+<p><strong>原因</strong>：本条出了致命问题（如某路相机或必需通道中断）已废，灯黄到收尾。</p>
+<p><strong>解决</strong>：停录后删掉重录（项目页有质量标注）；查监控页断掉那路的线缆。含义见<a href="../gripper/#buttons-leds">指示灯</a>。</p>
 </details>
 <details class="failure">
 <summary>录制中头显断联，这一条被中断并标为失败</summary>
-<p><strong>原因</strong>：录制中头显的 USB 连接断开、连接中断，或位姿 / 图像约 3 秒没有更新，设备会立即判这一条失败并停止采集，同时播报「pico连接失败」（Tracker 掉线则是「Tracker 连接失败」），界面弹出「Pico 异常：录制已中断」。已录到的数据安全收尾后保留在设备上供排查，但不计入已采条数，也不进入正常的导出与上传。</p>
-<p><strong>解决</strong>：检查头显与背包 <code>PICO</code> 口之间的连线、头显电量与头显里的 XTac-UMI XR 是否仍在运行；Tracker 掉线就查手上的 Tracker。头显恢复后录制<strong>不会自动续录</strong>，等监控页就绪后重新开始录制。同一次故障只弹一次提示。</p>
+<p><strong>原因</strong>：</p>
+<ul>
+<li><strong>触发</strong>：头显 USB 断开、连接中断，或位姿 / 图像约 3 秒没更新。</li>
+<li><strong>设备反应</strong>：立即判失败、停录，播报「pico连接失败」（Tracker 掉线则「Tracker 连接失败」），弹「Pico 异常：录制已中断」（同一次只弹一次）；数据保留供排查，不计条数、不进正常导出与上传。</li>
+</ul>
+<p><strong>解决</strong>：</p>
+<ul>
+<li>查头显到背包 <code>PICO</code> 口的连线、头显电量、XTac-UMI XR 是否在运行；Tracker 掉线就查 Tracker。</li>
+<li><strong>不会自动续录</strong>，就绪后重新开录，详见<a href="../monitor-record/#pico-disconnect">录制中头显断联</a>。</li>
+</ul>
 </details>
 <details class="failure">
 <summary>录制显示失败，原因写着断电或系统重启</summary>
-<p><strong>原因</strong>：录制进行中背包断电、系统重启或采集服务重启，这一条没能正常收尾。重新上电后失败原因会区分是断电 / 系统重启还是采集服务重启，数据量按设备上实际留下的文件显示。</p>
-<p><strong>解决</strong>：这类录制文件可能不完整，不要当作有效数据使用，确认后删除重录；断电多发时检查供电与接线，见<a href="#power">供电与接口</a>。</p>
+<p><strong>原因</strong>：录制中背包断电、系统重启或采集服务重启，没能正常收尾；上电后失败原因会区分断电 / 系统重启与采集服务重启，数据量按实际留下的文件显示。</p>
+<p><strong>解决</strong>：文件可能不完整，确认后删除重录；断电多发时查供电与接线，见<a href="#power">供电与接口</a>。</p>
 </details>
 <details class="failure">
 <summary>夹爪灯红常亮</summary>
-<p><strong>原因</strong>：系统问题，由背包侧点亮：夹爪掉线、相机掉线或必需通道缺失，持续到问题解除。红色只表示故障，不表示录制中。</p>
-<p><strong>解决</strong>：看监控页哪一路离线，重插对应线缆；到<a href="../system/#device-info">设备信息</a>看相机清单里哪台标了「离线」、夹爪 MCU 是否都在；不恢复就给背包重新上电。</p>
+<p><strong>原因</strong>：背包侧报系统问题（夹爪掉线、相机掉线或必需通道缺失），持续到解除。红色只表示故障，不表示录制中。</p>
+<p><strong>解决</strong>：</p>
+<ul>
+<li>重插监控页上离线那路的线缆。</li>
+<li>在<a href="../system/#device-info">设备信息</a>查相机清单里哪台标「离线」、夹爪 MCU 是否都在。</li>
+<li>不恢复就给背包重新上电。</li>
+</ul>
 </details>
 <details class="failure">
 <summary>夹爪灯红爆闪</summary>
-<p><strong>原因</strong>：夹爪自身的问题，由夹爪 MCU 自检点亮（传感器故障等），故障期间夹爪不响应背包的灯控指令。</p>
-<p><strong>解决</strong>：拔插该夹爪的 Type-C 线或给背包重新上电；反复出现记下夹爪 SN 联系支持。</p>
+<p><strong>原因</strong>：夹爪 MCU 自检报自身故障（如传感器），期间不响应背包灯控。</p>
+<p><strong>解决</strong>：拔插该夹爪 Type-C 线或背包重新上电；反复出现记下夹爪 SN 联系支持。</p>
 </details>
 <details class="failure">
 <summary>按键没反应：双击被拒（黄快闪）、录制中长按无效</summary>
-<p><strong>原因</strong>：这是状态机的设计：录制中双击与右爪长按静默忽略（防手抖）；没有可删条目时双击被拒；删除后 3 秒冷却期内双击无效。</p>
-<p><strong>解决</strong>：对照<a href="../gripper/#buttons">按键</a>的手势表操作；当前生效的绑定在 系统 → <a href="../system/#capture-settings">采集设置</a> 查看。</p>
+<p><strong>原因</strong>：状态机的设计：</p>
+<ul>
+<li>录制中双击与右爪长按静默忽略（防手抖）；</li>
+<li>没有可删条目时双击被拒；</li>
+<li>删除后 3 秒冷却期内双击无效。</li>
+</ul>
+<p><strong>解决</strong>：对照<a href="../gripper/#buttons">按键</a>手势表；当前绑定见 系统 → <a href="../system/#capture-settings">采集设置</a>。</p>
 </details>
 <details class="failure">
 <summary>设备不出声，录制开始 / 结束都没有语音播报</summary>
-<p><strong>原因</strong>：语音默认从头显播放，头显不可用时才改由背包的板载喇叭播放，所以先确认声音该从哪里出：戴着头显时听头显，没连头显时听背包。仍然没声，基本是设置问题：语音被静音，或音量拉到了 0。</p>
-<p><strong>解决</strong>：到 系统 → <a href="../system/#voice">采集设置 › 语音播报</a> 看开关是不是「已静音」、音量滑块是不是 0，用每句旁边的「试听」逐句验一遍，试听结果会说明声音从哪里出、为什么。选了英文播报而头显应用缺少英文素材时，这句会改由板载喇叭播放。播报的内容与时机是固定值，现场改不了，能调的只有开关、音量与播报语言。</p>
+<p><strong>原因</strong>：默认从头显出声，头显不可用才用背包板载喇叭；都没声基本是被静音或音量为 0。</p>
+<p><strong>解决</strong>：</p>
+<ul>
+<li>在 系统 → <a href="../system/#voice">采集设置 › 语音播报</a> 查开关是否「已静音」、音量是否 0。</li>
+<li>用每句旁的「试听」逐句验，会显示从哪出声、为什么。</li>
+<li>选英文而头显应用缺英文素材时，该句改由板载喇叭播。</li>
+<li>内容与时机固定，只能调开关、音量与播报语言。</li>
+</ul>
 </details>
 <details class="failure">
 <summary>鱼眼画面发糊</summary>
-<p><strong>原因</strong>：鱼眼相机的对焦旋钮容易被误碰跑焦。</p>
-<p><strong>解决</strong>：每次开采前先看两路鱼眼画面清晰度，糊了就调回旋钮；镜头脏了用无尘布清洁，见<a href="../../common/maintenance/">维护保养</a>。</p>
+<p><strong>原因</strong>：对焦旋钮容易被误碰跑焦。</p>
+<p><strong>解决</strong>：开采前看两路鱼眼，画面发糊就把对焦旋钮拧回清晰；镜头脏用无尘布清洁，见<a href="../../common/maintenance/">维护保养</a>。</p>
 </details>
 <details class="failure">
 <summary>切换项目、夹爪标定、固件升级或系统更新被拒，提示「录制进行中」</summary>
-<p><strong>原因</strong>：这些操作在录制进行中都会被设备硬性拒绝。</p>
-<p><strong>解决</strong>：先在监控页停止录制（或左爪长按），再操作。</p>
+<p><strong>原因</strong>：录制中这些操作被硬性拒绝。</p>
+<p><strong>解决</strong>：先停录（监控页按钮或左爪长按）再操作。</p>
 </details>
 <h2 id="export">回放、导出与数据<a class="headerlink" href="#export" title="锚点链接">¶</a></h2>
 <details class="failure">
 <summary>点「回放」被拒，提示被相机预览占用</summary>
-<p><strong>原因</strong>：回放与实时预览共用背包的硬件编码器，回放要独占；别的标签页或别的设备上开着实时监控就会被拒。相机刚断开后最多 15 秒仍会被算作占用。回放开始后再打开监控页，预览会正常起来，回放不会被抢掉。</p>
-<p><strong>解决</strong>：关掉其他标签页与其他平板 / 手机上的监控页，等几秒再点回放。见<a href="../playback/">回放</a>。</p>
+<p><strong>原因</strong>：</p>
+<ul>
+<li>回放要独占背包硬件编码器（与实时预览共用），别的标签页或设备开着实时监控就被拒；相机刚断开后最多 15 秒仍算占用。</li>
+<li>反之无妨：先回放再开监控页，预览正常，回放不被抢。</li>
+</ul>
+<p><strong>解决</strong>：关掉其他标签页与设备上的监控页，等几秒再点回放。见<a href="../playback/">回放</a>。</p>
 </details>
 <details class="failure">
 <summary>归档之后这些录制回放不了、也导不出另一种格式</summary>
-<p><strong>原因</strong>：预期行为，不是故障。归档就是删掉本地原始文件、只保留目录里的记录，回放与导出都要读原始文件，所以两件事都做不了；项目页里这些条目的「回放」按钮会置灰并写明「已归档，本地源已删除」。若某条只用一种格式上传过，归档后另一种格式也就永远导不出来了 —— 归档确认框会先把这几条列出来。</p>
-<p><strong>解决</strong>：归档前想清楚要哪几种格式，把要的都先导出；数据以上传到的远端仓库那份为准。没上传过的录制也能归档，但那种情况下数据不再有任何副本，确认框会给更醒目的提示。归档的入口与判据见<a href="../projects-export/#archive">归档</a>，状态口径见<a href="../monitor-record/#episode-state">条目状态</a>。</p>
+<p><strong>原因</strong>：预期行为。</p>
+<ul>
+<li>归档删的是回放与导出都要读的原始文件，只留目录记录；项目页这些条目的「回放」置灰，写明「已归档，本地源已删除」。</li>
+<li>只传过一种格式的，另一种永远导不出，归档确认框会先列出。</li>
+</ul>
+<p><strong>解决</strong>：</p>
+<ul>
+<li>归档前先导出要的格式；数据以远端仓库为准。</li>
+<li>没上传过的也能归档，但数据将无副本，确认框会醒目提示。</li>
+<li>入口与判据见<a href="../projects-export/#archive">归档</a>，状态口径见<a href="../monitor-record/#episode-state">条目状态</a>。</li>
+</ul>
 </details>
 <details class="failure">
 <summary>上传完成了，录制盘却没腾出空间</summary>
-<p><strong>原因</strong>：预期行为。上传成功后<strong>默认不自动删除本地文件</strong>，不勾就只上传、文件全部保留。</p>
-<p><strong>解决</strong>：要腾空间就在上传前勾「上传完成后自动归档（删除本地源，只留元数据）」，或事后在任务导出窗口点「归档」。上传过任一格式的录制都会被归档；只传过一种格式的，源文件一删就再也导不出另一种格式，要两种都留就先把另一种也导出或上传。</p>
+<p><strong>原因</strong>：预期行为，上传后<strong>默认不删本地文件</strong>。</p>
+<p><strong>解决</strong>：</p>
+<ul>
+<li><strong>腾空间</strong>：上传前勾「上传完成后自动归档（删除本地源，只留元数据）」，或事后在任务导出窗口点「归档」。</li>
+<li><strong>归档范围</strong>：上传过任一格式的都会归档；只传过一种而两种都要的，先把另一种也导出或上传。</li>
+</ul>
 </details>
 <details class="failure">
 <summary>NFS / FTP 上传失败，或「检测读写」没有通过</summary>
-<p><strong>原因</strong>：常见的是目标位置不合要求 —— 目标目录还不存在；账号或设备账户没有写入、重命名或删除权限；NFS 的协议版本与服务器对不上；FTPS 的服务器地址与证书不匹配，或私有 CA 没填、填错；目标路径或端口填错。不是所有上传失败都出自这几条，页面上的检测提示才是判据。</p>
-<p><strong>解决</strong>：到 控制台 → 系统 → <a href="../system/#upload">上传配置</a> 打开对应那一档，按检测提示逐条查：目标目录（NFS 的目标子目录同理）是否已经存在，设备不会替你创建；NAS 或 FTP / FTPS 服务是否允许该账户写入、读回、重命名与删除；NFS 再看协议版本与 UID / GID；FTPS 再看服务器地址是否与证书匹配、需不需要填私有 CA。改完保存，再点一次「检测读写」。仍不通就带上检测提示的原文、设备 SN、控制台版本与这一档的后端种类联系支持。</p>
+<p><strong>原因</strong>：常见是目标位置不合要求（见下方各项），或路径 / 端口填错；以页面检测提示为准。</p>
+<p><strong>解决</strong>：在 控制台 → 系统 → <a href="../system/#upload">上传配置</a> 打开对应一档，按检测提示查：</p>
+<ul>
+<li><strong>目标目录</strong>：须已存在（NFS 目标子目录同理），设备不代建。</li>
+<li><strong>权限</strong>：NAS 或 FTP / FTPS 服务须允许该账户写入、读回、重命名与删除。</li>
+<li><strong>NFS</strong>：协议版本与 UID / GID。</li>
+<li><strong>FTPS</strong>：服务器地址与证书是否匹配、要不要填私有 CA。</li>
+<li>改完保存再点「检测读写」；仍不通，带检测提示原文、设备 SN、控制台版本与后端种类联系支持。</li>
+</ul>
 </details>
 <details class="failure">
 <summary>LeRobot 数据集比想象的大</summary>
-<p><strong>原因</strong>：多路视频同录，3 分钟量级的任务导出 1.5 GB 属正常范围；受硬件编码能力限制不会特别小。</p>
+<p><strong>原因</strong>：多路视频同录，3 分钟量级任务导出 1.5 GB 属正常，受硬件编码所限不会特别小。</p>
 <p><strong>解决</strong>：传输与存储按此量级预留。</p>
 </details>
 <h2 id="update">升级<a class="headerlink" href="#update" title="锚点链接">¶</a></h2>
 <details class="failure">
 <summary>升级中断电了 / 应用更新后控制台一直连不上</summary>
-<p><strong>原因</strong>：应用更新时采集软件会重启，页面最多等 90 秒。升级时设备会保留上一版，新版启动失败或中途断电都会自动退回上一版，不会变砖。</p>
-<p><strong>解决</strong>：先刷新页面；仍连不上就给背包重新上电，再到系统更新页看当前版本与「上次操作 / 上次错误」，回滚了就重新导入包，见<a href="../update/#rollback">回滚</a>。</p>
+<p><strong>原因</strong>：应用更新时采集软件重启，页面最多等 90 秒；升级保留上一版，新版启动失败或中途断电都自动退回，不会变砖。</p>
+<p><strong>解决</strong>：</p>
+<ol>
+<li>刷新页面。</li>
+<li>仍连不上就给背包重新上电。</li>
+<li>在系统更新页看当前版本与「上次操作 / 上次错误」；回滚了就重新导入包，见<a href="../update/#rollback">回滚</a>。</li>
+</ol>
 </details>
 <details class="failure">
 <summary>上传升级包校验失败</summary>
 <p><strong>原因</strong>：文件损坏或没传完、版本跨度太大，或比当前版本旧。</p>
-<p><strong>解决</strong>：看「上次错误」的那一句；重新下载后再传，跨版本升级向技术支持要中间版本的包。拒收不影响当前版本运行。</p>
+<p><strong>解决</strong>：看「上次错误」；重新下载再传，跨版本向技术支持要中间版本包。拒收不影响当前版本运行。</p>
 </details>
 <details class="failure">
 <summary>刷完夹爪固件后夹爪时好时坏、数据里悄悄丢帧</summary>
-<p><strong>原因</strong>：刷后的重启是软复位，夹爪的 USB 转串口芯片没断过电，停在降级状态。</p>
-<p><strong>解决</strong>：给背包断电再上电（或拔插该夹爪的 Type-C 线），再到设备信息核对固件版本，见<a href="../update/#gripper-firmware">夹爪固件</a>。</p>
+<p><strong>原因</strong>：刷后只是软复位，夹爪 USB 转串口芯片没断电，停在降级状态。</p>
+<p><strong>解决</strong>：背包断电再上电（或拔插该夹爪 Type-C 线），再在设备信息核对固件版本，见<a href="../update/#gripper-firmware">夹爪固件</a>。</p>
 </details>
 <hr>
-<p>仍未解决？先在控制台里把报错取下来：顶栏右上角那块田字读数可以点开「系统日志」，出现错误时它会带红色角标和错误条数。这个面板只能看，导不出日志文件，所以<strong>截图就够，不用去设备上找日志</strong>。</p>
+<p>仍未解决？点顶栏右上角田字读数打开「系统日志」（有错误时带红色角标和条数）。面板导不出文件，<strong>截图即可，不用去设备上找日志</strong>。</p>
 <p>按<a href="../../common/reference/#support">支持与反馈</a>的渠道反馈时带上：</p>
 <ul>
-<li>系统日志面板的截图，以及报错出现的大致时间；</li>
-<li>界面上能看到的完整报错原文；</li>
-<li>设备 SN 与控制台版本，都在 系统 → <a href="../system/#device-info">设备信息</a> 页；</li>
-<li>出问题时你正在做的操作；</li>
+<li>系统日志截图与报错时间；</li>
+<li>完整报错原文；</li>
+<li>设备 SN 与控制台版本（系统 → <a href="../system/#device-info">设备信息</a>）；</li>
+<li>出问题时在做的操作；</li>
 <li>涉及录制时，附项目 / 任务 / episode 编号；</li>
-<li>与夹爪或采集画面相关时，附夹爪灯态与监控页截图。</li>
+<li>涉及夹爪或画面时，附夹爪灯态与监控页截图。</li>
 </ul>
 
 

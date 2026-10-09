@@ -2357,14 +2357,17 @@
 
 
 <h1 id="数据采集">数据采集<a class="headerlink" href="#数据采集" title="锚点链接">¶</a></h1>
-<p>先用 <code>lerobot-teleoperate</code> 确认设备正常，再用 <code>lerobot-record</code> 录出干净、一致的 <code>LeRobotDataset</code>。落盘位置、目录结构、校验与上传见<a href="../dataset/">数据集</a>。</p>
+<p>先用 <code>lerobot-teleoperate</code> 确认设备正常，再用 <code>lerobot-record</code> 录出 <code>LeRobotDataset</code>。落盘、目录结构、校验与上传见<a href="../dataset/">数据集</a>。</p>
 <h2 id="51">采集原理<a class="headerlink" href="#51" title="锚点链接">¶</a></h2>
-<p><code>taccap_gripper</code> 不需要遥操作端，录制是自驱动的，命令行里没有 <code>--teleop.*</code> 参数；集间复位是被动等待，重新摆放设备即可。</p>
-<p>移位帧（shifted-frame）配对：<em>t-1</em> 步的观测配 <em>t</em> 步的位姿（EEF TCP 位姿 + 归一化 <code>gripper.pos</code>，开了<a href="#56">头显相机</a>时还有头显位姿）作为动作，动作比观测领先一步，每集因此少 1 帧。</p>
-<p><code>tcp.*</code> 是夹爪末端而非追踪器：追踪器离两指中点约 195 mm，落盘前乘上内置的刚性安装变换（CAD 装配实测，左右各一套），机体固连、任意姿态成立、与 <code>gripper.pos</code> 无关。世界系是重力对齐的 X 前 / Y 左 / Z 上，在 XTac-UMI XR 启动瞬间冻结（见<a href="../../common/pico4/#pico-frame">坐标系对齐</a>）。</p>
-<p><code>--display_data=true</code> 会开出 Rerun 的 <code>/world</code> 3D 视图：夹爪以带标签的椭球 + 三轴画在实时 <code>tcp.*</code> 处并拖出轨迹面包屑，<code>--show_trajectory=false</code> 关闭。视图里各元素的含义、<code>FLU</code> 场景约定与「夹爪平放时三轴应呈 X 前 / Y 左 / Z 上」的装配检查见<a href="../../common/coordinates/#world-view">坐标系 · <code>/world</code> 3D 视图</a>。</p>
+<ul>
+<li><code>taccap_gripper</code> 录制自驱动，没有 <code>--teleop.*</code> 参数。</li>
+<li>移位帧（shifted-frame）配对：<em>t-1</em> 步的观测配 <em>t</em> 步的位姿作动作（EEF TCP 位姿 + 归一化 <code>gripper.pos</code>，开<a href="#56">头显相机</a>时加头显位姿），每集因此少 1 帧。</li>
+<li><code>tcp.*</code> 是夹爪末端而非追踪器：追踪器离两指中点约 195 mm，落盘前乘上内置刚性安装变换（CAD 装配实测，左右各一套），机体固连，与姿态和 <code>gripper.pos</code> 无关。</li>
+<li>世界系重力对齐，X 前 / Y 左 / Z 上，在 XTac-UMI XR 启动瞬间冻结，见<a href="../../common/pico4/#pico-frame">坐标系对齐</a>。</li>
+<li><code>--display_data=true</code> 开出 Rerun 的 <code>/world</code> 3D 视图（<code>--show_trajectory=false</code> 关轨迹），元素含义与装配检查见<a href="../../common/coordinates/#world-view">坐标系 · <code>/world</code> 3D 视图</a>。</li>
+</ul>
 <h2 id="preview">开录前预览<a class="headerlink" href="#preview" title="锚点链接">¶</a></h2>
-<p><code>lerobot-teleoperate</code> 只预览、不写数据；相机没上来、追踪器没位姿、<code>gripper.pos</code> 顶不到 1.0、双夹爪左右接反，预览里一眼就能看出。要录哪档就预览哪档，预览与录制用同一组开关：</p>
+<p><code>lerobot-teleoperate</code> 只预览不写数据，开关与录制相同，录哪档就预览哪档：</p>
 <table>
 <thead>
 <tr>
@@ -2402,8 +2405,12 @@
 </span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span>--fps<span class="o">=</span><span class="m">30</span><span class="w"> </span><span class="se">\</span>
 </span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">    </span>--display_data<span class="o">=</span><span class="nb">true</span>
 </span></code></pre></div>
-<p>换档只改表里的开关。双夹爪带不带头显由 <code>--robot.type</code> 决定：不带头显用 <code>bi_taccap_gripper</code>，带头显用 <code>xtac_umi_g1</code>，数据集里记录的类型也随之不同；双夹爪命令里不再写 <code>--robot.enable_head_camera</code>，写了且与类型矛盾时会直接报错，并提示该用哪个类型。单夹爪换成 <code>--robot.type=taccap_gripper</code>：只接一只时自动选中，两只都接着时加 <code>--robot.side=left|right</code>（录制时只录一只则必填）；单夹爪没有带头显的类型，仍用 <code>--robot.enable_head_camera=true</code> 开启头显。<code>--teleop_time_s=10</code> 跑满 10 秒自动退出，<code>--debug_timing=true</code> 打印采样耗时与相机路数。</p>
-<p>逐项确认（②③ 档才有位姿两行），都正常再 <code>Ctrl+C</code> 退出：</p>
+<ul>
+<li>双夹爪带不带头显由 <code>--robot.type</code> 决定；写了与之矛盾的 <code>--robot.enable_head_camera</code> 会报错并提示该用的类型。</li>
+<li>单夹爪用 <code>--robot.type=taccap_gripper</code>，只接一只时自动选中，两只都接时加 <code>--robot.side=left|right</code>（只录一只则必填）。</li>
+<li><code>--teleop_time_s=10</code> 跑满 10 秒自动退出；<code>--debug_timing=true</code> 打印采样耗时与相机路数。</li>
+</ul>
+<p>逐项确认（位姿两行仅 ②③ 档）后 <code>Ctrl+C</code> 退出：</p>
 <table>
 <thead>
 <tr>
@@ -2414,11 +2421,11 @@
 <tbody>
 <tr>
 <td>左右两路触觉</td>
-<td>都有画面，按压时纹理明显变化</td>
+<td>有画面，按压时纹理明显变化</td>
 </tr>
 <tr>
 <td>腕相机</td>
-<td>有画面，视野里没有线缆或杂物遮挡</td>
+<td>有画面，无线缆或杂物遮挡</td>
 </tr>
 <tr>
 <td><code>gripper.pos</code></td>
@@ -2426,16 +2433,16 @@
 </tr>
 <tr>
 <td><code>/world</code> 里的 EE 标记与轨迹</td>
-<td>平滑移动，不跳变、不卡住；追踪器要始终在头显视野内，被遮挡就丢跟踪</td>
+<td>平滑，不跳变不卡住；追踪器出头显视野或被遮挡即丢跟踪</td>
 </tr>
 <tr>
 <td>双夹爪：左右两条轨迹</td>
-<td>各自独立且对应正确的手</td>
+<td>各自独立且对应正确</td>
 </tr>
 </tbody>
 </table>
 <h2 id="52">录制<a class="headerlink" href="#52" title="锚点链接">¶</a></h2>
-<p>设备按序列号规则自动发现，不列举序列号；触觉、腕相机、追踪器各自匹配左右。换档、单夹爪写法与预览相同。</p>
+<p>设备按序列号自动发现并各自匹配左右；换档、单夹爪写法同预览。</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>lerobot-record<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">    </span>--robot.type<span class="o">=</span>bi_taccap_gripper<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span>--robot.id<span class="o">=</span><span class="m">0</span><span class="w"> </span><span class="se">\</span>
@@ -2449,12 +2456,12 @@
 </span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="w">    </span>--dataset.single_task<span class="o">=</span><span class="s1">'Pick up the object'</span>
 </span></code></pre></div>
 <ul>
-<li><code>--display_data</code> 默认是 <code>false</code>。0.0.8 起 Rerun 显示在独立线程上做，录制时开着也不占采集循环的帧预算：查看器跟不上时只丢屏幕上的帧，结束时打印一行 <code>Rerun display: N/M frames dropped …</code>，录进数据集的内容不受影响。</li>
-<li>显式写出 <code>fps=30</code>、<code>episode_time_s=120</code>、<code>reset_time_s=60</code>、<code>push_to_hub=false</code>，避免不同 checkout 的默认值变化影响采集。</li>
-<li>相机或夹爪编码器中途掉线（线松、hub 掉电）时，采集主动停下并把已录部分存盘，打印 <code>Device lost mid-recording</code>，不写编造的值。短暂读取失败会沿用上一帧好值（相机约 2 秒、编码器约 1 秒）才判掉线，所以那一集末尾一两秒可能是重复旧值，建议弃用。检查线缆与 USB 口（见<a href="../troubleshooting/">故障排查</a>），再用 <code>--resume</code> 续录。</li>
+<li>Rerun 在独立线程显示，开着 <code>--display_data</code> 不占采集帧预算，跟不上只丢屏幕帧，结束时打印 <code>Rerun display: N/M frames dropped …</code>。</li>
+<li>显式写出 <code>fps=30</code>、<code>episode_time_s=120</code>、<code>reset_time_s=60</code>、<code>push_to_hub=false</code>，不依赖默认值。</li>
+<li>相机或夹爪编码器中途掉线（线松、hub 掉电）时，停止采集并存盘已录部分，打印 <code>Device lost mid-recording</code>，不写编造值。判掉线前沿用上一帧好值（相机约 2 秒、编码器约 1 秒），该集末尾一两秒可能是旧值，建议弃用；查线缆与 USB 口（见<a href="../troubleshooting/">故障排查</a>）后 <code>--resume</code> 续录。</li>
 </ul>
 <h3 id="params">参数<a class="headerlink" href="#params" title="锚点链接">¶</a></h3>
-<p>分三类：数据集（<code>--dataset.*</code>）、录制控制（顶层）、设备（<code>--robot.*</code>）。完整定义见 lerobot 官方<a href="https://huggingface.co/docs/lerobot/v0.5.1/en/il_robots#record-a-dataset">录制指南</a>（本项目 lerobot 基线 0.5.1）。</p>
+<p>完整定义见 lerobot 官方<a href="https://huggingface.co/docs/lerobot/v0.5.1/en/il_robots#record-a-dataset">录制指南</a>（lerobot 基线 0.5.1）。</p>
 <p><strong>数据集参数 <code>--dataset.*</code></strong></p>
 <table>
 <thead>
@@ -2468,7 +2475,7 @@
 <tr>
 <td><code>repo_id</code></td>
 <td>必填</td>
-<td><code>&lt;org&gt;/&lt;name&gt;</code>，团队约定 <code>&lt;org&gt;/&lt;任务&gt;_&lt;变体&gt;_&lt;YYYYMMDD&gt;</code>，如 <code>Xense/insert_plug_left_20260703</code>，见<a href="../dataset/">数据集</a></td>
+<td><code>&lt;org&gt;/&lt;name&gt;</code>，约定 <code>&lt;org&gt;/&lt;任务&gt;_&lt;变体&gt;_&lt;YYYYMMDD&gt;</code>，如 <code>Xense/insert_plug_left_20260703</code>，见<a href="../dataset/">数据集</a></td>
 </tr>
 <tr>
 <td><code>single_task</code></td>
@@ -2483,7 +2490,7 @@
 <tr>
 <td><code>fps</code></td>
 <td><code>30</code></td>
-<td>录制采样帧率上限；传感器本身 120 Hz（<a href="../../product/specs/#specs">规格</a>）</td>
+<td>采样帧率上限；传感器本身 120 Hz（<a href="../../product/specs/#specs">规格</a>）</td>
 </tr>
 <tr>
 <td><code>episode_time_s</code></td>
@@ -2503,7 +2510,7 @@
 <tr>
 <td><code>video</code></td>
 <td><code>true</code></td>
-<td>帧编码为视频（mp4）</td>
+<td>编码为 mp4 视频</td>
 </tr>
 <tr>
 <td><code>push_to_hub</code></td>
@@ -2538,12 +2545,12 @@
 <tr>
 <td><code>encoder_queue_maxsize</code></td>
 <td><code>30</code></td>
-<td>每相机缓冲帧数（~1s@30fps）；队列满时最多等 0.1 秒，仍满则丢弃当前帧并告警</td>
+<td>每相机缓冲帧数（~1s@30fps）</td>
 </tr>
 <tr>
 <td><code>video_encoding_batch_size</code></td>
 <td><code>1</code></td>
-<td>批量编码前累计的集数（1=即时编码）</td>
+<td>批量编码前累计集数（1=即时编码）</td>
 </tr>
 </tbody>
 </table>
@@ -2565,12 +2572,12 @@
 <tr>
 <td><code>robot.id</code></td>
 <td>必填</td>
-<td>工位号，填数字（<code>0</code> / <code>1</code>…），前缀自动补；漏填直接报错，见 <a href="#robot-id"><code>--robot.id</code></a></td>
+<td>工位号，填数字（<code>0</code> / <code>1</code>…），前缀自动补；漏填报错，见 <a href="#robot-id"><code>--robot.id</code></a></td>
 </tr>
 <tr>
 <td><code>fps</code></td>
 <td><code>30</code></td>
-<td>主循环帧率，与 <code>--dataset.fps</code>（落盘采样率）是两个参数，通常相同</td>
+<td>主循环帧率，与 <code>--dataset.fps</code>（落盘采样率）分开，通常相同</td>
 </tr>
 <tr>
 <td><code>display_data</code></td>
@@ -2585,27 +2592,27 @@
 <tr>
 <td><code>display_compressed_images</code></td>
 <td><code>false</code></td>
-<td>Rerun 里 JPEG 压缩后显示；压缩在显示线程上做，不占录制循环，只在查看器在另一台机器（<code>--display_ip</code>）时划算</td>
+<td>JPEG 压缩后显示，在显示线程上做；仅查看器在另一台机器（<code>--display_ip</code>）时划算</td>
 </tr>
 <tr>
 <td><code>display_image_every_n</code></td>
 <td><code>1</code></td>
-<td>每 N 帧刷新一次相机画面（标量始终全速）；显示丢帧很多、又想自己决定丢哪些帧时再用</td>
+<td>每 N 帧刷新相机画面（标量全速）；想自己决定丢哪些显示帧时用</td>
 </tr>
 <tr>
 <td><code>play_sounds</code></td>
 <td><code>true</code></td>
-<td>语音播报；容器里没有语音合成器，一律静音，要听到就在宿主机上跑</td>
+<td>语音播报；容器内无语音合成器总是静音，宿主机上跑才有声</td>
 </tr>
 <tr>
 <td><code>resume</code></td>
 <td><code>false</code></td>
-<td>在已有数据集上续录；只在本地找，找不到直接报错，不会从 Hub 下载；<code>--robot.id</code> 须与数据集一致，见 <a href="#robot-id"><code>--robot.id</code></a></td>
+<td>续录已有数据集；只在本地找，找不到报错，不从 Hub 下载；<code>--robot.id</code> 须与数据集一致，见 <a href="#robot-id"><code>--robot.id</code></a></td>
 </tr>
 </tbody>
 </table>
 <p><strong>设备参数 <code>--robot.*</code>（XTac-UMI G1 专属）</strong></p>
-<p>只列本页命令与可选功能用到的项，完整配置项见 <a href="../reference/#robotconfig"><code>RobotConfig</code> 常用配置项</a>。</p>
+<p>只列本页用到的项，完整配置项见 <a href="../reference/#robotconfig"><code>RobotConfig</code> 常用配置项</a>。</p>
 <table>
 <thead>
 <tr>
@@ -2618,37 +2625,37 @@
 <tr>
 <td><code>robot.side</code></td>
 <td>自动</td>
-<td><code>left</code>/<code>right</code>，单夹爪模式下两只都接着时必填</td>
+<td><code>left</code>/<code>right</code>，单夹爪两只都接着时必填</td>
 </tr>
 <tr>
 <td><code>robot.role</code></td>
 <td><code>leader</code></td>
-<td>填 <code>follower</code> 绑定从夹爪；从夹爪固件须 ≥ 1.2.5，否则拒绝连接（低于 1.2.11 会提示升级），见<a href="../versions/#ota">固件 OTA</a></td>
+<td>填 <code>follower</code> 绑定从夹爪；固件须 ≥ 1.2.5 否则拒连，低于 1.2.11 提示升级，见<a href="../versions/#ota">固件 OTA</a></td>
 </tr>
 <tr>
 <td><code>robot.gripper_stream_hz</code></td>
 <td><code>100</code></td>
-<td>主夹爪固件主动推送编码器（开启时含 IMU）读数的频率；<code>0</code> 为每帧轮询。推流起不来时自动回退轮询并告警，不影响录制。双夹爪两侧共用，不带前缀</td>
+<td>主夹爪固件推送编码器（开启时含 IMU）读数的频率，<code>0</code> 为每帧轮询；推流失败回退轮询并告警；双夹爪共用，不带前缀</td>
 </tr>
 <tr>
 <td><code>robot.enable_tracker</code></td>
 <td><code>true</code></td>
-<td>关闭则无位姿</td>
+<td>关则无位姿</td>
 </tr>
 <tr>
 <td><code>robot.enable_head_camera</code></td>
 <td><code>false</code></td>
-<td>仅单夹爪 <code>taccap_gripper</code>：录头显相机；双夹爪改用 <code>--robot.type=xtac_umi_g1</code>，见<a href="#56">头显相机</a></td>
+<td>仅单夹爪 <code>taccap_gripper</code>：录头显；双夹爪改用 <code>--robot.type=xtac_umi_g1</code>，见<a href="#56">头显相机</a></td>
 </tr>
 <tr>
 <td><code>robot.head_camera_eyes</code></td>
 <td><code>both</code></td>
-<td><code>both</code> 两只眼（两个键），<code>left</code> / <code>right</code> 只录一只</td>
+<td><code>both</code> 两眼（两个键），<code>left</code> / <code>right</code> 只录一只</td>
 </tr>
 <tr>
 <td><code>robot.head_camera_width/_height</code></td>
 <td><code>640</code> / <code>480</code></td>
-<td>每只眼尺寸，须与头显输出的分辨率一致（默认都是 640x480），见<a href="#56">头显相机</a></td>
+<td>每眼尺寸，须与头显输出一致（默认 640x480），见<a href="#56">头显相机</a></td>
 </tr>
 <tr>
 <td><code>robot.wrist_undistort</code></td>
@@ -2658,13 +2665,13 @@
 <tr>
 <td><code>robot.wrist_undistort_balance</code></td>
 <td><code>0.0</code></td>
-<td><code>0</code> 保持标定焦距，<code>1</code> 视野最大但黑边更多</td>
+<td><code>0</code> 保持标定焦距，<code>1</code> 视野最大、黑边最多</td>
 </tr>
 </tbody>
 </table>
 <div class="admonition warning">
 <p class="admonition-title">双夹爪上，按单元的那几项要带 <code>left_</code> / <code>right_</code> 前缀</p>
-<p>本页参数都按单夹爪写。<code>bi_taccap_gripper</code> 下面这几项每侧一个，不带前缀会因为没有这个字段而报错：</p>
+<p>本页参数按单夹爪写；<code>bi_taccap_gripper</code> 下这几项每侧一个，不带前缀报字段不存在：</p>
 <table>
 <thead>
 <tr>
@@ -2693,9 +2700,9 @@
 </table>
 <p>其余两侧共用：<code>--robot.enable_tactile</code>、<code>--robot.enable_tracker</code>、<code>--robot.tactile_*</code>、<code>--robot.wrist_camera_width/_height/_fps/_fourcc</code>、<code>--robot.head_camera_*</code>。</p>
 </div>
-<p>追踪器上电后 6-DoF 位姿自动录制，按序列号末尾字母 <code>G</code> 前一个数字（<a href="../host-setup/#33">单左双右</a>）匹配侧别；序列号不合规或枚举不稳时用 <code>--robot.tracker_serial=&lt;SN&gt;</code> 钉住。</p>
+<p>追踪器上电即录 6-DoF 位姿，按序列号末尾 <code>G</code> 前一位数字（<a href="../host-setup/#33">单左双右</a>）匹配侧别；序列号不合规或枚举不稳时用 <code>--robot.tracker_serial=&lt;SN&gt;</code> 钉住。</p>
 <h3 id="robot-id"><code>--robot.id</code> 与硬件清单<a class="headerlink" href="#robot-id" title="锚点链接">¶</a></h3>
-<p><code>--robot.id</code> 是工位号，一套设备一个（双夹爪算一套），标工位不标硬件，换了夹爪不用改；它出现在日志前缀、标定文件名和硬件清单里，不是数据集的一列。编号本身不校验，填数字即可，前缀按 <code>--robot.type</code> 自动补：</p>
+<p><code>--robot.id</code> 是工位号，一套设备（双夹爪算一套）一个，换夹爪不用改；用于日志前缀、标定文件名和硬件清单，不是数据集的列。前缀按 <code>--robot.type</code> 自动补：</p>
 <table>
 <thead>
 <tr>
@@ -2722,10 +2729,10 @@
 </tr>
 </tbody>
 </table>
-<p>不要手敲前缀，双夹爪上写 <code>--robot.id=taccap_0</code> 标签就和设备类型对不上；非纯数字原样保留，老命令的 <code>--robot.id=taccap_0</code> 仍可用。漏填或填空在解析命令行时就退出：</p>
+<p>不要手敲前缀：非纯数字原样保留，<code>--robot.id=taccap_0</code> 仍可用，但在双夹爪上会与设备类型对不上。漏填或填空在解析命令行时退出：</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>ValueError: --robot.id is required: the station label for this rig, e.g. --robot.id=0 …
 </span></code></pre></div>
-<p>硬件清单才是身份：<code>lerobot-record</code> 在 <code>connect()</code> 之后立刻把 <code>meta/hardware.json</code> 写进数据集，记每只夹爪的固件 SN 和它两枚触觉传感器的 SN，每枚带对应的观测键。</p>
+<p>身份靠硬件清单：<code>lerobot-record</code> 在 <code>connect()</code> 后立即写入 <code>meta/hardware.json</code>，记每只夹爪的固件 SN 及其两枚触觉的 SN（各带观测键）。</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="p">{</span>
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="nt">"robot_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bi_taccap_gripper"</span><span class="p">,</span>
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span><span class="nt">"robot_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bi_taccap_0"</span><span class="p">,</span>
@@ -2752,17 +2759,25 @@
 </span><span id="__span-3-24"><a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a><span class="p">}</span>
 </span></code></pre></div>
 <ul>
-<li><code>side</code> 是哪只夹爪，<code>finger</code> 是这只上的哪一枚触觉，互相独立（<a href="../host-setup/#33">单左双右</a>各判一次）；<code>observation_key</code> 让数据集的一列直接回溯到具体传感器。</li>
+<li><code>side</code> 是哪只夹爪，<code>finger</code> 是其上哪枚触觉，各按<a href="../host-setup/#33">单左双右</a>判定。</li>
+<li><code>observation_key</code> 把数据集的一列对应到具体传感器。</li>
 <li><code>gripper_sn</code> 是固件 SN，不是 CH343 的 <code>mcu_serial</code>（换根转接就变）。</li>
-<li>单夹爪结构相同，<code>units</code> 只有一项；某侧没开记 <code>"gripper_sn": null</code>；<code>--robot.enable_tactile=false</code> 时 <code>tactile_sensors</code> 为空列表。</li>
-<li>独立文件，不是 <code>meta/info.json</code> 的键；追踪器和腕相机是配件，不在清单里。</li>
-<li><code>wrist_undistort</code> 记腕相机帧是否矫正过、用哪份内参，没矫正记 <code>{"applied": false}</code>，见<a href="#57">鱼眼矫正</a>。</li>
+<li>单夹爪 <code>units</code> 只有一项；某侧没开记 <code>"gripper_sn": null</code>；<code>--robot.enable_tactile=false</code> 时 <code>tactile_sensors</code> 为空列表。</li>
+<li>独立文件，不在 <code>meta/info.json</code> 里；追踪器和腕相机是配件，不入清单。</li>
+<li><code>wrist_undistort</code> 记是否矫正、用哪份内参，没矫正记 <code>{"applied": false}</code>，见<a href="#57">鱼眼矫正</a>。</li>
 </ul>
-<p><code>epochs</code> 让一个数据集跨几套硬件：每段记 <code>from_episode</code> / <code>to_episode</code>（左闭右开，同 <code>dataset_from_index</code> / <code>dataset_to_index</code>）和 <code>recorded_at</code>，正在录的段 <code>to_episode</code> 为 <code>null</code>。<code>--resume</code> 续录时同一套设备什么都不记；换了夹爪或传感器，旧段在当前集数处封口、新段接上；<code>--robot.type</code> 对不上是换数据集不是换硬件，保留原文件并告警。<code>bi_taccap_gripper</code> ↔ <code>xtac_umi_g1</code>（加或去掉头显）同样是换数据集，类型、观测键都不同，换一个 <code>--dataset.repo_id</code>；更早版本里在 <code>bi_taccap_gripper</code> 下开头显录的数据集也续不上（类型、特征和工位号都对不上），请录进新的 <code>--dataset.repo_id</code>。</p>
-<p><strong>一个数据集只属于一个工位</strong>：<code>--resume</code> 时 <code>--robot.id</code> 和数据集里记的不一致，会在连接任何设备之前直接报错拒绝续录（报错里带 <code>refusing to resume it</code>）。要么回原工位续录，要么换个 <code>--dataset.repo_id</code> 录成新数据集；没有记工位号的老数据集不受这条限制。老数据集（扁平 <code>units</code>）读成一个开口 epoch，只说明"没有证据换过硬件"。</p>
+<p><code>epochs</code> 让一个数据集跨几套硬件：</p>
+<ul>
+<li>每段记 <code>from_episode</code> / <code>to_episode</code>（左闭右开，同 <code>dataset_from_index</code> / <code>dataset_to_index</code>）和 <code>recorded_at</code>，在录段 <code>to_episode</code> 为 <code>null</code>。</li>
+<li><code>--resume</code> 时同一套设备不记新段；换了夹爪或传感器，旧段在当前集数处封口并接新段。</li>
+<li><code>--robot.type</code> 对不上是换数据集而非换硬件，保留原文件并告警。</li>
+<li><code>bi_taccap_gripper</code> ↔ <code>xtac_umi_g1</code>（加或去头显）同样算换数据集，更早版本在 <code>bi_taccap_gripper</code> 下开头显录的也续不上，都要换一个 <code>--dataset.repo_id</code>。</li>
+<li>老数据集（扁平 <code>units</code>）读成一个开口 epoch，仅表示"没有证据换过硬件"。</li>
+</ul>
+<p><strong>一个数据集只属于一个工位</strong>：<code>--resume</code> 时 <code>--robot.id</code> 与记录不符，会在连接设备前拒绝续录（报错带 <code>refusing to resume it</code>）。回原工位续录或换个 <code>--dataset.repo_id</code>；没记工位号的老数据集不受限。</p>
 <div class="admonition note">
 <p class="admonition-title">触觉的衍生通道只靠数据集本身就能重建</p>
-<p>落盘的是 <code>rectify</code> 流，depth / force / difference 从它算出。计算要用的参考图就是每个 episode 的第一帧 <code>rectify</code>，其余参数由传感器型号决定，所以重建只靠数据集本身就够，不用去找那台实物。更早版本录的数据集里可能还有 <code>meta/runtimes/</code> 目录和传感器条目里的 <code>runtime</code> 字段，现在都会被忽略，不影响读取。</p>
+<p>depth / force / difference 由落盘的 <code>rectify</code> 流算出：参考图是每个 episode 的第一帧 <code>rectify</code>，其余参数由传感器型号决定，不用找实物。旧数据集里的 <code>meta/runtimes/</code> 和传感器条目的 <code>runtime</code> 字段会被忽略。</p>
 </div>
 <h2 id="53">每帧记录内容<a class="headerlink" href="#53" title="锚点链接">¶</a></h2>
 <table>
@@ -2796,8 +2811,8 @@
 <tr>
 <td><code>tactile_left</code> / <code>tactile_right</code></td>
 <td>左右视触觉传感器</td>
-<td>默认采集；<code>--robot.enable_tactile=false</code> 只用于排查，见下方警告</td>
-<td>uint8，约 <code>(400, 700, 3)</code>，宽高自动推导，别写死</td>
+<td>默认采集；<code>--robot.enable_tactile=false</code> 仅排查用，见下方警告</td>
+<td>uint8，约 <code>(400, 700, 3)</code>，宽高自动推导勿写死</td>
 </tr>
 <tr>
 <td><code>wrist_cam</code></td>
@@ -2843,23 +2858,32 @@
 </tr>
 </tbody>
 </table>
-<p>6-D 旋转记的是旋转矩阵 R（「世界 ← 本体」）的前两列，按列取、不是按行；第三列是前两列的叉积。<code>tcp.*</code> 与 <code>head_camera.*</code> 同一套约定：</p>
+<p>6-D 旋转按列（不是按行）取旋转矩阵 R（「世界 ← 本体」）的前两列，<code>tcp.*</code> 与 <code>head_camera.*</code> 相同：</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>R = ⎡ r1  r4  · ⎤     第一列 (r1,r2,r3) = 本体 X 轴在世界系下的方向
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>    ⎢ r2  r5  · ⎥     第二列 (r4,r5,r6) = 本体 Y 轴在世界系下的方向
 </span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>    ⎣ r3  r6  · ⎦     第三列 = 前两列的叉积,可自行算回
 </span></code></pre></div>
-<p>IMU 默认不录，按本页采出的数据集里没有这 9 列；需要时加 <code>--robot.enable_imu=true</code>（双夹爪两侧一起生效，键名带 <code>left_</code> / <code>right_</code> 前缀），<code>observation.state</code> 单夹爪 10 → 19，双夹爪 20 → 38。</p>
+<p>IMU 这 9 列默认不录，需要时加 <code>--robot.enable_imu=true</code>（双夹爪两侧一起生效，键名带 <code>left_</code> / <code>right_</code> 前缀），<code>observation.state</code> 单夹爪 10 → 19，双夹爪 20 → 38。</p>
 <div class="admonition warning">
 <p class="admonition-title"><code>--robot.enable_tactile=false</code> 是排查开关，不要用它录数据</p>
-<p>关掉后触觉不发现、不落盘、无观测键。它用来把 USB 带宽问题拆成两半：双夹爪四路触觉 + 两路腕相机可能超出一条总线的预算，表现为某一路相机打不开、且每次不是同一路；分别关触觉、关腕相机各跑一次即可判断，见<a href="../troubleshooting/#usb-bandwidth">某一路相机打不开</a>。要少录一路用 <code>--robot.enable_wrist_camera=false</code> 或 <code>--robot.enable_tracker=false</code>。</p>
+<p>关掉后触觉不发现、不落盘、无观测键，只用于对半排查 USB 带宽（某路相机打不开且每次不同），见<a href="../troubleshooting/#usb-bandwidth">某一路相机打不开</a>。要少录一路用 <code>--robot.enable_wrist_camera=false</code> 或 <code>--robot.enable_tracker=false</code>。</p>
 </div>
 <div class="admonition tip">
 <p class="admonition-title">默认情况下，Rerun 里看到的就是落盘的那张图</p>
-<p>落盘 = <code>--robot.tactile_output_types</code>，默认 <code>rectify</code>（未做基线相减的原图），只能填一个，多填报错。显示 = <code>--robot.tactile_display_output_types</code>，默认同样是 <code>rectify</code>（填空列表 <code>'[]'</code> 等价），所以传感器每帧只读一次，屏幕上和数据集里是同一张图。改成别的类型，才会在同一次读取上多出一路只显示、不落盘的流，键名如 <code>tactile_left_difference</code>，不在 <code>observation_features</code> 里。</p>
-<p>值得知道的那个类型是 <code>difference</code>（相对初始化时刻基线的增强差分图）。它曾经是默认值：早期胶体上 <code>rectify</code> 几乎看不出形变，只能靠差分图判断接触；2026-08 换硅胶之后 <code>rectify</code> 上直接能看出接触，显示流就不必再拿一路不落盘的图挡在操作员眼前。真要开回去（<code>--robot.tactile_display_output_types='["difference"]'</code>），记住差分是破坏性的：基线在传感器 init 时抓取，连接时压在胶上的力会被整段减掉，所以四枚指尖连接时都要空载，也不要为了看着清楚把 <code>--robot.tactile_output_types</code> 改成 <code>difference</code>。<code>--robot.tactile_diff_gain</code>（默认 <code>1.0</code>）只是这张差分图的增益，不请求 <code>difference</code> 时什么都不做；出厂值 1.5 在本胶体上噪声偏大且会削顶。</p>
+<ul>
+<li>落盘：<code>--robot.tactile_output_types</code>，默认 <code>rectify</code>（未做基线相减的原图），只能填一个，多填报错。</li>
+<li>显示：<code>--robot.tactile_display_output_types</code>，默认同为 <code>rectify</code>（<code>'[]'</code> 等价），每帧只读一次，屏幕与数据集同一张图。</li>
+<li>显示改成别的类型，同一次读取会多出一路只显示不落盘的流，键名如 <code>tactile_left_difference</code>，不在 <code>observation_features</code> 里。</li>
+</ul>
+<p><code>difference</code> 是相对 init 时基线的增强差分图。要开启（<code>--robot.tactile_display_output_types='["difference"]'</code>）注意：</p>
+<ul>
+<li>差分是破坏性的：连接时压在胶上的力会被整段减掉，四枚指尖连接时须空载。</li>
+<li>不要为了看着清楚把 <code>--robot.tactile_output_types</code> 改成 <code>difference</code>。</li>
+<li><code>--robot.tactile_diff_gain</code>（默认 <code>1.0</code>）是差分图增益，不请求 <code>difference</code> 时无效；出厂值 1.5 在本胶体上噪声大且削顶。</li>
+</ul>
 </div>
 <h2 id="54">录制选项：流式编码与编码器预热<a class="headerlink" href="#54" title="锚点链接">¶</a></h2>
-<p>视频键（触觉 + 腕相机）在采集时实时编码，而非先存 PNG 再在集尾编码，每集结束几乎不用等。默认开启（<code>--dataset.streaming_encoding=true</code>）：</p>
+<p>视频键（触觉 + 腕相机）采集时实时编码，不在集尾从 PNG 编码，每集结束几乎不用等，默认开启（<code>--dataset.streaming_encoding=true</code>）：</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>lerobot-record<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">    </span>--robot.type<span class="o">=</span>taccap_gripper<span class="w"> </span>--robot.id<span class="o">=</span><span class="m">0</span><span class="w"> </span>--robot.side<span class="o">=</span>right<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span>--dataset.repo_id<span class="o">=</span>&lt;your_org&gt;/&lt;your_dataset&gt;<span class="w"> </span><span class="se">\</span>
@@ -2874,24 +2898,24 @@
 </span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="w">    </span>--dataset.vcodec<span class="o">=</span>auto
 </span></code></pre></div>
 <ul>
-<li>每个相机一个编码线程，经有界队列（<code>--dataset.encoder_queue_maxsize</code>，约 1 秒帧量）喂原始帧；队列满时最多等 0.1 秒，仍满则丢弃当前帧并告警 <code>Encoder queue full … dropped N frame(s)</code>，不阻塞采集。</li>
-<li>保存一集是事务式的：存盘失败或存盘中途按 Ctrl+C，数据集回滚到上一集的完整状态，不会留下半条 episode，直接 <code>--resume</code> 续录即可。</li>
-<li><code>--dataset.vcodec=auto</code> 优先启用可用的硬件编码；推荐采集主机配 NVIDIA GPU，用 GPU H.264 编码器降低多路实时编码的 CPU 压力。</li>
-<li>编码器预热是自动的：每集开录前先把编码器准备好，不占第一帧的时间预算。</li>
+<li>每相机一个编码线程，经有界队列（<code>--dataset.encoder_queue_maxsize</code>，约 1 秒帧量）喂原始帧；队列满时最多等 0.1 秒，仍满则丢当前帧并告警 <code>Encoder queue full … dropped N frame(s)</code>，不阻塞采集。</li>
+<li>存盘是事务式的：失败或中途 Ctrl+C 都回滚到上一集，不留半条 episode，可直接 <code>--resume</code>。</li>
+<li><code>--dataset.vcodec=auto</code> 优先用硬件编码；推荐配 NVIDIA GPU，由 GPU H.264 编码分担 CPU 压力。</li>
+<li>编码器预热自动完成：每集开录前就绪，不占第一帧的时间预算。</li>
 </ul>
 <h3 id="no-gpu">没有 NVIDIA GPU 的主机怎么录<a class="headerlink" href="#no-gpu" title="锚点链接">¶</a></h3>
 <div class="admonition warning">
 <p class="admonition-title">这是给不达标机器的临时办法，不是推荐做法</p>
-<p><a href="../install/#host-spec">采集主机最低要求</a>是 NVIDIA RTX 3060 / 8 GB 显存及以上。纯 CPU 服务器、虚拟机或无 NVIDIA 显卡的笔记本用下面这条能把数据录下来，但存盘慢、更容易掉帧；正式采集请换达标主机。</p>
+<p><a href="../install/#host-spec">采集主机最低要求</a>是 NVIDIA RTX 3060 / 8 GB 显存及以上。纯 CPU 服务器、虚拟机或无 NVIDIA 显卡的笔记本按下面做能录，但存盘慢、易掉帧，正式采集请换达标主机。</p>
 </div>
-<p>0.0.8 修掉了无显卡路径上的内存增长（此前 <code>libsvtav1</code> 每集多占约 1.3 GB，长时间录制会耗尽内存），这类机器请先升级到 v0.1.0。</p>
-<p><code>--dataset.vcodec=auto</code> + <code>--dataset.streaming_encoding=true</code> 这两个默认值是按装了 NVIDIA 显卡配的。没有显卡时关掉流式编码：</p>
+<p>这类机器须先升级到 v0.1.0。</p>
+<p><code>--dataset.vcodec=auto</code> + <code>--dataset.streaming_encoding=true</code> 两个默认值是给 NVIDIA 显卡的，没有显卡时关掉流式编码：</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>lerobot-record<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">    </span>...<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span>--dataset.streaming_encoding<span class="o">=</span><span class="nb">false</span>
 </span></code></pre></div>
-<p>编码器不用管：<code>--dataset.vcodec=auto</code> 会真的开一次编码会话探测，没有 NVIDIA 驱动时回落到 <code>libsvtav1</code>（CPU 上的 AV1）；离线编辑数据集时重新编码也走同一套选择，有 NVIDIA 用 <code>h264_nvenc</code>，否则 <code>libsvtav1</code>；显式写 <code>--dataset.vcodec=libsvtav1</code> 也可以。</p>
-<p>原因：<code>libsvtav1</code> 让 CPU 既编码又采集，双夹爪一帧六到八张图而 30 fps 预算只有 33.3 ms，先看到的就是 <code>[slow_frame] ... overrun=</code>；关掉后到 <code>save_episode()</code> 再批量编码，存盘慢只是多等，掉帧丢的是补不回来的数据。此时"建议把流式编码开回来"的提示忽略即可。多核服务器上仍想开流式编码，两个旋钮：</p>
+<p><code>--dataset.vcodec=auto</code> 会实际开一次编码会话探测，无 NVIDIA 驱动时回落到 <code>libsvtav1</code>（CPU 上的 AV1）；离线编辑重新编码同理（有 NVIDIA 用 <code>h264_nvenc</code>）。也可显式写 <code>--dataset.vcodec=libsvtav1</code>。</p>
+<p><code>libsvtav1</code> 让 CPU 既编码又采集，双夹爪一帧六到八张图，30 fps 预算仅 33.3 ms，会出现 <code>[slow_frame] ... overrun=</code>。关掉后在 <code>save_episode()</code> 批量编码，存盘慢只是多等，掉帧则补不回来；忽略"建议把流式编码开回来"的提示。多核服务器仍想开流式编码，调这两项：</p>
 <table>
 <thead>
 <tr>
@@ -2904,21 +2928,21 @@
 <tr>
 <td><code>--dataset.encoder_threads</code></td>
 <td>自动</td>
-<td>大机器上 <code>libsvtav1</code> 会拿走采集需要的核；每个编码器给 <code>2</code> 是稳妥上限</td>
+<td>大机器上 <code>libsvtav1</code> 会抢走采集要用的核，每个编码器给 <code>2</code> 是稳妥上限</td>
 </tr>
 <tr>
 <td><code>--dataset.encoder_queue_maxsize</code></td>
 <td><code>30</code></td>
-<td>30 fps 下约 1 秒缓冲，是反压阀，编码跟不上时在这里挡住而不是让内存一直涨</td>
+<td>约 1 秒缓冲（30 fps）的反压阀，编码跟不上时在此挡住，内存不再上涨</td>
 </tr>
 </tbody>
 </table>
 <h2 id="55">分集与复位<a class="headerlink" href="#55" title="锚点链接">¶</a></h2>
 <ul>
-<li>一次运行采多集：<code>--dataset.num_episodes=N</code>。</li>
-<li>集间是被动复位：在 <code>--dataset.reset_time_s</code> 内重新摆放物体/场景，无需遥操。</li>
-<li>每条 episode 是一次完整演示，不要把多次尝试塞进一集。</li>
-<li><code>--dataset.episode_time_s</code> 给够但别过长，过长会产生大量无效尾帧。</li>
+<li><code>--dataset.num_episodes=N</code> 一次采多集。</li>
+<li>集间在 <code>--dataset.reset_time_s</code> 内重新摆放物体/场景。</li>
+<li>一集一次完整演示，不要塞多次尝试。</li>
+<li><code>--dataset.episode_time_s</code> 给够但别过长，否则产生大量无效尾帧。</li>
 <li>
 <p>录制中的键盘控制：</p>
 <table>
@@ -2935,7 +2959,7 @@
 </tr>
 <tr>
 <td>←</td>
-<td>放弃这一集并重录；录制中或随后的复位阶段按都行，之后照常给出复位时间</td>
+<td>放弃本集并重录；录制中或随后的复位阶段均可，之后照常给复位时间</td>
 </tr>
 <tr>
 <td>Esc</td>
@@ -2943,11 +2967,10 @@
 </tr>
 </tbody>
 </table>
-<p>键盘监听是全局的：在 Rerun 等<strong>任何窗口</strong>里按方向键都会生效（Rerun 的时间轴正是用左右键翻帧）。</p>
+<p>键盘监听是全局的，在<strong>任何窗口</strong>（包括用左右键翻帧的 Rerun）按方向键都生效。</p>
 </li>
 </ul>
 <h2 id="采集规范">采集规范<a class="headerlink" href="#采集规范" title="锚点链接">¶</a></h2>
-<p>一句话原则：每条 episode 都是一次完整、平稳、传感器有真实信号的演示，且全集同一坐标原点。</p>
 <h3 id="好-episode-与常见坏样本">好 episode 与常见坏样本<a class="headerlink" href="#好-episode-与常见坏样本" title="锚点链接">¶</a></h3>
 <table>
 <thead>
@@ -2962,38 +2985,38 @@
 <tr>
 <td>完整性</td>
 <td>接近 → 抓取 → 操作 → 完成</td>
-<td>中途中断、没完成</td>
-<td>每条演示自然收尾</td>
+<td>中途中断</td>
+<td>自然收尾</td>
 </tr>
 <tr>
 <td>平稳性</td>
-<td>手持带动平稳、匀速</td>
+<td>手持平稳匀速</td>
 <td>急停急转，IMU/位姿噪声大</td>
-<td>平稳匀速带动</td>
+<td>匀速带动</td>
 </tr>
 <tr>
 <td>触觉信号</td>
-<td>抓取时传感器与物体真实接触、有形变</td>
+<td>抓取时真实接触、有形变</td>
 <td>空抓，触觉图无信号</td>
-<td>抓取时确保真实接触、看 Rerun 触觉</td>
+<td>看 Rerun 触觉确认接触</td>
 </tr>
 <tr>
 <td>相机可见</td>
 <td>目标在腕相机视野内</td>
 <td>手/线缆遮挡，或过曝/频闪</td>
-<td>清理遮挡、调整手持角度</td>
+<td>清理遮挡、调手持角度</td>
 </tr>
 <tr>
 <td>坐标一致</td>
-<td>与本数据集其它集同一原点</td>
+<td>与其它集同一原点</td>
 <td>中途重启 XTac-UMI XR，位姿集间跳变</td>
 <td>不重启 XTac-UMI XR</td>
 </tr>
 <tr>
 <td>夹爪读数</td>
 <td><code>gripper.pos</code> 闭合≈0、张开合理</td>
-<td>未标定，完全闭合时 <code>gripper.pos</code>≠0</td>
-<td>确认完全闭合后按需重标零点，见<a href="../calibration/#41">夹爪标定</a></td>
+<td>未标定，闭合时 <code>gripper.pos</code>≠0</td>
+<td>确认闭合后按需重标零点，见<a href="../calibration/#41">夹爪标定</a></td>
 </tr>
 <tr>
 <td>丢帧</td>
@@ -3005,43 +3028,50 @@
 <td>首帧</td>
 <td>动作起点正常</td>
 <td>关键动作落在被丢的首帧</td>
-<td>开录后稳定 0.5~1 秒再动作，并给足 <code>--dataset.episode_time_s</code></td>
+<td>开录后稳 0.5~1 秒再动，给足 <code>--dataset.episode_time_s</code></td>
 </tr>
 </tbody>
 </table>
-<p>出现报错先查<a href="../troubleshooting/">故障排查</a>。</p>
+<p>报错先查<a href="../troubleshooting/">故障排查</a>。</p>
 <h3 id="采集前">采集前<a class="headerlink" href="#采集前" title="锚点链接">¶</a></h3>
-<p>采集全程不要重启 XTac-UMI XR，原因见<a href="../../common/pico4/#pico-frame">坐标系对齐</a>；不得不重启时，把之后的数据当作新数据集处理。</p>
+<p>全程不要重启 XTac-UMI XR（原因见<a href="../../common/pico4/#pico-frame">坐标系对齐</a>）；不得不重启时，之后的数据当作新数据集。</p>
 <ul>
-<li>确认标定生效：预览时 <code>gripper.pos</code> 张到底 1.0、闭合 0.0。没标定的主夹爪连不上，能预览就说明标过了，这一步复核的是机械行程；每台主夹爪标一次（存 flash），双夹爪两侧都要标，见<a href="../calibration/#41">夹爪标定</a>。</li>
-<li>自检设备：<code>scan_grippers</code> 输出 side/role/firmware_sn 正常；追踪器有电、有位姿。</li>
-<li>走有线时关闭数采电脑 WiFi，有线共享网络会与 WiFi 冲突，见<a href="../../common/pico4/#pico-network">网络连接</a>。</li>
-<li>准备场景：光照稳定、目标清晰可见，清理会遮挡腕相机的线缆/杂物。</li>
-<li>预留磁盘：满负荷出流可达 ~280 MB/s（双夹爪），见<a href="../dataset/#storage-planning">存储规划</a>。</li>
-<li>开录前<a href="#preview">预览</a>一遍，看轨迹、<code>gripper.pos</code> 与触觉图是否都有信号；录制时想边录边看可以开着 <code>--display_data</code>，不影响采集。</li>
+<li>没标定的主夹爪连不上，预览时复核机械行程即可；每台主夹爪标一次（存 flash），双夹爪两侧都要标，见<a href="../calibration/#41">夹爪标定</a>。</li>
+<li><code>scan_grippers</code> 输出 side/role/firmware_sn 正常；追踪器有电、有位姿。</li>
+<li>走有线时关数采电脑 WiFi（与有线共享网络冲突），见<a href="../../common/pico4/#pico-network">网络连接</a>。</li>
+<li>场景光照稳定、目标清晰，清理遮挡腕相机的线缆/杂物。</li>
+<li>双夹爪满负荷出流可达 ~280 MB/s，见<a href="../dataset/#storage-planning">存储规划</a>。</li>
+<li>开录前先<a href="#preview">预览</a>。</li>
 </ul>
 <h3 id="演示动作规范">演示动作规范<a class="headerlink" href="#演示动作规范" title="锚点链接">¶</a></h3>
-<p>同一任务的多条演示动作节奏尽量一致，便于模型学习；触觉是核心模态，空抓的演示价值很低；移位帧配对会丢掉每集首帧，关键动作不要压在第 0 帧。</p>
+<p>同一任务的演示节奏尽量一致，便于模型学习；触觉是核心模态，空抓价值很低。</p>
 <h3 id="多样性与一致性">多样性与一致性<a class="headerlink" href="#多样性与一致性" title="锚点链接">¶</a></h3>
-<p>任务语义一致、无关因素适度多样。保持一致：任务定义（<code>--dataset.single_task</code>）、动作意图、坐标原点；适度多样：物体初始位姿/位置、抓取点、光照的轻微变化。不要在同一份数据集里混入不同任务，明显不同的变体拆成不同数据集。</p>
+<ul>
+<li>保持一致：任务定义（<code>--dataset.single_task</code>）、动作意图、坐标原点。</li>
+<li>适度多样：物体初始位姿/位置、抓取点、光照的轻微变化。</li>
+</ul>
 <h3 id="任务定义与数据集组织">任务定义与数据集组织<a class="headerlink" href="#任务定义与数据集组织" title="锚点链接">¶</a></h3>
-<p><code>single_task</code> 用稳定清晰的英文短句（如 <code>'Pick up the object'</code>），同一数据集内保持一致，它会写进 <code>tasks</code>。一个数据集对应一个任务/变体，<code>repo_id</code> 命名与组织见<a href="../dataset/">数据集</a>。记录设备台账（用哪只夹爪/追踪器、标定时间）便于回溯；序列号已由 <a href="#robot-id"><code>meta/hardware.json</code></a> 自动记录。</p>
+<ul>
+<li><code>single_task</code> 用稳定清晰的英文短句，同一数据集内一致，写进 <code>tasks</code>。</li>
+<li>一个数据集只放一个任务/变体，<code>repo_id</code> 命名见<a href="../dataset/">数据集</a>。</li>
+<li>记设备台账（夹爪/追踪器、标定时间）；序列号已自动写进 <a href="#robot-id"><code>meta/hardware.json</code></a>。</li>
+</ul>
 <h3 id="增量采集">增量采集<a class="headerlink" href="#增量采集" title="锚点链接">¶</a></h3>
-<p>不要一口气采几百条再回头发现系统性问题：先采 5~10 条；用 <a href="../dataset/#62"><code>lerobot-check-dataset</code></a> 校验；回放/可视化抽查几条；再规模化采集。</p>
+<p>先采 5~10 条，用 <a href="../dataset/#62"><code>lerobot-check-dataset</code></a> 校验并回放抽查，再规模化采集。</p>
 <h3 id="采集自查清单">采集自查清单<a class="headerlink" href="#采集自查清单" title="锚点链接">¶</a></h3>
 <ul>
-<li>[ ] XTac-UMI XR 本次采集期间从未重启（原点一致）</li>
-<li>[ ] 编码器零点有效（闭合 <code>gripper.pos</code>≈0）</li>
-<li>[ ] 追踪器有位姿、Rerun 轨迹正常</li>
-<li>[ ] 已关闭数采电脑 WiFi（只留 Pico4 Ultra 企业版有线共享网络）</li>
-<li>[ ] 抓取时触觉图有信号（非空抓）</li>
-<li>[ ] 腕相机视野内目标不被遮挡</li>
+<li>[ ] 采集期间未重启 XTac-UMI XR</li>
+<li>[ ] 闭合时 <code>gripper.pos</code>≈0</li>
+<li>[ ] 追踪器有位姿、轨迹正常</li>
+<li>[ ] 数采电脑 WiFi 已关</li>
+<li>[ ] 抓取时触觉图有信号</li>
+<li>[ ] 腕相机视野无遮挡</li>
 <li>[ ] 无丢帧告警</li>
-<li>[ ] <code>single_task</code> 描述与本数据集一致</li>
+<li>[ ] <code>single_task</code> 与本数据集一致</li>
 <li>[ ] 磁盘空间充足</li>
 </ul>
 <h2 id="56">可选：头显相机<a class="headerlink" href="#56" title="锚点链接">¶</a></h2>
-<p>录制 Pico4 Ultra 企业版头显自带的双目相机与头显位姿——操作员第一视角和"人在往哪看"；产出 <code>left_head</code> / <code>right_head</code> 与 <code>head_camera.*</code>（见<a href="#53">每帧记录内容</a>），后者同时进 action。双夹爪用 <code>--robot.type=xtac_umi_g1</code>（<code>bi_taccap_gripper</code> 固定不带头显）；单夹爪 <code>taccap_gripper</code> 加 <code>--robot.enable_head_camera=true</code>。下面的头显参数两种情况都适用。</p>
+<p>录 Pico4 Ultra 企业版头显的双目画面与位姿（操作员第一视角和"人在往哪看"），产出 <code>left_head</code> / <code>right_head</code> 与 <code>head_camera.*</code>（见<a href="#53">每帧记录内容</a>），后者同时进 action。双夹爪用 <code>--robot.type=xtac_umi_g1</code>，单夹爪 <code>taccap_gripper</code> 加 <code>--robot.enable_head_camera=true</code>，下列参数两者通用。</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>lerobot-record<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">    </span>--robot.type<span class="o">=</span>xtac_umi_g1<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">    </span>--robot.id<span class="o">=</span><span class="m">0</span><span class="w"> </span><span class="se">\</span>
@@ -3051,29 +3081,44 @@
 </span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w">    </span>--dataset.fps<span class="o">=</span><span class="m">30</span><span class="w"> </span><span class="se">\</span>
 </span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">    </span>--dataset.push_to_hub<span class="o">=</span><span class="nb">false</span>
 </span></code></pre></div>
-<p>这里的 <code>left_</code> / <code>right_</code> 指头显的左眼 / 右眼，不是左右手（双夹爪的 <code>{side}_wrist</code>、<code>{side}_tcp.*</code> 才按手臂分）；两个单夹爪进程同时开头显相机，拿到的是同一路画面。</p>
-<p>前置条件：XenseVR PC Service ≥ v0.2.0，更低版本不转发相机画面（见<a href="../versions/#required">版本基线</a>）；头显 APP 正在推流，相机和追踪器共用同一条 SDK 连接，头显必须已连上 <a href="../host-setup/#35">PC Service</a>，关掉一个不会断开另一个。</p>
+<ul>
+<li><code>left_</code> / <code>right_</code> 指头显左右眼，不是左右手（<code>{side}_wrist</code>、<code>{side}_tcp.*</code> 才按手分）；两个单夹爪进程同开头显相机，拿到同一路画面。</li>
+<li>前置条件：XenseVR PC Service ≥ v0.2.0（更低版本不转发画面，见<a href="../versions/#required">版本基线</a>）；头显 APP 正在推流并已连上 <a href="../host-setup/#35">PC Service</a>。相机和追踪器共用一条 SDK 连接，关掉一个不断开另一个。</li>
+</ul>
 <div class="admonition warning">
 <p class="admonition-title">头显的分辨率和 <code>--robot.head_camera_width/_height</code> 必须一致</p>
-<p>只接受 <code>640x480</code>（默认）、<code>1024x768</code>、<code>1280x960</code> 三档。出画面的是头显，XTac-UMI XR 默认每眼 640x480，与采集端默认一致，不用加参数；命令行参数只是声明预期。填别的直接报错，首帧尺寸与配置不一致也在 connect 时报错，不会悄悄重采样（那会改掉记录下来的视场角）。三档都是 4:3，与传感器一致（PICO 相机接口单帧上限 2328x1748 也是 4:3），按 16:9 要画面只会得到裁剪或拉伸。需要更高分辨率时请联系<a href="../../common/reference/#support">技术支持</a>在头显上调整，并同步修改这两个参数，两处一起改，不要只改一边。</p>
+<p>只接受 <code>640x480</code>（默认）、<code>1024x768</code>、<code>1280x960</code> 三档。XTac-UMI XR 默认每眼输出 640x480，与采集端默认一致，不用加参数；命令行参数只声明预期。</p>
+<ul>
+<li>填别的或首帧尺寸与配置不符都会报错（后者在 connect 时），不会悄悄重采样改掉视场角。</li>
+<li>三档都是 4:3，同传感器（PICO 相机接口单帧上限 2328x1748 也是 4:3），16:9 只会裁剪或拉伸。</li>
+<li>要更高分辨率请联系<a href="../../common/reference/#support">技术支持</a>在头显上调整，并同步改这两个参数。</li>
+</ul>
 </div>
-<p>只要一只眼时用 <code>--robot.head_camera_eyes=left</code>（或 <code>right</code>）：JPEG 解码量和编码器压力减半，数据集里只有一个头部视频键。</p>
-<p>改分辨率或改录制的眼睛都等于换了一组数据，变更前后的 episode 不能混用，要改就在开录前定下来。</p>
-<p>左右眼配对：两只眼是两条独立消息，配错在数据里看不出痕迹，所以每帧比对两只眼的最新帧，帧序号相同即同一次曝光，不同则要求时间戳相差不超过 <code>--robot.head_camera_pair_max_skew_ms</code>（默认 20 ms，30 fps 帧周期约 33 ms）；超出不中断录制，打一条限流告警并给出实测偏差。</p>
-<p><code>head_camera.*</code> 已重映射到与 <code>tcp.*</code> 相同的重力对齐世界系（用追踪器那套 Pico→world 变换）。开启后 <code>observation.state</code> 增加 9 维：单夹爪 10 → 19，双夹爪 20 → 29，再叠加 <code>--robot.enable_imu=true</code> 时继续累加。头显相机连不上见<a href="../troubleshooting/#head-camera">故障排查</a>。</p>
+<ul>
+<li><code>--robot.head_camera_eyes=left</code>（或 <code>right</code>）只录一只眼，解码与编码压力减半，只有一个头部视频键。</li>
+<li>改分辨率或录制的眼睛等于换一组数据，前后 episode 不能混用。</li>
+<li>左右眼是两条独立消息，配错在数据里看不出，所以每帧比对两眼最新帧：帧序号相同即同一曝光，否则时间戳差须不超过 <code>--robot.head_camera_pair_max_skew_ms</code>（默认 20 ms，30 fps 帧周期约 33 ms）；超出只打限流告警（含实测偏差），不中断录制。</li>
+</ul>
+<p><code>head_camera.*</code> 用追踪器的 Pico→world 变换映射到 <code>tcp.*</code> 的世界系。开启后 <code>observation.state</code> 增 9 维：单夹爪 10 → 19，双夹爪 20 → 29，再开 <code>--robot.enable_imu=true</code> 继续累加。连不上见<a href="../troubleshooting/#head-camera">故障排查</a>。</p>
 <h2 id="57">可选：腕相机鱼眼矫正<a class="headerlink" href="#57" title="锚点链接">¶</a></h2>
-<p>腕相机是 190° 鱼眼，默认落盘原始鱼眼帧。加 <code>--robot.wrist_undistort=true</code> 会在写入数据集之前矫正成直线投影，内参取自这只夹爪 flash 里存的那份；<code>--robot.wrist_undistort_balance</code> 调视野档位。只支持 640×480：固件里的鱼眼记录只有 8 个浮点数、不带图像尺寸，配上别的 <code>--robot.wrist_camera_width/_height</code> 会在解析命令行时直接退出。</p>
+<p>腕相机是 190° 鱼眼，默认落盘原始帧。<code>--robot.wrist_undistort=true</code> 用本夹爪 flash 里的内参在写入前矫正成直线投影，<code>--robot.wrist_undistort_balance</code> 调视野。只支持 640×480（固件鱼眼记录只有 8 个浮点数、不含图像尺寸），配别的 <code>--robot.wrist_camera_width/_height</code> 会在解析命令行时退出。</p>
 <div class="admonition warning">
 <p class="admonition-title">开与不开，录出来的是两种数据，而且看不出来</p>
-<p>矫正过的与原始鱼眼的 <code>wrist_cam</code> 形状、dtype 完全一样，两批混在一起训练时没有任何提示。所以录制时把用了哪一种写进 <a href="#robot-id"><code>meta/hardware.json</code></a> 的每个 unit：</p>
+<p>矫正与原始的 <code>wrist_cam</code> 形状、dtype 相同，混用无提示，所以录制时记入 <a href="#robot-id"><code>meta/hardware.json</code></a> 的每个 unit：</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nt">"wrist_undistort"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"applied"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="nt">"calibration"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unit"</span><span class="p">,</span><span class="w"> </span><span class="nt">"balance"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="w"> </span><span class="p">}</span>
 </span></code></pre></div>
-<p><code>calibration</code> 是 <code>"unit"</code>（本机标定）或 <code>"reference"</code>（SDK 参考值）；录到一半改了这个设置会自动另起一个 epoch。一个数据集从头到尾只用一种。</p>
+<p><code>calibration</code> 是 <code>"unit"</code>（本机标定）或 <code>"reference"</code>（SDK 参考值）；中途改设置会另起 epoch。一个数据集只用一种。</p>
 </div>
 <h3 id="fisheye-fallback">鱼眼标定读不到时会怎样<a class="headerlink" href="#fisheye-fallback" title="锚点链接">¶</a></h3>
-<p>从未标定（<code>read_fisheye()</code> 返回 <code>None</code>）、固件回了全零记录（固件 1.1.1 与 1.2.2 都会，判断要用 <code>is_usable_fisheye_cal()</code> 而不是 <code>is None</code>，否则 <code>fx = fy = 0</code> 建出的重映射表得到纯黑图且不抛异常）、或固件早于命令集 V2.0 时，矫正不会失败，而是回退到 SDK 内置参考内参（<code>Calibration::resolve_fisheye()</code> 返回 <code>(calibration, is_reference, reason)</code>，优先用它而不是 <code>read_fisheye()</code>），连接时告警 <code>Wrist undistortion is using the SDK's REFERENCE intrinsics ... Rectification will be approximate</code>，清单里记 <code>"calibration": "reference"</code>。</p>
-<p>参考值够看画面，但主点逐台会漂（实测一台差 37.7 像素）；要在矫正图上按像素测量（视觉伺服、手眼标定、尺寸估计）就先给这台存自己的标定：<code>python third_party/taccap-gripper/python/examples/fisheye_cal.py set-fisheye right</code>（接着两只夹爪时用 <code>left</code> / <code>right</code> 或完整 SN 指定；只接一只可省略）。</p>
-<p>矫正后画面偏心、略微倾斜不代表标定错了：去畸变绕主点而非画幅中心，传感器未必装在镜头光心上，原始鱼眼的桶形畸变把周边压缩才藏住了它（实测一台 <code>cx = 359.1</code>，爪尖中点在 x = 360.1，仅差约 1 像素）；不要自己改 <code>cx</code>，改回 320 反而偏得更远并引入倾斜。</p>
+<p>以下情况不会失败，而是回退到 SDK 内置参考内参：</p>
+<ul>
+<li>从未标定（<code>read_fisheye()</code> 返回 <code>None</code>）。</li>
+<li>固件回了全零记录（1.1.1 与 1.2.2 都会）：须用 <code>is_usable_fisheye_cal()</code> 判断而非 <code>is None</code>，否则 <code>fx = fy = 0</code> 的重映射表输出纯黑图且不报错。</li>
+<li>固件早于命令集 V2.0。</li>
+</ul>
+<p>回退时告警 <code>Wrist undistortion is using the SDK's REFERENCE intrinsics ... Rectification will be approximate</code>，清单里记 <code>"calibration": "reference"</code>。代码里优先用 <code>Calibration::resolve_fisheye()</code>（返回 <code>(calibration, is_reference, reason)</code>）而不是 <code>read_fisheye()</code>。</p>
+<p>参考值够看画面，但主点逐台漂移（实测一台差 37.7 像素）；要在矫正图上按像素测量（视觉伺服、手眼标定、尺寸估计），先存本机标定：<code>python third_party/taccap-gripper/python/examples/fisheye_cal.py set-fisheye right</code>（接两只时用 <code>left</code> / <code>right</code> 或完整 SN 指定，只接一只可省略）。</p>
+<p>矫正后画面偏心、略倾斜不代表标定错：去畸变绕主点而非画幅中心，传感器未必在光心上，鱼眼桶形畸变藏住了它（实测一台 <code>cx = 359.1</code>，爪尖中点 x = 360.1，差约 1 像素）。别改 <code>cx</code>，改回 320 更偏且引入倾斜。</p>
 
 
 

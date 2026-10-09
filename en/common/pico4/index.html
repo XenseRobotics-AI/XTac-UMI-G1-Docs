@@ -2215,7 +2215,10 @@
 
 
 <h1 id="34">Pico4 headset and tracker setup<a class="headerlink" href="#34" title="锚点链接">¶</a></h1>
-<p>The standalone motion tracker that ships with the Pico4 Ultra Enterprise mounts on top of the gripper and provides the 6-DoF pose. XTac-UMI XR (the VR client app) runs on the headset and sends the pose to the collection side. Both editions use the same headset and the same trackers; only three things differ — where the headset plugs in, where the pose service runs, and how the app connects — and those steps are split into "Backpack Kit / Developer Kit" tabs. Every other step is identical.</p>
+<ul>
+<li><strong>Components</strong>: the standalone motion tracker that ships with the Pico4 Ultra Enterprise mounts on top of the gripper and provides the 6-DoF pose; XTac-UMI XR (the VR client app) on the headset sends it to the collection side.</li>
+<li><strong>Two editions</strong>: only the three rows below differ; those steps are split into "Backpack Kit / Developer Kit" tabs.</li>
+</ul>
 <table>
 <thead>
 <tr>
@@ -2232,7 +2235,7 @@
 </tr>
 <tr>
 <td>Where the pose service runs</td>
-<td>The XenseVR runtime is built into XTac-UMI Collector; it is up as soon as the backpack boots, nothing to start</td>
+<td>The XenseVR runtime is built into XTac-UMI Collector and is up once the backpack boots</td>
 <td>The <a href="../../pc/host-setup/#35">XenseVR PC Service</a> on the collection PC, started by hand before every session</td>
 </tr>
 <tr>
@@ -2242,97 +2245,105 @@
 </tr>
 </tbody>
 </table>
-<p>On a factory-configured headset, developer mode, the power policy, the app, the tracker binding and the tracking mode are already set and survive power cycles (redo them only after a factory reset or a headset swap), so start at <a href="#pico-network">Network connection</a>. Plugging in, short-pressing the tracker's power button until the blue light comes on, <a href="#pico-toolkit-ui">connecting in the app</a> and <a href="#pico-frame">startup alignment</a> are needed before every session.</p>
+<ul>
+<li><strong>Factory-configured</strong>: developer mode, power policy, app, tracker binding and tracking mode survive power cycles (redo them only after a factory reset or a headset swap); start at <a href="#pico-network">Network connection</a>.</li>
+<li><strong>Every session</strong>: plug in, short-press the tracker's power button until the blue light comes on, <a href="#pico-toolkit-ui">connect in the app</a>, <a href="#pico-frame">align at startup</a>.</li>
+</ul>
 <h2 id="pico-unbox">Unboxing and the system update<a class="headerlink" href="#pico-unbox" title="锚点链接">¶</a></h2>
 <ol>
 <li>
-<p>Unbox: peel the protective sticker off the front panel, the tape off the controllers and the sticker off the lenses, then hold the power button to switch it on.</p>
+<p>Unbox: peel off the front-panel sticker, the controller tape and the lens stickers, then hold the power button to switch on.</p>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/pico4/unbox-film.webp" data-desc-position="bottom"><img alt="Protective sticker on the front sensor bar" src="../../../assets/pico4/unbox-film.webp" width="440"></a></p>
 </li>
 <li>
-<p>Update the system. This is required on a new unit: it ships on an older build and only works properly once updated, and it has to be done before pairing the tracker or installing the app. Join a WiFi network with internet access, go to Settings → System update, and tap "Download and install" to reach Pico OS 5.15.5.U or later. The package is about 1.9 GB.</p>
+<p>Update the system: a new unit ships on an older build and must be updated before you pair trackers or install the app. Join a WiFi network with internet access, go to Settings → System update and tap "Download and install" to reach Pico OS 5.15.5.U or later (about 1.9 GB).</p>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/pico4/system-update.webp" data-desc-position="bottom"><img alt="System update to 5.15.5.U" src="../../../assets/pico4/system-update.webp" width="560"></a></p>
 </li>
 </ol>
 <h2 id="pico-system">System settings: developer mode and power policy<a class="headerlink" href="#pico-system" title="锚点链接">¶</a></h2>
 <ol>
 <li>
-<p>Enable developer mode: Settings → About → tap "Software version" several times (with the controller, pull the index-finger trigger repeatedly while pointing at it) → "Developer options" appears on the left → turn on USB debugging.</p>
+<p>Enable developer mode: Settings → About → tap "Software version" several times (with the controller, pull the index trigger repeatedly while pointing at it) → "Developer options" appears on the left → turn on USB debugging.</p>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/pico4/devmode-tap-version.webp" data-desc-position="bottom"><img alt="Tap the software version repeatedly" src="../../../assets/pico4/devmode-tap-version.webp" width="480"></a></p>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/pico4/devmode-usb-debug.webp" data-desc-position="bottom"><img alt="Developer options → turn on USB debugging" src="../../../assets/pico4/devmode-usb-debug.webp" width="480"></a></p>
 </li>
 <li>
-<p>Disable sleep and screen-off: in Developer options tap "Enterprise Settings" → System Settings → Power policy (only the Enterprise edition has this item; the consumer edition cannot set "Never"). It ships as screen-off 30 s, system sleep 5 min, battery icon hidden. Change all three, in this order:</p>
+<p>Disable sleep and screen-off: Developer options → "Enterprise Settings" → System Settings → Power policy (Enterprise edition only; the consumer edition cannot set "Never"). It ships as screen-off 30 s, system sleep 5 min, battery icon hidden. Change them in order:</p>
 <ol>
-<li>System sleep = Never first;</li>
-<li>Screen off = Never second;</li>
-<li>Set the battery and charging status icon at the bottom to "Always show", so you can check the charge mid-session.</li>
+<li>System sleep = Never;</li>
+<li>Screen off = Never;</li>
+<li>Battery and charging status icon at the bottom = "Always show", to check the charge mid-session.</li>
 </ol>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/pico4/power-step4-final.webp" data-desc-position="bottom"><img alt="Final power policy settings" src="../../../assets/pico4/power-step4-final.webp" width="480"></a></p>
 </li>
 </ol>
 <div class="admonition warning">
 <p class="admonition-title">Sleep first, screen-off second; the order cannot be reversed</p>
-<p>The screen-off timeout is bounded by the system sleep timeout. Set screen-off first, while system sleep is still at its default, and its "Never" gets clamped back to a finite value: it looks set but is not in effect. When done, leave Settings and come back to confirm both read "Never".</p>
+<p>Screen-off is bounded by system sleep: while sleep is still at its default, screen-off's "Never" is clamped back to a finite value, so it looks set but is not in effect. Leave Settings and come back to confirm both read "Never".</p>
 </div>
-<p>If you skip this: once the headset screen-blanks or sleeps between episodes, XTac-UMI XR gets suspended or killed and tracking drops out, and restarting it resets the world frame (see <a href="#pico-frame">Frame alignment</a>). Taking the headset off and setting it down triggers this too.</p>
+<p>Otherwise, screen-off or sleep between episodes (also triggered by taking the headset off and setting it down) suspends or kills XTac-UMI XR, and restarting it resets the world frame (see <a href="#pico-frame">Frame alignment</a>).</p>
 <h2 id="pico-app">Installing XTac-UMI XR<a class="headerlink" href="#pico-app" title="锚点链接">¶</a></h2>
 <p>The APK is named <code>XTac-UMI-XR-&lt;version&gt;.apk</code>; the current version is 0.3.2. Install it from the headset's file manager:</p>
 <ol>
 <li>
-<p>On the PC: connect the headset to the PC over USB and copy the APK into the headset's <code>Download/</code> directory.</p>
+<p>Connect the headset to the PC over USB and copy the APK into the headset's <code>Download/</code> directory.</p>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/pico4/install-step1-copy.webp" data-desc-position="bottom"><img alt="Copy the apk into the Pico's Download folder" src="../../../assets/pico4/install-step1-copy.webp" width="480"></a></p>
 </li>
 <li>
-<p>Put the headset on, tap "File Manager" on the taskbar, and go into the "Download" folder.</p>
+<p>Put the headset on, tap "File Manager" on the taskbar, and open the "Download" folder.</p>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/pico4/install-step2-filemanager.webp" data-desc-position="bottom"><img alt="File Manager → Download" src="../../../assets/pico4/install-step2-filemanager.webp" width="480"></a></p>
 </li>
 <li>
-<p>Tap the APK and choose "Install" in the "Install this app?" dialog. Once installed, XTac-UMI XR appears in the "Library".</p>
+<p>Tap the APK and choose "Install" in the "Install this app?" dialog; XTac-UMI XR then appears in the "Library".</p>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/pico4/install-step3-confirm.webp" data-desc-position="bottom"><img alt="Confirming the install" src="../../../assets/pico4/install-step3-confirm.webp" width="480"></a></p>
 </li>
 </ol>
-<p>If the PC has adb (Android platform-tools), you can install in one command without going into the headset, once USB debugging is on and "USB connection" is set to "File transfer":</p>
+<p>With adb (Android platform-tools) on the PC, USB debugging on and "USB connection" set to "File transfer", you can install in one command:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>adb<span class="w"> </span>devices<span class="w">                          </span><span class="c1"># the headset should be listed</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>adb<span class="w"> </span>install<span class="w"> </span>XTac-UMI-XR-0.3.2.apk<span class="w">    </span><span class="c1"># substitute the build you were given</span>
 </span></code></pre></div>
 <h2 id="pico-network">Network connection<a class="headerlink" href="#pico-network" title="锚点链接">¶</a></h2>
-<p>Tracking data has to reach the XenseVR pose service on the collection unit. <strong>The Backpack Kit is wired only</strong>; the Developer Kit is wired by default too, with WiFi for quick debugging only. A Type-C cable gives the link to itself, with stable, predictable latency.</p>
+<p>Tracking data goes to the XenseVR pose service on the collection unit. The Backpack Kit is <strong>wired only</strong>; the Developer Kit is wired by default, with WiFi for quick debugging only. A Type-C cable keeps the link to itself, with stable latency.</p>
 <div class="admonition warning">
 <p class="admonition-title">On the Developer Kit, wireless is for quick debugging only, never for real collection</p>
-<p>Over WiFi the headset and the collection unit compete for the channel with everything else on site. The link fluctuates and pose data arrives late: at best the pose stutters and jitters, at worst frames are dropped. None of this is visible while recording, and afterwards it is hard to tell apart from other causes, so the whole batch has to be recollected. Use the cable for real collection.</p>
+<p>Over WiFi the headset competes for the channel with everything on site, so pose data arrives late: at best stutter and jitter, at worst dropped frames. None of it shows while recording and it is hard to tell from other causes afterwards, so the whole batch has to be recollected.</p>
 </div>
-<p>On both editions, set USB up on the headset first: Settings → Developer options → enable "USB debugging" → set "USB connection" to "File transfer". Re-check this after every USB re-plug, as it reverts to the default. If you cannot select it, reboot the Pico.</p>
+<p>On both editions, set USB up on the headset first:</p>
+<ul>
+<li><strong>Settings path</strong>: Settings → Developer options → enable "USB debugging" → set "USB connection" to "File transfer".</li>
+<li><strong>Re-check after re-plugging</strong>: it reverts to the default after a USB re-plug; if you cannot select it, reboot the Pico.</li>
+</ul>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/pico4/usb-shared-network.webp" data-desc-position="bottom"><img alt="USB connection set to file transfer" src="../../../assets/pico4/usb-shared-network.webp" width="520"></a></p>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">Backpack Kit</label><label for="__tabbed_1_2">Developer Kit</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<p>Wired setup:</p>
 <ol>
-<li>Run the headset cable (Pico → Pack, Type-C to Type-C) from the Type-C port on the side of the headset to the backpack's <code>PICO</code> port. It is connected the same way with adapter power and with power-bank power; wiring in <a href="../../backpack/unbox-connect/#order">Unboxing, cabling and power</a>.</li>
-<li>Power on the backpack. The XenseVR runtime is built into Collector and starts with it; there is no separate service to launch.</li>
-<li>Open XTac-UMI XR, leave "USB Network" unticked and "PC IP" empty (it connects to the backpack at <code>192.168.100.1</code> by default), then tap "Connect".</li>
+<li>Run the headset cable (Pico → Pack, Type-C to Type-C) from the headset's side Type-C port to the backpack's <code>PICO</code> port, the same with adapter or power-bank power; see <a href="../../backpack/unbox-connect/#order">Unboxing, cabling and power</a>. The headset cannot use WiFi on the Backpack Kit.</li>
+<li>Power on the backpack (the pose service starts with it).</li>
+<li>Open XTac-UMI XR, leave "USB Network" unticked and "PC IP" empty (connects to the backpack at <code>192.168.100.1</code> by default), then tap "Connect".</li>
 </ol>
-<p>The Backpack Kit does not support the headset over WiFi; the headset must be cabled to the backpack.</p>
 </div>
 <div class="tabbed-block">
-<p>Wired setup:</p>
 <ol>
-<li>Start the service on the PC first (see <a href="../../pc/host-setup/#35">Start the XenseVR PC Service</a>): <code>runService.sh</code>. With the service down, the app cannot connect.</li>
-<li>Run a Type-C cable straight from the headset to the collection PC; the headset assigns the PC an IP.</li>
-<li>Open XTac-UMI XR, tick "USB Network", tap "Connect", and Status changes to "Connected" (see <a href="#pico-toolkit-ui">The app's screen</a>). With USB Network ticked the app connects to the collection PC (<code>192.168.58.1</code>) by itself; no IP to enter.</li>
+<li>Start the service on the PC first with <code>runService.sh</code> (see <a href="../../pc/host-setup/#35">Start the XenseVR PC Service</a>); otherwise the app cannot connect.</li>
+<li>Cable the headset straight to the collection PC; the headset assigns the PC an IP.</li>
+<li>Open XTac-UMI XR, tick "USB Network" and tap "Connect": the app connects to the collection PC (<code>192.168.58.1</code>) by itself and Status changes to "Connected" (see <a href="#pico-toolkit-ui">The app's screen</a>).</li>
 </ol>
-<p>Over WiFi, put the headset and the collection PC on the same network, leave "USB Network" unticked, type the collection PC's IP into "PC IP", then tap "Connect".</p>
+<p>Over WiFi: put the headset and the collection PC on the same network, leave "USB Network" unticked, enter the PC's IP in "PC IP", then tap "Connect".</p>
 <div class="admonition warning">
 <p class="admonition-title">On the wired link, turn the collection PC's WiFi off</p>
-<p>The wired shared network conflicts with other networks on the PC (WiFi above all) through routing and interface contention, leaving the tracker unreachable or its pose unstable. Keep only the headset's shared network.</p>
+<p>The wired shared network contends with other networks on the PC (WiFi above all) for routing and interfaces, leaving the tracker unreachable or its pose unstable; keep only the headset's shared network.</p>
 </div>
 </div>
 </div>
 </div>
 <h2 id="pico-tracker-bind">Binding the motion tracker to the headset<a class="headerlink" href="#pico-tracker-bind" title="锚点链接">¶</a></h2>
-<p>On first use, or after swapping a tracker, the PICO Motion Tracker must be bound to this headset first. Until it is, it cannot be selected in tracking mode, and neither XTac-UMI XR nor the collection side will discover its SN.</p>
-<p>Before pairing, scan the QR code on the back of the tracker with your phone to get its full SN, and mount it on the gripper by odd-left / even-right (see <a href="../gripper/#sn">Serial numbers and side identification</a>). The six digits in the red box are the number shown in the "My trackers" list after pairing (e.g. <code>Tracker 150311</code>).</p>
+<p>On first use, or after swapping a tracker, bind the PICO Motion Tracker to this headset first; otherwise tracking mode cannot select it and neither XTac-UMI XR nor the collection side will discover its SN.</p>
+<p>Before pairing:</p>
+<ul>
+<li>Scan the QR code on the back of the tracker with your phone for its full SN, and mount it odd-left / even-right (see <a href="../gripper/#sn">Serial numbers and side identification</a>).</li>
+<li>The six digits in the red box are the number shown in the "My trackers" list after pairing (e.g. <code>Tracker 150311</code>).</li>
+</ul>
 <table>
 <thead>
 <tr>
@@ -2349,33 +2360,36 @@
 </table>
 <ol>
 <li>
-<p>Open the "Motion Tracker" app from the Library and tap the icon in the top-right corner of the main screen to enter the pairing screen.</p>
+<p>Open the "Motion Tracker" app from the Library and tap the top-right icon on the main screen to enter pairing.</p>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/pico4/tracker-pair-entry.webp" data-desc-position="bottom"><img alt="The top-right icon opens the pairing screen" src="../../../assets/pico4/tracker-pair-entry.webp" width="440"></a></p>
 </li>
 <li>
-<p>Hold the tracker's power button for about 6 seconds, until the indicator alternates blue and red. That is Bluetooth pairing mode.</p>
+<p>Hold the tracker's power button for about 6 seconds, until the indicator alternates blue and red (Bluetooth pairing mode).</p>
 </li>
-<li>Tap "Start pairing". The headset plays a tone when pairing succeeds, and the tracker appears in the "My trackers" list with its battery level and number (e.g. <code>Tracker 150399</code>), marked "Connected".</li>
+<li>Tap "Start pairing". The headset beeps on success and the tracker appears in "My trackers" with its battery level and number (e.g. <code>Tracker 150399</code>), marked "Connected".</li>
 <li>
-<p>One tracker per gripper, so bind both. The top of the list should read "2 paired".</p>
+<p>Bind one per gripper; the top of the list should read "2 paired".</p>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/pico4/tracker-bind.webp" data-desc-position="bottom"><img alt="Motion Tracker app: 2 paired" src="../../../assets/pico4/tracker-bind.webp" width="440"></a></p>
 </li>
 </ol>
 <div class="admonition warning">
 <p class="admonition-title">Power-on is a short press; only pairing needs the hold</p>
-<p>Solid blue is just powered on, not pairing mode, and the app will not find it. Everyday power-on is a short press until the blue light comes on; only first-time binding needs the ~6 s hold until it alternates blue and red.</p>
+<p>Everyday power-on is a short press until the blue light comes on; that is not pairing mode and the app will not find it. First-time binding needs the ~6 s hold until it alternates blue and red.</p>
 </div>
-<p>The binding is stored on the headset; everyday power cycles and app restarts do not need a re-bind. Re-bind after swapping trackers, moving to another headset or a factory reset, and likewise after pairing the wrong tracker: unpair from the ⓘ on the right of the list entry first, then bind the new one.</p>
+<p>The binding is stored on the headset and survives power cycles and app restarts. Re-bind after swapping trackers, moving to another headset, a factory reset or pairing the wrong one: unpair from the ⓘ on the right of the list entry, then bind the new one.</p>
 <div class="admonition warning">
 <p class="admonition-title">In standalone tracking mode the tracker must stay in the headset's view</p>
-<p>A tracker occluded for long by your body, the desk edge or the other hand loses tracking (pose jumps or a frozen pose). Do not let the tracker on top of the gripper leave the headset's view for long.</p>
+<p>A tracker occluded for long by your body, the desk edge or the other hand loses tracking (pose jumps or a frozen pose).</p>
 </div>
 <h3 id="pico-tracker-sn">Reading a tracker SN<a class="headerlink" href="#pico-tracker-sn" title="锚点链接">¶</a></h3>
-<p>The SN determines the side (the digit before the <code>G</code>, odd-left / even-right) and is also how the collection side identifies a tracker. It is not visible on the headset: the "Motion Tracker" app only shows a short number (e.g. <code>Tracker 150399</code>), and the SN on XTac-UMI XR's Network panel (e.g. <code>PA9410MGL…</code>) is the headset's own. The most direct source of the full SN (shaped like <code>PC2310MLL3200496G</code>) is the QR code on the back of the tracker.</p>
+<ul>
+<li><strong>Purpose</strong>: it sets the side (the digit before the <code>G</code>, odd-left / even-right) and is how the collection side identifies a tracker.</li>
+<li><strong>From the QR code</strong>: the full SN (shaped like <code>PC2310MLL3200496G</code>) comes from the QR code on the back of the tracker; the "Motion Tracker" app only shows a short number (e.g. <code>Tracker 150399</code>), and the SN on XTac-UMI XR's Network panel (e.g. <code>PA9410MGL…</code>) is the headset's own.</li>
+</ul>
 <div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1">Backpack Kit</label><label for="__tabbed_2_2">Developer Kit</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<p>The Backpack Kit relies on the SN from the QR code; there is no command-line interface. Once connected, open the console's "Live monitor" page: the pose view shows the left and right gripper poses, and shaking one gripper at a time confirms the sides are not swapped.</p>
+<p>The SN comes only from the QR code; there is no command-line interface. Once connected, shake one gripper at a time in the pose view of the console's "Live monitor" page to confirm the sides are not swapped.</p>
 </div>
 <div class="tabbed-block">
 <p>Read it with the PC Service's Python interface:</p>
@@ -2384,15 +2398,18 @@
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="n">xrt</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
 </span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="nb">print</span><span class="p">(</span><span class="n">xrt</span><span class="o">.</span><span class="n">get_motion_tracker_serial_numbers</span><span class="p">())</span>   <span class="c1"># e.g. ['PC2310MLL3200496G', ...]</span>
 </span></code></pre></div>
-<p>It only returns the trackers the service is currently receiving data from, so first: tracker bound and powered on → XTac-UMI XR <a href="#pico-toolkit-ui">"Connected"</a> → <a href="../../pc/host-setup/#35">PC Service</a> running on the host. Miss any one and you get an empty list. With the SN in hand you can pin it via <code>--robot.tracker_serial=&lt;SN&gt;</code> and skip <a href="../../pc/host-setup/#33">auto-matching</a>. Shake one gripper at a time to confirm which SN is which hand before writing it into your config.</p>
+<ul>
+<li><strong>Prerequisites</strong>: tracker bound and on → XTac-UMI XR <a href="#pico-toolkit-ui">"Connected"</a> → <a href="../../pc/host-setup/#35">PC Service</a> running on the host; miss one and you get an empty list.</li>
+<li><strong>Pin the SN</strong>: <code>--robot.tracker_serial=&lt;SN&gt;</code> skips <a href="../../pc/host-setup/#33">auto-matching</a>; shake one gripper at a time to confirm which SN is which hand before writing it into your config.</li>
+</ul>
 </div>
 </div>
 </div>
 <h2 id="pico-tracker">Tracking mode<a class="headerlink" href="#pico-tracker" title="锚点链接">¶</a></h2>
-<p>Once bound, open "Motion Tracking" on the headset, find "Tracking mode" in its settings, select "Standalone tracking" and tap "Confirm". The row should then read "Standalone tracking". The factory default "Full-body motion capture" wears trackers on the body to follow a human pose; "Standalone tracking" fixes a tracker to an object and follows that object's pose, which is how a gripper is used.</p>
+<p>Once bound, open "Motion Tracking" on the headset → settings → "Tracking mode", select "Standalone tracking" and tap "Confirm"; the row should read "Standalone tracking". The factory default "Full-body motion capture" follows a human body; "Standalone tracking" follows an object the tracker is fixed to.</p>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/pico4/tracker-mode2-pick.webp" data-desc-position="bottom"><img alt="Pick standalone tracking and confirm" src="../../../assets/pico4/tracker-mode2-pick.webp" width="480"></a></p>
 <h2 id="pico-toolkit-ui">The app's screen<a class="headerlink" href="#pico-toolkit-ui" title="锚点链接">¶</a></h2>
-<p>With the headset on, open XTac-UMI XR from the Library to reach the "XENSE XR Console". Connecting only involves these items on the left:</p>
+<p>With the headset on, open XTac-UMI XR from the Library to reach the "XENSE XR Console". Connecting only uses these items on the left:</p>
 <table>
 <thead>
 <tr>
@@ -2403,7 +2420,7 @@
 <tbody>
 <tr>
 <td>Tracker Mode</td>
-<td>Should read "Independent Tracking"; if not, go back to <a href="#pico-tracker">Tracking mode</a> and set it again</td>
+<td>Should read "Independent Tracking"; if not, redo <a href="#pico-tracker">Tracking mode</a></td>
 </tr>
 <tr>
 <td>Pico Hardware</td>
@@ -2411,53 +2428,68 @@
 </tr>
 <tr>
 <td>Status</td>
-<td>Until it reads "Connected", the collection side reads no pose at all</td>
+<td>Until "Connected", the collection side reads no pose</td>
 </tr>
 <tr>
 <td>USB Network</td>
-<td>Tick it for a Developer Kit wired connection: the app connects to the collection PC (<code>192.168.58.1</code>) by itself. <strong>Leave it unticked on the Backpack Kit</strong></td>
+<td>Developer Kit wired: tick it, and the app connects to the collection PC (<code>192.168.58.1</code>) by itself. <strong>Backpack Kit: leave unticked</strong></td>
 </tr>
 <tr>
 <td>PC IP</td>
-<td>Backpack Kit: leave empty (connects to the backpack at <code>192.168.100.1</code> by default); Developer Kit: the collection PC's IP over WiFi, not needed when wired</td>
+<td>Backpack Kit: leave empty (connects to the backpack at <code>192.168.100.1</code> by default); Developer Kit: the PC's IP over WiFi, empty when wired</td>
 </tr>
 <tr>
 <td>Connect / Disconnect</td>
-<td>Tap "Connect" to start connecting; once connected the button turns into "Disconnect"</td>
+<td>Tap "Connect"; once connected the button turns into "Disconnect"</td>
 </tr>
 </tbody>
 </table>
 <div class="tabbed-set tabbed-alternate" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio"><input id="__tabbed_3_2" name="__tabbed_3" type="radio"><div class="tabbed-labels"><label for="__tabbed_3_1">Not connected</label><label for="__tabbed_3_2">Connected</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<p>It opens with Status at "Not connected". On the Backpack Kit leave "USB Network" unticked and "PC IP" empty; on the Developer Kit tick "USB Network" for a wired connection. Then tap "Connect".</p>
+<p>On opening, Status reads "Not connected". Set the items as in the table, then tap "Connect".</p>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/pico4/xr-console-idle-en.webp" data-desc-position="bottom"><img alt="XTac-UMI XR console: not connected" src="../../../assets/pico4/xr-console-idle-en.webp" width="560"></a></p>
 </div>
 <div class="tabbed-block">
-<p>Once Status reads "Connected", you can start collecting.</p>
+<p>Once "Connected", you can start collecting.</p>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/pico4/xr-console-connected-en.webp" data-desc-position="bottom"><img alt="XTac-UMI XR console: connected" src="../../../assets/pico4/xr-console-connected-en.webp" width="560"></a></p>
 </div>
 </div>
 </div>
-<p>How the two editions differ when connecting:</p>
+<p>How the two editions differ:</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="4:2"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio"><input id="__tabbed_4_2" name="__tabbed_4" type="radio"><div class="tabbed-labels"><label for="__tabbed_4_1">Backpack Kit</label><label for="__tabbed_4_2">Developer Kit</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<p>In the panel, <strong>leave "USB Network" unticked</strong> and "PC IP" empty (it connects to the backpack at <code>192.168.100.1</code> by default), then tap "Connect"; the Backpack Kit only connects over the cable. When tracker accuracy degrades or the link to the backpack drops, an icon appears on the panel.</p>
-<p>Once connected, open the console's "Live monitor" page: the pose view should show the headset and both gripper poses. When the record button is not ready it states the reason: "Pico not ready" is followed by the headset-side cause (for example disconnected or timed out, pose data missing or timed out, clock synchronization missing or timed out), and "Tracker not ready" by the tracker's cause (for example out of view or stationary for over 5 seconds); both can appear together. If the headset disconnects while recording, that recording stops at once, see <a href="../../backpack/monitor-record/#pico-disconnect">Headset disconnects while recording</a>.</p>
+<ul>
+<li><strong>Panel icon</strong>: appears when tracker accuracy degrades or the link to the backpack drops.</li>
+<li><strong>Check the poses</strong>: the pose view on the console's "Live monitor" page should show the headset and both gripper poses.</li>
+<li><strong>Record button not ready</strong>: it states the reason; both can appear together:<ul>
+<li>"Pico not ready": headset disconnected or timed out, pose data or clock synchronization missing or timed out;</li>
+<li>"Tracker not ready": tracker out of view or stationary for over 5 seconds.</li>
+</ul>
+</li>
+<li><strong>Disconnect while recording</strong>: the recording stops at once, see <a href="../../backpack/monitor-record/#pico-disconnect">Headset disconnects while recording</a>.</li>
+</ul>
 </div>
 <div class="tabbed-block">
-<p>For a wired connection tick "USB Network" and the app connects to the collection PC (<code>192.168.58.1</code>) by itself; over WiFi leave it unticked, type the collection PC's IP into "PC IP", then tap "Connect".</p>
-<p>If it never connects, the cause is usually the <a href="#pico-network">network</a> not being up or the PC's WiFi still on. Once it reads "Connected", confirm on the host that a pose with an <code>sn</code> comes through, via <code>ConsoleDemo</code> in <code>/opt/apps/roboticsservice/</code> or <code>python -m lerobot.robots.taccap_gripper.check_tracker</code>. The headset saying it is connected and the host actually receiving data are two different things.</p>
+<ul>
+<li><strong>Never connects</strong>: usually the <a href="#pico-network">network</a> is not up or the PC's WiFi is still on.</li>
+<li><strong>Confirm the host gets data</strong>: "Connected" on the headset does not mean the host receives data; confirm a pose with an <code>sn</code> comes through via <code>ConsoleDemo</code> in <code>/opt/apps/roboticsservice/</code> or <code>python -m lerobot.robots.taccap_gripper.check_tracker</code>.</li>
+</ul>
 </div>
 </div>
 </div>
 <h2 id="pico-frame">Startup and frame alignment<a class="headerlink" href="#pico-frame" title="锚点链接">¶</a></h2>
-<p>Wear the headset and face straight towards the robot when you launch XTac-UMI XR, then <a href="#pico-toolkit-ui">connect in the app</a>. The moment it launches, the world frame's origin and orientation are frozen.</p>
-<p>The world frame's definition (axes, origin, freeze rule) and its diagram are in <a href="../coordinates/">Coordinate frames</a>; every pose in the dataset is referenced to it.</p>
+<ul>
+<li><strong>Launch</strong>: face straight towards the robot when you launch XTac-UMI XR, then <a href="#pico-toolkit-ui">connect in the app</a>; the world frame's origin and orientation freeze at launch.</li>
+<li><strong>World frame definition</strong>: axes, origin, freeze rule and diagram are in <a href="../coordinates/">Coordinate frames</a>; every pose in the dataset is referenced to it.</li>
+</ul>
 <div class="admonition danger">
 <p class="admonition-title">Face straight towards the robot at launch; do not restart XTac-UMI XR between episodes</p>
-<p>Facing straight ahead is what aligns world X with the robot's forward direction. Only the orientation matters; where you stand does not. After a restart of XTac-UMI XR the origin and orientation change, leaving poses inside one dataset referenced to different frames.</p>
+<ul>
+<li><strong>Face straight ahead</strong>: this aligns world X with the robot's forward direction; where you stand does not matter.</li>
+<li><strong>Do not restart</strong>: a restart changes the origin and orientation, leaving poses inside one dataset in different frames.</li>
+</ul>
 </div>
 
 

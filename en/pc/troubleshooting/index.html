@@ -2229,102 +2229,133 @@
 
 
 <h1 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="锚点链接">¶</a></h1>
-<p>This page is organised by symptom; each entry gives the cause and the fix. Most problems come down to serial permissions and ModemManager grabbing the port, so read "Serial permissions and device discovery" below first. Before touching anything, run the self-check in <a href="../">Quickstart</a>, then match against the symptoms.</p>
+<p>Most problems come down to serial permissions and ModemManager grabbing the port, so read "Serial permissions and device discovery" first. Before touching anything, run the self-check in <a href="../">Quickstart</a>.</p>
 <h2 id="logs">Attach the full log when reporting a problem<a class="headerlink" href="#logs" title="锚点链接">¶</a></h2>
-<p>The full log is at <code>~/xenselogs/session_&lt;timestamp&gt;.log</code>, one file per run. The screen keeps only the few lines worth watching; this file has everything, with the collection program, <code>xensesdk</code> and the video encoding library all in one place, plus timestamps for key presses. Attach this file rather than the last few lines off the screen. The <code>[session]</code> line at the top records the host, encoding and camera configuration; only the latest 15 files are kept. The directory can be changed with the <code>XENSE_LOG_DIR</code> environment variable, and how much is shown on screen with <code>XENSE_LOG_LEVEL</code>.</p>
+<p>The full log is at <code>~/xenselogs/session_&lt;timestamp&gt;.log</code>, one file per run; attach the whole file when reporting.</p>
+<ul>
+<li>It holds the collection program, <code>xensesdk</code> and encoding library logs plus key-press timestamps; the <code>[session]</code> line records the host, encoding and camera configuration.</li>
+<li>Only the latest 15 files are kept; change the directory with <code>XENSE_LOG_DIR</code> and the on-screen level with <code>XENSE_LOG_LEVEL</code>.</li>
+</ul>
 <h2 id="environment-and-installation">Environment and installation<a class="headerlink" href="#environment-and-installation" title="锚点链接">¶</a></h2>
 <details class="failure">
 <summary><code>setup_env.sh --install</code> stops immediately with <code>needs system packages that are not installed</code></summary>
-<p><strong>Cause:</strong> the hardware SDKs are compiled on the spot, and some of <code>build-essential</code> / <code>cmake</code> / <code>pkg-config</code> / <code>git</code> / <code>curl</code> are missing; the script stops deliberately before it starts.</p>
-<p><strong>Fix:</strong> install what the line it prints tells you to; the full list is in <a href="../install/#apt">System packages</a>. Two further checks only warn and do not block, but do not skip them either: <code>libusb-0.1.so.4</code> (provided by <code>libusb-dev</code>) is a runtime dependency of the cameras, so if it is missing nothing fails until <code>connect()</code>; check it first when a camera will not connect. <code>v4l-utils</code> provides <code>v4l2-ctl</code>, which you use to troubleshoot cameras.</p>
+<p><strong>Cause:</strong> the hardware SDKs are compiled on the spot, and some of <code>build-essential</code> / <code>cmake</code> / <code>pkg-config</code> / <code>git</code> / <code>curl</code> are missing.</p>
+<p><strong>Fix:</strong> install what the printed line says; the full list is in <a href="../install/#apt">System packages</a>. Two more checks only warn, but do not skip them:</p>
+<ul>
+<li><code>libusb-0.1.so.4</code> (provided by <code>libusb-dev</code>): a camera runtime dependency; if missing, nothing fails until <code>connect()</code>;</li>
+<li><code>v4l-utils</code>: provides <code>v4l2-ctl</code> for camera troubleshooting.</li>
+</ul>
 </details>
 <details class="failure">
 <summary><code>import xensesdk</code> / <code>import xensevr_pc_service_sdk</code> / <code>import xense.taccap</code> fails</summary>
-<p><strong>Cause:</strong> the environment is incomplete, or the <code>xense-taccap</code> environment is not active.</p>
+<p><strong>Cause:</strong> the environment is incomplete or not active.</p>
 <p><strong>Fix:</strong> run <code>mamba activate xense-taccap</code>, then re-run <code>./setup_env.sh --install</code>. To verify them one by one, see <a href="../install/#25">Verifying the install</a>.</p>
 </details>
 <details class="failure">
 <summary><code>torchcodec</code> fails to load / video encoding errors</summary>
-<p><strong>Cause:</strong> <code>torchcodec</code> does not match the current PyTorch version, or PyAV is not the required <code>15.1.0</code>.</p>
-<p><strong>Fix:</strong> re-run <code>setup_env.sh --install</code>, which corrects the versions automatically. Install a system FFmpeg with <code>libsvtav1</code> separately only if you need one.</p>
+<p><strong>Cause:</strong> <code>torchcodec</code> does not match PyTorch, or PyAV is not <code>15.1.0</code>.</p>
+<p><strong>Fix:</strong> re-run <code>setup_env.sh --install</code> to correct it; a system FFmpeg with <code>libsvtav1</code> is a separate install.</p>
 </details>
 <h2 id="hardware">Hardware faults<a class="headerlink" href="#hardware" title="锚点链接">¶</a></h2>
-<p>First note down the device serial number, how it is connected, the software error and a photo of the setup. Take anti-static precautions when powering on and off.</p>
+<p>Note the serial number, connection, error and a photo of the setup; take anti-static precautions when powering on and off.</p>
 <div class="admonition danger">
 <p class="admonition-title">Odd smell, smoke, noticeable heat, structural damage or a frayed cable</p>
 <p>Cut the power immediately and stop using the device.</p>
 </div>
 <details class="failure">
 <summary>The software does not detect the leader gripper / <code>lsusb</code> shows the wrong count</summary>
-<p><strong>Cause:</strong> the cable is not locked, the USB port makes poor contact, or the cable is faulty. The leader gripper must be powered only through the supplied Type-C cable (DC 5V/500mA); do not connect a 9V/12V fast-charge adapter.</p>
-<p><strong>Fix:</strong> <code>lsusb</code> should list all the UVC devices: 6 on a bimanual rig (4 <code>Xense Robotics ... GSPS01…</code> tactile + 2 <code>Sunplus ... XCA…</code> wrist cameras), 3 on a single arm. The last digit of the serial number is odd for left, even for right, see <a href="../../common/gripper/#sn">Serial numbers and left/right</a>. If the count is wrong, check the cable locking and the left/right wiring, restart the collection software, and try another Type-C port or cable. If they are listed but will not open, see the next section.</p>
+<p><strong>Cause:</strong> an unlocked cable, poor contact or a faulty cable. The leader gripper must be powered only through the supplied Type-C cable (DC 5V/500mA), never a 9V/12V fast charger.</p>
+<p><strong>Fix:</strong></p>
+<ul>
+<li><code>lsusb</code> should list 6 UVC devices on a bimanual rig (4 <code>Xense Robotics ... GSPS01…</code> tactile + 2 <code>Sunplus ... XCA…</code> wrist cameras), 3 on a single arm; for left/right see <a href="../../common/gripper/#sn">Serial numbers and left/right</a>.</li>
+<li>If the count is wrong, check locking and left/right wiring, restart the software, try another port or cable; if listed but not opening, see the next section.</li>
+</ul>
 </details>
 <details class="failure">
 <summary>Black image / no image</summary>
 <p><strong>Cause:</strong> the UVC device is not recognised, the sensor connection is faulty, or the wrong channel is selected.</p>
-<p><strong>Fix:</strong> confirm with <code>lsusb</code> that the device is recognised, restart the collection software, and power-cycle the device.</p>
+<p><strong>Fix:</strong> confirm recognition with <code>lsusb</code>, restart the software, power-cycle.</p>
 </details>
 <details class="failure">
 <summary>Spots on the image / blurry image</summary>
 <p><strong>Cause:</strong> dirt, foreign matter or damage on the sensor surface.</p>
-<p><strong>Fix:</strong> clean with a lint-free cloth, see <a href="../../common/maintenance/">Maintenance</a>. A scratched or dented sensor must be replaced.</p>
+<p><strong>Fix:</strong> clean with a lint-free cloth, see <a href="../../common/maintenance/">Maintenance</a>; a scratched or dented sensor must be replaced.</p>
 </details>
 <details class="failure">
 <summary>The follower gripper does not power on / communication errors</summary>
-<p><strong>Cause:</strong> the follower gripper takes power from the 24V adapter and communicates over Type-C. No power means the 24V is not connected or the adapter is faulty; communication errors mean the Type-C is not connected or not recognised, or the cable is being pulled by the robot's motion.</p>
-<p><strong>Fix:</strong> check the 24V adapter, the outlet, the power connector and its rating; connect the 24V first, then the Type-C, and lock it (see <a href="../../common/gripper/#power">Power and connection requirements</a>). Reconnect the Type-C and tighten the locking screws, route the cable away from the joints and the gripper's range of motion, and test at low speed before the first run.</p>
+<p><strong>Cause:</strong> no power means the 24V is not connected or the adapter is faulty; communication errors mean the Type-C is not connected, not recognised, or pulled by the robot's motion.</p>
+<p><strong>Fix:</strong></p>
+<ul>
+<li>check the 24V adapter, outlet, connector and rating;</li>
+<li>connect 24V first, then Type-C, and lock it (see <a href="../../common/gripper/#power">Power and connection requirements</a>);</li>
+<li>route the cable away from moving parts and test at low speed before the first run.</li>
+</ul>
 </details>
 <details class="failure">
 <summary>Binding the follower fails with <code>从爪固件版本过低,必须升级后才能使用本 SDK</code> / <code>Follower firmware too old</code></summary>
-<p><strong>Cause:</strong> the follower firmware is older than 1.2.5. Both <code>--robot.role=follower</code> and the SDK refuse older firmware (only from 1.2.5 does the closed zero sit on the mechanical stop); 1.2.5–1.2.10 connects but warns you to upgrade.</p>
-<p><strong>Fix:</strong> flash the follower image bundled with the SDK, then <strong>unplug the 24V power cable, wait about 2 seconds and plug it back in</strong> (the USB cable can stay connected):</p>
+<p><strong>Cause:</strong> follower firmware older than 1.2.5, which <code>--robot.role=follower</code> and the SDK both refuse (only from 1.2.5 does the closed zero sit on the mechanical stop); 1.2.5–1.2.10 connects but warns you to upgrade.</p>
+<p><strong>Fix:</strong> flash the follower image bundled with the SDK, then <strong>unplug the 24V power cable, wait about 2 seconds and plug it back in</strong> (USB can stay connected):</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>python<span class="w"> </span>third_party/taccap-gripper/python/examples/ota_update.py<span class="w"> </span>slave
 </span></code></pre></div>
-<p>That works only with a single follower plugged in. With several, pass the image file name plus a side or serial number: <code>ota_update.py tc-gu-01-slave-1.2.14.bin left</code> (use the name actually in <code>firmware/</code>), see <a href="../versions/#ota">Firmware OTA</a>.</p>
+<p>That works only with a single follower plugged in; with several, see the next entry or <a href="../versions/#ota">Firmware OTA</a>.</p>
 </details>
 <details class="failure">
 <summary>Flashing fails with <code>firmware file not found</code></summary>
-<p><strong>Cause:</strong> the first argument was taken as an image file name and no such file exists. Two usual ways in: <code>slave left</code> / <code>master left</code> / <code>slave &lt;SN&gt;</code> (a role followed by another argument is treated as a file name), and the unversioned <code>tc-gu-01-master.bin</code> / <code>tc-gu-01-slave.bin</code> (file names now carry the version).</p>
-<p><strong>Fix:</strong> normally just <code>ota_update.py --all</code>, which flashes every plugged-in gripper with the image for its role; with only one gripper of that role plugged in, <code>ota_update.py master</code> / <code>ota_update.py slave</code>. To pick one of several, pass a file name listed under <code>shipped images</code> in the error plus a side or serial, e.g. <code>ota_update.py tc-gu-01-slave-1.2.14.bin left</code>. The bare file name is enough; the script looks in the SDK's <code>firmware/</code>. See <a href="../versions/#ota">Firmware OTA</a>.</p>
+<p><strong>Cause:</strong> the first argument was taken as an image file name that does not exist:</p>
+<ul>
+<li><code>slave left</code> / <code>master left</code> / <code>slave &lt;SN&gt;</code>: a role followed by another argument is treated as a file name;</li>
+<li>the unversioned <code>tc-gu-01-master.bin</code> / <code>tc-gu-01-slave.bin</code>.</li>
+</ul>
+<p><strong>Fix:</strong></p>
+<ul>
+<li>normally <code>ota_update.py --all</code>, flashing each gripper by role;</li>
+<li>with one gripper of that role plugged in, <code>ota_update.py master</code> / <code>ota_update.py slave</code>;</li>
+<li>to pick one, pass a file name listed under <code>shipped images</code> in the error plus a side or serial, e.g. <code>ota_update.py tc-gu-01-slave-1.2.14.bin left</code> (use the actual name in <code>firmware/</code>).</li>
+</ul>
+<p>See <a href="../versions/#ota">Firmware OTA</a>.</p>
 </details>
 <h2 id="serial-permissions-and-device-discovery">Serial permissions and device discovery<a class="headerlink" href="#serial-permissions-and-device-discovery" title="锚点链接">¶</a></h2>
 <details class="failure">
 <summary><code>connect()</code> reports <code>No leader gripper discovered for the &lt;side&gt; side.</code></summary>
-<p><strong>Cause (most common):</strong> the user is not in the <code>dialout</code> group, so the SDK can list the grippers but cannot open the serial port to read the firmware SN, leaving <code>role=Unknown</code> / an empty <code>firmware_sn</code>. Underneath it is <code>IoError: SerialBus: open(...): Permission denied</code>.</p>
-<p><strong>Fix:</strong> <code>sudo usermod -aG dialout "$USER"</code>, then you must log out and back in (or <code>newgrp dialout</code>) and re-plug the gripper. Without a fresh login the error stays the same. Details in <a href="../host-setup/#31">Serial permissions</a>.</p>
+<p><strong>Cause (most common):</strong> the user is not in the <code>dialout</code> group and cannot open the serial port to read the SN, leaving <code>role=Unknown</code> / an empty <code>firmware_sn</code>. Underneath it is <code>IoError: SerialBus: open(...): Permission denied</code>.</p>
+<p><strong>Fix:</strong> <code>sudo usermod -aG dialout "$USER"</code>, log out and back in (or <code>newgrp dialout</code>), then re-plug the gripper, see <a href="../host-setup/#31">Serial permissions</a>.</p>
 </details>
 <details class="failure">
 <summary><code>Device or resource busy</code> (starting immediately after a hot-plug; <code>/dev/ttyACM*</code> reporting busy inside the container is the same thing)</summary>
-<p><strong>Cause:</strong> ModemManager probes the CH343 serial port with AT commands on every hot-plug and holds it for a few seconds. The classic shape: unplug, move to another port, restart immediately, and get busy. <code>brltty</code>, if installed, grabs it the same way. The container is no different, and the rule has to be installed on the host. The other cause is that the same gripper is held by another program (the serial port is opened exclusively), for example a previous recording, calibration or example script that has not exited.</p>
-<p><strong>Fix:</strong> first close any other program using that gripper. For ModemManager: temporarily, wait about 3 s after plugging in. Permanently, add a udev rule that makes ModemManager ignore <code>1a86</code> devices (<code>install_customer.sh</code> on the Docker path has already installed it once). The rule and the verification commands are in <a href="../host-setup/#32">Stopping ModemManager from grabbing the port</a>; re-plug the gripper after installing it.</p>
+<p><strong>Cause:</strong></p>
+<ul>
+<li>ModemManager probes the CH343 serial port with AT commands for a few seconds on every hot-plug; <code>brltty</code> grabs it the same way. For containers the rule goes on the host.</li>
+<li>Another program holds the gripper's serial port exclusively, e.g. a previous recording, calibration or example script that has not exited.</li>
+</ul>
+<p><strong>Fix:</strong> close the other program first. For ModemManager: temporarily, wait about 3 s after plugging in; permanently, add a udev rule ignoring <code>1a86</code> devices (<code>install_customer.sh</code> on the Docker path already installs it). Rule and verification are in <a href="../host-setup/#32">Stopping ModemManager from grabbing the port</a>; re-plug the gripper afterwards.</p>
 </details>
 <details class="failure">
 <summary><code>firmware_sn</code> is still empty after fixing permissions / <code>role=Unknown</code></summary>
-<p><strong>Cause:</strong> the SN was not burned in, the serial read is still failing, firmware communication is faulty, or there is a device-side configuration problem. An empty SN alone is not enough to infer the firmware version.</p>
-<p><strong>Fix:</strong> save the complete low-level error, retest with a different cable and port; if it is still empty, contact the device or firmware team to check the SN programming and the communication state.</p>
+<p><strong>Cause:</strong> the SN was not burned in, the serial read still fails, or firmware communication or device configuration is faulty; an empty SN alone does not tell you the firmware version.</p>
+<p><strong>Fix:</strong> save the low-level error, retest with another cable and port; if still empty, contact the device or firmware team.</p>
 </details>
 <details class="failure">
 <summary>The error names a specific hub / serial number</summary>
-<p><strong>Cause:</strong> the assembly does not match the "odd is left, even is right" rule: a non-conforming serial number, the wrong count on a side, both fingertip tactile sensors mapping to the same side, or a tactile hub with no matching gripper.</p>
-<p><strong>Fix:</strong> work through the assembly and cabling of the physical device or hub the error names. The rules are in <a href="../host-setup/#33">Device discovery</a>.</p>
+<p><strong>Cause:</strong> the assembly breaks the "odd is left, even is right" rule: a non-conforming serial, the wrong count on a side, both tactile sensors mapping to one side, or a hub with no matching gripper.</p>
+<p><strong>Fix:</strong> check the assembly and cabling of the device or hub the error names; rules in <a href="../host-setup/#33">Device discovery</a>.</p>
 </details>
 <details class="failure">
 <summary>The wrist camera / visuotactile sensor will not open, <code>video ... busy</code></summary>
-<p><strong>Cause:</strong> the camera is held by an external camera service, or the user is not in the <code>video</code> group.</p>
+<p><strong>Cause:</strong> an external service holds the camera, or the user is not in the <code>video</code> group.</p>
 <p><strong>Fix:</strong> check the camera service; <code>sudo usermod -aG video "$USER"</code>, effective after logging back in. If a different camera fails each time, see USB bandwidth below.</p>
 </details>
 <h3 id="usb-bandwidth">Not enough USB bandwidth<a class="headerlink" href="#usb-bandwidth" title="锚点链接">¶</a></h3>
 <div class="admonition warning">
 <p class="admonition-title">On a bimanual rig, measure this on day one, do not wait for a camera to fail</p>
-<p>This is the most common failure on a bimanual rig in the field, and it is decided the moment you plug the cables in, by which physical ports the two grippers go into. How to work out the bandwidth budget and how to read <code>lsusb -t</code> are in <a href="../host-setup/#usb-budget">USB bandwidth budget</a>; this section only covers diagnosis and what to do.</p>
+<p>The most common bimanual failure, decided by which physical ports the grippers use. The budget and how to read <code>lsusb -t</code> are in <a href="../host-setup/#usb-budget">USB bandwidth budget</a>.</p>
 </div>
 <details class="failure">
 <summary>One camera will not open (<code>Cannot open camera N</code>), and it is a different one each time</summary>
-<p><strong>Cause:</strong> not enough USB bandwidth; nothing is broken. Every UVC camera exclusively reserves a share of isochronous bandwidth when it opens, and once the bus budget (about 384 Mbit/s) is exceeded, whichever camera opened last fails. Which one that is differs every time, which is why the fault appears to wander. Using a blue USB 3 port does not help: the tactile sensors and wrist cameras still land on the same controller's USB 2.0 bus.</p>
-<p><strong>First confirm it is bandwidth:</strong> with <code>lsusb -t</code>, count how many cameras hang off each <code>480M</code> bus; six on one bus on a bimanual rig is very likely over. Watch the kernel log in another terminal while starting up:</p>
+<p><strong>Cause:</strong> not enough USB bandwidth. Every UVC camera reserves isochronous bandwidth when it opens; past the bus budget (about 384 Mbit/s) the last one to open fails, so the fault wanders.</p>
+<p><strong>Confirm:</strong> with <code>lsusb -t</code>, count the cameras on each <code>480M</code> bus; six on one bus is very likely over. Watch the kernel log in another terminal while starting:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sudo<span class="w"> </span>dmesg<span class="w"> </span>-w<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>--line-buffered<span class="w"> </span>-iE<span class="w"> </span><span class="s2">"uvcvideo|bandwidth|disconnect"</span>
 </span></code></pre></div>
-<p><code>--line-buffered</code> is not optional; without it <code>grep</code> keeps buffering and looks like it has hung. If <code>Not enough bandwidth for altsetting N</code> is printed the moment a camera fails to open, that is the diagnosis. You can also run the two halves separately:</p>
+<p><code>--line-buffered</code> is not optional, or <code>grep</code> buffers and looks hung. <code>Not enough bandwidth for altsetting N</code> is the diagnosis. You can also run the two halves separately:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># tactile only (wrist cameras off)</span>
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>lerobot-teleoperate<span class="w"> </span>--robot.type<span class="o">=</span>bi_taccap_gripper<span class="w"> </span>--robot.id<span class="o">=</span><span class="m">0</span><span class="w"> </span><span class="se">\</span>
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span>--robot.left_enable_wrist_camera<span class="o">=</span><span class="nb">false</span><span class="w"> </span>--robot.right_enable_wrist_camera<span class="o">=</span><span class="nb">false</span><span class="w"> </span><span class="se">\</span>
@@ -2335,12 +2366,17 @@
 </span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">    </span>--robot.enable_tactile<span class="o">=</span><span class="nb">false</span><span class="w"> </span><span class="se">\</span>
 </span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">    </span>--robot.enable_tracker<span class="o">=</span><span class="nb">false</span><span class="w"> </span>--fps<span class="o">=</span><span class="m">30</span><span class="w"> </span>--display_data<span class="o">=</span><span class="nb">true</span>
 </span></code></pre></div>
-<p>If each half works and the combination fails, it is bandwidth. <code>enable_tactile=false</code> is only for this diagnostic; never record data with it.</p>
-<p><strong>Fix:</strong> first confirm the wrist cameras were not switched from the default <code>MJPG</code> to <code>YUYV</code> (<code>--robot.wrist_camera_fourcc</code>); <code>MJPG</code> is the default precisely to save bandwidth. If it is still over budget, the only fix is to add a USB host controller, not a hub (a Thunderbolt / USB4 dock brings its own xHCI controller, an ordinary hub does not). After moving one gripper onto it, <code>lsusb -t</code> should show one more <code>480M</code> root_hub line. Until the second controller is in place you can record with the wrist cameras off; the dataset will then have no <code>{side}_wrist</code> key. Decide this before you start recording, not half with and half without.</p>
+<p>Each half working but the combination failing means bandwidth; <code>enable_tactile=false</code> is for this diagnostic only, never record with it.</p>
+<p><strong>Fix:</strong></p>
+<ul>
+<li>confirm the wrist cameras were not switched from the default <code>MJPG</code> (chosen to save bandwidth) to <code>YUYV</code> (<code>--robot.wrist_camera_fourcc</code>);</li>
+<li>if still over, add a USB host controller, not a hub (a Thunderbolt / USB4 dock brings its own xHCI controller); after moving one gripper over, <code>lsusb -t</code> should show one more <code>480M</code> root_hub;</li>
+<li>until then you can record without wrist cameras (no <code>{side}_wrist</code> key); decide before recording, not half with and half without.</li>
+</ul>
 </details>
 <details class="question">
 <summary>How far over budget is it, exactly?</summary>
-<p>Measure on the machine in front of you. Measured on one bimanual host with a single <code>480M</code> bus:</p>
+<p>Measured on one bimanual host with a single <code>480M</code> bus:</p>
 <table>
 <thead>
 <tr>
@@ -2367,164 +2403,185 @@
 </tr>
 </tbody>
 </table>
-<p><code>altsetting 6</code> is 944 bytes per microframe, i.e. 60.4 Mbit/s per tactile sensor, while 320x240 YUYV@30 is only about 37 Mbit/s of actual data; the wrist cameras request more still. 362 against about 384 is right on the edge. To read the numbers yourself:</p>
+<p><code>altsetting 6</code> is 944 bytes per microframe, i.e. 60.4 Mbit/s per tactile sensor (320x240 YUYV@30 is only about 37 Mbit/s of actual data); the wrist cameras request more. To read the numbers yourself:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># I:* is the active altsetting; the class name is lower-case (video) in this file</span>
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>sudo<span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s2">"^(T:|I:\*.*video|E:.*Isoc)"</span><span class="w"> </span>/sys/kernel/debug/usb/devices
 </span></code></pre></div>
-<p>Each video interface's <code>Alt=</code> and the <code>MxPS=</code> on its <code>E:</code> line give the reservation (<code>MxPS × 8000 × 8</code> bit/s); sum per bus and compare against about 384 Mbit/s. How much a device requests is set by the firmware's UVC descriptors, and the collection program cannot change it.</p>
+<p>Each video interface's <code>Alt=</code> and the <code>MxPS=</code> on its <code>E:</code> line give the reservation (<code>MxPS × 8000 × 8</code> bit/s); sum per bus and compare against about 384 Mbit/s. The request is set by the firmware's UVC descriptors; the collection program cannot change it.</p>
 </details>
 <details class="question">
 <summary>Does another USB port, a lower <code>tactile_fps</code>, or <code>uvcvideo quirks=128</code> help?</summary>
-<p>None of them. Moving to a different physical USB port: every port on the same controller shares one USB 2.0 bus, so to change anything you have to move to a different controller. Lowering <code>--robot.tactile_fps</code>: it only throttles the Python-side read, the sensor SDK takes no fps argument, and the stream on the USB bus is unchanged. <code>uvcvideo quirks=128</code> (<code>UVC_QUIRK_FIX_BANDWIDTH</code>): measured to have no effect; it recomputes the reservation as <code>width × height × bpp</code>, which gives it nothing to work with on the MJPEG wrist cameras, the biggest consumers.</p>
+<p>None of them:</p>
+<ul>
+<li>another physical USB port (blue USB 3 ports included): every port on one controller shares one USB 2.0 bus, so move to a different controller;</li>
+<li>lowering <code>--robot.tactile_fps</code>: it only throttles the Python-side read, the USB stream is unchanged;</li>
+<li><code>uvcvideo quirks=128</code> (<code>UVC_QUIRK_FIX_BANDWIDTH</code>): measured to have no effect; it recomputes as <code>width × height × bpp</code>, which misses the MJPEG wrist cameras, the biggest consumers.</li>
+</ul>
 </details>
 <h2 id="pico4-tracker-and-pose">Pico4 tracker and pose<a class="headerlink" href="#pico4-tracker-and-pose" title="锚点链接">¶</a></h2>
 <details class="failure">
 <summary>No pose / the tracker will not connect / the pose is unstable</summary>
-<p><strong>Cause:</strong> the computer's WiFi conflicting with the Pico4 Ultra Enterprise wired network sharing (most common); or XenseVR PC Service or XTac-UMI XR not started, or the tracker unpaired or out of charge.</p>
-<p><strong>Fix:</strong> turn the data-collection host's WiFi off first and leave only the wired network sharing (see <a href="../../common/pico4/#pico-network">Network connection</a>); then walk through the <a href="../quickstart/#power-on">Power-on sequence</a> item by item; start the service with <code>/opt/apps/roboticsservice/runService.sh</code>; if needed, self-check with <code>python -m lerobot.robots.taccap_gripper.check_tracker</code>.</p>
+<p><strong>Cause:</strong> most commonly the computer's WiFi conflicting with the Pico4 Ultra Enterprise wired network sharing; or the service or XTac-UMI XR not started, or the tracker unpaired or out of charge.</p>
+<p><strong>Fix:</strong> turn the computer's WiFi off (see <a href="../../common/pico4/#pico-network">Network connection</a>); walk through the <a href="../quickstart/#power-on">Power-on sequence</a>; start the service with <code>/opt/apps/roboticsservice/runService.sh</code>; if needed, self-check with <code>python -m lerobot.robots.taccap_gripper.check_tracker</code>.</p>
 </details>
 <details class="failure">
 <summary>The pose reference frame drifts between episodes</summary>
-<p><strong>Cause:</strong> XTac-UMI XR was restarted between episodes, which reset the world origin.</p>
-<p><strong>Fix:</strong> do not restart XTac-UMI XR between episodes. If it was restarted, treat the data recorded afterwards as a new dataset. See <a href="../../common/pico4/#pico-frame">Frame alignment</a>.</p>
+<p><strong>Cause:</strong> XTac-UMI XR was restarted between episodes, resetting the world origin.</p>
+<p><strong>Fix:</strong> do not restart it between episodes; treat data recorded after a restart as a new dataset, see <a href="../../common/pico4/#pico-frame">Frame alignment</a>.</p>
 </details>
 <details class="failure">
 <summary>The pose cuts out between episodes / the headset blanks its screen by itself</summary>
-<p><strong>Cause:</strong> screen blanking and system sleep were not disabled on the headset, so after suspending, XTac-UMI XR was paused or killed; restarting it then causes the drift described in the previous entry.</p>
-<p><strong>Fix:</strong> Enterprise settings → System settings → Power policy. Set "System sleep" to "Never" first, then set "Screen off" to "Never" (in the other order, blanking gets clamped back to a finite value by the sleep timeout). See <a href="../../common/pico4/#pico-system">System settings</a>.</p>
+<p><strong>Cause:</strong> screen blanking and sleep were left on, so after suspending, XTac-UMI XR was paused or killed.</p>
+<p><strong>Fix:</strong> Enterprise settings → System settings → Power policy: set "System sleep" and then "Screen off" to "Never" (in the other order, blanking gets clamped back to a finite value), see <a href="../../common/pico4/#pico-system">System settings</a>.</p>
 </details>
 <details class="failure">
 <summary>The tracker is not selectable in tracking mode / PC Service does not discover that SN / the pairing screen cannot find the tracker</summary>
-<p><strong>Cause:</strong> the tracker is not bound to this headset (a new unit, a swapped tracker or headset, or a factory reset); if pairing cannot find it, the tracker is not in Bluetooth pairing mode (steady blue light).</p>
-<p><strong>Fix:</strong> open the "Motion Tracker" app and complete the binding, for both trackers. Before pairing, hold the power button for about 6 seconds until the indicator alternates blue and red, then tap "Start pairing". See <a href="../../common/pico4/#pico-tracker-bind">Binding the trackers</a>.</p>
+<p><strong>Cause:</strong> the tracker is not bound to this headset (a new unit, a swapped device, or a factory reset); if pairing cannot find it, it is not in pairing mode (steady blue light).</p>
+<p><strong>Fix:</strong> bind both trackers in the "Motion Tracker" app; before pairing, hold the power button for about 6 seconds until it alternates blue and red, then tap "Start pairing". See <a href="../../common/pico4/#pico-tracker-bind">Binding the trackers</a>.</p>
 </details>
 <details class="failure">
 <summary>XTac-UMI XR will not connect (Not connected or Connection failed)</summary>
-<p><strong>Cause:</strong> usually not the app at all; the wired network sharing is not connected properly, or the data-collection host's WiFi is still on.</p>
-<p><strong>Fix:</strong> when wired, make sure "USB network" is ticked; over WiFi, make sure "PC IP" holds the data-collection host's IP; then tap "Connect". If that does not help, redo the <a href="../../common/pico4/#pico-network">Network connection</a> and confirm the computer's WiFi is off. The screen is shown in <a href="../../common/pico4/#pico-toolkit-ui">The app's interface</a>.</p>
+<p><strong>Cause:</strong> usually the wired network is not connected properly, or the computer's WiFi is still on.</p>
+<p><strong>Fix:</strong> when wired, tick "USB network"; over WiFi, put the host's IP in "PC IP"; then tap "Connect". Otherwise redo the <a href="../../common/pico4/#pico-network">Network connection</a>; the screen is in <a href="../../common/pico4/#pico-toolkit-ui">The app's interface</a>.</p>
 </details>
 <details class="failure">
 <summary>The headset says \"Connected\" but the PC receives no pose at all</summary>
-<p><strong>Cause:</strong> "Connected" only means the app reached the service; the host-side service is not running, or the tracker is off or unbound.</p>
-<p><strong>Fix:</strong> confirm the host has started <a href="../host-setup/#35">XenseVR PC Service</a>; then use <code>ConsoleDemo</code> in <code>/opt/apps/roboticsservice/</code> or <code>python -m lerobot.robots.taccap_gripper.check_tracker</code> to see whether a pose with an <code>sn</code> comes through. If not, go back to <a href="../../common/pico4/#pico-tracker-bind">binding</a> and confirm both trackers are powered on and show "connected".</p>
+<p><strong>Cause:</strong> "Connected" only means the app reached the service; the host service may not be running, or the tracker is off or unbound.</p>
+<p><strong>Fix:</strong> start <a href="../host-setup/#35">XenseVR PC Service</a>; use <code>ConsoleDemo</code> in <code>/opt/apps/roboticsservice/</code> or <code>python -m lerobot.robots.taccap_gripper.check_tracker</code> to see whether a pose with an <code>sn</code> comes through. If not, go back to <a href="../../common/pico4/#pico-tracker-bind">binding</a> and confirm both trackers are on and "connected".</p>
 </details>
 <details class="failure">
 <summary>The tracker is matched to the wrong side / PC Service enumeration is unstable</summary>
-<p><strong>Cause:</strong> a non-conforming serial number, or jitter in enumeration.</p>
-<p><strong>Fix:</strong> pin it literally with <code>--robot.tracker_serial=&lt;SN&gt;</code> (no enumeration, no validation); or check the digit before the trailing letter <code>G</code> in the serial number, odd is left, even is right, see <a href="../../common/pico4/#pico-tracker-sn">Tracker serial numbers</a>.</p>
+<p><strong>Cause:</strong> a non-conforming serial number or enumeration jitter.</p>
+<p><strong>Fix:</strong> pin it with <code>--robot.tracker_serial=&lt;SN&gt;</code> (no enumeration, no validation); or check the digit before the trailing <code>G</code> in the serial, odd is left, even is right, see <a href="../../common/pico4/#pico-tracker-sn">Tracker serial numbers</a>.</p>
 </details>
 <h2 id="head-camera">Head camera<a class="headerlink" href="#head-camera" title="锚点链接">¶</a></h2>
 <details class="failure">
 <summary>Fails with <code>... always records the headset ...</code> or <code>... does not record the headset ...</code></summary>
-<p><strong>Cause:</strong> a bimanual command passes <code>--robot.enable_head_camera</code> and it contradicts <code>--robot.type</code>. The type decides whether the headset is included: <code>bi_taccap_gripper</code> without it, <code>xtac_umi_g1</code> with it.</p>
+<p><strong>Cause:</strong> a bimanual command passes <code>--robot.enable_head_camera</code>, contradicting <code>--robot.type</code>; the type decides whether the headset is included.</p>
 <p><strong>Fix:</strong> drop <code>--robot.enable_head_camera</code>; to record the headset use <code>--robot.type=xtac_umi_g1</code>, otherwise <code>--robot.type=bi_taccap_gripper</code>. See <a href="../recording/#56">Head camera</a>.</p>
 </details>
 <details class="failure">
 <summary>Recording the headset hangs waiting for the first frame</summary>
-<p><strong>Cause:</strong> the frames are relayed by PC Service, and any broken link in that chain means no frames: a service older than v0.2.0 (v0.1.0 does not relay head camera frames), or the headset app is not streaming.</p>
+<p><strong>Cause:</strong> frames are relayed by PC Service: a service older than v0.2.0 (v0.1.0 does not relay head camera frames), or the headset app is not streaming.</p>
 <p><strong>Fix:</strong> check in this order:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># 1) the service deb version: needs ≥ 0.2.0</span>
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>dpkg<span class="w"> </span>-s<span class="w"> </span>xensevr-pc-service<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s1">'^(Version|Architecture):'</span>
 </span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="c1"># 2) does it expose the camera interface</span>
 </span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"import xensevr_pc_service_sdk as xrt; print(hasattr(xrt, 'has_pico_camera_frame'))"</span>
 </span></code></pre></div>
-<p>Then confirm the headset is connected to PC Service and the app is streaming (the camera and the tracker share one connection). Prerequisites are in <a href="../recording/#56">Head camera</a>.</p>
+<p>Then confirm the headset is connected to PC Service and the app is streaming (it shares one connection with the tracker). Prerequisites are in <a href="../recording/#56">Head camera</a>.</p>
 </details>
 <details class="failure">
 <summary><code>AttributeError: module 'xensevr_pc_service_sdk' has no attribute 'has_pico_camera_frame'</code></summary>
-<p><strong>Cause:</strong> an older interface is being loaded (the camera interface arrived with v0.2.0). This module links the C SDK taken from the installed <code>.deb</code>, so start by checking which version is installed: <code>dpkg -s xensevr-pc-service | grep -E '^(Status|Version):'</code>.</p>
-<p><strong>Fix:</strong> update to the release tag (see <a href="../versions/#repo-update">Repo and submodule update</a>) and re-run <code>./setup_env.sh --install</code>, which upgrades the <code>.deb</code> to the baseline version as well. If it is still <code>False</code>, use <code>python -c "import xensevr_pc_service_sdk as x; print(x.__file__)"</code> to see which copy is being loaded. If <code>Status</code> is not <code>install ok installed</code> (for example it was removed with <code>dpkg -r</code>, leaving <code>deinstall ok config-files</code>), reinstall the same way.</p>
+<p><strong>Cause:</strong> an older interface is loaded (the camera interface arrived with v0.2.0); the module links the <code>.deb</code>'s C SDK, so check the version first: <code>dpkg -s xensevr-pc-service | grep -E '^(Status|Version):'</code>.</p>
+<p><strong>Fix:</strong></p>
+<ul>
+<li>update to the release tag (see <a href="../versions/#repo-update">Repo and submodule update</a>) and re-run <code>./setup_env.sh --install</code>, which also upgrades the <code>.deb</code> to the baseline;</li>
+<li>if still <code>False</code>, use <code>python -c "import xensevr_pc_service_sdk as x; print(x.__file__)"</code> to see which copy loads;</li>
+<li>if <code>Status</code> is not <code>install ok installed</code> (e.g. removed with <code>dpkg -r</code>, leaving <code>deinstall ok config-files</code>), reinstall the same way.</li>
+</ul>
 </details>
 <details class="failure">
 <summary>Repeated left/right eye skew warnings in the log</summary>
-<p><strong>Cause:</strong> the two eyes arrive as two independent messages, and their timestamps differ by more than <code>--robot.head_camera_pair_max_skew_ms</code> (20 ms by default). Usually a heavily loaded host, or jitter on the link between the headset and the PC.</p>
-<p><strong>Fix:</strong> the warning does not interrupt recording, but for those frames the two eyes may not be in sync. Reduce host load first (fewer cameras, or <code>--robot.head_camera_eyes=left</code> to record one eye only); for link problems work through <a href="../../common/pico4/#pico-network">Network connection</a>; only once you are sure it is just jitter, relax the threshold moderately.</p>
+<p><strong>Cause:</strong> the two eyes' independent messages differ in timestamp by more than <code>--robot.head_camera_pair_max_skew_ms</code> (20 ms by default); usually a loaded host or link jitter.</p>
+<p><strong>Fix:</strong> the warning does not interrupt recording, but those frames may be out of sync.</p>
+<ul>
+<li>reduce load (fewer cameras, or <code>--robot.head_camera_eyes=left</code> for one eye);</li>
+<li>for the link, see <a href="../../common/pico4/#pico-network">Network connection</a>;</li>
+<li>only once sure it is just jitter, relax the threshold.</li>
+</ul>
 </details>
 <details class="failure">
 <summary><code>head_camera_width/_height</code> reports an unsupported size, or the size is valid but connect still reports a first-frame size mismatch</summary>
-<p><strong>Cause:</strong> the head camera only accepts <code>640x480</code> (default), <code>1024x768</code> and <code>1280x960</code> (all 4:3); anything else is an error. If the size is valid but still mismatches, the size on the command line does not match the resolution the headset actually outputs.</p>
-<p><strong>Fix:</strong> XTac-UMI XR defaults to 640x480 per eye, so passing neither flag matches it. If the headset has been set to another resolution, contact <a href="../../common/reference/#support">technical support</a> to confirm the headset's setting, then set both flags to the same value, see <a href="../recording/#56">Head camera</a>. Changing the size means a different set of data: episodes from before and after the change cannot be mixed.</p>
+<p><strong>Cause:</strong> only <code>640x480</code> (default), <code>1024x768</code> and <code>1280x960</code> (all 4:3) are accepted; a valid size that still mismatches differs from the headset's actual output.</p>
+<p><strong>Fix:</strong> the default is 640x480 per eye, so pass neither flag; if the headset resolution was changed, confirm it with <a href="../../common/reference/#support">technical support</a> and set both flags to the same value, see <a href="../recording/#56">Head camera</a>. Episodes from before and after a size change cannot be mixed.</p>
 </details>
 <h2 id="collecting-and-recording">Collecting and recording<a class="headerlink" href="#collecting-and-recording" title="锚点链接">¶</a></h2>
 <details class="failure">
 <summary>The command exits the moment you run it: <code>--robot.id is required</code></summary>
-<p><strong>Cause:</strong> <code>--robot.id</code> is the required station number, and it is checked while parsing the command line.</p>
-<p><strong>Fix:</strong> add the station number; a bare number is enough (<code>0</code> / <code>1</code>…, one per rig, and a bimanual rig counts as one; the prefix is filled in from <code>--robot.type</code>, giving <code>taccap_0</code> / <code>bi_taccap_0</code> / <code>xtac_umi_g1_0</code>), for example <code>lerobot-record --robot.type=bi_taccap_gripper --robot.id=0 ...</code>. It names the station, not the hardware, so swapping a gripper does not change it; the devices' identity is recorded in the dataset's <code>meta/hardware.json</code>, see <a href="../recording/#robot-id"><code>--robot.id</code> and the hardware manifest</a>.</p>
+<p><strong>Cause:</strong> <code>--robot.id</code> is the required station number.</p>
+<p><strong>Fix:</strong> add it (<code>0</code> / <code>1</code>…; the prefix from <code>--robot.type</code> gives <code>taccap_0</code> / <code>bi_taccap_0</code> / <code>xtac_umi_g1_0</code>), e.g. <code>lerobot-record --robot.type=bi_taccap_gripper --robot.id=0 ...</code>. It names the station, not the hardware, so swapping a gripper does not change it; device identity is in <code>meta/hardware.json</code>, see <a href="../recording/#robot-id"><code>--robot.id</code> and the hardware manifest</a>.</p>
 </details>
 <details class="failure">
 <summary>On resume, the hardware does not match what the dataset recorded</summary>
-<p><strong>Cause:</strong> the gripper or tactile sensors were swapped when resuming with <code>--resume</code>. This is not an error: the manifest opens a new epoch at the current episode count and logs <code>... recorded as a new epoch in .../hardware.json</code>. Only a <code>--robot.type</code> mismatch keeps the original file with a warning.</p>
-<p><strong>Fix:</strong> if the change was intentional, carry on; if not (a gripper plugged into the wrong place, say), stop and put the original device back.</p>
+<p><strong>Cause:</strong> the gripper or tactile sensors were swapped under <code>--resume</code>. This is not an error: the manifest opens a new epoch at the current episode count and logs <code>... recorded as a new epoch in .../hardware.json</code>; only a <code>--robot.type</code> mismatch keeps the original file with a warning.</p>
+<p><strong>Fix:</strong> if intentional, carry on; if not (a wrong gripper plugged in, say), stop and put the original back.</p>
 </details>
 <details class="failure">
 <summary>Resume fails with <code>refusing to resume it</code></summary>
-<p><strong>Cause:</strong> <code>--robot.id</code> differs from the station recorded in the dataset. One dataset belongs to one station, and this is refused before any device is connected.</p>
-<p><strong>Fix:</strong> resume on the original station with the original <code>--robot.id</code>, or record into a new <code>--dataset.repo_id</code>.</p>
+<p><strong>Cause:</strong> <code>--robot.id</code> differs from the station recorded in the dataset; it is refused before any device connects.</p>
+<p><strong>Fix:</strong> resume with the original <code>--robot.id</code>, or record into a new <code>--dataset.repo_id</code>.</p>
 </details>
 <details class="failure">
 <summary>Recording dies partway through with <code>ValueError: You must add one or several frames</code></summary>
-<p><strong>Cause:</strong> for about 2 s between two episodes nobody reads keyboard events (saving plus encoder warm-up), and a <strong>right arrow</strong> pressed in that gap stays pending. The usual trigger is the previous episode's reset timing out on its own just as you reach for the key. The next episode then exits with zero frames recorded, the reset still runs in full, and saving raises this error, killing the whole session. It surfaces more than two minutes after the keypress, with a perfectly normal-looking reset in between, so it is hard to connect to that key.</p>
-<p><strong>Fix:</strong> upgrade to <code>0.0.7</code> or newer, where key presses in that gap are discarded. On an earlier version, do not press the arrow keys early between episodes; wait until the next episode's prompt is printed. The keyboard hook is global, so a right arrow in <strong>any</strong> window ends the episode (Rerun included, whose timeline scrubs with the arrow keys); the keypress timestamps in the <a href="#logs">session log</a> are the first evidence to check for "it exited on its own".</p>
+<p><strong>Cause:</strong> for about 2 s between episodes no keyboard events are read (saving plus encoder warm-up), and a <strong>right arrow</strong> pressed in that gap stays pending, typically just as the previous reset times out on its own. The next episode exits with zero frames, saving raises this error and the whole session dies; it surfaces more than two minutes after the keypress.</p>
+<p><strong>Fix:</strong> upgrade to <code>0.0.7</code> or newer, which discards key presses in that gap. The keyboard hook is global, so a right arrow in <strong>any</strong> window ends the episode (Rerun included); the keypress timestamps in the <a href="#logs">session log</a> help trace it.</p>
 </details>
 <details class="failure">
 <summary><code>[stale_frames]</code> is printed after each reset phase, or a camera capture stall warning appears</summary>
-<p><strong>Cause:</strong> one camera's background capture stalled briefly. The collection loop is <strong>not blocked</strong> by it (it gets the cached previous frame), so the frame rate looks entirely normal and the cost lands in the data instead: what was recorded during that window is a <strong>repeat of the old image</strong>. After each reset phase a line gives how many frames in that episode were duplicates, in how many runs, and the longest run; a re-recorded episode is marked <code>(discarded take)</code>:</p>
+<p><strong>Cause:</strong> a camera's background capture stalled. The collection loop is <strong>not blocked</strong> (it takes the cached previous frame), so the frame rate looks normal, but what gets recorded is a <strong>repeat of the old image</strong>. After each reset phase a line gives the duplicate count, number of runs and longest run; a re-recorded episode is marked <code>(discarded take)</code>:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>[stale_frames] episode 3 [left_tactile_left] 45/1800 frames served stale (2.5%): 25 gap(s), longest 21 frame(s)
 </span></code></pre></div>
-<p><strong>Fix:</strong> look at the proportion first. Some duplication is expected: the sensor's background capture and the recording loop each run freely at the same nominal rate, the phase drifts, and occasionally a frame is sampled twice before a new one lands. That produces many <strong>single-frame</strong> duplicates and needs no action. What is worth chasing is a <strong>long contiguous run</strong>, which is a real stall, most often the GPU encoder starving the tactile threads for 0.3 to 0.9 s while 8 cameras encode at once. A few percent in short runs is fine to use; an episode with a very long run is a still image for that stretch and is better discarded. If it persists, work through <a href="#usb-bandwidth">Not enough USB bandwidth</a> or record fewer cameras at once.</p>
-<p>At the same time a <code>[loop_summary]</code> line gives the episode's actual frame rate, e.g. <code>= 29.0 fps (nominal 30; dataset timestamps assume nominal)</code>: when the real rate is below nominal, the dataset timestamps are still written at the nominal rate.</p>
+<p><strong>Fix:</strong></p>
+<ul>
+<li><strong>Single-frame</strong> duplicates are expected: capture and recording each run at the nominal rate, and phase drift occasionally samples a frame twice; ignore them.</li>
+<li>A <strong>long contiguous run</strong> is a real stall, most often the GPU encoder starving the tactile threads for 0.3 to 0.9 s while 8 cameras encode.</li>
+<li>A few percent in short runs is fine; discard an episode with a very long run.</li>
+<li>If it persists, work through <a href="#usb-bandwidth">Not enough USB bandwidth</a> or record fewer cameras.</li>
+</ul>
+<p><code>[loop_summary]</code> gives the actual frame rate, e.g. <code>= 29.0 fps (nominal 30; dataset timestamps assume nominal)</code>: dataset timestamps are still written at the nominal rate.</p>
 </details>
 <details class="failure">
 <summary>The log shows <code>[slow_frame] ... overrun=</code></summary>
-<p><strong>Cause:</strong> one frame took longer than the frame budget (33.3 ms at 30 fps). Since 0.0.8 the Rerun display runs on its own thread and is <strong>no longer a cause</strong>; if it falls behind, only on-screen frames are dropped.</p>
-<p><strong>Fix:</strong> read the two parts of the line:</p>
+<p><strong>Cause:</strong> a frame exceeded the frame budget (33.3 ms at 30 fps). The Rerun display runs on its own thread and is <strong>not a cause</strong>.</p>
+<p><strong>Fix:</strong> read the two parts:</p>
 <ul>
-<li><code>| phases obs=… build=… add=… display=…</code>: time per phase; look for the largest;</li>
+<li><code>| phases obs=… build=… add=… display=…</code>: time per phase;</li>
 <li><code>top_obs=</code> at the end: the slowest sensors.</li>
 </ul>
-<p>Only the first 5 <code>[slow_frame]</code> lines of an episode reach the screen; the rest go to the <a href="#logs">session log</a>, and the screen shows a <code>[slow_frame_summary]</code> every 5 s instead. A few now and then do not affect the data; if they persist and keep pointing at the same camera, work through <a href="#usb-bandwidth">Not enough USB bandwidth</a>. For machines without an NVIDIA card see <a href="../recording/#no-gpu">Recording on a host without an NVIDIA GPU</a>.</p>
+<p>The first 5 <code>[slow_frame]</code> lines per episode reach the screen; the rest go to the <a href="#logs">session log</a>, and the screen shows a <code>[slow_frame_summary]</code> every 5 s instead. Occasional ones do not affect the data; if they persist on the same camera, work through <a href="#usb-bandwidth">Not enough USB bandwidth</a>. Without an NVIDIA card see <a href="../recording/#no-gpu">Recording on a host without an NVIDIA GPU</a>.</p>
 </details>
 <details class="failure">
 <summary>Recording stops partway through with <code>Device lost mid-recording</code></summary>
-<p><strong>Cause:</strong> a camera or the gripper encoder dropped off: a loose cable, locking screws not tightened, strain on the cable, a hub losing power, unstable power or a bad USB port. Collection stops on purpose, and what was recorded so far is saved.</p>
-<p><strong>Fix:</strong> the last second or two of that episode is repeated stale values, so discard it. Check the locking screws, the cable routing and the USB port (if it keeps happening and changing ports does not help, see <a href="#usb-bandwidth">Not enough USB bandwidth</a>), then continue into the same dataset with <code>--resume</code>, see <a href="../recording/#52">Recording</a>.</p>
+<p><strong>Cause:</strong> a camera or the gripper encoder dropped off: a loose cable, untightened screws, cable strain, a hub losing power, unstable power or poor contact. What was recorded so far is saved.</p>
+<p><strong>Fix:</strong> the last second or two of that episode is stale repeats, so discard it. Check the screws, routing and USB port (if it recurs and changing ports does not help, see <a href="#usb-bandwidth">Not enough USB bandwidth</a>), then continue into the same dataset with <code>--resume</code>, see <a href="../recording/#52">Recording</a>.</p>
 </details>
 <details class="failure">
 <summary>On a machine with no discrete GPU, recording fails at the start saying the encoder will not open</summary>
-<p><strong>Cause:</strong> the machine has no NVIDIA driver but is using a GPU hardware encoder.</p>
+<p><strong>Cause:</strong> no NVIDIA driver, but a GPU hardware encoder is in use.</p>
 <p><strong>Fix:</strong> switch to a CPU encoder and turn streaming encoding off: <code>lerobot-record ... --dataset.vcodec=libsvtav1 --dataset.streaming_encoding=false</code>. The reasoning is in <a href="../recording/#no-gpu">Recording on a host with no NVIDIA GPU</a>.</p>
 </details>
 <details class="failure">
 <summary>The encoder cannot keep up and dropped-frame warnings appear in the log</summary>
-<p><strong>Cause:</strong> when the real-time encoding queue is full it waits up to 0.1 s, then drops the current frame and warns <code>Encoder queue full … dropped N frame(s)</code> (rather than blocking the collection loop).</p>
-<p><strong>Fix:</strong> raise <code>--dataset.encoder_threads</code>, use hardware encoding with <code>--dataset.vcodec=auto</code>, or adjust <code>--dataset.encoder_queue_maxsize</code>, see <a href="../recording/#54">Recording options</a>.</p>
+<p><strong>Cause:</strong> a full encoding queue waits up to 0.1 s, then drops the frame and warns <code>Encoder queue full … dropped N frame(s)</code> (rather than blocking the collection loop).</p>
+<p><strong>Fix:</strong> raise <code>--dataset.encoder_threads</code>, use <code>--dataset.vcodec=auto</code>, or adjust <code>--dataset.encoder_queue_maxsize</code>, see <a href="../recording/#54">Recording options</a>.</p>
 </details>
 <details class="failure">
 <summary>The gripper opening is wrong / it does not read 0 when closed</summary>
-<p><strong>Cause:</strong> the encoder zero has drifted or was never calibrated; for an uncalibrated leader gripper the collection program refuses to connect and prints the command to run.</p>
-<p><strong>Fix:</strong> recalibrate with <code>python third_party/taccap-gripper/python/examples/calibrate.py left</code> (or <code>right</code>). It recalibrates both the zero and the travel limit and writes both into MCU flash; once per unit is enough. See <a href="../calibration/#41">Gripper calibration</a>.</p>
+<p><strong>Cause:</strong> the encoder zero has drifted or was never calibrated; an uncalibrated leader is refused and the command to run is printed.</p>
+<p><strong>Fix:</strong> <code>python third_party/taccap-gripper/python/examples/calibrate.py left</code> (or <code>right</code>) recalibrates the zero and travel limit into MCU flash, once per unit, see <a href="../calibration/#41">Gripper calibration</a>.</p>
 </details>
 <details class="failure">
 <summary>Calibration reports <code>encoder-max calibration needs command set &gt;= V2.1</code></summary>
-<p><strong>Cause:</strong> the firmware command set is below V2.1 (i.e. leader &lt; 1.2.0) and does not support travel calibration; <code>calibrate.py</code> exits as is without changing anything.</p>
-<p><strong>Fix:</strong> flash the firmware. The procedure (upgrade the SDK first, pick the image by role, pass just the image file name) is in <a href="../versions/#ota">Firmware OTA upgrade</a>. Re-run <code>calibrate.py</code> afterwards.</p>
+<p><strong>Cause:</strong> the firmware command set is below V2.1 (i.e. leader &lt; 1.2.0) and does not support travel calibration; <code>calibrate.py</code> exits without changing anything.</p>
+<p><strong>Fix:</strong> flash the firmware (upgrade the SDK first, pick the image by role, pass just the file name), see <a href="../versions/#ota">Firmware OTA upgrade</a>, then re-run <code>calibrate.py</code>.</p>
 </details>
 <h2 id="data-and-disk">Data and disk<a class="headerlink" href="#data-and-disk" title="锚点链接">¶</a></h2>
 <details class="failure">
 <summary>Collection slows down / the disk fills up</summary>
-<p><strong>Cause:</strong> a bimanual rig with several cameras can produce around 280 MB/s of raw video throughput; how much is written after encoding depends on resolution, scene content, the encoder and the bitrate. Insufficient free space, insufficient sustained write performance, or encoder threads that cannot keep up will all cause trouble.</p>
-<p><strong>Fix:</strong> measure the encoded size and the dropped-frame situation on a handful of episodes before planning a large run; check <code>df -h</code> and the dataset directory size regularly, see <a href="../dataset/#storage-planning">Storage planning</a>.</p>
+<p><strong>Cause:</strong> a bimanual rig can produce around 280 MB/s of raw video; too little space, slow sustained writes or encoding that cannot keep up all cause trouble.</p>
+<p><strong>Fix:</strong> measure encoded size and dropped frames on a few episodes first; check <code>df -h</code> and the dataset directory size regularly, see <a href="../dataset/#storage-planning">Storage planning</a>.</p>
 </details>
 <h2 id="docker">Docker image<a class="headerlink" href="#docker" title="锚点链接">¶</a></h2>
-<p>Only relevant on the <a href="../install/#docker">Docker image</a> path. For a busy serial port inside the container, see <code>Device or resource busy</code> above.</p>
+<p>Only for the <a href="../install/#docker">Docker image</a> path. For a busy serial port in the container, see <code>Device or resource busy</code> above.</p>
 <details class="failure">
 <summary><code>could not select device driver ... gpu</code> / no GPU visible inside the container</summary>
 <p><strong>Cause:</strong> the NVIDIA Container Toolkit is not installed properly, or the Docker daemon was not restarted after installing it.</p>
-<p><strong>Fix:</strong> <code>install_customer.sh</code> installs it for you. To check by hand, run <code>docker run --rm --gpus all ubuntu:22.04 nvidia-smi</code>; if it shows no GPU, reinstall the Toolkit and <code>sudo systemctl restart docker</code>. The host driver must be ≥ 570.144.</p>
+<p><strong>Fix:</strong> <code>install_customer.sh</code> installs it for you. To check by hand, run <code>docker run --rm --gpus all ubuntu:22.04 nvidia-smi</code>; if no GPU shows, reinstall the Toolkit and <code>sudo systemctl restart docker</code>. The host driver must be ≥ 570.144.</p>
 </details>
 <details class="failure">
 <summary><code>Unknown runtime specified nvidia</code>, <code>docker compose</code> will not start</summary>
-<p><strong>Cause:</strong> the NVIDIA runtime is not registered with Docker; <code>compose.yaml</code> uses <code>runtime: nvidia</code> to get graphics capability (see <a href="../install/#docker-gui">Graphics from inside the container</a>).</p>
+<p><strong>Cause:</strong> the NVIDIA runtime is not registered with Docker, while <code>compose.yaml</code> uses <code>runtime: nvidia</code> (see <a href="../install/#docker-gui">Graphics from inside the container</a>).</p>
 <p><strong>Fix:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>sudo<span class="w"> </span>nvidia-ctk<span class="w"> </span>runtime<span class="w"> </span>configure<span class="w"> </span>--runtime<span class="o">=</span>docker
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>restart<span class="w"> </span>docker
@@ -2533,32 +2590,47 @@
 </details>
 <details class="failure">
 <summary>Rerun will not start in the container: <code>Failed to create surface for any enabled backend</code> / Vulkan adapter errors, but <code>nvidia-smi</code> is fine</summary>
-<p><strong>Cause:</strong> X11 was not authorised; or the container got CUDA but not NVIDIA's Vulkan ICD, typically because <code>runtime: nvidia</code> in <code>compose.yaml</code> was changed back to <code>gpus: all</code>, which requests compute + utility only. In that case <code>vulkaninfo</code> reports <code>INCOMPATIBLE_DRIVER</code> or lists no NVIDIA device.</p>
-<p><strong>Fix:</strong> on the host, as the graphical desktop user, run <code>xhost +si:localuser:root</code> and check that <code>echo "$DISPLAY"</code> is non-empty and <code>/tmp/.X11-unix</code> exists. If <code>docker info --format '{{json .Runtimes}}'</code> does not list nvidia, register the runtime as in the previous entry; if it does, change <code>compose.yaml</code> back to <code>runtime: nvidia</code>. Then confirm that <code>vulkaninfo --summary</code> inside the container recognises the GPU.</p>
+<p><strong>Cause:</strong> X11 was not authorised; or the container lacks NVIDIA's Vulkan ICD, typically because <code>runtime: nvidia</code> in <code>compose.yaml</code> was changed to <code>gpus: all</code>, which requests compute + utility only. Then <code>vulkaninfo</code> reports <code>INCOMPATIBLE_DRIVER</code> or lists no NVIDIA device.</p>
+<p><strong>Fix:</strong></p>
+<ul>
+<li>as the host desktop user, run <code>xhost +si:localuser:root</code> and check that <code>echo "$DISPLAY"</code> is non-empty and <code>/tmp/.X11-unix</code> exists;</li>
+<li>if <code>docker info --format '{{json .Runtimes}}'</code> does not list nvidia, register it as in the previous entry; if it does, change <code>compose.yaml</code> back to <code>runtime: nvidia</code>;</li>
+<li>confirm <code>vulkaninfo --summary</code> inside the container recognises the GPU.</li>
+</ul>
 </details>
 <details class="failure">
 <summary><code>pull access denied ... 'docker login'</code>, or you changed <code>LEROBOT_IMAGE_TAG</code> and still get the old image</summary>
-<p><strong>Cause:</strong> the image is public and needs no login. Either the image name resolved wrongly, or <code>.env</code> was not pulled again after the change, or it is not in the directory you run <code>docker compose</code> from.</p>
-<p><strong>Fix:</strong> run <code>docker compose config --images</code> to see the resolved image name, check <code>LEROBOT_IMAGE</code> in <code>.env</code> for a typo (the default is <code>ghcr.io/xenserobotics-ai/xense-taccap-lerobot</code>, and normally <code>.env</code> needs only the tag line), then <code>docker compose pull</code>. See <a href="../install/#docker-pin">Pin the image version</a>.</p>
+<p><strong>Cause:</strong> the image is public and needs no login; the image name resolved wrongly, or <code>.env</code> was not pulled again after the change, or you are not in the <code>docker compose</code> directory.</p>
+<p><strong>Fix:</strong> run <code>docker compose config --images</code> to see the image name, check <code>LEROBOT_IMAGE</code> in <code>.env</code> (the default is <code>ghcr.io/xenserobotics-ai/xense-taccap-lerobot</code>, and normally <code>.env</code> needs only the tag line), then <code>docker compose pull</code>. See <a href="../install/#docker-pin">Pin the image version</a>.</p>
 </details>
 <details class="failure">
 <summary>Entering the container prints <code>groups: cannot find name for group ID &lt;n&gt;</code></summary>
-<p>Harmless. The NVIDIA runtime injected the host's <code>render</code> group GID and the container has no group by that name. It affects neither the GPU, nor the cameras, nor collection.</p>
+<p>Harmless: the NVIDIA runtime injected the host's <code>render</code> group GID, and the container has no group by that name.</p>
 </details>
 <details class="failure">
 <summary>Images <code>0.0.5</code> and earlier: <code>mamba activate</code> says <code>Shell not initialized</code>; recording dies as it starts with <code>FileNotFoundError: 'spd-say'</code>; every exported <code>.mp4</code> reports <code>Permission denied</code> while the metadata copies fine</summary>
-<p><strong>Cause:</strong> three known problems of the old images, fixed from <code>0.0.6</code> on. The environment is already active when you enter the container, so there is nothing to activate; the image has no <code>spd-say</code> for the voice announcements while <code>--play_sounds</code> defaults to <code>true</code>, so the announcement raises and the process dies with <code>terminate called without an active exception</code>; recorded videos are <code>-rw------- root</code> while the metadata is <code>0644</code>, so a non-root copy fails on the videos only, and the files themselves are fine.</p>
-<p><strong>Fix:</strong> upgrade the image (see <a href="../install/#docker-pin">Pin the image version</a>). If you are still pinned to an old image: to switch environments by hand, run <code>eval "$(mamba shell hook --shell bash)"</code> first; add <code>--play_sounds=false</code> when recording, collection is unaffected (the container deliberately has no speech synthesiser, with one installed <code>spd-say</code> would hang forever; to hear the announcements, record on the host); videos recorded by an old image keep their permissions after upgrading, so copy them as root and <code>chown</code> afterwards as in <a href="../install/#docker-data">Where the data lives</a>, and do not use <code>--user</code>.</p>
+<p><strong>Cause:</strong> three known problems of the old images, fixed from <code>0.0.6</code> on:</p>
+<ul>
+<li>the environment is already active when you enter the container, so there is nothing to activate;</li>
+<li>the image has no <code>spd-say</code> for voice announcements while <code>--play_sounds</code> defaults to <code>true</code>, so the process dies with <code>terminate called without an active exception</code>;</li>
+<li>videos are <code>-rw------- root</code> while metadata is <code>0644</code>, so a non-root copy fails on the videos only; the files themselves are fine.</li>
+</ul>
+<p><strong>Fix:</strong> upgrade the image (see <a href="../install/#docker-pin">Pin the image version</a>). If you stay on an old image:</p>
+<ul>
+<li>to switch environments by hand, run <code>eval "$(mamba shell hook --shell bash)"</code> first;</li>
+<li>add <code>--play_sounds=false</code> when recording; collection is unaffected;</li>
+<li>old-image videos keep their permissions after upgrading, so copy them as root and <code>chown</code> afterwards as in <a href="../install/#docker-data">Where the data lives</a>; do not use <code>--user</code>.</li>
+</ul>
 </details>
 <details class="failure">
 <summary>The host sees the tactile sensors, the container does not</summary>
-<p><strong>Cause:</strong> the container was not started through Compose (<code>/dev</code> and <code>/run/udev</code> were not passed through), or the device nodes have not settled after a USB re-enumeration.</p>
-<p><strong>Fix:</strong> enter with <code>docker compose run --rm xense-taccap</code> and confirm the nodes exist with <code>ls /dev/v4l/by-id/*GSPS*</code>. If that is empty, go back to the host, re-plug the USB hub and run <code>sudo udevadm settle --timeout=20</code>.</p>
+<p><strong>Cause:</strong> the container was not started through Compose (<code>/dev</code> and <code>/run/udev</code> not passed through), or the nodes have not settled after re-enumeration.</p>
+<p><strong>Fix:</strong> enter with <code>docker compose run --rm xense-taccap</code> and check the nodes with <code>ls /dev/v4l/by-id/*GSPS*</code>. If empty, re-plug the USB hub on the host and run <code>sudo udevadm settle --timeout=20</code>.</p>
 </details>
 <details class="failure">
 <summary>After a container restart the sensors are re-read and startup is slow</summary>
-<p><strong>Cause:</strong> the <code>xensesdk-cache</code> volume was deleted. It caches each sensor's configuration by serial number, which avoids re-reading the flash, and the USB re-enumeration that triggers, on every start.</p>
-<p><strong>Fix:</strong> leave it alone. What each volume holds is in <a href="../install/#docker-data">Where the data lives</a>.</p>
+<p><strong>Cause:</strong> the <code>xensesdk-cache</code> volume was deleted; it caches sensor configuration by serial number so each start avoids re-reading flash and re-enumerating USB.</p>
+<p><strong>Fix:</strong> keep it; what each volume holds is in <a href="../install/#docker-data">Where the data lives</a>.</p>
 </details>
 <hr>
 <p>Still stuck? Report it through the channels in <a href="../../common/reference/#support">Support and feedback</a>, with the complete error, the self-check output (<code>scan_grippers</code>'s side / role / firmware_sn), version information and the command that reproduces it.</p>

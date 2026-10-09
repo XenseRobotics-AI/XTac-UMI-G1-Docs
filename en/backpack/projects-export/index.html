@@ -2353,7 +2353,34 @@
 </table>
 <p>It also includes <code>meta/taccap_extrinsics.json</code> (tracker extrinsics) and <code>meta/xumi_collection_devices.json</code> (which devices recorded each episode).</p>
 <h3 id="mcap">MCAP<a class="headerlink" href="#mcap" title="锚点链接">¶</a></h3>
-<p>One <code>.train.mcap</code> file per recording, with 30 Hz state and action, every video stream and the sensor data; open it directly in Foxglove and similar tools.</p>
+<p>The export is a training MCAP: one <code>.train.mcap</code> file per recording, built from the same data as the LeRobot dataset in a different container. It holds the state and action aligned to 30 Hz, every video stream and the sensor data, and opens directly in Foxglove and similar tools.</p>
+<p>It is not the same file as the raw recording on the backpack:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Raw recording</th>
+<th>Exported <code>.train.mcap</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Where</td>
+<td>On the backpack's data drive, for replay and export</td>
+<td>Downloaded or uploaded to a remote backend</td>
+</tr>
+<tr>
+<td>Rate</td>
+<td>Each stream at its device's native rate: visuotactile 120 fps, wrist fisheye 30 fps, gripper opening and IMU 100 Hz</td>
+<td>All aligned to 30 Hz</td>
+</tr>
+<tr>
+<td>Images</td>
+<td>Raw frames, not rectified</td>
+<td>Rectified according to the project settings</td>
+</tr>
+</tbody>
+</table>
 <h2 id="archive">Archive<a class="headerlink" href="#archive" title="锚点链接">¶</a></h2>
 <p>Archiving <strong>deletes the raw files on the device and keeps only the record</strong>, to free space; archived recordings can no longer be replayed or exported.</p>
 <p>Tick recordings in the export dialog and click Archive, or tick "Archive automatically after upload" when uploading. The confirmation separates recordings by whether they were uploaded or downloaded, and recordings never uploaded or downloaded need a final extra confirmation.</p>
