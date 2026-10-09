@@ -1,31 +1,31 @@
 # Network and console access
 
-This page covers how to open the XTac-UMI Collector console (below, "the console"). **The recommended way is the bundled tablet over USB**, which can also put the backpack and the tablet on the site WiFi in one step.
+This page explains how to open the XTac-UMI Collector console (below, "the console"). The recommended way is the bundled tablet over USB, which can also put the backpack and the tablet on the site WiFi together.
 
-## Identify the unit by its label, not by IP {#label}
+## Identifying the unit: by its label, not by IP {#label}
 
 ![The body label: SN, WiFi name, password, IP and mDNS address](../assets/product/backpack-label.webp){ width="420" }
 
-The label shows the SN, hotspot name and password, IP and device name.
+The body label shows the device's SN, hotspot name and password, IP and mDNS address. Keep in mind:
 
-- **The IP on the label**: the hotspot's fixed address `192.168.44.1`, usable only while on the hotspot.
-- **Site network IP**: differs per unit and changes, so never write it into a procedure.
-- **Identifying a unit**: by SN (System → [Device info](system.md#device-info)) and hotspot name.
+- **Hotspot IP**: the IP on the label (`192.168.44.1`) is the hotspot's fixed address, usable only while connected to this unit's own hotspot.
+- **Site network IP**: once on a site network, every unit's IP differs and changes; never write it into a fixed procedure or configuration file.
+- **Identifying a unit**: always by SN (see System → [Device info](system.md#device-info)) and hotspot name.
 
 ## Recommended: the tablet over USB {#tablet}
 
-Cable the tablet to the backpack's front `HOST1` or `HOST2` port and unlock it: the backpack opens System → Network on it by itself, with no WiFi to join and no address to type.
+Cable the tablet to the backpack's front `HOST1` or `HOST2` port and unlock the tablet. Once connected, the backpack opens System → Network on the tablet by itself, with no WiFi to join and no address to type.
 
 ![The Network page the tablet opens over USB](../assets/backpack/tablet-usb-network-settings.webp)
 
-- The bundled tablet is authorised on the production line and works as soon as it is plugged in.
-- After a factory reset or revoked USB debugging authorisation it no longer opens; re-authorise it as in [Troubleshooting](troubleshooting.md#tablet-adb).
+- **Plug and play**: the bundled tablet is authorised on the production line and works as soon as USB is plugged in.
+- **Re-authorising**: after a factory reset of the tablet or revoked USB debugging authorisation it no longer opens; re-authorise it as in [Troubleshooting](troubleshooting.md#tablet-adb).
 
 ### Putting the backpack on WiFi from the tablet {#tablet-wifi}
 
-Pick the site's 5 GHz WiFi on this page and enter its password: the backpack and the tablet **join together**. Once the backpack confirms the same network, the tablet switches to the backpack's WiFi address and you can unplug USB.
+Pick the site's 5 GHz WiFi on this page and enter its password: the backpack and the tablet **join that network together**. Once the backpack is confirmed on the same network, the tablet switches to the backpack's WiFi address automatically and you can unplug the USB cable.
 
-## The backpack's three network interfaces {#interfaces}
+## The backpack's network interfaces {#interfaces}
 
 | Interface | What it is | Use |
 |---|---|---|
@@ -35,47 +35,49 @@ Pick the site's 5 GHz WiFi on this page and enter its password: the backpack and
 
 ## The backpack hotspot {#softap}
 
-Without a tablet:
+Without a tablet, reach the backpack over its hotspot:
 
-1. Join the hotspot from a phone, tablet or computer (name and password on the body label).
+1. Join the backpack hotspot from a phone, tablet or computer (name and password on the body label).
 2. Open `http://192.168.44.1` in a browser.
 
 !!! note "On a new unit the hotspot is off at first boot"
     Use "Turn on hotspot" in System → [Network](system.md#wifi); the device remembers it. You can reach the console with the [tablet over USB](#tablet) first to turn it on. The hotspot is 5 GHz only; 2.4 GHz-only devices will not see it.
 
-- On iOS / Safari, type the full `http://` prefix.
-- With several backpacks, check the hotspot name against the label before joining.
-- Turn off auto-join for other saved networks so the device does not hop away mid-collection.
+- **iOS / Safari**: type the full `http://` prefix in the address bar.
+- **Several backpacks**: check the hotspot name against the body label before joining.
+- **No network hopping**: turn off auto-join for other saved networks so the device does not switch away mid-collection.
 
 ## Device name {#mdns}
 
-- On the same network, use the `http://xense-xxxxxx.local` on the label's last line instead of an IP.
-- Rename or turn it off in System → [Network](system.md#wifi).
-- Windows and some Android phones cannot open `.local` names; use the IP from the [network drop-down](#status).
+On the same network, use the `http://xense-xxxxxx.local` on the label's last line instead of remembering an IP. Rename or turn it off in System → [Network](system.md#wifi).
+
+!!! note
+    Windows and some Android phones cannot resolve `.local` names; use the IP from the [network drop-down](#status) instead.
 
 ## Joining a site network {#lan}
 
 ### Wired {#wired}
 
-- Run the backpack's Ethernet port to a router LAN port and it works; a computer on the same router uses the wired IP in the [network drop-down](#status) or the device name.
-- **Ubuntu**: tick Wired in the system settings:
+- Connect the backpack's Ethernet port to a router LAN port and it works; computers on the same router use the wired IP in the [network drop-down](#status) or the device name.
+- **Ubuntu computers**: turn on the Wired switch in the system settings:
 
 ![The Ubuntu wired network switch](../assets/backpack/ubuntu-wired.webp){ width="480" }
 
-Set a static IP only with no DHCP (backpack cabled straight to a computer) or when IT requires a fixed address, see System → [Wired IP](system.md#wifi-wired).
+Set a static IP only when there is no DHCP (backpack cabled straight to a computer) or IT requires a fixed address; see System → [Wired IP](system.md#wifi-wired).
 
 ### Site WiFi {#site-wifi}
 
 - **Easiest**: [WiFi setup from the tablet over USB](#tablet-wifi), which joins both together.
 - **Backpack alone**: System → [Joining the site WiFi](system.md#wifi-site).
-- The backpack only joins 5 GHz WiFi.
+- **Band**: the backpack only supports 5 GHz WiFi.
 
 ## Checking the current network state {#status}
 
-The IP drop-down at the left of the console's top bar gathers every way into this unit; after a network change, look here first for which address to use.
+The IP drop-down at the left of the top bar gathers every way into this unit. After a network change, when you are unsure which address to use, look here first.
 
 - **Contents**: the wired IP, the wireless IP and the hotspot it is joined to, its own hotspot's SSID / password / gateway, and the mDNS device name.
-- **Collapsed**: shows only "the one address you should use to reach it right now", the first available of wired > wireless > hotspot; open it to see them all.
+- **Collapsed**: shows only "the one address you should use to reach it right now", the first available of wired > wireless > hotspot.
+- **Expanded**: click to see all network details.
 
 ![The top-bar network drop-down](../assets/backpack/network-dropdown-live.webp)
 
@@ -92,11 +94,13 @@ The IP drop-down at the left of the console's top bar gathers every way into thi
 
 ## Advanced diagnosis: handled by technical support {#ssh}
 
-- **Day-to-day work is in the console**: addresses in the [network drop-down](#status); the wired address, gateway, states such as "no cable", joining the site WiFi and changing the wired IP in System → [Network](system.md#wifi).
-- **The device back end is for technical support diagnosis only**. **Do not log in or change the system configuration yourself**: the console cannot show those changes, and a bad configuration can cost you even the hotspot way in.
+!!! warning "The device back end is for technical support diagnosis only"
+    **Do not log in to the back end or change the system configuration yourself**: the console cannot show those changes, and a bad configuration can cost you even the hotspot way in.
 
-If you have worked through this page and [Troubleshooting](troubleshooting.md) and still cannot connect, hand these to technical support:
+Day-to-day work happens in the console: addresses in the [network drop-down](#status); the wired address, gateway, states such as "no cable", joining the site WiFi and changing the wired IP are all in System → [Network](system.md#wifi).
 
-- The body-label SN, and which way in you used (hotspot / device name / wired IP);
-- The addresses in the [network drop-down](#status), and the wired state and current internet connection on the System → [Network](system.md#wifi) page;
-- The exact text of the error on screen.
+If you have worked through this page and [Troubleshooting](troubleshooting.md) and still cannot connect, collect the following for technical support:
+
+1. The body-label SN, and which way in you used (hotspot / device name / wired IP).
+2. The addresses in the [network drop-down](#status), and the wired state and current internet connection on the System → [Network](system.md#wifi) page.
+3. A screenshot of the exact error text on screen.
