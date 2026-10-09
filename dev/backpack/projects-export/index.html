@@ -2353,7 +2353,34 @@
 </table>
 <p>另附 <code>meta/taccap_extrinsics.json</code>（追踪器外参）与 <code>meta/xumi_collection_devices.json</code>（每条数据由哪套设备采集）。</p>
 <h3 id="mcap">MCAP<a class="headerlink" href="#mcap" title="锚点链接">¶</a></h3>
-<p>每条录制一个 <code>.train.mcap</code> 文件，包含 30 Hz 的状态与动作、各路视频和传感器数据，可以直接用 Foxglove 等工具打开。</p>
+<p>导出的是训练用 MCAP：每条录制一个 <code>.train.mcap</code> 文件，与 LeRobot 数据集同源，只是换了封装。内容是按 30 Hz 对齐后的状态与动作、各路视频和传感器数据，可以直接用 Foxglove 等工具打开。</p>
+<p>它和背包上的原始记录不是同一个文件：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>原始记录</th>
+<th>导出的 <code>.train.mcap</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>在哪</td>
+<td>背包数据盘，用于回放和导出</td>
+<td>下载或上传到远端</td>
+</tr>
+<tr>
+<td>频率</td>
+<td>各路按设备原生频率：视触觉 120 fps，腕部鱼眼 30 fps，夹爪开合与 IMU 100 Hz</td>
+<td>统一对齐到 30 Hz</td>
+</tr>
+<tr>
+<td>图像</td>
+<td>原始画面，未矫正</td>
+<td>按项目设置矫正后的画面</td>
+</tr>
+</tbody>
+</table>
 <h2 id="archive">归档<a class="headerlink" href="#archive" title="锚点链接">¶</a></h2>
 <p>归档会<strong>删掉设备上的原始文件，只保留记录</strong>，用来腾出空间；归档后不能再回放或导出。</p>
 <p>在导出对话框勾选录制后点「归档」，或上传时勾选「上传完成后自动归档」。确认时会按录制是否已上传、是否已下载分开提示，从未上传或下载过的录制需要最后再确认一次。</p>

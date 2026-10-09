@@ -2187,36 +2187,60 @@
 
 
 <h1 id="quickstart-tldr">Quickstart (TL;DR)<a class="headerlink" href="#quickstart-tldr" title="锚点链接">¶</a></h1>
-<p>From power-on to your first exported dataset. Before you start, make sure these two are done:</p>
+<p>This page takes you from powering on to your first exported dataset; follow the steps in order.</p>
+<div class="admonition note">
+<p class="admonition-title">Before you start</p>
 <ul>
-<li>The headset is updated, XTac-UMI XR is installed and both trackers are paired → <a href="../../common/pico4/">Pico4 headset and trackers</a></li>
-<li>The leader grippers are calibrated → console System → <a href="../system/#gripper">Gripper</a></li>
+<li><strong>Headset and trackers</strong>: the Pico system is updated, XTac-UMI XR is installed and both trackers are paired; see <a href="../../common/pico4/">Pico4 headset and trackers</a>.</li>
+<li><strong>Gripper calibration</strong>: the leader grippers are calibrated; see console → System → <a href="../system/#gripper">Gripper</a>.</li>
 </ul>
+</div>
 <h2 id="power-on">1. Wiring and power<a class="headerlink" href="#power-on" title="锚点链接">¶</a></h2>
 <ol>
-<li>Plug the two leader grippers into the backpack's <code>UMI-L</code> / <code>UMI-R</code>.</li>
-<li>Connect the headset to the backpack's <code>PICO</code> port with the Pico → Pack cable.</li>
-<li>Power the backpack: the adapter at a fixed station, the power bank for mobile collection.</li>
+<li><strong>Connect the leader grippers</strong>: plug the two leader grippers into the backpack's <code>UMI-L</code> and <code>UMI-R</code> ports.</li>
+<li><strong>Connect the headset</strong>: connect the headset to the backpack's <code>PICO</code> port with the Pico → Pack cable.</li>
+<li><strong>Power the backpack</strong>:<ul>
+<li>Fixed station: use the power adapter.</li>
+<li>Mobile collection: use the power bank.</li>
+</ul>
+</li>
 </ol>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/product/backpack-wiring-powerbank-diagram-en.webp" data-desc-position="bottom"><img alt="Power-bank wiring: both leader grippers and the headset to the backpack, the power bank to the backpack's DC port" src="../../../assets/product/backpack-wiring-powerbank-diagram-en.webp"></a></p>
 <h2 id="console">2. Open the console<a class="headerlink" href="#console" title="锚点链接">¶</a></h2>
-<p>Cable the tablet to the backpack's <code>HOST1</code> or <code>HOST2</code> port and the backpack opens the console on it. If it does not, see <a href="../troubleshooting/#tablet-adb">Troubleshooting</a>.</p>
+<ol>
+<li><strong>Connect the tablet</strong>: cable the tablet to the backpack's <code>HOST1</code> or <code>HOST2</code> port.</li>
+<li><strong>Wait for it to open</strong>: once connected, the console opens on the tablet automatically.</li>
+</ol>
+<p>If the console does not open, see <a href="../troubleshooting/#tablet-adb">Troubleshooting</a>.</p>
 <h2 id="headset">3. Connect the headset<a class="headerlink" href="#headset" title="锚点链接">¶</a></h2>
-<p><strong>Facing the work area</strong>, put on the headset, open XTac-UMI XR, leave "USB Network" unticked and "PC IP" empty (it connects to the backpack at <code>192.168.100.1</code> by default), then tap "Connect"; Status turns to Connected.</p>
+<ol>
+<li><strong>Put on the headset</strong>, facing the work area.</li>
+<li><strong>Start the app</strong>: open XTac-UMI XR.</li>
+<li><strong>Network settings</strong>: <strong>leave "USB Network" unticked</strong> and "PC IP" empty (it connects to the backpack at <code>192.168.100.1</code> by default).</li>
+<li><strong>Connect</strong>: tap "Connect"; you are done when Status shows "Connected".</li>
+</ol>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/pico4/xr-console-connected-en.webp" data-desc-position="bottom"><img alt="XTac-UMI XR console: Connected" src="../../../assets/pico4/xr-console-connected-en.webp" width="560"></a></p>
 <div class="admonition warning">
 <p class="admonition-title">Do not restart the XR app during collection</p>
 <p>Restarting resets the world origin, so poses within one dataset stop lining up.</p>
 </div>
 <h2 id="project">4. Pick a project and task<a class="headerlink" href="#project" title="锚点链接">¶</a></h2>
-<p>At the bottom of the console's Live monitor page, pick a project and a task, or choose "New project…" / "New task…". Choose the <a href="../monitor-record/#project-task">capture mode</a> when creating the project (for example "Dual gripper + headset stereo"); a task needs a natural-language instruction.</p>
-<h2 id="checks">5. Check before recording<a class="headerlink" href="#checks" title="锚点链接">¶</a></h2>
-<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/backpack/monitor-live.webp" data-desc-position="bottom"><img alt="The live monitor page" src="../../../assets/backpack/monitor-live.webp"></a></p>
-<ul>
-<li>Every camera view shows an image and the fisheye views are sharp.</li>
-<li>The pose view follows your hands, with left and right not swapped.</li>
-<li>The opening follows the grippers as they open and close.</li>
+<ol>
+<li><strong>Pick or create</strong>: at the bottom of the console's Live monitor page, pick a project and a task; if there are none yet, choose "New project…" or "New task…".</li>
+<li><strong>Fill in the settings</strong>:<ul>
+<li><strong>Capture mode</strong>: chosen when creating the project, for example "Dual gripper + headset stereo"; see <a href="../monitor-record/#project-task">capture mode</a>.</li>
+<li><strong>Task instruction</strong>: give the new task a clear natural-language instruction.</li>
 </ul>
+</li>
+</ol>
+<h2 id="checks">5. Check before recording<a class="headerlink" href="#checks" title="锚点链接">¶</a></h2>
+<p>Before you hit record, confirm these three:</p>
+<ul>
+<li><strong>Camera views</strong>: every camera shows an image and the fisheye views are sharp.</li>
+<li><strong>Pose view</strong>: follows your hands in real time, with left and right not swapped.</li>
+<li><strong>Gripper opening</strong>: follows the grippers as they open and close.</li>
+</ul>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/backpack/monitor-live.webp" data-desc-position="bottom"><img alt="The live monitor page" src="../../../assets/backpack/monitor-live.webp"></a></p>
 <p>If the record button is unavailable, the page states why; see <a href="../monitor-record/#record-gates">Recording gates</a>.</p>
 <h2 id="record">6. Record with the gripper buttons<a class="headerlink" href="#record" title="锚点链接">¶</a></h2>
 <table>
@@ -2249,9 +2273,13 @@
 <h2 id="export">7. Export and upload<a class="headerlink" href="#export" title="锚点链接">¶</a></h2>
 <p>On the console's Projects page, select a task and click Export:</p>
 <ol>
-<li>Data integrity is checked first; fix anything it reports.</li>
-<li>Pick where it goes: download an archive, or upload to a backend configured beforehand (ModelScope, S3, FTP, NFS).</li>
-<li>Pick the format: LeRobotDataset v3 or MCAP.</li>
+<li><strong>Precheck</strong>: data integrity is checked automatically; fix anything it reports.</li>
+<li><strong>Destination</strong>:<ul>
+<li>Download an archive to save locally.</li>
+<li>Upload to a backend configured beforehand (ModelScope, S3, FTP, NFS).</li>
+</ul>
+</li>
+<li><strong>Format</strong>: choose LeRobotDataset v3 or MCAP to suit your training pipeline.</li>
 </ol>
 <p>Details are in <a href="../projects-export/">Projects, export and upload</a>.</p>
 
