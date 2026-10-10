@@ -324,7 +324,7 @@
 **供电方案（二选一）**
 
 - **方案 A**：[适配器供电](unbox-connect.md#adapter)，将电源适配器接入背包的 `DC` 口。
-- **方案 B**：[充电宝供电](unbox-connect.md#powerbank)，用 0.3 m 12 V PD 电源线将充电宝接入背包的 `DC` 口。
+- **方案 B**：[充电宝供电](unbox-connect.md#powerbank)，用 0.3m 12V PD 电源线将充电宝接入背包的 `DC` 口。
 
 夹爪的具体连接与供电要求见[夹爪连接与序列号](../common/gripper.md#power)。
 

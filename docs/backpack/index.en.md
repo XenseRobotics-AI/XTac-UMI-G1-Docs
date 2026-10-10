@@ -324,7 +324,7 @@ Connect in the [fixed order](unbox-connect.md#order): grippers → headset → p
 **Power (choose one)**
 
 - **Option A**: [adapter power](unbox-connect.md#adapter), with the power adapter plugged into the backpack's `DC` port.
-- **Option B**: [power-bank power](unbox-connect.md#powerbank), with the power bank connected to the backpack's `DC` port through the 0.3 m 12 V PD power cable.
+- **Option B**: [power-bank power](unbox-connect.md#powerbank), with the power bank connected to the backpack's `DC` port through the 0.3m 12V PD power cable.
 
 The grippers' connection and power requirements are in [Gripper connection and serial numbers](../common/gripper.md#power).
 

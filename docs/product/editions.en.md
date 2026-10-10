@@ -57,17 +57,17 @@ This page compares the two and lists each kit's box contents and wiring.
     | Item | Qty | Spec and notes |
     |---|---|---|
     | XTac-UMI G1 leader gripper | 2 | One left and one right, told apart by the last digit of the serial number: odd is left, even is right |
-    | Leader gripper cable | 2 | Type-C to Type-C, 1.5 m, one per side; locking connector at the gripper end, the other end into the backpack's `UMI-L` / `UMI-R` |
+    | Leader gripper cable | 2 | Type-C to Type-C, 1.5m, one per side; locking connector at the gripper end, the other end into the backpack's `UMI-L` / `UMI-R` |
     | Pico4 Ultra Enterprise headset | 1 | With controllers and motion trackers; the trackers mount on top of the two leader grippers |
     | Tracker charging dock | 1 | Three-way |
-    | Headset cable (Pico → Pack) | 1 | Type-C to Type-C, 1.5 m, headset to the backpack's `PICO` port |
+    | Headset cable (Pico → Pack) | 1 | Type-C to Type-C, 1.5m, headset to the backpack's `PICO` port |
     | Backpack | 1 | Compute node with a built-in 5 GHz hotspot (off by default) |
     | Waist belt | 1 | For wearing the backpack |
-    | 12 V power adapter | 1 | 12 V 3 A, 1.5 m lead, into the backpack's `DC` port |
-    | Power bank | 1 | 20000 mAh, 45 W |
-    | 12 V PD power cable | 1 | 0.3 m, power bank to the backpack's `DC` port |
+    | 12V power adapter | 1 | 12V 3A, 1.5m lead, into the backpack's `DC` port |
+    | Power bank | 1 | 20000mAh, 45W |
+    | 12V PD power cable | 1 | 0.3m, power bank to the backpack's `DC` port |
     | Tablet | 1 | 6 GB + 128 GB, with case; serves as the console |
-    | Type-C charging plug | 1 | PD fast charging, 100 W |
+    | Type-C charging plug | 1 | PD fast charging, 100W |
 
     Use the adapter at a fixed workstation and the power bank for mobile collection:
 
@@ -86,18 +86,18 @@ This page compares the two and lists each kit's box contents and wiring.
     | Item | Qty | Spec and notes |
     |---|---|---|
     | XTac-UMI G1 leader gripper | 2 | One left and one right, told apart by the last digit of the serial number: odd is left, even is right |
-    | Leader gripper cable | 2 | Type-C to Type-A, USB 2.0, 3 m; locking connector at the gripper end |
+    | Leader gripper cable | 2 | Type-C to Type-A, USB 2.0, 3m; locking connector at the gripper end |
     | Pico4 Ultra Enterprise headset | 1 | With controllers and motion trackers; the trackers mount on top of the two leader grippers |
     | Tracker charging dock | 1 | Three-way |
-    | Headset cable | 1 | Type-C to Type-C, 1.5 m, headset to the host |
+    | Headset cable | 1 | Type-C to Type-C, 1.5m, headset to the host |
 
     With the optional follower grippers you also get:
 
     | Item | Qty | Spec and notes |
     |---|---|---|
     | XTac-UMI G1 follower gripper | 2 | One left and one right, mounted on the robot's end effector |
-    | 24 V power adapter | 2 | 24 V 2.5 A, 4.5 m lead with ferrite, one per follower |
-    | Cable sleeve | 1 | 3 m, for routing cables along the arm |
+    | 24V power adapter | 2 | 24V 2.5A, 4.5m lead with ferrite, one per follower |
+    | Cable sleeve | 1 | 3m, for routing cables along the arm |
 
     You supply the host; the requirements are in [Collection host requirements](../pc/install.md#host-spec). Three cables in total:
 

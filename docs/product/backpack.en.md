@@ -39,7 +39,7 @@ No computer and no site network needed; it is ready to collect once it boots.
 
 | No. | Connector | Location | What it is for |
 |---|---|---|---|
-| ① | `DC IN` | Rear panel | 12 V power input: the supplied 12 V 3 A adapter, or the power bank through its power cable |
+| ① | `DC IN` | Rear panel | 12V power input: the supplied 12V 3A adapter, or the power bank through its power cable |
 | ② | Ethernet | Rear panel | Wired networking, DHCP from the factory, static IP settable on the System page |
 | ③ | TF | Rear panel | TF card slot, not used for day-to-day collection |
 | ④ | `HDMI` | Rear panel | Video out, not used for day-to-day collection |

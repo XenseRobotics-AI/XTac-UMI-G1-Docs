@@ -216,7 +216,7 @@ Other forms:
 
     - The reboot after OTA is a soft reset: the USB-serial bridge never loses power and the device stays degraded, right version, stream running, error counters at 0, but quietly dropping status frames. Over 60-second runs, OTA alone loses 35 to 39 frames, after unplug and replug 0.
     - Order: flash → unplug and replug → step-3 check → calibration; data before the power cycle is untrustworthy.
-    - Leader: unplug and replug USB. Follower: unplug the 24 V power cable, wait about 2 seconds and plug it back in, leaving USB connected (controller and motor both run on 24 V).
+    - Leader: unplug and replug USB. Follower: unplug the 24V power cable, wait about 2 seconds and plug it back in, leaving USB connected (controller and motor both run on 24V).
     - Unplug and replug only after the gripper has finished rebooting.
 
 Once at V2.1, go back to [Gripper calibration](calibration.md#41) and set the zero and travel limit.

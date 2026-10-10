@@ -15,7 +15,7 @@ Specifications for the XTac-UMI G1 grippers, the tracking system and the backpac
 | Wrist fisheye camera | 190° field of view, 640 × 480 @ 30 fps |
 | IMU | 9-axis, 100 Hz |
 | Opening encoder | 100 Hz |
-| Connector and power | USB Type-C (locking), DC 5 V / 500 mA bus power, no internal battery |
+| Connector and power | USB Type-C (locking), DC 5V / 500 mA bus power, no internal battery |
 | Operating temperature | 0–50 °C |
 
 ### Visuotactile sensor {#sensor}
@@ -46,7 +46,7 @@ The frame rate used during collection can be set as needed (the Developer Kit re
 | Maximum output torque | 1.1 N·m |
 | Opening angle | 0–70° |
 | Control | Impedance control (default), force-position control |
-| Connector and power | USB Type-C for communication + 24 V power adapter (24 V 2.5 A) |
+| Connector and power | USB Type-C for communication + 24V power adapter (24V 2.5A) |
 | Operating temperature | 0–50 °C |
 
 ![Follower gripper dimensions (mm)](../assets/product/follower-dimensions.webp){ width="760" }
@@ -73,8 +73,8 @@ The Backpack Kit's collection unit: the grippers and headset plug into it and th
 | Storage | eMMC system disk + 1 TB NVMe data disk; recordings and exports live on the data disk |
 | Disk-full rule | The data disk counts as full at 80% and recording stops |
 | Exported data size | An exported LeRobot dataset takes about 200 GB per 400 hours |
-| Power | 12 V 3 A power adapter, or a 20000 mAh power bank through a 12 V PD power cable |
-| Power draw | About 20 W |
+| Power | 12V 3A power adapter, or a 20000mAh power bank through a 12V PD power cable |
+| Power draw | About 20W |
 | Power-bank runtime | About 3.5–4 hours |
 | Network | Ethernet; WiFi (5 GHz); built-in 5 GHz hotspot |
 | Ports | `UMI-L` / `UMI-R` for the leader grippers, `PICO` for the headset, `DC IN` for power, `HOST1` / `HOST2` USB host ports, plus Ethernet, TF slot, `HDMI` and headphone jack, see [Ports](backpack.md#ports) |
