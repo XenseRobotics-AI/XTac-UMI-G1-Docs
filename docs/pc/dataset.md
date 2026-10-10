@@ -162,7 +162,7 @@ lerobot-push-dataset-to-hub \
 
 成功后地址为 `https://huggingface.co/datasets/<repo_id>`。
 
-- 上传时自动生成数据集卡片（README），并在本地数据集目录写 `assets/`（三张卡片图，共约 12MB）一并上传，`--no-videos` 也照传。
+- 上传时自动生成数据集卡片（README），在数据集目录写 `assets/`（三张卡片图约 12MB）一并上传，`--no-videos` 亦然。
 - `--dataset-path` 只读本地，路径不对报 `Cannot find dataset metadata in local directory`，不会从 Hub 下载。
 
 ## 磁盘规划与估算 {#storage-planning}
@@ -194,7 +194,7 @@ mv -- ~/.cache/huggingface/lerobot/<your_org>/<old_dataset> /data/lerobot-trash/
 
 ## 采集台账
 
-每份数据集记一行台账。夹爪与触觉 SN 已自动写进 `meta/hardware.json`，照抄只为离线可查，不一致时以数据集为准；追踪器 SN 需手写。
+每份数据集记一行台账。夹爪与触觉 SN 已自动写进 `meta/hardware.json`，照抄只为离线可查，不一致时以数据集为准；追踪器 SN 需手工填写。
 
 | `repo_id` | 任务描述 | 工位号 `--robot.id` | 夹爪 / 追踪器 SN | 标定时间 | 软件版本 / commit | 世界系会话 | 完整性检查 | 集数 / 单集时长 | 备注 |
 |---|---|---|---|---|---|---|---|---|---|

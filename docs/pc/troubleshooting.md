@@ -132,7 +132,7 @@
     sudo dmesg -w | grep --line-buffered -iE "uvcvideo|bandwidth|disconnect"
     ```
 
-    必须加 `--line-buffered`，否则 `grep` 会缓冲输出，看起来如同停止响应。出现 `Not enough bandwidth for altsetting N` 即可确诊。也可将相机分为两组分别运行：
+    必须加 `--line-buffered`，否则 `grep` 会缓冲输出，看似停止响应。出现 `Not enough bandwidth for altsetting N` 即可确诊。也可将相机分两组运行：
 
     ```bash
     # 只开触觉(关掉腕相机)
@@ -163,7 +163,7 @@
     | 只开两路腕相机（`--robot.enable_tactile=false`） | 够用 | 正常 |
     | 六个全开（默认） | 6 × 60.4 = 362 Mbit/s | 失败 |
 
-    `altsetting 6` 每微帧 944 字节，即每枚触觉传感器预留 60.4 Mbit/s（320x240 YUYV@30 的实际数据量仅约 37 Mbit/s），腕相机申请的带宽更多。自行读取的方法：
+    `altsetting 6` 每微帧 944 字节，即每枚触觉传感器预留 60.4 Mbit/s（320x240 YUYV@30 的实际数据仅约 37 Mbit/s），腕相机申请的更多。自行读取方法：
 
     ```bash
     # I:* 是当前生效的 altsetting;类名在这个文件里是小写的 (video)
@@ -204,7 +204,7 @@
 ??? failure "XTac-UMI XR 始终无法连接（未连接或连接失败）"
     **原因**：通常是有线网络未正确连接，或电脑 WiFi 未关闭。
 
-    **解决**：有线连接时勾选「USB网络」；WiFi 连接时在「PC IP」填写主机 IP，再点击「连接」。仍无法连接时，按[网络连接](../common/pico4.md#pico-network)重新连接，界面说明见[打开 App 后的界面](../common/pico4.md#pico-toolkit-ui)。
+    **解决**：有线连接时勾选「USB网络」；WiFi 连接时在「PC IP」填写主机 IP，再点「连接」。仍无法连接时按[网络连接](../common/pico4.md#pico-network)重连，界面说明见[打开 App 后的界面](../common/pico4.md#pico-toolkit-ui)。
 
 ??? failure "头显显示「连接成功」，PC 端却收不到任何位姿"
     **原因**：「连接成功」仅表示 App 已连接到服务。主机服务可能未启动，或追踪器未开机、未绑定。
@@ -402,4 +402,4 @@
 
 ---
 
-仍未解决时，请准备完整报错、自检输出（`scan_grippers` 的 side / role / firmware_sn）、版本信息与复现命令，按[支持与反馈](../common/reference.md#support)中的渠道反馈。
+仍未解决时，准备完整报错、自检输出（`scan_grippers` 的 side / role / firmware_sn）、版本与复现命令，按[支持与反馈](../common/reference.md#support)反馈。

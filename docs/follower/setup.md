@@ -1,6 +1,6 @@
 # 准备与自检
 
-按顺序做完四步再投入使用。硬件安装与接线见 [夹爪连接与序列号 → 从夹爪安装与连接](../common/gripper.md#follower-install)，
+依次完成四步再投入使用。安装接线见 [夹爪连接与序列号 → 从夹爪安装与连接](../common/gripper.md#follower-install)，
 从夹爪要 **USB Type-C 和 24V 两路都接上**。
 
 ## 1. 安装 SDK {#install}
@@ -18,7 +18,7 @@ python -c "import xense.taccap as t; print(t.hello())"
 应输出 `taccap-gripper OK; version 0.4.1`。版本不对说明 SDK 子模块没更新或没重新编译，见
 [从夹爪故障排查](troubleshooting.md#connect)。
 
-之后的命令都在 `third_party/taccap-gripper` 目录下、数采环境里运行。不使用数采仓库、单独安装 SDK 的方法见
+后续命令均在 `third_party/taccap-gripper` 目录、数采环境中运行。不用数采仓库、单独安装 SDK 见
 [SDK 附录 → 安装与构建](../sdk/install.md)。
 
 ## 2. 找到设备 {#discover}

@@ -55,4 +55,4 @@ add_subdirectory(path/to/TacCap-Gripper taccap-gripper-build)
 target_link_libraries(my_target PRIVATE taccap_core)
 ```
 
-编译环境用上面单独安装时创建的 `taccap` 环境，它带有编译所需的全部依赖。C++ 接口与 Python 同名，位于 `xense::taccap` 命名空间。
+编译使用上面单独安装时创建的 `taccap` 环境，其中已含全部编译依赖。C++ 接口与 Python 同名，位于 `xense::taccap` 命名空间。

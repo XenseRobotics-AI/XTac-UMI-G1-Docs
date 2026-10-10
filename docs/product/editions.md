@@ -79,7 +79,7 @@ XTac-UMI 提供两种配置，使用同一套 XTac-UMI G1 夹爪与 Pico4 Ultra 
 
         ![充电宝供电接线：左右主夹爪与头显接数采背包，充电宝接背包 DC 口](../assets/product/backpack-wiring-powerbank-diagram.webp)
 
-    接线步骤见[适配器供电](../backpack/unbox-connect.md#adapter)与[充电宝供电](../backpack/unbox-connect.md#powerbank)；供电与拔线顺序的安全要求见[数采背包与供电](safety.md#backpack-power)；打开控制台见[平板插 USB](../backpack/network.md#tablet)，没有平板时用[背包热点](../backpack/network.md#softap)。
+    接线见[适配器供电](../backpack/unbox-connect.md#adapter)与[充电宝供电](../backpack/unbox-connect.md#powerbank)；供电与拔线顺序的安全要求见[数采背包与供电](safety.md#backpack-power)；打开控制台见[平板插 USB](../backpack/network.md#tablet)，无平板时用[背包热点](../backpack/network.md#softap)。
 
 === "PC 版"
 

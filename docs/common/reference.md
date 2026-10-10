@@ -8,7 +8,7 @@
 |---|---|
 | **XTac-UMI G1** | 手持式 UMI 数采夹爪，两种形态共用的传感器载体；见[认识 XTac-UMI G1](../product/g1.md) |
 | **数采背包** | 背包版的采集单元：RK3588 计算节点，夹爪与头显都接到它上面，XTac-UMI Collector 在它上面运行；正式名 XTac-UMI 数采背包，见[认识数采背包](../product/backpack.md) |
-| **XTac-UMI Collector** | 跑在数采背包上的采集软件，接入相机、夹爪 MCU 与头显位姿，负责录制、回放、导出与设备管理；版本基线 0.4.3，以设备系统页显示为准 |
+| **XTac-UMI Collector** | 数采背包上的采集软件，接入相机、夹爪 MCU 与头显位姿，负责录制、回放、导出与设备管理；版本基线 0.4.3，以系统页为准 |
 | **控制台** | Collector 的浏览器界面，平板、手机、电脑连上背包后打开；实时监控、项目、系统等页面都在里面 |
 | **项目 / 任务 / episode** | 背包版的数据组织层级：项目下建任务，任务带 LeRobot 语言指令，每次开录到停录是一条 episode |
 | **MCAP** | 背包版每条 episode 的原始记录格式，按 topic 存相机、编码器、IMU、位姿与事件；导出 LeRobot 时从它转换 |
@@ -39,7 +39,7 @@
 反馈时请附带：
 
 - 完整报错原文，以及对应的日志：
-    - PC 版：附那次运行的完整日志文件 `~/xenselogs/session_<时间戳>.log`，整份附上，不要只贴屏幕上最后几行，见 [PC 版故障排查](../pc/troubleshooting.md#logs)。
+    - PC 版：附该次运行的完整日志 `~/xenselogs/session_<时间戳>.log`，不要只贴屏幕末尾几行，见 [PC 版故障排查](../pc/troubleshooting.md#logs)。
     - 背包版：附控制台系统日志面板的截图，并注明报错出现的大致时间；该面板不导出日志文件，不用去设备上找。
 - 设备身份：背包版抄控制台 系统 → 设备信息 页的设备 SN、采集单元版本与每只夹爪的 SN / 固件版本；PC 版给 `scan_grippers` 的 side / role / firmware_sn 输出和[如何查版本](../pc/versions.md#check-versions)里那条命令的输出。
 - 复现步骤、完整命令或控制台操作、单夹爪 / 双夹爪、是否启用追踪器。
@@ -52,7 +52,7 @@
 | 资源 | 地址 | 说明 |
 |---|---|---|
 | 数采主仓库 `xense-taccap-lerobot` | <https://github.com/XenseRobotics-AI/xense-taccap-lerobot> | PC 版采集软件，附带设备说明与 CHANGELOG |
-| 夹爪 SDK `TacCap-Gripper` | <https://github.com/XenseRobotics-AI/TacCap-Gripper> | 子模块 `third_party/taccap-gripper/`；SDK 文档在 `docs/` |
+| 夹爪 SDK `TacCap-Gripper` | <https://github.com/XenseRobotics-AI/TacCap-Gripper> | 子模块 `third_party/taccap-gripper/`；SDK 文档在 `docs/` 目录 |
 | 追踪器 PC 服务 `XenseVR-PC-Service` | <https://github.com/XenseRobotics-AI/XenseVR-PC-Service> | 不是子模块，以 `.deb` 安装到 `/opt/apps/roboticsservice`，见[一键安装](../pc/install.md#24) |
 | 视触觉传感器 SDK `xensesdk` | <https://github.com/XenseRobotics/xensesdk> | [文档站](https://docs.xenserobotics.com/) |
 | 本地可视化工具 `xense-lerobot-viewer` | <https://github.com/XenseRobotics-AI/xense-lerobot-viewer> | 开源，在浏览器里查看本地 LeRobot 数据集 |
@@ -67,7 +67,7 @@
 |---|---|---|---|---|
 | v0.1.0 | v0.1.0 | 0.3.2 | 0.4.3 | 0.4.1 |
 
-夹爪固件随 SDK 附带（SDK 0.4.1 附带主夹爪 1.2.6、从夹爪 1.2.14），不单独列。各组件的升级方法见 [PC 版 · 版本与升级](../pc/versions.md) 与 [背包版 · 版本](../backpack/versions.md)。
+夹爪固件随 SDK 附带（0.4.1 含主夹爪 1.2.6、从夹爪 1.2.14），不单列。各组件升级见 [PC 版 · 版本与升级](../pc/versions.md) 与 [背包版 · 版本](../backpack/versions.md)。
 
 ## 本手册范围
 

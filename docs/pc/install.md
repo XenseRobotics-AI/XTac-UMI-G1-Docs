@@ -137,7 +137,7 @@
     - **下载**：从 [v0.2.1 release](https://github.com/XenseRobotics-AI/XenseVR-PC-Service/releases/tag/v0.2.1) 取当前架构的 `.deb`（约 110MB），`$XENSEVR_DEB_URL` 可覆盖地址。
     - **安装**：`sudo dpkg -i` 装到 `/opt/apps/roboticsservice`；同版本已装则跳过，下了一半的文件会复用。
     - **下载失败**：`--install` 停下；离线或打过补丁的包用 `$XENSEVR_DEB` 指向本地文件。
-    - **版本**：v0.2.1 重新编译过 C SDK，v0.2.0 会拿旧 SDK 编 Pico4 绑定；[头显双目与头部位姿](recording.md#56)需要 PC Service ≥ v0.2.0，追踪器不受影响。
+    - **版本**：v0.2.1 重编了 C SDK，v0.2.0 会拿旧 SDK 编 Pico4 绑定；[头显双目与头部位姿](recording.md#56)需 PC Service ≥ v0.2.0，追踪器不受影响。
 
     ### 验证安装 {#25}
 
