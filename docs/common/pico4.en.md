@@ -62,12 +62,6 @@ The APK is named `XTac-UMI-XR-<version>.apk`; the current version is 0.3.2. Inst
 
     ![Confirming the install](../assets/pico4/install-step3-confirm.webp){ width="480" }
 
-With adb (Android platform-tools) on the PC, USB debugging on and "USB connection" set to "File transfer", you can install in one command:
-
-```bash
-adb devices                          # the headset should be listed
-adb install XTac-UMI-XR-0.3.2.apk    # substitute the build you were given
-```
 
 ## Network connection {#pico-network}
 
