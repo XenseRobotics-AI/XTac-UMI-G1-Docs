@@ -41,7 +41,7 @@
     **原因**：上电自动标定没有完成，常见于上电时爪子被挡住或 24V 没接。
     **解决**：清空爪子周围，接好 24V，断电重启，等爪子自己开合一次后再试。
 
-??? failure "数据帧率明显低于 100 Hz，或没有显示 `OK`"
+??? failure "数据帧率明显低于 100Hz，或没有显示 `OK`"
     **解决**：关掉其他用到夹爪的程序，换线或换 USB 口，断电重启后再自检。
 
 ??? failure "`get_spec()` 显示的不是 EL05"
@@ -51,7 +51,7 @@
 
 ??? failure "报 `ValueError: ... exceeds ...` 或 `RuntimeError: ... stored motor startup torque limit ...`"
     **原因**：控制器配置里的力矩超出了电机的额定值。
-    **解决**：配置用 `for_spec(g.motor.get_spec())` 生成，夹持力不超过 1.1 N·m。仍然报错时联系[技术支持](../common/reference.md#support)。
+    **解决**：配置用 `for_spec(g.motor.get_spec())` 生成，夹持力不超过 1.1N·m。仍然报错时联系[技术支持](../common/reference.md#support)。
 
 ??? failure "刚上电时报 `SysBusy`，或电机没反应"
     **原因**：上电后约 10 秒夹爪在自动标定。

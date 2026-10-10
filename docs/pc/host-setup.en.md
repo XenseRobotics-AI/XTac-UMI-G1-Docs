@@ -41,7 +41,7 @@ IoError: SerialBus: open(/dev/serial/by-id/usb-1a86_USB_Dual_Serial_..-if02): De
 
 - **Symptom**: the first launch works, but relaunching right after moving to another port gives busy. It is not a tactile, camera or bandwidth problem.
 - **brltty**: the braille driver `brltty` grabs `1a86` too.
-- **Stopgap**: wait about 3 s after plugging in before launching.
+- **Stopgap**: wait about 3s after plugging in before launching.
 
 Permanent fix (real modems are unaffected):
 

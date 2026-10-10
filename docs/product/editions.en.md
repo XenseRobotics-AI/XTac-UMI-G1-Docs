@@ -61,12 +61,12 @@ This page compares the two and lists each kit's box contents and wiring.
     | Pico4 Ultra Enterprise headset | 1 | With controllers and motion trackers; the trackers mount on top of the two leader grippers |
     | Tracker charging dock | 1 | Three-way |
     | Headset cable (Pico → Pack) | 1 | Type-C to Type-C, 1.5m, headset to the backpack's `PICO` port |
-    | Backpack | 1 | Compute node with a built-in 5 GHz hotspot (off by default) |
+    | Backpack | 1 | Compute node with a built-in 5GHz hotspot (off by default) |
     | Waist belt | 1 | For wearing the backpack |
     | 12V power adapter | 1 | 12V 3A, 1.5m lead, into the backpack's `DC` port |
     | Power bank | 1 | 20000mAh, 45W |
     | 12V PD power cable | 1 | 0.3m, power bank to the backpack's `DC` port |
-    | Tablet | 1 | 6 GB + 128 GB, with case; serves as the console |
+    | Tablet | 1 | 6GB + 128GB, with case; serves as the console |
     | Type-C charging plug | 1 | PD fast charging, 100W |
 
     Use the adapter at a fixed workstation and the power bank for mobile collection:

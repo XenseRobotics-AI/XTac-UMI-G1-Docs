@@ -6,7 +6,7 @@
 
 - `taccap_gripper` 录制自驱动，没有 `--teleop.*` 参数。
 - 移位帧（shifted-frame）配对：*t-1* 步的观测配 *t* 步的位姿作动作（EEF TCP 位姿 + 归一化 `gripper.pos`，开[头显相机](#56)时加头显位姿），每集因此少 1 帧。
-- `tcp.*` 是夹爪末端而非追踪器：追踪器离两指中点约 195 mm，落盘前乘上内置刚性安装变换（CAD 装配实测，左右各一套），机体固连，与姿态和 `gripper.pos` 无关。
+- `tcp.*` 是夹爪末端而非追踪器：追踪器离两指中点约 195mm，落盘前乘上内置刚性安装变换（CAD 装配实测，左右各一套），机体固连，与姿态和 `gripper.pos` 无关。
 - 世界系重力对齐，X 前 / Y 左 / Z 上，在 XTac-UMI XR 启动瞬间冻结，见[坐标系对齐](../common/pico4.md#pico-frame)。
 - `--display_data=true` 开出 Rerun 的 `/world` 3D 视图（`--show_trajectory=false` 关轨迹），元素含义与装配检查见[坐标系 · `/world` 3D 视图](../common/coordinates.md#world-view)。
 
@@ -77,7 +77,7 @@ lerobot-record \
 | `repo_id` | 必填 | `<org>/<name>`，约定 `<org>/<任务>_<变体>_<YYYYMMDD>`，如 `Xense/insert_plug_left_20260703`，见[数据集](dataset.md) |
 | `single_task` | 必填 | 任务描述，写入 `meta/tasks`，如 `'Pick up the object'` |
 | `root` | `$HF_LEROBOT_HOME/repo_id` | 本地存储目录，见[数据集](dataset.md) |
-| `fps` | `30` | 采样帧率上限；传感器本身 120 Hz（[规格](../product/specs.md#specs)） |
+| `fps` | `30` | 采样帧率上限；传感器本身 120Hz（[规格](../product/specs.md#specs)） |
 | `episode_time_s` | `120` | 每集时长（秒） |
 | `reset_time_s` | `60` | 集间复位时长（秒） |
 | `num_episodes` | `50` | 录制集数 |
@@ -267,7 +267,7 @@ lerobot-record \
 ### 没有 NVIDIA GPU 的主机怎么录 {#no-gpu}
 
 !!! warning "这是给不达标机器的临时办法，不是推荐做法"
-    [采集主机最低要求](install.md#host-spec)是 NVIDIA RTX 3060 / 8 GB 显存及以上。纯 CPU 服务器、虚拟机或无 NVIDIA 显卡的笔记本按下面做能录，但存盘慢、易掉帧，正式采集请换达标主机。
+    [采集主机最低要求](install.md#host-spec)是 NVIDIA RTX 3060 / 8GB 显存及以上。纯 CPU 服务器、虚拟机或无 NVIDIA 显卡的笔记本按下面做能录，但存盘慢、易掉帧，正式采集请换达标主机。
 
 这类机器须先升级到 v0.1.0。
 
@@ -281,12 +281,12 @@ lerobot-record \
 
 `--dataset.vcodec=auto` 会实际开一次编码会话探测，无 NVIDIA 驱动时回落到 `libsvtav1`（CPU 上的 AV1）；离线编辑重新编码同理（有 NVIDIA 用 `h264_nvenc`）。也可显式写 `--dataset.vcodec=libsvtav1`。
 
-`libsvtav1` 让 CPU 既编码又采集，双夹爪一帧六到八张图，30 fps 预算仅 33.3 ms，会出现 `[slow_frame] ... overrun=`。关掉后在 `save_episode()` 批量编码，存盘慢只是多等，掉帧则补不回来；忽略"建议把流式编码开回来"的提示。多核服务器仍想开流式编码，调这两项：
+`libsvtav1` 让 CPU 既编码又采集，双夹爪一帧六到八张图，30fps 预算仅 33.3ms，会出现 `[slow_frame] ... overrun=`。关掉后在 `save_episode()` 批量编码，存盘慢只是多等，掉帧则补不回来；忽略"建议把流式编码开回来"的提示。多核服务器仍想开流式编码，调这两项：
 
 | 参数 | 默认 | 什么时候动它 |
 |---|---|---|
 | `--dataset.encoder_threads` | 自动 | 大机器上 `libsvtav1` 会抢走采集要用的核，每个编码器给 `2` 是稳妥上限 |
-| `--dataset.encoder_queue_maxsize` | `30` | 约 1 秒缓冲（30 fps）的反压阀，编码跟不上时在此挡住，内存不再上涨 |
+| `--dataset.encoder_queue_maxsize` | `30` | 约 1 秒缓冲（30fps）的反压阀，编码跟不上时在此挡住，内存不再上涨 |
 
 ## 分集与复位 {#55}
 
@@ -390,7 +390,7 @@ lerobot-record \
 
 - `--robot.head_camera_eyes=left`（或 `right`）只录一只眼，解码与编码压力减半，只有一个头部视频键。
 - 改分辨率或录制的眼睛等于换一组数据，前后 episode 不能混用。
-- 左右眼是两条独立消息，配错在数据里看不出，所以每帧比对两眼最新帧：帧序号相同即同一曝光，否则时间戳差须不超过 `--robot.head_camera_pair_max_skew_ms`（默认 20 ms，30 fps 帧周期约 33 ms）；超出只打限流告警（含实测偏差），不中断录制。
+- 左右眼是两条独立消息，配错在数据里看不出，所以每帧比对两眼最新帧：帧序号相同即同一曝光，否则时间戳差须不超过 `--robot.head_camera_pair_max_skew_ms`（默认 20ms，30fps 帧周期约 33ms）；超出只打限流告警（含实测偏差），不中断录制。
 
 `head_camera.*` 用追踪器的 Pico→world 变换映射到 `tcp.*` 的世界系。开启后 `observation.state` 增 9 维：单夹爪 10 → 19，双夹爪 20 → 29，再开 `--robot.enable_imu=true` 继续累加。连不上见[故障排查](troubleshooting.md#head-camera)。
 

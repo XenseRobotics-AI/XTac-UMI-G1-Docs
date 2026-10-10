@@ -25,7 +25,7 @@ How it is serialised:
 - Video (tactile + wrist camera): mp4
 - Metadata: json / jsonl (`info` / `episodes` / `stats` / `tasks`); key fields in `info` are `fps`, `features`, `total_episodes`, `total_frames`, `robot_type`, `data_path`, `video_path`
 - `robot_type` is the `--robot.type` used for recording (`taccap_gripper` / `bi_taccap_gripper` / `xtac_umi_g1`); right after it, `collection_stack` is always `"xense-taccap-lerobot"`, marking data recorded directly by this program
-- Temporal queries: `delta_timestamps = {"observation.image": [-1, -0.5, -0.2, 0]}` returns the current frame plus the ones 1 s, 0.5 s and 0.2 s before it in one call
+- Temporal queries: `delta_timestamps = {"observation.image": [-1, -0.5, -0.2, 0]}` returns the current frame plus the ones 1s, 0.5s and 0.2s before it in one call
 
 For the per-frame observation and action keys, see [What each frame records](recording.md#53).
 
@@ -162,7 +162,7 @@ Common variants:
 
 On success it lives at `https://huggingface.co/datasets/<repo_id>`.
 
-- The upload generates a dataset card (README) and writes `assets/` (three card images, about 12 MB in total) into the local dataset folder, uploading it too, even with `--no-videos`.
+- The upload generates a dataset card (README) and writes `assets/` (three card images, about 12MB in total) into the local dataset folder, uploading it too, even with `--no-videos`.
 - `--dataset-path` reads local files only; a wrong path fails with `Cannot find dataset metadata in local directory` and nothing is downloaded from the Hub.
 
 ## Planning and estimating disk usage {#storage-planning}

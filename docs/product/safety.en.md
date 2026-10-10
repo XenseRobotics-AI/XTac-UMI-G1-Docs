@@ -15,7 +15,7 @@ Safety requirements shared by both configurations: read them through before firs
 
 | Item | Requirement |
 |---|---|
-| Operating temperature | Grippers 0–50 °C, backpack 0–40 °C; see [Specifications](specs.md) |
+| Operating temperature | Grippers 0–50°C, backpack 0–40°C; see [Specifications](specs.md) |
 | Environment | Dry indoor use; keep away from rain, splashes and condensation |
 | Interference | Keep away from strong magnetic fields and heat sources; headset tracking needs good lighting without direct strong light |
 
@@ -25,7 +25,7 @@ During collection the leader gripper's motor is never energised; the operator mo
 
 | Risk | Requirement | Consequence |
 |---|---|---|
-| Leader gripper power | Use only the supplied Type-C cable to the collection terminal (a USB port on the PC, or `UMI-L` / `UMI-R` on the backpack); bus-powered at DC 5V / 500 mA | Out-of-spec power may damage the device |
+| Leader gripper power | Use only the supplied Type-C cable to the collection terminal (a USB port on the PC, or `UMI-L` / `UMI-R` on the backpack); bus-powered at DC 5V / 500mA | Out-of-spec power may damage the device |
 | Follower gripper power | A 24V adapter supplies power, Type-C carries communication only; never use a mismatched or faulty supply | A miswired supply may damage the hardware |
 | Plugging and unplugging cables | Stop collection before plugging or unplugging the locking Type-C; loosen the screws before pulling it out | Strain on the connector, interrupted data |
 | Static electricity | Anti-static precautions when powering up or down and when removing or refitting a sensor | Affects the sensors and communication |
@@ -68,7 +68,7 @@ See also [Gripper connection and serial numbers](../common/gripper.md), the Back
     System sleep first, screen timeout second; the other way round, the screen timeout's "Never" is clamped back to a finite value. Steps: [Pico4 headset and tracker setup](../common/pico4.md#pico-system).
 
 - Trackers go by the serial number's last digit: odd on the left gripper, even on the right; swapped, the recorded poses will not match the grippers. Binding and verification: [Tracker binding](../common/pico4.md#pico-tracker-bind).
-- A short press of the tracker's power button until the blue light comes on turns it on; a ~6 s hold enters pairing mode, alternating blue and red.
+- A short press of the tracker's power button until the blue light comes on turns it on; a ~6s hold enters pairing mode, alternating blue and red.
 - Headset power: see [The backpack and its power](#backpack-power).
 - Headset wearing, charging and visual health follow Pico's *PICO 4 Ultra User Guide*.
 

@@ -23,14 +23,14 @@ Every pose in a dataset is referenced to this world frame: the Developer Kit wri
 
 === "Backpack Kit"
 
-    The pose view on the console's "Live monitor" page shows the left and right grippers' and the headset's poses live, with the left and right gripper opening angles below it (rad / deg / percentage open). A closed gripper reads about 0.02 rad, and a little more force brings it to zero. Before recording, shake each gripper in turn and confirm that the left and right poses each follow it; if one does not move or jumps around, check the [tracker binding](pico4.md#pico-tracker-bind) and whether the view is obstructed.
+    The pose view on the console's "Live monitor" page shows the left and right grippers' and the headset's poses live, with the left and right gripper opening angles below it (rad / deg / percentage open). A closed gripper reads about 0.02rad, and a little more force brings it to zero. Before recording, shake each gripper in turn and confirm that the left and right poses each follow it; if one does not move or jumps around, check the [tracker binding](pico4.md#pico-tracker-bind) and whether the view is obstructed.
 
 === "Developer Kit"
 
     `--display_data=true` opens a `/world` 3D view in Rerun: each gripper is drawn as a labelled ellipsoid with a triad at its live `tcp.*`, trailing a breadcrumb trajectory.
 
     - The scene is declared `FLU`, the initial viewpoint faces +X, and the world axes are labelled `+X forward / +Y left / +Z up`.
-    - The breadcrumb keeps the most recent 90 samples (about 3 seconds at 30 fps), fading with age.
+    - The breadcrumb keeps the most recent 90 samples (about 3 seconds at 30fps), fading with age.
     - With the headset camera on, the headset is drawn into the same `/world` as a smaller amber `HEAD` marker, without a trajectory.
     - `--show_trajectory` is on by default and `false` turns it off; it is skipped automatically when `--robot.enable_tracker=false`.
     - With the gripper lying flat, the EE marker should sit at the midpoint between the fingers with the triad reading X forward / Y left / Z up; if not, the tracker is fitted wrong.

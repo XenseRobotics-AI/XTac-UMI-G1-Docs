@@ -13,7 +13,7 @@
 | **项目 / 任务 / episode** | 背包版的数据组织层级：项目下建任务，任务带 LeRobot 语言指令，每次开录到停录是一条 episode |
 | **MCAP** | 背包版每条 episode 的原始记录格式，按 topic 存相机、编码器、IMU、位姿与事件；导出 LeRobot 时从它转换 |
 | **OTA bundle** | 背包版 Collector 的升级包（`.tar.zst`），在控制台 系统 → 系统更新 页上传、校验、应用并重启，可回滚到上一版本；PC 版夹爪固件的 OTA 见[固件升级](../pc/versions.md#ota) |
-| **SoftAP** | 数采背包自建的常驻 WiFi 热点，SSID `xense-<序列号后 6 位>`，只有 5 GHz，网关固定 `192.168.44.1`；不依赖现场网络的兜底入口 |
+| **SoftAP** | 数采背包自建的常驻 WiFi 热点，SSID `xense-<序列号后 6 位>`，只有 5GHz，网关固定 `192.168.44.1`；不依赖现场网络的兜底入口 |
 | **TacCap** | 包名 `xense.taccap`、设备类型 `taccap_gripper` 与背包机身标签里的名字（Tactile Capture）；产品名为 XTac-UMI G1 |
 | **UMI** | Universal Manipulation Interface，手持式主夹爪数采范式 |
 | **Leader / Follower** | 主夹爪 / 从夹爪；序列号 patch `m` = leader，`s` = follower |

@@ -18,7 +18,7 @@
 
     ![Protective sticker on the front sensor bar](../assets/pico4/unbox-film.webp){ width="440" }
 
-2. Update the system: a new unit ships on an older build and must be updated before you pair trackers or install the app. Join a WiFi network with internet access, go to Settings → System update and tap "Download and install" to reach Pico OS 5.15.5.U or later (about 1.9 GB).
+2. Update the system: a new unit ships on an older build and must be updated before you pair trackers or install the app. Join a WiFi network with internet access, go to Settings → System update and tap "Download and install" to reach Pico OS 5.15.5.U or later (about 1.9GB).
 
     ![System update to 5.15.5.U](../assets/pico4/system-update.webp){ width="560" }
 
@@ -30,7 +30,7 @@
 
     ![Developer options → turn on USB debugging](../assets/pico4/devmode-usb-debug.webp){ width="480" }
 
-2. Disable sleep and screen-off: Developer options → "Enterprise Settings" → System Settings → Power policy (Enterprise edition only; the consumer edition cannot set "Never"). It ships as screen-off 30 s, system sleep 5 min, battery icon hidden. Change them in order:
+2. Disable sleep and screen-off: Developer options → "Enterprise Settings" → System Settings → Power policy (Enterprise edition only; the consumer edition cannot set "Never"). It ships as screen-off 30s, system sleep 5min, battery icon hidden. Change them in order:
     1. System sleep = Never;
     2. Screen off = Never;
     3. Battery and charging status icon at the bottom = "Always show", to check the charge mid-session.
@@ -120,7 +120,7 @@ Before pairing:
     ![Motion Tracker app: 2 paired](../assets/pico4/tracker-bind.webp){ width="440" }
 
 !!! warning "Power-on is a short press; only pairing needs the hold"
-    Everyday power-on is a short press until the blue light comes on; that is not pairing mode and the app will not find it. First-time binding needs the ~6 s hold until it alternates blue and red.
+    Everyday power-on is a short press until the blue light comes on; that is not pairing mode and the app will not find it. First-time binding needs the ~6s hold until it alternates blue and red.
 
 The binding is stored on the headset and survives power cycles and app restarts. Re-bind after swapping trackers, moving to another headset, a factory reset or pairing the wrong one: unpair from the ⓘ on the right of the list entry, then bind the new one.
 

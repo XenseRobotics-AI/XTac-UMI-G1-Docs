@@ -65,7 +65,7 @@
 
     ---
 
-    多设备时间同步 **5 ms**、空间定位精度 **< 3 mm**，各路数据按同一时刻对齐。
+    多设备时间同步 **5ms**、空间定位精度 **< 3mm**，各路数据按同一时刻对齐。
 
 -   ![主夹爪、背包、工具链到云端的数据链路](../assets/highlights/toolchain.webp){ .tc-card-img loading=lazy }
 

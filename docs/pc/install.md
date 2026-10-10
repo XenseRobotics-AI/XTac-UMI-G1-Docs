@@ -8,21 +8,21 @@
 
 ## 采集主机配置要求 {#host-spec}
 
-双夹爪六路相机边取流边编码，一帧只有 33.3 ms（30 fps）。配置不够时表现为丢帧，不报错。
+双夹爪六路相机边取流边编码，一帧只有 33.3ms（30fps）。配置不够时表现为丢帧，不报错。
 
 | | **最低要求** | **推荐配置** |
 |---|---|---|
 | CPU | Intel **12 代 i7** 及以上（或同级 AMD） | Intel **Core Ultra 9 275HX**（24 核）或同级 |
-| 内存 | **8 GB** | **32 GB** |
-| GPU | NVIDIA **RTX 3060 / 8 GB 显存**及以上 | NVIDIA **RTX 5060 Laptop / 8 GB 显存**及以上 |
+| 内存 | **8GB** | **32GB** |
+| GPU | NVIDIA **RTX 3060 / 8GB 显存**及以上 | NVIDIA **RTX 5060 Laptop / 8GB 显存**及以上 |
 | 显卡驱动 | **≥ 570.144** | 同左 |
-| 硬盘 | 512 GB SSD | **1 TB NVMe SSD** |
+| 硬盘 | 512GB SSD | **1TB NVMe SSD** |
 | USB | **单夹爪**（3 路相机）同一条 USB 2.0 总线即可 | **双夹爪**（6 路相机）分挂**两条 USB 2.0 总线**（两个独立主控制器） |
 | 系统 | Ubuntu 22.04 / 24.04 LTS，**amd64** | Ubuntu 24.04 LTS |
 
-- **CPU**：主循环、触觉解码、喂帧都在 CPU 上，双夹爪一帧六到八张图；12 代 i7 是实测稳住 30 fps 的下限。
+- **CPU**：主循环、触觉解码、喂帧都在 CPU 上，双夹爪一帧六到八张图；12 代 i7 是实测稳住 30fps 的下限。
 - **GPU**：`--dataset.vcodec=auto` 用显卡编码 H.264；没有 NVIDIA 显卡时改用 CPU 编码，存盘慢、易 `[slow_frame]`，见[没有 NVIDIA GPU 怎么录](recording.md#no-gpu)。查驱动：`nvidia-smi --query-gpu=driver_version,name --format=csv,noheader`。
-- **内存**：开 `--display_data` 看 Rerun 或边采边处理时用 32 GB。
+- **内存**：开 `--display_data` 看 Rerun 或边采边处理时用 32GB。
 - **硬盘**：双夹爪原始视频出流约 280 MB/s，落盘量见[磁盘规划](dataset.md#storage-planning)；不要直接录到机械硬盘或 USB 移动硬盘。
 - **USB**：双夹爪 6 路相机分挂两条 480M 总线，见 [USB 带宽预算](host-setup.md#usb-budget)。
 
@@ -33,7 +33,7 @@
 | | **Mamba 源码安装** | **Docker 交付镜像** |
 |---|---|---|
 | 拿到的东西 | 源码仓库，自己建环境 | 拉一个现成镜像，跑一个脚本 |
-| 耗时 | 较长，夹爪 SDK 与 Pico4 绑定要现编译 | 几分钟到几十分钟，看拉镜像（约 21 GB）的网速 |
+| 耗时 | 较长，夹爪 SDK 与 Pico4 绑定要现编译 | 几分钟到几十分钟，看拉镜像（约 21GB）的网速 |
 | NVIDIA GPU | 非必需，没有时只能[降级录制](recording.md#no-gpu) | **必需**，驱动 ≥ 570.144 |
 | 环境隔离 | 主机的 Mamba 环境 | 容器里，不污染主机 |
 | 改代码 | 方便 | 不方便 |
@@ -134,7 +134,7 @@
 
     按 `conda_environment.yaml` 更新环境，从 `pyproject.toml` 装主包，装 `xensesdk` 与 XenseVR PC Service 守护进程，再编译 `xensevr_pc_service_sdk` 与 `xense.taccap`。
 
-    - **下载**：从 [v0.2.1 release](https://github.com/XenseRobotics-AI/XenseVR-PC-Service/releases/tag/v0.2.1) 取当前架构的 `.deb`（约 110 MB），`$XENSEVR_DEB_URL` 可覆盖地址。
+    - **下载**：从 [v0.2.1 release](https://github.com/XenseRobotics-AI/XenseVR-PC-Service/releases/tag/v0.2.1) 取当前架构的 `.deb`（约 110MB），`$XENSEVR_DEB_URL` 可覆盖地址。
     - **安装**：`sudo dpkg -i` 装到 `/opt/apps/roboticsservice`；同版本已装则跳过，下了一半的文件会复用。
     - **下载失败**：`--install` 停下；离线或打过补丁的包用 `$XENSEVR_DEB` 指向本地文件。
     - **版本**：v0.2.1 重新编译过 C SDK，v0.2.0 会拿旧 SDK 编 Pico4 绑定；[头显双目与头部位姿](recording.md#56)需要 PC Service ≥ v0.2.0，追踪器不受影响。

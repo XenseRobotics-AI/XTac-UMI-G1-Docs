@@ -101,7 +101,7 @@ Note the serial number, connection, error and a photo of the setup; take anti-st
     - ModemManager probes the CH343 serial port with AT commands for a few seconds on every hot-plug; `brltty` grabs it the same way. For containers the rule goes on the host.
     - Another program holds the gripper's serial port exclusively, e.g. a previous recording, calibration or example script that has not exited.
 
-    **Fix:** close the other program first. For ModemManager: temporarily, wait about 3 s after plugging in; permanently, add a udev rule ignoring `1a86` devices (`install_customer.sh` on the Docker path already installs it). Rule and verification are in [Stopping ModemManager from grabbing the port](host-setup.md#32); re-plug the gripper afterwards.
+    **Fix:** close the other program first. For ModemManager: temporarily, wait about 3s after plugging in; permanently, add a udev rule ignoring `1a86` devices (`install_customer.sh` on the Docker path already installs it). Rule and verification are in [Stopping ModemManager from grabbing the port](host-setup.md#32); re-plug the gripper afterwards.
 
 ??? failure "`firmware_sn` is still empty after fixing permissions / `role=Unknown`"
     **Cause:** the SN was not burned in, the serial read still fails, or firmware communication or device configuration is faulty; an empty SN alone does not tell you the firmware version.
@@ -247,7 +247,7 @@ Note the serial number, connection, error and a photo of the setup; take anti-st
     - if `Status` is not `install ok installed` (e.g. removed with `dpkg -r`, leaving `deinstall ok config-files`), reinstall the same way.
 
 ??? failure "Repeated left/right eye skew warnings in the log"
-    **Cause:** the two eyes' independent messages differ in timestamp by more than `--robot.head_camera_pair_max_skew_ms` (20 ms by default); usually a loaded host or link jitter.
+    **Cause:** the two eyes' independent messages differ in timestamp by more than `--robot.head_camera_pair_max_skew_ms` (20ms by default); usually a loaded host or link jitter.
 
     **Fix:** the warning does not interrupt recording, but those frames may be out of sync.
 
@@ -278,7 +278,7 @@ Note the serial number, connection, error and a photo of the setup; take anti-st
     **Fix:** resume with the original `--robot.id`, or record into a new `--dataset.repo_id`.
 
 ??? failure "Recording dies partway through with `ValueError: You must add one or several frames`"
-    **Cause:** for about 2 s between episodes no keyboard events are read (saving plus encoder warm-up), and a **right arrow** pressed in that gap stays pending, typically just as the previous reset times out on its own. The next episode exits with zero frames, saving raises this error and the whole session dies; it surfaces more than two minutes after the keypress.
+    **Cause:** for about 2s between episodes no keyboard events are read (saving plus encoder warm-up), and a **right arrow** pressed in that gap stays pending, typically just as the previous reset times out on its own. The next episode exits with zero frames, saving raises this error and the whole session dies; it surfaces more than two minutes after the keypress.
 
     **Fix:** upgrade to `0.0.7` or newer, which discards key presses in that gap. The keyboard hook is global, so a right arrow in **any** window ends the episode (Rerun included); the keypress timestamps in the [session log](#logs) help trace it.
 
@@ -292,21 +292,21 @@ Note the serial number, connection, error and a photo of the setup; take anti-st
     **Fix:**
 
     - **Single-frame** duplicates are expected: capture and recording each run at the nominal rate, and phase drift occasionally samples a frame twice; ignore them.
-    - A **long contiguous run** is a real stall, most often the GPU encoder starving the tactile threads for 0.3 to 0.9 s while 8 cameras encode.
+    - A **long contiguous run** is a real stall, most often the GPU encoder starving the tactile threads for 0.3 to 0.9s while 8 cameras encode.
     - A few percent in short runs is fine; discard an episode with a very long run.
     - If it persists, work through [Not enough USB bandwidth](#usb-bandwidth) or record fewer cameras.
 
     `[loop_summary]` gives the actual frame rate, e.g. `= 29.0 fps (nominal 30; dataset timestamps assume nominal)`: dataset timestamps are still written at the nominal rate.
 
 ??? failure "The log shows `[slow_frame] ... overrun=`"
-    **Cause:** a frame exceeded the frame budget (33.3 ms at 30 fps). The Rerun display runs on its own thread and is **not a cause**.
+    **Cause:** a frame exceeded the frame budget (33.3ms at 30fps). The Rerun display runs on its own thread and is **not a cause**.
 
     **Fix:** read the two parts:
 
     - ` | phases obs=… build=… add=… display=…`: time per phase;
     - `top_obs=` at the end: the slowest sensors.
 
-    The first 5 `[slow_frame]` lines per episode reach the screen; the rest go to the [session log](#logs), and the screen shows a `[slow_frame_summary]` every 5 s instead. Occasional ones do not affect the data; if they persist on the same camera, work through [Not enough USB bandwidth](#usb-bandwidth). Without an NVIDIA card see [Recording on a host without an NVIDIA GPU](recording.md#no-gpu).
+    The first 5 `[slow_frame]` lines per episode reach the screen; the rest go to the [session log](#logs), and the screen shows a `[slow_frame_summary]` every 5s instead. Occasional ones do not affect the data; if they persist on the same camera, work through [Not enough USB bandwidth](#usb-bandwidth). Without an NVIDIA card see [Recording on a host without an NVIDIA GPU](recording.md#no-gpu).
 
 ??? failure "Recording stops partway through with `Device lost mid-recording`"
     **Cause:** a camera or the gripper encoder dropped off: a loose cable, untightened screws, cable strain, a hub losing power, unstable power or poor contact. What was recorded so far is saved.
@@ -319,7 +319,7 @@ Note the serial number, connection, error and a photo of the setup; take anti-st
     **Fix:** switch to a CPU encoder and turn streaming encoding off: `lerobot-record ... --dataset.vcodec=libsvtav1 --dataset.streaming_encoding=false`. The reasoning is in [Recording on a host with no NVIDIA GPU](recording.md#no-gpu).
 
 ??? failure "The encoder cannot keep up and dropped-frame warnings appear in the log"
-    **Cause:** a full encoding queue waits up to 0.1 s, then drops the frame and warns `Encoder queue full … dropped N frame(s)` (rather than blocking the collection loop).
+    **Cause:** a full encoding queue waits up to 0.1s, then drops the frame and warns `Encoder queue full … dropped N frame(s)` (rather than blocking the collection loop).
 
     **Fix:** raise `--dataset.encoder_threads`, use `--dataset.vcodec=auto`, or adjust `--dataset.encoder_queue_maxsize`, see [Recording options](recording.md#54).
 

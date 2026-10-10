@@ -50,7 +50,7 @@ hide:
 
 **3 × 6DoF poses** both grippers + head
 
-**5 ms sync** positioning < 3 mm
+**5ms sync** positioning < 3mm
 
 **MCAP · LeRobot v3** raw and training formats
 
@@ -70,7 +70,7 @@ hide:
 
 - **Visuotactile fusion**: tri-colour fingertip sensors capture contact location, grasp stability and slip
 - **Close to the hand**: the wearable leader handles grasping, insertion and thin-part picking
-- **Precise sync**: 5 ms multi-device time sync, < 3 mm positioning
+- **Precise sync**: 5ms multi-device time sync, < 3mm positioning
 - **Open formats**: LeRobot / MCAP output, compatible with mainstream data ecosystems
 
 [More highlights](product/highlights.md){ .md-button .md-button--primary }

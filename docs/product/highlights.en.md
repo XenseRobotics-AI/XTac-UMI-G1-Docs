@@ -65,7 +65,7 @@
 
     ---
 
-    Multi-device time sync of **5 ms** and positioning accuracy of **< 3 mm**; every stream is aligned to the same instant.
+    Multi-device time sync of **5ms** and positioning accuracy of **< 3mm**; every stream is aligned to the same instant.
 
 -   ![Data path from gripper and backpack through the toolchain to the cloud](../assets/highlights/toolchain.webp){ .tc-card-img loading=lazy }
 

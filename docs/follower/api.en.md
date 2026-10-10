@@ -33,7 +33,7 @@ Follower serials end in `s`; see [Serial number](index.md#sn).
 |---|---|---|
 | Controller | `ImpedanceController` | `ForcePositionController` |
 | Config | `ImpedanceConfig.for_spec(g.motor.get_spec())` | `ForcePositionConfig.for_spec(g.motor.get_spec())` |
-| Tunable | Usually left alone | `grasp_torque_nm` (grip force, ≤ 1.1 N·m) |
+| Tunable | Usually left alone | `grasp_torque_nm` (grip force, ≤ 1.1N·m) |
 | Common | `set_target(opening)` | `set_target(opening)`, `release()`, `hold_position()` |
 
 Both have `start()` / `stop()` (or `with`), `snapshot()` and `reset()`. Order:

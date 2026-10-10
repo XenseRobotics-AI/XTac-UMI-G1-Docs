@@ -96,9 +96,9 @@ This page gives a cause and fix per symptom. The most common are not reaching th
     - Ways in: [Network and console access](network.md#softap).
 
 ??? failure "The tablet or phone cannot find the backpack hotspot"
-    **Cause:** the hotspot is 5 GHz only; 2.4 GHz-only devices cannot see it.
+    **Cause:** the hotspot is 5GHz only; 2.4GHz-only devices cannot see it.
 
-    **Fix:** use a 5 GHz-capable device, or put the backpack on the site network and reach it over the LAN, see [Joining site WiFi and wired](network.md#lan).
+    **Fix:** use a 5GHz-capable device, or put the backpack on the site network and reach it over the LAN, see [Joining site WiFi and wired](network.md#lan).
 
 ??? failure "A PC cannot open `xense-xxxxxx.local` but a phone can"
     **Cause:** Windows mDNS resolution is unreliable.
@@ -111,7 +111,7 @@ This page gives a cause and fix per symptom. The most common are not reaching th
     **Fix:** turn off "auto-connect" for, or forget, other saved networks; keep only the backpack hotspot.
 
 ??? failure "The backpack's network page cannot find the site WiFi"
-    **Cause:** the backpack only joins and lists 5 GHz WiFi; a 2.4 GHz-only router is invisible.
+    **Cause:** the backpack only joins and lists 5GHz WiFi; a 2.4GHz-only router is invisible.
 
     **Fix:** use wired, or the backpack hotspot.
 
@@ -129,7 +129,7 @@ This page gives a cause and fix per symptom. The most common are not reaching th
     - "Pico not ready" or "Tracker not ready" with the specific reason (such as a connection timeout, missing pose or video from one eye, missing clock sync, a headset configuration change awaiting confirmation, or a Tracker out of view or still for more than 5 seconds without active tracking);
     - no gripper MCU online;
     - the task has reached its cumulative collection target;
-    - the recording disk is 80 % used.
+    - the recording disk is 80% used.
 
     **Fix:**
 
@@ -150,7 +150,7 @@ This page gives a cause and fix per symptom. The most common are not reaching th
     The basis is in [Picking a project and task](monitor-record.md#project-task).
 
 ??? failure "Recording refused: “Recording disk is N% used, at the 80% limit”"
-    **Cause:** recording is refused at 80 %, leaving 20 % for transcode intermediates and exports and avoiding a truncated MCAP on a full disk.
+    **Cause:** recording is refused at 80%, leaving 20% for transcode intermediates and exports and avoiding a truncated MCAP on a full disk.
 
     **Fix:**
 
@@ -264,7 +264,7 @@ This page gives a cause and fix per symptom. The most common are not reaching th
     - Save and click "Check read/write" again; if it still fails, contact support with the check's exact message, device SN, console version and backend kind.
 
 ??? failure "The LeRobot dataset is bigger than expected"
-    **Cause:** several video feeds are recorded at once; 1.5 GB for a task of around 3 minutes is normal, and the hardware encoder limits how small it gets.
+    **Cause:** several video feeds are recorded at once; 1.5GB for a task of around 3 minutes is normal, and the hardware encoder limits how small it gets.
 
     **Fix:** budget transfer and storage at that scale.
 

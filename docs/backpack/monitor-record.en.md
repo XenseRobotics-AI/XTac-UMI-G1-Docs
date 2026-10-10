@@ -21,8 +21,8 @@ Check each item before recording, and do not start if any is wrong:
 |---|---|---|
 | Every view | The top bar's "Cameras" count matches the capture mode (6 / 6 for "Dual gripper", 8 / 8 for "Dual gripper + headset stereo", 7 / 7 for "Dual gripper + headset right eye") and every tile has an image; fisheye views are sharp; the visuotactile feed is the geometrically rectified image with no difference overlay, and the contact area changes as you press | A blurred fisheye usually means the focus ring was knocked; turn it back to sharp before recording. If the count is wrong, check [System → Capture mode](system.md#capture-mode); only if one feed stays black for long, click "Refresh devices" |
 | Headset pose and tracker state | Move a gripper and the headset and the 3D model follows; the indicator at the top right of the pose card is green | "Pose online" but the model does not move: the tracker app in the Pico usually never really started; hold the tracker's power button to reactivate it and restart the app on the Pico. Light turns yellow with a prompt: a tracker has left the headset's view (orientation only, no position); bring it back into view. Check left / right by serial number, odd left and even right, see [Pico4 tracker serial numbers](../common/pico4.md#pico-tracker-sn) |
-| Both grippers' opening | The two cards below the pose view show radians, degrees and a normalised percentage: about 100 % fully open, about 0 % closed (about 0.02 rad; a little more force reaches 0) | If fully open will not reach 100 % or closing will not return to 0, recalibrate at [System → Gripper](system.md#gripper) |
-| Free disk space | The top bar's "Disk" usage is below 80 % (recording disk, measured on the device); hovering shows the mount point, used, total and available space | At 80 % recording is refused; [export and archive](projects-export.md#archive) the data you have, or delete recordings you do not need |
+| Both grippers' opening | The two cards below the pose view show radians, degrees and a normalised percentage: about 100% fully open, about 0% closed (about 0.02rad; a little more force reaches 0) | If fully open will not reach 100% or closing will not return to 0, recalibrate at [System → Gripper](system.md#gripper) |
+| Free disk space | The top bar's "Disk" usage is below 80% (recording disk, measured on the device); hovering shows the mount point, used, total and available space | At 80% recording is refused; [export and archive](projects-export.md#archive) the data you have, or delete recordings you do not need |
 | Recording state | The status line at the top right of the project / task card reads "Standby", followed by the capture-mode badge (for example "Dual gripper + headset stereo"); "Start recording" is clickable | When the badge says "Pico not ready" and the button is grey, the reason is below the status line: "Pico not ready" and "Tracker not ready" are separate and can appear together, each followed by the specific cause (for example disconnected or timed out, pose data missing or timed out, left-eye / right-eye video missing or timed out, clock synchronization missing or timed out, or the tracker out of view or stationary for over 5 seconds); a missing project / task is stated too. Deal with the reason first |
 
 - The preview is encoded once by the backpack's hardware encoder and sent to every device with the console open; headset and visuotactile previews are half resolution, so looking coarser than the recording is normal. Recording bypasses the preview path: the MCAP holds the cameras' raw MJPEG frames at full resolution.
@@ -62,9 +62,9 @@ The fields for a new task:
 
 Camera parameters and rectification:
 
-- **Wrist cameras and tactile sensors**: fixed at 640×480 @ 30 fps and 640×480 @ 120 fps respectively, not adjustable.
+- **Wrist cameras and tactile sensors**: fixed at 640×480 @ 30fps and 640×480 @ 120fps respectively, not adjustable.
 - **All rectification happens at export**: tactile is rectified geometrically in the chosen orientation; wrist fisheye rectification, if on, uses the calibration parameters frozen into the recording when it started.
-- **LeRobot export**: fixed at 30 fps.
+- **LeRobot export**: fixed at 30fps.
 
 ## Recording {#record}
 
@@ -88,7 +88,7 @@ With both hands on the grippers and eyes on the scene, you rely on two complemen
 
 Whether started from a gripper button or the console, the device checks these in order and stops at the first failure:
 
-1. Disk usage below 80 %;
+1. Disk usage below 80%;
 2. A project and task are selected, and the task's cumulative count has not reached its target;
 3. The gripper MCUs are online;
 4. Pico ready: the headset is connected with pose and clock sync working; in modes that record headset video, the selected eye's video must be working too;
@@ -120,9 +120,9 @@ Long-press the left gripper or click "Stop recording": the entry is saved into t
 
 On stopping, an automatic quality check marks the entry "data suspect" if any of these hits (the gripper pulses yellow and the "Quality" column on the Projects page carries a mark; the entry is saved either way):
 
-- The recording is shorter than 1 s (almost always a misfire);
+- The recording is shorter than 1s (almost always a misfire);
 - Any camera channel recorded not one frame, or the whole take received no video frames at all;
-- Tracking was lost for more than 20 % of the take's duration (suspected to have left the field of view);
+- Tracking was lost for more than 20% of the take's duration (suspected to have left the field of view);
 - The tactile rectification recipe is missing (this take's LeRobot export is certain to fail).
 
 For a suspect entry, best [delete the previous take](#record-delete) on the spot and re-record.

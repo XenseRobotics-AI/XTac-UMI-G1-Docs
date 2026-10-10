@@ -162,7 +162,7 @@ lerobot-push-dataset-to-hub \
 
 成功后地址为 `https://huggingface.co/datasets/<repo_id>`。
 
-- 上传时自动生成数据集卡片（README），并在本地数据集目录写 `assets/`（三张卡片图，共约 12 MB）一并上传，`--no-videos` 也照传。
+- 上传时自动生成数据集卡片（README），并在本地数据集目录写 `assets/`（三张卡片图，共约 12MB）一并上传，`--no-videos` 也照传。
 - `--dataset-path` 只读本地，路径不对报 `Cannot find dataset metadata in local directory`，不会从 Hub 下载。
 
 ## 磁盘规划与估算 {#storage-planning}

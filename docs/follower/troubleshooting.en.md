@@ -41,7 +41,7 @@ On this page, **power-cycle** means unplugging the 24V power cable, waiting abou
     **Cause**: the automatic calibration at power-on did not complete, usually because the jaws were blocked or the 24V was not connected at power-on.
     **Fix**: clear the area around the jaws, connect the 24V, power-cycle, and wait for the jaws to open and close once by themselves before trying again.
 
-??? failure "The data frame rate is well below 100 Hz, or `OK` is not shown"
+??? failure "The data frame rate is well below 100Hz, or `OK` is not shown"
     **Fix**: close other programs using the gripper, try another cable or USB port, power-cycle, and run the self-check again.
 
 ??? failure "`get_spec()` shows something other than EL05"
@@ -51,7 +51,7 @@ On this page, **power-cycle** means unplugging the 24V power cable, waiting abou
 
 ??? failure "It reports `ValueError: ... exceeds ...` or `RuntimeError: ... stored motor startup torque limit ...`"
     **Cause**: a torque in the controller config exceeds the motor's rating.
-    **Fix**: generate the config with `for_spec(g.motor.get_spec())` and keep the grip force at or below 1.1 N·m. If it still fails, contact [technical support](../common/reference.md#support).
+    **Fix**: generate the config with `for_spec(g.motor.get_spec())` and keep the grip force at or below 1.1N·m. If it still fails, contact [technical support](../common/reference.md#support).
 
 ??? failure "It reports `SysBusy` right after power-on, or the motor does not respond"
     **Cause**: for about 10 seconds after power-on the gripper is calibrating automatically.

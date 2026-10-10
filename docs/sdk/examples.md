@@ -58,10 +58,10 @@ python python/examples/wrist_camera.py <相机序列号> --undistort   # 矫正�
 
 从 0.3.x 升级到 0.4.x 时：
 
-- 力位控制改为单一的力矩受限控制律，夹住时更稳；`snapshot().holding` 会比以前晚约 150 ms 变为真，
+- 力位控制改为单一的力矩受限控制律，夹住时更稳；`snapshot().holding` 会比以前晚约 150ms 变为真，
   依赖它的程序请重新验证。
 - 闭合到 0 时，最终状态可能是 `HOLDING_FORCE` 也可能是 `HOLDING_POSITION`，两者都是正常的。
-- 运行中 `set_target(开度, 夹持力)` 的夹持力超过 1.1 N·m 时直接报错，不再静默接受。
+- 运行中 `set_target(开度, 夹持力)` 的夹持力超过 1.1N·m 时直接报错，不再静默接受。
 - 新增 `g.motor.motor_version()` 读电机固件版本（夹爪固件 1.2.14 起不受电机通信模式限制）。
 
 完整变更见 SDK 的 [CHANGELOG](https://github.com/XenseRobotics-AI/TacCap-Gripper/blob/v0.4.1/CHANGELOG.md)。

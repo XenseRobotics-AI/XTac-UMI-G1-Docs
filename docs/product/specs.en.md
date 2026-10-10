@@ -7,16 +7,16 @@ Specifications for the XTac-UMI G1 grippers, the tracking system and the backpac
 | Parameter | Specification |
 |---|---|
 | Structure | Two-finger gripper, one left and one right |
-| Dimensions | 145 × 186 × 170 mm |
-| Weight | About 370 g |
-| Payload | 2.5 kg maximum |
-| Opening travel | 0–150 mm (each unit's calibrated value applies) |
+| Dimensions | 145 × 186 × 170mm |
+| Weight | About 370g |
+| Payload | 2.5kg maximum |
+| Opening travel | 0–150mm (each unit's calibrated value applies) |
 | Visuotactile sensors | 2 (one per finger), see [Visuotactile sensor](#sensor) below |
-| Wrist fisheye camera | 190° field of view, 640 × 480 @ 30 fps |
-| IMU | 9-axis, 100 Hz |
-| Opening encoder | 100 Hz |
-| Connector and power | USB Type-C (locking), DC 5V / 500 mA bus power, no internal battery |
-| Operating temperature | 0–50 °C |
+| Wrist fisheye camera | 190° field of view, 640 × 480 @ 30fps |
+| IMU | 9-axis, 100Hz |
+| Opening encoder | 100Hz |
+| Connector and power | USB Type-C (locking), DC 5V / 500mA bus power, no internal battery |
+| Operating temperature | 0–50°C |
 
 ### Visuotactile sensor {#sensor}
 
@@ -25,29 +25,29 @@ The fingertip sensor is Xense's GS-PS visuotactile sensor; see the [product page
 | Parameter | Specification |
 |---|---|
 | Imaging | Tri-colour illumination |
-| Sensing area | 623 mm² |
-| Elastomer thickness | 2–5 mm |
+| Sensing area | 623mm² |
+| Elastomer thickness | 2–5mm |
 | Image resolution | 640 × 480 |
-| Sampling rate | 0–120 Hz |
-| Range | 0–25 N |
-| Force accuracy | 0.2 N |
-| Deformation accuracy | 0.1 mm |
+| Sampling rate | 0–120Hz |
+| Range | 0–25N |
+| Force accuracy | 0.2N |
+| Deformation accuracy | 0.1mm |
 | Modalities | 3D shape, 6-axis force, 3D force distribution, slip detection |
 
-The frame rate used during collection can be set as needed (the Developer Kit records tactile at 30 fps by default) without changing the sensors' own specification.
+The frame rate used during collection can be set as needed (the Developer Kit records tactile at 30fps by default) without changing the sensors' own specification.
 
 ## Follower gripper {#follower}
 
 | Parameter | Specification |
 |---|---|
 | Structure | Two-finger gripper, mounted on the robot's end effector |
-| Dimensions | 200 × 157 × 111 mm (L × W × H), see the drawing below |
+| Dimensions | 200 × 157 × 111mm (L × W × H), see the drawing below |
 | Motor | RobStride EL05 |
-| Maximum output torque | 1.1 N·m |
+| Maximum output torque | 1.1N·m |
 | Opening angle | 0–70° |
 | Control | Impedance control (default), force-position control |
 | Connector and power | USB Type-C for communication + 24V power adapter (24V 2.5A) |
-| Operating temperature | 0–50 °C |
+| Operating temperature | 0–50°C |
 
 ![Follower gripper dimensions (mm)](../assets/product/follower-dimensions.webp){ width="760" }
 
@@ -58,9 +58,9 @@ How to use it is in [Follower gripper](../follower/index.md).
 | Parameter | Specification |
 |---|---|
 | Pose source | Pico4 Ultra Enterprise headset + motion trackers, 6-DoF |
-| Pose rate | About 90 Hz on the Developer Kit; every pose the headset reports is recorded on the Backpack Kit |
-| Positioning accuracy | < 3 mm |
-| Multi-device time sync | 5 ms |
+| Pose rate | About 90Hz on the Developer Kit; every pose the headset reports is recorded on the Backpack Kit |
+| Positioning accuracy | < 3mm |
+| Multi-device time sync | 5ms |
 | Coordinate frame | X forward, Y left, Z up, see [Coordinate frames](../common/coordinates.md) |
 
 ## The backpack {#backpack}
@@ -70,15 +70,15 @@ The Backpack Kit's collection unit: the grippers and headset plug into it and th
 | Parameter | Specification |
 |---|---|
 | Processor | RK3588 |
-| Storage | eMMC system disk + 1 TB NVMe data disk; recordings and exports live on the data disk |
+| Storage | eMMC system disk + 1TB NVMe data disk; recordings and exports live on the data disk |
 | Disk-full rule | The data disk counts as full at 80% and recording stops |
-| Exported data size | An exported LeRobot dataset takes about 200 GB per 400 hours |
+| Exported data size | An exported LeRobot dataset takes about 200GB per 400 hours |
 | Power | 12V 3A power adapter, or a 20000mAh power bank through a 12V PD power cable |
 | Power draw | About 20W |
 | Power-bank runtime | About 3.5–4 hours |
-| Network | Ethernet; WiFi (5 GHz); built-in 5 GHz hotspot |
+| Network | Ethernet; WiFi (5GHz); built-in 5GHz hotspot |
 | Ports | `UMI-L` / `UMI-R` for the leader grippers, `PICO` for the headset, `DC IN` for power, `HOST1` / `HOST2` USB host ports, plus Ethernet, TF slot, `HDMI` and headphone jack, see [Ports](backpack.md#ports) |
-| Operating temperature | 0–40 °C |
+| Operating temperature | 0–40°C |
 | Environment | Indoor use; not waterproof, keep away from rain, splashes and heavy dust |
 
 The serial number, hotspot name and password on the body label are explained in [Identify the unit by its label](../backpack/network.md#label).

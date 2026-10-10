@@ -51,8 +51,8 @@ Flash first per [Firmware OTA upgrade](versions.md#ota): the image is chosen by 
 
 Once the version passes, the script prints the current reading (raw and clamped); follow the two prompts:
 
-1. Fully closed → Enter. It sends `SetEncoderZero` to latch the zero, then re-reads to verify the residual (tolerance ±0.01 rad).
-2. Fully open to the mechanical limit → Enter. The angle goes straight into `EncoderMaxCal` in MCU flash, with no second confirmation; a 10 Hz live readout follows for checking.
+1. Fully closed → Enter. It sends `SetEncoderZero` to latch the zero, then re-reads to verify the residual (tolerance ±0.01rad).
+2. Fully open to the mechanical limit → Enter. The angle goes straight into `EncoderMaxCal` in MCU flash, with no second confirmation; a 10Hz live readout follows for checking.
 
 !!! warning "Get the jaw in position first, then press Enter"
     The firmware latches the raw count the instant it receives the command; moving the jaw afterwards wastes the calibration.
@@ -83,7 +83,7 @@ Step 2/2: open the gripper to its MECHANICAL LIMIT.
 
 A previously calibrated unit gets an extra `existing span: … — will be overwritten` header line.
 
-- **Closed is always 0**: there is no `gripper_closed_rad` config; negative drift is clamped to 0 (the raw value stays in `raw_position_rad`), and beyond -0.1 rad it triggers a rate-limited warning.
+- **Closed is always 0**: there is no `gripper_closed_rad` config; negative drift is clamped to 0 (the raw value stays in `raw_position_rad`), and beyond -0.1rad it triggers a rate-limited warning.
 - **Fields**: `position_rad` is still raw radians; normalisation only adds a `position` field.
 
 ### Confirm it took effect {#413}
@@ -123,9 +123,9 @@ python -m lerobot.robots.taccap_gripper.check_tracker <tracker SN>
 python -m lerobot.robots.taccap_gripper.check_tracker --side right
 ```
 
-Prints `raw` (the tracker's own pose) and `ee` (the TCP after the mount transform) at 10 Hz. Wave the gripper: `raw xyz` should change smoothly and the SN should match ([Reading a tracker SN](../common/pico4.md#pico-tracker-sn)).
+Prints `raw` (the tracker's own pose) and `ee` (the TCP after the mount transform) at 10Hz. Wave the gripper: `raw xyz` should change smoothly and the SN should match ([Reading a tracker SN](../common/pico4.md#pico-tracker-sn)).
 
-- **Mount transform**: the rigid tracker-to-TCP offset is built in (measured off the CAD assembly), each side separately; the two are close to mirror images but not identical (0.03° apart in rotation, 1.27 mm in translation).
+- **Mount transform**: the rigid tracker-to-TCP offset is built in (measured off the CAD assembly), each side separately; the two are close to mirror images but not identical (0.03° apart in rotation, 1.27mm in translation).
 - **`--side`**: picks which side to apply; without it the transform is identity and `ee` follows `raw`.
 - **Override**: after re-machining the mount, set `--robot.tracker_to_ee_pos` / `--robot.tracker_to_ee_quat`; the two are independent, so you can pin just the translation.
 - **Pivot check**: rest the midpoint of the two fingers on a fixed point and sweep the handle through many orientations; `ee xyz` should barely move while `raw xyz` swings widely, and the drift is the transform's error. Test both sides; a left value mirrored the wrong way makes `ee` swing about twice as far as it should.

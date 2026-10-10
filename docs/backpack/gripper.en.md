@@ -12,8 +12,8 @@ The button state machine runs on the backpack and **does not need the browser to
 |---|---|
 | **Right gripper hold** | Start recording |
 | **Left gripper hold** | Stop recording |
-| **Left gripper double-press** | Enter delete confirmation (purple blink; exits by itself after 5 s without input) |
-| **Double-press** again while confirming | Delete the previous episode (solid purple for 3 s; those 3 s are also the cool-down, during which double-presses are ignored) |
+| **Left gripper double-press** | Enter delete confirmation (purple blink; exits by itself after 5s without input) |
+| **Double-press** again while confirming | Delete the previous episode (solid purple for 3s; those 3s are also the cool-down, during which double-presses are ignored) |
 | **Left gripper hold** while confirming | Cancel the delete |
 | **Right gripper hold** while confirming | Abandon the delete and start a new recording right away (the previous episode is kept) |
 | **Right gripper single press** while recording | Place a subtask marker (a sub-step boundary) in this recording, with a tone |
@@ -26,11 +26,11 @@ Which gripper does what (right starts / left stops), the press timings and the L
 |---|---|---|
 | <span class="tc-lamp green solid"></span> | Green Solid | Standby: ready to record |
 | <span class="tc-lamp green breathe"></span> | Green Breathing | Recording (one bright-dark cycle per second) |
-| <span class="tc-lamp white flash"></span> | White One flash | Saved (on for 0.4 s) |
-| <span class="tc-lamp amber solid"></span> | Yellow Solid | Recording failed to start (on for 2 s), or a fatal problem while recording (stays on) |
-| <span class="tc-lamp amber pulse"></span> | Yellow Pulse | Suspect data: still recording, but that take is questionable (on 0.2 s, off 0.8 s, 3 times) |
-| <span class="tc-lamp amber strobe"></span> | Yellow Fast blink | Action refused, e.g. a double-press with nothing to delete (0.1 s on/off, 3 times) |
-| <span class="tc-lamp purple blink"></span> | Purple Blink | Delete confirmation, waiting for your second double-click; 0.3 s on/off, cancels on timeout |
+| <span class="tc-lamp white flash"></span> | White One flash | Saved (on for 0.4s) |
+| <span class="tc-lamp amber solid"></span> | Yellow Solid | Recording failed to start (on for 2s), or a fatal problem while recording (stays on) |
+| <span class="tc-lamp amber pulse"></span> | Yellow Pulse | Suspect data: still recording, but that take is questionable (on 0.2s, off 0.8s, 3 times) |
+| <span class="tc-lamp amber strobe"></span> | Yellow Fast blink | Action refused, e.g. a double-press with nothing to delete (0.1s on/off, 3 times) |
+| <span class="tc-lamp purple blink"></span> | Purple Blink | Delete confirmation, waiting for your second double-click; 0.3s on/off, cancels on timeout |
 | <span class="tc-lamp purple solid"></span> | Purple Solid | The 3-second cool-down just after deleting; double-clicks are ignored |
 | <span class="tc-lamp red solid"></span> | Red Solid | System problem (e.g. a gripper dropped out, lit by the backpack) |
 | <span class="tc-lamp red burst"></span> | Red Burst | Gripper-side problem (lit by the gripper itself, not via the backpack) |

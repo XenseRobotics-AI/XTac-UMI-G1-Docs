@@ -154,13 +154,13 @@ The ways to open the console are in [Network and console access](network.md); th
 
 ### Joining site WiFi {#wifi-site}
 
-Set this up when the site has 5 GHz WiFi and several computers or tablets need to reach the backpack.
+Set this up when the site has 5GHz WiFi and several computers or tablets need to reach the backpack.
 
 1. Open the console from the tablet (USB) or the [backpack hotspot](network.md#softap) and go to System → Network.
 2. "Rescan", click the target network, enter the password and connect.
 3. The backpack remembers the network and reconnects after a reboot.
 
-Only 5 GHz networks are listed (2.4 GHz would disrupt the backpack hotspot). If the site has only 2.4 GHz, use wired or the hotspot.
+Only 5GHz networks are listed (2.4GHz would disrupt the backpack hotspot). If the site has only 2.4GHz, use wired or the hotspot.
 
 ### Wired IP {#wifi-wired}
 

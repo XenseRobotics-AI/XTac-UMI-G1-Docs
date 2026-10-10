@@ -247,7 +247,7 @@
     - `Status` 不是 `install ok installed`（如 `dpkg -r` 删过，残留 `deinstall ok config-files`）时同样重装。
 
 ??? failure "日志反复出现左右眼偏差（skew）告警"
-    **原因**：两眼两条独立消息的时间戳差超过 `--robot.head_camera_pair_max_skew_ms`（默认 20 ms）；常见于主机负载高或链路抖动。
+    **原因**：两眼两条独立消息的时间戳差超过 `--robot.head_camera_pair_max_skew_ms`（默认 20ms）；常见于主机负载高或链路抖动。
 
     **解决**：告警不中断录制，但这几帧可能不同步。
 
@@ -299,7 +299,7 @@
     `[loop_summary]` 给出实际帧率，如 `= 29.0 fps (nominal 30; dataset timestamps assume nominal)`：数据集时间戳仍按标称帧率写。
 
 ??? failure "日志出现 `[slow_frame] ... overrun=`"
-    **原因**：某帧超出帧预算（30 fps 为 33.3 ms）；Rerun 显示在独立线程，**不是原因**。
+    **原因**：某帧超出帧预算（30fps 为 33.3ms）；Rerun 显示在独立线程，**不是原因**。
 
     **解决**：看两段信息：
 
