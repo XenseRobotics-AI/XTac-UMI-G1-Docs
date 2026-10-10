@@ -285,8 +285,8 @@ nav:
       - 回放: backpack/playback.md
       - 系统设置: backpack/system.md
       - 升级与 OTA: backpack/update.md
-      - 故障排查: backpack/troubleshooting.md
       - 版本: backpack/versions.md
+      - 故障排查: backpack/troubleshooting.md
   - PC 版:
       - pc/index.md
       - 一页速通: pc/quickstart.md
@@ -295,7 +295,6 @@ nav:
       - 标定与自检: pc/calibration.md
       - 数据采集: pc/recording.md
       - 数据集: pc/dataset.md
-      - 故障排查: pc/troubleshooting.md
       - 版本与升级: pc/versions.md
       - RobotConfig 配置项: pc/reference.md
       - SDK 与二次开发:
@@ -303,6 +302,7 @@ nav:
           - 安装与构建: sdk/install.md
           - API 要点: sdk/api.md
           - 示例: sdk/examples.md
+      - 故障排查: pc/troubleshooting.md
   - 从夹爪:
       - 从夹爪概览: follower/index.md
       - 准备与自检: follower/setup.md
