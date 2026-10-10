@@ -56,7 +56,6 @@ The repositories below belong to the Developer Kit and are all open source excep
 | Tracker PC service `XenseVR-PC-Service` | <https://github.com/XenseRobotics-AI/XenseVR-PC-Service> | Not a submodule; installed as a `.deb` into `/opt/apps/roboticsservice`, see [One-shot install](../pc/install.md#24) |
 | Visuotactile sensor SDK `xensesdk` | <https://github.com/XenseRobotics/xensesdk> | [Docs site](https://docs.xenserobotics.com/) |
 | Local viewer `xense-lerobot-viewer` | <https://github.com/XenseRobotics-AI/xense-lerobot-viewer> | Open source; browse a local LeRobot dataset in the browser |
-| This manual's source | <https://github.com/XenseRobotics-AI/XTac-UMI-G1-Docs> | Issues: see the section above |
 
 ## Documentation version and matching software {#doc-version}
 

@@ -56,7 +56,6 @@
 | 追踪器 PC 服务 `XenseVR-PC-Service` | <https://github.com/XenseRobotics-AI/XenseVR-PC-Service> | 不是子模块，以 `.deb` 安装到 `/opt/apps/roboticsservice`，见[一键安装](../pc/install.md#24) |
 | 视触觉传感器 SDK `xensesdk` | <https://github.com/XenseRobotics/xensesdk> | [文档站](https://docs.xenserobotics.com/) |
 | 本地可视化工具 `xense-lerobot-viewer` | <https://github.com/XenseRobotics-AI/xense-lerobot-viewer> | 开源，在浏览器里查看本地 LeRobot 数据集 |
-| 本手册源码 | <https://github.com/XenseRobotics-AI/XTac-UMI-G1-Docs> | Issues 见上节 |
 
 ## 文档版本与配套软件 {#doc-version}
 
