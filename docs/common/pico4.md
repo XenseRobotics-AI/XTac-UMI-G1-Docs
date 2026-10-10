@@ -62,12 +62,6 @@ APK 文件名形如 `XTac-UMI-XR-<版本>.apk`，当前版本 0.3.2，用头显�
 
     ![确认安装](../assets/pico4/install-step3-confirm.webp){ width="480" }
 
-电脑装了 adb（Android platform-tools）时，打开 USB 调试、「USB 连接」选「传输文件」后可一键安装：
-
-```bash
-adb devices                          # 应列出头显
-adb install XTac-UMI-XR-0.3.2.apk    # 换成拿到的那份
-```
 
 ## 网络连接 {#pico-network}
 
