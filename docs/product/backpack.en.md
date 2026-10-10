@@ -67,7 +67,7 @@ The waist belt holds the backpack and the power bank and keeps the cables out of
 
 | Field | What it is for |
 |---|---|
-| SN | The device serial number; quote it when asking for service |
+| SN | The device serial number |
 | WiFi / password | The backpack hotspot's name and password |
 | IP / device name | Open in a browser once connected to reach the console |
 
