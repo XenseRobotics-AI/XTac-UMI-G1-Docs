@@ -2169,22 +2169,23 @@ On this page, <strong>power-cycle</strong> means unplugging the 24V power cable,
 </details>
 <details class="failure">
 <summary>The script reports <code>2 plugged-in grippers report side=Left</code></summary>
-<p><strong>Cause</strong>: a leader and a follower gripper are both connected on the same side.
-<strong>Fix</strong>: specify the follower gripper's full serial number instead, e.g. <code>follower_status.py TCGU01A24A0001s</code>.</p>
+<p><strong>Cause</strong>: a leader and a follower gripper are both connected on the same side.</p>
+<p><strong>Fix</strong>: specify the follower gripper's full serial number instead, e.g. <code>follower_status.py TCGU01A24A0001s</code>.</p>
 </details>
 <details class="failure">
 <summary>Error <code>从爪固件版本过低,必须升级后才能使用本 SDK</code> (follower firmware too old, must be upgraded to use this SDK)</summary>
+<p><strong>Cause</strong>: the follower firmware is below 1.2.5, the minimum version the SDK requires, so the SDK refuses to open the device.</p>
 <p><strong>Fix</strong>: upgrade as described in <a href="../firmware/#mcu-ota">Upgrade the gripper firmware</a>, then power-cycle.</p>
 </details>
 <details class="failure">
 <summary>On opening, the warning <code>从爪固件 ... 低于 1.2.11</code> (follower firmware below 1.2.11) appears, or during control the gripper suddenly stops responding to commands and the grip force drops</summary>
-<p><strong>Cause</strong>: in gripper firmware earlier than 1.2.11, an occasional overflow on the control serial port causes the gripper to stop receiving commands permanently while it continues to report data. The grip force then drops and the fingers loosen.
-<strong>Fix</strong>: upgrade to the version bundled with the SDK as described in <a href="../firmware/#mcu-ota">Upgrade the gripper firmware</a>, then power-cycle.</p>
+<p><strong>Cause</strong>: in gripper firmware earlier than 1.2.11, an occasional overflow on the control serial port causes the gripper to stop receiving commands permanently while it continues to report data. The grip force then drops and the fingers loosen.</p>
+<p><strong>Fix</strong>: upgrade to the version bundled with the SDK as described in <a href="../firmware/#mcu-ota">Upgrade the gripper firmware</a>, then power-cycle.</p>
 </details>
 <details class="failure">
 <summary><code>hello()</code> shows a version other than 0.4.1, or <code>import</code> fails</summary>
-<p><strong>Cause</strong>: the SDK submodule was not updated, or was not rebuilt after updating.
-<strong>Fix</strong>: from the data-collection repository root, update the submodules and rerun the install script:</p>
+<p><strong>Cause</strong>: the SDK submodule was not updated, or was not rebuilt after updating.</p>
+<p><strong>Fix</strong>: from the data-collection repository root, update the submodules and rerun the install script:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>git<span class="w"> </span>submodule<span class="w"> </span>update<span class="w"> </span>--init<span class="w"> </span>--recursive
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>./setup_env.sh<span class="w"> </span>--install
 </span></code></pre></div>
@@ -2193,8 +2194,8 @@ On this page, <strong>power-cycle</strong> means unplugging the 24V power cable,
 <h2 id="self-check">Self-check anomalies<a class="headerlink" href="#self-check" title="锚点链接">¶</a></h2>
 <details class="failure">
 <summary>Error <code>gripper config is not calibrated</code></summary>
-<p><strong>Cause</strong>: automatic calibration at power-on did not complete, usually because the jaws were obstructed or the 24V supply was not connected at power-on.
-<strong>Fix</strong>: clear any obstructions around the jaws, connect the 24V supply and power-cycle. Wait for the jaws to open and close once automatically, then try again.</p>
+<p><strong>Cause</strong>: automatic calibration at power-on did not complete, usually because the jaws were obstructed or the 24V supply was not connected at power-on.</p>
+<p><strong>Fix</strong>: clear any obstructions around the jaws, connect the 24V supply and power-cycle. Wait for the jaws to open and close once automatically, then try again.</p>
 </details>
 <details class="failure">
 <summary>The data frame rate is well below 100Hz, or <code>OK</code> is not shown</summary>
@@ -2207,13 +2208,13 @@ On this page, <strong>power-cycle</strong> means unplugging the 24V power cable,
 <h2 id="start-errors">Errors when starting control<a class="headerlink" href="#start-errors" title="锚点链接">¶</a></h2>
 <details class="failure">
 <summary>Error <code>ValueError: ... exceeds ...</code> or <code>RuntimeError: ... stored motor startup torque limit ...</code></summary>
-<p><strong>Cause</strong>: a torque value in the controller configuration exceeds the motor's rating.
-<strong>Fix</strong>: generate the configuration with <code>for_spec(g.motor.get_spec())</code> and keep the grip force at or below 1.1N·m. If the error persists, contact <a href="../../common/reference/#support">technical support</a>.</p>
+<p><strong>Cause</strong>: a torque value in the controller configuration exceeds the motor's rating.</p>
+<p><strong>Fix</strong>: generate the configuration with <code>for_spec(g.motor.get_spec())</code> and keep the grip force at or below 1.1N·m. If the error persists, contact <a href="../../common/reference/#support">technical support</a>.</p>
 </details>
 <details class="failure">
 <summary>Error <code>SysBusy</code> immediately after power-on, or the motor does not respond</summary>
-<p><strong>Cause</strong>: for about 10 seconds after power-on, the gripper performs automatic calibration.
-<strong>Fix</strong>: wait for the jaws to open and close once and come to rest before starting control.</p>
+<p><strong>Cause</strong>: for about 10 seconds after power-on, the gripper performs automatic calibration.</p>
+<p><strong>Fix</strong>: wait for the jaws to open and close once and come to rest before starting control.</p>
 </details>
 <h2 id="fault">Problems during motion<a class="headerlink" href="#fault" title="锚点链接">¶</a></h2>
 <details class="failure">
@@ -2228,18 +2229,18 @@ On this page, <strong>power-cycle</strong> means unplugging the 24V power cable,
 </details>
 <details class="failure">
 <summary>While gripping a hard object, the gripper suddenly releases and USB disconnects</summary>
-<p><strong>Cause</strong>: the firmware is outdated, so the motion safety envelope is not in effect, and excessive torque caused the 24V supply voltage to drop.
-<strong>Fix</strong>: power-cycle, <a href="../firmware/#mcu-ota">upgrade the firmware</a> to the version bundled with the SDK, then confirm <code>ENFORCED</code> in the <a href="../setup/#motion-check">motion check</a>. Also confirm that the 24V power adapter meets the specification.</p>
+<p><strong>Cause</strong>: the firmware is outdated, so the motion safety envelope is not in effect, and excessive torque caused the 24V supply voltage to drop.</p>
+<p><strong>Fix</strong>: power-cycle, <a href="../firmware/#mcu-ota">upgrade the firmware</a> to the version bundled with the SDK, then confirm <code>ENFORCED</code> in the <a href="../setup/#motion-check">motion check</a>. Also confirm that the 24V power adapter meets the specification.</p>
 </details>
 <details class="failure">
 <summary>The grip force drops after gripping for a long time</summary>
-<p><strong>Cause</strong>: as the motor heats up, the firmware automatically reduces output. This is a protection mechanism, not a fault.
-<strong>Fix</strong>: reduce the grip force or shorten the gripping time.</p>
+<p><strong>Cause</strong>: as the motor heats up, the firmware automatically reduces output. This is a protection mechanism, not a fault.</p>
+<p><strong>Fix</strong>: reduce the grip force or shorten the gripping time.</p>
 </details>
 <details class="failure">
 <summary>Starting another script causes the gripper under control to release</summary>
-<p><strong>Cause</strong>: the script scans for devices at startup, which interrupts the running control program.
-<strong>Fix</strong>: while control is running, do not start any other gripper program or example script.</p>
+<p><strong>Cause</strong>: the script scans for devices at startup, which interrupts the running control program.</p>
+<p><strong>Fix</strong>: while control is running, do not start any other gripper program or example script.</p>
 </details>
 
 

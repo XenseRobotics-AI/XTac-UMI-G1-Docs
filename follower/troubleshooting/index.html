@@ -2169,22 +2169,23 @@
 </details>
 <details class="failure">
 <summary>脚本报错 <code>2 plugged-in grippers report side=Left</code></summary>
-<p><strong>原因</strong>：同一侧同时连接了主夹爪和从夹爪。
-<strong>解决</strong>：改用从夹爪的完整序列号，例如 <code>follower_status.py TCGU01A24A0001s</code>。</p>
+<p><strong>原因</strong>：同一侧同时连接了主夹爪和从夹爪。</p>
+<p><strong>解决</strong>：改用从夹爪的完整序列号，例如 <code>follower_status.py TCGU01A24A0001s</code>。</p>
 </details>
 <details class="failure">
 <summary>报错 <code>从爪固件版本过低,必须升级后才能使用本 SDK</code></summary>
+<p><strong>原因</strong>：从夹爪固件低于 SDK 要求的最低版本 1.2.5，SDK 拒绝打开设备。</p>
 <p><strong>解决</strong>：按<a href="../firmware/#mcu-ota">升级夹爪固件</a>完成升级，然后断电重启。</p>
 </details>
 <details class="failure">
 <summary>打开时提示 <code>从爪固件 ... 低于 1.2.11</code>，或控制中夹爪突然不响应命令、夹持力下降</summary>
-<p><strong>原因</strong>：1.2.11 之前的夹爪固件在控制串口偶发溢出后，将持续无法接收命令，但数据仍正常上报。此时夹持力下降，手指松开。
-<strong>解决</strong>：按<a href="../firmware/#mcu-ota">升级夹爪固件</a>升级到 SDK 附带的版本，然后断电重启。</p>
+<p><strong>原因</strong>：1.2.11 之前的夹爪固件在控制串口偶发溢出后，将持续无法接收命令，但数据仍正常上报。此时夹持力下降，手指松开。</p>
+<p><strong>解决</strong>：按<a href="../firmware/#mcu-ota">升级夹爪固件</a>升级到 SDK 附带的版本，然后断电重启。</p>
 </details>
 <details class="failure">
 <summary><code>hello()</code> 显示的版本不是 0.4.1，或 <code>import</code> 报错</summary>
-<p><strong>原因</strong>：SDK 子模块未更新，或更新后未重新编译。
-<strong>解决</strong>：在数采仓库根目录更新子模块，并重新运行安装脚本：</p>
+<p><strong>原因</strong>：SDK 子模块未更新，或更新后未重新编译。</p>
+<p><strong>解决</strong>：在数采仓库根目录更新子模块，并重新运行安装脚本：</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>git<span class="w"> </span>submodule<span class="w"> </span>update<span class="w"> </span>--init<span class="w"> </span>--recursive
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>./setup_env.sh<span class="w"> </span>--install
 </span></code></pre></div>
@@ -2193,8 +2194,8 @@
 <h2 id="self-check">自检异常<a class="headerlink" href="#self-check" title="锚点链接">¶</a></h2>
 <details class="failure">
 <summary>报错 <code>gripper config is not calibrated</code></summary>
-<p><strong>原因</strong>：上电自动标定未完成，常见于上电时爪子被遮挡或 24V 电源未接。
-<strong>解决</strong>：清除爪子周围障碍物，接好 24V 电源后断电重启。待爪子自动开合一次后重试。</p>
+<p><strong>原因</strong>：上电自动标定未完成，常见于上电时爪子被遮挡或 24V 电源未接。</p>
+<p><strong>解决</strong>：清除爪子周围障碍物，接好 24V 电源后断电重启。待爪子自动开合一次后重试。</p>
 </details>
 <details class="failure">
 <summary>数据帧率明显低于 100Hz，或未显示 <code>OK</code></summary>
@@ -2207,13 +2208,13 @@
 <h2 id="start-errors">启动控制时报错<a class="headerlink" href="#start-errors" title="锚点链接">¶</a></h2>
 <details class="failure">
 <summary>报错 <code>ValueError: ... exceeds ...</code> 或 <code>RuntimeError: ... stored motor startup torque limit ...</code></summary>
-<p><strong>原因</strong>：控制器配置中的力矩超出电机额定值。
-<strong>解决</strong>：使用 <code>for_spec(g.motor.get_spec())</code> 生成配置，夹持力不超过 1.1N·m。仍报错时联系<a href="../../common/reference/#support">技术支持</a>。</p>
+<p><strong>原因</strong>：控制器配置中的力矩超出电机额定值。</p>
+<p><strong>解决</strong>：使用 <code>for_spec(g.motor.get_spec())</code> 生成配置，夹持力不超过 1.1N·m。仍报错时联系<a href="../../common/reference/#support">技术支持</a>。</p>
 </details>
 <details class="failure">
 <summary>刚上电时报错 <code>SysBusy</code>，或电机无响应</summary>
-<p><strong>原因</strong>：上电后约 10 秒内，夹爪正在自动标定。
-<strong>解决</strong>：等待爪子自动开合一次并停止后，再开始控制。</p>
+<p><strong>原因</strong>：上电后约 10 秒内，夹爪正在自动标定。</p>
+<p><strong>解决</strong>：等待爪子自动开合一次并停止后，再开始控制。</p>
 </details>
 <h2 id="fault">运动中出现故障<a class="headerlink" href="#fault" title="锚点链接">¶</a></h2>
 <details class="failure">
@@ -2228,18 +2229,18 @@
 </details>
 <details class="failure">
 <summary>夹持硬物时夹爪突然松开，USB 断开</summary>
-<p><strong>原因</strong>：固件版本过旧，运动安全包络未生效，力矩过大导致 24V 电源电压跌落。
-<strong>解决</strong>：断电重启，<a href="../firmware/#mcu-ota">升级固件</a>至 SDK 附带的版本，再按<a href="../setup/#motion-check">运动自检</a>确认显示 <code>ENFORCED</code>。同时确认 24V 电源适配器符合规格。</p>
+<p><strong>原因</strong>：固件版本过旧，运动安全包络未生效，力矩过大导致 24V 电源电压跌落。</p>
+<p><strong>解决</strong>：断电重启，<a href="../firmware/#mcu-ota">升级固件</a>至 SDK 附带的版本，再按<a href="../setup/#motion-check">运动自检</a>确认显示 <code>ENFORCED</code>。同时确认 24V 电源适配器符合规格。</p>
 </details>
 <details class="failure">
 <summary>长时间夹持后夹持力下降</summary>
-<p><strong>原因</strong>：电机发热后，固件会自动降低输出。这是保护机制，不是故障。
-<strong>解决</strong>：降低夹持力，或缩短夹持时间。</p>
+<p><strong>原因</strong>：电机发热后，固件会自动降低输出。这是保护机制，不是故障。</p>
+<p><strong>解决</strong>：降低夹持力，或缩短夹持时间。</p>
 </details>
 <details class="failure">
 <summary>启动其他脚本后，正在控制的夹爪松开</summary>
-<p><strong>原因</strong>：脚本启动时会扫描设备，从而中断正在运行的控制程序。
-<strong>解决</strong>：控制运行期间，不要启动其他夹爪程序或示例脚本。</p>
+<p><strong>原因</strong>：脚本启动时会扫描设备，从而中断正在运行的控制程序。</p>
+<p><strong>解决</strong>：控制运行期间，不要启动其他夹爪程序或示例脚本。</p>
 </details>
 
 
