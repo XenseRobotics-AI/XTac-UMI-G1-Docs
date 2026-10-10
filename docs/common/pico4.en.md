@@ -154,7 +154,13 @@ The binding is stored on the headset and survives power cycles and app restarts.
 
 Once bound, open "Motion Tracking" on the headset → settings → "Tracking mode", select "Standalone tracking" and tap "Confirm"; the row should read "Standalone tracking". The factory default "Full-body motion capture" follows a human body; "Standalone tracking" follows an object the tracker is fixed to.
 
-![Pick standalone tracking and confirm](../assets/pico4/tracker-mode2-pick.webp){ width="480" }
+<div class="tc-pair" markdown>
+
+![Motion tracking settings: Tracking mode](../assets/pico4/tracker-mode1-setting.webp)
+
+![Pick standalone tracking and confirm](../assets/pico4/tracker-mode2-pick.webp)
+
+</div>
 
 ## The app's screen {#pico-toolkit-ui}
 

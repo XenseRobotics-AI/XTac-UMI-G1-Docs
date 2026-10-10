@@ -154,7 +154,13 @@ adb install XTac-UMI-XR-0.3.2.apk    # 换成拿到的那份
 
 绑定后在头显打开「体感追踪」→ 设置 →「追踪模式」，选「独立追踪」并点「确定」，该行应显示「独立追踪」。出厂默认「全身动捕」追人体，「独立追踪」追固定了追踪器的物体。
 
-![选独立追踪并确定](../assets/pico4/tracker-mode2-pick.webp){ width="480" }
+<div class="tc-pair" markdown>
+
+![体感追踪设置：追踪模式](../assets/pico4/tracker-mode1-setting.webp)
+
+![选独立追踪并确定](../assets/pico4/tracker-mode2-pick.webp)
+
+</div>
 
 ## 打开 App 后的界面 {#pico-toolkit-ui}
 

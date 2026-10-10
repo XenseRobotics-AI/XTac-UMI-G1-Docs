@@ -9,7 +9,7 @@ This page compares the two and lists each kit's box contents and wiring.
 
 <div class="grid cards xu-cards" markdown>
 
--   ![Backpack Kit wiring: both grippers and the headset connected to the backpack](../assets/product/backpack-wiring-adapter.webp){ .xu-card__img }
+-   ![The Backpack Kit console live monitor: every camera, the visuotactile images and the poses on one screen](../assets/backpack/monitor-live.webp){ .xu-card__img }
 
     <span class="xu-tag xu-tag--backpack">Backpack Kit</span>
 
