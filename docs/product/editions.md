@@ -9,7 +9,7 @@ XTac-UMI 提供两种配置，使用同一套 XTac-UMI G1 夹爪与 Pico4 Ultra 
 
 <div class="grid cards xu-cards" markdown>
 
--   ![背包版接线：左右夹爪、头显接数采背包](../assets/product/backpack-wiring-adapter-card.webp){ .xu-card__img }
+-   ![XTac-UMI 数采背包](../assets/product/backpack-card.webp){ .xu-card__img }
 
     <span class="xu-tag xu-tag--backpack">背包版</span>
 
@@ -21,7 +21,7 @@ XTac-UMI 提供两种配置，使用同一套 XTac-UMI G1 夹爪与 Pico4 Ultra 
 
     [快速开始](../backpack/quickstart.md){ .md-button .md-button--primary }
 
--   ![PC 版采集中的 Rerun 实时预览](../assets/dataset/rerun-xtac-umi-g1.webp){ .xu-card__img }
+-   ![XTac-UMI G1 视触觉夹爪](../assets/product/g1-card.webp){ .xu-card__img }
 
     <span class="xu-tag xu-tag--pc">PC 版</span>
 

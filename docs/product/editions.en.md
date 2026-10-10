@@ -9,7 +9,7 @@ This page compares the two and lists each kit's box contents and wiring.
 
 <div class="grid cards xu-cards" markdown>
 
--   ![Backpack Kit wiring: both grippers and the headset connected to the backpack](../assets/product/backpack-wiring-adapter-card.webp){ .xu-card__img }
+-   ![The XTac-UMI data collection backpack](../assets/product/backpack-card.webp){ .xu-card__img }
 
     <span class="xu-tag xu-tag--backpack">Backpack Kit</span>
 
@@ -21,7 +21,7 @@ This page compares the two and lists each kit's box contents and wiring.
 
     [Quickstart](../backpack/quickstart.md){ .md-button .md-button--primary }
 
--   ![Developer Kit live Rerun preview while recording](../assets/dataset/rerun-xtac-umi-g1.webp){ .xu-card__img }
+-   ![XTac-UMI G1 visuotactile gripper](../assets/product/g1-card.webp){ .xu-card__img }
 
     <span class="xu-tag xu-tag--pc">Developer Kit</span>
 
