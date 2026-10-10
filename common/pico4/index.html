@@ -2300,10 +2300,6 @@
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/pico4/install-step3-confirm.webp" data-desc-position="bottom"><img alt="确认安装" src="../../assets/pico4/install-step3-confirm.webp" width="480"></a></p>
 </li>
 </ol>
-<p>电脑装了 adb（Android platform-tools）时，打开 USB 调试、「USB 连接」选「传输文件」后可一键安装：</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>adb<span class="w"> </span>devices<span class="w">                          </span><span class="c1"># 应列出头显</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>adb<span class="w"> </span>install<span class="w"> </span>XTac-UMI-XR-0.3.2.apk<span class="w">    </span><span class="c1"># 换成拿到的那份</span>
-</span></code></pre></div>
 <h2 id="pico-network">网络连接<a class="headerlink" href="#pico-network" title="锚点链接">¶</a></h2>
 <p>追踪数据送往采集单元的 XenseVR 位姿服务。背包版<strong>只能有线</strong>；PC 版默认有线，WiFi 只作临时调试。Type-C 直连独占，延迟稳定。</p>
 <div class="admonition warning">
@@ -2395,10 +2391,10 @@
 </div>
 <div class="tabbed-block">
 <p>用 PC Service 的 Python 接口读：</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">xensevr_pc_service_sdk</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">xrt</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="n">xrt</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="nb">print</span><span class="p">(</span><span class="n">xrt</span><span class="o">.</span><span class="n">get_motion_tracker_serial_numbers</span><span class="p">())</span>   <span class="c1"># 例:['PC2310MLL3200496G', ...]</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">xensevr_pc_service_sdk</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">xrt</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">xrt</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="nb">print</span><span class="p">(</span><span class="n">xrt</span><span class="o">.</span><span class="n">get_motion_tracker_serial_numbers</span><span class="p">())</span>   <span class="c1"># 例:['PC2310MLL3200496G', ...]</span>
 </span></code></pre></div>
 <ul>
 <li><strong>前提</strong>：追踪器已绑定开机 → XTac-UMI XR <a href="#pico-toolkit-ui">「连接成功」</a> → 主机已启动 <a href="../../pc/host-setup/#35">PC Service</a>，少一步返回空列表。</li>
