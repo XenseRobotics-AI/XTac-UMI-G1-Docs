@@ -1032,14 +1032,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../backpack/troubleshooting/" class="md-nav__link">
+      <a href="../../backpack/versions/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    故障排查
+    版本
   
 
     
@@ -1060,14 +1060,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../backpack/versions/" class="md-nav__link">
+      <a href="../../backpack/troubleshooting/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    版本
+    故障排查
   
 
     
@@ -1352,34 +1352,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pc/troubleshooting/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    故障排查
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../pc/versions/" class="md-nav__link">
         
   
@@ -1463,7 +1435,7 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_11">
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_10">
         
           
           <div class="md-nav__link md-nav__container">
@@ -1485,14 +1457,14 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3_11" id="__nav_3_11_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_3_10" id="__nav_3_10_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_11_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_11">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_10">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1591,6 +1563,34 @@
           </ul>
         </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pc/troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    故障排查
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -2215,7 +2215,7 @@
 </tr>
 <tr>
 <td>被物体挡住时</td>
-<td>以 1.1 N·m 顶住</td>
+<td>以 1.1N·m 顶住</td>
 <td>以设定的夹持力顶住，并报告已夹住</td>
 </tr>
 </tbody>
@@ -2262,13 +2262,13 @@
 </ul>
 <div class="admonition danger">
 <p class="admonition-title">停止控制或断链时夹爪会松开</p>
-<p>控制器停止（退出 <code>with</code>、程序结束）、控制台按 <code>d</code> / <code>q</code>，或者 USB 断开，夹爪都会松开，<strong>夹着的东西会掉</strong>。
-机器人上夹持物体时，先把物体放到安全的位置再停止控制。</p>
+<p>控制器停止（退出 <code>with</code>、程序结束）、控制台按 <code>d</code> / <code>q</code>，或 USB 断开，夹爪会松开，<strong>夹持物会掉落</strong>。
+机器人夹持物体时，先将物体放到安全位置再停止控制。</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">长时间夹持会降低夹持力</p>
-<p>电机发热后，固件会自动降低输出。实测 1.1 N·m 持续夹 10 分钟，电机升到约 70 °C；0.6 N·m 稳定在约 49 °C。
-需要持续夹几十分钟时，把夹持力降到 0.6 N·m 左右。</p>
+<p>电机发热后固件自动降低输出。实测 1.1N·m 持续夹 10 分钟，电机升到约 70°C；0.6N·m 稳定在约 49°C。
+需持续夹持数十分钟时，将夹持力降至约 0.6N·m。</p>
 </div>
 <h2 id="fault">故障与恢复<a class="headerlink" href="#fault" title="锚点链接">¶</a></h2>
 <p>控制器检测到异常会停下并卸力，<code>c.snapshot().state</code> 变为 <code>FAULT</code>，原因在 <code>c.snapshot().fault_reason</code>。
@@ -2397,6 +2397,8 @@
       <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
         <script src="../../assets/javascripts/arch.js"></script>
+      
+        <script src="../../assets/javascripts/tabs-toc.js"></script>
       
     
   

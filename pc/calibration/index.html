@@ -1032,14 +1032,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../backpack/troubleshooting/" class="md-nav__link">
+      <a href="../../backpack/versions/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    故障排查
+    版本
   
 
     
@@ -1060,14 +1060,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../backpack/versions/" class="md-nav__link">
+      <a href="../../backpack/troubleshooting/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    版本
+    故障排查
   
 
     
@@ -1474,34 +1474,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../troubleshooting/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    故障排查
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../versions/" class="md-nav__link">
         
   
@@ -1588,7 +1560,7 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_11">
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_10">
         
           
           <div class="md-nav__link md-nav__container">
@@ -1610,14 +1582,14 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3_11" id="__nav_3_11_label" tabindex="">
+              <label class="md-nav__link " for="__nav_3_10" id="__nav_3_10_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_11_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_11">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_10">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1716,6 +1688,34 @@
           </ul>
         </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    故障排查
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -2200,13 +2200,13 @@
 <tbody>
 <tr>
 <td>从没标过</td>
-<td>采集程序<strong>拒绝连接</strong>主夹爪，报错里直接带标定命令</td>
+<td>采集程序<strong>拒绝连接</strong>主夹爪，报错附带标定命令</td>
 <td>程序，漏不掉</td>
 </tr>
 <tr>
-<td>标过，但值和实际行程对不上（拆装过编码器、动过机械限位、擦除过固件）</td>
-<td>能连上，但张到机械极限时 <code>gripper.pos</code> 顶不到 <code>1.0</code></td>
-<td>只能你在预览里看出来，见<a href="#413">确认标定生效</a></td>
+<td>标过但失准（拆装编码器、改动机械限位、擦除固件）</td>
+<td>能连上，但张到极限时 <code>gripper.pos</code> 达不到 <code>1.0</code></td>
+<td>需自行在预览中确认，见<a href="#413">确认标定生效</a></td>
 </tr>
 </tbody>
 </table>
@@ -2239,8 +2239,8 @@
 <p>先按<a href="../versions/#ota">固件 OTA 升级</a>刷固件：镜像按角色选，先升 SDK 再刷固件。</p>
 <p>版本通过后，脚本打印当前读数（raw 与钳位），按提示走两步：</p>
 <ol>
-<li>完全闭合 → 回车。发送 <code>SetEncoderZero</code> 锁存零点，再复读校验残差（容差 ±0.01 rad）。</li>
-<li>完全张开到机械极限 → 回车。角度直接写入 MCU flash 的 <code>EncoderMaxCal</code>，无二次确认；随后显示 10 Hz 实时读数供核对。</li>
+<li>完全闭合 → 回车。发送 <code>SetEncoderZero</code> 锁存零点，再复读校验残差（容差 ±0.01rad）。</li>
+<li>完全张开到机械极限 → 回车。角度直接写入 MCU flash 的 <code>EncoderMaxCal</code>，无二次确认；随后显示 10Hz 实时读数供核对。</li>
 </ol>
 <div class="admonition warning">
 <p class="admonition-title">先夹到位，再按 Enter</p>
@@ -2269,7 +2269,7 @@
 </span></code></pre></div>
 <p>标过的抬头多一行 <code>existing span: … — will be overwritten</code>。</p>
 <ul>
-<li><strong>闭合恒为 0</strong>：没有 <code>gripper_closed_rad</code> 配置；负漂移钳到 0（原始值在 <code>raw_position_rad</code>），超过 -0.1 rad 限频告警。</li>
+<li><strong>闭合恒为 0</strong>：没有 <code>gripper_closed_rad</code> 配置；负漂移钳到 0（原始值在 <code>raw_position_rad</code>），超过 -0.1rad 限频告警。</li>
 <li><strong>字段</strong>：<code>position_rad</code> 仍是原始弧度，归一化只新增 <code>position</code> 字段。</li>
 </ul>
 <h3 id="413">确认标定生效<a class="headerlink" href="#413" title="锚点链接">¶</a></h3>
@@ -2303,7 +2303,7 @@
 <h3 id="适用范围">适用范围<a class="headerlink" href="#适用范围" title="锚点链接">¶</a></h3>
 <ul>
 <li><strong>仅主夹爪</strong>：主夹爪没有自动标定，不能省。从夹爪不接受该命令，自 V1.9 起上电自动标定（闭合到堵转取零点、张开到堵转取行程上限），<code>gripper.pos</code> 按 <code>gripper_open_rad</code> 归一化。</li>
-<li><strong>固件</strong>：命令集 ≥ V2.1（即 leader ≥ 1.2.0 / follower ≥ 1.1.0，<a href="../versions/#v21">区别</a>）；更低版本采集时主夹爪报错退出并提示 OTA，见<a href="../versions/#ota">固件 OTA 升级</a>。</li>
+<li><strong>固件</strong>：命令集 ≥ V2.1（leader ≥ 1.2.0 / follower ≥ 1.1.0，<a href="../versions/#v21">区别</a>）；版本过低则主夹爪报错退出并提示 OTA，见<a href="../versions/#ota">固件 OTA 升级</a>。</li>
 </ul>
 <h2 id="pico4-ultra-追踪器自检">Pico4 Ultra 追踪器自检<a class="headerlink" href="#pico4-ultra-追踪器自检" title="锚点链接">¶</a></h2>
 <p>追踪器不需要标定，侧别由 SN 自动匹配；绑定见<a href="../../common/pico4/#pico-tracker-bind">Pico4 头显与追踪器</a>。下面命令只读不写，打印位姿以确认链路和装配。</p>
@@ -2313,9 +2313,9 @@
 </span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="c1"># 应用该侧内置的 tracker→TCP 安装变换:</span>
 </span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>python<span class="w"> </span>-m<span class="w"> </span>lerobot.robots.taccap_gripper.check_tracker<span class="w"> </span>--side<span class="w"> </span>right
 </span></code></pre></div>
-<p>以 10 Hz 打印 <code>raw</code>（追踪器自身位姿）与 <code>ee</code>（经安装变换后的 TCP）。挥动夹爪，<code>raw xyz</code> 应平滑变化、SN 与预期一致（<a href="../../common/pico4/#pico-tracker-sn">读取追踪器 SN</a>）。</p>
+<p>以 10Hz 打印 <code>raw</code>（追踪器自身位姿）与 <code>ee</code>（经安装变换后的 TCP）。挥动夹爪，<code>raw xyz</code> 应平滑变化、SN 与预期一致（<a href="../../common/pico4/#pico-tracker-sn">读取追踪器 SN</a>）。</p>
 <ul>
-<li><strong>安装变换</strong>：追踪器到 TCP 的刚性偏移已内置（取自 CAD 装配实测），左右各自实测，接近镜像但不完全相同（旋转差 0.03°、平移差 1.27 mm）。</li>
+<li><strong>安装变换</strong>：追踪器到 TCP 的刚性偏移已内置（取自 CAD 装配实测），左右各自实测，接近镜像但不完全相同（旋转差 0.03°、平移差 1.27mm）。</li>
 <li><strong><code>--side</code></strong>：选套用哪一侧；不带时变换是单位阵，<code>ee</code> 跟随 <code>raw</code>。</li>
 <li><strong>覆盖</strong>：重新加工过安装座时设 <code>--robot.tracker_to_ee_pos</code> / <code>--robot.tracker_to_ee_quat</code>，两者独立，可只钉平移。</li>
 <li><strong>支点检查</strong>：两指中点抵住固定点，握柄多姿态摆动；<code>ee xyz</code> 应基本不动而 <code>raw xyz</code> 大幅摆动，漂移量即变换误差。左右都测；左侧镜像方向错时 <code>ee</code> 摆幅约为应有的两倍。</li>
@@ -2446,6 +2446,8 @@
       <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
         <script src="../../assets/javascripts/arch.js"></script>
+      
+        <script src="../../assets/javascripts/tabs-toc.js"></script>
       
     
   

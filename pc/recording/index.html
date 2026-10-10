@@ -1032,14 +1032,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../backpack/troubleshooting/" class="md-nav__link">
+      <a href="../../backpack/versions/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    故障排查
+    版本
   
 
     
@@ -1060,14 +1060,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../backpack/versions/" class="md-nav__link">
+      <a href="../../backpack/troubleshooting/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    版本
+    故障排查
   
 
     
@@ -1646,34 +1646,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../troubleshooting/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    故障排查
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../versions/" class="md-nav__link">
         
   
@@ -1760,7 +1732,7 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_11">
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_10">
         
           
           <div class="md-nav__link md-nav__container">
@@ -1782,14 +1754,14 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3_11" id="__nav_3_11_label" tabindex="">
+              <label class="md-nav__link " for="__nav_3_10" id="__nav_3_10_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_11_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_11">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_10">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1888,6 +1860,34 @@
           </ul>
         </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    故障排查
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -2357,12 +2357,12 @@
 
 
 <h1 id="数据采集">数据采集<a class="headerlink" href="#数据采集" title="锚点链接">¶</a></h1>
-<p>先用 <code>lerobot-teleoperate</code> 确认设备正常，再用 <code>lerobot-record</code> 录出 <code>LeRobotDataset</code>。落盘、目录结构、校验与上传见<a href="../dataset/">数据集</a>。</p>
+<p>先用 <code>lerobot-teleoperate</code> 验证设备，再用 <code>lerobot-record</code> 录制 <code>LeRobotDataset</code>。落盘、目录结构、校验与上传见<a href="../dataset/">数据集</a>。</p>
 <h2 id="51">采集原理<a class="headerlink" href="#51" title="锚点链接">¶</a></h2>
 <ul>
 <li><code>taccap_gripper</code> 录制自驱动，没有 <code>--teleop.*</code> 参数。</li>
 <li>移位帧（shifted-frame）配对：<em>t-1</em> 步的观测配 <em>t</em> 步的位姿作动作（EEF TCP 位姿 + 归一化 <code>gripper.pos</code>，开<a href="#56">头显相机</a>时加头显位姿），每集因此少 1 帧。</li>
-<li><code>tcp.*</code> 是夹爪末端而非追踪器：追踪器离两指中点约 195 mm，落盘前乘上内置刚性安装变换（CAD 装配实测，左右各一套），机体固连，与姿态和 <code>gripper.pos</code> 无关。</li>
+<li><code>tcp.*</code> 是夹爪末端而非追踪器：追踪器离两指中点约 195mm，落盘前乘上内置刚性安装变换（CAD 装配实测，左右各一套），机体固连，与姿态和 <code>gripper.pos</code> 无关。</li>
 <li>世界系重力对齐，X 前 / Y 左 / Z 上，在 XTac-UMI XR 启动瞬间冻结，见<a href="../../common/pico4/#pico-frame">坐标系对齐</a>。</li>
 <li><code>--display_data=true</code> 开出 Rerun 的 <code>/world</code> 3D 视图（<code>--show_trajectory=false</code> 关轨迹），元素含义与装配检查见<a href="../../common/coordinates/#world-view">坐标系 · <code>/world</code> 3D 视图</a>。</li>
 </ul>
@@ -2385,8 +2385,8 @@
 <td>触觉两路、腕相机、<code>gripper.pos</code>，没有 <code>tcp.*</code></td>
 </tr>
 <tr>
-<td>② 带腕部位姿（最常用，本页默认）</td>
-<td><code>--robot.type=bi_taccap_gripper</code>（追踪器默认开启）</td>
+<td>② 带腕部位姿（最常用，也是本页默认）</td>
+<td><code>--robot.type=bi_taccap_gripper</code>（追踪器默认即开启）</td>
 <td>追踪器已开机<a href="../../common/pico4/#pico-tracker-bind">绑定</a>、Pico4 已连上、<a href="../host-setup/#35">PC Service 已启动</a></td>
 <td><a href="../../common/coordinates/#world-view"><code>/world</code> 视图</a> / <code>tcp.*</code></td>
 </tr>
@@ -2394,7 +2394,7 @@
 <td>③ 完全体</td>
 <td><code>--robot.type=xtac_umi_g1</code></td>
 <td>同 ②，PC Service ≥ v0.2.0</td>
-<td>头显双目与头部位姿，见<a href="#56">头显相机</a></td>
+<td>头显双目与位姿，见<a href="#56">头显相机</a></td>
 </tr>
 </tbody>
 </table>
@@ -2407,7 +2407,7 @@
 </span></code></pre></div>
 <ul>
 <li>双夹爪带不带头显由 <code>--robot.type</code> 决定；写了与之矛盾的 <code>--robot.enable_head_camera</code> 会报错并提示该用的类型。</li>
-<li>单夹爪用 <code>--robot.type=taccap_gripper</code>，只接一只时自动选中，两只都接时加 <code>--robot.side=left|right</code>（只录一只则必填）。</li>
+<li>单夹爪用 <code>--robot.type=taccap_gripper</code>，只接一只时自动选中，两只都接时须加 <code>--robot.side=left|right</code> 指定录哪一只。</li>
 <li><code>--teleop_time_s=10</code> 跑满 10 秒自动退出；<code>--debug_timing=true</code> 打印采样耗时与相机路数。</li>
 </ul>
 <p>逐项确认（位姿两行仅 ②③ 档）后 <code>Ctrl+C</code> 退出：</p>
@@ -2490,7 +2490,7 @@
 <tr>
 <td><code>fps</code></td>
 <td><code>30</code></td>
-<td>采样帧率上限；传感器本身 120 Hz（<a href="../../product/specs/#specs">规格</a>）</td>
+<td>采样帧率上限；传感器本身 120Hz（<a href="../../product/specs/#specs">规格</a>）</td>
 </tr>
 <tr>
 <td><code>episode_time_s</code></td>
@@ -2729,7 +2729,7 @@
 </tr>
 </tbody>
 </table>
-<p>不要手敲前缀：非纯数字原样保留，<code>--robot.id=taccap_0</code> 仍可用，但在双夹爪上会与设备类型对不上。漏填或填空在解析命令行时退出：</p>
+<p>勿手敲前缀：非纯数字原样保留，<code>--robot.id=taccap_0</code> 仍可用，但双夹爪上与设备类型不符。漏填或留空时解析命令行即退出：</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>ValueError: --robot.id is required: the station label for this rig, e.g. --robot.id=0 …
 </span></code></pre></div>
 <p>身份靠硬件清单：<code>lerobot-record</code> 在 <code>connect()</code> 后立即写入 <code>meta/hardware.json</code>，记每只夹爪的固件 SN 及其两枚触觉的 SN（各带观测键）。</p>
@@ -2762,7 +2762,7 @@
 <li><code>side</code> 是哪只夹爪，<code>finger</code> 是其上哪枚触觉，各按<a href="../host-setup/#33">单左双右</a>判定。</li>
 <li><code>observation_key</code> 把数据集的一列对应到具体传感器。</li>
 <li><code>gripper_sn</code> 是固件 SN，不是 CH343 的 <code>mcu_serial</code>（换根转接就变）。</li>
-<li>单夹爪 <code>units</code> 只有一项；某侧没开记 <code>"gripper_sn": null</code>；<code>--robot.enable_tactile=false</code> 时 <code>tactile_sensors</code> 为空列表。</li>
+<li>单夹爪 <code>units</code> 仅一项；未启用侧记 <code>"gripper_sn": null</code>；<code>--robot.enable_tactile=false</code> 时 <code>tactile_sensors</code> 为空列表。</li>
 <li>独立文件，不在 <code>meta/info.json</code> 里；追踪器和腕相机是配件，不入清单。</li>
 <li><code>wrist_undistort</code> 记是否矫正、用哪份内参，没矫正记 <code>{"applied": false}</code>，见<a href="#57">鱼眼矫正</a>。</li>
 </ul>
@@ -2834,7 +2834,7 @@
 </tr>
 <tr>
 <td><code>head_camera.r1..r6</code></td>
-<td>头显姿态的 6-D 旋转，也是动作</td>
+<td>头显姿态 6-D 旋转，也是动作</td>
 <td>同上</td>
 <td>float</td>
 </tr>
@@ -2906,7 +2906,7 @@
 <h3 id="no-gpu">没有 NVIDIA GPU 的主机怎么录<a class="headerlink" href="#no-gpu" title="锚点链接">¶</a></h3>
 <div class="admonition warning">
 <p class="admonition-title">这是给不达标机器的临时办法，不是推荐做法</p>
-<p><a href="../install/#host-spec">采集主机最低要求</a>是 NVIDIA RTX 3060 / 8 GB 显存及以上。纯 CPU 服务器、虚拟机或无 NVIDIA 显卡的笔记本按下面做能录，但存盘慢、易掉帧，正式采集请换达标主机。</p>
+<p><a href="../install/#host-spec">采集主机最低要求</a>是 NVIDIA RTX 3060 / 8GB 显存及以上。纯 CPU 服务器、虚拟机或无 NVIDIA 显卡的笔记本按下面操作可以录制，但存盘慢、易掉帧，正式采集请换用达标主机。</p>
 </div>
 <p>这类机器须先升级到 v0.1.0。</p>
 <p><code>--dataset.vcodec=auto</code> + <code>--dataset.streaming_encoding=true</code> 两个默认值是给 NVIDIA 显卡的，没有显卡时关掉流式编码：</p>
@@ -2915,7 +2915,7 @@
 </span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span>--dataset.streaming_encoding<span class="o">=</span><span class="nb">false</span>
 </span></code></pre></div>
 <p><code>--dataset.vcodec=auto</code> 会实际开一次编码会话探测，无 NVIDIA 驱动时回落到 <code>libsvtav1</code>（CPU 上的 AV1）；离线编辑重新编码同理（有 NVIDIA 用 <code>h264_nvenc</code>）。也可显式写 <code>--dataset.vcodec=libsvtav1</code>。</p>
-<p><code>libsvtav1</code> 让 CPU 既编码又采集，双夹爪一帧六到八张图，30 fps 预算仅 33.3 ms，会出现 <code>[slow_frame] ... overrun=</code>。关掉后在 <code>save_episode()</code> 批量编码，存盘慢只是多等，掉帧则补不回来；忽略"建议把流式编码开回来"的提示。多核服务器仍想开流式编码，调这两项：</p>
+<p><code>libsvtav1</code> 让 CPU 既编码又采集，双夹爪一帧六到八张图，30fps 预算仅 33.3ms，会出现 <code>[slow_frame] ... overrun=</code>。关掉后在 <code>save_episode()</code> 批量编码，存盘慢只是多等，掉帧则补不回来；忽略"建议把流式编码开回来"的提示。多核服务器仍想开流式编码，调这两项：</p>
 <table>
 <thead>
 <tr>
@@ -2933,7 +2933,7 @@
 <tr>
 <td><code>--dataset.encoder_queue_maxsize</code></td>
 <td><code>30</code></td>
-<td>约 1 秒缓冲（30 fps）的反压阀，编码跟不上时在此挡住，内存不再上涨</td>
+<td>约 1 秒缓冲（30fps）的反压阀，编码跟不上时在此挡住，内存不再上涨</td>
 </tr>
 </tbody>
 </table>
@@ -3097,7 +3097,7 @@
 <ul>
 <li><code>--robot.head_camera_eyes=left</code>（或 <code>right</code>）只录一只眼，解码与编码压力减半，只有一个头部视频键。</li>
 <li>改分辨率或录制的眼睛等于换一组数据，前后 episode 不能混用。</li>
-<li>左右眼是两条独立消息，配错在数据里看不出，所以每帧比对两眼最新帧：帧序号相同即同一曝光，否则时间戳差须不超过 <code>--robot.head_camera_pair_max_skew_ms</code>（默认 20 ms，30 fps 帧周期约 33 ms）；超出只打限流告警（含实测偏差），不中断录制。</li>
+<li>左右眼是两条独立消息，配错在数据里看不出，所以每帧比对两眼最新帧：帧序号相同即同一曝光，否则时间戳差须不超过 <code>--robot.head_camera_pair_max_skew_ms</code>（默认 20ms，30fps 帧周期约 33ms）；超出只限流告警（含实测偏差），录制继续。</li>
 </ul>
 <p><code>head_camera.*</code> 用追踪器的 Pico→world 变换映射到 <code>tcp.*</code> 的世界系。开启后 <code>observation.state</code> 增 9 维：单夹爪 10 → 19，双夹爪 20 → 29，再开 <code>--robot.enable_imu=true</code> 继续累加。连不上见<a href="../troubleshooting/#head-camera">故障排查</a>。</p>
 <h2 id="57">可选：腕相机鱼眼矫正<a class="headerlink" href="#57" title="锚点链接">¶</a></h2>
@@ -3242,6 +3242,8 @@
       <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
         <script src="../../assets/javascripts/arch.js"></script>
+      
+        <script src="../../assets/javascripts/tabs-toc.js"></script>
       
     
   

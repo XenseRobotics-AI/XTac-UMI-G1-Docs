@@ -1032,14 +1032,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../backpack/troubleshooting/" class="md-nav__link">
+      <a href="../../backpack/versions/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    故障排查
+    版本
   
 
     
@@ -1060,14 +1060,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../backpack/versions/" class="md-nav__link">
+      <a href="../../backpack/troubleshooting/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    版本
+    故障排查
   
 
     
@@ -1352,34 +1352,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pc/troubleshooting/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    故障排查
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../pc/versions/" class="md-nav__link">
         
   
@@ -1463,7 +1435,7 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_11">
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_10">
         
           
           <div class="md-nav__link md-nav__container">
@@ -1485,14 +1457,14 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3_11" id="__nav_3_11_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_3_10" id="__nav_3_10_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_11_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_11">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_10">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1591,6 +1563,34 @@
           </ul>
         </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pc/troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    故障排查
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -2173,19 +2173,19 @@
 </tbody>
 </table>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/pico4/world-frame-origin.webp" data-desc-position="bottom"><img alt="启动瞬间冻结的世界坐标系" src="../../assets/pico4/world-frame-origin.webp" width="420"></a></p>
-<p>坐标系只在启动瞬间跟着头显，冻结后就固定在空间里，转头、走动都不会带着它动；重启 XTac-UMI XR 会重新建系，原点和方向都会变。所以启动时要面朝机器人正前方，让 X 轴对齐机器人正前方，而且同一个数据集采集期间不要重启它，操作步骤见<a href="../pico4/#pico-frame">启动与坐标系对齐</a>。</p>
+<p>坐标系只在启动瞬间跟着头显，冻结后固定在空间中，转头、走动都不会带动它；重启 XTac-UMI XR 会重新建系，原点和方向都会变。因此启动时要面朝机器人正前方，使 X 轴与之对齐；同一数据集采集期间不要重启，操作步骤见<a href="../pico4/#pico-frame">启动与坐标系对齐</a>。</p>
 <p>数据集里所有位姿都以这个世界系为参考：PC 版落盘的是末端 TCP 位姿 <code>tcp.x/y/z</code> 加 6D 旋转 <code>r1..r6</code>（旋转矩阵前两列，约定见<a href="../../pc/recording/#53">每帧记录内容</a>）；背包版 MCAP 里记录头显与追踪器的位姿。</p>
 <h2 id="world-view">采集时的位姿视图<a class="headerlink" href="#world-view" title="锚点链接">¶</a></h2>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">背包版</label><label for="__tabbed_1_2">PC 版</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<p>控制台「实时监控」页的位姿视图实时显示左右爪与头显的位姿，下方是左右爪开合角度（rad / deg / 开合百分比）。夹爪闭合时角度约 0.02 rad，再施加一定的力可以到零。开录前逐个摇晃夹爪，确认左右位姿各自跟着动；不动或跳变先查<a href="../pico4/#pico-tracker-bind">追踪器绑定</a>与视野遮挡。</p>
+<p>控制台「实时监控」页的位姿视图实时显示左右爪与头显的位姿，下方是左右爪开合角度（rad / deg / 开合百分比）。夹爪闭合时角度约 0.02rad，再施加一定的力可以到零。开录前逐个摇晃夹爪，确认左右位姿各自跟着动；不动或跳变先查<a href="../pico4/#pico-tracker-bind">追踪器绑定</a>与视野遮挡。</p>
 </div>
 <div class="tabbed-block">
 <p><code>--display_data=true</code> 会在 Rerun 里开出 <code>/world</code> 3D 视图：夹爪以带标签的椭球 + 三轴画在实时 <code>tcp.*</code> 处，拖出一条轨迹面包屑。</p>
 <ul>
 <li>场景按 <code>FLU</code> 声明，初始视角朝 +X，世界轴标 <code>+X forward / +Y left / +Z up</code>。</li>
-<li>面包屑保留最近 90 个采样点（30 fps 下约 3 秒），越旧越淡。</li>
+<li>面包屑保留最近 90 个采样点（30fps 下约 3 秒），越旧越淡。</li>
 <li>头显相机开启时，头显以更小的琥珀色 <code>HEAD</code> 标记画进同一个 <code>/world</code>，不带轨迹。</li>
 <li><code>--show_trajectory</code> 默认开启，<code>false</code> 关闭；<code>--robot.enable_tracker=false</code> 时自动跳过。</li>
 <li>夹爪平放时 EE 标记应在两指中点、三轴呈 X 前 / Y 左 / Z 上，否则追踪器装错了。</li>
@@ -2322,6 +2322,8 @@
       <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
         <script src="../../assets/javascripts/arch.js"></script>
+      
+        <script src="../../assets/javascripts/tabs-toc.js"></script>
       
     
   

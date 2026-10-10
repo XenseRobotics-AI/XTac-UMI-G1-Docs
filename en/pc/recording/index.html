@@ -1032,14 +1032,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../backpack/troubleshooting/" class="md-nav__link">
+      <a href="../../backpack/versions/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Troubleshooting
+    Versions
   
 
     
@@ -1060,14 +1060,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../backpack/versions/" class="md-nav__link">
+      <a href="../../backpack/troubleshooting/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Versions
+    Troubleshooting
   
 
     
@@ -1646,34 +1646,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../troubleshooting/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Troubleshooting
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../versions/" class="md-nav__link">
         
   
@@ -1760,7 +1732,7 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_11">
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_10">
         
           
           <div class="md-nav__link md-nav__container">
@@ -1782,14 +1754,14 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3_11" id="__nav_3_11_label" tabindex="">
+              <label class="md-nav__link " for="__nav_3_10" id="__nav_3_10_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_11_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_11">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_10">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1888,6 +1860,34 @@
           </ul>
         </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -2362,7 +2362,7 @@
 <ul>
 <li><code>taccap_gripper</code> recording is self-driven; there are no <code>--teleop.*</code> arguments.</li>
 <li>Shifted-frame pairing: the observation from step <em>t-1</em> is paired with the pose from step <em>t</em> as its action (EEF TCP pose + normalised <code>gripper.pos</code>, plus the headset pose with the <a href="#56">head camera</a> on), so each episode is one frame shorter.</li>
-<li><code>tcp.*</code> is the gripper tip, not the tracker: the tracker sits about 195 mm from the two-finger midpoint, and a built-in rigid mount transform (measured off the CAD assembly, one per side) is applied before writing. It is body-fixed and independent of orientation and <code>gripper.pos</code>.</li>
+<li><code>tcp.*</code> is the gripper tip, not the tracker: the tracker sits about 195mm from the two-finger midpoint, and a built-in rigid mount transform (measured off the CAD assembly, one per side) is applied before writing. It is body-fixed and independent of orientation and <code>gripper.pos</code>.</li>
 <li>The world frame is gravity-aligned, X forward / Y left / Z up, frozen the instant XTac-UMI XR starts; see <a href="../../common/pico4/#pico-frame">frame alignment</a>.</li>
 <li><code>--display_data=true</code> opens Rerun's <code>/world</code> 3D view (<code>--show_trajectory=false</code> turns the trail off); what it shows and the mount check are in <a href="../../common/coordinates/#world-view">Coordinate frames · The <code>/world</code> 3D view</a>.</li>
 </ul>
@@ -2458,7 +2458,7 @@
 <ul>
 <li>Rerun displays on its own thread, so leaving <code>--display_data</code> on costs the collection loop nothing; a lagging viewer drops only on-screen frames and prints <code>Rerun display: N/M frames dropped …</code> at the end.</li>
 <li>Spell out <code>fps=30</code>, <code>episode_time_s=120</code>, <code>reset_time_s=60</code> and <code>push_to_hub=false</code> rather than relying on defaults.</li>
-<li>If a camera or the gripper encoder is lost mid-recording (loose cable, hub brown-out), collection stops, saves what it has and prints <code>Device lost mid-recording</code>; no values are invented. The last good value is carried before loss is declared (about 2 s for a camera, 1 s for the encoder), so the episode's last second or two may be stale; discard it. Check cabling and USB ports (see <a href="../troubleshooting/">Troubleshooting</a>), then <code>--resume</code>.</li>
+<li>If a camera or the gripper encoder is lost mid-recording (loose cable, hub brown-out), collection stops, saves what it has and prints <code>Device lost mid-recording</code>; no values are invented. The last good value is carried before loss is declared (about 2s for a camera, 1s for the encoder), so the episode's last second or two may be stale; discard it. Check cabling and USB ports (see <a href="../troubleshooting/">Troubleshooting</a>), then <code>--resume</code>.</li>
 </ul>
 <h3 id="params">Parameters<a class="headerlink" href="#params" title="锚点链接">¶</a></h3>
 <p>For the complete definitions see lerobot's official <a href="https://huggingface.co/docs/lerobot/v0.5.1/en/il_robots#record-a-dataset">recording guide</a> (lerobot baseline 0.5.1).</p>
@@ -2490,7 +2490,7 @@
 <tr>
 <td><code>fps</code></td>
 <td><code>30</code></td>
-<td>Sample-rate cap; the sensors themselves run at 120 Hz (<a href="../../product/specs/#specs">specs</a>)</td>
+<td>Sample-rate cap; the sensors themselves run at 120Hz (<a href="../../product/specs/#specs">specs</a>)</td>
 </tr>
 <tr>
 <td><code>episode_time_s</code></td>
@@ -2898,7 +2898,7 @@
 </span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="w">    </span>--dataset.vcodec<span class="o">=</span>auto
 </span></code></pre></div>
 <ul>
-<li>One encoder thread per camera, fed through a bounded queue (<code>--dataset.encoder_queue_maxsize</code>, about one second of frames); when full it waits up to 0.1 s, then drops the current frame and warns <code>Encoder queue full … dropped N frame(s)</code> without blocking collection.</li>
+<li>One encoder thread per camera, fed through a bounded queue (<code>--dataset.encoder_queue_maxsize</code>, about one second of frames); when full it waits up to 0.1s, then drops the current frame and warns <code>Encoder queue full … dropped N frame(s)</code> without blocking collection.</li>
 <li>Saving is transactional: a failed save or a Ctrl+C rolls back to the last complete episode, never leaving half an episode, and <code>--resume</code> carries on.</li>
 <li><code>--dataset.vcodec=auto</code> prefers hardware encoding; an NVIDIA GPU is recommended so GPU H.264 encoding takes load off the CPU.</li>
 <li>Encoder warm-up is automatic: encoders are ready before each episode, so the first frame does not pay for it.</li>
@@ -2906,7 +2906,7 @@
 <h3 id="no-gpu">Recording on a host with no NVIDIA GPU<a class="headerlink" href="#no-gpu" title="锚点链接">¶</a></h3>
 <div class="admonition warning">
 <p class="admonition-title">This is a workaround for an underspecified machine, not a recommendation</p>
-<p>The <a href="../install/#host-spec">data-collection host minimum</a> is an NVIDIA RTX 3060 / 8 GB VRAM or better. A CPU-only server, a VM or a laptop with no NVIDIA card can record as below, but saves are slow and frames drop sooner; use a compliant host for real collection.</p>
+<p>The <a href="../install/#host-spec">data-collection host minimum</a> is an NVIDIA RTX 3060 / 8GB VRAM or better. A CPU-only server, a VM or a laptop with no NVIDIA card can record as below, but saves are slow and frames drop sooner; use a compliant host for real collection.</p>
 </div>
 <p>Upgrade such machines to v0.1.0 first.</p>
 <p>The defaults <code>--dataset.vcodec=auto</code> + <code>--dataset.streaming_encoding=true</code> assume an NVIDIA card; without one, turn streaming encoding off:</p>
@@ -2915,7 +2915,7 @@
 </span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span>--dataset.streaming_encoding<span class="o">=</span><span class="nb">false</span>
 </span></code></pre></div>
 <p><code>--dataset.vcodec=auto</code> probes by actually opening an encode session and falls back to <code>libsvtav1</code> (AV1 on the CPU) with no NVIDIA driver; offline re-encoding chooses the same way (<code>h264_nvenc</code> with NVIDIA). Passing <code>--dataset.vcodec=libsvtav1</code> explicitly also works.</p>
-<p>With <code>libsvtav1</code> the CPU both encodes and captures; a bimanual rig has six to eight images per frame in a 33.3 ms budget at 30 fps, so <code>[slow_frame] ... overrun=</code> appears. With streaming off, frames are batch-encoded at <code>save_episode()</code>: a slow save only means waiting, a dropped frame cannot be recovered. Ignore the reminder to turn streaming encoding back on. To keep streaming encoding on a many-core server, tune these:</p>
+<p>With <code>libsvtav1</code> the CPU both encodes and captures; a bimanual rig has six to eight images per frame in a 33.3ms budget at 30fps, so <code>[slow_frame] ... overrun=</code> appears. With streaming off, frames are batch-encoded at <code>save_episode()</code>: a slow save only means waiting, a dropped frame cannot be recovered. Ignore the reminder to turn streaming encoding back on. To keep streaming encoding on a many-core server, tune these:</p>
 <table>
 <thead>
 <tr>
@@ -2933,7 +2933,7 @@
 <tr>
 <td><code>--dataset.encoder_queue_maxsize</code></td>
 <td><code>30</code></td>
-<td>About 1 s of buffer at 30 fps; a back-pressure valve that stops memory growing when encoding falls behind</td>
+<td>About 1s of buffer at 30fps; a back-pressure valve that stops memory growing when encoding falls behind</td>
 </tr>
 </tbody>
 </table>
@@ -3028,7 +3028,7 @@
 <td>First frame</td>
 <td>The motion starts normally</td>
 <td>The key action lands in the dropped first frame</td>
-<td>Hold still 0.5–1 s after start; give <code>--dataset.episode_time_s</code> enough room</td>
+<td>Hold still 0.5–1s after start; give <code>--dataset.episode_time_s</code> enough room</td>
 </tr>
 </tbody>
 </table>
@@ -3097,7 +3097,7 @@
 <ul>
 <li><code>--robot.head_camera_eyes=left</code> (or <code>right</code>) records one eye: half the decoding and encoder load, one head video key.</li>
 <li>Changing the resolution or eye selection changes the data; episodes either side cannot be mixed.</li>
-<li>The eyes are two independent messages and a mismatch leaves no trace, so each frame compares both eyes' newest frames: identical sequence numbers mean the same exposure, otherwise timestamps must agree within <code>--robot.head_camera_pair_max_skew_ms</code> (default 20 ms, against about 33 ms per frame at 30 fps); exceeding it only logs a rate-limited warning with the measured skew.</li>
+<li>The eyes are two independent messages and a mismatch leaves no trace, so each frame compares both eyes' newest frames: identical sequence numbers mean the same exposure, otherwise timestamps must agree within <code>--robot.head_camera_pair_max_skew_ms</code> (default 20ms, against about 33ms per frame at 30fps); exceeding it only logs a rate-limited warning with the measured skew.</li>
 </ul>
 <p><code>head_camera.*</code> is mapped into the <code>tcp.*</code> world frame with the tracker's Pico→world transform. Enabling it adds 9 dimensions to <code>observation.state</code>: 10 → 19 single, 20 → 29 bimanual, and <code>--robot.enable_imu=true</code> adds on top. If it will not connect, see <a href="../troubleshooting/#head-camera">Troubleshooting</a>.</p>
 <h2 id="57">Optional: wrist camera fisheye undistortion<a class="headerlink" href="#57" title="锚点链接">¶</a></h2>
@@ -3117,8 +3117,8 @@
 <li>The firmware predates command set V2.0.</li>
 </ul>
 <p>The fallback warns <code>Wrist undistortion is using the SDK's REFERENCE intrinsics ... Rectification will be approximate</code> and records <code>"calibration": "reference"</code> in the manifest. In code, prefer <code>Calibration::resolve_fisheye()</code> (returns <code>(calibration, is_reference, reason)</code>) over <code>read_fisheye()</code>.</p>
-<p>The reference values are fine to look at, but the principal point drifts per unit (37.7 px off on one unit); to measure in pixels on the rectified image (visual servoing, hand-eye calibration, size estimation), store this unit's own calibration first: <code>python third_party/taccap-gripper/python/examples/fisheye_cal.py set-fisheye right</code> (with two connected, pick <code>left</code> / <code>right</code> or a full SN; omit with one).</p>
-<p>An off-centre or slightly tilted rectified frame does not mean bad calibration: undistortion centres on the principal point, not the frame centre, the sensor need not sit on the optical centre, and fisheye barrel distortion hides this (one unit: <code>cx = 359.1</code>, fingertip midpoint x = 360.1, about 1 px apart). Do not change <code>cx</code>; forcing 320 makes it worse and adds tilt.</p>
+<p>The reference values are fine to look at, but the principal point drifts per unit (37.7px off on one unit); to measure in pixels on the rectified image (visual servoing, hand-eye calibration, size estimation), store this unit's own calibration first: <code>python third_party/taccap-gripper/python/examples/fisheye_cal.py set-fisheye right</code> (with two connected, pick <code>left</code> / <code>right</code> or a full SN; omit with one).</p>
+<p>An off-centre or slightly tilted rectified frame does not mean bad calibration: undistortion centres on the principal point, not the frame centre, the sensor need not sit on the optical centre, and fisheye barrel distortion hides this (one unit: <code>cx = 359.1</code>, fingertip midpoint x = 360.1, about 1px apart). Do not change <code>cx</code>; forcing 320 makes it worse and adds tilt.</p>
 
 
 
@@ -3242,6 +3242,8 @@
       <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
         <script src="../../../assets/javascripts/arch.js"></script>
+      
+        <script src="../../../assets/javascripts/tabs-toc.js"></script>
       
     
   

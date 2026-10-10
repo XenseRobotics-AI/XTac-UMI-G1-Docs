@@ -1198,14 +1198,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../troubleshooting/" class="md-nav__link">
+      <a href="../versions/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    故障排查
+    版本
   
 
     
@@ -1226,14 +1226,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../versions/" class="md-nav__link">
+      <a href="../troubleshooting/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    版本
+    故障排查
   
 
     
@@ -1518,34 +1518,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pc/troubleshooting/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    故障排查
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../pc/versions/" class="md-nav__link">
         
   
@@ -1629,7 +1601,7 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_11">
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_10">
         
           
           <div class="md-nav__link md-nav__container">
@@ -1651,14 +1623,14 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3_11" id="__nav_3_11_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_3_10" id="__nav_3_10_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_11_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_11">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_10">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1757,6 +1729,34 @@
           </ul>
         </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pc/troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    故障排查
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -2226,11 +2226,11 @@
 
 
 <h1 id="实时监控与录制">实时监控与录制<a class="headerlink" href="#实时监控与录制" title="锚点链接">¶</a></h1>
-<p>本页讲 XTac-UMI Collector 控制台（下称控制台）的「实时监控」页。夹爪按键手势、灯语与语音播报正文见<a href="../gripper/#buttons-leds">夹爪按键与指示灯</a>，本页只链接。</p>
+<p>本页讲 XTac-UMI Collector 控制台（下称控制台）的「实时监控」页。夹爪按键手势、灯语与语音播报详见<a href="../gripper/#buttons-leds">夹爪按键与指示灯</a>。</p>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/backpack/monitor-live.webp" data-desc-position="bottom"><img alt="实时监控页" src="../../assets/backpack/monitor-live.webp"></a></p>
 <ul>
 <li><strong>顶栏</strong>：设备状态（视频带宽、CPU、内存、硬盘、相机路数、监控时长、录制时长、系统）。</li>
-<li><strong>中间</strong>：两侧列各是一只夹爪的鱼眼与左指 / 右指视触觉；中列是头显双目、「双臂 / 头部位姿」3D 视图及其下方的左右爪开合角度卡。</li>
+<li><strong>中间</strong>：两侧各为一只夹爪的鱼眼与左 / 右指视触觉；中列是头显双目、「双臂 / 头部位姿」3D 视图及下方的左右爪开合角度卡。</li>
 <li><strong>底部</strong>：左起「当前任务条数」卡、项目 / 任务选择与录制按钮、实时监控连接卡（「关闭推流」「刷新设备」）。</li>
 </ul>
 <h2 id="checks">开录前在控制台确认<a class="headerlink" href="#checks" title="锚点链接">¶</a></h2>
@@ -2250,19 +2250,19 @@
 <td>鱼眼糊多半是旋钮被碰跑焦，拧回清晰再录；路数不对去<a href="../system/#capture-mode">系统 → 采集模式</a>核对；某一路长时间黑才点「刷新设备」</td>
 </tr>
 <tr>
-<td>头显位姿与追踪器状态</td>
-<td>动一动夹爪与头显，3D 模型跟随；位姿卡右上角指示灯绿</td>
-<td>「位姿在线」但模型不动：多半是 Pico 里的追踪器 APP 没真正开起来，长按追踪器电源键重新激活并重启 Pico 内 APP；灯转黄并提示：追踪器出了头显视野（只报方向、无位置），转回视野内；左右按左单右双核对序列号，见 <a href="../../common/pico4/#pico-tracker-sn">Pico4 追踪器序列号</a></td>
+<td>位姿追踪</td>
+<td>移动夹爪与头显，3D 模型跟随；位姿卡右上角亮绿灯</td>
+<td>「位姿在线」但模型不动：多为 Pico 内追踪器 APP 未真正启动，长按追踪器电源键重新激活并重启 Pico 内 APP；灯转黄：追踪器出了头显视野（只报方向、无位置），移回视野内；左右按左单右双核对序列号，见 <a href="../../common/pico4/#pico-tracker-sn">Pico4 追踪器序列号</a></td>
 </tr>
 <tr>
 <td>两爪开合度</td>
-<td>位姿视图下方两卡显示弧度、角度与归一化百分比：张到底约 100 %，闭合约 0 %（约 0.02 rad，加点力可到 0）</td>
-<td>张到底不到 100 % 或闭合回不到 0，去<a href="../system/#gripper">系统 → 夹爪配置</a>重标</td>
+<td>位姿视图下方两卡显示弧度、角度与归一化百分比：张到底约 100%，闭合约 0%（约 0.02rad，加点力可到 0）</td>
+<td>张到底不到 100% 或闭合回不到 0，去<a href="../system/#gripper">系统 → 夹爪配置</a>重标</td>
 </tr>
 <tr>
 <td>磁盘余量</td>
-<td>顶栏「硬盘」占用低于 80 %（录制盘实测），悬停看挂载点、已用、总量与可用空间</td>
-<td>达到 80 % 拒绝开录；把已采数据<a href="../projects-export/#archive">导出后归档</a>或删掉不要的录制</td>
+<td>顶栏「硬盘」占用低于 80%（录制盘实测），悬停看挂载点、已用、总量与可用空间</td>
+<td>达到 80% 拒绝开录；把已采数据<a href="../projects-export/#archive">导出后归档</a>或删掉不要的录制</td>
 </tr>
 <tr>
 <td>录制状态</td>
@@ -2301,8 +2301,8 @@
 <td>短标签，只能用英文小写字母、数字和连字符，如 <code>pick-chips</code></td>
 </tr>
 <tr>
-<td>任务指令 / prompt（必填）</td>
-<td>LeRobot 语言指令，写完整的自然语言，如 <em>open the lid of the container on the table, take out the chips, place them into the box, and close the lid</em></td>
+<td>任务指令 / prompt</td>
+<td>必填。LeRobot 语言指令，写完整的自然语言，如 <em>open the lid of the container on the table, take out the chips, place them into the box, and close the lid</em></td>
 </tr>
 <tr>
 <td>目标条数</td>
@@ -2320,13 +2320,13 @@
 <li><strong>目标条数是硬门槛</strong>：录满即拒绝开录，控制台按钮和夹爪按键都被挡。</li>
 <li><strong>按累计采集计</strong>：「已就绪」「已上传」都算；归档只删本地文件、不改状态，所以<strong>上传与归档都腾不出名额</strong>，进度也不倒退。已删除的不算；「删除上条并重录」净条数不变。</li>
 <li><strong>录满后继续采</strong>：提高目标条数，或删除不该计入的录制。</li>
-<li><strong>「当前任务条数」卡</strong>：左下角，显示已采条数、时长与目标进度，口径同上；按键或另一台平板开 / 停录时与项目页列表即时更新。</li>
+<li><strong>「当前任务条数」卡</strong>：左下角，显示已采条数、时长与目标进度，口径同上；按键或其他平板开 / 停录时与项目页列表同步。</li>
 </ul>
 <p>相机参数与矫正：</p>
 <ul>
-<li><strong>腕部相机与触觉</strong>：分别固定 640×480 @ 30 fps 与 640×480 @ 120 fps，不可调。</li>
+<li><strong>腕部相机与触觉</strong>：分别固定 640×480 @ 30fps 与 640×480 @ 120fps，不可调。</li>
 <li><strong>矫正都在导出时做</strong>：触觉按所选方向做几何矫正；腕部鱼眼若开了矫正，用开录时冻结进这条录制的标定参数。</li>
-<li><strong>LeRobot 导出</strong>：固定 30 fps。</li>
+<li><strong>LeRobot 导出</strong>：固定 30fps。</li>
 </ul>
 <h2 id="record">录制<a class="headerlink" href="#record" title="锚点链接">¶</a></h2>
 <ul>
@@ -2353,7 +2353,7 @@
 <h3 id="record-gates">开录门槛<a class="headerlink" href="#record-gates" title="锚点链接">¶</a></h3>
 <p>按键或按钮开录都按此顺序检查，一项不过即停：</p>
 <ol>
-<li>磁盘占用低于 80 %；</li>
+<li>磁盘占用低于 80%；</li>
 <li>已选项目与任务，且任务累计采集条数未达目标；</li>
 <li>夹爪 MCU 在线；</li>
 <li>Pico 就绪：头显已连接，位姿与时钟同步正常；录头显画面的模式还要所选眼的视频正常；</li>
@@ -2386,9 +2386,9 @@
 <p>左爪长按或点「结束录制」，条目存进当前任务，灯白闪一下回待机；编号规则见<a href="../projects-export/#projects">项目页</a>。</p>
 <p>停录时自动质检，任一项命中即标「数据可疑」（夹爪黄脉冲，项目页「质量」列有标记，条目照样保存）：</p>
 <ul>
-<li>录制时长低于 1 s（基本是误触）；</li>
+<li>录制时长低于 1s（基本是误触）；</li>
 <li>任一相机通道一帧都没录到，或整条没收到任何视频帧；</li>
-<li>追踪器追踪失效时长超过本条时长的 20 %（疑似出视野）；</li>
+<li>追踪器追踪失效时长超过本条时长的 20%（疑似出视野）；</li>
 <li>触觉矫正配方缺失（这条的 LeRobot 导出必失败）。</li>
 </ul>
 <p>可疑条目最好当场<a href="#record-delete">删除上一条</a>重录。</p>
@@ -2406,7 +2406,7 @@
 <tr>
 <td>已就绪</td>
 <td>刚录完，原始文件在设备上，没上传过</td>
-<td>回放、导出（两种格式）、上传、归档、删除</td>
+<td>回放、导出、上传、归档、删除</td>
 </tr>
 <tr>
 <td>已上传</td>
@@ -2563,6 +2563,8 @@
       <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
         <script src="../../assets/javascripts/arch.js"></script>
+      
+        <script src="../../assets/javascripts/tabs-toc.js"></script>
       
     
   

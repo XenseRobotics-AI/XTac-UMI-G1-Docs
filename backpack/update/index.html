@@ -15,7 +15,7 @@
         <link rel="prev" href="../system/">
       
       
-        <link rel="next" href="../troubleshooting/">
+        <link rel="next" href="../versions/">
       
       
         
@@ -1115,14 +1115,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../troubleshooting/" class="md-nav__link">
+      <a href="../versions/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    故障排查
+    版本
   
 
     
@@ -1143,14 +1143,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../versions/" class="md-nav__link">
+      <a href="../troubleshooting/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    版本
+    故障排查
   
 
     
@@ -1435,34 +1435,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pc/troubleshooting/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    故障排查
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../pc/versions/" class="md-nav__link">
         
   
@@ -1546,7 +1518,7 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_11">
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_10">
         
           
           <div class="md-nav__link md-nav__container">
@@ -1568,14 +1540,14 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3_11" id="__nav_3_11_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_3_10" id="__nav_3_10_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_11_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_11">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_10">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1674,6 +1646,34 @@
           </ul>
         </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pc/troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    故障排查
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -2143,38 +2143,46 @@
 
 
 <h1 id="升级与-ota">升级与 OTA<a class="headerlink" href="#升级与-ota" title="锚点链接">¶</a></h1>
-<p>控制台升级在 系统 → 系统更新 页完成；夹爪固件在 系统 → 夹爪配置 页刷写，见<a href="#gripper-firmware">夹爪固件</a>。</p>
+<p>本页说明控制台程序与夹爪固件的升级方法：</p>
+<ul>
+<li><strong>控制台程序</strong>：在 系统 → 系统更新 页导入升级包。</li>
+<li><strong>夹爪固件</strong>：在 系统 → 夹爪配置 页刷写，见<a href="#gripper-firmware">夹爪固件</a>。</li>
+</ul>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/backpack/update.webp" data-desc-position="bottom"><img alt="系统更新页" src="../../assets/backpack/update.webp"></a></p>
 <h2 id="bundle">导入升级包<a class="headerlink" href="#bundle" title="锚点链接">¶</a></h2>
-<p>升级包是技术支持提供的 <code>.tar.zst</code> 文件，文件名里带版本号，如 <code>taccap-collector-v0.4.3-….tar.zst</code>。它只更新控制台程序，不含夹爪固件、相机参数包，也不动采集数据。</p>
+<p>升级包为技术支持提供的 <code>.tar.zst</code> 文件，文件名含版本号，如 <code>taccap-collector-v0.4.3-….tar.zst</code>。升级包仅更新控制台程序，不包含夹爪固件与相机参数包，不影响已采集的数据。</p>
 <ol>
 <li>停止录制。</li>
-<li>「上传固件包」→ 选择 <code>.tar.zst</code> →「上传并校验」。</li>
+<li>点击「上传固件包」，选择 <code>.tar.zst</code> 文件，点击「上传并校验」。</li>
 <li>校验通过后，在「待应用版本」卡核对版本号。</li>
-<li>「应用更新并重启」→ 确认。服务重启约需 1 分钟，提示「更新已应用」即完成；超时就手动刷新页面。</li>
-<li>到<a href="../system/#device-info">设备信息</a>确认版本和构建时间已更新。</li>
+<li>点击「应用更新并重启」并确认。服务重启约需 1 分钟，页面提示「更新已应用」即升级完成；若等待超时，请手动刷新页面。</li>
+<li>在<a href="../system/#device-info">设备信息</a>确认版本号与构建时间已更新。</li>
 </ol>
-<p>校验不通过时设备拒收，原因写在「上次错误」，当前版本照常运行。常见原因：文件损坏或没传完、版本跨度太大或比当前版本旧。</p>
+<p>校验未通过时，设备拒绝该升级包并在「上次错误」中给出原因，当前版本继续运行。常见原因包括：文件损坏或传输不完整、版本跨度过大、版本低于当前版本。</p>
 <div class="admonition note">
-<p class="admonition-title">部分修复要由技术支持处理</p>
-<p>少数修复涉及设备系统组件，不在升级包里，现场也无法操作。设备是否需要，以技术支持的通知为准。「上传固件包」只接受 <code>.tar.zst</code> 升级包，技术支持给的其他文件不要往这里传。</p>
+<p class="admonition-title">部分修复需由技术支持处理</p>
+<p>少数修复涉及设备系统组件，不包含在升级包内，无法在现场完成。设备是否需要此类修复，以技术支持的通知为准。「上传固件包」仅接受 <code>.tar.zst</code> 升级包，请勿上传其他文件。</p>
 </div>
 <h2 id="rollback">回滚<a class="headerlink" href="#rollback" title="锚点链接">¶</a></h2>
-<p>升级时设备会保留上一版。新版启动失败、文件损坏或中途断电，设备都会自动退回上一版，不会变砖。</p>
-<p>手动回滚：「回滚」卡显示「可回滚」时，点「回滚到上一版本」→ 确认。只能退一步；出厂后还没升级过的设备没有上一版可退。</p>
-<p>升级与回滚都不影响录制数据、项目、上传配置和网络配置。</p>
+<p>升级时设备会保留上一版本。新版本启动失败、文件损坏或升级过程中断电时，设备自动回退到上一版本，不会导致设备无法启动。</p>
+<p><strong>手动回滚</strong>：「回滚」卡显示「可回滚」时，点击「回滚到上一版本」并确认。</p>
+<ul>
+<li>仅能回退一个版本。</li>
+<li>出厂后未升级过的设备没有可回退的版本。</li>
+</ul>
+<p>升级与回滚均不影响录制数据、项目、上传配置和网络配置。</p>
 <h2 id="gripper-firmware">夹爪固件<a class="headerlink" href="#gripper-firmware" title="锚点链接">¶</a></h2>
-<p>夹爪固件不走升级包，在 系统 → <a href="../system/#gripper">夹爪配置</a> 页下方的「夹爪固件升级」里直接刷，不需要电脑。固件文件与是否需要刷，见 PC 版<a href="../../pc/versions/#ota">固件 OTA 升级</a>。</p>
+<p>夹爪固件不通过升级包更新，而是在 系统 → <a href="../system/#gripper">夹爪配置</a> 页下方的「夹爪固件升级」中刷写，无需电脑。固件文件及是否需要升级，见 PC 版<a href="../../pc/versions/#ota">固件 OTA 升级</a>。</p>
 <ol>
-<li>停止录制，且没有进行中的开合标定。</li>
-<li>选目标爪（左 / 右）→ 选 <code>.bin</code> →「上传并刷写」→ 确认。</li>
-<li>提示「固件已刷写完成，设备正在重启」后，<strong>给背包断电再上电</strong>（或拔插该夹爪的 Type-C 线），否则夹爪会丢数据。</li>
-<li>到<a href="../system/#device-info">设备信息</a>核对固件版本；标定卡显示「未标定」时回<a href="../system/#gripper">夹爪配置</a>重新标定。</li>
+<li>停止录制，并确认没有进行中的开合标定。</li>
+<li>选择目标夹爪（左 / 右），选择 <code>.bin</code> 文件，点击「上传并刷写」并确认。</li>
+<li>页面提示「固件已刷写完成，设备正在重启」后，<strong>将背包断电再上电</strong>（或重插该夹爪 Type-C 线），否则夹爪可能丢失数据。</li>
+<li>在<a href="../system/#device-info">设备信息</a>核对固件版本；如标定卡显示「未标定」，请在<a href="../system/#gripper">夹爪配置</a>重新标定。</li>
 </ol>
-<p>刷写中途可以「中止」，失败了重来即可，不会刷坏。</p>
+<p>刷写过程中可点击「中止」；刷写失败后可重新刷写，不会损坏夹爪。</p>
 <div class="admonition danger">
-<p class="admonition-title">按主从选固件，刷写时不要断电</p>
-<p>主夹爪（SN 末位 <code>m</code>）刷 <code>tc-gu-01-master.bin</code>，从夹爪（SN 末位 <code>s</code>）刷 <code>tc-gu-01-slave.bin</code>，按主从不按左右。刷错夹爪无法启动，需返厂恢复；写入过程中断电或拔线也会损坏固件。</p>
+<p class="admonition-title">按主从角色选择固件，刷写过程中不要断电</p>
+<p>主夹爪（SN 末位为 <code>m</code>）使用 <code>tc-gu-01-master.bin</code>，从夹爪（SN 末位为 <code>s</code>）使用 <code>tc-gu-01-slave.bin</code>，按主从角色区分，与左右无关。固件选错将导致夹爪无法启动，需返厂恢复；写入过程中断电或拔线也会损坏固件。</p>
 </div>
 
 
@@ -2230,13 +2238,13 @@
         
         
           
-          <a href="../troubleshooting/" class="md-footer__link md-footer__link--next" aria-label="下一页: 故障排查">
+          <a href="../versions/" class="md-footer__link md-footer__link--next" aria-label="下一页: 版本">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 下一页
               </span>
               <div class="md-ellipsis">
-                故障排查
+                版本
               </div>
             </div>
             <div class="md-footer__button md-icon">
@@ -2299,6 +2307,8 @@
       <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
         <script src="../../assets/javascripts/arch.js"></script>
+      
+        <script src="../../assets/javascripts/tabs-toc.js"></script>
       
     
   

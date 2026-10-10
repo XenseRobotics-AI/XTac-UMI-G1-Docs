@@ -12,7 +12,7 @@
         <link rel="canonical" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/pc/versions/">
       
       
-        <link rel="prev" href="../troubleshooting/">
+        <link rel="prev" href="../dataset/">
       
       
         <link rel="next" href="../reference/">
@@ -1032,14 +1032,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../backpack/troubleshooting/" class="md-nav__link">
+      <a href="../../backpack/versions/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Troubleshooting
+    Versions
   
 
     
@@ -1060,14 +1060,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../backpack/versions/" class="md-nav__link">
+      <a href="../../backpack/troubleshooting/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Versions
+    Troubleshooting
   
 
     
@@ -1352,34 +1352,6 @@
                 
   
   
-  
-  
-    <li class="md-nav__item">
-      <a href="../troubleshooting/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Troubleshooting
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
     
   
   
@@ -1621,7 +1593,7 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_11">
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_10">
         
           
           <div class="md-nav__link md-nav__container">
@@ -1643,14 +1615,14 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3_11" id="__nav_3_11_label" tabindex="">
+              <label class="md-nav__link " for="__nav_3_10" id="__nav_3_10_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_11_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_11">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_10">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1749,6 +1721,34 @@
           </ul>
         </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -2295,12 +2295,12 @@
 </tr>
 <tr>
 <td>Collection host</td>
-<td>Minimum 12th-gen i7, 8 GB, 512 GB SSD; recommended Core Ultra 9 275HX, 32 GB, 1 TB NVMe, see <a href="../install/#host-spec">Host specification</a></td>
+<td>Minimum 12th-gen i7, 8GB, 512GB SSD; recommended Core Ultra 9 275HX, 32GB, 1TB NVMe, see <a href="../install/#host-spec">Host specification</a></td>
 <td>—</td>
 </tr>
 <tr>
 <td>NVIDIA GPU / driver</td>
-<td>Minimum RTX 3060 / 8 GB (RTX 5060 Laptop / 8 GB or better recommended), driver ≥ 570.144; with no NVIDIA card, only <a href="../recording/#no-gpu">degraded recording</a></td>
+<td>Minimum RTX 3060 / 8GB (RTX 5060 Laptop / 8GB or better recommended), driver ≥ 570.144; with no NVIDIA card, only <a href="../recording/#no-gpu">degraded recording</a></td>
 <td>570.144 / 580.126.09 / 595.71.05</td>
 </tr>
 <tr>
@@ -2544,7 +2544,7 @@
 <ul>
 <li>The reboot after OTA is a soft reset: the USB-serial bridge never loses power and the device stays degraded, right version, stream running, error counters at 0, but quietly dropping status frames. Over 60-second runs, OTA alone loses 35 to 39 frames, after unplug and replug 0.</li>
 <li>Order: flash → unplug and replug → step-3 check → calibration; data before the power cycle is untrustworthy.</li>
-<li>Leader: unplug and replug USB. Follower: unplug the 24 V power cable, wait about 2 seconds and plug it back in, leaving USB connected (controller and motor both run on 24 V).</li>
+<li>Leader: unplug and replug USB. Follower: unplug the 24V power cable, wait about 2 seconds and plug it back in, leaving USB connected (controller and motor both run on 24V).</li>
 <li>Unplug and replug only after the gripper has finished rebooting.</li>
 </ul>
 </div>
@@ -2586,7 +2586,7 @@
       <nav class="md-footer__inner md-grid" aria-label="Footer">
         
           
-          <a href="../troubleshooting/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Troubleshooting">
+          <a href="../dataset/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Dataset">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
@@ -2596,7 +2596,7 @@
                 Previous
               </span>
               <div class="md-ellipsis">
-                Troubleshooting
+                Dataset
               </div>
             </div>
           </a>
@@ -2672,6 +2672,8 @@
       <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
         <script src="../../../assets/javascripts/arch.js"></script>
+      
+        <script src="../../../assets/javascripts/tabs-toc.js"></script>
       
     
   

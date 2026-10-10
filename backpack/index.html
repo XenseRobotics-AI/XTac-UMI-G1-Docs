@@ -1035,14 +1035,14 @@
   
   
     <li class="md-nav__item">
-      <a href="troubleshooting/" class="md-nav__link">
+      <a href="versions/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    故障排查
+    版本
   
 
     
@@ -1063,14 +1063,14 @@
   
   
     <li class="md-nav__item">
-      <a href="versions/" class="md-nav__link">
+      <a href="troubleshooting/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    版本
+    故障排查
   
 
     
@@ -1355,34 +1355,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../pc/troubleshooting/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    故障排查
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../pc/versions/" class="md-nav__link">
         
   
@@ -1466,7 +1438,7 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_11">
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_10">
         
           
           <div class="md-nav__link md-nav__container">
@@ -1488,14 +1460,14 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3_11" id="__nav_3_11_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_3_10" id="__nav_3_10_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_11_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_11">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_10">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1594,6 +1566,34 @@
           </ul>
         </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pc/troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    故障排查
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -2117,17 +2117,17 @@
     "grip": {
       "title": "主控板 · 编码器",
       "sub": "开合 · IMU · 按键",
-      "desc": "主夹爪主控板把开合角度与 IMU（各 100 Hz）以及按键手势经 USB 上报给背包。"
+      "desc": "主夹爪主控板把开合角度与 IMU（各 100Hz）以及按键手势经 USB 上报给背包。"
     },
     "tact": {
       "title": "视触觉传感器 ×2",
       "sub": "左右指各一",
-      "desc": "每指一个视触觉传感器，以 640 × 480、120 fps 采集。"
+      "desc": "每指一个视触觉传感器，以 640 × 480、120fps 采集。"
     },
     "wrist": {
       "title": "腕部相机",
       "sub": "手腕视角鱼眼",
-      "desc": "手腕视角的鱼眼画面，640 × 480、30 fps。"
+      "desc": "手腕视角的鱼眼画面，640 × 480、30fps。"
     },
     "tracker": {
       "title": "运动追踪器 ×2",
@@ -2146,12 +2146,12 @@
     },
     "tcam": {
       "title": "触觉采集",
-      "sub": "原始画面 · 120 fps",
+      "sub": "原始画面 · 120fps",
       "desc": "按原始画面采集与保存；导出时再用传感器自带的矫正参数，按项目所选方向矫正（默认 700 × 400）。"
     },
     "fcam": {
       "title": "鱼眼采集",
-      "sub": "原始画面 · 30 fps",
+      "sub": "原始画面 · 30fps",
       "desc": "按原始鱼眼画面保存；去畸变参数在开录时记下，导出时再矫正。"
     },
     "xvr": {
@@ -2301,7 +2301,7 @@
   "obsNote": "观测里记的是第 t-1 帧的值。",
   "actNote": "动作里记的是第 t 帧的值，比观测领先一步。",
   "keys": {
-    "tactile": "这只夹爪一根手指上的视触觉图像，导出时矫正，默认 700 × 400 横图（可在项目里选 400 × 700），30 fps。",
+    "tactile": "这只夹爪一根手指上的视触觉图像，导出时矫正，默认 700 × 400 横图（可在项目里选 400 × 700），30fps。",
     "wrist": "这只夹爪的腕部鱼眼画面，640 × 480；项目开启腕部鱼眼矫正时导出为矫正后的画面。",
     "headimg": "头显一只眼的画面，每眼 640 × 480 或 1024 × 768（按项目设置）。双目模式录左右两眼，右单目模式只录右眼。",
     "tcp": "这只夹爪末端（两指中点）在世界系下的位姿：位置 x、y、z（米）加 6-D 旋转 r1–r6，由追踪器位姿换算得到。三种模式都录。",
@@ -2379,7 +2379,7 @@
 <p><strong>供电方案（二选一）</strong></p>
 <ul>
 <li><strong>方案 A</strong>：<a href="unbox-connect/#adapter">适配器供电</a>，将电源适配器接入背包的 <code>DC</code> 口。</li>
-<li><strong>方案 B</strong>：<a href="unbox-connect/#powerbank">充电宝供电</a>，用 0.3 m 12 V PD 电源线将充电宝接入背包的 <code>DC</code> 口。</li>
+<li><strong>方案 B</strong>：<a href="unbox-connect/#powerbank">充电宝供电</a>，用 0.3m 12V PD 电源线将充电宝接入背包的 <code>DC</code> 口。</li>
 </ul>
 <p>夹爪的具体连接与供电要求见<a href="../common/gripper/#power">夹爪连接与序列号</a>。</p>
 <h3 id="deploy-console">3. 连接控制台<a class="headerlink" href="#deploy-console" title="锚点链接">¶</a></h3>
@@ -2454,7 +2454,7 @@
 <p>归档只保留记录，清掉原始文件；清理时会保护还没有导出过的格式。</p>
 <h2 id="faq">常见问题<a class="headerlink" href="#faq" title="锚点链接">¶</a></h2>
 <ul>
-<li><a href="troubleshooting/#connect">连不上控制台</a>：先用平板插 USB 进入；走热点时确认设备支持 5 GHz、连的是这台背包的热点、地址带了 <code>http://</code> 前缀；偶发无响应时给背包重新上电。</li>
+<li><a href="troubleshooting/#connect">连不上控制台</a>：先用平板插 USB 进入；走热点时确认设备支持 5GHz、连的是这台背包的热点、地址带了 <code>http://</code> 前缀；偶发无响应时给背包重新上电。</li>
 <li><a href="troubleshooting/#tracker">追踪器丢失</a>：追踪精度不准或头显断开时，XTac-UMI XR 与监控页都会有图标提示；先看追踪器是否亮蓝灯、<a href="../common/pico4/#pico-tracker-bind">配对</a>是否正确。</li>
 <li><a href="troubleshooting/#record">开录被拒</a>：录制盘已用达到 80% 时拒绝开始录制，提示「录制盘已用 N%（剩余 …），达到 80% 上限，已拒绝开录」；先把已采数据上传或下载走，再<a href="projects-export/#archive">归档</a>腾空间，或删掉不要的条目。</li>
 <li><a href="playback/">回放与实时预览不能同时进行</a>：回放被拒时，先关掉其他标签页或其他设备上打开的实时监控。</li>
@@ -2586,6 +2586,8 @@
       <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
       
         <script src="../assets/javascripts/arch.js"></script>
+      
+        <script src="../assets/javascripts/tabs-toc.js"></script>
       
     
   

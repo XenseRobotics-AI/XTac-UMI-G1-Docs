@@ -1176,14 +1176,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../troubleshooting/" class="md-nav__link">
+      <a href="../versions/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    故障排查
+    版本
   
 
     
@@ -1204,14 +1204,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../versions/" class="md-nav__link">
+      <a href="../troubleshooting/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    版本
+    故障排查
   
 
     
@@ -1496,34 +1496,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pc/troubleshooting/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    故障排查
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../pc/versions/" class="md-nav__link">
         
   
@@ -1607,7 +1579,7 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_11">
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_10">
         
           
           <div class="md-nav__link md-nav__container">
@@ -1629,14 +1601,14 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3_11" id="__nav_3_11_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_3_10" id="__nav_3_10_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_11_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_11">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_10">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1735,6 +1707,34 @@
           </ul>
         </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pc/troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    故障排查
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -2255,7 +2255,7 @@
 <tr>
 <td>DC IN</td>
 <td>后面板</td>
-<td>12 V 供电输入，接适配器或充电宝</td>
+<td>12V 供电输入，接适配器或充电宝</td>
 </tr>
 <tr>
 <td>网口</td>
@@ -2300,33 +2300,33 @@
 </tr>
 <tr>
 <td>电源</td>
-<td>12 V 3 A 电源适配器，接市电</td>
-<td>箱内充电宝（20000 mAh，45 W）</td>
+<td>12V 3A 电源适配器，接市电</td>
+<td>箱内充电宝（20000mAh，45W）</td>
 </tr>
 <tr>
 <td>接到背包 DC 口的线</td>
 <td>适配器直连</td>
-<td>0.3 m 12 V PD 电源线，用充电宝的 12 V 输出</td>
+<td>0.3m 12V PD 电源线，用充电宝的 12V 输出</td>
 </tr>
 </tbody>
 </table>
 <div class="admonition note">
 <p class="admonition-title">头显电量会缓慢下降</p>
-<p>头显只接一根线，背包经它给头显供电，但供电不足以完全抵消头显功耗，电量仍会以约 1–2 W 的净消耗缓慢下降；电量耗尽头显会关机，采集随之中断。开工前把头显充满电，长时间采集留意电量图标（在<a href="../../common/pico4/#pico-system">电源策略</a>里设为常驻显示）。</p>
+<p>头显只接一根线，背包经它给头显供电，但供电不足以完全抵消头显功耗，电量仍会以约 1–2W 的净消耗缓慢下降；电量耗尽头显会关机，采集随之中断。开工前把头显充满电，长时间采集留意电量图标（在<a href="../../common/pico4/#pico-system">电源策略</a>里设为常驻显示）。</p>
 </div>
 <h3 id="adapter">适配器供电<a class="headerlink" href="#adapter" title="锚点链接">¶</a></h3>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/product/backpack-wiring-adapter.webp" data-desc-position="bottom"><img alt="适配器供电接线：左右夹爪接背包两侧，头显 Type-C 接 PICO 口，适配器接 DC 口" src="../../assets/product/backpack-wiring-adapter.webp"></a></p>
 <ol>
 <li>左、右主夹爪分别接背包的 <code>UMI-L</code> 和 <code>UMI-R</code> 口。</li>
 <li>用头显连接线（Pico → Pack）把头显接到背包的 <code>PICO</code> 口。</li>
-<li>12 V 3 A 适配器接背包 <code>DC</code> 口，再插市电。</li>
+<li>12V 3A 适配器接背包 <code>DC</code> 口，再插市电。</li>
 </ol>
 <h3 id="powerbank">充电宝供电<a class="headerlink" href="#powerbank" title="锚点链接">¶</a></h3>
-<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/product/backpack-wiring-powerbank.webp" data-desc-position="bottom"><img alt="充电宝供电接线：左右夹爪接背包两侧，头显接 PICO 口，充电宝经 0.3 m 12 V PD 电源线接 DC 口" src="../../assets/product/backpack-wiring-powerbank.webp"></a></p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/product/backpack-wiring-powerbank.webp" data-desc-position="bottom"><img alt="充电宝供电接线：左右夹爪接背包两侧，头显接 PICO 口，充电宝经 0.3m 12V PD 电源线接 DC 口" src="../../assets/product/backpack-wiring-powerbank.webp"></a></p>
 <ol>
-<li>取出箱内的充电宝（20000 mAh，45 W）。</li>
+<li>取出箱内的充电宝（20000mAh，45W）。</li>
 <li>夹爪与头显的接法同<a href="#adapter">适配器供电</a>。</li>
-<li>用 0.3 m 12 V PD 电源线把充电宝接到背包 <code>DC</code> 口。</li>
+<li>用 0.3m 12V PD 电源线把充电宝接到背包 <code>DC</code> 口。</li>
 </ol>
 <table>
 <thead>
@@ -2337,20 +2337,20 @@
 </thead>
 <tbody>
 <tr>
-<td>夹爪连接线（1.5 m 双 C）×2</td>
+<td>夹爪连接线（1.5m 双 C）×2</td>
 <td>左 / 右夹爪 ↔ 背包 UMI-L / UMI-R</td>
 </tr>
 <tr>
-<td>头显连接线（Pico → Pack，1.5 m 双 C）</td>
+<td>头显连接线（Pico → Pack，1.5m 双 C）</td>
 <td>头显 Type-C 口 ↔ 背包 PICO 口</td>
 </tr>
 <tr>
-<td>12 V PD 电源线（0.3 m）</td>
+<td>12V PD 电源线（0.3m）</td>
 <td>充电宝 ↔ 背包 DC 口</td>
 </tr>
 </tbody>
 </table>
-<p>背包功耗不超过 36 W，充电宝续航约 3.5–4 小时，见<a href="../../product/specs/#backpack">技术参数</a>。</p>
+<p>背包功耗约 20W，充电宝续航约 3.5–4 小时，见<a href="../../product/specs/#backpack">技术参数</a>。</p>
 <div class="admonition warning">
 <p class="admonition-title">采集中不要往充电宝上加设备</p>
 <p>部分充电宝接上第二台设备时会停掉原有输出口，背包会当场断电。所有线在开录前接好。</p>
@@ -2500,6 +2500,8 @@
       <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
         <script src="../../assets/javascripts/arch.js"></script>
+      
+        <script src="../../assets/javascripts/tabs-toc.js"></script>
       
     
   

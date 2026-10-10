@@ -12,7 +12,7 @@
         <link rel="canonical" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/pc/">
       
       
-        <link rel="prev" href="../backpack/versions/">
+        <link rel="prev" href="../backpack/troubleshooting/">
       
       
         <link rel="next" href="quickstart/">
@@ -1032,14 +1032,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../backpack/troubleshooting/" class="md-nav__link">
+      <a href="../backpack/versions/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Troubleshooting
+    Versions
   
 
     
@@ -1060,14 +1060,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../backpack/versions/" class="md-nav__link">
+      <a href="../backpack/troubleshooting/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Versions
+    Troubleshooting
   
 
     
@@ -1355,34 +1355,6 @@
   
   
     <li class="md-nav__item">
-      <a href="troubleshooting/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Troubleshooting
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="versions/" class="md-nav__link">
         
   
@@ -1469,7 +1441,7 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_11">
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_10">
         
           
           <div class="md-nav__link md-nav__container">
@@ -1491,14 +1463,14 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3_11" id="__nav_3_11_label" tabindex="">
+              <label class="md-nav__link " for="__nav_3_10" id="__nav_3_10_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_11_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_11">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_10">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1597,6 +1569,34 @@
           </ul>
         </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -2175,28 +2175,28 @@ Hover over (or tap) any block to see where its data comes from and where it goes
     },
     "sdk": {
       "title": "xense.taccap",
-      "sub": "Serial · 100 Hz push",
-      "desc": "The gripper SDK receives the readings the MCU pushes (100 Hz by default) and normalises the jaw angle with the calibration into gripper.pos (closed = 0, open = 1)."
+      "sub": "Serial · 100Hz push",
+      "desc": "The gripper SDK receives the readings the MCU pushes (100Hz by default) and normalises the jaw angle with the calibration into gripper.pos (closed = 0, open = 1)."
     },
     "xsdk": {
       "title": "xensesdk",
-      "sub": "Rectified · 30 fps",
-      "desc": "The visuotactile sensor SDK reads each sensor independently and outputs the rectified visuotactile image (about 400 × 700) at 30 fps by default."
+      "sub": "Rectified · 30fps",
+      "desc": "The visuotactile sensor SDK reads each sensor independently and outputs the rectified visuotactile image (about 400 × 700) at 30fps by default."
     },
     "cam": {
       "title": "Camera capture",
-      "sub": "640 × 480 · 30 fps",
-      "desc": "Finds each gripper's wrist camera by serial number and reads each one independently, 640 × 480 at 30 fps by default. Fisheye undistortion is optional and off by default."
+      "sub": "640 × 480 · 30fps",
+      "desc": "Finds each gripper's wrist camera by serial number and reads each one independently, 640 × 480 at 30fps by default. Fisheye undistortion is optional and off by default."
     },
     "pcs": {
       "title": "XenseVR PC Service",
-      "sub": "Pose · ~90 Hz",
-      "desc": "A service on the PC that receives the tracker poses from the headset (refreshed at about 90 Hz); the collection program transforms them to the gripper tip (TCP) to get tcp.*. In tier ③ it also relays the headset stereo images (left and right paired by frame number) and the head pose."
+      "sub": "Pose · ~90Hz",
+      "desc": "A service on the PC that receives the tracker poses from the headset (refreshed at about 90Hz); the collection program transforms them to the gripper tip (TCP) to get tcp.*. In tier ③ it also relays the headset stereo images (left and right paired by frame number) and the head pose."
     },
     "obs": {
       "title": "Frame assembly",
       "sub": "Latest of each stream",
-      "desc": "Each frame (30 fps by default) takes the latest value of every stream as one observation: opening, gripper pose, visuotactile images and wrist view; tier ③ adds the headset stereo images and head pose."
+      "desc": "Each frame (30fps by default) takes the latest value of every stream as one observation: opening, gripper pose, visuotactile images and wrist view; tier ③ adds the headset stereo images and head pose."
     },
     "pair": {
       "title": "Shifted pairing",
@@ -2226,7 +2226,7 @@ Hover over (or tap) any block to see where its data comes from and where it goes
 </script></div>
 
 <ul>
-<li>The <strong>leader grippers</strong> connect over USB: the opening is read by <code>xense.taccap</code> (100 Hz push), the visuotactile images by <code>xensesdk</code>, and each wrist camera is matched to its gripper by serial number.</li>
+<li>The <strong>leader grippers</strong> connect over USB: the opening is read by <code>xense.taccap</code> (100Hz push), the visuotactile images by <code>xensesdk</code>, and each wrist camera is matched to its gripper by serial number.</li>
 <li>The <strong>motion trackers</strong> sit on top of the grippers and are tracked by the <strong>headset</strong>, which hands the poses to the <strong>XenseVR PC Service</strong> over a cable (recommended) or WiFi; the collection program then transforms them to the gripper tip (TCP). Tier ③ also brings the headset stereo images and head pose.</li>
 <li><strong><code>lerobot-record</code></strong> takes the latest value of every stream each frame, pairs the previous frame's observation with this frame's pose and opening, and writes a <strong>LeRobotDataset v3.0</strong>; camera streams are encoded while recording, with hardware encoding on an NVIDIA GPU.</li>
 </ul>
@@ -2274,7 +2274,7 @@ Hover over (or tap) any block to see where its data comes from and where it goes
   "obsNote": " The observation holds the value from frame t-1.",
   "actNote": " The action holds the value from frame t, one step ahead of the observation.",
   "keys": {
-    "tactile": "The visuotactile image from one finger of this gripper, rectified to about 400 × 700, 30 fps.",
+    "tactile": "The visuotactile image from one finger of this gripper, rectified to about 400 × 700, 30fps.",
     "wrist": "This gripper's wrist camera view, 640 × 480 by default.",
     "headimg": "One eye of the headset camera, 640 × 480 by default; recorded in tier ③ only.",
     "tcp": "The pose of this gripper's tip (midpoint between the fingers) in the world frame: position x, y, z (metres) plus the 6-D rotation r1–r6, derived from the tracker pose.",
@@ -2375,7 +2375,7 @@ Hover over (or tap) any block to see where its data comes from and where it goes
       <nav class="md-footer__inner md-grid" aria-label="Footer">
         
           
-          <a href="../backpack/versions/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Versions">
+          <a href="../backpack/troubleshooting/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Troubleshooting">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
@@ -2385,7 +2385,7 @@ Hover over (or tap) any block to see where its data comes from and where it goes
                 Previous
               </span>
               <div class="md-ellipsis">
-                Versions
+                Troubleshooting
               </div>
             </div>
           </a>
@@ -2461,6 +2461,8 @@ Hover over (or tap) any block to see where its data comes from and where it goes
       <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
         <script src="../../assets/javascripts/arch.js"></script>
+      
+        <script src="../../assets/javascripts/tabs-toc.js"></script>
       
     
   

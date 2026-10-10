@@ -1032,14 +1032,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../backpack/troubleshooting/" class="md-nav__link">
+      <a href="../../backpack/versions/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Troubleshooting
+    Versions
   
 
     
@@ -1060,14 +1060,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../backpack/versions/" class="md-nav__link">
+      <a href="../../backpack/troubleshooting/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Versions
+    Troubleshooting
   
 
     
@@ -1355,34 +1355,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../troubleshooting/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Troubleshooting
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../versions/" class="md-nav__link">
         
   
@@ -1420,24 +1392,6 @@
         
       
       
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    RobotConfig Options
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1454,47 +1408,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
-      
-        <li class="md-nav__item">
-  <a href="#robotconfig" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Common RobotConfig options
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#sdk-and-custom-development" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        SDK and custom development
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
       
     </li>
   
@@ -1538,7 +1451,7 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_11">
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_10">
         
           
           <div class="md-nav__link md-nav__container">
@@ -1560,14 +1473,14 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3_11" id="__nav_3_11_label" tabindex="">
+              <label class="md-nav__link " for="__nav_3_10" id="__nav_3_10_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_11_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_11">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_10">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1666,6 +1579,34 @@
           </ul>
         </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -2136,7 +2077,7 @@
 
 <h1 id="robotconfig-options">RobotConfig options<a class="headerlink" href="#robotconfig-options" title="锚点链接">¶</a></h1>
 <p>Workflow: <a href="../recording/">Data collection</a>; errors: <a href="../troubleshooting/">Troubleshooting</a>.</p>
-<h2 id="robotconfig">Common <code>RobotConfig</code> options<a class="headerlink" href="#robotconfig" title="锚点链接">¶</a></h2>
+<p><span id="robotconfig"></span></p>
 <table>
 <thead>
 <tr>
@@ -2289,8 +2230,6 @@
 </tbody>
 </table>
 <p>The table is written for a single gripper; the full field list is in the main repo's device notes. On <code>bi_taccap_gripper</code>, <code>enable_wrist_camera</code>, <code>tracker_serial</code>, <code>enable_gripper</code>, <code>enable_imu</code>, <code>gripper_open_rad</code> and <code>tracker_to_ee_pos/_quat</code> are per side with a <code>left_</code> / <code>right_</code> prefix (for example <code>--robot.left_enable_wrist_camera</code>); the rest are shared by both sides, see <a href="../recording/#params">Parameters</a>.</p>
-<h2 id="sdk-and-custom-development">SDK and custom development<a class="headerlink" href="#sdk-and-custom-development" title="锚点链接">¶</a></h2>
-<p>See <a href="../../sdk/">SDK &amp; development</a>.</p>
 <p>Terms are in the <a href="../../common/reference/#glossary">Glossary</a>; feedback in <a href="../../common/reference/#support">Support and feedback</a>.</p>
 
 
@@ -2415,6 +2354,8 @@
       <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
         <script src="../../../assets/javascripts/arch.js"></script>
+      
+        <script src="../../../assets/javascripts/tabs-toc.js"></script>
       
     
   

@@ -15,7 +15,7 @@
         <link rel="prev" href="../system/">
       
       
-        <link rel="next" href="../troubleshooting/">
+        <link rel="next" href="../versions/">
       
       
         
@@ -1115,14 +1115,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../troubleshooting/" class="md-nav__link">
+      <a href="../versions/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Troubleshooting
+    Versions
   
 
     
@@ -1143,14 +1143,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../versions/" class="md-nav__link">
+      <a href="../troubleshooting/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Versions
+    Troubleshooting
   
 
     
@@ -1435,34 +1435,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pc/troubleshooting/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Troubleshooting
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../pc/versions/" class="md-nav__link">
         
   
@@ -1546,7 +1518,7 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_11">
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_10">
         
           
           <div class="md-nav__link md-nav__container">
@@ -1568,14 +1540,14 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3_11" id="__nav_3_11_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_3_10" id="__nav_3_10_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_11_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_11">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_10">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1674,6 +1646,34 @@
           </ul>
         </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pc/troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -2143,38 +2143,46 @@
 
 
 <h1 id="upgrades-and-ota">Upgrades and OTA<a class="headerlink" href="#upgrades-and-ota" title="锚点链接">¶</a></h1>
-<p>Console upgrades are done on System → System update; gripper firmware is flashed on System → Gripper, see <a href="#gripper-firmware">Gripper firmware</a>.</p>
+<p>This page covers upgrading the console program and the gripper firmware:</p>
+<ul>
+<li><strong>Console program</strong>: import an upgrade bundle on System → System update.</li>
+<li><strong>Gripper firmware</strong>: flash it on System → Gripper; see <a href="#gripper-firmware">Gripper firmware</a>.</li>
+</ul>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/backpack/update.webp" data-desc-position="bottom"><img alt="System update page" src="../../../assets/backpack/update.webp"></a></p>
 <h2 id="bundle">Importing an upgrade bundle<a class="headerlink" href="#bundle" title="锚点链接">¶</a></h2>
-<p>An upgrade bundle is a <code>.tar.zst</code> file from technical support, with the version in its name, such as <code>taccap-collector-v0.4.3-….tar.zst</code>. It updates only the console program: no gripper firmware, no camera profiles, and your collected data is untouched.</p>
+<p>An upgrade bundle is a <code>.tar.zst</code> file provided by technical support, with the version in its file name, such as <code>taccap-collector-v0.4.3-….tar.zst</code>. It updates only the console program; it contains no gripper firmware or camera profiles and does not affect collected data.</p>
 <ol>
 <li>Stop recording.</li>
-<li>"Upload firmware package" → pick the <code>.tar.zst</code> → "Upload and verify".</li>
-<li>Once it passes, check the version on the "Version pending application" card.</li>
-<li>"Apply update and restart" → confirm. The restart takes about a minute; "Update applied" means done. If it times out, refresh the page.</li>
-<li>On <a href="../system/#device-info">Device info</a>, confirm the version and build time have changed.</li>
+<li>Click "Upload firmware package", select the <code>.tar.zst</code> file and click "Upload and verify".</li>
+<li>Once verification passes, check the version number on the "Version pending application" card.</li>
+<li>Click "Apply update and restart" and confirm. The service restarts in about one minute; the upgrade is complete when the page shows "Update applied". If it times out, refresh the page manually.</li>
+<li>On <a href="../system/#device-info">Device info</a>, confirm that the version number and build time have been updated.</li>
 </ol>
-<p>If verification fails, the device refuses the bundle, writes the reason into "Last error" and keeps running the current version. Common causes: a corrupt or incomplete file, or a version that jumps too far or is older than the current one.</p>
+<p>If verification fails, the device rejects the bundle, gives the reason under "Last error" and keeps running the current version. Common causes: a corrupt or incompletely transferred file, a version gap that is too large, or a version older than the current one.</p>
 <div class="admonition note">
-<p class="admonition-title">Some fixes are handled by technical support</p>
-<p>A few fixes involve the device's system components, are not in the upgrade bundle and cannot be done on site. Whether a device needs one is for technical support to tell you. "Upload firmware package" accepts only <code>.tar.zst</code> bundles; do not upload any other file technical support gives you there.</p>
+<p class="admonition-title">Some fixes must be applied by technical support</p>
+<p>A few fixes involve the device's system components, are not included in upgrade bundles and cannot be applied on site. Whether a device needs such a fix is determined by technical support. "Upload firmware package" accepts only <code>.tar.zst</code> upgrade bundles; do not upload any other file.</p>
 </div>
 <h2 id="rollback">Rollback<a class="headerlink" href="#rollback" title="锚点链接">¶</a></h2>
-<p>The device keeps the previous version when it upgrades. If the new version fails to start, the file is corrupt or power is lost mid-upgrade, it falls back to the previous version automatically and cannot be bricked.</p>
-<p>Manual rollback: when the "Rollback" card shows "Rollback available", click "Roll back to previous version" → confirm. You can go back only one step; a device that has never been upgraded since leaving the factory has no previous version.</p>
+<p>The device keeps the previous version when upgrading. If the new version fails to start, the file is corrupt or power is lost during the upgrade, the device automatically reverts to the previous version and remains bootable.</p>
+<p><strong>Manual rollback</strong>: when the "Rollback" card shows "Rollback available", click "Roll back to previous version" and confirm.</p>
+<ul>
+<li>Only one version can be rolled back.</li>
+<li>A device that has not been upgraded since leaving the factory has no version to roll back to.</li>
+</ul>
 <p>Upgrades and rollbacks do not affect recorded data, projects, upload configurations or network settings.</p>
 <h2 id="gripper-firmware">Gripper firmware<a class="headerlink" href="#gripper-firmware" title="锚点链接">¶</a></h2>
-<p>Gripper firmware does not use the upgrade bundle; flash it from "Gripper firmware upgrade" at the bottom of System → <a href="../system/#gripper">Gripper</a>, with no computer needed. The firmware files and whether you need to flash are covered in the Developer Kit's <a href="../../pc/versions/#ota">firmware OTA upgrade</a>.</p>
+<p>Gripper firmware is not updated through upgrade bundles; flash it from "Gripper firmware upgrade" at the bottom of System → <a href="../system/#gripper">Gripper</a>, with no computer required. The firmware files and whether an upgrade is needed are covered in the Developer Kit's <a href="../../pc/versions/#ota">firmware OTA upgrade</a>.</p>
 <ol>
-<li>Stop recording, and make sure no travel calibration is in progress.</li>
-<li>Pick the target gripper (left / right) → pick the <code>.bin</code> → "Upload and flash" → confirm.</li>
-<li>After "Firmware flashed, the device is restarting", <strong>power the backpack off and on again</strong> (or replug that gripper's Type-C cable); otherwise the gripper drops data.</li>
+<li>Stop recording and make sure no travel calibration is in progress.</li>
+<li>Select the target gripper (left / right), select the <code>.bin</code> file, click "Upload and flash" and confirm.</li>
+<li>When the page shows "Firmware flashed, the device is restarting", <strong>power the backpack off and on again</strong> (or replug that gripper's Type-C cable); otherwise the gripper may lose data.</li>
 <li>Check the firmware version on <a href="../system/#device-info">Device info</a>; if the calibration card shows "Not calibrated", recalibrate on <a href="../system/#gripper">Gripper</a>.</li>
 </ol>
-<p>You can "Abort" while flashing; if it fails, just start again — it cannot brick the gripper.</p>
+<p>You can click "Abort" during flashing; if flashing fails, simply flash again. The gripper will not be damaged.</p>
 <div class="admonition danger">
-<p class="admonition-title">Pick the firmware by role, and never cut power while flashing</p>
-<p>The leader gripper (SN ending in <code>m</code>) takes <code>tc-gu-01-master.bin</code> and the follower (SN ending in <code>s</code>) takes <code>tc-gu-01-slave.bin</code> — by role, not by left or right. Flash the wrong one and the gripper will not start, and only the factory can recover it; cutting power or unplugging during writing also corrupts the firmware.</p>
+<p class="admonition-title">Select firmware by role, and do not cut power while flashing</p>
+<p>The leader gripper (SN ending in <code>m</code>) uses <code>tc-gu-01-master.bin</code> and the follower (SN ending in <code>s</code>) uses <code>tc-gu-01-slave.bin</code>; the choice depends on role, not on left or right. Flashing the wrong firmware leaves the gripper unable to start and requires a factory repair; cutting power or unplugging during writing also corrupts the firmware.</p>
 </div>
 
 
@@ -2230,13 +2238,13 @@
         
         
           
-          <a href="../troubleshooting/" class="md-footer__link md-footer__link--next" aria-label="Next: Troubleshooting">
+          <a href="../versions/" class="md-footer__link md-footer__link--next" aria-label="Next: Versions">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Troubleshooting
+                Versions
               </div>
             </div>
             <div class="md-footer__button md-icon">
@@ -2299,6 +2307,8 @@
       <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
         <script src="../../../assets/javascripts/arch.js"></script>
+      
+        <script src="../../../assets/javascripts/tabs-toc.js"></script>
       
     
   
