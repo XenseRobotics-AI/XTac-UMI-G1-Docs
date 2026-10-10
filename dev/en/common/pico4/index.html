@@ -2300,10 +2300,6 @@
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/pico4/install-step3-confirm.webp" data-desc-position="bottom"><img alt="Confirming the install" src="../../../assets/pico4/install-step3-confirm.webp" width="480"></a></p>
 </li>
 </ol>
-<p>With adb (Android platform-tools) on the PC, USB debugging on and "USB connection" set to "File transfer", you can install in one command:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>adb<span class="w"> </span>devices<span class="w">                          </span><span class="c1"># the headset should be listed</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>adb<span class="w"> </span>install<span class="w"> </span>XTac-UMI-XR-0.3.2.apk<span class="w">    </span><span class="c1"># substitute the build you were given</span>
-</span></code></pre></div>
 <h2 id="pico-network">Network connection<a class="headerlink" href="#pico-network" title="锚点链接">¶</a></h2>
 <p>Tracking data goes to the XenseVR pose service on the collection unit. The Backpack Kit is <strong>wired only</strong>; the Developer Kit is wired by default, with WiFi for quick debugging only. A Type-C cable keeps the link to itself, with stable latency.</p>
 <div class="admonition warning">
@@ -2395,10 +2391,10 @@
 </div>
 <div class="tabbed-block">
 <p>Read it with the PC Service's Python interface:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">xensevr_pc_service_sdk</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">xrt</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="n">xrt</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="nb">print</span><span class="p">(</span><span class="n">xrt</span><span class="o">.</span><span class="n">get_motion_tracker_serial_numbers</span><span class="p">())</span>   <span class="c1"># e.g. ['PC2310MLL3200496G', ...]</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">xensevr_pc_service_sdk</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">xrt</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">xrt</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="nb">print</span><span class="p">(</span><span class="n">xrt</span><span class="o">.</span><span class="n">get_motion_tracker_serial_numbers</span><span class="p">())</span>   <span class="c1"># e.g. ['PC2310MLL3200496G', ...]</span>
 </span></code></pre></div>
 <ul>
 <li><strong>Prerequisites</strong>: tracker bound and on → XTac-UMI XR <a href="#pico-toolkit-ui">"Connected"</a> → <a href="../../pc/host-setup/#35">PC Service</a> running on the host; miss one and you get an empty list.</li>
