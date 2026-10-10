@@ -80,7 +80,7 @@ The grippers and headset are wired the same way either way; only the backpack's 
 | Headset cable (Pico → Pack, 1.5 m C-to-C) | The headset's Type-C port ↔ the backpack's PICO port |
 | 12 V PD power cable (0.3 m) | Power bank ↔ the backpack's DC port |
 
-The backpack draws up to 36 W and runs about 3.5–4 hours on the power bank; see [Specifications](../product/specs.md#backpack).
+The backpack draws about 20 W and runs about 3.5–4 hours on the power bank; see [Specifications](../product/specs.md#backpack).
 
 !!! warning "Do not add devices to a power bank during collection"
     Some power banks shut down an existing output port when a second device is plugged in, and the backpack loses power on the spot. Connect every cable before you start recording.

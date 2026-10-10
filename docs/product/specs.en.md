@@ -74,7 +74,7 @@ The Backpack Kit's collection unit: the grippers and headset plug into it and th
 | Disk-full rule | The data disk counts as full at 80% and recording stops |
 | Exported data size | An exported LeRobot dataset takes about 200 GB per 400 hours |
 | Power | 12 V 3 A power adapter, or a 20000 mAh power bank through a 12 V PD power cable |
-| Power draw | Up to 36 W (12 V 3 A) |
+| Power draw | About 20 W |
 | Power-bank runtime | About 3.5–4 hours |
 | Network | Ethernet; WiFi (5 GHz); built-in 5 GHz hotspot |
 | Ports | `UMI-L` / `UMI-R` for the leader grippers, `PICO` for the headset, `DC IN` for power, `HOST1` / `HOST2` USB host ports, plus Ethernet, TF slot, `HDMI` and headphone jack, see [Ports](backpack.md#ports) |
