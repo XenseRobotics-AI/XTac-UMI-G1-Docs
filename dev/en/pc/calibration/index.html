@@ -1032,14 +1032,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../backpack/troubleshooting/" class="md-nav__link">
+      <a href="../../backpack/versions/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Troubleshooting
+    Versions
   
 
     
@@ -1060,14 +1060,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../backpack/versions/" class="md-nav__link">
+      <a href="../../backpack/troubleshooting/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Versions
+    Troubleshooting
   
 
     
@@ -1474,34 +1474,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../troubleshooting/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Troubleshooting
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../versions/" class="md-nav__link">
         
   
@@ -1588,7 +1560,7 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_11">
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_10">
         
           
           <div class="md-nav__link md-nav__container">
@@ -1610,14 +1582,14 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3_11" id="__nav_3_11_label" tabindex="">
+              <label class="md-nav__link " for="__nav_3_10" id="__nav_3_10_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_11_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_11">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_10">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1716,6 +1688,34 @@
           </ul>
         </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -2239,8 +2239,8 @@
 <p>Flash first per <a href="../versions/#ota">Firmware OTA upgrade</a>: the image is chosen by role, and update the SDK before the firmware.</p>
 <p>Once the version passes, the script prints the current reading (raw and clamped); follow the two prompts:</p>
 <ol>
-<li>Fully closed → Enter. It sends <code>SetEncoderZero</code> to latch the zero, then re-reads to verify the residual (tolerance ±0.01 rad).</li>
-<li>Fully open to the mechanical limit → Enter. The angle goes straight into <code>EncoderMaxCal</code> in MCU flash, with no second confirmation; a 10 Hz live readout follows for checking.</li>
+<li>Fully closed → Enter. It sends <code>SetEncoderZero</code> to latch the zero, then re-reads to verify the residual (tolerance ±0.01rad).</li>
+<li>Fully open to the mechanical limit → Enter. The angle goes straight into <code>EncoderMaxCal</code> in MCU flash, with no second confirmation; a 10Hz live readout follows for checking.</li>
 </ol>
 <div class="admonition warning">
 <p class="admonition-title">Get the jaw in position first, then press Enter</p>
@@ -2269,7 +2269,7 @@
 </span></code></pre></div>
 <p>A previously calibrated unit gets an extra <code>existing span: … — will be overwritten</code> header line.</p>
 <ul>
-<li><strong>Closed is always 0</strong>: there is no <code>gripper_closed_rad</code> config; negative drift is clamped to 0 (the raw value stays in <code>raw_position_rad</code>), and beyond -0.1 rad it triggers a rate-limited warning.</li>
+<li><strong>Closed is always 0</strong>: there is no <code>gripper_closed_rad</code> config; negative drift is clamped to 0 (the raw value stays in <code>raw_position_rad</code>), and beyond -0.1rad it triggers a rate-limited warning.</li>
 <li><strong>Fields</strong>: <code>position_rad</code> is still raw radians; normalisation only adds a <code>position</code> field.</li>
 </ul>
 <h3 id="413">Confirm it took effect<a class="headerlink" href="#413" title="锚点链接">¶</a></h3>
@@ -2313,9 +2313,9 @@
 </span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="c1"># Apply that side's built-in tracker→TCP mount transform:</span>
 </span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>python<span class="w"> </span>-m<span class="w"> </span>lerobot.robots.taccap_gripper.check_tracker<span class="w"> </span>--side<span class="w"> </span>right
 </span></code></pre></div>
-<p>Prints <code>raw</code> (the tracker's own pose) and <code>ee</code> (the TCP after the mount transform) at 10 Hz. Wave the gripper: <code>raw xyz</code> should change smoothly and the SN should match (<a href="../../common/pico4/#pico-tracker-sn">Reading a tracker SN</a>).</p>
+<p>Prints <code>raw</code> (the tracker's own pose) and <code>ee</code> (the TCP after the mount transform) at 10Hz. Wave the gripper: <code>raw xyz</code> should change smoothly and the SN should match (<a href="../../common/pico4/#pico-tracker-sn">Reading a tracker SN</a>).</p>
 <ul>
-<li><strong>Mount transform</strong>: the rigid tracker-to-TCP offset is built in (measured off the CAD assembly), each side separately; the two are close to mirror images but not identical (0.03° apart in rotation, 1.27 mm in translation).</li>
+<li><strong>Mount transform</strong>: the rigid tracker-to-TCP offset is built in (measured off the CAD assembly), each side separately; the two are close to mirror images but not identical (0.03° apart in rotation, 1.27mm in translation).</li>
 <li><strong><code>--side</code></strong>: picks which side to apply; without it the transform is identity and <code>ee</code> follows <code>raw</code>.</li>
 <li><strong>Override</strong>: after re-machining the mount, set <code>--robot.tracker_to_ee_pos</code> / <code>--robot.tracker_to_ee_quat</code>; the two are independent, so you can pin just the translation.</li>
 <li><strong>Pivot check</strong>: rest the midpoint of the two fingers on a fixed point and sweep the handle through many orientations; <code>ee xyz</code> should barely move while <code>raw xyz</code> swings widely, and the drift is the transform's error. Test both sides; a left value mirrored the wrong way makes <code>ee</code> swing about twice as far as it should.</li>
@@ -2446,6 +2446,8 @@
       <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
         <script src="../../../assets/javascripts/arch.js"></script>
+      
+        <script src="../../../assets/javascripts/tabs-toc.js"></script>
       
     
   

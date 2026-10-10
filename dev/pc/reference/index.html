@@ -1032,14 +1032,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../backpack/troubleshooting/" class="md-nav__link">
+      <a href="../../backpack/versions/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    故障排查
+    版本
   
 
     
@@ -1060,14 +1060,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../backpack/versions/" class="md-nav__link">
+      <a href="../../backpack/troubleshooting/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    版本
+    故障排查
   
 
     
@@ -1355,34 +1355,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../troubleshooting/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    故障排查
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../versions/" class="md-nav__link">
         
   
@@ -1420,24 +1392,6 @@
         
       
       
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    RobotConfig 配置项
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1454,47 +1408,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="目录">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      目录
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
-      
-        <li class="md-nav__item">
-  <a href="#robotconfig" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        RobotConfig 常用配置项
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#sdk-与二次开发" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        SDK 与二次开发
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
       
     </li>
   
@@ -1538,7 +1451,7 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_11">
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_10">
         
           
           <div class="md-nav__link md-nav__container">
@@ -1560,14 +1473,14 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3_11" id="__nav_3_11_label" tabindex="">
+              <label class="md-nav__link " for="__nav_3_10" id="__nav_3_10_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_11_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_11">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_10">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1666,6 +1579,34 @@
           </ul>
         </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    故障排查
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -2136,7 +2077,7 @@
 
 <h1 id="robotconfig-配置项">RobotConfig 配置项<a class="headerlink" href="#robotconfig-配置项" title="锚点链接">¶</a></h1>
 <p>流程见<a href="../recording/">数据采集</a>，报错见<a href="../troubleshooting/">故障排查</a>。</p>
-<h2 id="robotconfig"><code>RobotConfig</code> 常用配置项<a class="headerlink" href="#robotconfig" title="锚点链接">¶</a></h2>
+<p><span id="robotconfig"></span></p>
 <table>
 <thead>
 <tr>
@@ -2289,8 +2230,6 @@
 </tbody>
 </table>
 <p>上表按单夹爪写，完整字段见主仓库设备说明。<code>bi_taccap_gripper</code> 上 <code>enable_wrist_camera</code>、<code>tracker_serial</code>、<code>enable_gripper</code>、<code>enable_imu</code>、<code>gripper_open_rad</code>、<code>tracker_to_ee_pos/_quat</code> 每侧一个，加 <code>left_</code> / <code>right_</code> 前缀（如 <code>--robot.left_enable_wrist_camera</code>），其余两侧共用，见<a href="../recording/#params">参数</a>。</p>
-<h2 id="sdk-与二次开发">SDK 与二次开发<a class="headerlink" href="#sdk-与二次开发" title="锚点链接">¶</a></h2>
-<p>见 <a href="../../sdk/">SDK 与二次开发</a>。</p>
 <p>术语见<a href="../../common/reference/#glossary">术语表</a>，反馈见<a href="../../common/reference/#support">支持与反馈</a>。</p>
 
 
@@ -2415,6 +2354,8 @@
       <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
         <script src="../../assets/javascripts/arch.js"></script>
+      
+        <script src="../../assets/javascripts/tabs-toc.js"></script>
       
     
   

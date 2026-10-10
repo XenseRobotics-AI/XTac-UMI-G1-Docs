@@ -1198,14 +1198,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../troubleshooting/" class="md-nav__link">
+      <a href="../versions/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Troubleshooting
+    Versions
   
 
     
@@ -1226,14 +1226,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../versions/" class="md-nav__link">
+      <a href="../troubleshooting/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Versions
+    Troubleshooting
   
 
     
@@ -1518,34 +1518,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pc/troubleshooting/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Troubleshooting
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../pc/versions/" class="md-nav__link">
         
   
@@ -1629,7 +1601,7 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_11">
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_10">
         
           
           <div class="md-nav__link md-nav__container">
@@ -1651,14 +1623,14 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3_11" id="__nav_3_11_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_3_10" id="__nav_3_10_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_11_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_11">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_10">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1757,6 +1729,34 @@
           </ul>
         </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pc/troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -2256,13 +2256,13 @@
 </tr>
 <tr>
 <td>Both grippers' opening</td>
-<td>The two cards below the pose view show radians, degrees and a normalised percentage: about 100 % fully open, about 0 % closed (about 0.02 rad; a little more force reaches 0)</td>
-<td>If fully open will not reach 100 % or closing will not return to 0, recalibrate at <a href="../system/#gripper">System → Gripper</a></td>
+<td>The two cards below the pose view show radians, degrees and a normalised percentage: about 100% fully open, about 0% closed (about 0.02rad; a little more force reaches 0)</td>
+<td>If fully open will not reach 100% or closing will not return to 0, recalibrate at <a href="../system/#gripper">System → Gripper</a></td>
 </tr>
 <tr>
 <td>Free disk space</td>
-<td>The top bar's "Disk" usage is below 80 % (recording disk, measured on the device); hovering shows the mount point, used, total and available space</td>
-<td>At 80 % recording is refused; <a href="../projects-export/#archive">export and archive</a> the data you have, or delete recordings you do not need</td>
+<td>The top bar's "Disk" usage is below 80% (recording disk, measured on the device); hovering shows the mount point, used, total and available space</td>
+<td>At 80% recording is refused; <a href="../projects-export/#archive">export and archive</a> the data you have, or delete recordings you do not need</td>
 </tr>
 <tr>
 <td>Recording state</td>
@@ -2324,9 +2324,9 @@
 </ul>
 <p>Camera parameters and rectification:</p>
 <ul>
-<li><strong>Wrist cameras and tactile sensors</strong>: fixed at 640×480 @ 30 fps and 640×480 @ 120 fps respectively, not adjustable.</li>
+<li><strong>Wrist cameras and tactile sensors</strong>: fixed at 640×480 @ 30fps and 640×480 @ 120fps respectively, not adjustable.</li>
 <li><strong>All rectification happens at export</strong>: tactile is rectified geometrically in the chosen orientation; wrist fisheye rectification, if on, uses the calibration parameters frozen into the recording when it started.</li>
-<li><strong>LeRobot export</strong>: fixed at 30 fps.</li>
+<li><strong>LeRobot export</strong>: fixed at 30fps.</li>
 </ul>
 <h2 id="record">Recording<a class="headerlink" href="#record" title="锚点链接">¶</a></h2>
 <ul>
@@ -2353,7 +2353,7 @@
 <h3 id="record-gates">Recording gates<a class="headerlink" href="#record-gates" title="锚点链接">¶</a></h3>
 <p>Whether started from a gripper button or the console, the device checks these in order and stops at the first failure:</p>
 <ol>
-<li>Disk usage below 80 %;</li>
+<li>Disk usage below 80%;</li>
 <li>A project and task are selected, and the task's cumulative count has not reached its target;</li>
 <li>The gripper MCUs are online;</li>
 <li>Pico ready: the headset is connected with pose and clock sync working; in modes that record headset video, the selected eye's video must be working too;</li>
@@ -2386,9 +2386,9 @@
 <p>Long-press the left gripper or click "Stop recording": the entry is saved into the current task, and the LED flashes white once and returns to standby. Numbering is in the <a href="../projects-export/#projects">Projects page</a>.</p>
 <p>On stopping, an automatic quality check marks the entry "data suspect" if any of these hits (the gripper pulses yellow and the "Quality" column on the Projects page carries a mark; the entry is saved either way):</p>
 <ul>
-<li>The recording is shorter than 1 s (almost always a misfire);</li>
+<li>The recording is shorter than 1s (almost always a misfire);</li>
 <li>Any camera channel recorded not one frame, or the whole take received no video frames at all;</li>
-<li>Tracking was lost for more than 20 % of the take's duration (suspected to have left the field of view);</li>
+<li>Tracking was lost for more than 20% of the take's duration (suspected to have left the field of view);</li>
 <li>The tactile rectification recipe is missing (this take's LeRobot export is certain to fail).</li>
 </ul>
 <p>For a suspect entry, best <a href="#record-delete">delete the previous take</a> on the spot and re-record.</p>
@@ -2563,6 +2563,8 @@
       <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
         <script src="../../../assets/javascripts/arch.js"></script>
+      
+        <script src="../../../assets/javascripts/tabs-toc.js"></script>
       
     
   

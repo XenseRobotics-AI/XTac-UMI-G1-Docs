@@ -1210,14 +1210,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../troubleshooting/" class="md-nav__link">
+      <a href="../versions/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    故障排查
+    版本
   
 
     
@@ -1238,14 +1238,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../versions/" class="md-nav__link">
+      <a href="../troubleshooting/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    版本
+    故障排查
   
 
     
@@ -1530,34 +1530,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pc/troubleshooting/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    故障排查
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../pc/versions/" class="md-nav__link">
         
   
@@ -1641,7 +1613,7 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_11">
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_10">
         
           
           <div class="md-nav__link md-nav__container">
@@ -1663,14 +1635,14 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3_11" id="__nav_3_11_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_3_10" id="__nav_3_10_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_11_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_11">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_10">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1769,6 +1741,34 @@
           </ul>
         </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pc/troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    故障排查
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -2320,7 +2320,7 @@
 <h2 id="formats">导出格式<a class="headerlink" href="#formats" title="锚点链接">¶</a></h2>
 <p>两种格式可以都导，互不影响。</p>
 <h3 id="lerobot">LeRobot 数据集<a class="headerlink" href="#lerobot" title="锚点链接">¶</a></h3>
-<p>标准 LeRobotDataset v3.0，30 fps，包含 <code>meta/</code>、<code>data/</code>、<code>videos/</code>。目录结构与读取方法见 <a href="https://huggingface.co/docs/lerobot/lerobot-dataset-v3">LeRobotDataset v3.0 官方文档</a>。</p>
+<p>标准 LeRobotDataset v3.0，30fps，包含 <code>meta/</code>、<code>data/</code>、<code>videos/</code>。目录结构与读取方法见 <a href="https://huggingface.co/docs/lerobot/lerobot-dataset-v3">LeRobotDataset v3.0 官方文档</a>。</p>
 <table>
 <thead>
 <tr>
@@ -2353,7 +2353,7 @@
 </table>
 <p>另附 <code>meta/taccap_extrinsics.json</code>（追踪器外参）与 <code>meta/xumi_collection_devices.json</code>（每条数据由哪套设备采集）。</p>
 <h3 id="mcap">MCAP<a class="headerlink" href="#mcap" title="锚点链接">¶</a></h3>
-<p>导出的是训练用 MCAP：每条录制一个 <code>.train.mcap</code> 文件，与 LeRobot 数据集同源，只是换了封装。内容是按 30 Hz 对齐后的状态与动作、各路视频和传感器数据，可以直接用 Foxglove 等工具打开。</p>
+<p>导出的是训练用 MCAP：每条录制一个 <code>.train.mcap</code> 文件，与 LeRobot 数据集同源，只是换了封装。内容是按 30Hz 对齐后的状态与动作、各路视频和传感器数据，可以直接用 Foxglove 等工具打开。</p>
 <p>它和背包上的原始记录不是同一个文件：</p>
 <table>
 <thead>
@@ -2371,8 +2371,8 @@
 </tr>
 <tr>
 <td>频率</td>
-<td>各路按设备原生频率：视触觉 120 fps，腕部鱼眼 30 fps，夹爪开合与 IMU 100 Hz</td>
-<td>统一对齐到 30 Hz</td>
+<td>各路按设备原生频率：视触觉 120fps，腕部鱼眼 30fps，夹爪开合与 IMU 100Hz</td>
+<td>统一对齐到 30Hz</td>
 </tr>
 <tr>
 <td>图像</td>
@@ -2513,6 +2513,8 @@
       <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
         <script src="../../assets/javascripts/arch.js"></script>
+      
+        <script src="../../assets/javascripts/tabs-toc.js"></script>
       
     
   

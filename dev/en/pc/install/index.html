@@ -1032,14 +1032,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../backpack/troubleshooting/" class="md-nav__link">
+      <a href="../../backpack/versions/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Troubleshooting
+    Versions
   
 
     
@@ -1060,14 +1060,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../backpack/versions/" class="md-nav__link">
+      <a href="../../backpack/troubleshooting/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Versions
+    Troubleshooting
   
 
     
@@ -1378,7 +1378,7 @@
   <a href="#ghcr" class="md-nav__link">
     <span class="md-ellipsis">
       
-        One-shot install
+        One-shot image install
       
     </span>
   </a>
@@ -1584,34 +1584,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../troubleshooting/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Troubleshooting
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../versions/" class="md-nav__link">
         
   
@@ -1698,7 +1670,7 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_11">
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_10">
         
           
           <div class="md-nav__link md-nav__container">
@@ -1720,14 +1692,14 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3_11" id="__nav_3_11_label" tabindex="">
+              <label class="md-nav__link " for="__nav_3_10" id="__nav_3_10_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_11_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_11">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_10">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1826,6 +1798,34 @@
           </ul>
         </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -2302,7 +2302,7 @@
 <li><strong>Other distributions or architectures</strong>: verify driver, UVC, serial-permission and <code>.deb</code> support yourself.</li>
 </ul>
 <h2 id="host-spec">Data-collection host requirements<a class="headerlink" href="#host-spec" title="锚点链接">¶</a></h2>
-<p>On a bimanual rig six cameras are streamed and encoded at once, with only 33.3 ms per frame (30 fps). An underspecified machine drops frames without raising an error.</p>
+<p>On a bimanual rig six cameras are streamed and encoded at once, with only 33.3ms per frame (30fps). An underspecified machine drops frames without raising an error.</p>
 <table>
 <thead>
 <tr>
@@ -2319,13 +2319,13 @@
 </tr>
 <tr>
 <td>Memory</td>
-<td><strong>8 GB</strong></td>
-<td><strong>32 GB</strong></td>
+<td><strong>8GB</strong></td>
+<td><strong>32GB</strong></td>
 </tr>
 <tr>
 <td>GPU</td>
-<td>NVIDIA <strong>RTX 3060 / 8 GB VRAM</strong> or better</td>
-<td>NVIDIA <strong>RTX 5060 Laptop / 8 GB VRAM</strong> or better</td>
+<td>NVIDIA <strong>RTX 3060 / 8GB VRAM</strong> or better</td>
+<td>NVIDIA <strong>RTX 5060 Laptop / 8GB VRAM</strong> or better</td>
 </tr>
 <tr>
 <td>GPU driver</td>
@@ -2334,8 +2334,8 @@
 </tr>
 <tr>
 <td>Disk</td>
-<td>512 GB SSD</td>
-<td><strong>1 TB NVMe SSD</strong></td>
+<td>512GB SSD</td>
+<td><strong>1TB NVMe SSD</strong></td>
 </tr>
 <tr>
 <td>USB</td>
@@ -2350,9 +2350,9 @@
 </tbody>
 </table>
 <ul>
-<li><strong>CPU</strong>: the main loop, tactile decoding and feeding the encoder all run on the CPU, and a bimanual frame is six to eight images; a 12th-gen i7 is the lowest part measured to hold 30 fps.</li>
+<li><strong>CPU</strong>: the main loop, tactile decoding and feeding the encoder all run on the CPU, and a bimanual frame is six to eight images; a 12th-gen i7 is the lowest part measured to hold 30fps.</li>
 <li><strong>GPU</strong>: <code>--dataset.vcodec=auto</code> encodes H.264 on the card. Without an NVIDIA card the CPU encodes, so saving is slower and <code>[slow_frame]</code> is likelier, see <a href="../recording/#no-gpu">Recording with no NVIDIA GPU</a>. Check the driver: <code>nvidia-smi --query-gpu=driver_version,name --format=csv,noheader</code>.</li>
-<li><strong>Memory</strong>: use 32 GB when you watch Rerun with <code>--display_data</code> or process data while collecting.</li>
+<li><strong>Memory</strong>: use 32GB when you watch Rerun with <code>--display_data</code> or process data while collecting.</li>
 <li><strong>Disk</strong>: bimanual raw video is about 280 MB/s, what lands on disk is in <a href="../dataset/#storage-planning">Disk planning</a>. Do not record straight onto a spinning disk or a USB external drive.</li>
 <li><strong>USB</strong>: a bimanual rig's 6 cameras are split across two 480M buses, see <a href="../host-setup/#usb-budget">USB bandwidth budget</a>.</li>
 </ul>
@@ -2375,7 +2375,7 @@
 <tr>
 <td>Time</td>
 <td>Longer; the gripper SDK and the Pico4 bindings are compiled on the spot</td>
-<td>Minutes to tens of minutes, depending on how fast you can pull the image (about 21 GB)</td>
+<td>Minutes to tens of minutes, depending on how fast you can pull the image (about 21GB)</td>
 </tr>
 <tr>
 <td>NVIDIA GPU</td>
@@ -2483,7 +2483,7 @@
 </span></code></pre></div>
 <p>It updates the environment from <code>conda_environment.yaml</code>, installs the main package from <code>pyproject.toml</code>, installs <code>xensesdk</code> and the XenseVR PC Service daemon, then builds <code>xensevr_pc_service_sdk</code> and <code>xense.taccap</code>.</p>
 <ul>
-<li><strong>Download</strong>: the <code>.deb</code> for the current architecture (about 110 MB) comes from the <a href="https://github.com/XenseRobotics-AI/XenseVR-PC-Service/releases/tag/v0.2.1">v0.2.1 release</a>; <code>$XENSEVR_DEB_URL</code> overrides the URL.</li>
+<li><strong>Download</strong>: the <code>.deb</code> for the current architecture (about 110MB) comes from the <a href="https://github.com/XenseRobotics-AI/XenseVR-PC-Service/releases/tag/v0.2.1">v0.2.1 release</a>; <code>$XENSEVR_DEB_URL</code> overrides the URL.</li>
 <li><strong>Install</strong>: <code>sudo dpkg -i</code> into <code>/opt/apps/roboticsservice</code>; skipped if the same version is installed, and a partial download is reused.</li>
 <li><strong>Failed download</strong>: <code>--install</code> stops; for an offline or patched package, point <code>$XENSEVR_DEB</code> at a local file.</li>
 <li><strong>Version</strong>: v0.2.1 rebuilt the C SDK, while v0.2.0 would build the Pico4 bindings against the old SDK. The <a href="../recording/#56">headset stereo view and head pose</a> need PC Service ≥ v0.2.0; the tracker is unaffected.</li>
@@ -2514,7 +2514,7 @@
 <li><strong>Host</strong>: Ubuntu 22.04 / 24.04 <strong>amd64</strong>, <strong>NVIDIA driver ≥ 570.144</strong> (check with <code>nvidia-smi --query-gpu=driver_version --format=csv,noheader</code>).</li>
 <li><strong>Driver</strong>: the script neither installs nor upgrades the GPU driver (that depends on the card, Secure Boot and a reboot) and stops if it falls short.</li>
 </ul>
-<h3 id="ghcr">One-shot install<a class="headerlink" href="#ghcr" title="锚点链接">¶</a></h3>
+<h3 id="ghcr">One-shot image install<a class="headerlink" href="#ghcr" title="锚点链接">¶</a></h3>
 <p>The image is public on the GitHub Container Registry; pulling needs no login:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>ghcr.io/xenserobotics-ai/xense-taccap-lerobot
 </span></code></pre></div>
@@ -2799,6 +2799,8 @@
       <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
         <script src="../../../assets/javascripts/arch.js"></script>
+      
+        <script src="../../../assets/javascripts/tabs-toc.js"></script>
       
     
   

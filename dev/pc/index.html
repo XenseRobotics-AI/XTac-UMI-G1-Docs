@@ -12,7 +12,7 @@
         <link rel="canonical" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/pc/">
       
       
-        <link rel="prev" href="../backpack/versions/">
+        <link rel="prev" href="../backpack/troubleshooting/">
       
       
         <link rel="next" href="quickstart/">
@@ -1032,14 +1032,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../backpack/troubleshooting/" class="md-nav__link">
+      <a href="../backpack/versions/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    故障排查
+    版本
   
 
     
@@ -1060,14 +1060,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../backpack/versions/" class="md-nav__link">
+      <a href="../backpack/troubleshooting/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    版本
+    故障排查
   
 
     
@@ -1355,34 +1355,6 @@
   
   
     <li class="md-nav__item">
-      <a href="troubleshooting/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    故障排查
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="versions/" class="md-nav__link">
         
   
@@ -1469,7 +1441,7 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_11">
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_10">
         
           
           <div class="md-nav__link md-nav__container">
@@ -1491,14 +1463,14 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3_11" id="__nav_3_11_label" tabindex="">
+              <label class="md-nav__link " for="__nav_3_10" id="__nav_3_10_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_11_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_11">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_10">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1597,6 +1569,34 @@
           </ul>
         </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    故障排查
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -2175,28 +2175,28 @@
     },
     "sdk": {
       "title": "xense.taccap",
-      "sub": "串口 · 100 Hz 推送",
-      "desc": "夹爪 SDK 接收主控板推送的读数（默认 100 Hz），按标定结果把开合角度归一化为 gripper.pos（闭合 = 0、张开 = 1）。"
+      "sub": "串口 · 100Hz 推送",
+      "desc": "夹爪 SDK 接收主控板推送的读数（默认 100Hz），按标定结果把开合角度归一化为 gripper.pos（闭合 = 0、张开 = 1）。"
     },
     "xsdk": {
       "title": "xensesdk",
-      "sub": "校正图 · 30 fps",
-      "desc": "视触觉传感器 SDK，每个传感器独立读取，默认输出校正后的视触觉图像（约 400 × 700），30 fps。"
+      "sub": "校正图 · 30fps",
+      "desc": "视触觉传感器 SDK，每个传感器独立读取，默认输出校正后的视触觉图像（约 400 × 700），30fps。"
     },
     "cam": {
       "title": "相机采集",
-      "sub": "640 × 480 · 30 fps",
-      "desc": "按序列号找到对应夹爪的腕部相机，每台独立读取，默认 640 × 480、30 fps。鱼眼矫正可选，默认关闭。"
+      "sub": "640 × 480 · 30fps",
+      "desc": "按序列号找到对应夹爪的腕部相机，每台独立读取，默认 640 × 480、30fps。鱼眼矫正可选，默认关闭。"
     },
     "pcs": {
       "title": "XenseVR PC Service",
-      "sub": "位姿 · 约 90 Hz",
-      "desc": "数采电脑上的服务，接收头显发来的追踪器位姿（约 90 Hz 刷新），由采集程序换算到夹爪末端（TCP），得到 tcp.*。③ 档同时转发头显双目画面（左右眼按帧序配对）与头部位姿。"
+      "sub": "位姿 · 约 90Hz",
+      "desc": "数采电脑上的服务，接收头显发来的追踪器位姿（约 90Hz 刷新），由采集程序换算到夹爪末端（TCP），得到 tcp.*。③ 档同时转发头显双目画面（左右眼按帧序配对）与头部位姿。"
     },
     "obs": {
       "title": "帧组装",
       "sub": "取各路最新值",
-      "desc": "每一帧（默认 30 fps）取各路的最新值合成一帧观测：开合度、夹爪位姿、视触觉图像、腕部画面；③ 档再加头显双目画面与头部位姿。"
+      "desc": "每一帧（默认 30fps）取各路的最新值合成一帧观测：开合度、夹爪位姿、视触觉图像、腕部画面；③ 档再加头显双目画面与头部位姿。"
     },
     "pair": {
       "title": "错帧配对",
@@ -2226,7 +2226,7 @@
 </script></div>
 
 <ul>
-<li><strong>主夹爪</strong>经 USB 接数采电脑：开合度由 <code>xense.taccap</code> 读取（100 Hz 推送），视触觉图像由 <code>xensesdk</code> 读取，腕部相机按序列号与所在夹爪对应。</li>
+<li><strong>主夹爪</strong>经 USB 接数采电脑：开合度由 <code>xense.taccap</code> 读取（100Hz 推送），视触觉图像由 <code>xensesdk</code> 读取，腕部相机按序列号与所在夹爪对应。</li>
 <li><strong>运动追踪器</strong>装在夹爪顶部，由<strong>头显</strong>跟踪；头显经有线（推荐）或 WiFi 把位姿交给 <strong>XenseVR PC Service</strong>，再由采集程序换算到夹爪末端（TCP）。③ 档还送来头显双目画面与头部位姿。</li>
 <li><strong><code>lerobot-record</code></strong> 每帧取各路最新值，把上一帧的观测与这一帧的位姿和开合度配成一行，写成 <strong>LeRobotDataset v3.0</strong>；相机画面边录边编码，有 NVIDIA GPU 时用硬件编码。</li>
 </ul>
@@ -2274,7 +2274,7 @@
   "obsNote": "观测里记的是第 t-1 帧的值。",
   "actNote": "动作里记的是第 t 帧的值，比观测领先一步。",
   "keys": {
-    "tactile": "这只夹爪一根手指上的视触觉图像，校正图约 400 × 700，30 fps。",
+    "tactile": "这只夹爪一根手指上的视触觉图像，校正图约 400 × 700，30fps。",
     "wrist": "这只夹爪的腕部相机画面，默认 640 × 480。",
     "headimg": "头显一只眼的画面，默认 640 × 480，只有 ③ 档录。",
     "tcp": "这只夹爪末端（两指中点）在世界系下的位姿：位置 x、y、z（米）加 6-D 旋转 r1–r6，由追踪器位姿换算得到。",
@@ -2375,7 +2375,7 @@
       <nav class="md-footer__inner md-grid" aria-label="页脚">
         
           
-          <a href="../backpack/versions/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 版本">
+          <a href="../backpack/troubleshooting/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 故障排查">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
@@ -2385,7 +2385,7 @@
                 上一页
               </span>
               <div class="md-ellipsis">
-                版本
+                故障排查
               </div>
             </div>
           </a>
@@ -2461,6 +2461,8 @@
       <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
       
         <script src="../assets/javascripts/arch.js"></script>
+      
+        <script src="../assets/javascripts/tabs-toc.js"></script>
       
     
   

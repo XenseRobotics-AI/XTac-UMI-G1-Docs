@@ -1030,14 +1030,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../backpack/troubleshooting/" class="md-nav__link">
+      <a href="../../backpack/versions/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    故障排查
+    版本
   
 
     
@@ -1058,14 +1058,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../backpack/versions/" class="md-nav__link">
+      <a href="../../backpack/troubleshooting/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    版本
+    故障排查
   
 
     
@@ -1350,34 +1350,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pc/troubleshooting/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    故障排查
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../pc/versions/" class="md-nav__link">
         
   
@@ -1461,7 +1433,7 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_11">
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_10">
         
           
           <div class="md-nav__link md-nav__container">
@@ -1483,14 +1455,14 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3_11" id="__nav_3_11_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_3_10" id="__nav_3_10_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_11_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_11">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_10">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1589,6 +1561,34 @@
           </ul>
         </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pc/troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    故障排查
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -2183,7 +2183,7 @@
 </tr>
 <tr>
 <td><strong>XTac-UMI Collector</strong></td>
-<td>跑在数采背包上的采集软件，接入相机、夹爪 MCU 与头显位姿，负责录制、回放、导出与设备管理；版本基线 0.4.3，以设备系统页显示为准</td>
+<td>数采背包上的采集软件，接入相机、夹爪 MCU 与头显位姿，负责录制、回放、导出与设备管理；版本基线 0.4.3，以系统页为准</td>
 </tr>
 <tr>
 <td><strong>控制台</strong></td>
@@ -2203,7 +2203,7 @@
 </tr>
 <tr>
 <td><strong>SoftAP</strong></td>
-<td>数采背包自建的常驻 WiFi 热点，SSID <code>xense-&lt;序列号后 6 位&gt;</code>，只有 5 GHz，网关固定 <code>192.168.44.1</code>；不依赖现场网络的兜底入口</td>
+<td>数采背包自建的常驻 WiFi 热点，SSID <code>xense-&lt;序列号后 6 位&gt;</code>，只有 5GHz，网关固定 <code>192.168.44.1</code>；不依赖现场网络的兜底入口</td>
 </tr>
 <tr>
 <td><strong>TacCap</strong></td>
@@ -2269,7 +2269,7 @@
 <p>反馈时请附带：</p>
 <ul>
 <li>完整报错原文，以及对应的日志：<ul>
-<li>PC 版：附那次运行的完整日志文件 <code>~/xenselogs/session_&lt;时间戳&gt;.log</code>，整份附上，不要只贴屏幕上最后几行，见 <a href="../../pc/troubleshooting/#logs">PC 版故障排查</a>。</li>
+<li>PC 版：附该次运行的完整日志 <code>~/xenselogs/session_&lt;时间戳&gt;.log</code>，不要只贴屏幕末尾几行，见 <a href="../../pc/troubleshooting/#logs">PC 版故障排查</a>。</li>
 <li>背包版：附控制台系统日志面板的截图，并注明报错出现的大致时间；该面板不导出日志文件，不用去设备上找。</li>
 </ul>
 </li>
@@ -2296,7 +2296,7 @@
 <tr>
 <td>夹爪 SDK <code>TacCap-Gripper</code></td>
 <td><a href="https://github.com/XenseRobotics-AI/TacCap-Gripper">https://github.com/XenseRobotics-AI/TacCap-Gripper</a></td>
-<td>子模块 <code>third_party/taccap-gripper/</code>；SDK 文档在 <code>docs/</code></td>
+<td>子模块 <code>third_party/taccap-gripper/</code>；SDK 文档在 <code>docs/</code> 目录</td>
 </tr>
 <tr>
 <td>追踪器 PC 服务 <code>XenseVR-PC-Service</code></td>
@@ -2312,11 +2312,6 @@
 <td>本地可视化工具 <code>xense-lerobot-viewer</code></td>
 <td><a href="https://github.com/XenseRobotics-AI/xense-lerobot-viewer">https://github.com/XenseRobotics-AI/xense-lerobot-viewer</a></td>
 <td>开源，在浏览器里查看本地 LeRobot 数据集</td>
-</tr>
-<tr>
-<td>本手册源码</td>
-<td><a href="https://github.com/XenseRobotics-AI/XTac-UMI-G1-Docs">https://github.com/XenseRobotics-AI/XTac-UMI-G1-Docs</a></td>
-<td>Issues 见上节</td>
 </tr>
 </tbody>
 </table>
@@ -2343,7 +2338,7 @@
 </tr>
 </tbody>
 </table>
-<p>夹爪固件随 SDK 附带（SDK 0.4.1 附带主夹爪 1.2.6、从夹爪 1.2.14），不单独列。各组件的升级方法见 <a href="../../pc/versions/">PC 版 · 版本与升级</a> 与 <a href="../../backpack/versions/">背包版 · 版本</a>。</p>
+<p>夹爪固件随 SDK 附带（0.4.1 含主夹爪 1.2.6、从夹爪 1.2.14），不单列。各组件升级见 <a href="../../pc/versions/">PC 版 · 版本与升级</a> 与 <a href="../../backpack/versions/">背包版 · 版本</a>。</p>
 <h2 id="本手册范围">本手册范围<a class="headerlink" href="#本手册范围" title="锚点链接">¶</a></h2>
 <p>本手册覆盖从数采夹爪硬件到数据落盘的链路：背包版到 MCAP 记录与 LeRobot 导出，PC 版到 <code>LeRobotDataset</code>；模型训练、推理、部署不在范围内，见对应工程的独立文档。</p>
 
@@ -2453,6 +2448,8 @@
       <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
         <script src="../../assets/javascripts/arch.js"></script>
+      
+        <script src="../../assets/javascripts/tabs-toc.js"></script>
       
     
   

@@ -15,7 +15,7 @@
         <link rel="prev" href="../recording/">
       
       
-        <link rel="next" href="../troubleshooting/">
+        <link rel="next" href="../versions/">
       
       
         
@@ -1032,14 +1032,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../backpack/troubleshooting/" class="md-nav__link">
+      <a href="../../backpack/versions/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    故障排查
+    版本
   
 
     
@@ -1060,14 +1060,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../backpack/versions/" class="md-nav__link">
+      <a href="../../backpack/troubleshooting/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    版本
+    故障排查
   
 
     
@@ -1507,34 +1507,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../troubleshooting/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    故障排查
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../versions/" class="md-nav__link">
         
   
@@ -1621,7 +1593,7 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_11">
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_10">
         
           
           <div class="md-nav__link md-nav__container">
@@ -1643,14 +1615,14 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3_11" id="__nav_3_11_label" tabindex="">
+              <label class="md-nav__link " for="__nav_3_10" id="__nav_3_10_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_11_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_11">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_10">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1749,6 +1721,34 @@
           </ul>
         </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    故障排查
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -2381,7 +2381,7 @@
 </div>
 <p>成功后地址为 <code>https://huggingface.co/datasets/&lt;repo_id&gt;</code>。</p>
 <ul>
-<li>上传时自动生成数据集卡片（README），并在本地数据集目录写 <code>assets/</code>（三张卡片图，共约 12 MB）一并上传，<code>--no-videos</code> 也照传。</li>
+<li>上传时自动生成数据集卡片（README），在数据集目录写 <code>assets/</code>（三张卡片图约 12MB）一并上传，<code>--no-videos</code> 亦然。</li>
 <li><code>--dataset-path</code> 只读本地，路径不对报 <code>Cannot find dataset metadata in local directory</code>，不会从 Hub 下载。</li>
 </ul>
 <h2 id="storage-planning">磁盘规划与估算<a class="headerlink" href="#storage-planning" title="锚点链接">¶</a></h2>
@@ -2406,7 +2406,7 @@
 </div>
 <p>定期用 <code>df -h</code> 盯住目标盘，免得采集中途写满（见<a href="../troubleshooting/">故障排查</a>）。</p>
 <h2 id="采集台账">采集台账<a class="headerlink" href="#采集台账" title="锚点链接">¶</a></h2>
-<p>每份数据集记一行台账。夹爪与触觉 SN 已自动写进 <code>meta/hardware.json</code>，照抄只为离线可查，不一致时以数据集为准；追踪器 SN 需手写。</p>
+<p>每份数据集记一行台账。夹爪与触觉 SN 已自动写进 <code>meta/hardware.json</code>，照抄只为离线可查，不一致时以数据集为准；追踪器 SN 需手工填写。</p>
 <table>
 <thead>
 <tr>
@@ -2491,13 +2491,13 @@
         
         
           
-          <a href="../troubleshooting/" class="md-footer__link md-footer__link--next" aria-label="下一页: 故障排查">
+          <a href="../versions/" class="md-footer__link md-footer__link--next" aria-label="下一页: 版本与升级">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 下一页
               </span>
               <div class="md-ellipsis">
-                故障排查
+                版本与升级
               </div>
             </div>
             <div class="md-footer__button md-icon">
@@ -2560,6 +2560,8 @@
       <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
         <script src="../../assets/javascripts/arch.js"></script>
+      
+        <script src="../../assets/javascripts/tabs-toc.js"></script>
       
     
   

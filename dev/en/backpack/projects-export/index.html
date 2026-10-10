@@ -1210,14 +1210,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../troubleshooting/" class="md-nav__link">
+      <a href="../versions/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Troubleshooting
+    Versions
   
 
     
@@ -1238,14 +1238,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../versions/" class="md-nav__link">
+      <a href="../troubleshooting/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Versions
+    Troubleshooting
   
 
     
@@ -1530,34 +1530,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pc/troubleshooting/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Troubleshooting
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../pc/versions/" class="md-nav__link">
         
   
@@ -1641,7 +1613,7 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_11">
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_10">
         
           
           <div class="md-nav__link md-nav__container">
@@ -1663,14 +1635,14 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3_11" id="__nav_3_11_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_3_10" id="__nav_3_10_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_11_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_11">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_10">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1769,6 +1741,34 @@
           </ul>
         </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pc/troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -2320,7 +2320,7 @@
 <h2 id="formats">Export formats<a class="headerlink" href="#formats" title="锚点链接">¶</a></h2>
 <p>You can export both formats; they do not affect each other.</p>
 <h3 id="lerobot">LeRobot dataset<a class="headerlink" href="#lerobot" title="锚点链接">¶</a></h3>
-<p>A standard LeRobotDataset v3.0 at 30 fps, with <code>meta/</code>, <code>data/</code> and <code>videos/</code>. The directory layout and how to load it are in the <a href="https://huggingface.co/docs/lerobot/lerobot-dataset-v3">LeRobotDataset v3.0 documentation</a>.</p>
+<p>A standard LeRobotDataset v3.0 at 30fps, with <code>meta/</code>, <code>data/</code> and <code>videos/</code>. The directory layout and how to load it are in the <a href="https://huggingface.co/docs/lerobot/lerobot-dataset-v3">LeRobotDataset v3.0 documentation</a>.</p>
 <table>
 <thead>
 <tr>
@@ -2353,7 +2353,7 @@
 </table>
 <p>It also includes <code>meta/taccap_extrinsics.json</code> (tracker extrinsics) and <code>meta/xumi_collection_devices.json</code> (which devices recorded each episode).</p>
 <h3 id="mcap">MCAP<a class="headerlink" href="#mcap" title="锚点链接">¶</a></h3>
-<p>The export is a training MCAP: one <code>.train.mcap</code> file per recording, built from the same data as the LeRobot dataset in a different container. It holds the state and action aligned to 30 Hz, every video stream and the sensor data, and opens directly in Foxglove and similar tools.</p>
+<p>The export is a training MCAP: one <code>.train.mcap</code> file per recording, built from the same data as the LeRobot dataset in a different container. It holds the state and action aligned to 30Hz, every video stream and the sensor data, and opens directly in Foxglove and similar tools.</p>
 <p>It is not the same file as the raw recording on the backpack:</p>
 <table>
 <thead>
@@ -2371,8 +2371,8 @@
 </tr>
 <tr>
 <td>Rate</td>
-<td>Each stream at its device's native rate: visuotactile 120 fps, wrist fisheye 30 fps, gripper opening and IMU 100 Hz</td>
-<td>All aligned to 30 Hz</td>
+<td>Each stream at its device's native rate: visuotactile 120fps, wrist fisheye 30fps, gripper opening and IMU 100Hz</td>
+<td>All aligned to 30Hz</td>
 </tr>
 <tr>
 <td>Images</td>
@@ -2513,6 +2513,8 @@
       <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
         <script src="../../../assets/javascripts/arch.js"></script>
+      
+        <script src="../../../assets/javascripts/tabs-toc.js"></script>
       
     
   

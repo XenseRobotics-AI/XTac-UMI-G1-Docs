@@ -1032,14 +1032,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../backpack/troubleshooting/" class="md-nav__link">
+      <a href="../../backpack/versions/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    故障排查
+    版本
   
 
     
@@ -1060,14 +1060,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../backpack/versions/" class="md-nav__link">
+      <a href="../../backpack/troubleshooting/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    版本
+    故障排查
   
 
     
@@ -1378,7 +1378,7 @@
   <a href="#ghcr" class="md-nav__link">
     <span class="md-ellipsis">
       
-        一键安装
+        一键安装镜像
       
     </span>
   </a>
@@ -1584,34 +1584,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../troubleshooting/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    故障排查
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../versions/" class="md-nav__link">
         
   
@@ -1698,7 +1670,7 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_11">
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_10">
         
           
           <div class="md-nav__link md-nav__container">
@@ -1720,14 +1692,14 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3_11" id="__nav_3_11_label" tabindex="">
+              <label class="md-nav__link " for="__nav_3_10" id="__nav_3_10_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_11_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_11">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_10">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1826,6 +1798,34 @@
           </ul>
         </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    故障排查
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -2302,7 +2302,7 @@
 <li><strong>其它发行版或架构</strong>：驱动、UVC、串口权限和 <code>.deb</code> 支持需自行验证。</li>
 </ul>
 <h2 id="host-spec">采集主机配置要求<a class="headerlink" href="#host-spec" title="锚点链接">¶</a></h2>
-<p>双夹爪六路相机边取流边编码，一帧只有 33.3 ms（30 fps）。配置不够时表现为丢帧，不报错。</p>
+<p>双夹爪六路相机边取流边编码，一帧只有 33.3ms（30fps）。配置不够时表现为丢帧，不报错。</p>
 <table>
 <thead>
 <tr>
@@ -2319,13 +2319,13 @@
 </tr>
 <tr>
 <td>内存</td>
-<td><strong>8 GB</strong></td>
-<td><strong>32 GB</strong></td>
+<td><strong>8GB</strong></td>
+<td><strong>32GB</strong></td>
 </tr>
 <tr>
 <td>GPU</td>
-<td>NVIDIA <strong>RTX 3060 / 8 GB 显存</strong>及以上</td>
-<td>NVIDIA <strong>RTX 5060 Laptop / 8 GB 显存</strong>及以上</td>
+<td>NVIDIA <strong>RTX 3060 / 8GB 显存</strong>及以上</td>
+<td>NVIDIA <strong>RTX 5060 Laptop / 8GB 显存</strong>及以上</td>
 </tr>
 <tr>
 <td>显卡驱动</td>
@@ -2334,8 +2334,8 @@
 </tr>
 <tr>
 <td>硬盘</td>
-<td>512 GB SSD</td>
-<td><strong>1 TB NVMe SSD</strong></td>
+<td>512GB SSD</td>
+<td><strong>1TB NVMe SSD</strong></td>
 </tr>
 <tr>
 <td>USB</td>
@@ -2350,9 +2350,9 @@
 </tbody>
 </table>
 <ul>
-<li><strong>CPU</strong>：主循环、触觉解码、喂帧都在 CPU 上，双夹爪一帧六到八张图；12 代 i7 是实测稳住 30 fps 的下限。</li>
+<li><strong>CPU</strong>：主循环、触觉解码、喂帧都在 CPU 上，双夹爪一帧六到八张图；12 代 i7 是实测稳住 30fps 的下限。</li>
 <li><strong>GPU</strong>：<code>--dataset.vcodec=auto</code> 用显卡编码 H.264；没有 NVIDIA 显卡时改用 CPU 编码，存盘慢、易 <code>[slow_frame]</code>，见<a href="../recording/#no-gpu">没有 NVIDIA GPU 怎么录</a>。查驱动：<code>nvidia-smi --query-gpu=driver_version,name --format=csv,noheader</code>。</li>
-<li><strong>内存</strong>：开 <code>--display_data</code> 看 Rerun 或边采边处理时用 32 GB。</li>
+<li><strong>内存</strong>：开 <code>--display_data</code> 看 Rerun 或边采边处理时用 32GB。</li>
 <li><strong>硬盘</strong>：双夹爪原始视频出流约 280 MB/s，落盘量见<a href="../dataset/#storage-planning">磁盘规划</a>；不要直接录到机械硬盘或 USB 移动硬盘。</li>
 <li><strong>USB</strong>：双夹爪 6 路相机分挂两条 480M 总线，见 <a href="../host-setup/#usb-budget">USB 带宽预算</a>。</li>
 </ul>
@@ -2375,7 +2375,7 @@
 <tr>
 <td>耗时</td>
 <td>较长，夹爪 SDK 与 Pico4 绑定要现编译</td>
-<td>几分钟到几十分钟，看拉镜像（约 21 GB）的网速</td>
+<td>几分钟到几十分钟，看拉镜像（约 21GB）的网速</td>
 </tr>
 <tr>
 <td>NVIDIA GPU</td>
@@ -2483,10 +2483,10 @@
 </span></code></pre></div>
 <p>按 <code>conda_environment.yaml</code> 更新环境，从 <code>pyproject.toml</code> 装主包，装 <code>xensesdk</code> 与 XenseVR PC Service 守护进程，再编译 <code>xensevr_pc_service_sdk</code> 与 <code>xense.taccap</code>。</p>
 <ul>
-<li><strong>下载</strong>：从 <a href="https://github.com/XenseRobotics-AI/XenseVR-PC-Service/releases/tag/v0.2.1">v0.2.1 release</a> 取当前架构的 <code>.deb</code>（约 110 MB），<code>$XENSEVR_DEB_URL</code> 可覆盖地址。</li>
+<li><strong>下载</strong>：从 <a href="https://github.com/XenseRobotics-AI/XenseVR-PC-Service/releases/tag/v0.2.1">v0.2.1 release</a> 取当前架构的 <code>.deb</code>（约 110MB），<code>$XENSEVR_DEB_URL</code> 可覆盖地址。</li>
 <li><strong>安装</strong>：<code>sudo dpkg -i</code> 装到 <code>/opt/apps/roboticsservice</code>；同版本已装则跳过，下了一半的文件会复用。</li>
 <li><strong>下载失败</strong>：<code>--install</code> 停下；离线或打过补丁的包用 <code>$XENSEVR_DEB</code> 指向本地文件。</li>
-<li><strong>版本</strong>：v0.2.1 重新编译过 C SDK，v0.2.0 会拿旧 SDK 编 Pico4 绑定；<a href="../recording/#56">头显双目与头部位姿</a>需要 PC Service ≥ v0.2.0，追踪器不受影响。</li>
+<li><strong>版本</strong>：v0.2.1 重编了 C SDK，v0.2.0 会拿旧 SDK 编 Pico4 绑定；<a href="../recording/#56">头显双目与头部位姿</a>需 PC Service ≥ v0.2.0，追踪器不受影响。</li>
 </ul>
 <h3 id="25">验证安装<a class="headerlink" href="#25" title="锚点链接">¶</a></h3>
 <p>三个包都能 import 即成功：</p>
@@ -2514,7 +2514,7 @@
 <li><strong>主机</strong>：Ubuntu 22.04 / 24.04 <strong>amd64</strong>，<strong>NVIDIA 驱动 ≥ 570.144</strong>（<code>nvidia-smi --query-gpu=driver_version --format=csv,noheader</code> 可查）。</li>
 <li><strong>驱动</strong>：脚本不装、不升级显卡驱动（涉及型号、Secure Boot 和重启），不满足就停下。</li>
 </ul>
-<h3 id="ghcr">一键安装<a class="headerlink" href="#ghcr" title="锚点链接">¶</a></h3>
+<h3 id="ghcr">一键安装镜像<a class="headerlink" href="#ghcr" title="锚点链接">¶</a></h3>
 <p>镜像在 GitHub Container Registry 公开发布，拉取免登录：</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>ghcr.io/xenserobotics-ai/xense-taccap-lerobot
 </span></code></pre></div>
@@ -2799,6 +2799,8 @@
       <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
         <script src="../../assets/javascripts/arch.js"></script>
+      
+        <script src="../../assets/javascripts/tabs-toc.js"></script>
       
     
   
