@@ -26,9 +26,13 @@
 
 1. 开启开发者模式：设置 → 关于本机 → 连续点击「软件版本号」数次（用手柄时对着它连扣食指扳机）→ 左侧出现「开发者选项」→ 打开 USB 调试。
 
-    ![连续点击软件版本号](../assets/pico4/devmode-tap-version.webp){ width="480" }
+    <div class="tc-pair" markdown>
 
-    ![开发者选项 → 打开 USB 调试](../assets/pico4/devmode-usb-debug.webp){ width="480" }
+    ![连续点击软件版本号](../assets/pico4/devmode-tap-version.webp)
+
+    ![开发者选项 → 打开 USB 调试](../assets/pico4/devmode-usb-debug.webp)
+
+    </div>
 
 2. 关闭休眠与灭屏：开发者选项 →「企业设置」→ 系统设置 → 电源策略（仅企业版有，消费版调不到「永不」）。出厂灭屏 30 秒、休眠 5 分钟、不显示电量图标，按顺序改：
     1. 系统休眠 = 永不；

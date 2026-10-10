@@ -26,9 +26,13 @@
 
 1. Enable developer mode: Settings → About → tap "Software version" several times (with the controller, pull the index trigger repeatedly while pointing at it) → "Developer options" appears on the left → turn on USB debugging.
 
-    ![Tap the software version repeatedly](../assets/pico4/devmode-tap-version.webp){ width="480" }
+    <div class="tc-pair" markdown>
 
-    ![Developer options → turn on USB debugging](../assets/pico4/devmode-usb-debug.webp){ width="480" }
+    ![Tap the software version repeatedly](../assets/pico4/devmode-tap-version.webp)
+
+    ![Developer options → turn on USB debugging](../assets/pico4/devmode-usb-debug.webp)
+
+    </div>
 
 2. Disable sleep and screen-off: Developer options → "Enterprise Settings" → System Settings → Power policy (Enterprise edition only; the consumer edition cannot set "Never"). It ships as screen-off 30s, system sleep 5min, battery icon hidden. Change them in order:
     1. System sleep = Never;
