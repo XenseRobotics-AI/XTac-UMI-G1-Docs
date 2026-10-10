@@ -9,7 +9,7 @@ XTac-UMI 提供两种配置，使用同一套 XTac-UMI G1 夹爪与 Pico4 Ultra 
 
 <div class="grid cards xu-cards" markdown>
 
--   ![背包版控制台实时监控：各路相机、视触觉与位姿同屏](../assets/backpack/monitor-live.webp){ .xu-card__img }
+-   ![背包版接线：左右夹爪、头显接数采背包](../assets/product/backpack-wiring-adapter-card.webp){ .xu-card__img }
 
     <span class="xu-tag xu-tag--backpack">背包版</span>
 
