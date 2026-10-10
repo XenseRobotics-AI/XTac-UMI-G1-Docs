@@ -8,21 +8,21 @@ This page installs `xense-taccap-lerobot` and the three hardware SDKs on an **Ub
 
 ## Data-collection host requirements {#host-spec}
 
-On a bimanual rig six cameras are streamed and encoded at once, with only 33.3 ms per frame (30 fps). An underspecified machine drops frames without raising an error.
+On a bimanual rig six cameras are streamed and encoded at once, with only 33.3ms per frame (30fps). An underspecified machine drops frames without raising an error.
 
 | | **Minimum** | **Recommended** |
 |---|---|---|
 | CPU | Intel **12th-gen i7** or better (or an AMD equivalent) | Intel **Core Ultra 9 275HX** (24 cores) or equivalent |
-| Memory | **8 GB** | **32 GB** |
-| GPU | NVIDIA **RTX 3060 / 8 GB VRAM** or better | NVIDIA **RTX 5060 Laptop / 8 GB VRAM** or better |
+| Memory | **8GB** | **32GB** |
+| GPU | NVIDIA **RTX 3060 / 8GB VRAM** or better | NVIDIA **RTX 5060 Laptop / 8GB VRAM** or better |
 | GPU driver | **≥ 570.144** | Same |
-| Disk | 512 GB SSD | **1 TB NVMe SSD** |
+| Disk | 512GB SSD | **1TB NVMe SSD** |
 | USB | **One gripper** (3 cameras) can share a single USB 2.0 bus | **Bimanual** (6 cameras) split across **two USB 2.0 buses** (two independent host controllers) |
 | OS | Ubuntu 22.04 / 24.04 LTS, **amd64** | Ubuntu 24.04 LTS |
 
-- **CPU**: the main loop, tactile decoding and feeding the encoder all run on the CPU, and a bimanual frame is six to eight images; a 12th-gen i7 is the lowest part measured to hold 30 fps.
+- **CPU**: the main loop, tactile decoding and feeding the encoder all run on the CPU, and a bimanual frame is six to eight images; a 12th-gen i7 is the lowest part measured to hold 30fps.
 - **GPU**: `--dataset.vcodec=auto` encodes H.264 on the card. Without an NVIDIA card the CPU encodes, so saving is slower and `[slow_frame]` is likelier, see [Recording with no NVIDIA GPU](recording.md#no-gpu). Check the driver: `nvidia-smi --query-gpu=driver_version,name --format=csv,noheader`.
-- **Memory**: use 32 GB when you watch Rerun with `--display_data` or process data while collecting.
+- **Memory**: use 32GB when you watch Rerun with `--display_data` or process data while collecting.
 - **Disk**: bimanual raw video is about 280 MB/s, what lands on disk is in [Disk planning](dataset.md#storage-planning). Do not record straight onto a spinning disk or a USB external drive.
 - **USB**: a bimanual rig's 6 cameras are split across two 480M buses, see [USB bandwidth budget](host-setup.md#usb-budget).
 
@@ -33,7 +33,7 @@ Both paths produce the same collection environment; pick one.
 | | **Mamba (from source)** | **Docker image** |
 |---|---|---|
 | What you get | The source repo; you build the environment | A prebuilt image to pull and one script to run |
-| Time | Longer; the gripper SDK and the Pico4 bindings are compiled on the spot | Minutes to tens of minutes, depending on how fast you can pull the image (about 21 GB) |
+| Time | Longer; the gripper SDK and the Pico4 bindings are compiled on the spot | Minutes to tens of minutes, depending on how fast you can pull the image (about 21GB) |
 | NVIDIA GPU | Not required; without one you are on the [degraded recording path](recording.md#no-gpu) | **Required**, driver ≥ 570.144 |
 | Isolation | A Mamba environment on the host | In a container; the host stays clean |
 | Editing the code | Easy | Awkward |
@@ -134,7 +134,7 @@ Both paths produce the same collection environment; pick one.
 
     It updates the environment from `conda_environment.yaml`, installs the main package from `pyproject.toml`, installs `xensesdk` and the XenseVR PC Service daemon, then builds `xensevr_pc_service_sdk` and `xense.taccap`.
 
-    - **Download**: the `.deb` for the current architecture (about 110 MB) comes from the [v0.2.1 release](https://github.com/XenseRobotics-AI/XenseVR-PC-Service/releases/tag/v0.2.1); `$XENSEVR_DEB_URL` overrides the URL.
+    - **Download**: the `.deb` for the current architecture (about 110MB) comes from the [v0.2.1 release](https://github.com/XenseRobotics-AI/XenseVR-PC-Service/releases/tag/v0.2.1); `$XENSEVR_DEB_URL` overrides the URL.
     - **Install**: `sudo dpkg -i` into `/opt/apps/roboticsservice`; skipped if the same version is installed, and a partial download is reused.
     - **Failed download**: `--install` stops; for an offline or patched package, point `$XENSEVR_DEB` at a local file.
     - **Version**: v0.2.1 rebuilt the C SDK, while v0.2.0 would build the Pico4 bindings against the old SDK. The [headset stereo view and head pose](recording.md#56) need PC Service ≥ v0.2.0; the tracker is unaffected.
@@ -178,7 +178,7 @@ Both paths produce the same collection environment; pick one.
     - **Host**: Ubuntu 22.04 / 24.04 **amd64**, **NVIDIA driver ≥ 570.144** (check with `nvidia-smi --query-gpu=driver_version --format=csv,noheader`).
     - **Driver**: the script neither installs nor upgrades the GPU driver (that depends on the card, Secure Boot and a reboot) and stops if it falls short.
 
-    ### One-shot install {#ghcr}
+    ### One-shot image install {#ghcr}
 
     The image is public on the GitHub Container Registry; pulling needs no login:
 

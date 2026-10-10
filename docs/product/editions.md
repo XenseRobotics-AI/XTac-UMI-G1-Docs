@@ -9,7 +9,7 @@ XTac-UMI 提供两种配置，使用同一套 XTac-UMI G1 夹爪与 Pico4 Ultra 
 
 <div class="grid cards xu-cards" markdown>
 
--   ![背包版接线：左右夹爪、头显接数采背包](../assets/product/backpack-wiring-adapter.webp){ .xu-card__img }
+-   ![XTac-UMI 数采背包](../assets/product/backpack-card.webp){ .xu-card__img }
 
     <span class="xu-tag xu-tag--backpack">背包版</span>
 
@@ -21,7 +21,7 @@ XTac-UMI 提供两种配置，使用同一套 XTac-UMI G1 夹爪与 Pico4 Ultra 
 
     [快速开始](../backpack/quickstart.md){ .md-button .md-button--primary }
 
--   ![PC 版采集中的 Rerun 实时预览](../assets/dataset/rerun-xtac-umi-g1.webp){ .xu-card__img }
+-   ![XTac-UMI G1 视触觉夹爪](../assets/product/g1-card.webp){ .xu-card__img }
 
     <span class="xu-tag xu-tag--pc">PC 版</span>
 
@@ -57,17 +57,17 @@ XTac-UMI 提供两种配置，使用同一套 XTac-UMI G1 夹爪与 Pico4 Ultra 
     | 物品 | 数量 | 规格与说明 |
     |---|---|---|
     | XTac-UMI G1 主夹爪 | 2 | 左右各一，按序列号末位区分：单数左、双数右 |
-    | 主夹爪连接线 | 2 | 双 Type-C，1.5 m，左右各一；夹爪端为锁紧接头，另一端接背包 `UMI-L` / `UMI-R` |
+    | 主夹爪连接线 | 2 | 双 Type-C，1.5m，左右各一；夹爪端为锁紧接头，另一端接背包 `UMI-L` / `UMI-R` |
     | Pico4 Ultra 企业版头显 | 1 | 含手柄与运动追踪器，追踪器装在两只主夹爪顶部 |
     | 追踪器充电底座 | 1 | 一拖三 |
-    | 头显连接线（Pico → Pack） | 1 | 双 Type-C，1.5 m，头显接背包 `PICO` 口 |
-    | 数采背包 | 1 | 计算节点，自带 5 GHz 热点（默认关闭） |
+    | 头显连接线（Pico → Pack） | 1 | 双 Type-C，1.5m，头显接背包 `PICO` 口 |
+    | 数采背包 | 1 | 计算节点，自带 5GHz 热点（默认关闭） |
     | 腰带组件 | 1 | 佩戴数采背包 |
-    | 12 V 电源适配器 | 1 | 12 V 3 A，线长 1.5 m，接背包 `DC` 口 |
-    | 充电宝 | 1 | 20000 mAh，45 W |
-    | 12 V PD 电源线 | 1 | 0.3 m，充电宝接背包 `DC` 口 |
-    | 平板电脑 | 1 | 6 GB + 128 GB，含保护套，作为控制台 |
-    | Type-C 充电插头 | 1 | PD 快充，100 W |
+    | 12V 电源适配器 | 1 | 12V 3A，线长 1.5m，接背包 `DC` 口 |
+    | 充电宝 | 1 | 20000mAh，45W |
+    | 12V PD 电源线 | 1 | 0.3m，充电宝接背包 `DC` 口 |
+    | 平板电脑 | 1 | 6GB + 128GB，含保护套，作为控制台 |
+    | Type-C 充电插头 | 1 | PD 快充，100W |
 
     固定工位用适配器供电，移动采集用充电宝供电：
 
@@ -79,25 +79,25 @@ XTac-UMI 提供两种配置，使用同一套 XTac-UMI G1 夹爪与 Pico4 Ultra 
 
         ![充电宝供电接线：左右主夹爪与头显接数采背包，充电宝接背包 DC 口](../assets/product/backpack-wiring-powerbank-diagram.webp)
 
-    接线步骤见[适配器供电](../backpack/unbox-connect.md#adapter)与[充电宝供电](../backpack/unbox-connect.md#powerbank)；供电与拔线顺序的安全要求见[数采背包与供电](safety.md#backpack-power)；打开控制台见[平板插 USB](../backpack/network.md#tablet)，没有平板时用[背包热点](../backpack/network.md#softap)。
+    接线见[适配器供电](../backpack/unbox-connect.md#adapter)与[充电宝供电](../backpack/unbox-connect.md#powerbank)；供电与拔线顺序的安全要求见[数采背包与供电](safety.md#backpack-power)；打开控制台见[平板插 USB](../backpack/network.md#tablet)，无平板时用[背包热点](../backpack/network.md#softap)。
 
 === "PC 版"
 
     | 物品 | 数量 | 规格与说明 |
     |---|---|---|
     | XTac-UMI G1 主夹爪 | 2 | 左右各一，按序列号末位区分：单数左、双数右 |
-    | 主夹爪连接线 | 2 | Type-C 转 Type-A，USB 2.0，3 m；夹爪端为锁紧接头 |
+    | 主夹爪连接线 | 2 | Type-C 转 Type-A，USB 2.0，3m；夹爪端为锁紧接头 |
     | Pico4 Ultra 企业版头显 | 1 | 含手柄与运动追踪器，追踪器装在两只主夹爪顶部 |
     | 追踪器充电底座 | 1 | 一拖三 |
-    | 头显连接线 | 1 | 双头 Type-C，1.5 m，头显接主机 |
+    | 头显连接线 | 1 | 双头 Type-C，1.5m，头显接主机 |
 
     选配从夹爪时另附：
 
     | 物品 | 数量 | 规格与说明 |
     |---|---|---|
     | XTac-UMI G1 从夹爪 | 2 | 左右各一，装在机器人末端 |
-    | 24 V 电源适配器 | 2 | 24 V 2.5 A，线长 4.5 m，带磁环，每只从夹爪一个 |
-    | 束线带 | 1 | 3 m，沿机械臂整理线缆 |
+    | 24V 电源适配器 | 2 | 24V 2.5A，线长 4.5m，带磁环，每只从夹爪一个 |
+    | 束线带 | 1 | 3m，沿机械臂整理线缆 |
 
     主机自备，配置要求见[采集主机配置要求](../pc/install.md#host-spec)。一共 3 条线：
 

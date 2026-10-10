@@ -2,7 +2,7 @@
 
 流程见[数据采集](recording.md)，报错见[故障排查](troubleshooting.md)。
 
-## `RobotConfig` 常用配置项 {#robotconfig}
+<span id="robotconfig"></span>
 
 | 配置项 | 默认 | 作用 |
 |---|---|---|
@@ -36,9 +36,5 @@
 | `robot.tracker_wait_timeout` | `10.0` | 等待追踪器数据的秒数 |
 
 上表按单夹爪写，完整字段见主仓库设备说明。`bi_taccap_gripper` 上 `enable_wrist_camera`、`tracker_serial`、`enable_gripper`、`enable_imu`、`gripper_open_rad`、`tracker_to_ee_pos/_quat` 每侧一个，加 `left_` / `right_` 前缀（如 `--robot.left_enable_wrist_camera`），其余两侧共用，见[参数](recording.md#params)。
-
-## SDK 与二次开发
-
-见 [SDK 与二次开发](../sdk/index.md)。
 
 术语见[术语表](../common/reference.md#glossary)，反馈见[支持与反馈](../common/reference.md#support)。

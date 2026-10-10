@@ -33,7 +33,7 @@ g = t.FollowerGripper(ep.mcu_device)
 |---|---|---|
 | 控制器 | `ImpedanceController` | `ForcePositionController` |
 | 配置 | `ImpedanceConfig.for_spec(g.motor.get_spec())` | `ForcePositionConfig.for_spec(g.motor.get_spec())` |
-| 可调 | 一般不调 | `grasp_torque_nm`（夹持力，≤ 1.1 N·m） |
+| 可调 | 一般不调 | `grasp_torque_nm`（夹持力，≤ 1.1N·m） |
 | 常用 | `set_target(开度)` | `set_target(开度)`、`release()`、`hold_position()` |
 
 两种都有 `start()` / `stop()`（或 `with`）、`snapshot()`、`reset()`，顺序：
@@ -67,7 +67,7 @@ g = t.FollowerGripper(ep.mcu_device)
 
 ## 示例脚本 {#examples}
 
-- 脚本在 `python/examples/`，于 SDK 源码目录（数采仓库 `third_party/taccap-gripper` 或单独安装的 `TacCap-Gripper`）运行。
+- 脚本在 `python/examples/`，从 SDK 源码目录运行（数采仓库 `third_party/taccap-gripper` 或单独安装的 `TacCap-Gripper`）。
 - 夹爪用 `left`、`right` 或完整序列号指定，只接一只可省；参数见 `--help`。
 
 | 脚本 | 用途 | 影响 |

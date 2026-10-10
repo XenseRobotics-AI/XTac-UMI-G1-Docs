@@ -1,12 +1,12 @@
 # 数据采集
 
-先用 `lerobot-teleoperate` 确认设备正常，再用 `lerobot-record` 录出 `LeRobotDataset`。落盘、目录结构、校验与上传见[数据集](dataset.md)。
+先用 `lerobot-teleoperate` 验证设备，再用 `lerobot-record` 录制 `LeRobotDataset`。落盘、目录结构、校验与上传见[数据集](dataset.md)。
 
 ## 采集原理 {#51}
 
 - `taccap_gripper` 录制自驱动，没有 `--teleop.*` 参数。
 - 移位帧（shifted-frame）配对：*t-1* 步的观测配 *t* 步的位姿作动作（EEF TCP 位姿 + 归一化 `gripper.pos`，开[头显相机](#56)时加头显位姿），每集因此少 1 帧。
-- `tcp.*` 是夹爪末端而非追踪器：追踪器离两指中点约 195 mm，落盘前乘上内置刚性安装变换（CAD 装配实测，左右各一套），机体固连，与姿态和 `gripper.pos` 无关。
+- `tcp.*` 是夹爪末端而非追踪器：追踪器离两指中点约 195mm，落盘前乘上内置刚性安装变换（CAD 装配实测，左右各一套），机体固连，与姿态和 `gripper.pos` 无关。
 - 世界系重力对齐，X 前 / Y 左 / Z 上，在 XTac-UMI XR 启动瞬间冻结，见[坐标系对齐](../common/pico4.md#pico-frame)。
 - `--display_data=true` 开出 Rerun 的 `/world` 3D 视图（`--show_trajectory=false` 关轨迹），元素含义与装配检查见[坐标系 · `/world` 3D 视图](../common/coordinates.md#world-view)。
 
@@ -17,8 +17,8 @@
 | 档 | 开关 | 需要 | 多出 |
 |---|---|---|---|
 | ① 只有夹爪 | `--robot.type=bi_taccap_gripper --robot.enable_tracker=false` | 不需要 PC Service | 触觉两路、腕相机、`gripper.pos`，没有 `tcp.*` |
-| ② 带腕部位姿（最常用，本页默认） | `--robot.type=bi_taccap_gripper`（追踪器默认开启） | 追踪器已开机[绑定](../common/pico4.md#pico-tracker-bind)、Pico4 已连上、[PC Service 已启动](host-setup.md#35) | [`/world` 视图](../common/coordinates.md#world-view) / `tcp.*` |
-| ③ 完全体 | `--robot.type=xtac_umi_g1` | 同 ②，PC Service ≥ v0.2.0 | 头显双目与头部位姿，见[头显相机](#56) |
+| ② 带腕部位姿（最常用，也是本页默认） | `--robot.type=bi_taccap_gripper`（追踪器默认即开启） | 追踪器已开机[绑定](../common/pico4.md#pico-tracker-bind)、Pico4 已连上、[PC Service 已启动](host-setup.md#35) | [`/world` 视图](../common/coordinates.md#world-view) / `tcp.*` |
+| ③ 完全体 | `--robot.type=xtac_umi_g1` | 同 ②，PC Service ≥ v0.2.0 | 头显双目与位姿，见[头显相机](#56) |
 
 按 ② 档预览：
 
@@ -31,7 +31,7 @@ lerobot-teleoperate \
 ```
 
 - 双夹爪带不带头显由 `--robot.type` 决定；写了与之矛盾的 `--robot.enable_head_camera` 会报错并提示该用的类型。
-- 单夹爪用 `--robot.type=taccap_gripper`，只接一只时自动选中，两只都接时加 `--robot.side=left|right`（只录一只则必填）。
+- 单夹爪用 `--robot.type=taccap_gripper`，只接一只时自动选中，两只都接时须加 `--robot.side=left|right` 指定录哪一只。
 - `--teleop_time_s=10` 跑满 10 秒自动退出；`--debug_timing=true` 打印采样耗时与相机路数。
 
 逐项确认（位姿两行仅 ②③ 档）后 `Ctrl+C` 退出：
@@ -77,7 +77,7 @@ lerobot-record \
 | `repo_id` | 必填 | `<org>/<name>`，约定 `<org>/<任务>_<变体>_<YYYYMMDD>`，如 `Xense/insert_plug_left_20260703`，见[数据集](dataset.md) |
 | `single_task` | 必填 | 任务描述，写入 `meta/tasks`，如 `'Pick up the object'` |
 | `root` | `$HF_LEROBOT_HOME/repo_id` | 本地存储目录，见[数据集](dataset.md) |
-| `fps` | `30` | 采样帧率上限；传感器本身 120 Hz（[规格](../product/specs.md#specs)） |
+| `fps` | `30` | 采样帧率上限；传感器本身 120Hz（[规格](../product/specs.md#specs)） |
 | `episode_time_s` | `120` | 每集时长（秒） |
 | `reset_time_s` | `60` | 集间复位时长（秒） |
 | `num_episodes` | `50` | 录制集数 |
@@ -145,7 +145,7 @@ lerobot-record \
 | `--robot.id=0` | `bi_taccap_gripper`（双夹爪） | `bi_taccap_0` |
 | `--robot.id=0` | `xtac_umi_g1`（双夹爪 + 头显） | `xtac_umi_g1_0` |
 
-不要手敲前缀：非纯数字原样保留，`--robot.id=taccap_0` 仍可用，但在双夹爪上会与设备类型对不上。漏填或填空在解析命令行时退出：
+勿手敲前缀：非纯数字原样保留，`--robot.id=taccap_0` 仍可用，但双夹爪上与设备类型不符。漏填或留空时解析命令行即退出：
 
 ```text
 ValueError: --robot.id is required: the station label for this rig, e.g. --robot.id=0 …
@@ -183,7 +183,7 @@ ValueError: --robot.id is required: the station label for this rig, e.g. --robot
 - `side` 是哪只夹爪，`finger` 是其上哪枚触觉，各按[单左双右](host-setup.md#33)判定。
 - `observation_key` 把数据集的一列对应到具体传感器。
 - `gripper_sn` 是固件 SN，不是 CH343 的 `mcu_serial`（换根转接就变）。
-- 单夹爪 `units` 只有一项；某侧没开记 `"gripper_sn": null`；`--robot.enable_tactile=false` 时 `tactile_sensors` 为空列表。
+- 单夹爪 `units` 仅一项；未启用侧记 `"gripper_sn": null`；`--robot.enable_tactile=false` 时 `tactile_sensors` 为空列表。
 - 独立文件，不在 `meta/info.json` 里；追踪器和腕相机是配件，不入清单。
 - `wrist_undistort` 记是否矫正、用哪份内参，没矫正记 `{"applied": false}`，见[鱼眼矫正](#57)。
 
@@ -211,7 +211,7 @@ ValueError: --robot.id is required: the station label for this rig, e.g. --robot
 | `wrist_cam` | 腕部相机 | `--robot.enable_wrist_camera`（默认 `true`） | uint8 `(H, W, 3)` |
 | `left_head` / `right_head` | 头显双目，一只眼一个键 | `--robot.type=xtac_umi_g1`（单夹爪为 `--robot.enable_head_camera=true`） | uint8，默认 `(480, 640, 3)` |
 | `head_camera.x/y/z` | 头显位置（同 `tcp.*` 世界系），也是动作 | 同上 | float(m) |
-| `head_camera.r1..r6` | 头显姿态的 6-D 旋转，也是动作 | 同上 | float |
+| `head_camera.r1..r6` | 头显姿态 6-D 旋转，也是动作 | 同上 | float |
 | `imu.accel.{x,y,z}` | 夹爪 IMU 加速度 | `--robot.enable_imu`（默认 `false`，预留不录） | float(m/s²) |
 | `imu.gyro.{x,y,z}` | 夹爪 IMU 角速度 | 同上 | float(rad/s) |
 | `imu.mag.{x,y,z}` | 夹爪 IMU 磁力 | 同上 | float(µT) |
@@ -267,7 +267,7 @@ lerobot-record \
 ### 没有 NVIDIA GPU 的主机怎么录 {#no-gpu}
 
 !!! warning "这是给不达标机器的临时办法，不是推荐做法"
-    [采集主机最低要求](install.md#host-spec)是 NVIDIA RTX 3060 / 8 GB 显存及以上。纯 CPU 服务器、虚拟机或无 NVIDIA 显卡的笔记本按下面做能录，但存盘慢、易掉帧，正式采集请换达标主机。
+    [采集主机最低要求](install.md#host-spec)是 NVIDIA RTX 3060 / 8GB 显存及以上。纯 CPU 服务器、虚拟机或无 NVIDIA 显卡的笔记本按下面操作可以录制，但存盘慢、易掉帧，正式采集请换用达标主机。
 
 这类机器须先升级到 v0.1.0。
 
@@ -281,12 +281,12 @@ lerobot-record \
 
 `--dataset.vcodec=auto` 会实际开一次编码会话探测，无 NVIDIA 驱动时回落到 `libsvtav1`（CPU 上的 AV1）；离线编辑重新编码同理（有 NVIDIA 用 `h264_nvenc`）。也可显式写 `--dataset.vcodec=libsvtav1`。
 
-`libsvtav1` 让 CPU 既编码又采集，双夹爪一帧六到八张图，30 fps 预算仅 33.3 ms，会出现 `[slow_frame] ... overrun=`。关掉后在 `save_episode()` 批量编码，存盘慢只是多等，掉帧则补不回来；忽略"建议把流式编码开回来"的提示。多核服务器仍想开流式编码，调这两项：
+`libsvtav1` 让 CPU 既编码又采集，双夹爪一帧六到八张图，30fps 预算仅 33.3ms，会出现 `[slow_frame] ... overrun=`。关掉后在 `save_episode()` 批量编码，存盘慢只是多等，掉帧则补不回来；忽略"建议把流式编码开回来"的提示。多核服务器仍想开流式编码，调这两项：
 
 | 参数 | 默认 | 什么时候动它 |
 |---|---|---|
 | `--dataset.encoder_threads` | 自动 | 大机器上 `libsvtav1` 会抢走采集要用的核，每个编码器给 `2` 是稳妥上限 |
-| `--dataset.encoder_queue_maxsize` | `30` | 约 1 秒缓冲（30 fps）的反压阀，编码跟不上时在此挡住，内存不再上涨 |
+| `--dataset.encoder_queue_maxsize` | `30` | 约 1 秒缓冲（30fps）的反压阀，编码跟不上时在此挡住，内存不再上涨 |
 
 ## 分集与复位 {#55}
 
@@ -390,7 +390,7 @@ lerobot-record \
 
 - `--robot.head_camera_eyes=left`（或 `right`）只录一只眼，解码与编码压力减半，只有一个头部视频键。
 - 改分辨率或录制的眼睛等于换一组数据，前后 episode 不能混用。
-- 左右眼是两条独立消息，配错在数据里看不出，所以每帧比对两眼最新帧：帧序号相同即同一曝光，否则时间戳差须不超过 `--robot.head_camera_pair_max_skew_ms`（默认 20 ms，30 fps 帧周期约 33 ms）；超出只打限流告警（含实测偏差），不中断录制。
+- 左右眼是两条独立消息，配错在数据里看不出，所以每帧比对两眼最新帧：帧序号相同即同一曝光，否则时间戳差须不超过 `--robot.head_camera_pair_max_skew_ms`（默认 20ms，30fps 帧周期约 33ms）；超出只限流告警（含实测偏差），录制继续。
 
 `head_camera.*` 用追踪器的 Pico→world 变换映射到 `tcp.*` 的世界系。开启后 `observation.state` 增 9 维：单夹爪 10 → 19，双夹爪 20 → 29，再开 `--robot.enable_imu=true` 继续累加。连不上见[故障排查](troubleshooting.md#head-camera)。
 

@@ -1,6 +1,6 @@
 # 准备与自检
 
-按顺序做完四步再投入使用。硬件安装与接线见 [夹爪连接与序列号 → 从夹爪安装与连接](../common/gripper.md#follower-install)，
+依次完成四步再投入使用。安装接线见 [夹爪连接与序列号 → 从夹爪安装与连接](../common/gripper.md#follower-install)，
 从夹爪要 **USB Type-C 和 24V 两路都接上**。
 
 ## 1. 安装 SDK {#install}
@@ -18,7 +18,7 @@ python -c "import xense.taccap as t; print(t.hello())"
 应输出 `taccap-gripper OK; version 0.4.1`。版本不对说明 SDK 子模块没更新或没重新编译，见
 [从夹爪故障排查](troubleshooting.md#connect)。
 
-之后的命令都在 `third_party/taccap-gripper` 目录下、数采环境里运行。不使用数采仓库、单独安装 SDK 的方法见
+后续命令均在 `third_party/taccap-gripper` 目录、数采环境中运行。不用数采仓库、单独安装 SDK 见
 [SDK 附录 → 安装与构建](../sdk/install.md)。
 
 ## 2. 找到设备 {#discover}
@@ -69,7 +69,7 @@ python python/examples/follower_status.py left
 | `[fw]` | 1.2.14 | 低于 1.2.11 会打印升级提示，低于 1.2.5 会报错退出，都先[升级固件](firmware.md#mcu-ota) |
 | `[归一化]` | 0 到 1 之间 | 报 `not calibrated`：清空爪子周围，断电重启 |
 | `[故障]` | 全 0 | 见[故障排查](troubleshooting.md#fault) |
-| `[开流读]` | 约 100 Hz，显示 `OK` | 断电重启后再试，仍不正常见[故障排查](troubleshooting.md#self-check) |
+| `[开流读]` | 约 100Hz，显示 `OK` | 断电重启后再试，仍不正常见[故障排查](troubleshooting.md#self-check) |
 
 ## 4. 运动自检 {#motion-check}
 
@@ -88,8 +88,8 @@ python python/examples/gripper_console.py left
 |---|---|
 | 顶部 `envelope:` | 末尾是 `ENFORCED`，表示固件的力矩与过热保护已生效；显示 `未生效` 说明固件太旧，先[升级固件](firmware.md#mcu-ota) |
 | `Act[0-1]` | 按 `o` 接近 1、按 `c` 接近 0；显示 `N/A` 说明没标定，断电重启 |
-| `Torq(+闭合)` | 空载开合时接近 0；用一根笔挡在指间按 `c`，稳定在 1.1 N·m，不会继续上涨 |
-| `Temp(C)` | 室温附近；持续夹持会慢慢升高，超过 90 °C 固件会自动降低力矩 |
+| `Torq(+闭合)` | 空载开合时接近 0；用一根笔挡在指间按 `c`，稳定在 1.1N·m，不会继续上涨 |
+| `Temp(C)` | 室温附近；持续夹持会慢慢升高，超过 90°C 固件会自动降低力矩 |
 | `State` | 运动中是 `EN`；出现 `FAULT` 等见[故障排查](troubleshooting.md#fault) |
 
 常用按键：`o` / `c` 全开 / 全合，`j` / `k` 张开 / 闭合一步，`d` 松开电机，`q` 退出。全部按键见[运动控制](control.md#first-motion)。

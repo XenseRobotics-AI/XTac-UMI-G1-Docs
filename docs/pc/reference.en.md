@@ -2,7 +2,7 @@
 
 Workflow: [Data collection](recording.md); errors: [Troubleshooting](troubleshooting.md).
 
-## Common `RobotConfig` options {#robotconfig}
+<span id="robotconfig"></span>
 
 | Option | Default | What it does |
 |---|---|---|
@@ -36,9 +36,5 @@ Workflow: [Data collection](recording.md); errors: [Troubleshooting](troubleshoo
 | `robot.tracker_wait_timeout` | `10.0` | Seconds to wait for tracker data |
 
 The table is written for a single gripper; the full field list is in the main repo's device notes. On `bi_taccap_gripper`, `enable_wrist_camera`, `tracker_serial`, `enable_gripper`, `enable_imu`, `gripper_open_rad` and `tracker_to_ee_pos/_quat` are per side with a `left_` / `right_` prefix (for example `--robot.left_enable_wrist_camera`); the rest are shared by both sides, see [Parameters](recording.md#params).
-
-## SDK and custom development
-
-See [SDK & development](../sdk/index.md).
 
 Terms are in the [Glossary](../common/reference.md#glossary); feedback in [Support and feedback](../common/reference.md#support).

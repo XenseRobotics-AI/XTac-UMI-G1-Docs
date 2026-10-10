@@ -58,10 +58,10 @@ Programs written against 0.1.x / 0.2.x mainly see these changes when upgrading t
 
 When upgrading from 0.3.x to 0.4.x:
 
-- Force-position control now uses a single torque-limited control law, which holds more steadily when grasping; `snapshot().holding` becomes true about 150 ms later than before,
+- Force-position control now uses a single torque-limited control law, which holds more steadily when grasping; `snapshot().holding` becomes true about 150ms later than before,
   so revalidate any program that relies on it.
 - When closing to 0, the final state may be either `HOLDING_FORCE` or `HOLDING_POSITION`; both are normal.
-- During operation, `set_target(opening, grip_force)` with a grip force above 1.1 N·m now raises an error instead of being silently accepted.
+- During operation, `set_target(opening, grip_force)` with a grip force above 1.1N·m now raises an error instead of being silently accepted.
 - New `g.motor.motor_version()` reads the motor firmware version (from gripper firmware 1.2.14 on, this works regardless of the motor's communication mode).
 
 The full list of changes is in the SDK's [CHANGELOG](https://github.com/XenseRobotics-AI/TacCap-Gripper/blob/v0.4.1/CHANGELOG.md).

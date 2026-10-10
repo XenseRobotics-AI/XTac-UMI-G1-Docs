@@ -36,8 +36,8 @@ flowchart LR
 |---|---|---|
 | 操作系统 / 架构 | Ubuntu 22.04 / 24.04，amd64 | 22.04.5 / 24.04.4，x86_64 |
 | Linux 内核 | 不构成约束 | 6.8 / 6.14 / 7.0 |
-| 采集主机 | 最低 12 代 i7、8 GB、512 GB SSD；推荐 Core Ultra 9 275HX、32 GB、1 TB NVMe，见[主机配置](install.md#host-spec) | — |
-| NVIDIA GPU / 驱动 | 最低 RTX 3060 / 8 GB（推荐 RTX 5060 Laptop / 8 GB 起），驱动 ≥ 570.144；无 NVIDIA 显卡只能[降级录制](recording.md#no-gpu) | 570.144 / 580.126.09 / 595.71.05 |
+| 采集主机 | 最低 12 代 i7、8GB、512GB SSD；推荐 Core Ultra 9 275HX、32GB、1TB NVMe，见[主机配置](install.md#host-spec) | — |
+| NVIDIA GPU / 驱动 | 最低 RTX 3060 / 8GB（推荐 RTX 5060 Laptop / 8GB 起），驱动 ≥ 570.144；无 NVIDIA 显卡只能[降级录制](recording.md#no-gpu) | 570.144 / 580.126.09 / 595.71.05 |
 | Python | ≥ 3.12（`conda_environment.yaml` 固定 `python=3.12`） | 3.12.13 |
 | PyTorch | `torch>=2.2.1,<2.11.0`;`torchvision>=0.21.0,<0.26.0` | 2.10.0 / 0.25.0 |
 | `torchcodec` | `>=0.2.1,<0.11.0`，`setup_env.sh` 按当前 torch 自动对齐 | 0.10.0 |

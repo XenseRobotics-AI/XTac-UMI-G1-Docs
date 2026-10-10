@@ -39,11 +39,11 @@ No computer and no site network needed; it is ready to collect once it boots.
 
 | No. | Connector | Location | What it is for |
 |---|---|---|---|
-| ① | `DC IN` | Rear panel | 12 V power input: the supplied 12 V 3 A adapter, or the power bank through its power cable |
+| ① | `DC IN` | Rear panel | 12V power input: the supplied 12V 3A adapter, or the power bank through its power cable |
 | ② | Ethernet | Rear panel | Wired networking, DHCP from the factory, static IP settable on the System page |
 | ③ | TF | Rear panel | TF card slot, not used for day-to-day collection |
 | ④ | `HDMI` | Rear panel | Video out, not used for day-to-day collection |
-| ⑤ | Headphone | Rear panel | 3.5 mm headphone jack |
+| ⑤ | Headphone | Rear panel | 3.5mm headphone jack |
 | ⑥ | `UMI-L` | Left side | Left leader gripper, Type-C locking cable, which also powers the gripper |
 | ⑦ | `UMI-R` | Right side | Right leader gripper, Type-C locking cable, which also powers the gripper |
 | ⑧ | `PICO` | Front panel | Pico4 Ultra headset, Type-C. In XR leave "USB Network" unticked and "PC IP" empty, then tap Connect |
@@ -67,7 +67,7 @@ The waist belt holds the backpack and the power bank and keeps the cables out of
 
 | Field | What it is for |
 |---|---|
-| SN | The device serial number; quote it when asking for service |
+| SN | The device serial number |
 | WiFi / password | The backpack hotspot's name and password |
 | IP / device name | Open in a browser once connected to reach the console |
 
@@ -109,7 +109,7 @@ The capture mode is **chosen when you create a project** and cannot be changed a
 - **Raw recordings**: one MCAP file per demonstration, on the backpack's NVMe data disk.
 - **Export per task**: LeRobotDataset v3 or MCAP, or both; data integrity is checked before export.
 - **Getting it out**: download an archive, or upload to ModelScope, S3, FTP / FTPS or NFS.
-- **Size**: a task of about 3 minutes exports to roughly 1.5 GB.
+- **Size**: a task of about 3 minutes exports to roughly 1.5GB.
 
 Details are in [Projects, export and upload](../backpack/projects-export.md).
 
@@ -123,5 +123,5 @@ Current component versions are in [Backpack Kit · Versions](../backpack/version
 ## Known limitations
 
 - Playback and live preview cannot run at the same time.
-- The backpack only joins 5 GHz WiFi; with 2.4 GHz only on site, use a cable or the backpack hotspot.
+- The backpack only joins 5GHz WiFi; with 2.4GHz only on site, use a cable or the backpack hotspot.
 - Some phones and Windows cannot open the `.local` device name; use the IP address instead.

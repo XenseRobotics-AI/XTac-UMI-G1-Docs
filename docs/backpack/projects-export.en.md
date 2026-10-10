@@ -61,7 +61,7 @@ You can export both formats; they do not affect each other.
 
 ### LeRobot dataset {#lerobot}
 
-A standard LeRobotDataset v3.0 at 30 fps, with `meta/`, `data/` and `videos/`. The directory layout and how to load it are in the [LeRobotDataset v3.0 documentation](https://huggingface.co/docs/lerobot/lerobot-dataset-v3).
+A standard LeRobotDataset v3.0 at 30fps, with `meta/`, `data/` and `videos/`. The directory layout and how to load it are in the [LeRobotDataset v3.0 documentation](https://huggingface.co/docs/lerobot/lerobot-dataset-v3).
 
 | Capture mode | `robot_type` | Video streams | State / action dims |
 |---|---|---|---|
@@ -73,14 +73,14 @@ It also includes `meta/taccap_extrinsics.json` (tracker extrinsics) and `meta/xu
 
 ### MCAP {#mcap}
 
-The export is a training MCAP: one `.train.mcap` file per recording, built from the same data as the LeRobot dataset in a different container. It holds the state and action aligned to 30 Hz, every video stream and the sensor data, and opens directly in Foxglove and similar tools.
+The export is a training MCAP: one `.train.mcap` file per recording, built from the same data as the LeRobot dataset in a different container. It holds the state and action aligned to 30Hz, every video stream and the sensor data, and opens directly in Foxglove and similar tools.
 
 It is not the same file as the raw recording on the backpack:
 
 | | Raw recording | Exported `.train.mcap` |
 |---|---|---|
 | Where | On the backpack's data drive, for replay and export | Downloaded or uploaded to a remote backend |
-| Rate | Each stream at its device's native rate: visuotactile 120 fps, wrist fisheye 30 fps, gripper opening and IMU 100 Hz | All aligned to 30 Hz |
+| Rate | Each stream at its device's native rate: visuotactile 120fps, wrist fisheye 30fps, gripper opening and IMU 100Hz | All aligned to 30Hz |
 | Images | Raw frames, not rectified | Rectified according to the project settings |
 
 ## Archive {#archive}

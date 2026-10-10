@@ -18,7 +18,7 @@
 
     ![Protective sticker on the front sensor bar](../assets/pico4/unbox-film.webp){ width="440" }
 
-2. Update the system: a new unit ships on an older build and must be updated before you pair trackers or install the app. Join a WiFi network with internet access, go to Settings → System update and tap "Download and install" to reach Pico OS 5.15.5.U or later (about 1.9 GB).
+2. Update the system: a new unit ships on an older build and must be updated before you pair trackers or install the app. Join a WiFi network with internet access, go to Settings → System update and tap "Download and install" to reach Pico OS 5.15.5.U or later (about 1.9GB).
 
     ![System update to 5.15.5.U](../assets/pico4/system-update.webp){ width="560" }
 
@@ -26,11 +26,15 @@
 
 1. Enable developer mode: Settings → About → tap "Software version" several times (with the controller, pull the index trigger repeatedly while pointing at it) → "Developer options" appears on the left → turn on USB debugging.
 
-    ![Tap the software version repeatedly](../assets/pico4/devmode-tap-version.webp){ width="480" }
+    <div class="tc-pair" markdown>
 
-    ![Developer options → turn on USB debugging](../assets/pico4/devmode-usb-debug.webp){ width="480" }
+    ![Tap the software version repeatedly](../assets/pico4/devmode-tap-version.webp)
 
-2. Disable sleep and screen-off: Developer options → "Enterprise Settings" → System Settings → Power policy (Enterprise edition only; the consumer edition cannot set "Never"). It ships as screen-off 30 s, system sleep 5 min, battery icon hidden. Change them in order:
+    ![Developer options → turn on USB debugging](../assets/pico4/devmode-usb-debug.webp)
+
+    </div>
+
+2. Disable sleep and screen-off: Developer options → "Enterprise Settings" → System Settings → Power policy (Enterprise edition only; the consumer edition cannot set "Never"). It ships as screen-off 30s, system sleep 5min, battery icon hidden. Change them in order:
     1. System sleep = Never;
     2. Screen off = Never;
     3. Battery and charging status icon at the bottom = "Always show", to check the charge mid-session.
@@ -120,7 +124,7 @@ Before pairing:
     ![Motion Tracker app: 2 paired](../assets/pico4/tracker-bind.webp){ width="440" }
 
 !!! warning "Power-on is a short press; only pairing needs the hold"
-    Everyday power-on is a short press until the blue light comes on; that is not pairing mode and the app will not find it. First-time binding needs the ~6 s hold until it alternates blue and red.
+    Everyday power-on is a short press until the blue light comes on; that is not pairing mode and the app will not find it. First-time binding needs the ~6s hold until it alternates blue and red.
 
 The binding is stored on the headset and survives power cycles and app restarts. Re-bind after swapping trackers, moving to another headset, a factory reset or pairing the wrong one: unpair from the ⓘ on the right of the list entry, then bind the new one.
 
@@ -154,7 +158,13 @@ The binding is stored on the headset and survives power cycles and app restarts.
 
 Once bound, open "Motion Tracking" on the headset → settings → "Tracking mode", select "Standalone tracking" and tap "Confirm"; the row should read "Standalone tracking". The factory default "Full-body motion capture" follows a human body; "Standalone tracking" follows an object the tracker is fixed to.
 
-![Pick standalone tracking and confirm](../assets/pico4/tracker-mode2-pick.webp){ width="480" }
+<div class="tc-pair" markdown>
+
+![Motion tracking settings: Tracking mode](../assets/pico4/tracker-mode1-setting.webp)
+
+![Pick standalone tracking and confirm](../assets/pico4/tracker-mode2-pick.webp)
+
+</div>
 
 ## The app's screen {#pico-toolkit-ui}
 

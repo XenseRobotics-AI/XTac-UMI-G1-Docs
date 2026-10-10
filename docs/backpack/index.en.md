@@ -59,17 +59,17 @@ The whole capture happens in the backpack: every device plugs into it, it stores
     "grip": {
       "title": "MCU · encoder",
       "sub": "Opening · IMU · buttons",
-      "desc": "The leader gripper's MCU reports the jaw angle and IMU (100 Hz each) and button gestures to the backpack over USB."
+      "desc": "The leader gripper's MCU reports the jaw angle and IMU (100Hz each) and button gestures to the backpack over USB."
     },
     "tact": {
       "title": "Visuotactile ×2",
       "sub": "One per finger",
-      "desc": "One visuotactile sensor per finger, captured at 640 × 480, 120 fps."
+      "desc": "One visuotactile sensor per finger, captured at 640 × 480, 120fps."
     },
     "wrist": {
       "title": "Wrist camera",
       "sub": "Wrist-view fisheye",
-      "desc": "The wrist-view fisheye image, 640 × 480 at 30 fps."
+      "desc": "The wrist-view fisheye image, 640 × 480 at 30fps."
     },
     "tracker": {
       "title": "Motion tracker ×2",
@@ -88,12 +88,12 @@ The whole capture happens in the backpack: every device plugs into it, it stores
     },
     "tcam": {
       "title": "Tactile capture",
-      "sub": "Raw frames · 120 fps",
+      "sub": "Raw frames · 120fps",
       "desc": "Captured and saved as raw frames; rectified at export with the sensor's own calibration, in the orientation chosen for the project (700 × 400 by default)."
     },
     "fcam": {
       "title": "Fisheye capture",
-      "sub": "Raw frames · 30 fps",
+      "sub": "Raw frames · 30fps",
       "desc": "Saved as raw fisheye frames; the undistortion parameters are frozen at record start and applied at export."
     },
     "xvr": {
@@ -244,7 +244,7 @@ In an exported LeRobot dataset, each row is the **observation** from frame t-1 p
   "obsNote": " The observation holds the value from frame t-1.",
   "actNote": " The action holds the value from frame t, one step ahead of the observation.",
   "keys": {
-    "tactile": "The visuotactile image from one finger of this gripper, rectified at export: 700 × 400 landscape by default (400 × 700 can be chosen per project), 30 fps.",
+    "tactile": "The visuotactile image from one finger of this gripper, rectified at export: 700 × 400 landscape by default (400 × 700 can be chosen per project), 30fps.",
     "wrist": "This gripper's wrist fisheye view, 640 × 480; exported rectified when the project turns on wrist fisheye rectification.",
     "headimg": "One eye of the headset camera, 640 × 480 or 1024 × 768 per eye (set per project). Stereo mode records both eyes; right-eye mode records the right eye only.",
     "tcp": "The pose of this gripper's tip (midpoint between the fingers) in the world frame: position x, y, z (metres) plus the 6-D rotation r1–r6, derived from the tracker pose. Recorded in all three modes.",
@@ -324,7 +324,7 @@ Connect in the [fixed order](unbox-connect.md#order): grippers → headset → p
 **Power (choose one)**
 
 - **Option A**: [adapter power](unbox-connect.md#adapter), with the power adapter plugged into the backpack's `DC` port.
-- **Option B**: [power-bank power](unbox-connect.md#powerbank), with the power bank connected to the backpack's `DC` port through the 0.3 m 12 V PD power cable.
+- **Option B**: [power-bank power](unbox-connect.md#powerbank), with the power bank connected to the backpack's `DC` port through the 0.3m 12V PD power cable.
 
 The grippers' connection and power requirements are in [Gripper connection and serial numbers](../common/gripper.md#power).
 
@@ -409,7 +409,7 @@ Archiving keeps only the record and clears the raw files; clean-up protects form
 
 ## Common questions {#faq}
 
-- [Cannot reach the console](troubleshooting.md#connect): try the tablet over USB first; on the hotspot, confirm the device supports 5 GHz, that you are on this backpack's hotspot and that the address includes `http://`; power-cycle the backpack if it becomes unresponsive.
+- [Cannot reach the console](troubleshooting.md#connect): try the tablet over USB first; on the hotspot, confirm the device supports 5GHz, that you are on this backpack's hotspot and that the address includes `http://`; power-cycle the backpack if it becomes unresponsive.
 - [Tracker lost](troubleshooting.md#tracker): when tracking accuracy degrades or the headset disconnects, both XTac-UMI XR and the Live monitor page show an icon. Check whether the tracker's blue light is on and whether the [pairing](../common/pico4.md#pico-tracker-bind) is correct.
 - [Recording refused](troubleshooting.md#record): once the recording disk reaches 80% used, starting a recording is refused with a message that the recording disk is N% used and has reached the 80% limit. Upload or download the data you have already collected, then [archive](projects-export.md#archive) to free space, or delete the entries you do not need.
 - [Replay and live preview cannot run at the same time](playback.md): when replay is refused, close the live monitor open in another tab or on another device.

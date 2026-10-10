@@ -979,3 +979,15 @@ html[lang="en"] .md-typeset .tc-slogan {
   background: url("../brand/logo-footer.png") no-repeat right center / contain;
   opacity: .85;
 }
+
+/* ---- 避免段落、列表、表格末行只剩一两个字 ---- */
+.md-typeset p,
+.md-typeset li,
+.md-typeset td,
+.md-typeset th {
+  text-wrap: pretty;
+}
+/* 表格里的短代码（参数名、字段名）不在 _ 或 - 处断开 */
+.md-typeset td code {
+  white-space: nowrap;
+}

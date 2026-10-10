@@ -69,7 +69,7 @@ This script is read-only and does not move the motor. The lines to look at in no
 | `[fw]` | 1.2.14 | Below 1.2.11 prints an upgrade prompt; below 1.2.5 exits with an error. In either case [upgrade the firmware](firmware.md#mcu-ota) first |
 | `[归一化]` (normalized) | Between 0 and 1 | Reports `not calibrated`: clear the area around the jaws and power-cycle |
 | `[故障]` (fault) | All 0 | See [Troubleshooting](troubleshooting.md#fault) |
-| `[开流读]` (stream read) | About 100 Hz, shows `OK` | Power-cycle and try again; if still not normal, see [Troubleshooting](troubleshooting.md#self-check) |
+| `[开流读]` (stream read) | About 100Hz, shows `OK` | Power-cycle and try again; if still not normal, see [Troubleshooting](troubleshooting.md#self-check) |
 
 ## 4. Motion check {#motion-check}
 
@@ -88,8 +88,8 @@ The top line of the console shows the gripper and its motion safety envelope; th
 |---|---|
 | Top `envelope:` | Ends with `ENFORCED`: the firmware's torque and overheating protection is active; if it says `未生效` (not in effect), the firmware is too old, so [upgrade it](firmware.md#mcu-ota) first |
 | `Act[0-1]` | Near 1 after `o`, near 0 after `c`; `N/A` means not calibrated, so power-cycle |
-| `Torq(+闭合)` | Near 0 when opening and closing empty; with a pen held between the fingers press `c`: it settles at 1.1 N·m and does not keep rising |
-| `Temp(C)` | Near room temperature; it rises slowly while gripping, and above 90 °C the firmware lowers the torque automatically |
+| `Torq(+闭合)` | Near 0 when opening and closing empty; with a pen held between the fingers press `c`: it settles at 1.1N·m and does not keep rising |
+| `Temp(C)` | Near room temperature; it rises slowly while gripping, and above 90°C the firmware lowers the torque automatically |
 | `State` | `EN` while moving; for `FAULT` and the like see [Troubleshooting](troubleshooting.md#fault) |
 
 Common keys: `o` / `c` fully open / close, `j` / `k` open / close one step, `d` release the motor, `q` quit. All keys are in [Motion control](control.md#first-motion).

@@ -23,15 +23,15 @@ Cable the tablet to the backpack's front `HOST1` or `HOST2` port and unlock the 
 
 ### Putting the backpack on WiFi from the tablet {#tablet-wifi}
 
-Pick the site's 5 GHz WiFi on this page and enter its password: the backpack and the tablet **join that network together**. Once the backpack is confirmed on the same network, the tablet switches to the backpack's WiFi address automatically and you can unplug the USB cable.
+Pick the site's 5GHz WiFi on this page and enter its password: the backpack and the tablet **join that network together**. Once the backpack is confirmed on the same network, the tablet switches to the backpack's WiFi address automatically and you can unplug the USB cable.
 
 ## The backpack's network interfaces {#interfaces}
 
 | Interface | What it is | Use |
 |---|---|---|
 | Wired | Ethernet to a router, IP by DHCP, static possible | Labs and fixed workstations; the steadiest bandwidth |
-| Wireless | The backpack joins the site's 5 GHz WiFi | Several people on the same network |
-| Hotspot | The backpack's own 5 GHz hotspot, fixed address `192.168.44.1` | The way in with no tablet and no site network |
+| Wireless | The backpack joins the site's 5GHz WiFi | Several people on the same network |
+| Hotspot | The backpack's own 5GHz hotspot, fixed address `192.168.44.1` | The way in with no tablet and no site network |
 
 ## The backpack hotspot {#softap}
 
@@ -41,7 +41,7 @@ Without a tablet, reach the backpack over its hotspot:
 2. Open `http://192.168.44.1` in a browser.
 
 !!! note "On a new unit the hotspot is off at first boot"
-    Use "Turn on hotspot" in System → [Network](system.md#wifi); the device remembers it. You can reach the console with the [tablet over USB](#tablet) first to turn it on. The hotspot is 5 GHz only; 2.4 GHz-only devices will not see it.
+    Use "Turn on hotspot" in System → [Network](system.md#wifi); the device remembers it. You can reach the console with the [tablet over USB](#tablet) first to turn it on. The hotspot is 5GHz only; 2.4GHz-only devices will not see it.
 
 - **iOS / Safari**: type the full `http://` prefix in the address bar.
 - **Several backpacks**: check the hotspot name against the body label before joining.
@@ -69,7 +69,7 @@ Set a static IP only when there is no DHCP (backpack cabled straight to a comput
 
 - **Easiest**: [WiFi setup from the tablet over USB](#tablet-wifi), which joins both together.
 - **Backpack alone**: System → [Joining the site WiFi](system.md#wifi-site).
-- **Band**: the backpack only supports 5 GHz WiFi.
+- **Band**: the backpack only supports 5GHz WiFi.
 
 ## Checking the current network state {#status}
 
@@ -88,7 +88,7 @@ The IP drop-down at the left of the top bar gathers every way into this unit. Af
 | Everyday collection with the bundled tablet | [Plug the tablet into USB](#tablet); the backpack opens the console for you |
 | Lab or fixed workstation with your own router | [Wired](#wired) to a router LAN port, then use the address in the [network drop-down](#status) |
 | Customer site, uncontrolled network | [Tablet over USB](#tablet), or turn on the [hotspot](#softap) |
-| Site has 5 GHz WiFi and several people need access | Use the tablet to [put the backpack on the site WiFi](#site-wifi); PCs on that network reach it directly |
+| Site has 5GHz WiFi and several people need access | Use the tablet to [put the backpack on the site WiFi](#site-wifi); PCs on that network reach it directly |
 | Backpack wired directly to a laptop, no router | A [static IP](#wired) on the same subnet at each end |
 | Nothing works at all | Plug the tablet into USB to check the network; if that fails, see [Troubleshooting](troubleshooting.md) |
 

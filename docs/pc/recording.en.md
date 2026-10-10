@@ -6,7 +6,7 @@ First confirm the devices work with `lerobot-teleoperate`, then record a `LeRobo
 
 - `taccap_gripper` recording is self-driven; there are no `--teleop.*` arguments.
 - Shifted-frame pairing: the observation from step *t-1* is paired with the pose from step *t* as its action (EEF TCP pose + normalised `gripper.pos`, plus the headset pose with the [head camera](#56) on), so each episode is one frame shorter.
-- `tcp.*` is the gripper tip, not the tracker: the tracker sits about 195 mm from the two-finger midpoint, and a built-in rigid mount transform (measured off the CAD assembly, one per side) is applied before writing. It is body-fixed and independent of orientation and `gripper.pos`.
+- `tcp.*` is the gripper tip, not the tracker: the tracker sits about 195mm from the two-finger midpoint, and a built-in rigid mount transform (measured off the CAD assembly, one per side) is applied before writing. It is body-fixed and independent of orientation and `gripper.pos`.
 - The world frame is gravity-aligned, X forward / Y left / Z up, frozen the instant XTac-UMI XR starts; see [frame alignment](../common/pico4.md#pico-frame).
 - `--display_data=true` opens Rerun's `/world` 3D view (`--show_trajectory=false` turns the trail off); what it shows and the mount check are in [Coordinate frames · The `/world` 3D view](../common/coordinates.md#world-view).
 
@@ -64,7 +64,7 @@ lerobot-record \
 
 - Rerun displays on its own thread, so leaving `--display_data` on costs the collection loop nothing; a lagging viewer drops only on-screen frames and prints `Rerun display: N/M frames dropped …` at the end.
 - Spell out `fps=30`, `episode_time_s=120`, `reset_time_s=60` and `push_to_hub=false` rather than relying on defaults.
-- If a camera or the gripper encoder is lost mid-recording (loose cable, hub brown-out), collection stops, saves what it has and prints `Device lost mid-recording`; no values are invented. The last good value is carried before loss is declared (about 2 s for a camera, 1 s for the encoder), so the episode's last second or two may be stale; discard it. Check cabling and USB ports (see [Troubleshooting](troubleshooting.md)), then `--resume`.
+- If a camera or the gripper encoder is lost mid-recording (loose cable, hub brown-out), collection stops, saves what it has and prints `Device lost mid-recording`; no values are invented. The last good value is carried before loss is declared (about 2s for a camera, 1s for the encoder), so the episode's last second or two may be stale; discard it. Check cabling and USB ports (see [Troubleshooting](troubleshooting.md)), then `--resume`.
 
 ### Parameters {#params}
 
@@ -77,7 +77,7 @@ For the complete definitions see lerobot's official [recording guide](https://hu
 | `repo_id` | required | `<org>/<name>`; convention `<org>/<task>_<variant>_<YYYYMMDD>`, e.g. `Xense/insert_plug_left_20260703`, see [Dataset](dataset.md) |
 | `single_task` | required | Task description, written to `meta/tasks`, e.g. `'Pick up the object'` |
 | `root` | `$HF_LEROBOT_HOME/repo_id` | Local storage directory, see [Dataset](dataset.md) |
-| `fps` | `30` | Sample-rate cap; the sensors themselves run at 120 Hz ([specs](../product/specs.md#specs)) |
+| `fps` | `30` | Sample-rate cap; the sensors themselves run at 120Hz ([specs](../product/specs.md#specs)) |
 | `episode_time_s` | `120` | Length per episode (seconds) |
 | `reset_time_s` | `60` | Reset time between episodes (seconds) |
 | `num_episodes` | `50` | Number of episodes to record |
@@ -259,7 +259,7 @@ lerobot-record \
     --dataset.vcodec=auto
 ```
 
-- One encoder thread per camera, fed through a bounded queue (`--dataset.encoder_queue_maxsize`, about one second of frames); when full it waits up to 0.1 s, then drops the current frame and warns `Encoder queue full … dropped N frame(s)` without blocking collection.
+- One encoder thread per camera, fed through a bounded queue (`--dataset.encoder_queue_maxsize`, about one second of frames); when full it waits up to 0.1s, then drops the current frame and warns `Encoder queue full … dropped N frame(s)` without blocking collection.
 - Saving is transactional: a failed save or a Ctrl+C rolls back to the last complete episode, never leaving half an episode, and `--resume` carries on.
 - `--dataset.vcodec=auto` prefers hardware encoding; an NVIDIA GPU is recommended so GPU H.264 encoding takes load off the CPU.
 - Encoder warm-up is automatic: encoders are ready before each episode, so the first frame does not pay for it.
@@ -267,7 +267,7 @@ lerobot-record \
 ### Recording on a host with no NVIDIA GPU {#no-gpu}
 
 !!! warning "This is a workaround for an underspecified machine, not a recommendation"
-    The [data-collection host minimum](install.md#host-spec) is an NVIDIA RTX 3060 / 8 GB VRAM or better. A CPU-only server, a VM or a laptop with no NVIDIA card can record as below, but saves are slow and frames drop sooner; use a compliant host for real collection.
+    The [data-collection host minimum](install.md#host-spec) is an NVIDIA RTX 3060 / 8GB VRAM or better. A CPU-only server, a VM or a laptop with no NVIDIA card can record as below, but saves are slow and frames drop sooner; use a compliant host for real collection.
 
 Upgrade such machines to v0.1.0 first.
 
@@ -281,12 +281,12 @@ lerobot-record \
 
 `--dataset.vcodec=auto` probes by actually opening an encode session and falls back to `libsvtav1` (AV1 on the CPU) with no NVIDIA driver; offline re-encoding chooses the same way (`h264_nvenc` with NVIDIA). Passing `--dataset.vcodec=libsvtav1` explicitly also works.
 
-With `libsvtav1` the CPU both encodes and captures; a bimanual rig has six to eight images per frame in a 33.3 ms budget at 30 fps, so `[slow_frame] ... overrun=` appears. With streaming off, frames are batch-encoded at `save_episode()`: a slow save only means waiting, a dropped frame cannot be recovered. Ignore the reminder to turn streaming encoding back on. To keep streaming encoding on a many-core server, tune these:
+With `libsvtav1` the CPU both encodes and captures; a bimanual rig has six to eight images per frame in a 33.3ms budget at 30fps, so `[slow_frame] ... overrun=` appears. With streaming off, frames are batch-encoded at `save_episode()`: a slow save only means waiting, a dropped frame cannot be recovered. Ignore the reminder to turn streaming encoding back on. To keep streaming encoding on a many-core server, tune these:
 
 | Parameter | Default | When to touch it |
 |---|---|---|
 | `--dataset.encoder_threads` | auto | On a big machine `libsvtav1` takes cores capture needs; `2` per encoder is a safe cap |
-| `--dataset.encoder_queue_maxsize` | `30` | About 1 s of buffer at 30 fps; a back-pressure valve that stops memory growing when encoding falls behind |
+| `--dataset.encoder_queue_maxsize` | `30` | About 1s of buffer at 30fps; a back-pressure valve that stops memory growing when encoding falls behind |
 
 ## Episodes and resets {#55}
 
@@ -317,7 +317,7 @@ With `libsvtav1` the CPU both encodes and captures; a bimanual rig has six to ei
 | Coordinate consistency | Same origin as other episodes | XTac-UMI XR restarted mid-collection, pose jumps between episodes | Never restart XTac-UMI XR |
 | Gripper reading | `gripper.pos` ≈ 0 closed, sensible when open | Not calibrated, `gripper.pos` ≠ 0 when closed | Confirm it is closed, then re-zero if needed, see [gripper calibration](calibration.md#41) |
 | Dropped frames | No warnings | Dropped-frame warnings in the log | Raise `encoder_threads`, use `vcodec=auto`, see [streaming encoding](#54) |
-| First frame | The motion starts normally | The key action lands in the dropped first frame | Hold still 0.5–1 s after start; give `--dataset.episode_time_s` enough room |
+| First frame | The motion starts normally | The key action lands in the dropped first frame | Hold still 0.5–1s after start; give `--dataset.episode_time_s` enough room |
 
 On errors, start with [Troubleshooting](troubleshooting.md).
 
@@ -390,7 +390,7 @@ lerobot-record \
 
 - `--robot.head_camera_eyes=left` (or `right`) records one eye: half the decoding and encoder load, one head video key.
 - Changing the resolution or eye selection changes the data; episodes either side cannot be mixed.
-- The eyes are two independent messages and a mismatch leaves no trace, so each frame compares both eyes' newest frames: identical sequence numbers mean the same exposure, otherwise timestamps must agree within `--robot.head_camera_pair_max_skew_ms` (default 20 ms, against about 33 ms per frame at 30 fps); exceeding it only logs a rate-limited warning with the measured skew.
+- The eyes are two independent messages and a mismatch leaves no trace, so each frame compares both eyes' newest frames: identical sequence numbers mean the same exposure, otherwise timestamps must agree within `--robot.head_camera_pair_max_skew_ms` (default 20ms, against about 33ms per frame at 30fps); exceeding it only logs a rate-limited warning with the measured skew.
 
 `head_camera.*` is mapped into the `tcp.*` world frame with the tracker's Pico→world transform. Enabling it adds 9 dimensions to `observation.state`: 10 → 19 single, 20 → 29 bimanual, and `--robot.enable_imu=true` adds on top. If it will not connect, see [Troubleshooting](troubleshooting.md#head-camera).
 
@@ -417,6 +417,6 @@ In these cases undistortion does not fail but falls back to the SDK's built-in r
 
 The fallback warns `Wrist undistortion is using the SDK's REFERENCE intrinsics ... Rectification will be approximate` and records `"calibration": "reference"` in the manifest. In code, prefer `Calibration::resolve_fisheye()` (returns `(calibration, is_reference, reason)`) over `read_fisheye()`.
 
-The reference values are fine to look at, but the principal point drifts per unit (37.7 px off on one unit); to measure in pixels on the rectified image (visual servoing, hand-eye calibration, size estimation), store this unit's own calibration first: `python third_party/taccap-gripper/python/examples/fisheye_cal.py set-fisheye right` (with two connected, pick `left` / `right` or a full SN; omit with one).
+The reference values are fine to look at, but the principal point drifts per unit (37.7px off on one unit); to measure in pixels on the rectified image (visual servoing, hand-eye calibration, size estimation), store this unit's own calibration first: `python third_party/taccap-gripper/python/examples/fisheye_cal.py set-fisheye right` (with two connected, pick `left` / `right` or a full SN; omit with one).
 
-An off-centre or slightly tilted rectified frame does not mean bad calibration: undistortion centres on the principal point, not the frame centre, the sensor need not sit on the optical centre, and fisheye barrel distortion hides this (one unit: `cx = 359.1`, fingertip midpoint x = 360.1, about 1 px apart). Do not change `cx`; forcing 320 makes it worse and adds tilt.
+An off-centre or slightly tilted rectified frame does not mean bad calibration: undistortion centres on the principal point, not the frame centre, the sensor need not sit on the optical centre, and fisheye barrel distortion hides this (one unit: `cx = 359.1`, fingertip midpoint x = 360.1, about 1px apart). Do not change `cx`; forcing 320 makes it worse and adds tilt.

@@ -29,7 +29,7 @@ The default is impedance control. To grasp with a set force, add `--mode force-p
 | | Impedance control (default) | Force-position control |
 |---|---|---|
 | Suited to | Following an opening: teleoperation, following the leader gripper, running a policy | Grasping an object with a set force |
-| When blocked by an object | Presses with 1.1 N·m | Presses with the set grip force and reports that it is holding |
+| When blocked by an object | Presses with 1.1N·m | Presses with the set grip force and reports that it is holding |
 
 The opening is expressed from 0 to 1: **0 = closed, 1 = open**.
 
@@ -85,8 +85,8 @@ Key points:
     When the robot is holding an object, put the object somewhere safe before stopping control.
 
 !!! warning "Holding for a long time reduces the grip force"
-    As the motor heats up, the firmware automatically reduces output. In testing, holding at 1.1 N·m for 10 minutes brought the motor to about 70 °C; at 0.6 N·m it settled at about 49 °C.
-    If you need to hold continuously for tens of minutes, lower the grip force to around 0.6 N·m.
+    As the motor heats up, the firmware automatically reduces output. In testing, holding at 1.1N·m for 10 minutes brought the motor to about 70°C; at 0.6N·m it settled at about 49°C.
+    If you need to hold continuously for tens of minutes, lower the grip force to around 0.6N·m.
 
 ## Faults and recovery {#fault}
 

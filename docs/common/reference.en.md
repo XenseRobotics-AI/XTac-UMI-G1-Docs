@@ -13,7 +13,7 @@ A lookup appendix shared by both editions: terms, feedback channels and related 
 | **Project / task / episode** | How the Backpack Kit organises data: tasks under a project, each task carrying a LeRobot language instruction, and each start-to-stop recording being one episode |
 | **MCAP** | The raw recording format of each Backpack Kit episode, storing cameras, encoders, IMU, poses and events by topic; the LeRobot export is converted from it |
 | **OTA bundle** | The Backpack Kit's Collector upgrade package (`.tar.zst`), uploaded, verified, applied and rebooted into on the console's System → System update page, with rollback to the previous version. Gripper firmware OTA on the Developer Kit is in [Firmware upgrade](../pc/versions.md#ota) |
-| **SoftAP** | The backpack's own always-on WiFi hotspot, SSID `xense-<last 6 of the serial>`, 5 GHz only, gateway fixed at `192.168.44.1`; the fallback entry point that does not depend on any site network |
+| **SoftAP** | The backpack's own always-on WiFi hotspot, SSID `xense-<last 6 of the serial>`, 5GHz only, gateway fixed at `192.168.44.1`; the fallback entry point that does not depend on any site network |
 | **TacCap** | The name inside the package `xense.taccap`, the robot type `taccap_gripper` and the backpack's body label (Tactile Capture); the product name is XTac-UMI G1 |
 | **UMI** | Universal Manipulation Interface, the handheld leader-gripper data-collection paradigm |
 | **Leader / Follower** | Leader gripper / follower gripper; the serial number's patch letter `m` = leader, `s` = follower |
@@ -56,7 +56,6 @@ The repositories below belong to the Developer Kit and are all open source excep
 | Tracker PC service `XenseVR-PC-Service` | <https://github.com/XenseRobotics-AI/XenseVR-PC-Service> | Not a submodule; installed as a `.deb` into `/opt/apps/roboticsservice`, see [One-shot install](../pc/install.md#24) |
 | Visuotactile sensor SDK `xensesdk` | <https://github.com/XenseRobotics/xensesdk> | [Docs site](https://docs.xenserobotics.com/) |
 | Local viewer `xense-lerobot-viewer` | <https://github.com/XenseRobotics-AI/xense-lerobot-viewer> | Open source; browse a local LeRobot dataset in the browser |
-| This manual's source | <https://github.com/XenseRobotics-AI/XTac-UMI-G1-Docs> | Issues: see the section above |
 
 ## Documentation version and matching software {#doc-version}
 

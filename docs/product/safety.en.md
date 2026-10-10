@@ -15,7 +15,7 @@ Safety requirements shared by both configurations: read them through before firs
 
 | Item | Requirement |
 |---|---|
-| Operating temperature | Grippers 0–50 °C, backpack 0–40 °C; see [Specifications](specs.md) |
+| Operating temperature | Grippers 0–50°C, backpack 0–40°C; see [Specifications](specs.md) |
 | Environment | Dry indoor use; keep away from rain, splashes and condensation |
 | Interference | Keep away from strong magnetic fields and heat sources; headset tracking needs good lighting without direct strong light |
 
@@ -25,19 +25,19 @@ During collection the leader gripper's motor is never energised; the operator mo
 
 | Risk | Requirement | Consequence |
 |---|---|---|
-| Leader gripper power | Use only the supplied Type-C cable to the collection terminal (a USB port on the PC, or `UMI-L` / `UMI-R` on the backpack); bus-powered at DC 5 V / 500 mA | Out-of-spec power may damage the device |
-| Follower gripper power | A 24 V adapter supplies power, Type-C carries communication only; never use a mismatched or faulty supply | A miswired supply may damage the hardware |
+| Leader gripper power | Use only the supplied Type-C cable to the collection terminal (a USB port on the PC, or `UMI-L` / `UMI-R` on the backpack); bus-powered at DC 5V / 500mA | Out-of-spec power may damage the device |
+| Follower gripper power | A 24V adapter supplies power, Type-C carries communication only; never use a mismatched or faulty supply | A miswired supply may damage the hardware |
 | Plugging and unplugging cables | Stop collection before plugging or unplugging the locking Type-C; loosen the screws before pulling it out | Strain on the connector, interrupted data |
 | Static electricity | Anti-static precautions when powering up or down and when removing or refitting a sensor | Affects the sensors and communication |
 | Sensor surface | Do not touch, scratch or squeeze the visuotactile surface with anything sharp; do not peel at the bonded face; do not wipe with alcohol or solvents unless confirmed safe | Elastomer or optical damage means replacing the sensor |
 
-!!! danger "Never connect a 9 V / 12 V fast-charge adapter directly to the leader gripper"
+!!! danger "Never connect a 9V / 12V fast-charge adapter directly to the leader gripper"
     Fast-charge voltages will destroy the leader gripper's control board.
 
 | | Leader gripper | Follower gripper |
 |---|---|---|
-| Connecting | Connect the gripper end first and tighten the locking screws, then the collection terminal | Connect the 24 V supply first, then Type-C, tightening the locking screws |
-| Disconnecting | Stop collection first, unplug the collection-terminal end, then loosen the screws and unplug the gripper end | Unplug the collection-terminal end first, then cut the 24 V, and finally loosen the screws and unplug the gripper end |
+| Connecting | Connect the gripper end first and tighten the locking screws, then the collection terminal | Connect the 24V supply first, then Type-C, tightening the locking screws |
+| Disconnecting | Stop collection first, unplug the collection-terminal end, then loosen the screws and unplug the gripper end | Unplug the collection-terminal end first, then cut the 24V, and finally loosen the screws and unplug the gripper end |
 
 Before fitting the follower gripper, stop the robot in a safe pose; route the cable clear of the joints and the gripper's range of motion with enough slack that nothing tugs, kinks or tangles; run the first motion slowly to confirm there is no interference.
 
@@ -50,7 +50,7 @@ See also [Gripper connection and serial numbers](../common/gripper.md), the Back
 
 ## The backpack and its power {#backpack-power}
 
-- The `DC` port takes only the supplied 12 V 3 A (36 W) adapter, or the supplied power bank over the supplied 0.3 m 12 V PD power cable; do not substitute another source or cable. Wiring: [Adapter power](../backpack/unbox-connect.md#adapter) and [Power-bank power](../backpack/unbox-connect.md#powerbank).
+- The `DC` port takes only the supplied 12V 3A (36W) adapter, or the supplied power bank over the supplied 0.3m 12V PD power cable; do not substitute another source or cable. Wiring: [Adapter power](../backpack/unbox-connect.md#adapter) and [Power-bank power](../backpack/unbox-connect.md#powerbank).
 - Grippers plug into `UMI-L` / `UMI-R` and are powered by the backpack; connect and disconnect as in the [Gripper](#gripper) table, stopping recording first (the console's "Stop recording", or a long press on the left gripper).
 - An underpowered headset shuts down and collection stops with it; do not add devices to the power bank mid-run.
 - On individual units the `DC`, `PICO` or `USB` port may make poor contact, a hardware fault; do not force the connector — note the serial number on the body and send it in for repair.
@@ -68,7 +68,7 @@ See also [Gripper connection and serial numbers](../common/gripper.md), the Back
     System sleep first, screen timeout second; the other way round, the screen timeout's "Never" is clamped back to a finite value. Steps: [Pico4 headset and tracker setup](../common/pico4.md#pico-system).
 
 - Trackers go by the serial number's last digit: odd on the left gripper, even on the right; swapped, the recorded poses will not match the grippers. Binding and verification: [Tracker binding](../common/pico4.md#pico-tracker-bind).
-- A short press of the tracker's power button until the blue light comes on turns it on; a ~6 s hold enters pairing mode, alternating blue and red.
+- A short press of the tracker's power button until the blue light comes on turns it on; a ~6s hold enters pairing mode, alternating blue and red.
 - Headset power: see [The backpack and its power](#backpack-power).
 - Headset wearing, charging and visual health follow Pico's *PICO 4 Ultra User Guide*.
 

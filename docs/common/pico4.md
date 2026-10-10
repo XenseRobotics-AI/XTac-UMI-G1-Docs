@@ -6,8 +6,8 @@
 | | 背包版 | PC 版 |
 |---|---|---|
 | 头显接到哪 | 数采背包的 `PICO` 口，**只能有线** | 数采主机的 Type-C 口（USB 有线共享网络），或与主机接同一 WiFi |
-| 位姿服务在哪跑 | XenseVR 运行时内置在 XTac-UMI Collector，背包开机即在 | 数采主机上的 [XenseVR PC Service](../pc/host-setup.md#35)，每次采集前手动启动 |
-| APP 里怎么连 | **不勾选**「USB网络」，「PC IP」留空 → 点「连接」（默认连 `192.168.100.1`） | 有线：**勾选**「USB网络」→ 点「连接」（默认连 `192.168.58.1`）；WiFi：不勾，在「PC IP」填数采主机 IP |
+| 位姿服务 | XenseVR 运行时内置于 XTac-UMI Collector，开机自启 | 数采主机上的 [XenseVR PC Service](../pc/host-setup.md#35)，每次采集前手动启动 |
+| APP 连接 | **不勾选**「USB网络」，「PC IP」留空 → 点「连接」（默认连 `192.168.100.1`） | 有线：**勾选**「USB网络」→ 点「连接」（默认连 `192.168.58.1`）；WiFi：不勾，在「PC IP」填数采主机 IP |
 
 - **出厂已配置**：开发者模式、电源策略、APP、追踪器绑定、追踪模式断电不丢（恢复出厂或换头显才重做），从[网络连接](#pico-network)开始。
 - **每次采集**：接线、短按追踪器电源键到蓝灯亮、在 APP 里[连上](#pico-toolkit-ui)、[启动对齐](#pico-frame)。
@@ -18,7 +18,7 @@
 
     ![前面板传感器条上的保护贴](../assets/pico4/unbox-film.webp){ width="440" }
 
-2. 更新系统：出厂系统偏低，新机必须先升级，再配追踪器、装 APP。连有网的 WiFi，进 设置 → 系统升级，点「下载并安装」升到 Pico OS 5.15.5.U 或更高，安装包约 1.9 GB。
+2. 更新系统：出厂系统偏低，新机必须先升级，再配追踪器、装 APP。连有网的 WiFi，进 设置 → 系统升级，点「下载并安装」升到 Pico OS 5.15.5.U 或更高，安装包约 1.9GB。
 
     ![系统升级到 5.15.5.U](../assets/pico4/system-update.webp){ width="560" }
 
@@ -26,9 +26,13 @@
 
 1. 开启开发者模式：设置 → 关于本机 → 连续点击「软件版本号」数次（用手柄时对着它连扣食指扳机）→ 左侧出现「开发者选项」→ 打开 USB 调试。
 
-    ![连续点击软件版本号](../assets/pico4/devmode-tap-version.webp){ width="480" }
+    <div class="tc-pair" markdown>
 
-    ![开发者选项 → 打开 USB 调试](../assets/pico4/devmode-usb-debug.webp){ width="480" }
+    ![连续点击软件版本号](../assets/pico4/devmode-tap-version.webp)
+
+    ![开发者选项 → 打开 USB 调试](../assets/pico4/devmode-usb-debug.webp)
+
+    </div>
 
 2. 关闭休眠与灭屏：开发者选项 →「企业设置」→ 系统设置 → 电源策略（仅企业版有，消费版调不到「永不」）。出厂灭屏 30 秒、休眠 5 分钟、不显示电量图标，按顺序改：
     1. 系统休眠 = 永不；
@@ -67,7 +71,7 @@ adb install XTac-UMI-XR-0.3.2.apk    # 换成拿到的那份
 
 ## 网络连接 {#pico-network}
 
-追踪数据送往采集单元的 XenseVR 位姿服务。背包版**只能走有线**；PC 版默认有线，WiFi 只作临时调试。Type-C 直连链路独占，延迟稳定。
+追踪数据送往采集单元的 XenseVR 位姿服务。背包版**只能有线**；PC 版默认有线，WiFi 只作临时调试。Type-C 直连独占，延迟稳定。
 
 !!! warning "PC 版的无线只用于临时调试，不要用来正式采集"
     WiFi 要和现场设备抢信道，位姿延迟到达，轻则卡顿、抖动，重则丢帧；录制中看不出，事后难与别的原因区分，整批只能重采。
@@ -114,7 +118,7 @@ adb install XTac-UMI-XR-0.3.2.apk    # 换成拿到的那份
     ![右上角进入配对界面](../assets/pico4/tracker-pair-entry.webp){ width="440" }
 
 2. 长按追踪器电源键约 6 秒，至指示灯蓝红交替闪烁（蓝牙配对状态）。
-3. 点「开始配对」。成功时头显响一声，追踪器出现在「我的追踪器」列表，显示电量与编号（如 `Tracker 150399`）并标「已连接」。
+3. 点「开始配对」。成功则头显鸣响，追踪器出现在「我的追踪器」中，显示电量、编号（如 `Tracker 150399`）并标「已连接」。
 4. 两只夹爪各绑一枚，列表顶部应显示「已配对 2 个」。
 
     ![体感追踪器 App：已配对 2 个](../assets/pico4/tracker-bind.webp){ width="440" }
@@ -154,7 +158,13 @@ adb install XTac-UMI-XR-0.3.2.apk    # 换成拿到的那份
 
 绑定后在头显打开「体感追踪」→ 设置 →「追踪模式」，选「独立追踪」并点「确定」，该行应显示「独立追踪」。出厂默认「全身动捕」追人体，「独立追踪」追固定了追踪器的物体。
 
-![选独立追踪并确定](../assets/pico4/tracker-mode2-pick.webp){ width="480" }
+<div class="tc-pair" markdown>
+
+![体感追踪设置：追踪模式](../assets/pico4/tracker-mode1-setting.webp)
+
+![选独立追踪并确定](../assets/pico4/tracker-mode2-pick.webp)
+
+</div>
 
 ## 打开 App 后的界面 {#pico-toolkit-ui}
 

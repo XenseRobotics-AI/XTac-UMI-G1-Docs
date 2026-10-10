@@ -36,8 +36,8 @@ Commands and fields should be taken from your local checkout and from the device
 |---|---|---|
 | OS / architecture | Ubuntu 22.04 / 24.04, amd64 | 22.04.5 / 24.04.4, x86_64 |
 | Linux kernel | Not a constraint | 6.8 / 6.14 / 7.0 |
-| Collection host | Minimum 12th-gen i7, 8 GB, 512 GB SSD; recommended Core Ultra 9 275HX, 32 GB, 1 TB NVMe, see [Host specification](install.md#host-spec) | — |
-| NVIDIA GPU / driver | Minimum RTX 3060 / 8 GB (RTX 5060 Laptop / 8 GB or better recommended), driver ≥ 570.144; with no NVIDIA card, only [degraded recording](recording.md#no-gpu) | 570.144 / 580.126.09 / 595.71.05 |
+| Collection host | Minimum 12th-gen i7, 8GB, 512GB SSD; recommended Core Ultra 9 275HX, 32GB, 1TB NVMe, see [Host specification](install.md#host-spec) | — |
+| NVIDIA GPU / driver | Minimum RTX 3060 / 8GB (RTX 5060 Laptop / 8GB or better recommended), driver ≥ 570.144; with no NVIDIA card, only [degraded recording](recording.md#no-gpu) | 570.144 / 580.126.09 / 595.71.05 |
 | Python | ≥ 3.12 (`conda_environment.yaml` pins `python=3.12`) | 3.12.13 |
 | PyTorch | `torch>=2.2.1,<2.11.0`; `torchvision>=0.21.0,<0.26.0` | 2.10.0 / 0.25.0 |
 | `torchcodec` | `>=0.2.1,<0.11.0`, `setup_env.sh` aligns it to the current torch | 0.10.0 |
@@ -216,7 +216,7 @@ Other forms:
 
     - The reboot after OTA is a soft reset: the USB-serial bridge never loses power and the device stays degraded, right version, stream running, error counters at 0, but quietly dropping status frames. Over 60-second runs, OTA alone loses 35 to 39 frames, after unplug and replug 0.
     - Order: flash → unplug and replug → step-3 check → calibration; data before the power cycle is untrustworthy.
-    - Leader: unplug and replug USB. Follower: unplug the 24 V power cable, wait about 2 seconds and plug it back in, leaving USB connected (controller and motor both run on 24 V).
+    - Leader: unplug and replug USB. Follower: unplug the 24V power cable, wait about 2 seconds and plug it back in, leaving USB connected (controller and motor both run on 24V).
     - Unplug and replug only after the gripper has finished rebooting.
 
 Once at V2.1, go back to [Gripper calibration](calibration.md#41) and set the zero and travel limit.

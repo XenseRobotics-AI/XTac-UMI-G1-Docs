@@ -126,28 +126,28 @@ Hover over (or tap) any block to see where its data comes from and where it goes
     },
     "sdk": {
       "title": "xense.taccap",
-      "sub": "Serial · 100 Hz push",
-      "desc": "The gripper SDK receives the readings the MCU pushes (100 Hz by default) and normalises the jaw angle with the calibration into gripper.pos (closed = 0, open = 1)."
+      "sub": "Serial · 100Hz push",
+      "desc": "The gripper SDK receives the readings the MCU pushes (100Hz by default) and normalises the jaw angle with the calibration into gripper.pos (closed = 0, open = 1)."
     },
     "xsdk": {
       "title": "xensesdk",
-      "sub": "Rectified · 30 fps",
-      "desc": "The visuotactile sensor SDK reads each sensor independently and outputs the rectified visuotactile image (about 400 × 700) at 30 fps by default."
+      "sub": "Rectified · 30fps",
+      "desc": "The visuotactile sensor SDK reads each sensor independently and outputs the rectified visuotactile image (about 400 × 700) at 30fps by default."
     },
     "cam": {
       "title": "Camera capture",
-      "sub": "640 × 480 · 30 fps",
-      "desc": "Finds each gripper's wrist camera by serial number and reads each one independently, 640 × 480 at 30 fps by default. Fisheye undistortion is optional and off by default."
+      "sub": "640 × 480 · 30fps",
+      "desc": "Finds each gripper's wrist camera by serial number and reads each one independently, 640 × 480 at 30fps by default. Fisheye undistortion is optional and off by default."
     },
     "pcs": {
       "title": "XenseVR PC Service",
-      "sub": "Pose · ~90 Hz",
-      "desc": "A service on the PC that receives the tracker poses from the headset (refreshed at about 90 Hz); the collection program transforms them to the gripper tip (TCP) to get tcp.*. In tier ③ it also relays the headset stereo images (left and right paired by frame number) and the head pose."
+      "sub": "Pose · ~90Hz",
+      "desc": "A service on the PC that receives the tracker poses from the headset (refreshed at about 90Hz); the collection program transforms them to the gripper tip (TCP) to get tcp.*. In tier ③ it also relays the headset stereo images (left and right paired by frame number) and the head pose."
     },
     "obs": {
       "title": "Frame assembly",
       "sub": "Latest of each stream",
-      "desc": "Each frame (30 fps by default) takes the latest value of every stream as one observation: opening, gripper pose, visuotactile images and wrist view; tier ③ adds the headset stereo images and head pose."
+      "desc": "Each frame (30fps by default) takes the latest value of every stream as one observation: opening, gripper pose, visuotactile images and wrist view; tier ③ adds the headset stereo images and head pose."
     },
     "pair": {
       "title": "Shifted pairing",
@@ -176,7 +176,7 @@ Hover over (or tap) any block to see where its data comes from and where it goes
 }
 </script></div>
 
-- The **leader grippers** connect over USB: the opening is read by `xense.taccap` (100 Hz push), the visuotactile images by `xensesdk`, and each wrist camera is matched to its gripper by serial number.
+- The **leader grippers** connect over USB: the opening is read by `xense.taccap` (100Hz push), the visuotactile images by `xensesdk`, and each wrist camera is matched to its gripper by serial number.
 - The **motion trackers** sit on top of the grippers and are tracked by the **headset**, which hands the poses to the **XenseVR PC Service** over a cable (recommended) or WiFi; the collection program then transforms them to the gripper tip (TCP). Tier ③ also brings the headset stereo images and head pose.
 - **`lerobot-record`** takes the latest value of every stream each frame, pairs the previous frame's observation with this frame's pose and opening, and writes a **LeRobotDataset v3.0**; camera streams are encoded while recording, with hardware encoding on an NVIDIA GPU.
 
@@ -208,7 +208,7 @@ Taking two grippers as the example, each dataset row is the **observation** from
   "obsNote": " The observation holds the value from frame t-1.",
   "actNote": " The action holds the value from frame t, one step ahead of the observation.",
   "keys": {
-    "tactile": "The visuotactile image from one finger of this gripper, rectified to about 400 × 700, 30 fps.",
+    "tactile": "The visuotactile image from one finger of this gripper, rectified to about 400 × 700, 30fps.",
     "wrist": "This gripper's wrist camera view, 640 × 480 by default.",
     "headimg": "One eye of the headset camera, 640 × 480 by default; recorded in tier ③ only.",
     "tcp": "The pose of this gripper's tip (midpoint between the fingers) in the world frame: position x, y, z (metres) plus the 6-D rotation r1–r6, derived from the tracker pose.",

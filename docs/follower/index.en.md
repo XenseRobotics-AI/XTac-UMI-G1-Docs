@@ -36,7 +36,7 @@ Taking `TCGU01A24A0001s` as an example:
 
 | Continuous stall rating | Speed range |
 |---|---|
-| 1.1 N·m | 50 rad/s |
+| 1.1N·m | 50rad/s |
 
 The **continuous stall rating** is the torque the jaws can hold indefinitely while pressing against an object; it is also the default grip force and its upper limit.
 

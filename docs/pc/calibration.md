@@ -10,8 +10,8 @@
 
 | 情况 | 表现 | 谁发现 |
 |---|---|---|
-| 从没标过 | 采集程序**拒绝连接**主夹爪，报错里直接带标定命令 | 程序，漏不掉 |
-| 标过，但值和实际行程对不上（拆装过编码器、动过机械限位、擦除过固件） | 能连上，但张到机械极限时 `gripper.pos` 顶不到 `1.0` | 只能你在预览里看出来，见[确认标定生效](#413) |
+| 从没标过 | 采集程序**拒绝连接**主夹爪，报错附带标定命令 | 程序，漏不掉 |
+| 标过但失准（拆装编码器、改动机械限位、擦除固件） | 能连上，但张到极限时 `gripper.pos` 达不到 `1.0` | 需自行在预览中确认，见[确认标定生效](#413) |
 
 第一种的报错：
 
@@ -51,8 +51,8 @@ python third_party/taccap-gripper/python/examples/calibrate.py right
 
 版本通过后，脚本打印当前读数（raw 与钳位），按提示走两步：
 
-1. 完全闭合 → 回车。发送 `SetEncoderZero` 锁存零点，再复读校验残差（容差 ±0.01 rad）。
-2. 完全张开到机械极限 → 回车。角度直接写入 MCU flash 的 `EncoderMaxCal`，无二次确认；随后显示 10 Hz 实时读数供核对。
+1. 完全闭合 → 回车。发送 `SetEncoderZero` 锁存零点，再复读校验残差（容差 ±0.01rad）。
+2. 完全张开到机械极限 → 回车。角度直接写入 MCU flash 的 `EncoderMaxCal`，无二次确认；随后显示 10Hz 实时读数供核对。
 
 !!! warning "先夹到位，再按 Enter"
     固件在收到命令瞬间锁存原始计数，之后再动就白标了。
@@ -83,7 +83,7 @@ Step 2/2: open the gripper to its MECHANICAL LIMIT.
 
 标过的抬头多一行 `existing span: … — will be overwritten`。
 
-- **闭合恒为 0**：没有 `gripper_closed_rad` 配置；负漂移钳到 0（原始值在 `raw_position_rad`），超过 -0.1 rad 限频告警。
+- **闭合恒为 0**：没有 `gripper_closed_rad` 配置；负漂移钳到 0（原始值在 `raw_position_rad`），超过 -0.1rad 限频告警。
 - **字段**：`position_rad` 仍是原始弧度，归一化只新增 `position` 字段。
 
 ### 确认标定生效 {#413}
@@ -109,7 +109,7 @@ Step 2/2: open the gripper to its MECHANICAL LIMIT.
 ### 适用范围
 
 - **仅主夹爪**：主夹爪没有自动标定，不能省。从夹爪不接受该命令，自 V1.9 起上电自动标定（闭合到堵转取零点、张开到堵转取行程上限），`gripper.pos` 按 `gripper_open_rad` 归一化。
-- **固件**：命令集 ≥ V2.1（即 leader ≥ 1.2.0 / follower ≥ 1.1.0，[区别](versions.md#v21)）；更低版本采集时主夹爪报错退出并提示 OTA，见[固件 OTA 升级](versions.md#ota)。
+- **固件**：命令集 ≥ V2.1（leader ≥ 1.2.0 / follower ≥ 1.1.0，[区别](versions.md#v21)）；版本过低则主夹爪报错退出并提示 OTA，见[固件 OTA 升级](versions.md#ota)。
 
 ## Pico4 Ultra 追踪器自检
 
@@ -123,9 +123,9 @@ python -m lerobot.robots.taccap_gripper.check_tracker <tracker SN>
 python -m lerobot.robots.taccap_gripper.check_tracker --side right
 ```
 
-以 10 Hz 打印 `raw`（追踪器自身位姿）与 `ee`（经安装变换后的 TCP）。挥动夹爪，`raw xyz` 应平滑变化、SN 与预期一致（[读取追踪器 SN](../common/pico4.md#pico-tracker-sn)）。
+以 10Hz 打印 `raw`（追踪器自身位姿）与 `ee`（经安装变换后的 TCP）。挥动夹爪，`raw xyz` 应平滑变化、SN 与预期一致（[读取追踪器 SN](../common/pico4.md#pico-tracker-sn)）。
 
-- **安装变换**：追踪器到 TCP 的刚性偏移已内置（取自 CAD 装配实测），左右各自实测，接近镜像但不完全相同（旋转差 0.03°、平移差 1.27 mm）。
+- **安装变换**：追踪器到 TCP 的刚性偏移已内置（取自 CAD 装配实测），左右各自实测，接近镜像但不完全相同（旋转差 0.03°、平移差 1.27mm）。
 - **`--side`**：选套用哪一侧；不带时变换是单位阵，`ee` 跟随 `raw`。
 - **覆盖**：重新加工过安装座时设 `--robot.tracker_to_ee_pos` / `--robot.tracker_to_ee_quat`，两者独立，可只钉平移。
 - **支点检查**：两指中点抵住固定点，握柄多姿态摆动；`ee xyz` 应基本不动而 `raw xyz` 大幅摆动，漂移量即变换误差。左右都测；左侧镜像方向错时 `ee` 摆幅约为应有的两倍。

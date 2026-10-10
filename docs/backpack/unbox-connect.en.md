@@ -26,7 +26,7 @@ The box contents and quantities are in [Product line and configuration compariso
 | UMI-L / UMI-R | Both sides | Left / right gripper, Type-C locking cable |
 | PICO | Front panel | The headset, wired over Type-C |
 | HOST1 / HOST2 | Front panel | USB host ports, for a tablet or other devices |
-| DC IN | Rear panel | 12 V power input, from the adapter or the power bank |
+| DC IN | Rear panel | 12V power input, from the adapter or the power bank |
 | Ethernet | Rear panel | RJ45, to a router's LAN port |
 | TF, HDMI, headphone | Rear panel | Not used in day-to-day collection |
 
@@ -52,11 +52,11 @@ The grippers and headset are wired the same way either way; only the backpack's 
 | | Adapter power | Power-bank power |
 |---|---|---|
 | Where | A fixed station with a socket | Mobile collection away from a socket |
-| Source | 12 V 3 A power adapter on mains | The power bank in the box (20000 mAh, 45 W) |
-| Cable into the backpack's DC port | The adapter's own lead | 0.3 m 12 V PD power cable, using the power bank's 12 V output |
+| Source | 12V 3A power adapter on mains | The power bank in the box (20000mAh, 45W) |
+| Cable into the backpack's DC port | The adapter's own lead | 0.3m 12V PD power cable, using the power bank's 12V output |
 
 !!! note "The headset battery drains slowly"
-    The headset needs only one cable and the backpack powers it through that cable, but not enough to cover its draw, so the battery still drains at a net of about 1–2 W; when it runs out the headset shuts down and collection stops. Charge the headset fully before you start and, on long sessions, keep an eye on its battery icon (set it to always show under [power policy](../common/pico4.md#pico-system)).
+    The headset needs only one cable and the backpack powers it through that cable, but not enough to cover its draw, so the battery still drains at a net of about 1–2W; when it runs out the headset shuts down and collection stops. Charge the headset fully before you start and, on long sessions, keep an eye on its battery icon (set it to always show under [power policy](../common/pico4.md#pico-system)).
 
 ### Adapter power {#adapter}
 
@@ -64,23 +64,23 @@ The grippers and headset are wired the same way either way; only the backpack's 
 
 1. Connect the left and right leader grippers to the backpack's `UMI-L` and `UMI-R` ports.
 2. Connect the headset to the backpack's `PICO` port with the headset cable (Pico → Pack).
-3. Plug the 12 V 3 A adapter into the backpack's `DC` port, then into the mains.
+3. Plug the 12V 3A adapter into the backpack's `DC` port, then into the mains.
 
 ### Power-bank power {#powerbank}
 
-![Power-bank wiring: left and right grippers to the sides of the backpack, the headset to the PICO port, the power bank to the DC port over the 0.3 m 12 V PD power cable](../assets/product/backpack-wiring-powerbank.webp)
+![Power-bank wiring: left and right grippers to the sides of the backpack, the headset to the PICO port, the power bank to the DC port over the 0.3m 12V PD power cable](../assets/product/backpack-wiring-powerbank.webp)
 
-1. Take out the power bank in the box (20000 mAh, 45 W).
+1. Take out the power bank in the box (20000mAh, 45W).
 2. Connect the grippers and headset as for [adapter power](#adapter).
-3. Connect the power bank to the backpack's `DC` port with the 0.3 m 12 V PD power cable.
+3. Connect the power bank to the backpack's `DC` port with the 0.3m 12V PD power cable.
 
 | Cable | How it connects |
 |---|---|
-| Gripper cable (1.5 m C-to-C) ×2 | Left / right gripper ↔ the backpack's UMI-L / UMI-R |
-| Headset cable (Pico → Pack, 1.5 m C-to-C) | The headset's Type-C port ↔ the backpack's PICO port |
-| 12 V PD power cable (0.3 m) | Power bank ↔ the backpack's DC port |
+| Gripper cable (1.5m C-to-C) ×2 | Left / right gripper ↔ the backpack's UMI-L / UMI-R |
+| Headset cable (Pico → Pack, 1.5m C-to-C) | The headset's Type-C port ↔ the backpack's PICO port |
+| 12V PD power cable (0.3m) | Power bank ↔ the backpack's DC port |
 
-The backpack draws up to 36 W and runs about 3.5–4 hours on the power bank; see [Specifications](../product/specs.md#backpack).
+The backpack draws about 20W and runs about 3.5–4 hours on the power bank; see [Specifications](../product/specs.md#backpack).
 
 !!! warning "Do not add devices to a power bank during collection"
     Some power banks shut down an existing output port when a second device is plugged in, and the backpack loses power on the spot. Connect every cable before you start recording.
