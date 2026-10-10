@@ -19,6 +19,8 @@ On this page, **power-cycle** means unplugging the 24V power cable, waiting abou
     **Fix**: specify the follower gripper's full serial number instead, e.g. `follower_status.py TCGU01A24A0001s`.
 
 ??? failure "Error `从爪固件版本过低,必须升级后才能使用本 SDK` (follower firmware too old, must be upgraded to use this SDK)"
+    **Cause**: the follower firmware is below 1.2.5, the minimum version the SDK requires, so the SDK refuses to open the device.
+
     **Fix**: upgrade as described in [Upgrade the gripper firmware](firmware.md#mcu-ota), then power-cycle.
 
 ??? failure "On opening, the warning `从爪固件 ... 低于 1.2.11` (follower firmware below 1.2.11) appears, or during control the gripper suddenly stops responding to commands and the grip force drops"
