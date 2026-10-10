@@ -257,6 +257,7 @@ extra_css:
 
 extra_javascript:
   - assets/javascripts/arch.js
+  - assets/javascripts/tabs-toc.js
 
 extra:
   social:

@@ -178,7 +178,7 @@
     - **主机**：Ubuntu 22.04 / 24.04 **amd64**，**NVIDIA 驱动 ≥ 570.144**（`nvidia-smi --query-gpu=driver_version --format=csv,noheader` 可查）。
     - **驱动**：脚本不装、不升级显卡驱动（涉及型号、Secure Boot 和重启），不满足就停下。
 
-    ### 一键安装 {#ghcr}
+    ### 一键安装镜像 {#ghcr}
 
     镜像在 GitHub Container Registry 公开发布，拉取免登录：
 

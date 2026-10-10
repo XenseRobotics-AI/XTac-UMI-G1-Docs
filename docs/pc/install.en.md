@@ -178,7 +178,7 @@ Both paths produce the same collection environment; pick one.
     - **Host**: Ubuntu 22.04 / 24.04 **amd64**, **NVIDIA driver ≥ 570.144** (check with `nvidia-smi --query-gpu=driver_version --format=csv,noheader`).
     - **Driver**: the script neither installs nor upgrades the GPU driver (that depends on the card, Secure Boot and a reboot) and stops if it falls short.
 
-    ### One-shot install {#ghcr}
+    ### One-shot image install {#ghcr}
 
     The image is public on the GitHub Container Registry; pulling needs no login:
 
