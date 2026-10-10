@@ -2,7 +2,7 @@
 
 流程见[数据采集](recording.md)，报错见[故障排查](troubleshooting.md)。
 
-## `RobotConfig` 常用配置项 {#robotconfig}
+<span id="robotconfig"></span>
 
 | 配置项 | 默认 | 作用 |
 |---|---|---|

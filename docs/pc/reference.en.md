@@ -2,7 +2,7 @@
 
 Workflow: [Data collection](recording.md); errors: [Troubleshooting](troubleshooting.md).
 
-## Common `RobotConfig` options {#robotconfig}
+<span id="robotconfig"></span>
 
 | Option | Default | What it does |
 |---|---|---|
