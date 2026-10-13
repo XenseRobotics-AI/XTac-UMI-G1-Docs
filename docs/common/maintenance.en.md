@@ -8,7 +8,7 @@ The imaging surface is an elastomer / gel material. It is the most delicate part
 
 - Avoid: scratching with sharp objects, digging in with fingernails, impacts from hard objects, deformation from prolonged heavy pressure, oil and solvents.
 - Cleaning: blow off loose dust with an air blower first, then wipe gently with a clean lint-free soft cloth if needed. Without official instructions for your hardware batch, do not use alcohol, solvents or any other liquid cleaner.
-- Storage: out of direct light, at room temperature. When not in use, leave the tactile surface unsupported or fit the protective part shipped with the unit; do not let a hard object press on the surface.
+- Storage: out of direct light, at room temperature. When not in use, keep the tactile surface free of contact or fit the protective part shipped with the unit; do not let a hard object press on the surface.
 - Contact: normal contact during collection is fine; avoid unusually hard squeezing.
 
 !!! danger "Actions that damage the sensor surface"
@@ -20,7 +20,7 @@ Mind static (ESD) throughout; stop collection before disconnecting the leader gr
 
 ![Sensor removal and refitting steps](../assets/hardware/sensor-removal.webp){ width="480" }
 
-After refitting, rerun the tactile and camera preview self-check (on the Backpack Kit, [Checks before recording](../backpack/monitor-record.md#checks); on the Developer Kit, [Preview before recording](../pc/recording.md#preview)). If the image is clearly worse, check whether the sensor is seated firmly, dirty or fitted backwards; encoder zero calibration does not fix image problems.
+After refitting, rerun the tactile and camera preview self-check (on the Backpack Kit, [Confirm in the console before recording](../backpack/monitor-record.md#checks); on the Developer Kit, [Preview before recording](../pc/recording.md#preview)). If the image is clearly worse, check whether the sensor is seated firmly, dirty or fitted backwards; encoder zero calibration does not fix image problems.
 
 ## Camera lenses
 
@@ -28,7 +28,7 @@ Clean the wrist camera and the tactile optical surfaces with an air blower plus 
 
 ## Encoder and calibration
 
-- Calibration is one-off: the zero and the travel limit are written to MCU flash, survive power cycles and do not need redoing on another collection unit. Day to day, only confirm that `gripper.pos`≈0 closed and ≈1.0 fully open; to recalibrate, use the console's System → [Gripper](../backpack/system.md#gripper) page on the Backpack Kit, or see [Gripper calibration](../pc/calibration.md#41) on the Developer Kit.
+- Calibration is one-off: the zero and the travel limit are written to MCU flash, survive power cycles and do not need redoing on another collection unit. Day to day, only confirm that `gripper.pos`≈0 closed and ≈1.0 fully open; to recalibrate, use the console's System → [Gripper](../backpack/system.md#gripper) page on the Backpack Kit, or see [Gripper calibration (zero + travel)](../pc/calibration.md#41) on the Developer Kit.
 - Recalibrate when: the mechanics loosen after a drop / hard impact, the encoder or mechanical limit stop has been removed or refitted, or the firmware was erased. Recalibrate the zero and the travel together; when the limit stop changes, the travel limit changes too.
 - Do a quick self-check before every collection batch: on the Backpack Kit, the [views and poses on the console's "Live monitor" page](../backpack/monitor-record.md#checks); on the Developer Kit, the [Quickstart self-check](../pc/quickstart.md#self-check).
 

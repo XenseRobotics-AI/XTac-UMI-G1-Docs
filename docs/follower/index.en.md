@@ -34,7 +34,7 @@ Taking `TCGU01A24A0001s` as an example:
 
 ## Motor {#motor-model}
 
-| Continuous stall rating | Speed range |
+| Continuous stall rating | Max. speed |
 |---|---|
 | 1.1N·m | 50rad/s |
 
@@ -43,7 +43,7 @@ The **continuous stall rating** is the torque the fingers can hold indefinitely 
 ## Safety notes {#safety-model}
 
 - The gripper firmware has a built-in **motion safety envelope** (torque limit, thermal derating) that no program can bypass; it is active automatically from firmware 1.2.12.
-  **Older firmware lacks this protection**: pressing against something hard can drag down the 24V supply and make the gripper let go, so [upgrade](firmware.md#mcu-ota) to the firmware bundled with the SDK before use.
+  **Older firmware lacks this protection**: pressing against something hard can pull the 24V supply voltage down and make the gripper let go, so [upgrade](firmware.md#mcu-ota) to the firmware bundled with the SDK before use.
 - When control stops, the program exits or USB disconnects, the gripper releases and whatever it is holding will drop.
 - After power-on the gripper opens and closes once by itself to calibrate (about 10 seconds). During that time do not put anything in it and do not send commands.
 

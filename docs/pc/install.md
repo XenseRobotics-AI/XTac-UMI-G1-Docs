@@ -194,7 +194,7 @@
     ./docker/install_customer.sh
     ```
 
-    脚本依次：检查系统与显卡驱动 → 按需装 Docker 与 NVIDIA Container Toolkit（并注册 NVIDIA runtime）→ 装[串口权限](host-setup.md#32)的 ModemManager 屏蔽规则 → 拉取镜像 → CUDA 与图形冒烟测试。克隆仓库只为拿 `compose.yaml` 和脚本。
+    脚本依次：检查系统与显卡驱动 → 按需装 Docker 与 NVIDIA Container Toolkit（并注册 NVIDIA runtime）→ 装[关闭 ModemManager 抢占（udev）](host-setup.md#32)中的屏蔽规则 → 拉取镜像 → CUDA 与图形冒烟测试。克隆仓库只为拿 `compose.yaml` 和脚本。
 
     走代理：
 

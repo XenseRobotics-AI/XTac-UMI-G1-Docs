@@ -8,14 +8,14 @@ Workflow: [Data collection](recording.md); errors: [Troubleshooting](troubleshoo
 |---|---|---|
 | `robot.id` | **required** | Station number (`0` / `1` ...); leaving it out fails when the command line is parsed; the prefix from `robot.type` gives `taccap_0` / `bi_taccap_0` / `xtac_umi_g1_0` → [`--robot.id` and the hardware manifest](recording.md#robot-id) |
 | `robot.side` | auto | `left`/`right`; required in **single-gripper mode** when both are plugged in |
-| `robot.role` | `leader` | `follower` binds the follower gripper; firmware must be ≥ 1.2.5 (below 1.2.11 it warns to upgrade), see [Firmware OTA](versions.md#ota) |
+| `robot.role` | `leader` | `follower` binds the follower gripper; firmware must be ≥ 1.2.5 (below 1.2.11 it warns to upgrade), see [Firmware OTA upgrade](versions.md#ota) |
 | `robot.enable_tracker` | `true` | Off records tactile + gripper only |
 | `robot.tracker_serial` | unset | Pin a tracker by SN, bypassing the side rule, unvalidated; a typo reports not found at connect |
 | `robot.enable_wrist_camera` | `true` | Turns the wrist camera off |
 | `robot.wrist_camera_width/_height/_fps` | — | Wrist camera resolution / frame rate |
 | `robot.wrist_camera_fourcc` | `MJPG` | MJPG saves USB bandwidth for the tactile sensors; `YUYV` is uncompressed, only when bandwidth allows |
-| `robot.wrist_undistort` / `_balance` | `false` / `0.0` | Wrist camera fisheye undistortion and its field-of-view setting, see [Fisheye undistortion](recording.md#57) |
-| `robot.enable_head_camera` | `false` | **Single gripper only**: records the headset first-person view + pose; bimanual uses `--robot.type=xtac_umi_g1`, see [Head camera](recording.md#56) |
+| `robot.wrist_undistort` / `_balance` | `false` / `0.0` | Wrist camera fisheye undistortion and its field-of-view setting, see [Optional: wrist camera fisheye undistortion](recording.md#57) |
+| `robot.enable_head_camera` | `false` | **Single gripper only**: records the headset first-person view + pose; bimanual uses `--robot.type=xtac_umi_g1`, see [Optional: head camera](recording.md#56) |
 | `robot.head_camera_eyes` | `both` | `both` one key per eye; `left` / `right` records only that eye |
 | `robot.head_camera_width/_height` | `640` / `480` | Size **per eye**; only `640x480` / `1024x768` / `1280x960`, must match the headset output |
 | `robot.head_camera_fps` | `30` | Headset frame rate |
@@ -30,7 +30,7 @@ Workflow: [Data collection](recording.md); errors: [Troubleshooting](troubleshoo
 | `robot.expected_tactiles_per_side` | `2` | Tactile sensors per side; a mismatch is an error |
 | `robot.enable_gripper` / `robot.enable_imu` | `true` / `false` | The gripper's own readings / the IMU channel |
 | `robot.gripper_stream_hz` | `100` | Leader encoder (incl. IMU) push rate; `0` polls every frame; on stream failure it falls back and warns |
-| `robot.gripper_open_rad` | `1.7` | **Follower only**; a leader uses the measured travel limit in its firmware and is refused if uncalibrated, see [Gripper calibration](calibration.md#41) |
+| `robot.gripper_open_rad` | `1.7` | **Follower only**; a leader uses the measured travel limit in its firmware and is refused if uncalibrated, see [Gripper calibration (zero + travel)](calibration.md#41) |
 | `robot.tracker_to_ee_pos` | `None` | Override the tracker→EE translation; `None` = **built-in measured value** |
 | `robot.tracker_to_ee_quat` | `None` | Override the tracker→EE rotation |
 | `robot.tracker_wait_timeout` | `10.0` | Seconds to wait for tracker data |

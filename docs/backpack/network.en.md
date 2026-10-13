@@ -68,7 +68,7 @@ Set a static IP only when there is no DHCP (backpack cabled straight to a comput
 ### Site Wi-Fi {#site-wifi}
 
 - **Easiest**: [Wi-Fi setup from the tablet over USB](#tablet-wifi), which joins both together.
-- **Backpack alone**: System → [Joining the site Wi-Fi](system.md#wifi-site).
+- **Backpack alone**: System → [Joining site Wi-Fi](system.md#wifi-site).
 - **Band**: the backpack only supports 5GHz Wi-Fi.
 
 ## Checking the current network state {#status}
@@ -95,7 +95,7 @@ The IP drop-down at the left of the top bar gathers every way into this unit. Af
 ## Advanced diagnosis: handled by technical support {#ssh}
 
 !!! warning "The device back end is for technical support diagnosis only"
-    **Do not log in to the back end or change the system configuration yourself**: the console cannot show those changes, and a bad configuration can cost you even the hotspot way in.
+    **Do not log in to the back end or change the system configuration yourself**: the console cannot show those changes, and a bad configuration can lock you out of the device, even through the hotspot.
 
 Day-to-day work happens in the console: addresses in the [network drop-down](#status); the wired address, gateway, states such as "Cable disconnected", joining the site Wi-Fi and changing the wired IP are all in System → [Network / Setup](system.md#wifi).
 

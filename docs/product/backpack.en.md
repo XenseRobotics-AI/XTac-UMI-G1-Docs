@@ -1,4 +1,4 @@
-# The Backpack
+# The XTac-UMI Backpack
 
 The **XTac-UMI Backpack** is the Backpack Kit's collection unit, worn by the operator: the grippers and headset plug straight in, a tablet browser is the console, and collection, playback and export all happen on the backpack.
 

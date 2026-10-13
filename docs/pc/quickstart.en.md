@@ -1,20 +1,20 @@
 # Quickstart
 
-From power-on to your first recorded episode. Before you start, make sure these five are done:
+From power-on to your first recorded episode. Before you start, make sure the following five items are complete:
 
-- Hardware connected → [Gripper connection](../common/gripper.md#install)
+- Hardware connected → [Leader gripper connection and use](../common/gripper.md#install)
 - Environment installed and active (`mamba activate xense-taccap` or the Docker container) → [Installation](install.md)
 - Collection PC configured: serial permissions, ModemManager kept off the ports → [Host setup](host-setup.md#31)
-- Every leader gripper calibrated (an uncalibrated leader is refused) → [Gripper calibration](calibration.md#41)
-- Repo, SDK and gripper firmware all up to date → [Required versions](versions.md#required)
+- Every leader gripper calibrated (an uncalibrated leader is refused) → [Gripper calibration (zero + travel)](calibration.md#41)
+- Repo, SDK and gripper firmware all up to date → [You must upgrade to the latest versions](versions.md#required)
 
 ## 1. Power on and connect {#power-on}
 
 1. Plug in the gripper USB.
-2. Wire the headset network and **turn off the collection PC's Wi-Fi**.
+2. Connect the headset to the collection PC by cable and **turn off the collection PC's Wi-Fi**.
 3. Turn on the headset and short-press the tracker power button until the LED is solid blue.
 4. Start the XenseVR PC Service: `/opt/apps/roboticsservice/runService.sh`
-5. **Facing the same direction as the robot**, open XTac-UMI XR and tap Connect; Status turns to Connected.
+5. **Facing the same direction as the robot**, open XTac-UMI XR and tap Connect; Status changes to "Connected".
 
 <div class="tc-pair" markdown>
 
@@ -25,14 +25,14 @@ From power-on to your first recorded episode. Before you start, make sure these 
 
 <figure class="tc-shot" markdown>
 ![XTac-UMI XR console: Connected](../assets/pico4/xr-console-connected-en.webp)
-<figcaption>XTac-UMI XR Status turns to Connected</figcaption>
+<figcaption>XTac-UMI XR Status changes to "Connected"</figcaption>
 </figure>
 
 </div>
 
 !!! warning "Three common mistakes"
     - Start the PC Service before opening the XR app, or it cannot connect.
-    - With a wired headset the collection PC's Wi-Fi must be off, or tracking is unstable. See [Network](../common/pico4.md#pico-network).
+    - With a wired headset the collection PC's Wi-Fi must be off, or tracking is unstable. See [Network connection](../common/pico4.md#pico-network).
     - Do not restart the XR app during collection: it resets the world origin, so poses within one dataset stop lining up.
 
 Power off in reverse: stop recording and let the current episode save, quit the XR app, stop the PC Service, then unplug, in the order given in [Power and connection requirements](../common/gripper.md#power).
@@ -86,7 +86,7 @@ The tiers are chosen with `--robot.type`; **record with the same tier you previe
 
 </div>
 
-Keep the trackers in the headset's view before starting; occlusion loses tracking.
+Keep the trackers in the headset's view before starting; tracking is lost if they are occluded.
 
 ## 4. Full recording
 
@@ -133,7 +133,7 @@ Keep the trackers in the headset's view before starting; occlusion loses trackin
 - Keep `--robot.type` (and whether you add `--robot.enable_tracker=false`) the same as in the preview; for grippers only, add that switch to the ② command.
 - Single gripper: `--robot.type=taccap_gripper`; with both grippers plugged in, add `--robot.side=left` or `right`.
 
-All parameters: [Recording parameters](recording.md#params).
+All parameters: [Data collection · Parameters](recording.md#params).
 
 ## 5. Check and upload
 

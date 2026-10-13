@@ -8,7 +8,7 @@ This page installs `xense-taccap-lerobot` and the three hardware SDKs on an **Ub
 
 ## Collection PC requirements {#host-spec}
 
-On a bimanual setup six cameras are streamed and encoded at once, with only 33.3ms per frame (30fps). An underspecified machine drops frames without raising an error.
+On a bimanual setup six cameras are streamed and encoded at once, with only 33.3ms per frame (30fps). A machine below the minimum specification drops frames without raising an error.
 
 | | **Minimum** | **Recommended** |
 |---|---|---|
@@ -20,10 +20,10 @@ On a bimanual setup six cameras are streamed and encoded at once, with only 33.3
 | USB | **One gripper** (3 cameras) can share a single USB 2.0 bus | **Bimanual** (6 cameras) split across **two USB 2.0 buses** (two independent host controllers) |
 | OS | Ubuntu 22.04 / 24.04 LTS, **amd64** | Ubuntu 24.04 LTS |
 
-- **CPU**: the main loop, tactile decoding and feeding the encoder all run on the CPU, and a bimanual frame is six to eight images; a 12th-gen i7 is the lowest part measured to hold 30fps.
-- **GPU**: `--dataset.vcodec=auto` encodes H.264 on the card. Without an NVIDIA card the CPU encodes, so saving is slower and `[slow_frame]` is likelier, see [Recording with no NVIDIA GPU](recording.md#no-gpu). Check the driver: `nvidia-smi --query-gpu=driver_version,name --format=csv,noheader`.
+- **CPU**: the main loop, tactile decoding and feeding the encoder all run on the CPU, and a bimanual frame is six to eight images; a 12th-gen i7 is the lowest CPU verified to sustain 30fps.
+- **GPU**: `--dataset.vcodec=auto` encodes H.264 on the card. Without an NVIDIA card the CPU encodes, so saving is slower and `[slow_frame]` is likelier, see [Recording on a collection PC with no NVIDIA GPU](recording.md#no-gpu). Check the driver: `nvidia-smi --query-gpu=driver_version,name --format=csv,noheader`.
 - **Memory**: use 32GB when you watch Rerun with `--display_data` or process data while collecting.
-- **Disk**: bimanual raw video is about 280 MB/s, what lands on disk is in [Disk planning](dataset.md#storage-planning). Do not record straight onto a spinning disk or a USB external drive.
+- **Disk**: bimanual raw video is about 280 MB/s; for the actual on-disk size, see [Planning and estimating disk usage](dataset.md#storage-planning). Do not record straight onto a spinning disk or a USB external drive.
 - **USB**: a bimanual setup's 6 cameras are split across two 480M buses, see [USB bandwidth budget](host-setup.md#usb-budget).
 
 ## Choosing an install path {#choose}
@@ -105,7 +105,7 @@ Both paths produce the same collection environment; pick one.
     |---|---|
     | `xense.taccap` (tactile gripper SDK) | The only submodule, [`third_party/taccap-gripper`](https://github.com/XenseRobotics-AI/TacCap-Gripper) |
     | `xensesdk` (visuotactile sensor SDK) | Installed automatically by `setup_env.sh --install` |
-    | `xensevr_pc_service_sdk` (Pico4) | Python bindings in the main repo; the C SDK (`PXREARobotSDK.h` + `libPXREARobotSDK.so`) comes from the [XenseVR PC Service `.deb`](#24) and is updated by a new `.deb`, not by re-running `--install` |
+    | `xensevr_pc_service_sdk` (Pico4U) | Python bindings in the main repo; the C SDK (`PXREARobotSDK.h` + `libPXREARobotSDK.so`) comes from the [XenseVR PC Service `.deb`](#24) and is updated by a new `.deb`, not by re-running `--install` |
 
     !!! warning "Rebuild `xense.taccap` after updating the submodule"
         `git submodule update` does not rebuild, after which `import xense.taccap` fails with an error like `AttributeError: module 'xense.taccap._taccap_native' has no attribute 'GripperAutoCalConfig'`. This can happen without a version bump, so rebuild after every submodule pull (no sudo needed), or run `bash setup_env.sh --install`:
@@ -156,7 +156,7 @@ Both paths produce the same collection environment; pick one.
     lerobot-info
     ```
 
-    One more for the [head camera](recording.md#56); `False` means an older version is loaded, so re-run `./setup_env.sh --install`:
+    If you use the [head camera](recording.md#56), run one more check; `False` means an older version is loaded, so re-run `./setup_env.sh --install`:
 
     ```bash
     python -c 'import xensevr_pc_service_sdk as xrt; print("pico camera API:", hasattr(xrt, "has_pico_camera_frame"))'
@@ -174,7 +174,7 @@ Both paths produce the same collection environment; pick one.
     ### Image contents and host requirements {#docker}
 
     - **Contents**: the full `xense-taccap` environment, the CUDA user-space libraries, the collection program and the three hardware SDKs (XenseSDK, TacCap-Gripper, the Pico4 bindings). XenseVR PC Service starts on launch.
-    - To hot-plug tactile sensors, wrist cameras, the gripper serial port and the Pico4, the container runs in **privileged mode** and shares the host's network and IPC. Use it only on a host you trust.
+    - To hot-plug tactile sensors, wrist cameras, the gripper serial port and the Pico4U, the container runs in **privileged mode** and shares the host's network and IPC. Use it only on a host you trust.
     - **Host**: Ubuntu 22.04 / 24.04 **amd64**, **NVIDIA driver ≥ 570.144** (check with `nvidia-smi --query-gpu=driver_version --format=csv,noheader`).
     - **Driver**: the script neither installs nor upgrades the GPU driver (that depends on the card, Secure Boot and a reboot) and stops if it falls short.
 
@@ -194,7 +194,7 @@ Both paths produce the same collection environment; pick one.
     ./docker/install_customer.sh
     ```
 
-    The script, in order: checks the system and GPU driver → installs Docker and the NVIDIA Container Toolkit as needed (and registers the NVIDIA runtime) → installs the ModemManager blocking rule from [Serial permissions](host-setup.md#32) → pulls the image → runs a CUDA and graphics smoke test. Cloning the repo is only how you get `compose.yaml` and the script.
+    The script, in order: checks the system and GPU driver → installs Docker and the NVIDIA Container Toolkit as needed (and registers the NVIDIA runtime) → installs the ModemManager blocking rule from [Stop ModemManager grabbing the port (udev)](host-setup.md#32) → pulls the image → runs a CUDA and graphics smoke test. Cloning the repo is only how you get `compose.yaml` and the script.
 
     Behind a proxy:
 
@@ -202,7 +202,7 @@ Both paths produce the same collection environment; pick one.
     XENSE_PROXY_URL=http://127.0.0.1:7897 ./docker/install_customer.sh
     ```
 
-    Offline, ask your delivery channel for the image `.tar` bundle, drop it in the repo root or pass it as the first argument; the script then verifies and imports it:
+    Offline, ask your Xense contact or distributor for the image `.tar` bundle, drop it in the repo root or pass it as the first argument; the script then verifies and imports it:
 
     ```bash
     ./docker/install_customer.sh xense-taccap-lerobot-0.1.0-linux-amd64.tar
@@ -225,7 +225,7 @@ Both paths produce the same collection environment; pick one.
     docker compose pull
     ```
 
-    Pinned at `0.0.5` or earlier (fixed from `0.0.6`): record with `--play_sounds=false` (the image has no `spd-say`, see [Troubleshooting](troubleshooting.md#docker)), and export by copying as root and then `chown`, see [Where the data lives](#docker-data).
+    Pinned at `0.0.5` or earlier (fixed from `0.0.6`): record with `--play_sounds=false` (the image has no `spd-say`, see [Troubleshooting · Docker image](troubleshooting.md#docker)), and export by copying as root and then `chown`, see [Where the data lives, and why removing the container does not lose it](#docker-data).
 
     ### Host setup after installing {#docker-host}
 
@@ -237,7 +237,7 @@ Both paths produce the same collection environment; pick one.
     ```
 
     !!! warning "Type them one at a time, do not paste the block"
-        `newgrp` opens a subshell that swallows the pasted commands after it. Entering the container without `newgrp docker` gives `permission denied`. Logging out and back in is cleaner, without new files getting group `docker`.
+        `newgrp` opens a subshell that swallows the pasted commands after it. Entering the container without `newgrp docker` gives `permission denied`. Logging out and back in is cleaner: it avoids newly created files belonging to the `docker` group.
 
     `docker` group membership is close to root; add only users who collect. Revoke the grant when done: `xhost -si:localuser:root`.
 
@@ -269,7 +269,7 @@ Both paths produce the same collection environment; pick one.
     ```
 
     !!! warning "These two lines must match; if they do not, do not record with this image"
-        A mismatch means an incomplete image build, and the tracker data may be wrong. Switch to another tag and `docker compose pull` again, or contact your delivery channel.
+        A mismatch means an incomplete image build, and the tracker data may be wrong. Switch to another tag and `docker compose pull` again, or contact Xense or your distributor.
 
     Confirm the devices are discovered:
 
@@ -291,7 +291,7 @@ Both paths produce the same collection environment; pick one.
     | Path in container | Volume | What it holds |
     |---|---|---|
     | `/data` | `lerobot-data` | Datasets (`HF_LEROBOT_HOME=/data/lerobot`) |
-    | `/root/.xensesdk` | `xensesdk-cache` | Per-serial sensor configuration cache. Do not delete it: a container restart then skips re-reading flash and re-enumerating USB |
+    | `/root/.xensesdk` | `xensesdk-cache` | Per-serial sensor configuration cache. Do not delete it: with this cache, a container restart skips re-reading flash and re-enumerating USB |
     | `/root/.cache/huggingface` | `huggingface-cache` | Hugging Face cache |
     | `/root/.cache/torch` | `torch-cache` | Torch cache |
 
@@ -339,7 +339,7 @@ Both paths produce the same collection environment; pick one.
     LEROBOT_DATA_DIR=/home/<user>/.cache/huggingface/docker_data
     ```
 
-    A value with `/` is a bind mount, without one a named volume, unset the default `lerobot-data`. Confirm with `docker compose config` before recording; data appears under `<that directory>/lerobot/`.
+    A value containing `/` is used as a bind mount, otherwise as a named volume; if unset, the default `lerobot-data` volume is used. Confirm with `docker compose config` before recording; data appears under `<that directory>/lerobot/`.
 
     !!! warning "A bind mount fixes the location, not the ownership"
         Recording runs as root, so the files are root-owned. Hand them back with the command below, or on the host run `sudo chown -R "$(id -u):$(id -g)" ~/.cache/huggingface/docker_data`; `ls -ln` prints numeric uid/gid to check:
@@ -368,9 +368,9 @@ Both paths produce the same collection environment; pick one.
 
     !!! warning "Do not change `runtime: nvidia` in `compose.yaml` to `gpus: all`"
         - `gpus: all` only requests compute + utility: CUDA and `nvidia-smi` work, but the Vulkan ICD is not injected and Rerun fails with `WGPU error: Failed to create surface for any enabled backend`.
-        - `runtime: nvidia` needs the NVIDIA runtime registered (`install_customer.sh` does this), otherwise Compose fails with `Unknown runtime specified nvidia`, see [Troubleshooting](troubleshooting.md#docker).
+        - `runtime: nvidia` needs the NVIDIA runtime registered (`install_customer.sh` does this), otherwise Compose fails with `Unknown runtime specified nvidia`, see [Troubleshooting · Docker image](troubleshooting.md#docker).
 
-    Without a Pico4 you can skip starting XenseVR PC Service (its log is at `/tmp/xensevr-service.log` in the container):
+    Without a Pico4U you can skip starting XenseVR PC Service (its log is at `/tmp/xensevr-service.log` in the container):
 
     ```bash
     START_XENSEVR_SERVICE=0 docker compose run --rm xense-taccap

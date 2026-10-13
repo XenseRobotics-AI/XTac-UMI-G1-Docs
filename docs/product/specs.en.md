@@ -1,6 +1,6 @@
 # Technical specifications
 
-Specifications for the XTac-UMI G1 grippers, the tracking system and the backpack. Wiring is in [Gripper connection and serial numbers](../common/gripper.md); choosing between the editions is in [Editions](editions.md).
+Specifications for the XTac-UMI G1 grippers, the tracking system and the backpack. Wiring is in [Gripper connection and serial numbers](../common/gripper.md); choosing between the editions is in [Product line and configuration comparison](editions.md).
 
 ## Leader gripper {#specs}
 
@@ -51,7 +51,7 @@ The frame rate used during collection can be set as needed (the Developer Kit re
 
 ![Follower gripper dimensions (mm)](../assets/product/follower-dimensions.webp){ width="760" }
 
-How to use it is in [Follower gripper](../follower/index.md).
+How to use it is in [Follower gripper overview](../follower/index.md).
 
 ## Tracking and synchronization
 
@@ -65,7 +65,7 @@ How to use it is in [Follower gripper](../follower/index.md).
 
 ## The backpack {#backpack}
 
-The Backpack Kit's collection unit: the grippers and headset plug into it and the console opens in a browser. See [The Backpack](backpack.md).
+The Backpack Kit's collection unit: the grippers and headset plug into it and the console opens in a browser. See [The XTac-UMI Backpack](backpack.md).
 
 | Parameter | Specification |
 |---|---|
@@ -77,8 +77,8 @@ The Backpack Kit's collection unit: the grippers and headset plug into it and th
 | Power draw | About 20W |
 | Power-bank runtime | About 3.5–4 hours |
 | Network | Ethernet; Wi-Fi (5GHz); built-in 5GHz hotspot |
-| Ports | `UMI-L` / `UMI-R` for the leader grippers, `PICO` for the headset, `DC IN` for power, `HOST1` / `HOST2` USB host ports, plus Ethernet, TF slot, `HDMI` and headphone jack, see [Ports](backpack.md#ports) |
+| Ports | `UMI-L` / `UMI-R` for the leader grippers, `PICO` for the headset, `DC IN` for power, `HOST1` / `HOST2` USB host ports, plus Ethernet, TF slot, `HDMI` and headphone jack, see [Connectors](backpack.md#ports) |
 | Operating temperature | 0–40°C |
 | Environment | Indoor use; not waterproof, keep away from rain, splashes and heavy dust |
 
-The serial number, hotspot name and password on the body label are explained in [Identify the unit by its label](../backpack/network.md#label).
+The serial number, hotspot name and password on the body label are explained in [Identifying the unit: by its label, not by IP](../backpack/network.md#label).

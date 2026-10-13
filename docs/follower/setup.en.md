@@ -6,7 +6,7 @@ the follower gripper needs **both USB Type-C and 24V connected**.
 ## 1. Install the SDK {#install}
 
 Once the collection environment is installed ([Installation](../pc/install.md)), SDK 0.4.1 is already included; there is nothing extra to install. The example scripts are in the data-collection repository under
-`third_party/taccap-gripper/python/examples/`. For serial port permissions, see [Serial permissions](../pc/host-setup.md#31).
+`third_party/taccap-gripper/python/examples/`. For serial port permissions, see [Serial permissions (dialout)](../pc/host-setup.md#31).
 
 Verify (from the data-collection repository root, inside the collection environment):
 
@@ -43,7 +43,7 @@ The example scripts all select a gripper by `left`, `right` or the full serial n
     if only the leader gripper is connected, the control scripts will open it as if it were the follower. With this kind of wiring, always use the follower gripper's full serial number.
 
 !!! danger "Do not scan while a collection or control program is running"
-    Scanning for devices (which every example script does at startup) interrupts any other program that is running, and a follower gripper that is holding something goes limp. Stop the other programs first.
+    Scanning for devices (which every example script does at startup) interrupts any other program that is running, and a follower gripper that is holding something releases its torque. Stop the other programs first.
 
 ## 3. Self-check {#self-check}
 

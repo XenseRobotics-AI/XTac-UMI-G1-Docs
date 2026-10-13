@@ -3,7 +3,7 @@
 The gripper is the same on both editions; only where the cable goes and how detection is checked are split into "Backpack Kit / Developer Kit" tabs.
 
 - Backpack Kit buttons, LEDs and voice: [Gripper buttons, LEDs and voice](../backpack/gripper.md).
-- Product positioning and components: [XTac-UMI G1](../product/g1.md); specs: [Specifications](../product/specs.md#specs).
+- Product positioning and components: [XTac-UMI G1](../product/g1.md); specs: [Technical specifications](../product/specs.md#specs).
 
 ## Leader gripper connection and use {#install}
 
@@ -39,7 +39,7 @@ The leader gripper takes power and communication over USB Type-C.
 === "Backpack Kit"
 
     - LED solid green (standby).
-    - The "cameras" counter at the console's top right shows online equal to total, 6 on the gripper side (2 wrist cameras + 4 visuotactile).
+    - The "cameras" counter at the console's top right shows all cameras online, 6 on the gripper side (2 wrist cameras + 4 visuotactile).
     - The "Live monitor" page shows both fisheye views and all four tactile views.
     - Offline cameras are marked "(offline)" on the System → Device info page.
 
@@ -66,7 +66,7 @@ The leader gripper takes power and communication over USB Type-C.
 A leader gripper needs travel calibration for a normalized opening:
 
 - **Backpack Kit**: console System → Gripper page (write zero closed → write maximum travel fully open).
-- **Developer Kit**: see [Gripper calibration](../pc/calibration.md#41); an uncalibrated leader is refused at connect, and both sides of a pair must be calibrated.
+- **Developer Kit**: see [Gripper calibration (zero + travel)](../pc/calibration.md#41); the software refuses to connect to an uncalibrated leader gripper, and both sides of a pair must be calibrated.
 - Firmware, SDK and repository versions must match; see [You must upgrade to the latest versions](../pc/versions.md#required).
 
 ## Follower gripper mounting and connection {#follower-install}
@@ -127,7 +127,7 @@ The follower gripper mounts on the robot's end effector and is not side-specific
 Last digit of the serial's running number: **odd = left, even = right**.
 
 - Applies to grippers, visuotactile sensors, wrist cameras and Pico trackers.
-- **Developer Kit**: the collection software assigns sides automatically (see [Device discovery rules](../pc/host-setup.md#33)); to check by hand, run `lsusb` and read the last digit.
+- **Developer Kit**: the collection software assigns sides automatically (see [Device auto-discovery and the odd-left/even-right rule](../pc/host-setup.md#33)); to check by hand, run `lsusb` and read the last digit.
 - **Backpack Kit**: the console's System → Device info page shows each gripper's left / right badge and SN.
 
 ## Safety notes {#safety}

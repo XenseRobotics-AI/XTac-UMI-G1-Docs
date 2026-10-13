@@ -8,14 +8,14 @@ Serial and version numbers here are examples; go by what you read on your own de
     - The firmware needs [command set V2.1](#v21) for travel calibration.
     - The images bundled with SDK 0.4.1 fix the [known defects](#ota-when).
     - `gripper.pos` normalization only holds once all three are in place.
-    - An uncalibrated leader or one on too-old firmware is refused a connection; other mismatches still write to disk "normally", but the data will not line up.
+    - An uncalibrated leader, or one on too-old firmware, cannot connect; other mismatches still write to disk "normally", but the data will not line up.
 
 | Component | Minimum | How to check |
 |---|---|---|
 | `xense-taccap-lerobot` | `0.5.1+xtac.0.1.0` | `pip show lerobot`, or look at `pyproject.toml` |
 | `xense.taccap` SDK | **0.4.1** | `python -c "import xense.taccap as t; print(t.__version__)"` |
 | Gripper firmware | **command set V2.1**, i.e. leader ≥ 1.2.0 / follower ≥ 1.1.0; with a follower gripper (`--robot.role=follower`) the follower needs ≥ 1.2.5 (below 1.2.11 it warns to upgrade) | Run [`calibrate.py`](calibration.md#41) or [read it directly](#check-versions) |
-| Encoder calibration on every leader | Zero + travel limit written to flash | [Gripper calibration](calibration.md#41) |
+| Encoder calibration on every leader | Zero + travel limit written to flash | [Gripper calibration (zero + travel)](calibration.md#41) |
 | XenseVR PC Service | ≥ v0.2.0; install v0.2.1 on a new machine | `Version` from `dpkg -s xensevr-pc-service` |
 
 Order: [pull the repo and submodules](#repo-update) and rebuild the SDK (otherwise `import xense.taccap` fails), then [flash the firmware](#ota), then [calibrate the grippers](calibration.md#41) (upgrading produces no calibration values).
@@ -47,7 +47,7 @@ Commands and fields should be taken from your local checkout and from the device
 | NumPy | `>=1.26.4` | 2.2.6 |
 | `xense-taccap-lerobot` | Based on lerobot 0.5.1, version `0.5.1+xtac.0.1.0` | `v0.1.0` |
 | `xense.taccap` SDK | Matched to the main repo's submodule `third_party/taccap-gripper` | 0.4.1 (tag `v0.4.1`), bundling firmware leader 1.2.6 / follower 1.2.14 |
-| Gripper firmware | Command set V2.1 (wire framing V1.8), leader ≥ 1.2.0 / follower ≥ 1.1.0 | leader 1.2.6 / follower 1.2.14, follows the SDK, with `firmware/manifest.json` as the authority, see [OTA](#ota) |
+| Gripper firmware | Command set V2.1 (wire framing V1.8), leader ≥ 1.2.0 / follower ≥ 1.1.0 | leader 1.2.6 / follower 1.2.14, follows the SDK, with `firmware/manifest.json` as the authority, see [Firmware OTA upgrade](#ota) |
 | `xensesdk` | Provided by the install script | 2.1.2 |
 | XenseVR PC Service (`.deb`) | ≥ v0.2.0 | v0.2.1 |
 | `xensevr_pc_service_sdk` | In the main repo; links the `.deb`'s C SDK | 0.2.1, the version comes from the `.deb` |
@@ -109,14 +109,14 @@ dpkg -s xensevr-pc-service 2>/dev/null | grep -E '^(Package|Version|Architecture
 python -c "import xensevr_pc_service_sdk as xrt; print('pico camera API:', hasattr(xrt, 'has_pico_camera_frame'))"
 ```
 
-`pip show xensevr-pc-service-sdk` shows the `.deb` version read from `dpkg` at build time; for the head camera interface check `has_pico_camera_frame`; for gripper SNs and roles see [Quickstart](quickstart.md#self-check).
+`pip show xensevr-pc-service-sdk` shows the `.deb` version read from `dpkg` at build time; for the head camera interface check `has_pico_camera_frame`; for gripper SNs and roles see [Quickstart · Self-check](quickstart.md#self-check).
 
 ## What's new in 0.1.0 {#whats-new}
 
-- **`--robot.type` decides whether the headset is recorded**: bimanual setups gain `xtac_umi_g1` (headset stereo and head pose), `bi_taccap_gripper` does not record the headset; `--robot.enable_head_camera` contradicting the type is an error, see [Record](recording.md#52).
-- The gripper SDK moves to 0.4.1, bundling firmware leader 1.2.6 / follower 1.2.14, see [Firmware OTA](#ota).
+- **`--robot.type` decides whether the headset is recorded**: bimanual setups gain `xtac_umi_g1` (headset stereo and head pose), `bi_taccap_gripper` does not record the headset; `--robot.enable_head_camera` contradicting the type is an error, see [Recording](recording.md#52).
+- The gripper SDK moves to 0.4.1, bundling firmware leader 1.2.6 / follower 1.2.14, see [Firmware OTA upgrade](#ota).
 - `meta/runtimes/` is no longer written; `meta/info.json` gains `collection_stack`, naming the recording software, see [Dataset](dataset.md).
-- `lerobot-check-dataset` requires exact video frame counts: missing frames error, extra frames warn; editing a dataset re-encodes with the collection encoder.
+- `lerobot-check-dataset` requires exact video frame counts: missing frames raise an error and extra frames a warning; editing a dataset re-encodes with the collection encoder.
 - The Docker image can speak voice prompts from inside the container.
 - The repo, submodule and image paths moved to the `XenseRobotics-AI` organization.
 - After moving to v0.1.0 you **must re-run `./setup_env.sh --install`**.
@@ -151,7 +151,7 @@ git submodule status         # the submodule should match v0.4.1
 
 ### Do I need to flash {#ota-when}
 
-Run [`calibrate.py`](calibration.md#41) once: if the firmware is too old it exits and prints the current version (sample in [Gripper calibration](calibration.md#41)). Flash if any of these holds:
+Run [`calibrate.py`](calibration.md#41) once: if the firmware is too old it exits and prints the current version (sample in [Gripper calibration (zero + travel)](calibration.md#41)). Flash if any of these holds:
 
 - `calibrate.py` reports `needs command set >= V2.1` and exits;
 - the leader will not connect and the error says to do an OTA first;
@@ -177,7 +177,7 @@ python -c "import json;m=json.load(open('third_party/taccap-gripper/firmware/man
 | `tc-gu-01-master-1.2.6.bin` | Leader gripper (SN ending in `m`) |
 | `tc-gu-01-slave-1.2.14.bin` | Follower gripper (SN ending in `s`) |
 
-Pick by role, not hand: `TCGU01A28Z0023m` ends in `m`, so use the leader image; both grippers on a setup are often leaders.
+Choose by role, not by side (left/right): `TCGU01A28Z0023m` ends in `m`, so use the leader image; both grippers on a setup are often leaders.
 
 ```bash
 # 1. Confirm each gripper's role
@@ -197,7 +197,7 @@ for ep in scan_grippers():
 "
 ```
 
-- The image name is resolved against the path you gave, the SDK root and the SDK's `firmware/`, in that order, so any directory works; it is checked before connecting.
+- The image name is resolved against the path you gave, the SDK root and the SDK's `firmware/`, in that order, so the script can be run from any directory; it is checked before connecting.
 - `--target-version` is normally unnecessary: it only tags the verification log and partition metadata; the script looks the version up in `manifest.json` by CRC32, so you need it only for an image `manifest.json` does not know.
 - The write takes about 1 second and the reboot about 1–3 seconds; the new firmware goes to the spare partition and replaces the running one only after it verifies, so a failed transfer cannot brick the gripper.
 - Step 3 must read back at least leader 1.2.0 / follower 1.1.0; the images bundled now read back 1.2.6 / 1.2.14.
@@ -208,15 +208,15 @@ Other forms:
 - For one of several of the same role, pass the image file name plus a side or SN: `ota_update.py tc-gu-01-master-1.2.6.bin left` (use the actual name in `firmware/`).
 - Not `slave left` / `master left`: the first argument is taken as a file name and fails with `firmware file not found`.
 
-!!! danger "Flashing the wrong role leaves a gripper that will not start and needs a factory repair"
+!!! danger "Flashing the wrong role leaves a gripper that will not start and must be returned to the factory for recovery"
     `ota_update.py` identifies the image by CRC32 against `manifest.json` and refuses a role mismatch unless `--force`; a hand-built image is let through with a note. Do not cut power or unplug anything during the upgrade.
 
 !!! danger "You must unplug and replug once after flashing"
     This is a step of the upgrade, not a troubleshooting move.
 
-    - The reboot after OTA is a soft reset: the USB-serial bridge never loses power and the device stays degraded, right version, stream running, error counters at 0, but quietly dropping status frames. Over 60-second runs, OTA alone loses 35 to 39 frames, after unplug and replug 0.
+    - The reboot after OTA is a soft reset: the USB-serial bridge never loses power and the device stays degraded: correct version, stream running, error counters at 0, yet quietly dropping status frames. Over 60-second runs, OTA alone loses 35 to 39 frames, after unplug and replug 0.
     - Order: flash → unplug and replug → step-3 check → calibration; data before the power cycle is untrustworthy.
     - Leader: unplug and replug USB. Follower: unplug the 24V power cable, wait about 2 seconds and plug it back in, leaving USB connected (controller and motor both run on 24V).
     - Unplug and replug only after the gripper has finished rebooting.
 
-Once at V2.1, go back to [Gripper calibration](calibration.md#41) and set the zero and travel limit.
+Once at V2.1, go back to [Gripper calibration (zero + travel)](calibration.md#41) and set the zero and travel limit.

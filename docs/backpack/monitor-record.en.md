@@ -5,7 +5,7 @@ description: Before recording, confirm the views, poses, gripper opening and dis
 # Live monitoring and recording
 
 
-This page covers the "Live monitoring" page of the XTac-UMI Collector console (below, "the console"). Gripper button gestures, LED patterns and voice announcement wording are in [Gripper buttons and LEDs](gripper.md#buttons-leds); this page only links to them.
+This page covers the "Live monitoring" page of the XTac-UMI Collector console (below, "the console"). Gripper button gestures, LED patterns and voice announcement wording are in [Gripper buttons, LEDs and voice](gripper.md#buttons-leds); this page only links to them.
 
 ![The Live monitoring page](../assets/backpack/monitor-live-en.webp)
 
@@ -20,7 +20,7 @@ Check each item before recording, and do not start if any is wrong:
 | What to look at | What you want | When it is wrong |
 |---|---|---|
 | Every view | The top bar's "Cameras" count matches the capture mode (6 / 6 for "Dual gripper", 8 / 8 for "Dual gripper + stereo headset", 7 / 7 for "Dual gripper + headset right eye") and every tile has an image; fisheye views are sharp; the visuotactile feed is the geometrically rectified image with no difference overlay, and the contact area changes as you press | A blurred fisheye usually means the focus ring was knocked; turn it back to sharp before recording. If the count is wrong, check [System → Capture settings](system.md#capture-mode); only if one feed stays black for long, click "Refresh devices" |
-| Headset pose and tracker state | Move a gripper and the headset and the 3D model follows; the indicator at the top right of the pose card is green | "Pose online" but the model does not move: the tracker app in the Pico usually never really started; hold the tracker's power button to reactivate it and restart the app on the Pico. Light turns yellow with a prompt: a tracker has left the headset's view (orientation only, no position); bring it back into view. Check left / right by serial number, odd left and even right, see [Pico4 tracker serial numbers](../common/pico4.md#pico-tracker-sn) |
+| Headset pose and tracker state | Move a gripper and the headset and the 3D model follows; the indicator at the top right of the pose card is green | "Pose online" but the model does not move: the tracker app in the Pico usually never really started; hold the tracker's power button to reactivate it and restart the app on the Pico. Light turns yellow with a prompt: a tracker has left the headset's view (orientation only, no position); bring it back into view. Check left / right by serial number, odd left and even right, see [Reading a tracker SN](../common/pico4.md#pico-tracker-sn) |
 | Both grippers' opening | The two cards below the pose view show radians, degrees and a normalized percentage: about 100% fully open, about 0% closed (about 0.02rad; a little more force reaches 0) | If fully open will not reach 100% or closing will not return to 0, recalibrate at [System → Gripper configuration](system.md#gripper) |
 | Free disk space | The top bar's "Disk" usage is below 80% (recording disk, measured on the device); hovering shows the mount point, used, total and available space | At 80% recording is refused; [export and archive](projects-export.md#archive) the data you have, or delete recordings you do not need |
 | Recording state | The status line at the top right of the project / task card reads "Standby", followed by the capture-mode badge (for example "Dual gripper + stereo headset"); "Start recording" is clickable | When the badge says "Pico not ready" and the button is gray, the reason is below the status line: "Pico not ready" and "Tracker not ready" are separate and can appear together, each followed by the specific cause (for example disconnected or timed out, pose data missing or timed out, left-eye / right-eye video missing or timed out, clock synchronization missing or timed out, or the tracker out of view or stationary for over 5 seconds); a missing project / task is stated too. Deal with the reason first |
@@ -68,7 +68,7 @@ Camera parameters and rectification:
 
 ## Recording {#record}
 
-- **Gripper buttons (day to day)**: long-press the right gripper to start and the left to stop, handled by a state machine on the device with no browser needed; which gripper does what and the timings are fixed fleet-wide and cannot be changed on site. Gestures, LEDs and how to confirm a deletion are in [Gripper buttons and LEDs](gripper.md#buttons).
+- **Gripper buttons (day to day)**: long-press the right gripper to start and the left to stop, handled by a state machine on the device with no browser needed; which gripper does what and the timings are fixed fleet-wide and cannot be changed on site. Gestures, LEDs and how to confirm a deletion are in [Buttons](gripper.md#buttons).
 - **Console buttons**: "Start recording / Stop recording" do the same, for someone not holding a gripper; to bind browser shortcuts see System → [Capture settings › Recording shortcut](system.md#keybinding).
 
 ### On-site feedback: LEDs and voice {#feedback}
@@ -82,7 +82,7 @@ With both hands on the grippers and eyes on the scene, you rely on two complemen
     - Plus a subtask marker tone.
 
 - **Fixed and adjustable**: wording and timing are fixed and cannot be changed on site, keeping a batch of devices identical; you can adjust the switch, the volume (a 0–100 slider) and the audio language (Chinese / English), with a per-line preview next to the switch that shows where the sound played and why. See System → [Capture settings](system.md#voice).
-- **Audio language**: follows the [interface language](index.md#faq) when the page loads or the interface language changes; a separately chosen one lasts until then.
+- **Audio language**: follows the [interface language](index.md#faq) when the page loads or the interface language changes; a language chosen separately applies until the page is reloaded or the interface language changes.
 
 ### Recording gates {#record-gates}
 
@@ -125,7 +125,7 @@ On stopping, an automatic quality check marks the episode "data suspect" if any 
 - Tracking was lost for more than 20% of the episode's duration (suspected to have left the field of view);
 - The tactile rectification recipe is missing (this episode's LeRobot export is certain to fail).
 
-For a suspect episode, best [delete the previous episode](#record-delete) on the spot and re-record.
+For a questionable episode, [delete it](#record-delete) on the spot and record it again.
 
 ### Episode states {#episode-state}
 
@@ -143,7 +143,7 @@ Project page rows and mobile cards show four states:
 
 ### Deleting the previous episode {#record-delete}
 
-- **Buttons**: double-click the left gripper to enter delete confirmation (purple blinking, 5-second timeout), then double-click again to delete; gestures are in [Gripper buttons and LEDs](gripper.md#buttons).
+- **Buttons**: double-click the left gripper to enter delete confirmation (purple blinking, 5-second timeout), then double-click again to delete; gestures are in [Buttons](gripper.md#buttons).
 - **Console**: "Delete last episode and record again" deletes the current task's most recent episode and immediately starts recording, with no second confirmation; unavailable while recording.
 - **Earlier episodes**: click "Delete" on its row in the [Project page](projects-export.md). The confirmation lists the number, duration and size, and deletes its MCAP and H264 export files with it. This cannot be undone.
 

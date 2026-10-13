@@ -45,7 +45,7 @@ While collecting, both hands are on the grippers and your eyes on the scene, so 
 |---|---|
 | Recording starts | "Recording started." |
 | An episode finishes | "Recording complete. Please reset the scene." — reset the scene and get ready for the next one |
-| A fatal problem while recording | "Recording failed." — that episode is a write-off |
+| A fatal problem while recording | "Recording failed." — that episode is unusable |
 | A gripper drops off while recording | "Gripper connection failed." |
 | The headset drops off while recording | "Pico connection failed." |
 | A tracker drops off while recording | "Tracker connection failed." — the headset may still be connected, so check the tracker on your hand first |

@@ -34,7 +34,7 @@ This page lists the cause and fix for each symptom. The most common issues are b
 
     - Move the grippers back into the headset's field of view.
     - Confirm that both trackers show blue, are [paired to the headset](../common/pico4.md#pico-tracker-bind) and are in independent tracking mode.
-    - For "Pico offline", check that XTac-UMI XR is connected; see [The app interface](../common/pico4.md#pico-toolkit-ui).
+    - For "Pico offline", check that XTac-UMI XR is connected; see [The app's screen](../common/pico4.md#pico-toolkit-ui).
 
 ??? failure "The pose is shown as online, but the 3D model does not move"
     **Cause:** the tracker app in the headset has not fully started (for example, on first use of the day without pressing the tracker button). The badge may still show online.
@@ -44,7 +44,7 @@ This page lists the cause and fix for each symptom. The most common issues are b
 ??? failure "The left and right gripper poses are swapped"
     **Cause:** the trackers were fitted or paired on the wrong sides. The SN rule is odd for left, even for right.
 
-    **Fix:** check against [Tracker serial numbers](../common/pico4.md#pico-tracker-sn) and swap them back. Before recording, move one gripper alone to confirm.
+    **Fix:** check against [Reading a tracker SN](../common/pico4.md#pico-tracker-sn) and swap them back. Before recording, move one gripper alone to confirm.
 
 ## Connecting and reaching the console {#connect}
 
@@ -93,12 +93,12 @@ This page lists the cause and fix for each symptom. The most common issues are b
     - Check that the hotspot name matches the Wi-Fi line on the body label (the password is also on the label).
     - Enter the full address `http://192.168.44.1` (the hotspot gateway is fixed), or the `http://xense-xxxxxx.local` address on the last line of the label.
     - If the signal is weak, move closer. If the backpack is occasionally unresponsive, power-cycle it.
-    - Access methods are described in [Network and console access](network.md#softap).
+    - Access methods are described in [The backpack hotspot](network.md#softap).
 
 ??? failure "The tablet or phone cannot find the backpack hotspot"
     **Cause:** the hotspot operates on 5GHz only; devices that support only 2.4GHz cannot detect it.
 
-    **Fix:** use a 5GHz-capable device, or connect the backpack to the site network and access it over the LAN; see [Joining site Wi-Fi and wired](network.md#lan).
+    **Fix:** use a 5GHz-capable device, or connect the backpack to the site network and access it over the LAN; see [Joining a site network](network.md#lan).
 
 ??? failure "A PC cannot open `xense-xxxxxx.local`, but a phone can"
     **Cause:** mDNS resolution on Windows is unreliable.

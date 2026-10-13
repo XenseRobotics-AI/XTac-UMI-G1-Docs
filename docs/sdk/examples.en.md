@@ -47,11 +47,11 @@ For a follower gripper see [Firmware and motor upgrades](../follower/firmware.md
 
 ## Migrating from older versions {#migrate}
 
-Programs written against 0.1.x / 0.2.x mainly see these changes when upgrading to 0.4.1:
+Programs written against 0.1.x / 0.2.x are mainly affected by these changes when upgrading to 0.4.1:
 
 - The follower gripper now uses controllers: `ImpedanceController` or `ForcePositionController`, configured with `for_spec()`.
   The old `ControlLoop`, `set_position()` and similar interfaces have been removed.
-- Velocity and torque are now uniformly positive = toward closing.
+- Positive velocity and torque now consistently mean the closing direction.
 - Follower gripper firmware must be 1.2.5 or later; below 1.2.11 you are prompted to upgrade.
 - The example scripts now select a gripper with a positional argument `left` / `right` / serial number, and the old control-type example scripts have been removed.
 - The wrist camera frames delivered by gripper objects are now RGB by default.

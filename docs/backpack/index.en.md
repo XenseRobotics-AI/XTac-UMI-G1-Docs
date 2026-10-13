@@ -18,7 +18,7 @@ The box contents are in [Box contents and wiring](../product/editions.md#kit); c
 
 ![The console's Live monitoring page: every camera, the visuotactile images and the poses on one screen](../assets/backpack/monitor-live-en.webp)
 
-The console shows every camera, the visuotactile images and the poses on one screen, with the gripper opening updated in real time; recording state, free disk space and tracker-loss alerts are on the same screen, viewable from a tablet or phone. What to check before recording is in [Checks on the Live monitoring page](monitor-record.md#checks), and the product introduction is in [The Backpack](../product/backpack.md).
+The console shows every camera, the visuotactile images and the poses on one screen, with the gripper opening updated in real time; recording state, free disk space and tracker-loss alerts are on the same screen, viewable from a tablet or phone. What to check before recording is in [Confirm in the console before recording](monitor-record.md#checks), and the product introduction is in [The XTac-UMI Backpack](../product/backpack.md).
 
 ## System composition {#system}
 
@@ -330,7 +330,7 @@ The grippers' connection and power requirements are in [Gripper connection and s
 
 ### 3. Open the console {#deploy-console}
 
-- **Tablet**: cable the tablet to the backpack's `HOST1` or `HOST2` port and the backpack opens the console on it; see [Tablet over USB](network.md#tablet).
+- **Tablet**: cable the tablet to the backpack's `HOST1` or `HOST2` port and the backpack opens the console on it; see [Recommended: the tablet over USB](network.md#tablet).
 - **No tablet**: connect to the [backpack hotspot](network.md#softap) instead.
 
 ### 4. Connect the headset to the backpack {#deploy-headset-link}
@@ -339,7 +339,7 @@ The grippers' connection and power requirements are in [Gripper connection and s
 2. **Leave "USB Network" unticked** and "PC IP" empty (it connects to the backpack at `192.168.100.1` by default).
 3. Tap "Connect".
 
-The interface and connection states are in [Pico4 headset and trackers](../common/pico4.md#pico-toolkit-ui); detailed steps are in [Connecting the headset to the backpack](unbox-connect.md#pico-link).
+The interface and connection states are in [Pico4 headset and tracker setup](../common/pico4.md#pico-toolkit-ui); detailed steps are in [Connecting the headset to the backpack](unbox-connect.md#pico-link).
 
 ### 5. Choose the capture mode {#deploy-mode}
 

@@ -1,8 +1,8 @@
 # XTac-UMI G1 Developer Kit
 
-The Developer Kit runs collection on your own x86 collection PC: the grippers and headset cable straight into it, recording runs on open-source LeRobot and produces a LeRobotDataset v3 you can push to the Hugging Face Hub. The collection software and gripper SDK are open source, built for research and algorithm teams who want to customize freely.
+The Developer Kit (PC edition) runs collection on your own x86 collection PC: the grippers and headset connect to it directly by cable, recording runs on open-source LeRobot and produces a LeRobotDataset v3 you can push to the Hugging Face Hub. The collection software and gripper SDK are open source, built for research and algorithm teams who want to customize freely.
 
-For no computer, with a tablet in the field, choose the [Backpack Kit](../backpack/index.md); the two are compared in [Editions](../product/editions.md).
+If you would rather work without a computer and operate from a tablet in the field, choose the [Backpack Kit](../backpack/index.md); the two are compared in [Product line and configuration comparison](../product/editions.md).
 
 ## The collection workflow {#workflow}
 

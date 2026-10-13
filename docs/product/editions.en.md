@@ -13,7 +13,7 @@ This page compares the two and lists each edition's box contents and wiring.
 
     <span class="xu-tag xu-tag--backpack">Backpack Kit</span>
 
-    **XTac-UMI Data Collection Backpack**{ .xu-card__title }
+    **XTac-UMI Backpack**{ .xu-card__title }
 
     ---
 
@@ -79,7 +79,7 @@ This page compares the two and lists each edition's box contents and wiring.
 
         ![Power-bank wiring: both leader grippers and the headset to the backpack, the power bank to the backpack's DC port](../assets/product/backpack-wiring-powerbank-diagram-en.webp)
 
-    The wiring steps are in [Adapter power](../backpack/unbox-connect.md#adapter) and [Power-bank power](../backpack/unbox-connect.md#powerbank); the safety requirements for powering and unplugging in order are in [The backpack and its power](safety.md#backpack-power); opening the console is in [The tablet over USB](../backpack/network.md#tablet), or use [the backpack hotspot](../backpack/network.md#softap) without a tablet.
+    The wiring steps are in [Adapter power](../backpack/unbox-connect.md#adapter) and [Power-bank power](../backpack/unbox-connect.md#powerbank); the safety requirements for powering and unplugging in order are in [The backpack and its power](safety.md#backpack-power); opening the console is in [Recommended: the tablet over USB](../backpack/network.md#tablet), or use [the backpack hotspot](../backpack/network.md#softap) without a tablet.
 
 === "Developer Kit"
 
@@ -101,7 +101,7 @@ This page compares the two and lists each edition's box contents and wiring.
 
     You supply the collection PC; the requirements are in [Collection PC requirements](../pc/install.md#host-spec). Three cables in total:
 
-    - **Leader grippers × 2**: a Type-C to USB-A cable from each gripper to a USB-A port on the collection PC; put the two grippers on two separate USB buses, see [The USB bandwidth budget](../pc/host-setup.md#usb-budget).
+    - **Leader grippers × 2**: a Type-C to USB-A cable from each gripper to a USB-A port on the collection PC; put the two grippers on two separate USB buses, see [USB bandwidth budget](../pc/host-setup.md#usb-budget).
     - **Headset × 1**: a Type-C to Type-C cable to the collection PC, over wired network sharing, see [Network connection](../common/pico4.md#pico-network).
 
     The power-up order and your first collection run are in [Developer Kit quickstart](../pc/quickstart.md#power-on).

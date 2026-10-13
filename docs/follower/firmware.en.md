@@ -1,7 +1,7 @@
 # Firmware and motor upgrades
 
 The follower gripper has two pieces of firmware: the **gripper firmware** (bundled with the SDK) and the **motor firmware** (provided by technical support).
-Normally you only need to care about the gripper firmware; upgrade the motor firmware only when technical support asks you to. If both need upgrading, flash the gripper firmware first, then the motor firmware.
+Normally you only need to keep the gripper firmware up to date; upgrade the motor firmware only when technical support asks you to. If both need upgrading, flash the gripper firmware first, then the motor firmware.
 
 ## Check the version {#check-version}
 

@@ -3,7 +3,7 @@
 This page takes you from powering on to your first exported dataset; follow the steps in order.
 
 !!! note "Before you start"
-    - **Headset and trackers**: the Pico system is updated, XTac-UMI XR is installed and both trackers are paired; see [Pico4 headset and trackers](../common/pico4.md).
+    - **Headset and trackers**: the Pico system is updated, XTac-UMI XR is installed and both trackers are paired; see [Pico4 headset and tracker setup](../common/pico4.md).
     - **Gripper calibration**: the leader grippers are calibrated; see console → System → [Gripper](system.md#gripper).
 
 ## 1. Wiring and power {#power-on}

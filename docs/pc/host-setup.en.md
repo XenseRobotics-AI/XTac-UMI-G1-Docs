@@ -1,6 +1,6 @@
 # Host setup
 
-A gripper being listed is not the same as it being openable. This page covers two one-off settings (serial permissions and ModemManager), how devices are assigned to left and right by serial number, and starting the XenseVR PC Service. Headset and tracker setup is in [Pico4 headset and trackers](../common/pico4.md).
+A gripper that shows up in the device list cannot necessarily be opened. This page covers two one-off settings (serial permissions and ModemManager), how devices are assigned to left and right by serial number, and starting the XenseVR PC Service. Headset and tracker setup is in [Pico4 headset and tracker setup](../common/pico4.md).
 
 ## Serial permissions (dialout) {#31}
 
@@ -17,7 +17,7 @@ Join the group once:
 sudo usermod -aG dialout "$USER"
 ```
 
-!!! warning "Log back in after changing the group, or this step did nothing"
+!!! warning "Log out and back in after changing groups, or the change has no effect"
     The current terminal keeps the old permissions. Log out and back in (or run `newgrp dialout`), re-plug the gripper, then verify.
 
 Verify: `role` is `Leader`/`Follower` and `firmware_sn` is non-empty:
@@ -39,7 +39,7 @@ The gripper MCU is a CH343 USB-serial device (`1a86:55d2`, CDC-ACM). On every ho
 IoError: SerialBus: open(/dev/serial/by-id/usb-1a86_USB_Dual_Serial_..-if02): Device or resource busy
 ```
 
-- **Symptom**: the first launch works, but relaunching right after moving to another port gives busy. It is not a tactile, camera or bandwidth problem.
+- **Symptom**: the first launch works, but relaunching right after moving to another port fails with `Device or resource busy`. It is not a tactile, camera or bandwidth problem.
 - **brltty**: the braille driver `brltty` grabs `1a86` too.
 - **Stopgap**: wait about 3s after plugging in before launching.
 
@@ -83,7 +83,7 @@ Last digit of `<seq>`: odd → left, even → right. This applies to grippers, w
 - **Tactile**: maps to `{side}_tactile_{left,right}`. The two GSPS sensors sharing a gripper's USB hub belong to that gripper, whose side comes from its firmware SN (the side in the `scan_grippers()` output), not the CH343 `mcu_serial`.
 - **Tracker**: the Pico4U tracker SN looks like `PC2310MLL3200496G`; the digit before the trailing `G` is odd-left / even-right, so this `6` is on the right. The headset does not show it, see [Reading a tracker SN](../common/pico4.md#pico-tracker-sn).
 - **Errors**: a non-conforming serial, the wrong count on a side, two fingertip sensors on one side, two grippers claiming one tactile side, or a tactile hub with no gripper all fail outright, naming the hub/serial.
-- **Order**: duplicates are reported before gaps; an empty side usually means its device landed on the other side, so re-check the side with two first.
+- **Order**: duplicates are reported before gaps; an empty side usually means its device landed on the other side, so first check the side that has two devices.
 
 ### USB bandwidth budget {#usb-budget}
 
@@ -97,9 +97,9 @@ lsusb -t
 - **USB 3 ports**: the tactile sensors and wrist cameras are USB 2.0 devices, so a blue USB 3 port still lands them on that controller's USB 2.0 bus. Splitting needs a second host controller (a Thunderbolt / USB4 dock brings its own, a plain hub does not).
 - **Error**: `Not enough bandwidth for altsetting N` in the kernel log; the full diagnosis is in [Troubleshooting · Not enough USB bandwidth](troubleshooting.md#usb-bandwidth).
 
-## Pico4 headset and trackers
+## Pico4U headset and trackers
 
-The Pico4U tracker on top of the gripper provides the 6-DoF pose; the headset runs XTac-UMI XR, and the pose reaches collection via the [XenseVR PC Service](#35) below. Unboxing, installing XTac-UMI XR, network, tracker binding, tracking mode and startup alignment are in [Pico4 headset and trackers](../common/pico4.md).
+The Pico4U tracker on top of the gripper provides the 6-DoF pose; the headset runs XTac-UMI XR, and the pose reaches collection via the [XenseVR PC Service](#35) below. Unboxing, installing XTac-UMI XR, network, tracker binding, tracking mode and startup alignment are in [Pico4 headset and tracker setup](../common/pico4.md).
 
 - **Factory-configured headset**: start at [Network connection](../common/pico4.md#pico-network).
 - **Before every session**: plug in the USB, short-press the tracker's power button until the blue light comes on, [tap "Connect"](../common/pico4.md#pico-toolkit-ui) and do the [startup alignment](../common/pico4.md#pico-frame).
@@ -115,7 +115,7 @@ Collection reads poses from the XenseVR PC Service (RoboticsService) daemon. The
 - **Naming**: the headset app is **XTac-UMI XR**; the service on the collection PC is **XenseVR PC Service**. The package `XenseVR-PC-Service_<version>_amd64.deb` installs into `/opt/apps/roboticsservice/`, and the Python package is `xensevr_pc_service_sdk`.
 - **Single instance**: starting a second one fails or conflicts.
 - **Data**: the service supplies Head / controllers / hand tracking / full-body mocap / tracker data; collection uses the tracker pose (with an `sn` per tracker) and the head pose (paired with the [headset's stereo frames](recording.md#56)).
-- **Headset frames**: they share one connection with the trackers, so with the service down neither works; this needs the service at v0.2.0 or later (see [Version baseline](versions.md#required)), while tracker-only use works with any version.
+- **Headset frames**: they share one connection with the trackers, so with the service down neither works; this needs the service at v0.2.0 or later (see [You must upgrade to the latest versions](versions.md#required)), while tracker-only use works with any version.
 - **Demos**: the service directory ships `ConsoleDemo` / `RobotDemoQt` to confirm the headset was discovered and tracking data looks right (they need the same runtime environment as the service).
 
 ## Power-on sequence {#36}

@@ -55,7 +55,7 @@ Once the version passes, the script prints the current reading (raw and clamped)
 2. Fully open to the mechanical limit → Enter. The angle goes straight into `EncoderMaxCal` in MCU flash, with no second confirmation; a 10Hz live readout follows for checking.
 
 !!! warning "Get the fingers in position first, then press Enter"
-    The firmware latches the raw count the instant it receives the command; moving the fingers afterwards wastes the calibration.
+    The firmware latches the raw count the instant it receives the command; moving the fingers afterwards invalidates the calibration.
 
 Output looks like:
 
@@ -94,7 +94,7 @@ First, the startup log prints this as each side connects:
 [left]  Jaw normalised by the firmware's encoder-max calibration
 ```
 
-If that line is missing, stop looking: an uncalibrated leader does not connect, and the program exits with the calibration command in the error.
+If that line is missing, there is no need to check further: an uncalibrated leader does not connect, and the program exits with the calibration command in the error.
 
 Second, the curve in Rerun. Run with `--display_data=true` and find `gripper.pos` in the scalar panel:
 
@@ -103,8 +103,8 @@ Second, the curve in Rerun. Run with `--display_data=true` and find `gripper.pos
 | Fully open | reaches **1.0** |
 | Fully closed | drops to **0.0** |
 
-!!! warning "Clearly short of 1.0 wide open → recalibrate that unit"
-    If fully open fingers only reach around `0.8`, the travel maximum in flash no longer matches the real travel, and the program does not raise. Recalibrate with the same command.
+!!! warning "Well below 1.0 when fully open → recalibrate that unit"
+    If fully open fingers only reach around `0.8`, the travel maximum in flash no longer matches the real travel, and the program does not report an error. Recalibrate with the same command.
 
 ### Scope
 
@@ -113,7 +113,7 @@ Second, the curve in Rerun. Run with `--display_data=true` and find `gripper.pos
 
 ## Pico4U tracker self-check
 
-The tracker needs no calibration, and its side is matched from the SN; binding is in [Pico4 headset and trackers](../common/pico4.md#pico-tracker-bind). The command below only reads: it prints the pose to confirm the chain and the assembly.
+The tracker needs no calibration, and its side is matched from the SN; binding is in [Binding the tracker to the headset](../common/pico4.md#pico-tracker-bind). The command below only reads: it prints the pose to confirm the chain and the assembly.
 
 ```bash
 python -m lerobot.robots.taccap_gripper.check_tracker

@@ -9,7 +9,7 @@ On this page, **power-cycle** means unplugging the 24V power cable, waiting abou
     **Fix**:
 
     - Confirm that both the USB cable and the 24V supply are connected; `lsusb` should list `1a86:55d2`. If it does not, try another cable or USB port.
-    - Confirm that the current user has been added to the `dialout` group and has logged in again; see [Serial permissions](../pc/host-setup.md#31).
+    - Confirm that the current user has been added to the `dialout` group and has logged in again; see [Serial permissions (dialout)](../pc/host-setup.md#31).
     - Close the collection program and any other program using the gripper, then scan again.
     - If it still shows `Role.Unknown` or an empty serial number, contact [technical support](../common/reference.md#support).
 

@@ -24,7 +24,7 @@ g = t.FollowerGripper(ep.mcu_device)
 With only one gripper attached you can also use `t.find_follower()` / `t.find_leader()`.
 
 !!! danger "Scanning interrupts other programs"
-    A scan stops the gripper data streams other programs are using, and a follower gripper that is holding an object goes limp. In your own program, scan only once at startup.
+    A scan stops the gripper data streams other programs are using, and a follower gripper that is holding an object releases its torque. In your own program, scan only once at startup.
 
 ## Leader gripper: reading {#leader}
 
@@ -56,7 +56,7 @@ g = t.FollowerGripper(ep.mcu_device, wrist_video="/dev/v4l/by-id/<camera>-video-
 g.wrist_camera.start(lambda f: print(f.frame_index))
 ```
 
-Frames are RGB by default. To view the image you can simply use the example `wrist_camera.py`; see [Examples](examples.md#camera).
+Frames are RGB by default. To view the image you can simply use the example `wrist_camera.py`; see [Examples · Wrist camera](examples.md#camera).
 
 ### What happens when the fisheye calibration cannot be read {#fisheye-fallback}
 
@@ -67,7 +67,7 @@ To read the intrinsics, use:
 cal, is_reference, reason = g.calibration.resolve_fisheye()
 ```
 
-`is_reference` being true means the reference intrinsics are in use.
+If `is_reference` is True, the reference intrinsics are in use.
 
 !!! warning "Reference intrinsics are only an approximation"
     Lens mounting varies slightly from unit to unit, so the reference intrinsics are only good for viewing. When you need pixel measurements on the undistorted image (hand-eye calibration, visual servoing and so on),

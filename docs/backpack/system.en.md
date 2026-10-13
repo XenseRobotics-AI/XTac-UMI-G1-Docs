@@ -39,7 +39,7 @@ When to look here:
 
 ![Gripper configuration page](../assets/backpack/gripper-en.webp)
 
-Gripper opening calibration normalizes the gripper opening to 0–1: write the zero when closed and the maximum travel when fully open. The values are stored in the gripper, survive power loss and moving to another backpack, so each gripper needs calibrating once; the console and the Developer Kit calibration script write the same values. When recalibration is needed is covered in the Developer Kit's [Gripper calibration](../pc/calibration.md#41).
+Gripper opening calibration normalizes the gripper opening to 0–1: write the zero when closed and the maximum travel when fully open. The values are stored in the gripper, survive power loss and moving to another backpack, so each gripper needs calibrating once; the console and the Developer Kit calibration script write the same values. When recalibration is needed is covered in the Developer Kit's [Gripper calibration (zero + travel)](../pc/calibration.md#41).
 
 One gripper at a time, without skipping steps:
 
@@ -133,7 +133,7 @@ To set one up:
 2. Click "Validate" or "Test read/write" to confirm the account and directory work.
 3. Select it under "Upload backend" when creating a project; for an existing project, bind it on the project's row.
 
-Credentials are not shown again after saving; leaving a field blank when editing keeps the stored value. Uploading is covered in [Export and upload](projects-export.md#export).
+Credentials are not shown again after saving; leaving a field blank when editing keeps the stored value. Uploading is covered in [Export](projects-export.md#export).
 
 !!! warning "Binding the wrong account cannot be undone"
     Data uploaded to someone else's account is hard to take back, and public publishing is irreversible. Check which configuration a project is bound to when you create it.

@@ -89,7 +89,7 @@ Both editions use the same grippers and headset and produce the same data. The B
 
     <span class="xu-tag xu-tag--backpack">Backpack Kit</span>
 
-    **XTac-UMI Data Collection Backpack**{ .xu-card__title }
+    **XTac-UMI Backpack**{ .xu-card__title }
 
     ---
 

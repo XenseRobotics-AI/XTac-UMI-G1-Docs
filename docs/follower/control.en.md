@@ -90,6 +90,6 @@ Key points:
 
 ## Faults and recovery {#fault}
 
-When the controller detects an anomaly it stops and goes limp; `c.snapshot().state` becomes `FAULT`, and the reason is in `c.snapshot().fault_reason`.
+When the controller detects an anomaly it stops and releases its torque; `c.snapshot().state` becomes `FAULT`, and the reason is in `c.snapshot().fault_reason`.
 Once the cause is removed, call `g.motor.clear_fault()` and then `c.reset()` to continue; if it cannot recover, power-cycle the gripper.
 For common causes, see [Troubleshooting](troubleshooting.md#fault).

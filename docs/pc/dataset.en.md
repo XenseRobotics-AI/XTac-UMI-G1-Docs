@@ -50,7 +50,7 @@ The default location is `~/.cache/huggingface/lerobot/<repo_id>/`; `--dataset.ro
 `repo_id` has the form `<org>/<name>`:
 
 - Lower case with hyphens or underscores, no spaces or non-ASCII characters; as a team use `<org>/<task>_<variant>_<YYYYMMDD>`, e.g. `Xense/insert_plug_left_20260703`.
-- One dataset per task/variant; different tasks or clearly different variants get different `repo_id`s (trade-offs in [Recording](recording.md)).
+- One dataset per task/variant; different tasks or clearly different variants get different `repo_id`s (trade-offs in [Data collection](recording.md)).
 - Keep `--dataset.single_task` identical within a dataset (written into `meta/tasks`).
 
 ## Checking the data {#62}
@@ -117,7 +117,7 @@ It drops the two headset eye image keys and the `head_camera.*` dimensions from 
 
 ## Pushing to the Hugging Face Hub and backup {#64}
 
-An upload is off-site backup plus delivery. Run `lerobot-check-dataset` first; back up the whole `<repo_id>/` before deleting or moving an important dataset.
+Uploading serves as both an off-site backup and a way to deliver the dataset. Run `lerobot-check-dataset` first; back up the whole `<repo_id>/` before deleting or moving an important dataset.
 
 !!! warning "Log in to the Hub first"
     Before uploading, run `hf auth login` (older versions also accept `huggingface-cli login`) or set `HF_TOKEN`; otherwise the push fails on authentication.
@@ -160,7 +160,7 @@ Common variants:
         --no-videos
     ```
 
-On success it lives at `https://huggingface.co/datasets/<repo_id>`.
+On success the dataset is available at `https://huggingface.co/datasets/<repo_id>`.
 
 - The upload generates a dataset card (README) and writes `assets/` (three card images, about 12MB in total) into the local dataset folder, uploading it too, even with `--no-videos`.
 - `--dataset-path` reads local files only; a wrong path fails with `Cannot find dataset metadata in local directory` and nothing is downloaded from the Hub.
@@ -194,7 +194,7 @@ Watch the target disk with `df -h` so a run does not fill it mid-session (see [T
 
 ## Collection record
 
-Keep one line of record per dataset. Gripper and tactile SNs are already in `meta/hardware.json`; copying them here is only for offline lookup, and the dataset wins if they disagree. The tracker SN has to be written down by hand.
+Log one row per dataset. Gripper and tactile SNs are already in `meta/hardware.json`; copying them here is only for offline lookup, and the dataset wins if they disagree. The tracker SN has to be written down by hand.
 
 | `repo_id` | Task description | Station number `--robot.id` | Gripper / tracker SN | Calibration date | Software version / commit | World-frame session | Integrity check | Episodes / episode length | Notes |
 |---|---|---|---|---|---|---|---|---|---|

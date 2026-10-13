@@ -25,7 +25,7 @@ g = t.FollowerGripper(ep.mcu_device)
 Follower serials end in `s`; see [Serial number](index.md#sn).
 
 !!! danger "Scanning interrupts other programs"
-    It stops other programs' gripper data streams, and a holding follower goes limp; scan only once, at start-up.
+    It stops other programs' gripper data streams, and a holding follower releases its torque; scan only once, at start-up.
 
 ## Controllers {#controllers}
 
@@ -63,7 +63,7 @@ These rewrite gripper or motor configuration; **only under technical support's g
 
 ## Wrist camera {#camera}
 
-Closed by default; it opens as on the leader gripper, see [Wrist camera and fisheye undistortion](../sdk/api.md#camera).
+Off by default; enable it the same way as on the leader gripper, see [Wrist camera and fisheye undistortion](../sdk/api.md#camera).
 
 ## Example scripts {#examples}
 

@@ -1,6 +1,6 @@
 # Projects, export and upload
 
-Manage recorded data on the console's Project page: export a task as a LeRobot dataset or MCAP, download it or upload it to a remote (for example ModelScope), then free up space with Archive.
+Manage recorded data on the console's Project page: export a task as a LeRobot dataset or MCAP, download it or upload it to a remote backend (for example ModelScope), then free up space with Archive.
 
 ## The Project page {#projects}
 
@@ -92,5 +92,5 @@ Tick recordings in the export dialog and click Archive, or tick "Automatically a
 ## Delete {#delete}
 
 - **One recording**: click Delete on its row; the files go with it and cannot be recovered.
-- **Several**: tick them in the export dialog and click "Delete permanently". Unlike archiving, the record goes too; copies already uploaded to a remote are unaffected.
+- **Several**: tick them in the export dialog and click "Delete permanently". Unlike archiving, the record goes too; copies already uploaded to a remote backend are unaffected.
 - **A whole project or task**: "Delete permanently" in its Edit menu; you must type the name to confirm.
