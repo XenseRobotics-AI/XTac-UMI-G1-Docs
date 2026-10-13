@@ -79,7 +79,7 @@ The IP drop-down at the left of the top bar gathers every way into this unit. Af
 - **Collapsed**: shows only "the one address you should use to reach it right now", the first available of wired > wireless > hotspot.
 - **Expanded**: click to see all network details.
 
-![The top-bar network drop-down](../assets/backpack/network-dropdown-live-en.webp)
+![The top-bar network drop-down](../assets/backpack/network-dropdown-live-en.webp){ width="320" }
 
 ## Choosing a method by scenario {#choose}
 

@@ -16,7 +16,7 @@
 
 1. Unbox: peel off the front-panel sticker, the controller tape and the lens stickers, then hold the power button to switch on.
 
-    ![Protective sticker on the front sensor bar](../assets/pico4/unbox-film.webp){ width="440" }
+    ![Protective sticker on the front sensor bar](../assets/pico4/unbox-film.webp){ width="560" }
 
 2. Update the system: a new unit ships on an older build and must be updated before you pair trackers or install the app. Join a WiFi network with internet access, go to Settings → System update and tap "Download and install" to reach Pico OS 5.15.5.U or later (about 1.9GB).
 
