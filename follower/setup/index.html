@@ -2157,13 +2157,13 @@
 <p>依次完成四步再投入使用。安装接线见 <a href="../../common/gripper/#follower-install">夹爪连接与序列号 → 从夹爪安装与连接</a>，
 从夹爪要 <strong>USB Type-C 和 24V 两路都接上</strong>。</p>
 <h2 id="install">1. 安装 SDK<a class="headerlink" href="#install" title="锚点链接">¶</a></h2>
-<p>装好数采环境（<a href="../../pc/install/">安装</a>）就已经带有 SDK 0.4.1，不需要另外安装。示例脚本在数采仓库的
+<p>装好数采环境（<a href="../../pc/install/">安装</a>）就已经带有 SDK 0.4.3，不需要另外安装。示例脚本在数采仓库的
 <code>third_party/taccap-gripper/python/examples/</code> 下。串口权限见 <a href="../../pc/host-setup/#31">串口权限</a>。</p>
 <p>验证（在数采仓库根目录、数采环境里）：</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nb">cd</span><span class="w"> </span>third_party/taccap-gripper
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"import xense.taccap as t; print(t.hello())"</span>
 </span></code></pre></div>
-<p>应输出 <code>taccap-gripper OK; version 0.4.1</code>。版本不对说明 SDK 子模块没更新或没重新编译，见
+<p>应输出 <code>taccap-gripper OK; version 0.4.3</code>。版本不对说明 SDK 子模块没更新或没重新编译，见
 <a href="../troubleshooting/#connect">从夹爪故障排查</a>。</p>
 <p>后续命令均在 <code>third_party/taccap-gripper</code> 目录、数采环境中运行。不用数采仓库、单独安装 SDK 见
 <a href="../../sdk/install/">SDK 附录 → 安装与构建</a>。</p>
@@ -2189,7 +2189,7 @@
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>python<span class="w"> </span>python/examples/follower_status.py<span class="w"> </span>left
 </span></code></pre></div>
 <p>这个脚本只读，不会让电机动。正常输出中要看的几行（中间省略）：</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>[fw] FirmwareVersion(1.2.14.0)
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>[fw] FirmwareVersion(1.2.16.0)
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>...
 </span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>[归一化] g.position() = 0.9183
 </span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>...
@@ -2209,7 +2209,7 @@
 <tbody>
 <tr>
 <td><code>[fw]</code></td>
-<td>1.2.14</td>
+<td>1.2.16</td>
 <td>低于 1.2.11 会打印升级提示，低于 1.2.5 会报错退出，都先<a href="../firmware/#mcu-ota">升级固件</a></td>
 </tr>
 <tr>
@@ -2348,7 +2348,7 @@
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      Copyright © 2026 千觉机器人科技(上海)有限公司 · 文档 v0.1.0
+      Copyright © 2026 千觉机器人科技(上海)有限公司 · 文档 v0.1.1
     </div>
   
   

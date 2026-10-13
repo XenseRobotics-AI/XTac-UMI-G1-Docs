@@ -2173,7 +2173,7 @@
 </tbody>
 </table>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/pico4/world-frame-origin.webp" data-desc-position="bottom"><img alt="启动瞬间冻结的世界坐标系" src="../../assets/pico4/world-frame-origin.webp" width="420"></a></p>
-<p>坐标系只在启动瞬间跟着头显，冻结后固定在空间中，转头、走动都不会带动它；重启 XTac-UMI XR 会重新建系，原点和方向都会变。因此启动时要面朝机器人正前方，使 X 轴与之对齐；同一数据集采集期间不要重启，操作步骤见<a href="../pico4/#pico-frame">启动与坐标系对齐</a>。</p>
+<p>坐标系只在启动瞬间跟着头显，冻结后固定在空间中，转头、走动都不会带动它；重启 XTac-UMI XR 会重新建系，原点和方向都会变。因此启动时要与机器人朝向一致（朝机器人的正前方），使 X 轴与之对齐；同一数据集采集期间不要重启，操作步骤见<a href="../pico4/#pico-frame">启动与坐标系对齐</a>。</p>
 <p>数据集里所有位姿都以这个世界系为参考：PC 版落盘的是末端 TCP 位姿 <code>tcp.x/y/z</code> 加 6D 旋转 <code>r1..r6</code>（旋转矩阵前两列，约定见<a href="../../pc/recording/#53">每帧记录内容</a>）；背包版 MCAP 里记录头显与追踪器的位姿。</p>
 <h2 id="world-view">采集时的位姿视图<a class="headerlink" href="#world-view" title="锚点链接">¶</a></h2>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">背包版</label><label for="__tabbed_1_2">PC 版</label></div>
@@ -2276,7 +2276,7 @@
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      Copyright © 2026 千觉机器人科技(上海)有限公司 · 文档 v0.1.0
+      Copyright © 2026 千觉机器人科技(上海)有限公司 · 文档 v0.1.1
     </div>
   
   

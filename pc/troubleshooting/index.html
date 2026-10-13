@@ -2229,7 +2229,7 @@
 
 
 <h1 id="故障排查">故障排查<a class="headerlink" href="#故障排查" title="锚点链接">¶</a></h1>
-<p>多数问题由串口权限不足或 ModemManager 抢占串口引起，请先查阅「串口权限与设备发现」。排查前请先运行<a href="../">快速开始</a>中的自检。</p>
+<p>多数问题由串口权限不足或 ModemManager 抢占串口引起，请先查阅「串口权限与设备发现」。排查前请先按<a href="../quickstart/#self-check">一页速通 · 自检</a>完成自检。</p>
 <h2 id="logs">反馈问题请附上完整日志<a class="headerlink" href="#logs" title="锚点链接">¶</a></h2>
 <p>完整日志位于 <code>~/xenselogs/session_&lt;时间戳&gt;.log</code>，每次运行生成一份。反馈时请附上整个文件。</p>
 <ul>
@@ -2310,7 +2310,7 @@
 <ul>
 <li>通常使用 <code>ota_update.py --all</code>，按角色逐只刷写；</li>
 <li>该角色只连接一只时，使用 <code>ota_update.py master</code> / <code>ota_update.py slave</code>；</li>
-<li>指定某一只时，使用报错中 <code>shipped images</code> 列出的文件名，并加上左右或序列号，如 <code>ota_update.py tc-gu-01-slave-1.2.14.bin left</code>（以 <code>firmware/</code> 中的实际文件名为准）。</li>
+<li>指定某一只时，使用报错中 <code>shipped images</code> 列出的文件名，并加上左右或序列号，如 <code>ota_update.py tc-gu-01-slave-1.2.16.bin left</code>（以 <code>firmware/</code> 中的实际文件名为准）。</li>
 </ul>
 <p>见<a href="../versions/#ota">固件 OTA 升级</a>。</p>
 </details>
@@ -2711,7 +2711,7 @@
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      Copyright © 2026 千觉机器人科技(上海)有限公司 · 文档 v0.1.0
+      Copyright © 2026 千觉机器人科技(上海)有限公司 · 文档 v0.1.1
     </div>
   
   
