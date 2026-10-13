@@ -2164,29 +2164,29 @@
 
 <h1 id="install-and-build">Install and build<a class="headerlink" href="#install-and-build" title="锚点链接">¶</a></h1>
 <h2 id="python">Python install<a class="headerlink" href="#python" title="锚点链接">¶</a></h2>
-<p><strong>We recommend using the collection environment directly</strong>: once it is set up per <a href="../../pc/install/">Installation</a> it already includes SDK 0.4.1
+<p><strong>We recommend using the collection environment directly</strong>: once it is set up per <a href="../../pc/install/">Installation</a> it already includes SDK 0.4.3
 (submodule <code>third_party/taccap-gripper</code>), and the source and example scripts are all in that directory. To verify:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nb">cd</span><span class="w"> </span>third_party/taccap-gripper
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"import xense.taccap as t; print(t.hello())"</span>
 </span></code></pre></div>
-<p>It should print <code>taccap-gripper OK; version 0.4.1</code>. If the version is wrong, pull the submodules and rerun <code>./setup_env.sh --install</code>,
+<p>It should print <code>taccap-gripper OK; version 0.4.3</code>. If the version is wrong, pull the submodules and rerun <code>./setup_env.sh --install</code>,
 see <a href="../../pc/install/#22">Clone the repo and its submodules</a>.</p>
 <h3 id="standalone">Standalone install without the data-collection repository (optional)<a class="headerlink" href="#standalone" title="锚点链接">¶</a></h3>
 <p>If you only want to develop on another machine and do not need the data-collection repository, you can install the SDK on its own. This needs Ubuntu 22.04 or later, and <code>mamba</code> or
 <code>conda</code>. The SDK is compiled from source and the example scripts live in the source tree, so keep it after installing.</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>git<span class="w"> </span>clone<span class="w"> </span>--branch<span class="w"> </span>v0.4.1<span class="w"> </span>https://github.com/XenseRobotics-AI/TacCap-Gripper.git
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>git<span class="w"> </span>clone<span class="w"> </span>--branch<span class="w"> </span>v0.4.3<span class="w"> </span>https://github.com/XenseRobotics-AI/TacCap-Gripper.git
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="nb">cd</span><span class="w"> </span>TacCap-Gripper
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>mamba<span class="w"> </span>env<span class="w"> </span>create<span class="w"> </span>-f<span class="w"> </span>environment.yml<span class="w">     </span><span class="c1"># creates an environment named taccap with every build dependency</span>
 </span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>mamba<span class="w"> </span>activate<span class="w"> </span>taccap
 </span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>pip<span class="w"> </span>install<span class="w"> </span>.<span class="w"> </span>--no-build-isolation<span class="w">      </span><span class="c1"># takes a few minutes</span>
 </span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>sudo<span class="w"> </span>usermod<span class="w"> </span>-aG<span class="w"> </span>dialout,video<span class="w"> </span><span class="s2">"</span><span class="nv">$USER</span><span class="s2">"</span><span class="w">  </span><span class="c1"># serial and camera permissions; takes effect after logging out and back in</span>
 </span></code></pre></div>
-<p>Verify the same way as above; it should print <code>taccap-gripper OK; version 0.4.1</code>.</p>
+<p>Verify the same way as above; it should print <code>taccap-gripper OK; version 0.4.3</code>.</p>
 <div class="admonition warning">
 <p class="admonition-title">Common problems</p>
 <ul>
 <li><strong>Run <code>mamba activate taccap</code> before installing</strong>, and do not drop <code>--no-build-isolation</code>, or the build will fail.</li>
-<li>Version is not 0.4.1: the current environment is loading an SDK from somewhere else. Open a clean terminal, activate only <code>taccap</code> and try again.</li>
+<li>Version is not 0.4.3: the current environment is loading an SDK from somewhere else. Open a clean terminal, activate only <code>taccap</code> and try again.</li>
 </ul>
 </div>
 <h2 id="self-check">Hardware self-check<a class="headerlink" href="#self-check" title="锚点链接">¶</a></h2>
@@ -2281,7 +2281,7 @@ serial permissions and similar issues are covered in <a href="../../pc/host-setu
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      Copyright © 2026 XenseRobotics Co., Ltd. · Docs v0.1.0
+      Copyright © 2026 XenseRobotics Co., Ltd. · Docs v0.1.1
     </div>
   
   

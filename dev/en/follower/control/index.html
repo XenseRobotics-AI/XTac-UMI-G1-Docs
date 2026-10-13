@@ -2257,6 +2257,7 @@
 <li><strong>Always generate the config with <code>for_spec(g.motor.get_spec())</code></strong>, and change only the grip force as needed.</li>
 <li><strong>Start the controller first, then <code>g.motor.enable()</code></strong>; the code above already follows this order.</li>
 <li><strong>Run only one controller per gripper at a time.</strong></li>
+<li>Force-position control follows a streamed target about one send interval behind (about 20ms at 50Hz), in exchange for smooth motion.</li>
 <li>While controlling, read opening, velocity, torque and temperature from <code>c.snapshot().observation</code>; do not read the motor state separately.</li>
 <li>Interface details and example scripts are in <a href="../api/">API and examples</a>.</li>
 </ul>
@@ -2351,7 +2352,7 @@ For common causes, see <a href="../troubleshooting/#fault">Troubleshooting</a>.<
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      Copyright © 2026 XenseRobotics Co., Ltd. · Docs v0.1.0
+      Copyright © 2026 XenseRobotics Co., Ltd. · Docs v0.1.1
     </div>
   
   

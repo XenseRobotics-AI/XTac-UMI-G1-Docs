@@ -2246,7 +2246,7 @@ with a standalone install it is <code>TacCap-Gripper</code>.</p>
 <h2 id="firmware">Firmware<a class="headerlink" href="#firmware" title="锚点链接">¶</a></h2>
 <p>For a follower gripper see <a href="../../follower/firmware/">Firmware and motor upgrades</a>; for a leader gripper see <a href="../../pc/versions/#ota">Firmware OTA upgrade</a>.</p>
 <h2 id="migrate">Migrating from older versions<a class="headerlink" href="#migrate" title="锚点链接">¶</a></h2>
-<p>Programs written against 0.1.x / 0.2.x are mainly affected by these changes when upgrading to 0.4.1:</p>
+<p>Programs written against 0.1.x / 0.2.x are mainly affected by these changes when upgrading to 0.4.x:</p>
 <ul>
 <li>The follower gripper now uses controllers: <code>ImpedanceController</code> or <code>ForcePositionController</code>, configured with <code>for_spec()</code>.
   The old <code>ControlLoop</code>, <code>set_position()</code> and similar interfaces have been removed.</li>
@@ -2263,7 +2263,13 @@ with a standalone install it is <code>TacCap-Gripper</code>.</p>
 <li>During operation, <code>set_target(opening, grip_force)</code> with a grip force above 1.1N·m now raises an error instead of being silently accepted.</li>
 <li>New <code>g.motor.motor_version()</code> reads the motor firmware version (from gripper firmware 1.2.14 on, this works regardless of the motor's communication mode).</li>
 </ul>
-<p>The full list of changes is in the SDK's <a href="https://github.com/XenseRobotics-AI/TacCap-Gripper/blob/v0.4.1/CHANGELOG.md">CHANGELOG</a>.</p>
+<p>Upgrading from 0.4.1 to 0.4.3 (no API changes):</p>
+<ul>
+<li><code>ForcePositionController</code> no longer stutters when following a streamed target, at the cost of about 10–15ms more tracking lag.</li>
+<li>A stall short of a target that is still moving enters <code>HOLDING_FORCE</code> about 150ms later than before; review programs that rely on it to detect a grasp.</li>
+<li>The bundled follower firmware moves to 1.2.16; <a href="../../follower/firmware/#mcu-ota">upgrade the firmware</a>.</li>
+</ul>
+<p>The full list of changes is in the SDK's <a href="https://github.com/XenseRobotics-AI/TacCap-Gripper/blob/v0.4.3/CHANGELOG.md">CHANGELOG</a>.</p>
 
 
 
@@ -2341,7 +2347,7 @@ with a standalone install it is <code>TacCap-Gripper</code>.</p>
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      Copyright © 2026 XenseRobotics Co., Ltd. · Docs v0.1.0
+      Copyright © 2026 XenseRobotics Co., Ltd. · Docs v0.1.1
     </div>
   
   

@@ -2184,11 +2184,11 @@ Normally you only need to keep the gripper firmware up to date; upgrade the moto
 </thead>
 <tbody>
 <tr>
-<td>1.2.14</td>
-<td>Bundled with SDK 0.4.1, recommended</td>
+<td>1.2.16</td>
+<td>Bundled with SDK 0.4.3, recommended</td>
 </tr>
 <tr>
-<td>1.2.11 – 1.2.13</td>
+<td>1.2.11 – 1.2.15</td>
 <td>Usable, upgrade recommended</td>
 </tr>
 <tr>
@@ -2222,7 +2222,7 @@ Normally you only need to keep the gripper firmware up to date; upgrade the moto
 </span></code></pre></div>
 <ul>
 <li>With several follower grippers connected, to flash just one of them, give the image file name plus the side or serial number:
-  <code>python python/examples/ota_update.py tc-gu-01-slave-1.2.14.bin left</code>.
+  <code>python python/examples/ota_update.py tc-gu-01-slave-1.2.16.bin left</code>.
   Do not write <code>slave left</code>; that reports <code>firmware file not found</code>.</li>
 <li>Flashing takes about 1 second, after which the gripper restarts automatically.</li>
 <li>If the script finds that the firmware does not match the gripper's role it refuses to flash. <strong>Do not force it with <code>--force</code>.</strong></li>
@@ -2354,7 +2354,7 @@ This requires gripper firmware 1.2.14 or later. If it shows <code>invalid</code>
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      Copyright © 2026 XenseRobotics Co., Ltd. · Docs v0.1.0
+      Copyright © 2026 XenseRobotics Co., Ltd. · Docs v0.1.1
     </div>
   
   

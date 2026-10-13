@@ -2164,29 +2164,29 @@
 
 <h1 id="安装与构建">安装与构建<a class="headerlink" href="#安装与构建" title="锚点链接">¶</a></h1>
 <h2 id="python">Python 安装<a class="headerlink" href="#python" title="锚点链接">¶</a></h2>
-<p><strong>推荐直接用数采环境</strong>：按 <a href="../../pc/install/">安装</a> 装好之后就已经带有 SDK 0.4.1
+<p><strong>推荐直接用数采环境</strong>：按 <a href="../../pc/install/">安装</a> 装好之后就已经带有 SDK 0.4.3
 （子模块 <code>third_party/taccap-gripper</code>），源码和示例脚本都在这个目录下。验证：</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nb">cd</span><span class="w"> </span>third_party/taccap-gripper
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"import xense.taccap as t; print(t.hello())"</span>
 </span></code></pre></div>
-<p>应输出 <code>taccap-gripper OK; version 0.4.1</code>。版本不对时，拉子模块并重跑 <code>./setup_env.sh --install</code>，
+<p>应输出 <code>taccap-gripper OK; version 0.4.3</code>。版本不对时，拉子模块并重跑 <code>./setup_env.sh --install</code>，
 见 <a href="../../pc/install/#22">克隆仓库与子模块</a>。</p>
 <h3 id="standalone">不使用数采仓库时单独安装（可选）<a class="headerlink" href="#standalone" title="锚点链接">¶</a></h3>
 <p>只想在别的机器上开发、不需要数采仓库时，也可以单独安装。需要 Ubuntu 22.04 及以上，以及 <code>mamba</code> 或
 <code>conda</code>。SDK 从源码编译，示例脚本也在源码目录里，装完请保留。</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>git<span class="w"> </span>clone<span class="w"> </span>--branch<span class="w"> </span>v0.4.1<span class="w"> </span>https://github.com/XenseRobotics-AI/TacCap-Gripper.git
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>git<span class="w"> </span>clone<span class="w"> </span>--branch<span class="w"> </span>v0.4.3<span class="w"> </span>https://github.com/XenseRobotics-AI/TacCap-Gripper.git
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="nb">cd</span><span class="w"> </span>TacCap-Gripper
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>mamba<span class="w"> </span>env<span class="w"> </span>create<span class="w"> </span>-f<span class="w"> </span>environment.yml<span class="w">     </span><span class="c1"># 新建名为 taccap 的环境,包含编译所需的全部依赖</span>
 </span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>mamba<span class="w"> </span>activate<span class="w"> </span>taccap
 </span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>pip<span class="w"> </span>install<span class="w"> </span>.<span class="w"> </span>--no-build-isolation<span class="w">      </span><span class="c1"># 需要几分钟</span>
 </span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>sudo<span class="w"> </span>usermod<span class="w"> </span>-aG<span class="w"> </span>dialout,video<span class="w"> </span><span class="s2">"</span><span class="nv">$USER</span><span class="s2">"</span><span class="w">  </span><span class="c1"># 串口与相机权限,注销后重新登录生效</span>
 </span></code></pre></div>
-<p>验证方法同上，应输出 <code>taccap-gripper OK; version 0.4.1</code>。</p>
+<p>验证方法同上，应输出 <code>taccap-gripper OK; version 0.4.3</code>。</p>
 <div class="admonition warning">
 <p class="admonition-title">常见问题</p>
 <ul>
 <li><strong>必须先 <code>mamba activate taccap</code> 再安装</strong>，<code>--no-build-isolation</code> 也不要省，否则编译会报错。</li>
-<li>版本不是 0.4.1：当前环境加载了别处的 SDK。换一个干净的终端，只激活 <code>taccap</code> 再试。</li>
+<li>版本不是 0.4.3：当前环境加载了别处的 SDK。换一个干净的终端，只激活 <code>taccap</code> 再试。</li>
 </ul>
 </div>
 <h2 id="self-check">硬件自检<a class="headerlink" href="#self-check" title="锚点链接">¶</a></h2>
@@ -2281,7 +2281,7 @@
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      Copyright © 2026 千觉机器人科技(上海)有限公司 · 文档 v0.1.0
+      Copyright © 2026 千觉机器人科技(上海)有限公司 · 文档 v0.1.1
     </div>
   
   

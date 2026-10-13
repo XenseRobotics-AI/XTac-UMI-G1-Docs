@@ -2257,6 +2257,7 @@
 <li><strong>配置一律用 <code>for_spec(g.motor.get_spec())</code> 生成</strong>，只按需要改夹持力。</li>
 <li><strong>先启动控制器，再 <code>g.motor.enable()</code></strong>，上面的写法已经是这个顺序。</li>
 <li><strong>一只夹爪同时只运行一个控制器。</strong></li>
+<li>力位控制跟随连续目标时，比目标晚约一个发送周期（50Hz 下约 20ms），换来平顺的运动。</li>
 <li>控制过程中读开度、速度、力矩、温度，用 <code>c.snapshot().observation</code>，不要另外去读电机状态。</li>
 <li>接口细节与示例脚本见 <a href="../api/">API 与示例</a>。</li>
 </ul>
@@ -2351,7 +2352,7 @@
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      Copyright © 2026 千觉机器人科技(上海)有限公司 · 文档 v0.1.0
+      Copyright © 2026 千觉机器人科技(上海)有限公司 · 文档 v0.1.1
     </div>
   
   

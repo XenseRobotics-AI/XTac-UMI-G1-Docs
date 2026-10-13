@@ -2157,13 +2157,13 @@
 <p>Complete these four steps in order before putting the follower gripper to work. Hardware mounting and wiring are in <a href="../../common/gripper/#follower-install">Gripper connection and serial numbers → Follower gripper mounting and connection</a>;
 the follower gripper needs <strong>both USB Type-C and 24V connected</strong>.</p>
 <h2 id="install">1. Install the SDK<a class="headerlink" href="#install" title="锚点链接">¶</a></h2>
-<p>Once the collection environment is installed (<a href="../../pc/install/">Installation</a>), SDK 0.4.1 is already included; there is nothing extra to install. The example scripts are in the data-collection repository under
+<p>Once the collection environment is installed (<a href="../../pc/install/">Installation</a>), SDK 0.4.3 is already included; there is nothing extra to install. The example scripts are in the data-collection repository under
 <code>third_party/taccap-gripper/python/examples/</code>. For serial port permissions, see <a href="../../pc/host-setup/#31">Serial permissions (dialout)</a>.</p>
 <p>Verify (from the data-collection repository root, inside the collection environment):</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nb">cd</span><span class="w"> </span>third_party/taccap-gripper
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"import xense.taccap as t; print(t.hello())"</span>
 </span></code></pre></div>
-<p>It should print <code>taccap-gripper OK; version 0.4.1</code>. A different version means the SDK submodule was not updated or not rebuilt; see
+<p>It should print <code>taccap-gripper OK; version 0.4.3</code>. A different version means the SDK submodule was not updated or not rebuilt; see
 <a href="../troubleshooting/#connect">Follower gripper troubleshooting</a>.</p>
 <p>All subsequent commands are run from the <code>third_party/taccap-gripper</code> directory, inside the collection environment. To install the SDK on its own without the data-collection repository, see
 <a href="../../sdk/install/">SDK appendix → Install and build</a>.</p>
@@ -2189,7 +2189,7 @@ if only the leader gripper is connected, the control scripts will open it as if 
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>python<span class="w"> </span>python/examples/follower_status.py<span class="w"> </span>left
 </span></code></pre></div>
 <p>This script is read-only and does not move the motor. The lines to look at in normal output (with parts omitted):</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>[fw] FirmwareVersion(1.2.14.0)
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>[fw] FirmwareVersion(1.2.16.0)
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>...
 </span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>[归一化] g.position() = 0.9183
 </span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>...
@@ -2209,7 +2209,7 @@ if only the leader gripper is connected, the control scripts will open it as if 
 <tbody>
 <tr>
 <td><code>[fw]</code></td>
-<td>1.2.14</td>
+<td>1.2.16</td>
 <td>Below 1.2.11 prints an upgrade prompt; below 1.2.5 exits with an error. In either case <a href="../firmware/#mcu-ota">upgrade the firmware</a> first</td>
 </tr>
 <tr>
@@ -2348,7 +2348,7 @@ if only the leader gripper is connected, the control scripts will open it as if 
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      Copyright © 2026 XenseRobotics Co., Ltd. · Docs v0.1.0
+      Copyright © 2026 XenseRobotics Co., Ltd. · Docs v0.1.1
     </div>
   
   
