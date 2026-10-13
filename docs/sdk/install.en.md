@@ -2,7 +2,7 @@
 
 ## Python install {#python}
 
-**We recommend using the collection environment directly**: once it is set up per [Installation](../pc/install.md) it already includes SDK 0.4.1
+**We recommend using the collection environment directly**: once it is set up per [Installation](../pc/install.md) it already includes SDK 0.4.3
 (submodule `third_party/taccap-gripper`), and the source and example scripts are all in that directory. To verify:
 
 ```bash
@@ -10,7 +10,7 @@ cd third_party/taccap-gripper
 python -c "import xense.taccap as t; print(t.hello())"
 ```
 
-It should print `taccap-gripper OK; version 0.4.1`. If the version is wrong, pull the submodules and rerun `./setup_env.sh --install`,
+It should print `taccap-gripper OK; version 0.4.3`. If the version is wrong, pull the submodules and rerun `./setup_env.sh --install`,
 see [Clone the repo and its submodules](../pc/install.md#22).
 
 ### Standalone install without the data-collection repository (optional) {#standalone}
@@ -19,7 +19,7 @@ If you only want to develop on another machine and do not need the data-collecti
 `conda`. The SDK is compiled from source and the example scripts live in the source tree, so keep it after installing.
 
 ```bash
-git clone --branch v0.4.1 https://github.com/XenseRobotics-AI/TacCap-Gripper.git
+git clone --branch v0.4.3 https://github.com/XenseRobotics-AI/TacCap-Gripper.git
 cd TacCap-Gripper
 mamba env create -f environment.yml     # creates an environment named taccap with every build dependency
 mamba activate taccap
@@ -27,11 +27,11 @@ pip install . --no-build-isolation      # takes a few minutes
 sudo usermod -aG dialout,video "$USER"  # serial and camera permissions; takes effect after logging out and back in
 ```
 
-Verify the same way as above; it should print `taccap-gripper OK; version 0.4.1`.
+Verify the same way as above; it should print `taccap-gripper OK; version 0.4.3`.
 
 !!! warning "Common problems"
     - **Run `mamba activate taccap` before installing**, and do not drop `--no-build-isolation`, or the build will fail.
-    - Version is not 0.4.1: the current environment is loading an SDK from somewhere else. Open a clean terminal, activate only `taccap` and try again.
+    - Version is not 0.4.3: the current environment is loading an SDK from somewhere else. Open a clean terminal, activate only `taccap` and try again.
 
 ## Hardware self-check {#self-check}
 

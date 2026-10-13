@@ -84,7 +84,7 @@ Record the serial number, connection method, error message and a photo of the se
 
     - normally use `ota_update.py --all`, which flashes each gripper by role;
     - when only one gripper of that role is connected, use `ota_update.py master` / `ota_update.py slave`;
-    - to target one gripper, pass a file name listed under `shipped images` in the error plus a side or serial number, e.g. `ota_update.py tc-gu-01-slave-1.2.14.bin left` (use the actual file name in `firmware/`).
+    - to target one gripper, pass a file name listed under `shipped images` in the error plus a side or serial number, e.g. `ota_update.py tc-gu-01-slave-1.2.16.bin left` (use the actual file name in `firmware/`).
 
     See [Firmware OTA upgrade](versions.md#ota).
 

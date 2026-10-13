@@ -89,7 +89,7 @@ Both paths produce the same collection environment; pick one.
 
     ```bash
     git clone \
-      --branch v0.1.0 \
+      --branch v0.1.1 \
       --recurse-submodules \
       https://github.com/XenseRobotics-AI/xense-taccap-lerobot.git
     cd xense-taccap-lerobot
@@ -189,7 +189,7 @@ Both paths produce the same collection environment; pick one.
     Run as a normal user (not root):
 
     ```bash
-    git clone --branch v0.1.0 https://github.com/XenseRobotics-AI/xense-taccap-lerobot.git
+    git clone --branch v0.1.1 https://github.com/XenseRobotics-AI/xense-taccap-lerobot.git
     cd xense-taccap-lerobot
     ./docker/install_customer.sh
     ```
@@ -205,7 +205,7 @@ Both paths produce the same collection environment; pick one.
     Offline, ask your Xense contact or distributor for the image `.tar` bundle, drop it in the repo root or pass it as the first argument; the script then verifies and imports it:
 
     ```bash
-    ./docker/install_customer.sh xense-taccap-lerobot-0.1.0-linux-amd64.tar
+    ./docker/install_customer.sh xense-taccap-lerobot-0.1.1-linux-amd64.tar
     ```
 
     Pulling online stays the default: an upgrade fetches only the layers that changed.
@@ -215,7 +215,7 @@ Both paths produce the same collection environment; pick one.
     The default `latest` floats with each release. Before real collection, pin a version in the repo root's `.env`; `compose.yaml` already points at the official image, so write only the tag line. `LEROBOT_IMAGE` is only for a different image name:
 
     ```dotenv
-    LEROBOT_IMAGE_TAG=0.1.0
+    LEROBOT_IMAGE_TAG=0.1.1
     ```
 
     Confirm this version resolves, then pull; the repository name shown by `docker compose config --images` may differ from the one above, so check the tag:

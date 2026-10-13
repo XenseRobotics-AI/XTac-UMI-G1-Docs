@@ -77,6 +77,7 @@ Key points:
 - **Always generate the config with `for_spec(g.motor.get_spec())`**, and change only the grip force as needed.
 - **Start the controller first, then `g.motor.enable()`**; the code above already follows this order.
 - **Run only one controller per gripper at a time.**
+- Force-position control follows a streamed target about one send interval behind (about 20ms at 50Hz), in exchange for smooth motion.
 - While controlling, read opening, velocity, torque and temperature from `c.snapshot().observation`; do not read the motor state separately.
 - Interface details and example scripts are in [API and examples](api.md).
 

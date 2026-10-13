@@ -2,7 +2,7 @@
 
 ## Python 安装 {#python}
 
-**推荐直接用数采环境**：按 [安装](../pc/install.md) 装好之后就已经带有 SDK 0.4.1
+**推荐直接用数采环境**：按 [安装](../pc/install.md) 装好之后就已经带有 SDK 0.4.3
 （子模块 `third_party/taccap-gripper`），源码和示例脚本都在这个目录下。验证：
 
 ```bash
@@ -10,7 +10,7 @@ cd third_party/taccap-gripper
 python -c "import xense.taccap as t; print(t.hello())"
 ```
 
-应输出 `taccap-gripper OK; version 0.4.1`。版本不对时，拉子模块并重跑 `./setup_env.sh --install`，
+应输出 `taccap-gripper OK; version 0.4.3`。版本不对时，拉子模块并重跑 `./setup_env.sh --install`，
 见 [克隆仓库与子模块](../pc/install.md#22)。
 
 ### 不使用数采仓库时单独安装（可选） {#standalone}
@@ -19,7 +19,7 @@ python -c "import xense.taccap as t; print(t.hello())"
 `conda`。SDK 从源码编译，示例脚本也在源码目录里，装完请保留。
 
 ```bash
-git clone --branch v0.4.1 https://github.com/XenseRobotics-AI/TacCap-Gripper.git
+git clone --branch v0.4.3 https://github.com/XenseRobotics-AI/TacCap-Gripper.git
 cd TacCap-Gripper
 mamba env create -f environment.yml     # 新建名为 taccap 的环境,包含编译所需的全部依赖
 mamba activate taccap
@@ -27,11 +27,11 @@ pip install . --no-build-isolation      # 需要几分钟
 sudo usermod -aG dialout,video "$USER"  # 串口与相机权限,注销后重新登录生效
 ```
 
-验证方法同上，应输出 `taccap-gripper OK; version 0.4.1`。
+验证方法同上，应输出 `taccap-gripper OK; version 0.4.3`。
 
 !!! warning "常见问题"
     - **必须先 `mamba activate taccap` 再安装**，`--no-build-isolation` 也不要省，否则编译会报错。
-    - 版本不是 0.4.1：当前环境加载了别处的 SDK。换一个干净的终端，只激活 `taccap` 再试。
+    - 版本不是 0.4.3：当前环境加载了别处的 SDK。换一个干净的终端，只激活 `taccap` 再试。
 
 ## 硬件自检 {#self-check}
 

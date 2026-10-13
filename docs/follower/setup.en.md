@@ -5,7 +5,7 @@ the follower gripper needs **both USB Type-C and 24V connected**.
 
 ## 1. Install the SDK {#install}
 
-Once the collection environment is installed ([Installation](../pc/install.md)), SDK 0.4.1 is already included; there is nothing extra to install. The example scripts are in the data-collection repository under
+Once the collection environment is installed ([Installation](../pc/install.md)), SDK 0.4.3 is already included; there is nothing extra to install. The example scripts are in the data-collection repository under
 `third_party/taccap-gripper/python/examples/`. For serial port permissions, see [Serial permissions (dialout)](../pc/host-setup.md#31).
 
 Verify (from the data-collection repository root, inside the collection environment):
@@ -15,7 +15,7 @@ cd third_party/taccap-gripper
 python -c "import xense.taccap as t; print(t.hello())"
 ```
 
-It should print `taccap-gripper OK; version 0.4.1`. A different version means the SDK submodule was not updated or not rebuilt; see
+It should print `taccap-gripper OK; version 0.4.3`. A different version means the SDK submodule was not updated or not rebuilt; see
 [Follower gripper troubleshooting](troubleshooting.md#connect).
 
 All subsequent commands are run from the `third_party/taccap-gripper` directory, inside the collection environment. To install the SDK on its own without the data-collection repository, see
@@ -54,7 +54,7 @@ python python/examples/follower_status.py left
 This script is read-only and does not move the motor. The lines to look at in normal output (with parts omitted):
 
 ```text
-[fw] FirmwareVersion(1.2.14.0)
+[fw] FirmwareVersion(1.2.16.0)
 ...
 [归一化] g.position() = 0.9183
 ...
@@ -66,7 +66,7 @@ This script is read-only and does not move the motor. The lines to look at in no
 
 | Where to look | Normal | If not normal |
 |---|---|---|
-| `[fw]` | 1.2.14 | Below 1.2.11 prints an upgrade prompt; below 1.2.5 exits with an error. In either case [upgrade the firmware](firmware.md#mcu-ota) first |
+| `[fw]` | 1.2.16 | Below 1.2.11 prints an upgrade prompt; below 1.2.5 exits with an error. In either case [upgrade the firmware](firmware.md#mcu-ota) first |
 | `[归一化]` (normalized) | Between 0 and 1 | Reports `not calibrated`: clear the area around the fingers and power-cycle |
 | `[故障]` (fault) | All 0 | See [Troubleshooting](troubleshooting.md#fault) |
 | `[开流读]` (stream read) | About 100Hz, shows `OK` | Power-cycle and try again; if still not normal, see [Troubleshooting](troubleshooting.md#self-check) |

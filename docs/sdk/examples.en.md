@@ -47,7 +47,7 @@ For a follower gripper see [Firmware and motor upgrades](../follower/firmware.md
 
 ## Migrating from older versions {#migrate}
 
-Programs written against 0.1.x / 0.2.x are mainly affected by these changes when upgrading to 0.4.1:
+Programs written against 0.1.x / 0.2.x are mainly affected by these changes when upgrading to 0.4.x:
 
 - The follower gripper now uses controllers: `ImpedanceController` or `ForcePositionController`, configured with `for_spec()`.
   The old `ControlLoop`, `set_position()` and similar interfaces have been removed.
@@ -64,4 +64,10 @@ When upgrading from 0.3.x to 0.4.x:
 - During operation, `set_target(opening, grip_force)` with a grip force above 1.1N·m now raises an error instead of being silently accepted.
 - New `g.motor.motor_version()` reads the motor firmware version (from gripper firmware 1.2.14 on, this works regardless of the motor's communication mode).
 
-The full list of changes is in the SDK's [CHANGELOG](https://github.com/XenseRobotics-AI/TacCap-Gripper/blob/v0.4.1/CHANGELOG.md).
+Upgrading from 0.4.1 to 0.4.3 (no API changes):
+
+- `ForcePositionController` no longer stutters when following a streamed target, at the cost of about 10–15ms more tracking lag.
+- A stall short of a target that is still moving enters `HOLDING_FORCE` about 150ms later than before; review programs that rely on it to detect a grasp.
+- The bundled follower firmware moves to 1.2.16; [upgrade the firmware](../follower/firmware.md#mcu-ota).
+
+The full list of changes is in the SDK's [CHANGELOG](https://github.com/XenseRobotics-AI/TacCap-Gripper/blob/v0.4.3/CHANGELOG.md).

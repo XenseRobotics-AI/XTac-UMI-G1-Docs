@@ -47,7 +47,7 @@ python python/examples/wrist_camera.py <相机序列号> --undistort   # 矫正�
 
 ## 从旧版本迁移 {#migrate}
 
-照 0.1.x / 0.2.x 写的程序，升级到 0.4.1 时主要有这些变化：
+照 0.1.x / 0.2.x 写的程序，升级到 0.4.x 时主要有这些变化：
 
 - 从夹爪改用控制器：`ImpedanceController` 或 `ForcePositionController`，配置用 `for_spec()` 生成。
   旧的 `ControlLoop`、`set_position()` 等接口已删除。
@@ -64,4 +64,10 @@ python python/examples/wrist_camera.py <相机序列号> --undistort   # 矫正�
 - 运行中 `set_target(开度, 夹持力)` 的夹持力超过 1.1N·m 时直接报错，不再静默接受。
 - 新增 `g.motor.motor_version()` 读电机固件版本（夹爪固件 1.2.14 起不受电机通信模式限制）。
 
-完整变更见 SDK 的 [CHANGELOG](https://github.com/XenseRobotics-AI/TacCap-Gripper/blob/v0.4.1/CHANGELOG.md)。
+从 0.4.1 升级到 0.4.3 时（接口不变）：
+
+- `ForcePositionController` 跟随连续发送的目标时不再走走停停，代价是跟踪延迟多约 10–15ms。
+- 目标仍在移动时被挡住，进入 `HOLDING_FORCE` 比以前晚约 150ms；依赖它判断夹住的程序请复核。
+- 附带的从夹爪固件升到 1.2.16，请[升级固件](../follower/firmware.md#mcu-ota)。
+
+完整变更见 SDK 的 [CHANGELOG](https://github.com/XenseRobotics-AI/TacCap-Gripper/blob/v0.4.3/CHANGELOG.md)。

@@ -5,8 +5,8 @@ This chapter shows how to control the follower gripper with the `xense.taccap` S
 
 ![XTac-UMI G1 follower gripper](../assets/product/follower-scene-front.webp){ width="720" }
 
-!!! note "This chapter uses SDK 0.4.1, which ships with the collection environment"
-    This chapter is written against [TacCap-Gripper](https://github.com/XenseRobotics-AI/TacCap-Gripper) **v0.4.1**,
+!!! note "This chapter uses SDK 0.4.3, which ships with the collection environment"
+    This chapter is written against [TacCap-Gripper](https://github.com/XenseRobotics-AI/TacCap-Gripper) **v0.4.3**,
     the version bundled with the collection environment; see [Setup and self-check](setup.md#install).
 
 ## How it differs from the leader gripper {#vs-leader}
@@ -19,7 +19,7 @@ This chapter shows how to control the follower gripper with the `xense.taccap` S
 | IMU / encoder / buttons | Yes | No |
 | Travel calibration | Manual | Automatic at power-on |
 | Last letter of the serial number | `m` | `s` |
-| Firmware bundled with SDK 0.4.1 | 1.2.6 | 1.2.14 |
+| Firmware bundled with SDK 0.4.3 | 1.2.6 | 1.2.16 |
 
 Leader and follower firmware are numbered separately, so it is normal for their version numbers to differ.
 
