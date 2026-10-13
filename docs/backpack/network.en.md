@@ -16,7 +16,7 @@ The body label shows the device's SN, hotspot name and password, IP and mDNS add
 
 Cable the tablet to the backpack's front `HOST1` or `HOST2` port and unlock the tablet. Once connected, the backpack opens System → Network on the tablet by itself, with no WiFi to join and no address to type.
 
-![The Network page the tablet opens over USB](../assets/backpack/tablet-usb-network-settings.webp)
+![The Network page the tablet opens over USB](../assets/backpack/tablet-usb-network-settings-en.webp)
 
 - **Plug and play**: the bundled tablet is authorised on the production line and works as soon as USB is plugged in.
 - **Re-authorising**: after a factory reset of the tablet or revoked USB debugging authorisation it no longer opens; re-authorise it as in [Troubleshooting](troubleshooting.md#tablet-adb).
@@ -79,7 +79,7 @@ The IP drop-down at the left of the top bar gathers every way into this unit. Af
 - **Collapsed**: shows only "the one address you should use to reach it right now", the first available of wired > wireless > hotspot.
 - **Expanded**: click to see all network details.
 
-![The top-bar network drop-down](../assets/backpack/network-dropdown-live.webp)
+![The top-bar network drop-down](../assets/backpack/network-dropdown-live-en.webp)
 
 ## Choosing a method by scenario {#choose}
 

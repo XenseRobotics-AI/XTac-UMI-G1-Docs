@@ -20,7 +20,7 @@
 
 2. Update the system: a new unit ships on an older build and must be updated before you pair trackers or install the app. Join a WiFi network with internet access, go to Settings → System update and tap "Download and install" to reach Pico OS 5.15.5.U or later (about 1.9GB).
 
-    ![System update to 5.15.5.U](../assets/pico4/system-update.webp){ width="560" }
+    ![System update to 5.15.5.U](../assets/pico4/system-update-en.webp){ width="560" }
 
 ## System settings: developer mode and power policy {#pico-system}
 
@@ -28,9 +28,9 @@
 
     <div class="tc-pair" markdown>
 
-    ![Tap the software version repeatedly](../assets/pico4/devmode-tap-version.webp)
+    ![Tap the software version repeatedly](../assets/pico4/devmode-tap-version-en.webp)
 
-    ![Developer options → turn on USB debugging](../assets/pico4/devmode-usb-debug.webp)
+    ![Developer options → turn on USB debugging](../assets/pico4/devmode-usb-debug-en.webp)
 
     </div>
 
@@ -39,7 +39,7 @@
     2. Screen off = Never;
     3. Battery and charging status icon at the bottom = "Always show", to check the charge mid-session.
 
-    ![Final power policy settings](../assets/pico4/power-step4-final.webp){ width="480" }
+    ![Final power policy settings](../assets/pico4/power-step4-final-en.webp){ width="480" }
 
 !!! warning "Sleep first, screen-off second; the order cannot be reversed"
     Screen-off is bounded by system sleep: while sleep is still at its default, screen-off's "Never" is clamped back to a finite value, so it looks set but is not in effect. Leave Settings and come back to confirm both read "Never".
@@ -56,11 +56,11 @@ The APK is named `XTac-UMI-XR-<version>.apk`; the current version is 0.3.2. Inst
 
 2. Put the headset on, tap "File Manager" on the taskbar, and open the "Download" folder.
 
-    ![File Manager → Download](../assets/pico4/install-step2-filemanager.webp){ width="480" }
+    ![File Manager → Download](../assets/pico4/install-step2-filemanager-en.webp){ width="480" }
 
 3. Tap the APK and choose "Install" in the "Install this app?" dialog; XTac-UMI XR then appears in the "Library".
 
-    ![Confirming the install](../assets/pico4/install-step3-confirm.webp){ width="480" }
+    ![Confirming the install](../assets/pico4/install-step3-confirm-en.webp){ width="480" }
 
 
 ## Network connection {#pico-network}
@@ -75,7 +75,7 @@ On both editions, set USB up on the headset first:
 - **Settings path**: Settings → Developer options → enable "USB debugging" → set "USB connection" to "File transfer".
 - **Re-check after re-plugging**: it reverts to the default after a USB re-plug; if you cannot select it, reboot the Pico.
 
-![USB connection set to file transfer](../assets/pico4/usb-shared-network.webp){ width="520" }
+![USB connection set to file transfer](../assets/pico4/usb-shared-network-en.webp){ width="520" }
 
 === "Backpack Kit"
 
@@ -109,13 +109,13 @@ Before pairing:
 
 1. Open the "Motion Tracker" app from the Library and tap the top-right icon on the main screen to enter pairing.
 
-    ![The top-right icon opens the pairing screen](../assets/pico4/tracker-pair-entry.webp){ width="440" }
+    ![The top-right icon opens the pairing screen](../assets/pico4/tracker-pair-entry-en.webp){ width="440" }
 
 2. Hold the tracker's power button for about 6 seconds, until the indicator alternates blue and red (Bluetooth pairing mode).
 3. Tap "Start pairing". The headset beeps on success and the tracker appears in "My trackers" with its battery level and number (e.g. `Tracker 150399`), marked "Connected".
 4. Bind one per gripper; the top of the list should read "2 paired".
 
-    ![Motion Tracker app: 2 paired](../assets/pico4/tracker-bind.webp){ width="440" }
+    ![Motion Tracker app: 2 paired](../assets/pico4/tracker-bind-en.webp){ width="440" }
 
 !!! warning "Power-on is a short press; only pairing needs the hold"
     Everyday power-on is a short press until the blue light comes on; that is not pairing mode and the app will not find it. First-time binding needs the ~6s hold until it alternates blue and red.
@@ -154,9 +154,9 @@ Once bound, open "Motion Tracking" on the headset → settings → "Tracking mod
 
 <div class="tc-pair" markdown>
 
-![Motion tracking settings: Tracking mode](../assets/pico4/tracker-mode1-setting.webp)
+![Motion tracking settings: Tracking mode](../assets/pico4/tracker-mode1-setting-en.webp)
 
-![Pick standalone tracking and confirm](../assets/pico4/tracker-mode2-pick.webp)
+![Pick standalone tracking and confirm](../assets/pico4/tracker-mode2-pick-en.webp)
 
 </div>
 

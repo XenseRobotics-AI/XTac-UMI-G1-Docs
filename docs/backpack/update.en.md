@@ -5,7 +5,7 @@ This page covers upgrading the console program and the gripper firmware:
 - **Console program**: import an upgrade bundle on System → System update.
 - **Gripper firmware**: flash it on System → Gripper; see [Gripper firmware](#gripper-firmware).
 
-![System update page](../assets/backpack/update.webp)
+![System update page](../assets/backpack/update-en.webp)
 
 ## Importing an upgrade bundle {#bundle}
 

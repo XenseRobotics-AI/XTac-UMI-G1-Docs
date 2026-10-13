@@ -16,7 +16,7 @@ Welcome to the XTac-UMI Backpack. This page is the getting-started guide for the
 
 The box contents are in [Box contents and wiring](../product/editions.md#kit); check them against [Unboxing, cabling and power](unbox-connect.md#unbox). To use your own x86 workstation and build entirely on LeRobot, see the [Developer Kit](../pc/index.md); the differences are in [Product line and configuration comparison](../product/editions.md).
 
-![The console's live monitor page: every camera, the visuotactile images and the poses on one screen](../assets/backpack/monitor-live.webp)
+![The console's live monitor page: every camera, the visuotactile images and the poses on one screen](../assets/backpack/monitor-live-en.webp)
 
 The console shows every camera, the visuotactile images and the poses on one screen, with the gripper opening updated in real time; recording state, free disk space and tracker-loss alerts are on the same screen, viewable from a tablet or phone. What to check before recording is in [Checks on the Live monitor page](monitor-record.md#checks), and the product introduction is in [The Backpack](../product/backpack.md).
 

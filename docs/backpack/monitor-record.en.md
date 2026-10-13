@@ -7,7 +7,7 @@ description: Before recording, confirm the views, poses, gripper opening and dis
 
 This page covers the "Live monitor" page of the XTac-UMI Collector console (below, "the console"). Gripper button gestures, LED patterns and voice announcement wording are in [Gripper buttons and LEDs](gripper.md#buttons-leds); this page only links to them.
 
-![The live monitor page](../assets/backpack/monitor-live.webp)
+![The live monitor page](../assets/backpack/monitor-live-en.webp)
 
 - **Top bar**: device status (bandwidth, CPU, memory, disk, cameras, live time, recording time, system).
 - **Middle**: the side columns each hold one gripper's fisheye view plus its left-finger / right-finger visuotactile feeds; the centre column holds the headset's stereo pair, the "arms / head pose" 3D view and, below it, the left and right gripper opening-angle cards.
@@ -41,7 +41,7 @@ A new project fixes its **capture config** at creation. **Once created it is fro
 - **Wrist fisheye**: whether to rectify its distortion on export.
 - **Upload backend**: you can bind one configured at [System → Upload configuration](system.md#upload) as the project's default for uploads; without a binding you pick one at upload time.
 
-![Creating a project](../assets/backpack/new-project.webp){ width="360" }
+![Creating a project](../assets/backpack/new-project-en.webp){ width="360" }
 
 The fields for a new task:
 
@@ -52,7 +52,7 @@ The fields for a new task:
 | Target count | How many takes this task should collect; may be left blank |
 | Target duration (minutes) | How long this task should collect for; may be left blank |
 
-![Creating a task](../assets/backpack/new-task-live.webp)
+![Creating a task](../assets/backpack/new-task-live-en.webp)
 
 - With targets blank, only the count collected so far is shown, with no progress bar.
 - **The target count is a hard gate**: once met, recording is refused, from both the console button and the gripper buttons.
@@ -147,6 +147,6 @@ Projects page rows and mobile cards show four states:
 - **Console**: "Delete previous and re-record" deletes the current task's most recent entry and immediately starts recording, with no second confirmation; unavailable while recording.
 - **Earlier entries**: click "Delete" on its row in the [Projects page](projects-export.md). The confirmation lists the number, duration and size, and deletes its MCAP and H264 export files with it. This cannot be undone.
 
-![Selecting an entry to delete on the Projects page](../assets/backpack/delete-select.webp)
+![Selecting an entry to delete on the Projects page](../assets/backpack/delete-select-en.webp)
 
-![The delete confirmation](../assets/backpack/delete-confirm.webp)
+![The delete confirmation](../assets/backpack/delete-confirm-en.webp)

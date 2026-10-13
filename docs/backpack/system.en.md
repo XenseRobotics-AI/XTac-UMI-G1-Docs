@@ -19,7 +19,7 @@ The interface language is also switched here; by default it follows the browser.
 
 ## Device info {#device-info}
 
-![Device info page](../assets/backpack/device-info.webp)
+![Device info page](../assets/backpack/device-info-en.webp)
 
 A read-only page; "Refresh" at the top right reloads it.
 
@@ -37,7 +37,7 @@ When to look here:
 
 ## Gripper {#gripper}
 
-![Gripper page](../assets/backpack/gripper.webp)
+![Gripper page](../assets/backpack/gripper-en.webp)
 
 Travel calibration normalises the gripper opening to 0–1: write the zero when closed and the maximum travel when fully open. The values are stored in the gripper, survive power loss and moving to another backpack, so each gripper needs calibrating once; the console and the Developer Kit calibration script write the same values. When recalibration is needed is covered in the Developer Kit's [Gripper calibration](../pc/calibration.md#41).
 
@@ -57,7 +57,7 @@ One gripper at a time, without skipping steps:
 
 ### Current project capture config {#capture-mode}
 
-![Current project capture config](../assets/backpack/capture-mode.webp)
+![Current project capture config](../assets/backpack/capture-mode-en.webp)
 
 Shows the current project's capture config, read-only. These are chosen when you [create the project](monitor-record.md#project-task) and cannot be changed afterwards.
 
@@ -108,7 +108,7 @@ Each line has a "Preview" button that tells you where the sound came out.
 
 ## Upload configuration {#upload}
 
-![Upload configuration page](../assets/backpack/upload.webp)
+![Upload configuration page](../assets/backpack/upload-en.webp)
 
 Save remote upload accounts here; you can keep several, each with its own name. Bind one when creating a project and uploads no longer ask for the account.
 
@@ -140,7 +140,7 @@ Credentials are not shown again after saving; leaving a field blank when editing
 
 ## Network {#wifi}
 
-![Network page](../assets/backpack/wifi.webp)
+![Network page](../assets/backpack/wifi-en.webp)
 
 The ways to open the console are in [Network and console access](network.md); this section only covers changing settings.
 
@@ -175,7 +175,7 @@ Defaults to automatic (DHCP) and works as soon as it is plugged into a router. C
 
 ## Camera profiles {#camera-profiles}
 
-![Camera profiles page](../assets/backpack/camera-profiles.webp)
+![Camera profiles page](../assets/backpack/camera-profiles-en.webp)
 
 A camera profile pack (`.xpack`) is built in at the factory; import one only when technical support provides a new pack.
 

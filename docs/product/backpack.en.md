@@ -2,7 +2,7 @@
 
 The **XTac-UMI Backpack** is the Backpack Kit's collection host, worn by the operator: the grippers and headset plug straight in, a tablet browser is the console, and collection, playback and export all happen on the backpack.
 
-![The XTac-UMI Backpack's front panel](../assets/product/backpack-ports-front.webp){ width="720" }
+![The XTac-UMI Backpack](../assets/product/backpack-ports-front-en.webp){ width="720" }
 
 [Quickstart](../backpack/quickstart.md){ .md-button .md-button--primary }
 [Compare the two kits](editions.md){ .md-button }
@@ -86,11 +86,11 @@ Open the backpack's address in a browser to reach the console; it has four pages
 
 === "Live monitor"
 
-    ![The live monitor page](../assets/backpack/monitor-live.webp)
+    ![The live monitor page](../assets/backpack/monitor-live-en.webp)
 
 === "Projects"
 
-    ![The projects page](../assets/backpack/project-list-live.webp)
+    ![The projects page](../assets/backpack/project-list-live-en.webp)
 
 Recording is mainly driven by the gripper buttons: long-press right to start, long-press left to stop, with no browser needed, plus LED and voice feedback; see [Gripper buttons, LEDs and voice](../backpack/gripper.md).
 

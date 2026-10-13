@@ -50,7 +50,7 @@ Before you hit record, confirm these three:
 - **Pose view**: follows your hands in real time, with left and right not swapped.
 - **Gripper opening**: follows the grippers as they open and close.
 
-![The live monitor page](../assets/backpack/monitor-live.webp)
+![The live monitor page](../assets/backpack/monitor-live-en.webp)
 
 If the record button is unavailable, the page states why; see [Recording gates](monitor-record.md#record-gates).
 

@@ -60,7 +60,7 @@ The grippers and headset are wired the same way either way; only the backpack's 
 
 ### Adapter power {#adapter}
 
-![Adapter wiring: left and right grippers to the sides of the backpack, the headset's Type-C to the PICO port, the adapter to the DC port](../assets/product/backpack-wiring-adapter.webp)
+![Adapter wiring: left and right grippers to the sides of the backpack, the headset's Type-C to the PICO port, the adapter to the DC port](../assets/product/backpack-wiring-adapter-en.webp)
 
 1. Connect the left and right leader grippers to the backpack's `UMI-L` and `UMI-R` ports.
 2. Connect the headset to the backpack's `PICO` port with the headset cable (Pico → Pack).
@@ -68,7 +68,7 @@ The grippers and headset are wired the same way either way; only the backpack's 
 
 ### Power-bank power {#powerbank}
 
-![Power-bank wiring: left and right grippers to the sides of the backpack, the headset to the PICO port, the power bank to the DC port over the 0.3m 12V PD power cable](../assets/product/backpack-wiring-powerbank.webp)
+![Power-bank wiring: left and right grippers to the sides of the backpack, the headset to the PICO port, the power bank to the DC port over the 0.3m 12V PD power cable](../assets/product/backpack-wiring-powerbank-en.webp)
 
 1. Take out the power bank in the box (20000mAh, 45W).
 2. Connect the grippers and headset as for [adapter power](#adapter).

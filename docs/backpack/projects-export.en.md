@@ -6,7 +6,7 @@ Manage recorded data on the console's Projects page: export a task as a LeRobot 
 
 The hierarchy is **project → task → recording**. Each recording shows frames, data size and [quality](playback.md#quality), with Playback and Delete at the end of the row.
 
-![The Projects page](../assets/backpack/project-list-live.webp)
+![The Projects page](../assets/backpack/project-list-live-en.webp)
 
 | Where | Actions |
 |---|---|
@@ -26,9 +26,9 @@ Click Export on a task row to open "Export task data":
 
 <div class="tc-pair" markdown>
 
-![The export dialog: precheck and picking recordings](../assets/backpack/export-precheck-live.webp)
+![The export dialog: precheck and picking recordings](../assets/backpack/export-precheck-live-en.webp)
 
-![The export dialog: destination, format and upload settings](../assets/backpack/export-options.webp)
+![The export dialog: destination, format and upload settings](../assets/backpack/export-options-en.webp)
 
 </div>
 

@@ -8,7 +8,7 @@ You do not need to download a recording to review it: replay it in the console a
 
 Find the recording on the [Projects page](projects-export.md#projects) and click Playback at the end of its row. The phone layout has no playback page; use a tablet or computer.
 
-![The playback page](../assets/backpack/playback-live.webp)
+![The playback page](../assets/backpack/playback-live-en.webp)
 
 ## Playing {#controls}
 
