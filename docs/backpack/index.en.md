@@ -2,23 +2,23 @@
 
 Welcome to the XTac-UMI Backpack. This page is the getting-started guide for the Backpack Kit:
 
-- **First deployment**: when you first receive the kit, work through the [first deployment checklist](#first-deploy) on this page.
+- **First deployment**: when you first receive the Backpack Kit, work through the [first deployment checklist](#first-deploy) on this page.
 - **Daily collection**: before each collection session, check the [daily collection cheat sheet](#daily).
 - **Goal**: by the end of this page you will be able to complete one full collection on your own, from powering on to exporting a dataset.
 
-## What this kit is {#overview}
+## What the Backpack Kit is {#overview}
 
-- **The backpack is the host**: the collection software, XTac-UMI Collector, runs on the backpack, and collection, replay and export all happen in its console. A tablet, phone or computer just opens the console in a browser; no separate collection host is needed.
+- **The backpack is the host**: the collection software, XTac-UMI Collector, runs on the backpack, and collection, replay and export all happen in its console. A tablet, phone or computer just opens the console in a browser; no separate collection PC is needed.
 - **One-person operation**: the gripper buttons start and stop recording, and the LEDs and voice prompts report the state, so one person can run the whole collection.
-- **What is recorded**: each take is saved as one raw MCAP recording, capturing the left and right wrist fisheye views, four visuotactile feeds, the headset images, the 6-DoF poses of the headset and both trackers, and the gripper opening in sync.
+- **What is recorded**: each episode is saved as one raw MCAP recording, capturing the left and right wrist fisheye views, four visuotactile feeds, the headset images, the 6-DoF poses of the headset and both trackers, and the gripper opening in sync.
 - **Export**: export per task as a [LeRobot dataset](projects-export.md#lerobot) or [MCAP](projects-export.md#mcap), then download an archive or upload to ModelScope, S3, FTP or NFS.
-- **Suits**: high-volume collection operations and collection teams. The software is delivered closed-source, with support for light customisation.
+- **Suits**: high-volume collection operations and collection teams. The software is delivered closed-source, with support for light customization.
 
-The box contents are in [Box contents and wiring](../product/editions.md#kit); check them against [Unboxing, cabling and power](unbox-connect.md#unbox). To use your own x86 workstation and build entirely on LeRobot, see the [Developer Kit](../pc/index.md); the differences are in [Product line and configuration comparison](../product/editions.md).
+The box contents are in [Box contents and wiring](../product/editions.md#kit); check them against [Unboxing, cabling and power](unbox-connect.md#unbox). To use your own x86 collection PC and build entirely on LeRobot, see the [Developer Kit](../pc/index.md); the differences are in [Product line and configuration comparison](../product/editions.md).
 
-![The console's live monitor page: every camera, the visuotactile images and the poses on one screen](../assets/backpack/monitor-live.webp)
+![The console's Live monitoring page: every camera, the visuotactile images and the poses on one screen](../assets/backpack/monitor-live-en.webp)
 
-The console shows every camera, the visuotactile images and the poses on one screen, with the gripper opening updated in real time; recording state, free disk space and tracker-loss alerts are on the same screen, viewable from a tablet or phone. What to check before recording is in [Checks on the Live monitor page](monitor-record.md#checks), and the product introduction is in [The Backpack](../product/backpack.md).
+The console shows every camera, the visuotactile images and the poses on one screen, with the gripper opening updated in real time; recording state, free disk space and tracker-loss alerts are on the same screen, viewable from a tablet or phone. What to check before recording is in [Confirm in the console before recording](monitor-record.md#checks), and the product introduction is in [The XTac-UMI Backpack](../product/backpack.md).
 
 ## System composition {#system}
 
@@ -30,7 +30,7 @@ The whole capture happens in the backpack: every device plugs into it, it stores
   "title": "Backpack Kit collection architecture",
   "tiers": [
     "Dual gripper",
-    "Dual gripper + headset stereo",
+    "Dual gripper + stereo headset",
     "Dual gripper + headset right eye"
   ],
   "cols": {
@@ -59,7 +59,7 @@ The whole capture happens in the backpack: every device plugs into it, it stores
     "grip": {
       "title": "MCU · encoder",
       "sub": "Opening · IMU · buttons",
-      "desc": "The leader gripper's MCU reports the jaw angle and IMU (100Hz each) and button gestures to the backpack over USB."
+      "desc": "The leader gripper's MCU reports the finger angle and IMU (100Hz each) and button gestures to the backpack over USB."
     },
     "tact": {
       "title": "Visuotactile ×2",
@@ -72,8 +72,8 @@ The whole capture happens in the backpack: every device plugs into it, it stores
       "desc": "The wrist-view fisheye image, 640 × 480 at 30fps."
     },
     "tracker": {
-      "title": "Motion tracker ×2",
-      "sub": "Pico4 Ultra",
+      "title": "Tracker ×2",
+      "sub": "Pico4U",
       "desc": "Mounted on top of each gripper; the headset tracks its 6-DoF pose. Every Backpack Kit capture mode needs it."
     },
     "headset": {
@@ -114,17 +114,17 @@ The whole capture happens in the backpack: every device plugs into it, it stores
     "console": {
       "title": "Browser console",
       "sub": "Tablet · phone · computer",
-      "desc": "Open the backpack's console in a browser: live monitor, projects, playback and system settings."
+      "desc": "Open the backpack's console in a browser: Live monitoring, Project, Playback and System settings."
     },
     "mcap": {
       "title": "MCAP raw recording",
-      "sub": "One file per take · NVMe",
+      "sub": "One file per episode · NVMe",
       "desc": "Each demonstration is one MCAP file on the backpack's NVMe data disk, holding every raw frame, sensor stream and calibration."
     },
     "export": {
       "title": "Export per task",
       "sub": [
-        "LeRobot v3 / MCAP",
+        "LeRobotDataset v3 / MCAP",
         "Pre-checked first"
       ],
       "desc": "Export a task as LeRobotDataset v3 or MCAP; recordings are checked for completeness first, then you download them or upload to a remote backend."
@@ -159,7 +159,7 @@ In an exported LeRobot dataset, each row is the **observation** from frame t-1 p
   "title": "What makes up one row of a LeRobot dataset exported from the backpack",
   "tiers": [
     "Dual gripper",
-    "Dual gripper + headset stereo",
+    "Dual gripper + stereo headset",
     "Dual gripper + headset right eye"
   ],
   "defaultTier": 2,
@@ -247,7 +247,7 @@ In an exported LeRobot dataset, each row is the **observation** from frame t-1 p
     "tactile": "The visuotactile image from one finger of this gripper, rectified at export: 700 × 400 landscape by default (400 × 700 can be chosen per project), 30fps.",
     "wrist": "This gripper's wrist fisheye view, 640 × 480; exported rectified when the project turns on wrist fisheye rectification.",
     "headimg": "One eye of the headset camera, 640 × 480 or 1024 × 768 per eye (set per project). Stereo mode records both eyes; right-eye mode records the right eye only.",
-    "tcp": "The pose of this gripper's tip (midpoint between the fingers) in the world frame: position x, y, z (metres) plus the 6-D rotation r1–r6, derived from the tracker pose. Recorded in all three modes.",
+    "tcp": "The pose of this gripper's tip (midpoint between the fingers) in the world frame: position x, y, z (meters) plus the 6-D rotation r1–r6, derived from the tracker pose. Recorded in all three modes.",
     "grip": "This gripper's opening, closed = 0, open = 1.",
     "headpose": "The headset pose in the world frame, same format as tcp.*; written only in the modes that record headset images."
   },
@@ -296,7 +296,7 @@ In an exported LeRobot dataset, each row is the **observation** from frame t-1 p
 
 - The observation comes from frame t-1 and the action from frame t, so the action leads by one step; the first frame of each episode has nothing to pair with, so each episode is one frame shorter.
 - The poses `*_tcp.*` and `head.*` are 9-D each: position x, y, z plus a 6-D rotation, in a world frame of X forward / Y left / Z up.
-- Dimensions per mode: Dual gripper, state and action 20-D each, 6 image streams; Dual gripper + headset stereo, 29-D each, 8 streams; Dual gripper + headset right eye, 29-D each, 7 streams (`head_right` only).
+- Dimensions per mode: Dual gripper, state and action 20-D each, 6 image streams; Dual gripper + stereo headset, 29-D each, 8 streams; Dual gripper + headset right eye, 29-D each, 7 streams (`head_right` only).
 
 Export formats and the extra files are in [LeRobot dataset](projects-export.md#lerobot).
 
@@ -330,7 +330,7 @@ The grippers' connection and power requirements are in [Gripper connection and s
 
 ### 3. Open the console {#deploy-console}
 
-- **Tablet**: cable the tablet to the backpack's `HOST1` or `HOST2` port and the backpack opens the console on it; see [Tablet over USB](network.md#tablet).
+- **Tablet**: cable the tablet to the backpack's `HOST1` or `HOST2` port and the backpack opens the console on it; see [Recommended: the tablet over USB](network.md#tablet).
 - **No tablet**: connect to the [backpack hotspot](network.md#softap) instead.
 
 ### 4. Connect the headset to the backpack {#deploy-headset-link}
@@ -339,14 +339,14 @@ The grippers' connection and power requirements are in [Gripper connection and s
 2. **Leave "USB Network" unticked** and "PC IP" empty (it connects to the backpack at `192.168.100.1` by default).
 3. Tap "Connect".
 
-The interface and connection states are in [Pico4 headset and trackers](../common/pico4.md#pico-toolkit-ui); detailed steps are in [Connecting the headset to the backpack](unbox-connect.md#pico-link).
+The interface and connection states are in [Pico4 headset and tracker setup](../common/pico4.md#pico-toolkit-ui); detailed steps are in [Connecting the headset to the backpack](unbox-connect.md#pico-link).
 
 ### 5. Choose the capture mode {#deploy-mode}
 
 The [capture mode](system.md#capture-mode) is a fixed property of a project. When you [create a project](monitor-record.md#project-task), choose one of these three modes to match what is connected:
 
 - "Dual gripper"
-- "Dual gripper + headset stereo"
+- "Dual gripper + stereo headset"
 - "Dual gripper + headset right eye"
 
 !!! warning "The capture mode cannot be changed after the project is created"
@@ -354,7 +354,7 @@ The [capture mode](system.md#capture-mode) is a fixed property of a project. Whe
 
 ### 6. Upload configuration (optional) {#deploy-upload}
 
-- **Where**: console → System → [Upload configuration](system.md#upload).
+- **Where**: console → System → [Upload configurations](system.md#upload).
 - **What to do**: create an upload backend and fill in its credentials (how to get them is in the same section).
 - **Binding**: bind it when you create a project; that project's exports with "Upload to remote" then use it by default, with no credentials to enter in the export dialog.
 
@@ -370,9 +370,9 @@ Once recording is done, you can replay, review, delete and export recordings fro
 
 ### 1. Replay and review {#after-review}
 
-- **Hierarchy**: console → Projects, organised as project → task → recording.
+- **Hierarchy**: console → Project, organized as project → task → recording.
 - **Overview**: each recording shows its duration, frame count, data size and quality flags.
-- **Streaming replay**: click "Replay" to [stream it in the browser](playback.md), with a draggable progress bar.
+- **Streaming replay**: click "Playback" to [stream it in the browser](playback.md), with a draggable progress bar.
 - **Clean-up**: delete a problem recording on the spot with ["Delete"](projects-export.md#delete).
 
 !!! danger "Deletion cannot be undone"
@@ -402,7 +402,7 @@ Select the task to export and click "Export" to open the [export dialog](project
 
 After uploading, **local files are kept by default**. To free space:
 
-- **Archive on upload**: tick "Archive automatically after upload" before uploading.
+- **Archive on upload**: tick "Automatically archive after upload (delete local source files; keep metadata only)" before uploading.
 - **Archive any time**: [archive](projects-export.md#archive) manually later.
 
 Archiving keeps only the record and clears the raw files; clean-up protects formats that have not been exported yet.
@@ -410,9 +410,9 @@ Archiving keeps only the record and clears the raw files; clean-up protects form
 ## Common questions {#faq}
 
 - [Cannot reach the console](troubleshooting.md#connect): try the tablet over USB first; on the hotspot, confirm the device supports 5GHz, that you are on this backpack's hotspot and that the address includes `http://`; power-cycle the backpack if it becomes unresponsive.
-- [Tracker lost](troubleshooting.md#tracker): when tracking accuracy degrades or the headset disconnects, both XTac-UMI XR and the Live monitor page show an icon. Check whether the tracker's blue light is on and whether the [pairing](../common/pico4.md#pico-tracker-bind) is correct.
-- [Recording refused](troubleshooting.md#record): once the recording disk reaches 80% used, starting a recording is refused with a message that the recording disk is N% used and has reached the 80% limit. Upload or download the data you have already collected, then [archive](projects-export.md#archive) to free space, or delete the entries you do not need.
-- [Replay and live preview cannot run at the same time](playback.md): when replay is refused, close the live monitor open in another tab or on another device.
+- [Tracker lost](troubleshooting.md#tracker): when tracking accuracy degrades or the headset disconnects, both XTac-UMI XR and the Live monitoring page show an icon. Check whether the tracker's blue light is on and whether the [pairing](../common/pico4.md#pico-tracker-bind) is correct.
+- [Recording refused](troubleshooting.md#record): once the recording disk reaches 80% used, starting a recording is refused with a message that the recording disk is N% used and has reached the 80% limit. Upload or download the data you have already collected, then [archive](projects-export.md#archive) to free space, or delete the episodes you do not need.
+- [Replay and live preview cannot run at the same time](playback.md): when replay is refused, close the Live monitoring page open in another tab or on another device.
 - While a recording is in progress, switching project / task, gripper calibration, firmware upgrades, system updates and similar operations are all refused; stop recording first. The capture mode is fixed with the project and can never be switched.
 - Interface language: the console shows Chinese or English according to the browser language (any other language falls back to English). You can switch "Interface language" temporarily on the System page or in the mobile settings; reloading the page returns it to "Follow browser". The device's voice prompts follow the interface language, see [Voice prompts](gripper.md#voice-cues).
 

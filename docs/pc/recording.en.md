@@ -5,22 +5,22 @@ First confirm the devices work with `lerobot-teleoperate`, then record a `LeRobo
 ## How collection works {#51}
 
 - `taccap_gripper` recording is self-driven; there are no `--teleop.*` arguments.
-- Shifted-frame pairing: the observation from step *t-1* is paired with the pose from step *t* as its action (EEF TCP pose + normalised `gripper.pos`, plus the headset pose with the [head camera](#56) on), so each episode is one frame shorter.
+- Shifted-frame pairing: the observation from step *t-1* is paired with the pose from step *t* as its action (EEF TCP pose + normalized `gripper.pos`, plus the headset pose with the [head camera](#56) on), so each episode is one frame shorter.
 - `tcp.*` is the gripper tip, not the tracker: the tracker sits about 195mm from the two-finger midpoint, and a built-in rigid mount transform (measured off the CAD assembly, one per side) is applied before writing. It is body-fixed and independent of orientation and `gripper.pos`.
 - The world frame is gravity-aligned, X forward / Y left / Z up, frozen the instant XTac-UMI XR starts; see [frame alignment](../common/pico4.md#pico-frame).
-- `--display_data=true` opens Rerun's `/world` 3D view (`--show_trajectory=false` turns the trail off); what it shows and the mount check are in [Coordinate frames · The `/world` 3D view](../common/coordinates.md#world-view).
+- `--display_data=true` opens Rerun's `/world` 3D view (`--show_trajectory=false` turns the trail off); what it shows and the mount check are in [Coordinate frames · The pose view during collection](../common/coordinates.md#world-view).
 
 ## Preview before recording {#preview}
 
-`lerobot-teleoperate` only previews and writes nothing. It takes the same switches as recording; preview at the level you will record at:
+`lerobot-teleoperate` only previews and writes nothing. It takes the same switches as recording; preview at the tier you will record at:
 
-| Level | Switches | Needs | Adds |
+| Tier | Switches | Needs | Adds |
 |---|---|---|---|
 | ① Grippers only | `--robot.type=bi_taccap_gripper --robot.enable_tracker=false` | No PC Service needed | Both tactile streams, the wrist camera, `gripper.pos`; no `tcp.*` |
-| ② With wrist pose (the usual one, this page's default) | `--robot.type=bi_taccap_gripper` (the tracker is on by default) | Tracker powered on and [bound](../common/pico4.md#pico-tracker-bind), Pico4 connected, [PC Service running](host-setup.md#35) | [`/world` view](../common/coordinates.md#world-view) / `tcp.*` |
-| ③ Full rig | `--robot.type=xtac_umi_g1` | As for ②, plus PC Service ≥ v0.2.0 | Headset stereo frames and head pose, see [head camera](#56) |
+| ② With wrist pose (the usual one, this page's default) | `--robot.type=bi_taccap_gripper` (the tracker is on by default) | Tracker powered on and [bound](../common/pico4.md#pico-tracker-bind), Pico4U connected, [PC Service running](host-setup.md#35) | [`/world` view](../common/coordinates.md#world-view) / `tcp.*` |
+| ③ Full setup | `--robot.type=xtac_umi_g1` | As for ②, plus PC Service ≥ v0.2.0 | Headset stereo frames and head pose, see [head camera](#56) |
 
-Preview at level ②:
+Preview at tier ②:
 
 ```bash
 lerobot-teleoperate \
@@ -30,7 +30,7 @@ lerobot-teleoperate \
     --display_data=true
 ```
 
-- On a bimanual rig `--robot.type` decides whether the headset is included; a `--robot.enable_head_camera` that contradicts it fails and tells you which type to use.
+- On a bimanual setup `--robot.type` decides whether the headset is included; a `--robot.enable_head_camera` that contradicts it fails and tells you which type to use.
 - For a single gripper use `--robot.type=taccap_gripper`: with one connected it is picked automatically, with both connected add `--robot.side=left|right` (required when recording only one).
 - `--teleop_time_s=10` exits after ten seconds; `--debug_timing=true` prints sampling times and the camera count.
 
@@ -46,7 +46,7 @@ Check each item (pose rows only for ② and ③), then `Ctrl+C`:
 
 ## Recording {#52}
 
-Devices are auto-discovered by serial number and each matched to left/right; level switches and the single-gripper form are as in the preview.
+Devices are auto-discovered by serial number and each matched to left/right; tier switches and the single-gripper form are as in the preview.
 
 ```bash
 lerobot-record \
@@ -64,7 +64,7 @@ lerobot-record \
 
 - Rerun displays on its own thread, so leaving `--display_data` on costs the collection loop nothing; a lagging viewer drops only on-screen frames and prints `Rerun display: N/M frames dropped …` at the end.
 - Spell out `fps=30`, `episode_time_s=120`, `reset_time_s=60` and `push_to_hub=false` rather than relying on defaults.
-- If a camera or the gripper encoder is lost mid-recording (loose cable, hub brown-out), collection stops, saves what it has and prints `Device lost mid-recording`; no values are invented. The last good value is carried before loss is declared (about 2s for a camera, 1s for the encoder), so the episode's last second or two may be stale; discard it. Check cabling and USB ports (see [Troubleshooting](troubleshooting.md)), then `--resume`.
+- If a camera or the gripper encoder is lost mid-recording (loose cable, hub brown-out), collection stops, saves what it has and prints `Device lost mid-recording`; no values are invented. Until a device is declared lost, its last good value is repeated (about 2s for a camera, 1s for the encoder), so the episode's last second or two may be stale; discard it. Check cabling and USB ports (see [Troubleshooting](troubleshooting.md)), then `--resume`.
 
 ### Parameters {#params}
 
@@ -82,7 +82,7 @@ For the complete definitions see lerobot's official [recording guide](https://hu
 | `reset_time_s` | `60` | Reset time between episodes (seconds) |
 | `num_episodes` | `50` | Number of episodes to record |
 | `video` | `true` | Encode as mp4 video |
-| `push_to_hub` | `false` | Upload to the Hub, see [Dataset](dataset.md#64) |
+| `push_to_hub` | `false` | Upload to the Hub, see [Pushing to the Hugging Face Hub and backup](dataset.md#64) |
 | `private` | `false` | Private Hub repo |
 | `tags` | none | Hub tags |
 | `streaming_encoding` | `true` | Live streaming encoding, see [streaming encoding](#54) |
@@ -102,8 +102,8 @@ For the complete definitions see lerobot's official [recording guide](https://hu
 | `show_trajectory` | `true` | Overlay the 3D pose + trajectory in Rerun (needs `display_data` and a `tcp.*`) |
 | `display_compressed_images` | `false` | JPEG-compress before display, on the display thread; only pays off when the viewer is on another machine (`--display_ip`) |
 | `display_image_every_n` | `1` | Refresh camera tiles every N frames (scalars at full rate); for choosing which display frames to drop yourself |
-| `play_sounds` | `true` | Spoken announcements; always silent in the container (no speech synthesiser), audible on the host |
-| `resume` | `false` | Continue an existing dataset; looks only locally, errors out, never downloads from the Hub; `--robot.id` must match the dataset, see [`--robot.id`](#robot-id) |
+| `play_sounds` | `true` | Spoken announcements; always silent in the container (no speech synthesizer), audible on the host |
+| `resume` | `false` | Continue an existing dataset; looks only locally and errors out if the dataset is not found; never downloads from the Hub; `--robot.id` must match the dataset, see [`--robot.id`](#robot-id) |
 
 **Device parameters `--robot.*` (XTac-UMI G1 specific)**
 
@@ -112,8 +112,8 @@ Only items used on this page; for the full set see [Common `RobotConfig` options
 | Parameter | Default | Meaning |
 |---|---|---|
 | `robot.side` | auto | `left`/`right`; required for a single gripper when both are connected |
-| `robot.role` | `leader` | Set `follower` to bind the follower gripper; firmware must be ≥ 1.2.5 or it is refused, below 1.2.11 it warns to upgrade, see [Firmware OTA](versions.md#ota) |
-| `robot.gripper_stream_hz` | `100` | Rate at which the leader firmware pushes encoder (and, when enabled, IMU) readings, `0` polls every frame; falls back to polling with a warning if the stream fails. Shared on a bimanual rig, no prefix |
+| `robot.role` | `leader` | Set `follower` to bind the follower gripper; firmware must be ≥ 1.2.5 or it is refused, below 1.2.11 it warns to upgrade, see [Firmware OTA upgrade](versions.md#ota) |
+| `robot.gripper_stream_hz` | `100` | Rate at which the leader firmware pushes encoder (and, when enabled, IMU) readings, `0` polls every frame; falls back to polling with a warning if the stream fails. Shared on a bimanual setup, no prefix |
 | `robot.enable_tracker` | `true` | Off means no pose |
 | `robot.enable_head_camera` | `false` | Single-gripper `taccap_gripper` only: record the headset; bimanual uses `--robot.type=xtac_umi_g1` instead, see [head camera](#56) |
 | `robot.head_camera_eyes` | `both` | `both` eyes (two keys), or `left` / `right` only |
@@ -121,7 +121,7 @@ Only items used on this page; for the full set see [Common `RobotConfig` options
 | `robot.wrist_undistort` | `false` | Undistort the fisheye before recording, see [fisheye undistortion](#57) |
 | `robot.wrist_undistort_balance` | `0.0` | `0` keeps the calibrated focal length, `1` is widest with the most black border |
 
-!!! warning "On a bimanual rig, the per-unit flags take a `left_` / `right_` prefix"
+!!! warning "On a bimanual setup, the per-unit flags take a `left_` / `right_` prefix"
     This page writes parameters for the single gripper; under `bi_taccap_gripper` these exist once per side, and without the prefix the field does not exist:
 
     | Single | Bimanual |
@@ -137,7 +137,7 @@ A powered tracker's 6-DoF pose is recorded automatically; the side comes from th
 
 ### `--robot.id` and the hardware manifest {#robot-id}
 
-`--robot.id` is the station number, one per rig (a bimanual rig is one rig), unchanged when a gripper is swapped. It is used in the log prefix, the calibration filename and the hardware manifest, not as a dataset column. The prefix is filled in from `--robot.type`:
+`--robot.id` is the station number, one per setup (a bimanual setup is one setup), unchanged when a gripper is swapped. It is used in the log prefix, the calibration filename and the hardware manifest, not as a dataset column. The prefix is filled in from `--robot.type`:
 
 | You type | `--robot.type` | Stored as |
 |---|---|---|
@@ -145,13 +145,13 @@ A powered tracker's 6-DoF pose is recorded automatically; the side comes from th
 | `--robot.id=0` | `bi_taccap_gripper` (bimanual) | `bi_taccap_0` |
 | `--robot.id=0` | `xtac_umi_g1` (bimanual + headset) | `xtac_umi_g1_0` |
 
-Do not type the prefix by hand: non-numeric values are kept verbatim, so `--robot.id=taccap_0` still works, but on a bimanual rig it disagrees with the device type. A missing or blank id exits at command-line parse time:
+Do not type the prefix by hand: non-numeric values are kept verbatim, so `--robot.id=taccap_0` still works, but on a bimanual setup it disagrees with the device type. A missing or blank id exits at command-line parse time:
 
 ```text
 ValueError: --robot.id is required: the station label for this rig, e.g. --robot.id=0 …
 ```
 
-Identity lives in the hardware manifest: `lerobot-record` writes `meta/hardware.json` right after `connect()`, with each gripper's firmware SN and the SNs of its two tactile sensors (each with its observation key).
+Identity is recorded in the hardware manifest: `lerobot-record` writes `meta/hardware.json` right after `connect()`, with each gripper's firmware SN and the SNs of its two tactile sensors (each with its observation key).
 
 ```json
 {
@@ -187,17 +187,17 @@ Identity lives in the hardware manifest: `lerobot-record` writes `meta/hardware.
 - It is a separate file, not in `meta/info.json`; trackers and wrist cameras are accessories and not listed.
 - `wrist_undistort` records whether frames were undistorted and with which intrinsics, `{"applied": false}` if not; see [fisheye undistortion](#57).
 
-`epochs` lets one dataset span several rigs:
+`epochs` lets one dataset span several setups:
 
 - Each epoch records `from_episode` / `to_episode` (half-open, matching `dataset_from_index` / `dataset_to_index`) and `recorded_at`; the open epoch has `to_episode` `null`.
-- On `--resume` with the same rig no new epoch is recorded; after a gripper or sensor swap, the old epoch closes at the current episode count and a new one starts.
+- On `--resume` with the same setup no new epoch is recorded; after a gripper or sensor swap, the old epoch closes at the current episode count and a new one starts.
 - A `--robot.type` mismatch is a different dataset, not a hardware swap: the original file is kept and a warning is logged.
 - `bi_taccap_gripper` ↔ `xtac_umi_g1` (adding or dropping the headset) is also a different dataset, and a dataset recorded on an earlier version with the headset under `bi_taccap_gripper` cannot be resumed either; both need a new `--dataset.repo_id`.
 - Older datasets (flat `units`) read back as one open epoch, which only says "nothing indicates the hardware changed".
 
 **One dataset belongs to one station**: on `--resume`, a `--robot.id` that differs from the recorded one is refused before any device connects (the error contains `refusing to resume it`). Resume on the original station or use a new `--dataset.repo_id`; older datasets with no recorded station are exempt.
 
-!!! note "The derived tactile channels rebuild from the dataset alone"
+!!! note "The derived tactile channels can be rebuilt from the dataset alone"
     depth / force / difference are computed from the recorded `rectify` stream: the reference image is each episode's first `rectify` frame and everything else is fixed by the sensor model, so no physical unit is needed. A `meta/runtimes/` directory and per-sensor `runtime` key in older datasets are ignored.
 
 ## What each frame records {#53}
@@ -224,10 +224,10 @@ R = ⎡ r1  r4  · ⎤     column 1 (r1,r2,r3) = direction of the body X axis in
     ⎣ r3  r6  · ⎦     column 3 = cross product of the first two; recompute it yourself
 ```
 
-The 9 IMU columns are not recorded by default; to add them use `--robot.enable_imu=true` (on a bimanual rig it applies to both sides at once, with keys prefixed `left_` / `right_`); `observation.state` goes 10 → 19 for a single gripper, 20 → 38 for bimanual.
+The 9 IMU columns are not recorded by default; to add them use `--robot.enable_imu=true` (on a bimanual setup it applies to both sides at once, with keys prefixed `left_` / `right_`); `observation.state` goes 10 → 19 for a single gripper, 20 → 38 for bimanual.
 
 !!! warning "`--robot.enable_tactile=false` is a diagnostic switch, do not record with it"
-    Off, the tactile sensors are not discovered, recorded or keyed. It only exists to halve a USB bandwidth problem (one camera failing to open, a different one each time); see [a camera that will not open](troubleshooting.md#usb-bandwidth). To record one stream fewer, use `--robot.enable_wrist_camera=false` or `--robot.enable_tracker=false`.
+    When it is off, the tactile sensors are not discovered, recorded or keyed. It exists only to bisect a USB bandwidth problem (one camera failing to open, a different one each time); see [a camera that will not open](troubleshooting.md#usb-bandwidth). To record one stream fewer, use `--robot.enable_wrist_camera=false` or `--robot.enable_tracker=false`.
 
 !!! tip "By default, what you see in Rerun is what lands on disk"
     - On disk: `--robot.tactile_output_types`, default `rectify` (the raw image with no baseline subtraction); exactly one type, more than one is an error.
@@ -262,12 +262,12 @@ lerobot-record \
 - One encoder thread per camera, fed through a bounded queue (`--dataset.encoder_queue_maxsize`, about one second of frames); when full it waits up to 0.1s, then drops the current frame and warns `Encoder queue full … dropped N frame(s)` without blocking collection.
 - Saving is transactional: a failed save or a Ctrl+C rolls back to the last complete episode, never leaving half an episode, and `--resume` carries on.
 - `--dataset.vcodec=auto` prefers hardware encoding; an NVIDIA GPU is recommended so GPU H.264 encoding takes load off the CPU.
-- Encoder warm-up is automatic: encoders are ready before each episode, so the first frame does not pay for it.
+- Encoder warm-up is automatic: encoders are ready before each episode, so warm-up does not eat into the first frame's time budget.
 
-### Recording on a host with no NVIDIA GPU {#no-gpu}
+### Recording on a collection PC with no NVIDIA GPU {#no-gpu}
 
-!!! warning "This is a workaround for an underspecified machine, not a recommendation"
-    The [data-collection host minimum](install.md#host-spec) is an NVIDIA RTX 3060 / 8GB VRAM or better. A CPU-only server, a VM or a laptop with no NVIDIA card can record as below, but saves are slow and frames drop sooner; use a compliant host for real collection.
+!!! warning "This is a workaround for a machine below the minimum specification, not a recommendation"
+    The [collection PC minimum](install.md#host-spec) is an NVIDIA RTX 3060 / 8GB VRAM or better. A CPU-only server, a VM or a laptop with no NVIDIA card can record as below, but saves are slow and frames drop sooner; use a compliant collection PC for real collection.
 
 Upgrade such machines to v0.1.0 first.
 
@@ -281,11 +281,11 @@ lerobot-record \
 
 `--dataset.vcodec=auto` probes by actually opening an encode session and falls back to `libsvtav1` (AV1 on the CPU) with no NVIDIA driver; offline re-encoding chooses the same way (`h264_nvenc` with NVIDIA). Passing `--dataset.vcodec=libsvtav1` explicitly also works.
 
-With `libsvtav1` the CPU both encodes and captures; a bimanual rig has six to eight images per frame in a 33.3ms budget at 30fps, so `[slow_frame] ... overrun=` appears. With streaming off, frames are batch-encoded at `save_episode()`: a slow save only means waiting, a dropped frame cannot be recovered. Ignore the reminder to turn streaming encoding back on. To keep streaming encoding on a many-core server, tune these:
+With `libsvtav1` the CPU both encodes and captures; a bimanual setup has six to eight images per frame in a 33.3ms budget at 30fps, so `[slow_frame] ... overrun=` appears. With streaming off, frames are batch-encoded at `save_episode()`: a slow save only means waiting; a dropped frame cannot be recovered. Ignore the reminder to turn streaming encoding back on. To keep streaming encoding on a many-core server, tune these:
 
 | Parameter | Default | When to touch it |
 |---|---|---|
-| `--dataset.encoder_threads` | auto | On a big machine `libsvtav1` takes cores capture needs; `2` per encoder is a safe cap |
+| `--dataset.encoder_threads` | auto | On a big machine `libsvtav1` takes CPU cores that capture needs; `2` per encoder is a safe cap |
 | `--dataset.encoder_queue_maxsize` | `30` | About 1s of buffer at 30fps; a back-pressure valve that stops memory growing when encoding falls behind |
 
 ## Episodes and resets {#55}
@@ -293,7 +293,7 @@ With `libsvtav1` the CPU both encodes and captures; a bimanual rig has six to ei
 - `--dataset.num_episodes=N` records several episodes per run.
 - Between episodes, reposition the object and scene within `--dataset.reset_time_s`.
 - One complete demonstration per episode, never several attempts.
-- Give `--dataset.episode_time_s` enough room but not too much, or you get many dead tail frames.
+- Give `--dataset.episode_time_s` enough room but not too much, or many idle frames accumulate at the end.
 - Keyboard controls while recording:
 
     | Key | Effect |
@@ -325,11 +325,11 @@ On errors, start with [Troubleshooting](troubleshooting.md).
 
 Never restart XTac-UMI XR during collection (see [frame alignment](../common/pico4.md#pico-frame)); if you must, treat everything after it as a new dataset.
 
-- An uncalibrated leader gripper cannot connect, so the preview only double-checks the mechanical travel; each leader gripper is calibrated once (stored in flash), both sides on a bimanual rig, see [gripper calibration](calibration.md#41).
+- An uncalibrated leader gripper cannot connect, so the preview only double-checks the mechanical travel; each leader gripper is calibrated once (stored in flash), both sides on a bimanual setup, see [gripper calibration](calibration.md#41).
 - `scan_grippers` reports sensible side/role/firmware_sn; the tracker is charged and producing a pose.
-- On the wired link, turn the host's WiFi off (it conflicts with wired sharing), see [network](../common/pico4.md#pico-network).
+- On the wired link, turn the collection PC's Wi-Fi off (it conflicts with wired sharing), see [network](../common/pico4.md#pico-network).
 - Stable lighting, a clearly visible target, no cables or clutter blocking the wrist camera.
-- A bimanual rig at full load can stream ~280 MB/s, see [storage planning](dataset.md#storage-planning).
+- A bimanual setup at full load can stream ~280 MB/s, see [storage planning](dataset.md#storage-planning).
 - Run the [preview](#preview) before recording.
 
 ### How to perform the demonstration
@@ -341,7 +341,7 @@ Keep the pace similar across demonstrations of the same task so it is easier to 
 - Keep consistent: the task definition (`--dataset.single_task`), the intent of the motion, the coordinate origin.
 - Vary moderately: the object's initial pose and position, the grasp point, small changes in lighting.
 
-### Task definition and dataset organisation
+### Task definition and dataset organization
 
 - Use a stable, clear English sentence for `single_task`, identical within a dataset; it is written into `tasks`.
 - One task/variant per dataset; `repo_id` naming is in [Dataset](dataset.md).
@@ -349,14 +349,14 @@ Keep the pace similar across demonstrations of the same task so it is easier to 
 
 ### Incremental collection
 
-Record 5–10 first, verify with [`lerobot-check-dataset`](dataset.md#62) and replay a few, then scale up.
+Record 5–10 episodes first, verify with [`lerobot-check-dataset`](dataset.md#62) and replay a few, then scale up.
 
 ### Pre-flight checklist
 
 - [ ] XTac-UMI XR not restarted during collection
 - [ ] `gripper.pos` ≈ 0 when closed
 - [ ] Tracker has a pose, trajectory looks right
-- [ ] Host WiFi off
+- [ ] Collection PC Wi-Fi off
 - [ ] Tactile images carry signal when grasping
 - [ ] Wrist camera view unobstructed
 - [ ] No dropped-frame warnings
@@ -382,17 +382,17 @@ lerobot-record \
 - Prerequisites: XenseVR PC Service ≥ v0.2.0 (older versions do not forward frames, see [version baseline](versions.md#required)); the headset app is streaming and connected to the [PC Service](host-setup.md#35). Camera and tracker share one SDK connection; turning one off does not disconnect the other.
 
 !!! warning "The headset's resolution and `--robot.head_camera_width/_height` must agree"
-    Only `640x480` (default), `1024x768` and `1280x960` are accepted. XTac-UMI XR outputs 640x480 per eye by default, matching the collection side, so there is nothing to pass; the flags only declare what you expect.
+    Only `640x480` (default), `1024x768` and `1280x960` are accepted. XTac-UMI XR outputs 640x480 per eye by default, matching the collection unit, so there is nothing to pass; the flags only declare what you expect.
 
     - Any other value, or a first frame that disagrees with the config (at connect), is an error; nothing is silently resampled to change the field of view.
     - All three are 4:3, like the sensor (the PICO camera API's per-frame cap of 2328x1748 is also 4:3); 16:9 only gets a crop or a stretch.
     - For a higher resolution, contact [technical support](../common/reference.md#support) to change it on the headset, and change both flags to match.
 
 - `--robot.head_camera_eyes=left` (or `right`) records one eye: half the decoding and encoder load, one head video key.
-- Changing the resolution or eye selection changes the data; episodes either side cannot be mixed.
-- The eyes are two independent messages and a mismatch leaves no trace, so each frame compares both eyes' newest frames: identical sequence numbers mean the same exposure, otherwise timestamps must agree within `--robot.head_camera_pair_max_skew_ms` (default 20ms, against about 33ms per frame at 30fps); exceeding it only logs a rate-limited warning with the measured skew.
+- Changing the resolution or eye selection changes the data; episodes recorded before and after the change cannot be mixed.
+- The eyes are two independent messages and a mismatch leaves no trace, so each frame compares both eyes' newest frames: identical sequence numbers mean the same exposure, otherwise timestamps must agree within `--robot.head_camera_pair_max_skew_ms` (default 20ms, against about 33ms per frame at 30fps); exceeding it only logs a rate-limited warning with the measured skew; recording continues.
 
-`head_camera.*` is mapped into the `tcp.*` world frame with the tracker's Pico→world transform. Enabling it adds 9 dimensions to `observation.state`: 10 → 19 single, 20 → 29 bimanual, and `--robot.enable_imu=true` adds on top. If it will not connect, see [Troubleshooting](troubleshooting.md#head-camera).
+`head_camera.*` is mapped into the `tcp.*` world frame with the tracker's Pico→world transform. Enabling it adds 9 dimensions to `observation.state`: 10 → 19 single, 20 → 29 bimanual, and `--robot.enable_imu=true` adds on top. If it will not connect, see [Troubleshooting · Head camera](troubleshooting.md#head-camera).
 
 ## Optional: wrist camera fisheye undistortion {#57}
 
@@ -417,6 +417,6 @@ In these cases undistortion does not fail but falls back to the SDK's built-in r
 
 The fallback warns `Wrist undistortion is using the SDK's REFERENCE intrinsics ... Rectification will be approximate` and records `"calibration": "reference"` in the manifest. In code, prefer `Calibration::resolve_fisheye()` (returns `(calibration, is_reference, reason)`) over `read_fisheye()`.
 
-The reference values are fine to look at, but the principal point drifts per unit (37.7px off on one unit); to measure in pixels on the rectified image (visual servoing, hand-eye calibration, size estimation), store this unit's own calibration first: `python third_party/taccap-gripper/python/examples/fisheye_cal.py set-fisheye right` (with two connected, pick `left` / `right` or a full SN; omit with one).
+The reference values are good enough for viewing, but the principal point drifts per unit (37.7px off on one unit); to measure in pixels on the rectified image (visual servoing, hand-eye calibration, size estimation), store this unit's own calibration first: `python third_party/taccap-gripper/python/examples/fisheye_cal.py set-fisheye right` (with two connected, pick `left` / `right` or a full SN; omit with one).
 
-An off-centre or slightly tilted rectified frame does not mean bad calibration: undistortion centres on the principal point, not the frame centre, the sensor need not sit on the optical centre, and fisheye barrel distortion hides this (one unit: `cx = 359.1`, fingertip midpoint x = 360.1, about 1px apart). Do not change `cx`; forcing 320 makes it worse and adds tilt.
+An off-center or slightly tilted rectified frame does not mean bad calibration: undistortion centers on the principal point, not the frame center, the sensor need not sit on the optical center, and fisheye barrel distortion hides this (one unit: `cx = 359.1`, fingertip midpoint x = 360.1, about 1px apart). Do not change `cx`; forcing 320 makes it worse and adds tilt.

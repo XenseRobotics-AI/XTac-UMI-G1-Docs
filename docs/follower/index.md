@@ -5,8 +5,8 @@
 
 ![XTac-UMI G1 从夹爪](../assets/product/follower-scene-front.webp){ width="720" }
 
-!!! note "本章使用数采环境自带的 SDK 0.4.1"
-    本章按 [TacCap-Gripper](https://github.com/XenseRobotics-AI/TacCap-Gripper) **v0.4.1** 编写，
+!!! note "本章使用数采环境自带的 SDK 0.4.3"
+    本章按 [TacCap-Gripper](https://github.com/XenseRobotics-AI/TacCap-Gripper) **v0.4.3** 编写，
     数采环境里自带的就是这一版，见 [准备与自检](setup.md#install)。
 
 ## 和主夹爪的区别 {#vs-leader}
@@ -19,7 +19,7 @@
 | IMU / 编码器 / 按键 | 有 | 无 |
 | 行程标定 | 手动标定 | 上电自动标定 |
 | 序列号末位字母 | `m` | `s` |
-| 随 SDK 0.4.1 附带的固件 | 1.2.6 | 1.2.14 |
+| 随 SDK 0.4.3 附带的固件 | 1.2.6 | 1.2.16 |
 
 主夹爪和从夹爪的固件各自编号，两边版本号不同是正常的。
 

@@ -2,7 +2,7 @@
 
 **XTac-UMI 数采背包**是背包版的采集主机，随采集人员背负移动：夹爪与头显直接接上，平板浏览器即控制台，采集、回放与导出都在背包上完成。
 
-![XTac-UMI 数采背包前面板](../assets/product/backpack-ports-front.webp){ width="720" }
+![XTac-UMI 数采背包](../assets/product/backpack-ports-front.webp){ width="720" }
 
 [一页速通](../backpack/quickstart.md){ .md-button .md-button--primary }
 [对比两种配置](editions.md){ .md-button }
@@ -109,7 +109,7 @@
 - **原始记录**：每条人类示范一个 MCAP 文件，存在背包的 NVMe 数据盘上。
 - **按任务导出**：LeRobotDataset v3 或 MCAP，两种可以都导；导出前自动检查数据完整性。
 - **取回方式**：下载压缩包，或上传到 ModelScope、S3、FTP / FTPS、NFS。
-- **数据量**：一个 3 分钟左右的任务导出约 1.5GB。
+- **数据量**：导出的 LeRobot 数据集约 0.5GB/小时。
 
 详见[项目、导出与上传](../backpack/projects-export.md)。
 

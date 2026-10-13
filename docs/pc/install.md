@@ -89,7 +89,7 @@
 
     ```bash
     git clone \
-      --branch v0.1.0 \
+      --branch v0.1.1 \
       --recurse-submodules \
       https://github.com/XenseRobotics-AI/xense-taccap-lerobot.git
     cd xense-taccap-lerobot
@@ -189,12 +189,12 @@
     用普通用户（非 root）执行：
 
     ```bash
-    git clone --branch v0.1.0 https://github.com/XenseRobotics-AI/xense-taccap-lerobot.git
+    git clone --branch v0.1.1 https://github.com/XenseRobotics-AI/xense-taccap-lerobot.git
     cd xense-taccap-lerobot
     ./docker/install_customer.sh
     ```
 
-    脚本依次：检查系统与显卡驱动 → 按需装 Docker 与 NVIDIA Container Toolkit（并注册 NVIDIA runtime）→ 装[串口权限](host-setup.md#32)的 ModemManager 屏蔽规则 → 拉取镜像 → CUDA 与图形冒烟测试。克隆仓库只为拿 `compose.yaml` 和脚本。
+    脚本依次：检查系统与显卡驱动 → 按需装 Docker 与 NVIDIA Container Toolkit（并注册 NVIDIA runtime）→ 装[关闭 ModemManager 抢占（udev）](host-setup.md#32)中的屏蔽规则 → 拉取镜像 → CUDA 与图形冒烟测试。克隆仓库只为拿 `compose.yaml` 和脚本。
 
     走代理：
 
@@ -205,7 +205,7 @@
     离线机器向交付渠道要镜像 `.tar` 包，放进仓库根目录或作为第一个参数传入，脚本改为校验并导入：
 
     ```bash
-    ./docker/install_customer.sh xense-taccap-lerobot-0.1.0-linux-amd64.tar
+    ./docker/install_customer.sh xense-taccap-lerobot-0.1.1-linux-amd64.tar
     ```
 
     默认仍在线拉取：升级只拉变动的层。
@@ -215,7 +215,7 @@
     默认的 `latest` 会随发布浮动。正式采集前在仓库根目录 `.env` 钉版本；`compose.yaml` 已指向官方镜像，只写 tag 一行，`LEROBOT_IMAGE` 仅换镜像名时用：
 
     ```dotenv
-    LEROBOT_IMAGE_TAG=0.1.0
+    LEROBOT_IMAGE_TAG=0.1.1
     ```
 
     确认解析到这一版再拉；`docker compose config --images` 显示的仓库名可能与上文不同，按 tag 核对即可：

@@ -17,7 +17,7 @@ hide:
 <p class="tc-note">XTac-UMI&nbsp;G1 grippers with the Pico4&nbsp;Ultra&nbsp;Enterprise headset<br>in a Backpack Kit or a Developer Kit</p>
 
 [About XTac-UMI G1](product/g1.md){ .md-button .md-button--primary }
-[Choose a kit](product/editions.md){ .md-button }
+[Choose an edition](product/editions.md){ .md-button }
 
 </div>
 
@@ -48,11 +48,11 @@ hide:
 
 **8 image streams** 4 tactile + 2 wrist + 2 headset
 
-**3 × 6DoF poses** both grippers + head
+**3 × 6-DoF poses** both grippers + head
 
 **5ms sync** positioning < 3mm
 
-**MCAP · LeRobot v3** raw and training formats
+**MCAP · LeRobotDataset v3** raw and training formats
 
 </div>
 
@@ -68,7 +68,7 @@ hide:
 
 <div class="tc-feature__text" markdown>
 
-- **Visuotactile fusion**: tri-colour fingertip sensors capture contact location, grasp stability and slip
+- **Visuotactile fusion**: tri-color fingertip sensors capture contact location, grasp stability and slip
 - **Close to the hand**: the wearable leader handles grasping, insertion and thin-part picking
 - **Precise sync**: 5ms multi-device time sync, < 3mm positioning
 - **Open formats**: LeRobot / MCAP output, compatible with mainstream data ecosystems
@@ -79,9 +79,9 @@ hide:
 
 </div>
 
-## Two kits for different settings
+## Two editions for different settings
 
-Both kits use the same grippers and headset and produce the same data. The Backpack Kit is a turnkey unit whose collection software is not open source; the Developer Kit's collection software and gripper SDK are open source and free to customize.
+Both editions use the same grippers and headset and produce the same data. The Backpack Kit is a turnkey unit whose collection software is not open source; the Developer Kit's collection software and gripper SDK are open source and free to customize.
 
 <div class="grid cards xu-cards" markdown>
 
@@ -89,7 +89,7 @@ Both kits use the same grippers and headset and produce the same data. The Backp
 
     <span class="xu-tag xu-tag--backpack">Backpack Kit</span>
 
-    **XTac-UMI Data Collection Backpack**{ .xu-card__title }
+    **XTac-UMI Backpack**{ .xu-card__title }
 
     ---
 
@@ -101,7 +101,7 @@ Both kits use the same grippers and headset and produce the same data. The Backp
     Turnkey, closed-source collection software; for large-scale collection teams and data factories
     { .xu-card__fit }
 
-    [Quick start](backpack/quickstart.md){ .md-button .md-button--primary }
+    [Quickstart](backpack/quickstart.md){ .md-button .md-button--primary }
     [About the backpack](product/backpack.md){ .md-button }
     { .xu-card__actions }
 
@@ -113,7 +113,7 @@ Both kits use the same grippers and headset and produce the same data. The Backp
 
     ---
 
-    - Grippers and headset connect straight to your workstation
+    - Grippers and headset connect straight to your collection PC
     - Built on open-source LeRobot; recording produces a LeRobotDataset
     - Open-source collection software and gripper SDK, free to customize
     - Supports the follower gripper for executing and replaying motions on a robot
@@ -121,8 +121,8 @@ Both kits use the same grippers and headset and produce the same data. The Backp
     For research and algorithm teams with their own training pipelines
     { .xu-card__fit }
 
-    [Quick start](pc/quickstart.md){ .md-button .md-button--primary }
-    [Compare the two kits](product/editions.md){ .md-button }
+    [Quickstart](pc/quickstart.md){ .md-button .md-button--primary }
+    [Compare the two editions](product/editions.md){ .md-button }
     { .xu-card__actions }
 
 </div>

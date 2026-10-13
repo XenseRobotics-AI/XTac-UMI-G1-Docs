@@ -3,7 +3,7 @@
 Before you start, make sure you have completed the four steps in [Setup and self-check](setup.md), **especially the step 4 motion check**.
 
 !!! danger "This drives a real motor"
-    Before running, clear the jaws' range of motion, keep your fingers away from the gripper, and make sure you can cut the 24V at any moment. For a follower gripper on a robot, test first with the robot stationary.
+    Before running, clear the fingers' range of motion, keep your hands away from the gripper, and make sure you can cut the 24V at any moment. For a follower gripper on a robot, test first with the robot stationary.
 
 ## Keyboard control {#first-motion}
 
@@ -77,6 +77,7 @@ Key points:
 - **Always generate the config with `for_spec(g.motor.get_spec())`**, and change only the grip force as needed.
 - **Start the controller first, then `g.motor.enable()`**; the code above already follows this order.
 - **Run only one controller per gripper at a time.**
+- Force-position control follows a streamed target about one send interval behind (about 20ms at 50Hz), in exchange for smooth motion.
 - While controlling, read opening, velocity, torque and temperature from `c.snapshot().observation`; do not read the motor state separately.
 - Interface details and example scripts are in [API and examples](api.md).
 
@@ -90,6 +91,6 @@ Key points:
 
 ## Faults and recovery {#fault}
 
-When the controller detects an anomaly it stops and goes limp; `c.snapshot().state` becomes `FAULT`, and the reason is in `c.snapshot().fault_reason`.
+When the controller detects an anomaly it stops and releases its torque; `c.snapshot().state` becomes `FAULT`, and the reason is in `c.snapshot().fault_reason`.
 Once the cause is removed, call `g.motor.clear_fault()` and then `c.reset()` to continue; if it cannot recover, power-cycle the gripper.
 For common causes, see [Troubleshooting](troubleshooting.md#fault).

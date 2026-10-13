@@ -3,7 +3,7 @@
 This page takes you from powering on to your first exported dataset; follow the steps in order.
 
 !!! note "Before you start"
-    - **Headset and trackers**: the Pico system is updated, XTac-UMI XR is installed and both trackers are paired; see [Pico4 headset and trackers](../common/pico4.md).
+    - **Headset and trackers**: the Pico system is updated, XTac-UMI XR is installed and both trackers are paired; see [Pico4 headset and tracker setup](../common/pico4.md).
     - **Gripper calibration**: the leader grippers are calibrated; see console → System → [Gripper](system.md#gripper).
 
 ## 1. Wiring and power {#power-on}
@@ -37,9 +37,9 @@ If the console does not open, see [Troubleshooting](troubleshooting.md#tablet-ad
 
 ## 4. Pick a project and task {#project}
 
-1. **Pick or create**: at the bottom of the console's Live monitor page, pick a project and a task; if there are none yet, choose "New project…" or "New task…".
+1. **Pick or create**: at the bottom of the console's Live monitoring page, pick a project and a task; if there are none yet, choose "New project…" or "New task…".
 2. **Fill in the settings**:
-    - **Capture mode**: chosen when creating the project, for example "Dual gripper + headset stereo"; see [capture mode](monitor-record.md#project-task).
+    - **Capture mode**: chosen when creating the project, for example "Dual gripper + stereo headset"; see [capture mode](monitor-record.md#project-task).
     - **Task instruction**: give the new task a clear natural-language instruction.
 
 ## 5. Check before recording {#checks}
@@ -50,7 +50,7 @@ Before you hit record, confirm these three:
 - **Pose view**: follows your hands in real time, with left and right not swapped.
 - **Gripper opening**: follows the grippers as they open and close.
 
-![The live monitor page](../assets/backpack/monitor-live.webp)
+![The Live monitoring page](../assets/backpack/monitor-live-en.webp)
 
 If the record button is unavailable, the page states why; see [Recording gates](monitor-record.md#record-gates).
 
@@ -60,13 +60,13 @@ If the record button is unavailable, the page states why; see [Recording gates](
 |---|---|---|
 | Start recording | Long-press right | LED breathes green |
 | Stop recording | Long-press left | One white flash: saved |
-| Delete the last take | Double-click left, then double-click again to confirm | Purple LED |
+| Delete the last episode | Double-click left, then double-click again to confirm | Purple LED |
 
 All gestures, LED patterns and voice prompts are in [Gripper buttons, LEDs and voice](gripper.md).
 
 ## 7. Export and upload {#export}
 
-On the console's Projects page, select a task and click Export:
+On the console's Project page, select a task and click Export:
 
 1. **Precheck**: data integrity is checked automatically; fix anything it reports.
 2. **Destination**:

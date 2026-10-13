@@ -5,7 +5,7 @@
 
 ## 1. 安装 SDK {#install}
 
-装好数采环境（[安装](../pc/install.md)）就已经带有 SDK 0.4.1，不需要另外安装。示例脚本在数采仓库的
+装好数采环境（[安装](../pc/install.md)）就已经带有 SDK 0.4.3，不需要另外安装。示例脚本在数采仓库的
 `third_party/taccap-gripper/python/examples/` 下。串口权限见 [串口权限](../pc/host-setup.md#31)。
 
 验证（在数采仓库根目录、数采环境里）：
@@ -15,7 +15,7 @@ cd third_party/taccap-gripper
 python -c "import xense.taccap as t; print(t.hello())"
 ```
 
-应输出 `taccap-gripper OK; version 0.4.1`。版本不对说明 SDK 子模块没更新或没重新编译，见
+应输出 `taccap-gripper OK; version 0.4.3`。版本不对说明 SDK 子模块没更新或没重新编译，见
 [从夹爪故障排查](troubleshooting.md#connect)。
 
 后续命令均在 `third_party/taccap-gripper` 目录、数采环境中运行。不用数采仓库、单独安装 SDK 见
@@ -54,7 +54,7 @@ python python/examples/follower_status.py left
 这个脚本只读，不会让电机动。正常输出中要看的几行（中间省略）：
 
 ```text
-[fw] FirmwareVersion(1.2.14.0)
+[fw] FirmwareVersion(1.2.16.0)
 ...
 [归一化] g.position() = 0.9183
 ...
@@ -66,7 +66,7 @@ python python/examples/follower_status.py left
 
 | 看哪里 | 正常 | 不正常时 |
 |---|---|---|
-| `[fw]` | 1.2.14 | 低于 1.2.11 会打印升级提示，低于 1.2.5 会报错退出，都先[升级固件](firmware.md#mcu-ota) |
+| `[fw]` | 1.2.16 | 低于 1.2.11 会打印升级提示，低于 1.2.5 会报错退出，都先[升级固件](firmware.md#mcu-ota) |
 | `[归一化]` | 0 到 1 之间 | 报 `not calibrated`：清空爪子周围，断电重启 |
 | `[故障]` | 全 0 | 见[故障排查](troubleshooting.md#fault) |
 | `[开流读]` | 约 100Hz，显示 `OK` | 断电重启后再试，仍不正常见[故障排查](troubleshooting.md#self-check) |

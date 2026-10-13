@@ -77,6 +77,7 @@ with t.ForcePositionController(g, cfg) as c:
 - **配置一律用 `for_spec(g.motor.get_spec())` 生成**，只按需要改夹持力。
 - **先启动控制器，再 `g.motor.enable()`**，上面的写法已经是这个顺序。
 - **一只夹爪同时只运行一个控制器。**
+- 力位控制跟随连续目标时，比目标晚约一个发送周期（50Hz 下约 20ms），换来平顺的运动。
 - 控制过程中读开度、速度、力矩、温度，用 `c.snapshot().observation`，不要另外去读电机状态。
 - 接口细节与示例脚本见 [API 与示例](api.md)。
 

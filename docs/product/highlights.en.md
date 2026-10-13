@@ -17,7 +17,7 @@
 
     ---
 
-    Capture, synchronisation and tooling live in one system, turning human demonstrations straight into trainable data.
+    Capture, synchronization and tooling live in one system, turning human demonstrations straight into trainable data.
 
 -   :material-hand-back-right-outline: __Natural handling, efficient collection__
 
@@ -35,7 +35,7 @@
 
     ---
 
-    Standardised output and fleet deployment; data is easy to review, compare and reuse.
+    Standardized output and fleet deployment; data is easy to review, compare and reuse.
 
 </div>
 
@@ -49,7 +49,7 @@
 
     ---
 
-    High-frame-rate tri-colour visuotactile sensors record contact location, grasp stability and slip trends in sync.
+    High-frame-rate tri-color visuotactile sensors record contact location, grasp stability and slip trends in sync.
 
 -   ![Holding a leader gripper](../assets/highlights/handheld.webp){ .tc-card-img loading=lazy }
 
@@ -57,11 +57,11 @@
 
     ---
 
-    The wearable leader end is light and easy to pick up, covering grasping, carrying, insertion, thin-part picking and more.
+    The wearable leader gripper is light and easy to pick up, covering grasping, carrying, insertion, thin-part picking and more.
 
 -   ![Two leader grippers with live pose axes overlaid](../assets/highlights/system-sync.webp){ .tc-card-img loading=lazy }
 
-    :material-sync: __Precise, synchronised output__
+    :material-sync: __Precise, synchronized output__
 
     ---
 
@@ -81,7 +81,7 @@
 
     ---
 
-    A light leader end and a wearable collection unit, ready for the lab, home or field.
+    A light leader gripper and a wearable collection unit, ready for the lab, home or field.
 
 -   ![Fingertip picking up a fine chain](../assets/highlights/fingertip.webp){ .tc-card-img loading=lazy }
 
@@ -122,4 +122,4 @@
 - **Tactile and real-interaction research**: contact-state understanding, tactile representation and tactile foundation models.
 
 !!! note "Full specifications"
-    Product parameters are in [Specifications](specs.md#specs).
+    Product parameters are in [Technical specifications](specs.md#specs).

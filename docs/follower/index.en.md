@@ -5,8 +5,8 @@ This chapter shows how to control the follower gripper with the `xense.taccap` S
 
 ![XTac-UMI G1 follower gripper](../assets/product/follower-scene-front.webp){ width="720" }
 
-!!! note "This chapter uses SDK 0.4.1, which ships with the collection environment"
-    This chapter is written against [TacCap-Gripper](https://github.com/XenseRobotics-AI/TacCap-Gripper) **v0.4.1**,
+!!! note "This chapter uses SDK 0.4.3, which ships with the collection environment"
+    This chapter is written against [TacCap-Gripper](https://github.com/XenseRobotics-AI/TacCap-Gripper) **v0.4.3**,
     the version bundled with the collection environment; see [Setup and self-check](setup.md#install).
 
 ## How it differs from the leader gripper {#vs-leader}
@@ -19,7 +19,7 @@ This chapter shows how to control the follower gripper with the `xense.taccap` S
 | IMU / encoder / buttons | Yes | No |
 | Travel calibration | Manual | Automatic at power-on |
 | Last letter of the serial number | `m` | `s` |
-| Firmware bundled with SDK 0.4.1 | 1.2.6 | 1.2.14 |
+| Firmware bundled with SDK 0.4.3 | 1.2.6 | 1.2.16 |
 
 Leader and follower firmware are numbered separately, so it is normal for their version numbers to differ.
 
@@ -34,16 +34,16 @@ Taking `TCGU01A24A0001s` as an example:
 
 ## Motor {#motor-model}
 
-| Continuous stall rating | Speed range |
+| Continuous stall rating | Max. speed |
 |---|---|
 | 1.1N·m | 50rad/s |
 
-The **continuous stall rating** is the torque the jaws can hold indefinitely while pressing against an object; it is also the default grip force and its upper limit.
+The **continuous stall rating** is the torque the fingers can hold indefinitely while pressing against an object; it is also the default grip force and its upper limit.
 
 ## Safety notes {#safety-model}
 
 - The gripper firmware has a built-in **motion safety envelope** (torque limit, thermal derating) that no program can bypass; it is active automatically from firmware 1.2.12.
-  **Older firmware lacks this protection**: pressing against something hard can drag down the 24V supply and make the gripper let go, so [upgrade](firmware.md#mcu-ota) to the firmware bundled with the SDK before use.
+  **Older firmware lacks this protection**: pressing against something hard can pull the 24V supply voltage down and make the gripper let go, so [upgrade](firmware.md#mcu-ota) to the firmware bundled with the SDK before use.
 - When control stops, the program exits or USB disconnects, the gripper releases and whatever it is holding will drop.
 - After power-on the gripper opens and closes once by itself to calibrate (about 10 seconds). During that time do not put anything in it and do not send commands.
 

@@ -1,6 +1,6 @@
 # 故障排查
 
-多数问题由串口权限不足或 ModemManager 抢占串口引起，请先查阅「串口权限与设备发现」。排查前请先运行[快速开始](index.md)中的自检。
+多数问题由串口权限不足或 ModemManager 抢占串口引起，请先查阅「串口权限与设备发现」。排查前请先按[一页速通 · 自检](quickstart.md#self-check)完成自检。
 
 ## 反馈问题请附上完整日志 {#logs}
 
@@ -84,7 +84,7 @@
 
     - 通常使用 `ota_update.py --all`，按角色逐只刷写；
     - 该角色只连接一只时，使用 `ota_update.py master` / `ota_update.py slave`；
-    - 指定某一只时，使用报错中 `shipped images` 列出的文件名，并加上左右或序列号，如 `ota_update.py tc-gu-01-slave-1.2.14.bin left`（以 `firmware/` 中的实际文件名为准）。
+    - 指定某一只时，使用报错中 `shipped images` 列出的文件名，并加上左右或序列号，如 `ota_update.py tc-gu-01-slave-1.2.16.bin left`（以 `firmware/` 中的实际文件名为准）。
 
     见[固件 OTA 升级](versions.md#ota)。
 

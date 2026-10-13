@@ -10,7 +10,7 @@ site_name: XTac-UMI 文档
 site_description: XTac-UMI 手持式多模态数据采集系统:XTac-UMI G1 视触觉夹爪、数采背包与 PC 开发套件的产品介绍与使用手册
 site_author: 千觉机器人
 site_url: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/
-copyright: Copyright &copy; 2026 千觉机器人科技(上海)有限公司 · 文档 v0.1.0
+copyright: Copyright &copy; 2026 千觉机器人科技(上海)有限公司 · 文档 v0.1.1
 
 # 不打包进站点的 docs 内文件(素材说明)
 exclude_docs: |
@@ -98,53 +98,53 @@ plugins:
           build: true
           site_name: "XTac-UMI Docs"
           site_author: XenseRobotics
-          copyright: Copyright &copy; 2026 XenseRobotics Co., Ltd. · Docs v0.1.0
+          copyright: Copyright &copy; 2026 XenseRobotics Co., Ltd. · Docs v0.1.1
           nav_translations:
             产品: Product
             首页: Home
             产品亮点: Highlights
             产品线与配置对比: Editions
             认识 XTac-UMI G1: XTac-UMI G1
-            认识数采背包: The Backpack
+            认识数采背包: The XTac-UMI Backpack
             技术参数: Specifications
-            安全与合规: Safety & Compliance
+            安全与合规: Safety and compliance
             背包版: Backpack Kit
             PC 版: Developer Kit
             通用: Common
-            开箱、接线与供电: Unboxing, Wiring & Power
-            网络与控制台入口: Network & Console Access
-            实时监控与录制: Live Monitor & Recording
-            项目、导出与上传: Projects, Export & Upload
+            开箱、接线与供电: Unboxing, cabling and power
+            网络与控制台入口: Network and console access
+            实时监控与录制: Live monitor and recording
+            项目、导出与上传: Projects, export and upload
             回放: Playback
-            系统设置: System Settings
-            升级与 OTA: Upgrades & OTA
+            系统设置: System settings
+            升级与 OTA: Upgrades and OTA
             版本: Versions
             安装: Installation
-            主机配置: Host Setup
-            标定与自检: Calibration & Self-check
-            数据采集: Data Collection
+            主机配置: Host setup
+            标定与自检: Calibration and self-check
+            数据采集: Data collection
             数据集: Dataset
             故障排查: Troubleshooting
-            版本与升级: Versions & Upgrades
-            RobotConfig 配置项: RobotConfig Options
-            Pico4 头显与追踪器: Pico4 Headset & Trackers
-            夹爪连接与序列号: Gripper Connection & Serials
-            夹爪按键、指示灯与语音: Gripper Buttons, LEDs & Voice
+            版本与升级: Versions and upgrades
+            RobotConfig 配置项: RobotConfig options
+            Pico4 头显与追踪器: Pico4 headset and tracker setup
+            夹爪连接与序列号: Gripper connection and serial numbers
+            夹爪按键、指示灯与语音: Gripper buttons, LEDs and voice
             一页速通: Quickstart
-            从夹爪: Follower Gripper
+            从夹爪: Follower gripper
             从夹爪概览: Overview
-            准备与自检: Setup & Self-check
-            运动控制: Motion Control
-            API 与示例: API & Examples
-            固件与电机升级: Firmware & Motor Upgrades
-            SDK 与二次开发: SDK & Development
-            SDK 概览: SDK Overview
-            安装与构建: Install & Build
-            API 要点: API Essentials
+            准备与自检: Setup and self-check
+            运动控制: Motion control
+            API 与示例: API and examples
+            固件与电机升级: Firmware and motor upgrades
+            SDK 与二次开发: SDK and development
+            SDK 概览: SDK overview
+            安装与构建: Install and build
+            API 要点: API essentials
             示例: Examples
-            坐标系: Coordinate Frames
+            坐标系: Coordinate frames
             维护保养: Maintenance
-            术语表与支持: Glossary & Support
+            术语表与支持: Glossary and support
   # 旧页面地址跳转到重构后的新页面(重构前的外部链接与收藏不失效)
   - redirects:
       redirect_maps:

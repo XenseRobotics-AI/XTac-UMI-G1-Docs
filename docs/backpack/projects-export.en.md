@@ -1,12 +1,12 @@
 # Projects, export and upload
 
-Manage recorded data on the console's Projects page: export a task as a LeRobot dataset or MCAP, download it or upload it to a remote (for example ModelScope), then free up space with Archive.
+Manage recorded data on the console's Project page: export a task as a LeRobot dataset or MCAP, download it or upload it to a remote backend (for example ModelScope), then free up space with Archive.
 
-## The Projects page {#projects}
+## The Project page {#projects}
 
 The hierarchy is **project → task → recording**. Each recording shows frames, data size and [quality](playback.md#quality), with Playback and Delete at the end of the row.
 
-![The Projects page](../assets/backpack/project-list-live.webp)
+![The Project page](../assets/backpack/project-list-live-en.webp)
 
 | Where | Actions |
 |---|---|
@@ -26,9 +26,9 @@ Click Export on a task row to open "Export task data":
 
 <div class="tc-pair" markdown>
 
-![The export dialog: precheck and picking recordings](../assets/backpack/export-precheck-live.webp)
+![The export dialog: precheck and picking recordings](../assets/backpack/export-precheck-live-en.webp)
 
-![The export dialog: destination, format and upload settings](../assets/backpack/export-options.webp)
+![The export dialog: destination, format and upload settings](../assets/backpack/export-options-en.webp)
 
 </div>
 
@@ -44,7 +44,7 @@ When it is done, click "Download dataset" or "Download mcap" and the browser sav
 
 ### Upload to remote {#upload}
 
-Pick an [upload backend](system.md#upload) (or create one on the spot); optionally tick "Archive automatically after upload".
+Pick an [upload backend](system.md#upload) (or create one on the spot); optionally tick "Automatically archive after upload (delete local source files; keep metadata only)".
 
 | Backend | Formats |
 |---|---|
@@ -61,12 +61,12 @@ You can export both formats; they do not affect each other.
 
 ### LeRobot dataset {#lerobot}
 
-A standard LeRobotDataset v3.0 at 30fps, with `meta/`, `data/` and `videos/`. The directory layout and how to load it are in the [LeRobotDataset v3.0 documentation](https://huggingface.co/docs/lerobot/lerobot-dataset-v3).
+A standard LeRobotDataset v3 at 30fps, with `meta/`, `data/` and `videos/`. The directory layout and how to load it are in the [LeRobotDataset v3.0 documentation](https://huggingface.co/docs/lerobot/lerobot-dataset-v3).
 
 | Capture mode | `robot_type` | Video streams | State / action dims |
 |---|---|---|---|
 | Dual gripper | `bi_taccap_gripper` | 6 | 20 |
-| Dual gripper + headset stereo | `xtac_umi_g1` | 8 | 29 |
+| Dual gripper + stereo headset | `xtac_umi_g1` | 8 | 29 |
 | Dual gripper + headset right eye | `xtac_umi_g1` | 7 | 29 |
 
 It also includes `meta/taccap_extrinsics.json` (tracker extrinsics) and `meta/xumi_collection_devices.json` (which devices recorded each episode).
@@ -87,10 +87,10 @@ It is not the same file as the raw recording on the backpack:
 
 Archiving **deletes the raw files on the device and keeps only the record**, to free space; archived recordings can no longer be replayed or exported.
 
-Tick recordings in the export dialog and click Archive, or tick "Archive automatically after upload" when uploading. The confirmation separates recordings by whether they were uploaded or downloaded, and recordings never uploaded or downloaded need a final extra confirmation.
+Tick recordings in the export dialog and click Archive, or tick "Automatically archive after upload (delete local source files; keep metadata only)" when uploading. The confirmation separates recordings by whether they were uploaded or downloaded, and recordings never uploaded or downloaded need a final extra confirmation.
 
 ## Delete {#delete}
 
 - **One recording**: click Delete on its row; the files go with it and cannot be recovered.
-- **Several**: tick them in the export dialog and click "Delete permanently". Unlike archiving, the record goes too; copies already uploaded to a remote are unaffected.
+- **Several**: tick them in the export dialog and click "Delete permanently". Unlike archiving, the record goes too; copies already uploaded to a remote backend are unaffected.
 - **A whole project or task**: "Delete permanently" in its Edit menu; you must type the name to confirm.
