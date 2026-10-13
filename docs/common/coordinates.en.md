@@ -15,7 +15,7 @@ The world frame is established and frozen by XTac-UMI XR on the headset at the m
 
 ![The world frame frozen at start-up](../assets/pico4/world-frame-origin.webp){ width="420" }
 
-The frame follows the headset only at the instant it starts; once frozen it is fixed in space, and turning your head or walking around does not carry it along. Restarting XTac-UMI XR establishes a new frame, changing both the origin and the orientation. So face the robot squarely when you start it, so that the X axis lines up with the robot's forward direction, and do not restart it while collecting one dataset; the steps are in [Start-up and frame alignment](pico4.md#pico-frame).
+The frame follows the headset only at the instant it starts; once frozen it is fixed in space, and turning your head or walking around does not carry it along. Restarting XTac-UMI XR establishes a new frame, changing both the origin and the orientation. So face the same direction as the robot (towards its front) when you start it, so that the X axis lines up with the robot's forward direction, and do not restart it while collecting one dataset; the steps are in [Start-up and frame alignment](pico4.md#pico-frame).
 
 Every pose in a dataset is referenced to this world frame: the Developer Kit writes the end-effector TCP pose `tcp.x/y/z` plus the 6-D rotation `r1..r6` (the first two columns of the rotation matrix, with the convention in [What each frame holds](../pc/recording.md#53)); the Backpack Kit records the headset's and the trackers' poses in the MCAP.
 
@@ -27,9 +27,9 @@ Every pose in a dataset is referenced to this world frame: the Developer Kit wri
 
 === "Developer Kit"
 
-    `--display_data=true` opens a `/world` 3D view in Rerun: each gripper is drawn as a labelled ellipsoid with a triad at its live `tcp.*`, trailing a breadcrumb trajectory.
+    `--display_data=true` opens a `/world` 3D view in Rerun: each gripper is drawn as a labeled ellipsoid with a triad at its live `tcp.*`, trailing a breadcrumb trajectory.
 
-    - The scene is declared `FLU`, the initial viewpoint faces +X, and the world axes are labelled `+X forward / +Y left / +Z up`.
+    - The scene is declared `FLU`, the initial viewpoint faces +X, and the world axes are labeled `+X forward / +Y left / +Z up`.
     - The breadcrumb keeps the most recent 90 samples (about 3 seconds at 30fps), fading with age.
     - With the headset camera on, the headset is drawn into the same `/world` as a smaller amber `HEAD` marker, without a trajectory.
     - `--show_trajectory` is on by default and `false` turns it off; it is skipped automatically when `--robot.enable_tracker=false`.

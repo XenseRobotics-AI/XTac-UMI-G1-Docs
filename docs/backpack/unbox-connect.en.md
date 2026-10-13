@@ -88,7 +88,7 @@ The backpack draws about 20W and runs about 3.5–4 hours on the power bank; see
 ## Connecting the headset to the backpack {#pico-link}
 
 1. **Start and connect**: the headset and the backpack connect by cable only, so make sure the headset's Type-C port is wired to the backpack's `PICO` port as above. Put on the headset, open XTac-UMI XR, **leave "USB Network" unticked** and "PC IP" empty (it connects to `192.168.100.1` by default), then tap "Connect".
-2. **Status icons**: the fold button is at the top right of XR. When tracking accuracy degrades or the link to the backpack drops, both XR and the console's live monitor page show an icon; the interface is described in [The XTac-UMI XR interface](../common/pico4.md#pico-toolkit-ui).
+2. **Status icons**: the fold button is at the top right of XR. When tracking accuracy degrades or the link to the backpack drops, both XR and the console's Live monitoring page show an icon; the interface is described in [The XTac-UMI XR interface](../common/pico4.md#pico-toolkit-ui).
 3. **Get in position**: stand at the work position facing the working direction before you open XR; where XR first starts becomes the [world-frame origin](../common/pico4.md#pico-frame). **Do not restart XR during collection.**
 
 !!! warning "The headset's screen timeout and sleep must be set to \"Never\""
@@ -103,6 +103,6 @@ Once the console is open, check these three; if any is wrong, go back and check 
 
 1. **Camera count**: the "Cameras" counter at the top right shows online / total, which should be 6 / 6 in "Dual gripper" mode. One missing usually means a gripper cable is not tightened or not fully seated.
 2. **Gripper LEDs**: normally solid green. A rapid red flash means the gripper's own self-check found a problem; solid red means the backpack detected that the gripper dropped out.
-3. **Capture mode**: the current project's [capture mode](system.md#capture-mode) matches how the system is wired ("Dual gripper", "Dual gripper + headset stereo" or "Dual gripper + headset right eye"; the System page shows it). Once the headset is connected, the pose view on the live monitor page should follow your hand; see [Camera and pose checks](monitor-record.md#checks).
+3. **Capture mode**: the current project's [capture mode](system.md#capture-mode) matches how the system is wired ("Dual gripper", "Dual gripper + stereo headset" or "Dual gripper + headset right eye"; the System page shows it). Once the headset is connected, the pose view on the Live monitoring page should follow your hand; see [Camera and pose checks](monitor-record.md#checks).
 
 **If something is wrong**: if nothing happens at power-up or the headset keeps dropping in and out, try a different cable and port first. Poor contact in the `DC`, `PICO` or `USB` port itself is a hardware fault: note the serial number on the body, contact technical support, and do not force or lever the connector; see [Troubleshooting](troubleshooting.md).

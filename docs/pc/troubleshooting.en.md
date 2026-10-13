@@ -6,7 +6,7 @@ Most problems are caused by insufficient serial permissions or ModemManager clai
 
 The full log is at `~/xenselogs/session_<timestamp>.log`; each run creates one file. Attach the entire file when reporting a problem.
 
-- The log contains the collection program, `xensesdk` and encoding library logs, plus key-press timestamps; the `[session]` line records the host, encoding and camera configuration.
+- The log contains the collection program, `xensesdk` and encoding library logs, plus key-press timestamps; the `[session]` line records the collection PC, encoding and camera configuration.
 - Only the latest 15 files are kept. Change the log directory with `XENSE_LOG_DIR` and the on-screen log level with `XENSE_LOG_LEVEL`.
 
 ## Environment and installation
@@ -41,7 +41,7 @@ Record the serial number, connection method, error message and a photo of the se
 
     **Fix:**
 
-    - `lsusb` should list 6 UVC devices on a bimanual rig (4 `Xense Robotics ... GSPS01…` tactile sensors + 2 `Sunplus ... XCA…` wrist cameras), and 3 on a single arm. For left/right identification, see [Serial numbers and left/right](../common/gripper.md#sn).
+    - `lsusb` should list 6 UVC devices on a bimanual setup (4 `Xense Robotics ... GSPS01…` tactile sensors + 2 `Sunplus ... XCA…` wrist cameras), and 3 on a single gripper. For left/right identification, see [Serial numbers and left/right](../common/gripper.md#sn).
     - If the count is wrong, check cable locking and left/right wiring, restart the software, and try another port or cable. If the devices are listed but cannot be opened, see the next section.
 
 ??? failure "Black image / no image"
@@ -120,7 +120,7 @@ Record the serial number, connection method, error message and a photo of the se
 
 ### Not enough USB bandwidth {#usb-bandwidth}
 
-!!! warning "Measure this on the first day of setting up a bimanual rig; do not wait for a camera to fail"
+!!! warning "Measure this on the first day of setting up a bimanual setup; do not wait for a camera to fail"
     This is the most common bimanual failure, and it depends on which physical ports the grippers use. The budget and how to read `lsusb -t` are in [USB bandwidth budget](host-setup.md#usb-budget).
 
 ??? failure "One camera cannot be opened (`Cannot open camera N`), and a different camera fails each time"
@@ -155,7 +155,7 @@ Record the serial number, connection method, error message and a photo of the se
     - until the new controller is in place, you can record without wrist cameras (no `{side}_wrist` key). Decide before recording; do not mix both configurations in one dataset.
 
 ??? question "How far over budget is it?"
-    Measured on a bimanual host with a single `480M` bus:
+    Measured on a bimanual collection PC with a single `480M` bus:
 
     | Cameras enabled | Reserved | Result |
     |---|---|---|
@@ -182,9 +182,9 @@ Record the serial number, connection method, error message and a photo of the se
 ## Pico4 tracker and pose
 
 ??? failure "No pose / the tracker cannot connect / the pose is unstable"
-    **Cause:** most commonly, the computer's WiFi conflicts with the Pico4 Ultra Enterprise wired network sharing. Other causes: the service or XTac-UMI XR is not running, or the tracker is unpaired or its battery is depleted.
+    **Cause:** most commonly, the collection PC's Wi-Fi conflicts with the Pico4 Ultra Enterprise wired network sharing. Other causes: the service or XTac-UMI XR is not running, or the tracker is unpaired or its battery is depleted.
 
-    **Fix:** turn off the computer's WiFi (see [Network connection](../common/pico4.md#pico-network)); check each step of the [Power-on sequence](quickstart.md#power-on); start the service with `/opt/apps/roboticsservice/runService.sh`; if needed, run the self-check `python -m lerobot.robots.taccap_gripper.check_tracker`.
+    **Fix:** turn off the collection PC's Wi-Fi (see [Network connection](../common/pico4.md#pico-network)); check each step of the [Power-on sequence](quickstart.md#power-on); start the service with `/opt/apps/roboticsservice/runService.sh`; if needed, run the self-check `python -m lerobot.robots.taccap_gripper.check_tracker`.
 
 ??? failure "The pose reference frame drifts between episodes"
     **Cause:** XTac-UMI XR was restarted between episodes, which reset the world origin.
@@ -202,12 +202,12 @@ Record the serial number, connection method, error message and a photo of the se
     **Fix:** bind both trackers in the "Motion Tracker" app. Before pairing, hold the tracker's power button for about 6 seconds until the light alternates blue and red, then tap "Start pairing". See [Binding the trackers](../common/pico4.md#pico-tracker-bind).
 
 ??? failure "XTac-UMI XR cannot connect (Not connected or Connection failed)"
-    **Cause:** usually the wired network is not connected properly, or the computer's WiFi is still on.
+    **Cause:** usually the wired network is not connected properly, or the collection PC's Wi-Fi is still on.
 
-    **Fix:** for a wired connection, tick "USB network"; over WiFi, enter the host's IP in "PC IP"; then tap "Connect". If it still fails, redo the [Network connection](../common/pico4.md#pico-network); the screen is described in [The app's interface](../common/pico4.md#pico-toolkit-ui).
+    **Fix:** for a wired connection, tick "USB network"; over Wi-Fi, enter the collection PC's IP in "PC IP"; then tap "Connect". If it still fails, redo the [Network connection](../common/pico4.md#pico-network); the screen is described in [The app's interface](../common/pico4.md#pico-toolkit-ui).
 
-??? failure "The headset shows \"Connected\" but the PC receives no pose"
-    **Cause:** "Connected" only means the app has reached the service. The host service may not be running, or the tracker is powered off or unbound.
+??? failure "The headset shows \"Connected\" but the collection PC receives no pose"
+    **Cause:** "Connected" only means the app has reached the service. The service on the collection PC may not be running, or the tracker is powered off or unbound.
 
     **Fix:** start [XenseVR PC Service](host-setup.md#35); run `ConsoleDemo` in `/opt/apps/roboticsservice/` or `python -m lerobot.robots.taccap_gripper.check_tracker` to check whether a pose with an `sn` is received. If not, return to [binding](../common/pico4.md#pico-tracker-bind) and confirm both trackers are on and "connected".
 
@@ -247,7 +247,7 @@ Record the serial number, connection method, error message and a photo of the se
     - if `Status` is not `install ok installed` (e.g. the package was removed with `dpkg -r`, leaving `deinstall ok config-files`), reinstall in the same way.
 
 ??? failure "Repeated left/right eye skew warnings in the log"
-    **Cause:** the timestamps of the two eyes' independent messages differ by more than `--robot.head_camera_pair_max_skew_ms` (20ms by default). This is common when the host is heavily loaded or the link is unstable.
+    **Cause:** the timestamps of the two eyes' independent messages differ by more than `--robot.head_camera_pair_max_skew_ms` (20ms by default). This is common when the collection PC is heavily loaded or the link is unstable.
 
     **Fix:** the warning does not interrupt recording, but the affected frames may be out of sync.
 
@@ -313,10 +313,10 @@ Record the serial number, connection method, error message and a photo of the se
 
     **Fix:** the last second or two of that episode contain stale values, so discard the episode. Check the screws, cable routing and USB port (if the problem recurs and changing ports does not help, see [Not enough USB bandwidth](#usb-bandwidth)), then continue into the same dataset with `--resume`, see [Recording](recording.md#52).
 
-??? failure "On a host without a discrete GPU, recording fails at startup because the encoder cannot be opened"
+??? failure "On a collection PC without a discrete GPU, recording fails at startup because the encoder cannot be opened"
     **Cause:** there is no NVIDIA driver, but a GPU hardware encoder is selected.
 
-    **Fix:** switch to a CPU encoder and disable streaming encoding: `lerobot-record ... --dataset.vcodec=libsvtav1 --dataset.streaming_encoding=false`. The rationale is in [Recording on a host with no NVIDIA GPU](recording.md#no-gpu).
+    **Fix:** switch to a CPU encoder and disable streaming encoding: `lerobot-record ... --dataset.vcodec=libsvtav1 --dataset.streaming_encoding=false`. The rationale is in [Recording on a collection PC with no NVIDIA GPU](recording.md#no-gpu).
 
 ??? failure "The encoder cannot keep up and dropped-frame warnings appear in the log"
     **Cause:** when the encoding queue is full, it waits up to 0.1s; if it is still full, the frame is dropped with the warning `Encoder queue full … dropped N frame(s)` (the collection loop is not blocked).
@@ -336,7 +336,7 @@ Record the serial number, connection method, error message and a photo of the se
 ## Data and disk
 
 ??? failure "Collection slows down / the disk fills up"
-    **Cause:** a bimanual rig can produce around 280 MB/s of raw video. Insufficient disk space, slow sustained writes or encoding that cannot keep up all cause this problem.
+    **Cause:** a bimanual setup can produce around 280 MB/s of raw video. Insufficient disk space, slow sustained writes or encoding that cannot keep up all cause this problem.
 
     **Fix:** first record a few episodes to measure the encoded size and dropped frames; check `df -h` and the dataset directory size regularly, see [Storage planning](dataset.md#storage-planning).
 

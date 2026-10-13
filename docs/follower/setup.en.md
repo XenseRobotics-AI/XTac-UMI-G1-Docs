@@ -67,7 +67,7 @@ This script is read-only and does not move the motor. The lines to look at in no
 | Where to look | Normal | If not normal |
 |---|---|---|
 | `[fw]` | 1.2.14 | Below 1.2.11 prints an upgrade prompt; below 1.2.5 exits with an error. In either case [upgrade the firmware](firmware.md#mcu-ota) first |
-| `[归一化]` (normalized) | Between 0 and 1 | Reports `not calibrated`: clear the area around the jaws and power-cycle |
+| `[归一化]` (normalized) | Between 0 and 1 | Reports `not calibrated`: clear the area around the fingers and power-cycle |
 | `[故障]` (fault) | All 0 | See [Troubleshooting](troubleshooting.md#fault) |
 | `[开流读]` (stream read) | About 100Hz, shows `OK` | Power-cycle and try again; if still not normal, see [Troubleshooting](troubleshooting.md#self-check) |
 

@@ -4,7 +4,7 @@ Format, checking, replay, Hub upload, disk planning and cleanup.
 
 ## The LeRobotDataset format at a glance {#61}
 
-Collection produces a standard **LeRobotDataset v3.0**: episodes merged into large Parquet/MP4 files, relational metadata locating episode boundaries, and native Hub streaming, with fewer small files and faster startup than v2. Official documentation:
+Collection produces a standard **LeRobotDataset v3**: episodes merged into large Parquet/MP4 files, relational metadata locating episode boundaries, and native Hub streaming, with fewer small files and faster startup than v2. Official documentation:
 
 - [LeRobotDataset v3.0 documentation](https://huggingface.co/docs/lerobot/lerobot-dataset-v3) (format design, directory layout, recording, loading/streaming, migrating v2.1→v3.0)
 - [lerobot recording guide](https://huggingface.co/docs/lerobot/il_robots#record-a-dataset)
@@ -19,7 +19,7 @@ ds = LeRobotDataset("<your_org>/<your_dataset>")
 sample = ds[0]          # one frame: observation + action, all torch tensors
 ```
 
-How it is serialised:
+How it is serialized:
 
 - `hf_dataset`: Hugging Face datasets → parquet
 - Video (tactile + wrist camera): mp4
@@ -29,12 +29,12 @@ How it is serialised:
 
 For the per-frame observation and action keys, see [What each frame records](recording.md#53).
 
-Recording also writes a separate hardware manifest, `meta/hardware.json` (upstream `info` is untouched): station number, gripper and tactile SNs, whether the wrist camera was undistorted, split into `epochs`. Fields and resume behaviour are in [`--robot.id` and the hardware manifest](recording.md#robot-id). Datasets derived with `lerobot-edit-dataset` (deleting or splitting episodes, removing features, 8 → 6 camera conversion) carry `hardware.json` along; **`merge` refuses outright**, because no single manifest could describe every episode's real sensors after a merge.
+Recording also writes a separate hardware manifest, `meta/hardware.json` (upstream `info` is untouched): station number, gripper and tactile SNs, whether the wrist camera was undistorted, split into `epochs`. Fields and resume behavior are in [`--robot.id` and the hardware manifest](recording.md#robot-id). Datasets derived with `lerobot-edit-dataset` (deleting or splitting episodes, removing features, 8 → 6 camera conversion) carry `hardware.json` along; **`merge` refuses outright**, because no single manifest could describe every episode's real sensors after a merge.
 
 <span id="stats-std"></span>
 
 !!! warning "Datasets recorded before 0.0.8: the image `std` statistic is 0"
-    In datasets recorded before 0.0.8, the `std` of image and video features in `meta/stats.json` is always 0 (`mean`, `min`, `max` and quantiles are unaffected). If you normalise images by `std` during training, recompute the statistics first.
+    In datasets recorded before 0.0.8, the `std` of image and video features in `meta/stats.json` is always 0 (`mean`, `min`, `max` and quantiles are unaffected). If you normalize images by `std` during training, recompute the statistics first.
 
 ## Where it lands and naming convention
 
@@ -78,7 +78,7 @@ What it checks:
 - Video files exist and their frame counts **exactly** match what is declared.
 - **Camera format**: a bimanual dataset is classified as 6 cameras (four tactile streams plus two wrist cameras) or 8 (plus the headset's two eyes); the two have different training input dimensions.
 
-The result is summarised on the last line:
+The result is summarized on the last line:
 
 ```text
 Summary: 0 error(s), 0 warning(s) | Camera format: 6-camera (no headset)
@@ -109,11 +109,11 @@ It drops the two headset eye image keys and the `head_camera.*` dimensions from 
 !!! warning "Double-check `--repo_id`"
     If the dataset is not found locally this conversion fetches it from the Hugging Face Hub, and `--local_files_only` has no effect on it. Make sure `--repo_id` is spelled correctly, or point `--root` straight at the local dataset folder.
 
-## Replay and visualisation
+## Replay and visualization
 
 - Online: once on the Hub, browse each episode's video and data with the [LeRobot Dataset Visualizer](https://huggingface.co/spaces/lerobot/visualize_dataset).
 - 3D trajectory: add `--display_data=true` during the [pre-recording preview](recording.md#preview) to see the gripper pose and trajectory in Rerun (see [the `/world` 3D view](../common/coordinates.md#world-view)).
-- Local, frame by frame: open the parquet + mp4 with the visualisation script your local `lerobot` provides.
+- Local, frame by frame: open the parquet + mp4 with the visualization script your local `lerobot` provides.
 
 ## Pushing to the Hugging Face Hub and backup {#64}
 
@@ -167,7 +167,7 @@ On success it lives at `https://huggingface.co/datasets/<repo_id>`.
 
 ## Planning and estimating disk usage {#storage-planning}
 
-- A bimanual multi-camera rig can produce around **280 MB/s** of raw video; that is not the encoded write rate, so do not estimate on-disk size from it.
+- A bimanual multi-camera setup can produce around **280 MB/s** of raw video; that is not the encoded write rate, so do not estimate on-disk size from it.
 - Per episode ≈ average bitrate of each encoded video stream × duration + Parquet and metadata; camera count, resolution, scene content, `fps`, encoder, bitrate and `episode_time_s` all affect it.
 - Before a large run, record 2–3 representative episodes and run the integrity check, then extrapolate from the measured size to the planned episode count:
 

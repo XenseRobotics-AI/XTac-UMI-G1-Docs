@@ -38,7 +38,7 @@ Taking `TCGU01A24A0001s` as an example:
 |---|---|
 | 1.1N·m | 50rad/s |
 
-The **continuous stall rating** is the torque the jaws can hold indefinitely while pressing against an object; it is also the default grip force and its upper limit.
+The **continuous stall rating** is the torque the fingers can hold indefinitely while pressing against an object; it is also the default grip force and its upper limit.
 
 ## Safety notes {#safety-model}
 

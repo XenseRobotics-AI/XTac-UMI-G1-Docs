@@ -17,7 +17,7 @@
 
     ---
 
-    Capture, synchronisation and tooling live in one system, turning human demonstrations straight into trainable data.
+    Capture, synchronization and tooling live in one system, turning human demonstrations straight into trainable data.
 
 -   :material-hand-back-right-outline: __Natural handling, efficient collection__
 
@@ -35,7 +35,7 @@
 
     ---
 
-    Standardised output and fleet deployment; data is easy to review, compare and reuse.
+    Standardized output and fleet deployment; data is easy to review, compare and reuse.
 
 </div>
 
@@ -49,7 +49,7 @@
 
     ---
 
-    High-frame-rate tri-colour visuotactile sensors record contact location, grasp stability and slip trends in sync.
+    High-frame-rate tri-color visuotactile sensors record contact location, grasp stability and slip trends in sync.
 
 -   ![Holding a leader gripper](../assets/highlights/handheld.webp){ .tc-card-img loading=lazy }
 
@@ -61,7 +61,7 @@
 
 -   ![Two leader grippers with live pose axes overlaid](../assets/highlights/system-sync.webp){ .tc-card-img loading=lazy }
 
-    :material-sync: __Precise, synchronised output__
+    :material-sync: __Precise, synchronized output__
 
     ---
 

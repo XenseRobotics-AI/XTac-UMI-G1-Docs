@@ -1,6 +1,6 @@
 # Technical specifications
 
-Specifications for the XTac-UMI G1 grippers, the tracking system and the backpack. Wiring is in [Gripper connection and serial numbers](../common/gripper.md); choosing between the kits is in [Editions](editions.md).
+Specifications for the XTac-UMI G1 grippers, the tracking system and the backpack. Wiring is in [Gripper connection and serial numbers](../common/gripper.md); choosing between the editions is in [Editions](editions.md).
 
 ## Leader gripper {#specs}
 
@@ -24,7 +24,7 @@ The fingertip sensor is Xense's GS-PS visuotactile sensor; see the [product page
 
 | Parameter | Specification |
 |---|---|
-| Imaging | Tri-colour illumination |
+| Imaging | Tri-color illumination |
 | Sensing area | 623mm² |
 | Elastomer thickness | 2–5mm |
 | Image resolution | 640 × 480 |
@@ -53,11 +53,11 @@ The frame rate used during collection can be set as needed (the Developer Kit re
 
 How to use it is in [Follower gripper](../follower/index.md).
 
-## Tracking and synchronisation
+## Tracking and synchronization
 
 | Parameter | Specification |
 |---|---|
-| Pose source | Pico4 Ultra Enterprise headset + motion trackers, 6-DoF |
+| Pose source | Pico4 Ultra Enterprise headset + trackers, 6-DoF |
 | Pose rate | About 90Hz on the Developer Kit; every pose the headset reports is recorded on the Backpack Kit |
 | Positioning accuracy | < 3mm |
 | Multi-device time sync | 5ms |
@@ -72,11 +72,11 @@ The Backpack Kit's collection unit: the grippers and headset plug into it and th
 | Processor | RK3588 |
 | Storage | eMMC system disk + 1TB NVMe data disk; recordings and exports live on the data disk |
 | Disk-full rule | The data disk counts as full at 80% and recording stops |
-| Exported data size | An exported LeRobot dataset takes about 200GB per 400 hours |
+| Exported data size | About 0.5GB per hour of exported LeRobot dataset |
 | Power | 12V 3A power adapter, or a 20000mAh power bank through a 12V PD power cable |
 | Power draw | About 20W |
 | Power-bank runtime | About 3.5–4 hours |
-| Network | Ethernet; WiFi (5GHz); built-in 5GHz hotspot |
+| Network | Ethernet; Wi-Fi (5GHz); built-in 5GHz hotspot |
 | Ports | `UMI-L` / `UMI-R` for the leader grippers, `PICO` for the headset, `DC IN` for power, `HOST1` / `HOST2` USB host ports, plus Ethernet, TF slot, `HDMI` and headphone jack, see [Ports](backpack.md#ports) |
 | Operating temperature | 0–40°C |
 | Environment | Indoor use; not waterproof, keep away from rain, splashes and heavy dust |

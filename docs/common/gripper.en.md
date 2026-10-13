@@ -19,7 +19,7 @@ The leader gripper takes power and communication over USB Type-C.
 
 ### Before connecting
 
-- Left and right leader grippers, two USB locking cables, and the collection terminal (the backpack or the collection PC; for the PC see [Collection host requirements](../pc/install.md#host-spec)).
+- Left and right leader grippers, two USB locking cables, and the collection unit (the backpack or the collection PC; for the collection PC see [Collection PC requirements](../pc/install.md#host-spec)).
 - No 9V/12V fast-charging adapter connected directly to the leader gripper.
 - Type-C locking end intact, nothing foreign in the port.
 - Visuotactile sensor surfaces free of dirt, scratches, looseness and foreign objects.
@@ -30,7 +30,7 @@ The leader gripper takes power and communication over USB Type-C.
 
 1. Take out the USB Type-C communication cable.
 2. Plug it into the leader gripper body's Type-C port and **tighten the locking screws**.
-3. Plug the other end into the collection terminal: Backpack Kit left gripper to `UMI-L`, right to `UMI-R`; Developer Kit to a Type-C or Type-A port on the PC.
+3. Plug the other end into the collection unit: Backpack Kit left gripper to `UMI-L`, right to `UMI-R`; Developer Kit to a Type-C or Type-A port on the collection PC.
 
 ![Leader gripper connected](../assets/hardware/master-connect.webp){ width="480" }
 
@@ -45,7 +45,7 @@ The leader gripper takes power and communication over USB Type-C.
 
 === "Developer Kit"
 
-    Check the UVC device count with `lsusb`: 6 for two grippers (2 wrist cameras + 4 visuotactile sensors), 3 for a single arm.
+    Check the UVC device count with `lsusb`: 6 for bimanual (2 wrist cameras + 4 visuotactile sensors), 3 for a single gripper.
 
     ```bash
     lsusb
@@ -63,7 +63,7 @@ The leader gripper takes power and communication over USB Type-C.
     - **Telling sides**: by the serial number's last digit (odd-left / even-right, see [Serial numbers and side identification](#sn)); in the picture `…0069`/`…0071` are left, `…0070`/`…0072` right.
     - **Wrong count**: check cable locking and USB contact; if still wrong, see [Hardware faults](../pc/troubleshooting.md#hardware).
 
-A leader gripper needs travel calibration for a normalised opening:
+A leader gripper needs travel calibration for a normalized opening:
 
 - **Backpack Kit**: console System → Gripper page (write zero closed → write maximum travel fully open).
 - **Developer Kit**: see [Gripper calibration](../pc/calibration.md#41); an uncalibrated leader is refused at connect, and both sides of a pair must be calibrated.
@@ -99,7 +99,7 @@ The follower gripper mounts on the robot's end effector and is not side-specific
 1. Take out the USB Type-C communication cable and the 24V power adapter.
 2. Connect the 24V power adapter to the gripper body.
 3. Plug the screw end of the Type-C locking cable into the body and **tighten the locking screws**.
-4. Plug the other end into the collection terminal and confirm communication in the software.
+4. Plug the other end into the collection unit and confirm communication in the software.
 
 ![Follower gripper connected](../assets/hardware/follower-connect.webp){ width="480" }
 
@@ -114,8 +114,8 @@ The follower gripper mounts on the robot's end effector and is not side-specific
 |---|---|---|
 | Power | USB Type-C bus power, DC 5V/500mA, no separate supply needed | 24V power adapter (do not use a supply with the wrong rating or a faulty one); Type-C is communication only |
 | Cables | Supplied locking cable: Type-C on the gripper end, Type-C or Type-A on the other | Type-C communication cable + 24V power cable |
-| Connect and lock order | Connect the gripper end and tighten the locking screws first, then the collection terminal | Connect 24V power first, then Type-C, and tighten the locking screws |
-| Disconnect order | Unplug the collection terminal end first, then loosen the screws and unplug the gripper end | Unplug the collection terminal end first, then cut 24V, and finally loosen the screws and unplug the gripper-end Type-C |
+| Connect and lock order | Connect the gripper end and tighten the locking screws first, then the collection unit | Connect 24V power first, then Type-C, and tighten the locking screws |
+| Disconnect order | Unplug the collection unit end first, then loosen the screws and unplug the gripper end | Unplug the collection unit end first, then cut 24V, and finally loosen the screws and unplug the gripper-end Type-C |
 | Static | Anti-static precautions when powering on/off and removing or fitting sensors | Same as leader |
 
 - Before unplugging, stop collection, recording, robot motion and replay.

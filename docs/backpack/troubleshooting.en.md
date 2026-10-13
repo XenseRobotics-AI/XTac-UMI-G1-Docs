@@ -1,8 +1,8 @@
 # Troubleshooting
 
-This page lists the cause and fix for each symptom. The most common issues are being unable to reach the XTac-UMI Collector console (below, "the console"), recording being refused, and the export pre-check failing. Before troubleshooting, listen for the voice announcement and check the gripper LEDs and the live monitor's status dots; LED meanings are in [Gripper buttons, LEDs and voice](gripper.md#buttons-leds).
+This page lists the cause and fix for each symptom. The most common issues are being unable to reach the XTac-UMI Collector console (below, "the console"), recording being refused, and the export pre-check failing. Before troubleshooting, listen for the voice announcement and check the gripper LEDs and the Live monitoring page's status dots; LED meanings are in [Gripper buttons, LEDs and voice](gripper.md#buttons-leds).
 
-!!! danger "Odour, smoke, obvious overheating, structural damage or damaged cable insulation"
+!!! danger "Odor, smoke, obvious overheating, structural damage or damaged cable insulation"
     Cut the power and stop using the device immediately. Note the serial number on the body and contact technical support.
 
 ## Power and connectors {#power}
@@ -24,7 +24,7 @@ This page lists the cause and fix for each symptom. The most common issues are b
 
 ## Headset and trackers {#tracker}
 
-??? failure "The status dot on the live monitor's pose card is yellow, with “tracker out of view” or “pose stale” beside it"
+??? failure "The status dot on the Live monitoring page's pose card is yellow, with “Tracker out of view” or “Pose stale” beside it"
     **Cause:**
 
     - **Yellow dot**: the headset is connected, but the tracker pose is invalid (out of view, tracking fault, or not powered on / not paired). Poses recorded while tracking was lost are unreliable and must not be used.
@@ -33,7 +33,7 @@ This page lists the cause and fix for each symptom. The most common issues are b
     **Fix:**
 
     - Move the grippers back into the headset's field of view.
-    - Confirm that both trackers show blue, are [paired to the headset](../common/pico4.md#pico-tracker-bind) and are in standalone tracking mode.
+    - Confirm that both trackers show blue, are [paired to the headset](../common/pico4.md#pico-tracker-bind) and are in independent tracking mode.
     - For "Pico offline", check that XTac-UMI XR is connected; see [The app interface](../common/pico4.md#pico-toolkit-ui).
 
 ??? failure "The pose is shown as online, but the 3D model does not move"
@@ -51,7 +51,7 @@ This page lists the cause and fix for each symptom. The most common issues are b
 <span id="tablet-adb"></span>
 
 ??? failure "The tablet does not open the console when connected to the backpack"
-    **Cause**: the tablet was factory reset, USB debugging was turned off, or debugging authorisations were revoked (the bundled tablet is authorised before shipping).
+    **Cause**: the tablet was factory reset, USB debugging was turned off, or debugging authorizations were revoked (the bundled tablet is authorized before shipping).
 
     **Fix**: confirm that the cable is connected to `HOST1` / `HOST2` and the tablet is unlocked. If the console still does not open, re-enable USB debugging and trust the backpack as follows (the bundled REDMI Pad 2 SE is shown):
 
@@ -77,7 +77,7 @@ This page lists the cause and fix for each symptom. The most common issues are b
 
         Connect the tablet to the backpack. When prompted "Allow USB debugging?", select "Always allow from this computer" and tap Allow.
 
-    After authorisation, the backpack disables the tablet's debugging-authorisation timeout. Subsequent connections open the console without confirmation.
+    After authorization, the backpack disables the tablet's debugging-authorization timeout. Subsequent connections open the console without confirmation.
 
 
 
@@ -90,7 +90,7 @@ This page lists the cause and fix for each symptom. The most common issues are b
 
     **Fix:**
 
-    - Check that the hotspot name matches the WiFi line on the body label (the password is also on the label).
+    - Check that the hotspot name matches the Wi-Fi line on the body label (the password is also on the label).
     - Enter the full address `http://192.168.44.1` (the hotspot gateway is fixed), or the `http://xense-xxxxxx.local` address on the last line of the label.
     - If the signal is weak, move closer. If the backpack is occasionally unresponsive, power-cycle it.
     - Access methods are described in [Network and console access](network.md#softap).
@@ -98,31 +98,31 @@ This page lists the cause and fix for each symptom. The most common issues are b
 ??? failure "The tablet or phone cannot find the backpack hotspot"
     **Cause:** the hotspot operates on 5GHz only; devices that support only 2.4GHz cannot detect it.
 
-    **Fix:** use a 5GHz-capable device, or connect the backpack to the site network and access it over the LAN; see [Joining site WiFi and wired](network.md#lan).
+    **Fix:** use a 5GHz-capable device, or connect the backpack to the site network and access it over the LAN; see [Joining site Wi-Fi and wired](network.md#lan).
 
 ??? failure "A PC cannot open `xense-xxxxxx.local`, but a phone can"
     **Cause:** mDNS resolution on Windows is unreliable.
 
     **Fix:** use the IP address, shown in the top-bar [network dropdown](network.md#status) (viewable by connecting the tablet over USB). On the hotspot, use `http://192.168.44.1`.
 
-??? failure "The console disconnects during collection, and the WiFi has switched to another network"
+??? failure "The console disconnects during collection, and the Wi-Fi has switched to another network"
     **Cause:** Windows / the tablet switched automatically to a saved network with a "better signal".
 
     **Fix:** turn off "auto-connect" for other saved networks, or forget them, so that only the backpack hotspot remains.
 
-??? failure "The backpack's network page cannot find the site WiFi"
-    **Cause:** the backpack joins and lists 5GHz WiFi only; a router that supports only 2.4GHz is not shown.
+??? failure "The backpack's network page cannot find the site Wi-Fi"
+    **Cause:** the backpack joins and lists 5GHz Wi-Fi only; a router that supports only 2.4GHz is not shown.
 
     **Fix:** use a wired connection or the backpack hotspot.
 
-??? failure "After extended use, the WiFi disconnects and the body is hot"
+??? failure "After extended use, the Wi-Fi disconnects and the body is hot"
     **Cause:** the backpack is overheating.
 
     **Fix:** restart the backpack to recover. Check that the fan outlet is not blocked and the fan is running. If the problem recurs, report it for repair.
 
 ## Collection and recording {#record}
 
-??? failure "The record button is greyed out, or the gripper button fails to start recording (solid yellow LED)"
+??? failure "The record button is grayed out, or the gripper button fails to start recording (solid yellow LED)"
     **Cause:** a recording gate did not pass. A dialog states which one (check order in [Recording gates](monitor-record.md#record-gates)):
 
     - no project / task selected;
@@ -133,18 +133,18 @@ This page lists the cause and fix for each symptom. The most common issues are b
 
     **Fix:**
 
-    - **No project / task**: select a [project and task](monitor-record.md#project-task) at the bottom of the live monitor page.
+    - **No project / task**: select a [project and task](monitor-record.md#project-task) at the bottom of the Live monitoring page.
     - **"Pico not ready"**: wait for the headset to connect and the pose dot to turn green.
     - **"Tracker not ready"**: move the grippers back into the headset's field of view and move them slightly.
     - **Target reached / disk full**: see the next two entries.
 
 ??? failure "Recording refused: “Task '…' has reached its cumulative collection target (N/M)”"
-    **Cause:** the target counts **cumulatively**; both "ready" and "uploaded" entries count. Archiving deletes only local files and does not change the state, so **neither uploading nor archiving frees capacity**.
+    **Cause:** the target counts **cumulatively**; both "ready" and "uploaded" episodes count. Archiving deletes only local files and does not change the state, so **neither uploading nor archiving frees capacity**.
 
     **Fix:**
 
     - raise the task's target count;
-    - or delete entries that should not count on the Projects page (such as accidental short takes or entries judged suspect);
+    - or delete episodes that should not count on the Project page (such as accidental short episodes or episodes judged suspect);
     - or create a new task to count from zero.
 
     The counting rules are in [Picking a project and task](monitor-record.md#project-task).
@@ -155,27 +155,27 @@ This page lists the cause and fix for each symptom. The most common issues are b
     **Fix:**
 
     - **Archive**: after exporting the data (download or upload), [archive](projects-export.md#archive) it.
-    - **Delete**: delete unneeded entries on the Projects page. Their MCAP and H264 files are deleted as well; this cannot be undone.
+    - **Delete**: delete unneeded episodes on the Project page. Their MCAP and H264 files are deleted as well; this cannot be undone.
     - **Uploading does not free space**: local files are kept by default; click "Archive" as well.
 
 ??? failure "The gripper LED turns solid yellow during recording"
-    **Cause:** a fatal problem occurred in this take (for example, a camera or required channel dropped), so the take is invalid. The LED stays yellow until recording ends.
+    **Cause:** a fatal problem occurred in this episode (for example, a camera or required channel dropped), so the episode is invalid. The LED stays yellow until recording ends.
 
-    **Fix:** stop recording, delete the take and record again (the Projects page shows a quality annotation). On the live monitor page, check the cable of the feed that dropped. LED meanings are in [LEDs](gripper.md#buttons-leds).
+    **Fix:** stop recording, delete the episode and record again (the Project page shows a quality annotation). On the Live monitoring page, check the cable of the feed that dropped. LED meanings are in [LEDs](gripper.md#buttons-leds).
 
-??? failure "The headset disconnected during recording, and the take was interrupted and marked failed"
+??? failure "The headset disconnected during recording, and the episode was interrupted and marked failed"
     **Cause:**
 
     - **Trigger**: the headset's USB link drops, its connection breaks, or its pose / images stop updating for about 3 seconds.
-    - **Device response**: the device immediately marks the take failed and stops recording, announces "Pico connection failed" ("Tracker connection failed" for a Tracker), and shows "Pico issue: recording interrupted" (once per incident). The data is kept for diagnosis; it is not counted and is excluded from normal export and upload.
+    - **Device response**: the device immediately marks the episode failed and stops recording, announces "Pico connection failed" ("Tracker connection failed" for a tracker), and shows "Pico issue: recording interrupted" (once per incident). The data is kept for diagnosis; it is not counted and is excluded from normal export and upload.
 
     **Fix:**
 
-    - Check the cable from the headset to the backpack's `PICO` port, the headset battery, and that XTac-UMI XR is running. For a Tracker dropout, check the Tracker.
+    - Check the cable from the headset to the backpack's `PICO` port, the headset battery, and that XTac-UMI XR is running. For a tracker dropout, check the tracker.
     - Recording **does not resume automatically**. Start a new recording once ready; see [Headset disconnects while recording](monitor-record.md#pico-disconnect).
 
 ??? failure "A recording shows as failed, with power loss or a system restart as the reason"
-    **Cause:** the backpack lost power, or the system or capture service restarted, during recording, so the take was not finalised. After power is restored, the reason distinguishes power loss / system restart from a capture-service restart, and the data size reflects the files actually retained.
+    **Cause:** the backpack lost power, or the system or capture service restarted, during recording, so the episode was not finalized. After power is restored, the reason distinguishes power loss / system restart from a capture-service restart, and the data size reflects the files actually retained.
 
     **Fix:** the files may be incomplete; verify, then delete and record again. If power losses recur, check the power supply and cabling; see [Power and ports](#power).
 
@@ -184,8 +184,8 @@ This page lists the cause and fix for each symptom. The most common issues are b
 
     **Fix:**
 
-    - Reconnect the cable of the feed shown as offline on the live monitor page.
-    - In [Device info](system.md#device-info), check which camera is marked "(offline)" and whether both gripper MCUs are present.
+    - Reconnect the cable of the feed shown as offline on the Live monitoring page.
+    - In [Device information](system.md#device-info), check which camera is marked "(Offline)" and whether both gripper MCUs are present.
     - If the problem persists, power-cycle the backpack.
 
 ??? failure "The gripper LED flashes red rapidly"
@@ -194,7 +194,7 @@ This page lists the cause and fix for each symptom. The most common issues are b
     **Fix:** reconnect that gripper's Type-C cable or power-cycle the backpack. If the problem recurs, note the gripper's SN and contact technical support.
 
 ??? failure "The buttons do not respond: a double-click is refused (fast yellow flash), or a long press during recording has no effect"
-    **Cause:** this is the designed state-machine behaviour:
+    **Cause:** this is the designed state-machine behavior:
 
     - during recording, a double-click and a long press on the right gripper are silently ignored to prevent accidental input;
     - a double-click is refused when there is nothing to delete;
@@ -207,7 +207,7 @@ This page lists the cause and fix for each symptom. The most common issues are b
 
     **Fix:**
 
-    - At System → [Capture settings › Voice announcements](system.md#voice), check whether the switch shows "Muted" and whether the volume is 0.
+    - At System → [Capture settings › Voice prompts](system.md#voice), check whether the switch shows "Muted" and whether the volume is 0.
     - Click "Preview" next to each line to test it; the page shows which device played the sound and why.
     - If English is selected and the headset app lacks English assets, that line plays through the onboard speaker.
     - Wording and timing are fixed; only the switch, volume and announcement language can be adjusted.
@@ -220,51 +220,51 @@ This page lists the cause and fix for each symptom. The most common issues are b
 ??? failure "Switching project, gripper calibration, a firmware upgrade or a system update is refused with “Recording in progress”"
     **Cause:** these operations are refused while recording.
 
-    **Fix:** stop recording first (with the live monitor page button or a long press on the left gripper), then retry.
+    **Fix:** stop recording first (with the Live monitoring page button or a long press on the left gripper), then retry.
 
 ## Replay, export and data {#export}
 
-??? failure "“Replay” is refused, stating that the camera preview is using it"
+??? failure "“Playback” is refused, stating that the camera preview is using it"
     **Cause:**
 
-    - Replay requires exclusive use of the backpack's hardware encoder (shared with live preview). It is refused while the live monitor is open in another tab or on another device. A camera is still treated as using the encoder for up to 15 seconds after it disconnects.
+    - Replay requires exclusive use of the backpack's hardware encoder (shared with live preview). It is refused while Live monitoring is open in another tab or on another device. A camera is still treated as using the encoder for up to 15 seconds after it disconnects.
     - The reverse does not apply: if replay starts first, opening the monitor page shows the preview normally without interrupting replay.
 
-    **Fix:** close the monitor page in other tabs and on other devices, wait a few seconds and click replay again. See [Replay](playback.md).
+    **Fix:** close the monitor page in other tabs and on other devices, wait a few seconds and click Playback again. See [Playback](playback.md).
 
 ??? failure "After archiving, those recordings cannot be replayed or exported in the other format"
-    **Cause:** this is expected behaviour.
+    **Cause:** this is expected behavior.
 
-    - Archiving deletes the raw files that replay and export both read, keeping only the catalogue record. On the Projects page, "Replay" for those entries is greyed out with "Archived, the local source has been deleted".
-    - If an entry was uploaded in only one format, the other format can no longer be exported. The archive confirmation lists these entries first.
+    - Archiving deletes the raw files that replay and export both read, keeping only the catalog record. On the Project page, "Playback" for those episodes is grayed out with "Archived; local source files deleted".
+    - If an episode was uploaded in only one format, the other format can no longer be exported. The archive confirmation lists these episodes first.
 
     **Fix:**
 
     - Export every required format before archiving. The remote repository copy is authoritative.
     - Recordings that were never uploaded can also be archived, but the data will then have no copy; the confirmation shows a prominent warning.
-    - For the entry point and criteria, see [Archive](projects-export.md#archive); for state definitions, see [Entry states](monitor-record.md#episode-state).
+    - For the entry point and criteria, see [Archive](projects-export.md#archive); for state definitions, see [Episode states](monitor-record.md#episode-state).
 
 ??? failure "The upload finished, but no space was freed on the recording disk"
-    **Cause:** this is expected behaviour; uploads **keep local files by default**.
+    **Cause:** this is expected behavior; uploads **keep local files by default**.
 
     **Fix:**
 
-    - **To free space**: before uploading, select "Archive automatically after uploading (delete the local source, keep only the metadata)", or click "Archive" in the task's export dialog afterwards.
+    - **To free space**: before uploading, select "Automatically archive after upload (delete local source files; keep metadata only)", or click "Archive" in the task's export dialog afterwards.
     - **Archive scope**: every recording uploaded in any format is archived. If only one format was uploaded and both are needed, export or upload the other format first.
 
-??? failure "An NFS / FTP upload fails, or “Check read/write” does not pass"
+??? failure "An NFS / FTP upload fails, or “Test read/write” does not pass"
     **Cause:** usually the target does not meet one of the requirements below, or the path / port is incorrect. Refer to the check's messages.
 
-    **Fix:** open the corresponding entry at console → System → [Upload configuration](system.md#upload) and check each item according to the messages:
+    **Fix:** open the corresponding entry at console → System → [Upload configurations](system.md#upload) and check each item according to the messages:
 
     - **Target directory**: must already exist (likewise the NFS target subdirectory); the device does not create it.
     - **Permissions**: the NAS or FTP / FTPS service must allow the account to write, read back, rename and delete.
     - **NFS**: check the protocol version and UID / GID.
     - **FTPS**: check that the server address matches the certificate and whether a private CA is required.
-    - Save the changes and click "Check read/write" again. If it still fails, contact technical support with the exact check message, device SN, console version and backend type.
+    - Save the changes and click "Test read/write" again. If it still fails, contact technical support with the exact check message, device SN, console version and backend type.
 
 ??? failure "The LeRobot dataset is larger than expected"
-    **Cause:** multiple video feeds are recorded simultaneously; 1.5GB for a task of around 3 minutes is normal. The hardware encoder limits how far the size can be reduced.
+    **Cause:** multiple video feeds are recorded simultaneously; about 0.5GB per hour of exported LeRobot dataset is normal. The hardware encoder limits how far the size can be reduced.
 
     **Fix:** plan transfer and storage capacity at this scale.
 
@@ -287,17 +287,17 @@ This page lists the cause and fix for each symptom. The most common issues are b
 ??? failure "After flashing the gripper firmware, the gripper works intermittently and frames are silently dropped"
     **Cause:** flashing ends with a soft reset only, so the gripper's USB-to-serial chip is not power-cycled and remains in a degraded state.
 
-    **Fix:** power-cycle the backpack (or reconnect that gripper's Type-C cable), then check the firmware version in Device info; see [Gripper firmware](update.md#gripper-firmware).
+    **Fix:** power-cycle the backpack (or reconnect that gripper's Type-C cable), then check the firmware version in Device information; see [Gripper firmware](update.md#gripper-firmware).
 
 ---
 
-If the problem persists, click the block of readings at the top right of the top bar to open the "system log" (a red badge with the error count appears when there are errors). The panel cannot export files, so **a screenshot is sufficient; there is no need to retrieve logs from the device**.
+If the problem persists, click the block of readings at the top right of the top bar to open the "System logs" (a red badge with the error count appears when there are errors). The panel cannot export files, so **a screenshot is sufficient; there is no need to retrieve logs from the device**.
 
 When reporting through the channels in [Support and feedback](../common/reference.md#support), include:
 
 - A system-log screenshot and the time the error occurred;
 - The complete error text;
-- The device SN and console version (System → [Device info](system.md#device-info));
+- The device SN and console version (System → [Device information](system.md#device-info));
 - The operation in progress when the problem occurred;
 - The project / task / episode number, if a recording was involved;
-- The gripper LED state and a live monitor screenshot, if a gripper or the views are involved.
+- The gripper LED state and a Live monitoring screenshot, if a gripper or the views are involved.

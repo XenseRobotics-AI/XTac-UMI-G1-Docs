@@ -1,14 +1,14 @@
 # Installation
 
-This page installs `xense-taccap-lerobot` and the three hardware SDKs on an **Ubuntu 22.04 / 24.04 LTS (amd64)** data-collection host and verifies them up to `lerobot-info`. Serial permissions and device discovery are in [Host setup](host-setup.md).
+This page installs `xense-taccap-lerobot` and the three hardware SDKs on an **Ubuntu 22.04 / 24.04 LTS (amd64)** collection PC and verifies them up to `lerobot-info`. Serial permissions and device discovery are in [Host setup](host-setup.md).
 
 - **Verified**: Ubuntu 22.04.5 / 24.04.4 LTS, kernel 6.8 / 6.14 / 7.0 series, `x86_64`, Python `3.12.13` (≥ 3.12 required), mamba environment name `xense-taccap`.
 - The repo commit and per-package versions are those in [Versions and upgrades](versions.md).
 - **Other distributions or architectures**: verify driver, UVC, serial-permission and `.deb` support yourself.
 
-## Data-collection host requirements {#host-spec}
+## Collection PC requirements {#host-spec}
 
-On a bimanual rig six cameras are streamed and encoded at once, with only 33.3ms per frame (30fps). An underspecified machine drops frames without raising an error.
+On a bimanual setup six cameras are streamed and encoded at once, with only 33.3ms per frame (30fps). An underspecified machine drops frames without raising an error.
 
 | | **Minimum** | **Recommended** |
 |---|---|---|
@@ -24,7 +24,7 @@ On a bimanual rig six cameras are streamed and encoded at once, with only 33.3ms
 - **GPU**: `--dataset.vcodec=auto` encodes H.264 on the card. Without an NVIDIA card the CPU encodes, so saving is slower and `[slow_frame]` is likelier, see [Recording with no NVIDIA GPU](recording.md#no-gpu). Check the driver: `nvidia-smi --query-gpu=driver_version,name --format=csv,noheader`.
 - **Memory**: use 32GB when you watch Rerun with `--display_data` or process data while collecting.
 - **Disk**: bimanual raw video is about 280 MB/s, what lands on disk is in [Disk planning](dataset.md#storage-planning). Do not record straight onto a spinning disk or a USB external drive.
-- **USB**: a bimanual rig's 6 cameras are split across two 480M buses, see [USB bandwidth budget](host-setup.md#usb-budget).
+- **USB**: a bimanual setup's 6 cameras are split across two 480M buses, see [USB bandwidth budget](host-setup.md#usb-budget).
 
 ## Choosing an install path {#choose}
 
@@ -360,7 +360,7 @@ Both paths produce the same collection environment; pick one.
 
     ### Graphics inside the container {#docker-gui}
 
-    The image ships the XKB / Vulkan / XDG runtime libraries Rerun needs and defaults to `WGPU_BACKEND=vulkan`; Compose passes `DISPLAY` and the X11 socket through. If no window appears, do the [`xhost` authorisation](#docker-host) first, then confirm the GPU is visible in the container:
+    The image ships the XKB / Vulkan / XDG runtime libraries Rerun needs and defaults to `WGPU_BACKEND=vulkan`; Compose passes `DISPLAY` and the X11 socket through. If no window appears, do the [`xhost` authorization](#docker-host) first, then confirm the GPU is visible in the container:
 
     ```bash
     vulkaninfo --summary

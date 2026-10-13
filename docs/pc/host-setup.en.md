@@ -60,7 +60,7 @@ udevadm info -q property -n /dev/ttyACM0 | grep ID_MM_DEVICE_IGNORE   # -> ID_MM
 mmcli -L                                                               # gripper no longer listed
 ```
 
-Delete the rule file and reload to revert; a dedicated host with no cellular module can also `sudo systemctl disable --now ModemManager`.
+Delete the rule file and reload to revert; a dedicated collection PC with no cellular module can also `sudo systemctl disable --now ModemManager`.
 
 ## Device auto-discovery and the odd-left/even-right rule {#33}
 
@@ -81,13 +81,13 @@ Every device is assigned to `left`/`right` by serial number + USB topology. No s
 Last digit of `<seq>`: odd → left, even → right. This applies to grippers, wrist cameras, and the two fingertip tactile sensors on one gripper.
 
 - **Tactile**: maps to `{side}_tactile_{left,right}`. The two GSPS sensors sharing a gripper's USB hub belong to that gripper, whose side comes from its firmware SN (the side in the `scan_grippers()` output), not the CH343 `mcu_serial`.
-- **Tracker**: the Pico4 Ultra Enterprise tracker SN looks like `PC2310MLL3200496G`; the digit before the trailing `G` is odd-left / even-right, so this `6` is on the right. The headset does not show it, see [Reading a tracker SN](../common/pico4.md#pico-tracker-sn).
+- **Tracker**: the Pico4U tracker SN looks like `PC2310MLL3200496G`; the digit before the trailing `G` is odd-left / even-right, so this `6` is on the right. The headset does not show it, see [Reading a tracker SN](../common/pico4.md#pico-tracker-sn).
 - **Errors**: a non-conforming serial, the wrong count on a side, two fingertip sensors on one side, two grippers claiming one tactile side, or a tactile hub with no gripper all fail outright, naming the hub/serial.
 - **Order**: duplicates are reported before gaps; an empty side usually means its device landed on the other side, so re-check the side with two first.
 
 ### USB bandwidth budget {#usb-budget}
 
-When a camera will not open, check bandwidth first. Every open UVC camera reserves its own share of isochronous bandwidth: a USB 2.0 bus has 480 Mbit/s, about 384 Mbit/s of it for isochronous transfers. A bimanual rig has six cameras (four tactile + two wrist cameras), plus the laptop's built-in webcam.
+When a camera will not open, check bandwidth first. Every open UVC camera reserves its own share of isochronous bandwidth: a USB 2.0 bus has 480 Mbit/s, about 384 Mbit/s of it for isochronous transfers. A bimanual setup has six cameras (four tactile + two wrist cameras), plus the laptop's built-in webcam.
 
 ```bash
 lsusb -t
@@ -99,7 +99,7 @@ lsusb -t
 
 ## Pico4 headset and trackers
 
-The Pico4 Ultra Enterprise tracker on top of the gripper provides the 6-DoF pose; the headset runs XTac-UMI XR, and the pose reaches collection via the [XenseVR PC Service](#35) below. Unboxing, installing XTac-UMI XR, network, tracker binding, tracking mode and startup alignment are in [Pico4 headset and trackers](../common/pico4.md).
+The Pico4U tracker on top of the gripper provides the 6-DoF pose; the headset runs XTac-UMI XR, and the pose reaches collection via the [XenseVR PC Service](#35) below. Unboxing, installing XTac-UMI XR, network, tracker binding, tracking mode and startup alignment are in [Pico4 headset and trackers](../common/pico4.md).
 
 - **Factory-configured headset**: start at [Network connection](../common/pico4.md#pico-network).
 - **Before every session**: plug in the USB, short-press the tracker's power button until the blue light comes on, [tap "Connect"](../common/pico4.md#pico-toolkit-ui) and do the [startup alignment](../common/pico4.md#pico-frame).
@@ -112,14 +112,14 @@ Collection reads poses from the XenseVR PC Service (RoboticsService) daemon. The
 /opt/apps/roboticsservice/runService.sh
 ```
 
-- **Naming**: the headset app is **XTac-UMI XR**; the computer service is **XenseVR PC Service**. The package `XenseVR-PC-Service_<version>_amd64.deb` installs into `/opt/apps/roboticsservice/`, and the Python package is `xensevr_pc_service_sdk`.
+- **Naming**: the headset app is **XTac-UMI XR**; the service on the collection PC is **XenseVR PC Service**. The package `XenseVR-PC-Service_<version>_amd64.deb` installs into `/opt/apps/roboticsservice/`, and the Python package is `xensevr_pc_service_sdk`.
 - **Single instance**: starting a second one fails or conflicts.
-- **Data**: the service supplies Head / controllers / hand tracking / full-body mocap / Tracker data; collection uses the Tracker pose (with an `sn` per tracker) and the head pose (paired with the [headset's stereo frames](recording.md#56)).
+- **Data**: the service supplies Head / controllers / hand tracking / full-body mocap / tracker data; collection uses the tracker pose (with an `sn` per tracker) and the head pose (paired with the [headset's stereo frames](recording.md#56)).
 - **Headset frames**: they share one connection with the trackers, so with the service down neither works; this needs the service at v0.2.0 or later (see [Version baseline](versions.md#required)), while tracker-only use works with any version.
 - **Demos**: the service directory ships `ConsoleDemo` / `RobotDemoQt` to confirm the headset was discovered and tracking data looks right (they need the same runtime environment as the service).
 
 ## Power-on sequence {#36}
 
-Follow [Quickstart · Power on and connect](quickstart.md#power-on). On a bimanual rig, read the [USB bandwidth budget](#usb-budget) before plugging in the cables.
+Follow [Quickstart · Power on and connect](quickstart.md#power-on). On a bimanual setup, read the [USB bandwidth budget](#usb-budget) before plugging in the cables.
 
 Next → [Calibration and self-check](calibration.md)

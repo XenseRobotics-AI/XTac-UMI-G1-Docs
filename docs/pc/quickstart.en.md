@@ -4,23 +4,23 @@ From power-on to your first recorded episode. Before you start, make sure these 
 
 - Hardware connected → [Gripper connection](../common/gripper.md#install)
 - Environment installed and active (`mamba activate xense-taccap` or the Docker container) → [Installation](install.md)
-- Host configured: serial permissions, ModemManager kept off the ports → [Host setup](host-setup.md#31)
+- Collection PC configured: serial permissions, ModemManager kept off the ports → [Host setup](host-setup.md#31)
 - Every leader gripper calibrated (an uncalibrated leader is refused) → [Gripper calibration](calibration.md#41)
 - Repo, SDK and gripper firmware all up to date → [Required versions](versions.md#required)
 
 ## 1. Power on and connect {#power-on}
 
 1. Plug in the gripper USB.
-2. Wire the headset network and **turn off the PC's WiFi**.
+2. Wire the headset network and **turn off the collection PC's Wi-Fi**.
 3. Turn on the headset and short-press the tracker power button until the LED is solid blue.
 4. Start the XenseVR PC Service: `/opt/apps/roboticsservice/runService.sh`
-5. **Facing the robot**, open XTac-UMI XR and tap Connect; Status turns to Connected.
+5. **Facing the same direction as the robot**, open XTac-UMI XR and tap Connect; Status turns to Connected.
 
 <div class="tc-pair" markdown>
 
 <figure class="tc-shot" markdown>
-![Gripper connected to the PC over USB](../assets/hardware/master-connection.webp)
-<figcaption>The gripper connects to the PC over USB Type-C</figcaption>
+![Gripper connected to the collection PC over USB](../assets/hardware/master-connection.webp)
+<figcaption>The gripper connects to the collection PC over USB Type-C</figcaption>
 </figure>
 
 <figure class="tc-shot" markdown>
@@ -32,7 +32,7 @@ From power-on to your first recorded episode. Before you start, make sure these 
 
 !!! warning "Three common mistakes"
     - Start the PC Service before opening the XR app, or it cannot connect.
-    - With a wired headset the PC's WiFi must be off, or tracking is unstable. See [Network](../common/pico4.md#pico-network).
+    - With a wired headset the collection PC's Wi-Fi must be off, or tracking is unstable. See [Network](../common/pico4.md#pico-network).
     - Do not restart the XR app during collection: it resets the world origin, so poses within one dataset stop lining up.
 
 Power off in reverse: stop recording and let the current episode save, quit the XR app, stop the PC Service, then unplug, in the order given in [Power and connection requirements](../common/gripper.md#power).
@@ -60,7 +60,7 @@ One line per gripper, `role` is `Leader` or `Follower`, and the serial is not em
 
     ![Rerun live preview: four visuotactile streams, both wrist cameras, state and action curves](../assets/dataset/rerun-bi-taccap-gripper.webp)
 
-=== "③ Full rig"
+=== "③ Full setup"
 
     ```bash
     lerobot-teleoperate \
@@ -82,7 +82,7 @@ The tiers are chosen with `--robot.type`; **record with the same tier you previe
 |---|---|---|
 | ① Grippers only | `--robot.type=bi_taccap_gripper`<br>`--robot.enable_tracker=false` | Tactile, wrist cameras, gripper opening; no PC Service needed |
 | ② With wrist pose | `--robot.type=bi_taccap_gripper` | Adds the gripper pose `tcp.*` |
-| ③ Full rig | `--robot.type=xtac_umi_g1` | Adds headset stereo images and head pose |
+| ③ Full setup | `--robot.type=xtac_umi_g1` | Adds headset stereo images and head pose |
 
 </div>
 
@@ -107,7 +107,7 @@ Keep the trackers in the headset's view before starting; occlusion loses trackin
 
     Each frame records 6 image streams (four visuotactile, both wrist cameras), plus gripper opening and gripper pose.
 
-=== "③ Full rig"
+=== "③ Full setup"
 
     ```bash
     lerobot-record \
@@ -129,7 +129,7 @@ Keep the trackers in the headset's view before starting; occlusion loses trackin
     <figcaption>The eight streams and their keys in the dataset</figcaption>
     </figure>
 
-- `--robot.id` is required: the station number as a plain number (`0`, `1`, …), one per kit.
+- `--robot.id` is required: the station number as a plain number (`0`, `1`, …), one per setup.
 - Keep `--robot.type` (and whether you add `--robot.enable_tracker=false`) the same as in the preview; for grippers only, add that switch to the ② command.
 - Single gripper: `--robot.type=taccap_gripper`; with both grippers plugged in, add `--robot.side=left` or `right`.
 

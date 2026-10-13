@@ -14,7 +14,7 @@
 2. 头显接上有线网络，**关闭电脑 WiFi**。
 3. 打开头显，短按追踪器电源键至蓝灯亮起。
 4. 启动 XenseVR PC Service：`/opt/apps/roboticsservice/runService.sh`
-5. **面朝机器人**打开 XTac-UMI XR，点「连接」，网络状态变为「连接成功」。
+5. **与机器人朝向一致**打开 XTac-UMI XR，点「连接」，网络状态变为「连接成功」。
 
 <div class="tc-pair" markdown>
 

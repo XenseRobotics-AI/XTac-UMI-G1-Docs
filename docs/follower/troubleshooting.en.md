@@ -43,9 +43,9 @@ On this page, **power-cycle** means unplugging the 24V power cable, waiting abou
 ## Self-check anomalies {#self-check}
 
 ??? failure "Error `gripper config is not calibrated`"
-    **Cause**: automatic calibration at power-on did not complete, usually because the jaws were obstructed or the 24V supply was not connected at power-on.
+    **Cause**: automatic calibration at power-on did not complete, usually because the fingers were obstructed or the 24V supply was not connected at power-on.
 
-    **Fix**: clear any obstructions around the jaws, connect the 24V supply and power-cycle. Wait for the jaws to open and close once automatically, then try again.
+    **Fix**: clear any obstructions around the fingers, connect the 24V supply and power-cycle. Wait for the fingers to open and close once automatically, then try again.
 
 ??? failure "The data frame rate is well below 100Hz, or `OK` is not shown"
     **Fix**: close other programs using the gripper, try another cable or USB port, power-cycle, and run the self-check again.
@@ -63,7 +63,7 @@ On this page, **power-cycle** means unplugging the 24V power cable, waiting abou
 ??? failure "Error `SysBusy` immediately after power-on, or the motor does not respond"
     **Cause**: for about 10 seconds after power-on, the gripper performs automatic calibration.
 
-    **Fix**: wait for the jaws to open and close once and come to rest before starting control.
+    **Fix**: wait for the fingers to open and close once and come to rest before starting control.
 
 ## Problems during motion {#fault}
 

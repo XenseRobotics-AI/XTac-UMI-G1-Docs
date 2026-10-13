@@ -1,12 +1,12 @@
 # Calibration and self-check
 
-This page covers two one-off jobs: calibrating the leader gripper's zero and travel, and confirming the Pico4 Ultra tracker chain is live. Check the whole chain with the [preview](recording.md#preview) before recording.
+This page covers two one-off jobs: calibrating the leader gripper's zero and travel, and confirming the Pico4U tracker chain is live. Check the whole chain with the [preview](recording.md#preview) before recording.
 
 ## Gripper calibration (zero + travel) {#41}
 
 ### When you need it
 
-`gripper.pos` is a normalised opening: `0.0` is fully closed, from the encoder zero latched in calibration step 1; `1.0` is fully open, from the travel maximum written in step 2 (command set ≥ V2.1). Both values live in MCU flash and survive power cycles and host changes. Two situations call for calibration:
+`gripper.pos` is a normalized opening: `0.0` is fully closed, from the encoder zero latched in calibration step 1; `1.0` is fully open, from the travel maximum written in step 2 (command set ≥ V2.1). Both values live in MCU flash and survive power cycles and collection PC changes. Two situations call for calibration:
 
 | Situation | How it shows | Who catches it |
 |---|---|---|
@@ -24,7 +24,7 @@ Calibrate it once, then re-run:
     python third_party/taccap-gripper/python/examples/calibrate.py <left|right>
 ```
 
-!!! danger "Calibrating one side of a dual-gripper rig is worse than calibrating neither"
+!!! danger "Calibrating one side of a bimanual setup is worse than calibrating neither"
     Calibrating one side leaves `left_gripper.pos` and `right_gripper.pos` on different scales: the same grip reads differently on each side, and the data does not show it. If you calibrate, calibrate both sides.
 
 ### How to calibrate
@@ -54,8 +54,8 @@ Once the version passes, the script prints the current reading (raw and clamped)
 1. Fully closed → Enter. It sends `SetEncoderZero` to latch the zero, then re-reads to verify the residual (tolerance ±0.01rad).
 2. Fully open to the mechanical limit → Enter. The angle goes straight into `EncoderMaxCal` in MCU flash, with no second confirmation; a 10Hz live readout follows for checking.
 
-!!! warning "Get the jaw in position first, then press Enter"
-    The firmware latches the raw count the instant it receives the command; moving the jaw afterwards wastes the calibration.
+!!! warning "Get the fingers in position first, then press Enter"
+    The firmware latches the raw count the instant it receives the command; moving the fingers afterwards wastes the calibration.
 
 Output looks like:
 
@@ -84,7 +84,7 @@ Step 2/2: open the gripper to its MECHANICAL LIMIT.
 A previously calibrated unit gets an extra `existing span: … — will be overwritten` header line.
 
 - **Closed is always 0**: there is no `gripper_closed_rad` config; negative drift is clamped to 0 (the raw value stays in `raw_position_rad`), and beyond -0.1rad it triggers a rate-limited warning.
-- **Fields**: `position_rad` is still raw radians; normalisation only adds a `position` field.
+- **Fields**: `position_rad` is still raw radians; normalization only adds a `position` field.
 
 ### Confirm it took effect {#413}
 
@@ -104,14 +104,14 @@ Second, the curve in Rerun. Run with `--display_data=true` and find `gripper.pos
 | Fully closed | drops to **0.0** |
 
 !!! warning "Clearly short of 1.0 wide open → recalibrate that unit"
-    If a fully open jaw only reaches around `0.8`, the travel maximum in flash no longer matches the real travel, and the program does not raise. Recalibrate with the same command.
+    If fully open fingers only reach around `0.8`, the travel maximum in flash no longer matches the real travel, and the program does not raise. Recalibrate with the same command.
 
 ### Scope
 
-- **Leader only**: the leader has no auto-calibration, so this cannot be skipped. The follower rejects the command; since V1.9 it auto-calibrates at power-on (close to stall for the zero, open to stall for the travel maximum), and its `gripper.pos` is normalised by `gripper_open_rad`.
+- **Leader only**: the leader has no auto-calibration, so this cannot be skipped. The follower rejects the command; since V1.9 it auto-calibrates at power-on (close to stall for the zero, open to stall for the travel maximum), and its `gripper.pos` is normalized by `gripper_open_rad`.
 - **Firmware**: command set ≥ V2.1 (that is leader ≥ 1.2.0 / follower ≥ 1.1.0, [the difference](versions.md#v21)); on older firmware the leader errors out at collection time and asks for the OTA, see [Firmware OTA upgrade](versions.md#ota).
 
-## Pico4 Ultra tracker self-check
+## Pico4U tracker self-check
 
 The tracker needs no calibration, and its side is matched from the SN; binding is in [Pico4 headset and trackers](../common/pico4.md#pico-tracker-bind). The command below only reads: it prints the pose to confirm the chain and the assembly.
 

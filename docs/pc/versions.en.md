@@ -7,7 +7,7 @@ Serial and version numbers here are examples; go by what you read on your own de
 !!! warning "Bring every item up to the versions in the table below before collecting; this is not optional"
     - The firmware needs [command set V2.1](#v21) for travel calibration.
     - The images bundled with SDK 0.4.1 fix the [known defects](#ota-when).
-    - `gripper.pos` normalisation only holds once all three are in place.
+    - `gripper.pos` normalization only holds once all three are in place.
     - An uncalibrated leader or one on too-old firmware is refused a connection; other mismatches still write to disk "normally", but the data will not line up.
 
 | Component | Minimum | How to check |
@@ -36,7 +36,7 @@ Commands and fields should be taken from your local checkout and from the device
 |---|---|---|
 | OS / architecture | Ubuntu 22.04 / 24.04, amd64 | 22.04.5 / 24.04.4, x86_64 |
 | Linux kernel | Not a constraint | 6.8 / 6.14 / 7.0 |
-| Collection host | Minimum 12th-gen i7, 8GB, 512GB SSD; recommended Core Ultra 9 275HX, 32GB, 1TB NVMe, see [Host specification](install.md#host-spec) | — |
+| Collection PC | Minimum 12th-gen i7, 8GB, 512GB SSD; recommended Core Ultra 9 275HX, 32GB, 1TB NVMe, see [Collection PC requirements](install.md#host-spec) | — |
 | NVIDIA GPU / driver | Minimum RTX 3060 / 8GB (RTX 5060 Laptop / 8GB or better recommended), driver ≥ 570.144; with no NVIDIA card, only [degraded recording](recording.md#no-gpu) | 570.144 / 580.126.09 / 595.71.05 |
 | Python | ≥ 3.12 (`conda_environment.yaml` pins `python=3.12`) | 3.12.13 |
 | PyTorch | `torch>=2.2.1,<2.11.0`; `torchvision>=0.21.0,<0.26.0` | 2.10.0 / 0.25.0 |
@@ -113,12 +113,12 @@ python -c "import xensevr_pc_service_sdk as xrt; print('pico camera API:', hasat
 
 ## What's new in 0.1.0 {#whats-new}
 
-- **`--robot.type` decides whether the headset is recorded**: bimanual rigs gain `xtac_umi_g1` (headset stereo and head pose), `bi_taccap_gripper` does not record the headset; `--robot.enable_head_camera` contradicting the type is an error, see [Record](recording.md#52).
+- **`--robot.type` decides whether the headset is recorded**: bimanual setups gain `xtac_umi_g1` (headset stereo and head pose), `bi_taccap_gripper` does not record the headset; `--robot.enable_head_camera` contradicting the type is an error, see [Record](recording.md#52).
 - The gripper SDK moves to 0.4.1, bundling firmware leader 1.2.6 / follower 1.2.14, see [Firmware OTA](#ota).
 - `meta/runtimes/` is no longer written; `meta/info.json` gains `collection_stack`, naming the recording software, see [Dataset](dataset.md).
 - `lerobot-check-dataset` requires exact video frame counts: missing frames error, extra frames warn; editing a dataset re-encodes with the collection encoder.
 - The Docker image can speak voice prompts from inside the container.
-- The repo, submodule and image paths moved to the `XenseRobotics-AI` organisation.
+- The repo, submodule and image paths moved to the `XenseRobotics-AI` organization.
 - After moving to v0.1.0 you **must re-run `./setup_env.sh --install`**.
 
 ## Repo and submodule update {#repo-update}
@@ -177,7 +177,7 @@ python -c "import json;m=json.load(open('third_party/taccap-gripper/firmware/man
 | `tc-gu-01-master-1.2.6.bin` | Leader gripper (SN ending in `m`) |
 | `tc-gu-01-slave-1.2.14.bin` | Follower gripper (SN ending in `s`) |
 
-Pick by role, not hand: `TCGU01A28Z0023m` ends in `m`, so use the leader image; both grippers on a rig are often leaders.
+Pick by role, not hand: `TCGU01A28Z0023m` ends in `m`, so use the leader image; both grippers on a setup are often leaders.
 
 ```bash
 # 1. Confirm each gripper's role

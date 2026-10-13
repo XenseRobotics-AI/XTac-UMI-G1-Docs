@@ -6,36 +6,36 @@ On the Backpack Kit the gripper's two side buttons start, stop and delete record
 
 ## Buttons {#buttons}
 
-The button state machine runs on the backpack and **does not need the browser to be open**. While recording, a double-press or a right-gripper hold is silently ignored (against accidental presses); with nothing to delete, a double-press is refused (fast yellow blink).
+The button state machine runs on the backpack and **does not need the browser to be open**. While recording, a double-click or a long-press of the right gripper is silently ignored (against accidental presses); with nothing to delete, a double-click is refused (rapid yellow flashing).
 
 | Gesture | Action |
 |---|---|
-| **Right gripper hold** | Start recording |
-| **Left gripper hold** | Stop recording |
-| **Left gripper double-press** | Enter delete confirmation (purple blink; exits by itself after 5s without input) |
-| **Double-press** again while confirming | Delete the previous episode (solid purple for 3s; those 3s are also the cool-down, during which double-presses are ignored) |
-| **Left gripper hold** while confirming | Cancel the delete |
-| **Right gripper hold** while confirming | Abandon the delete and start a new recording right away (the previous episode is kept) |
+| **Long-press the right gripper** | Start recording |
+| **Long-press the left gripper** | Stop recording |
+| **Double-click the left gripper** | Enter delete confirmation (purple blink; exits by itself after 5s without input) |
+| **Double-click** again while confirming | Delete the previous episode (solid purple for 3s; those 3s are also the cool-down, during which double-clicks are ignored) |
+| **Long-press the left gripper** while confirming | Cancel the delete |
+| **Long-press the right gripper** while confirming | Abandon the delete and start a new recording right away (the previous episode is kept) |
 | **Right gripper single press** while recording | Place a subtask marker (a sub-step boundary) in this recording, with a tone |
 
 Which gripper does what (right starts / left stops), the press timings and the LED patterns are fixed fleet-wide and cannot be changed on site, and the console offers no way to change them; the values in effect are shown on the console's System → Capture settings page (see [System settings](system.md)).
 
 ## LEDs {#leds}
 
-| LED | Colour and pattern | Meaning |
+| LED | Color and pattern | Meaning |
 |---|---|---|
-| <span class="tc-lamp green solid"></span> | Green Solid | Standby: ready to record |
-| <span class="tc-lamp green breathe"></span> | Green Breathing | Recording (one bright-dark cycle per second) |
-| <span class="tc-lamp white flash"></span> | White One flash | Saved (on for 0.4s) |
-| <span class="tc-lamp amber solid"></span> | Yellow Solid | Recording failed to start (on for 2s), or a fatal problem while recording (stays on) |
-| <span class="tc-lamp amber pulse"></span> | Yellow Pulse | Suspect data: still recording, but that take is questionable (on 0.2s, off 0.8s, 3 times) |
-| <span class="tc-lamp amber strobe"></span> | Yellow Fast blink | Action refused, e.g. a double-press with nothing to delete (0.1s on/off, 3 times) |
-| <span class="tc-lamp purple blink"></span> | Purple Blink | Delete confirmation, waiting for your second double-click; 0.3s on/off, cancels on timeout |
-| <span class="tc-lamp purple solid"></span> | Purple Solid | The 3-second cool-down just after deleting; double-clicks are ignored |
-| <span class="tc-lamp red solid"></span> | Red Solid | System problem (e.g. a gripper dropped out, lit by the backpack) |
-| <span class="tc-lamp red burst"></span> | Red Burst | Gripper-side problem (lit by the gripper itself, not via the backpack) |
+| <span class="tc-lamp green solid"></span> | Green · Steady | Standby: ready to record |
+| <span class="tc-lamp green breathe"></span> | Green · Breathing | Recording (one bright-dark cycle per second) |
+| <span class="tc-lamp white flash"></span> | White · Flash | Saved (on for 0.4s) |
+| <span class="tc-lamp amber solid"></span> | Yellow · Steady | Recording failed to start (on for 2s), or a fatal problem while recording (stays on) |
+| <span class="tc-lamp amber pulse"></span> | Yellow · Pulse | Suspect data: still recording, but that episode is questionable (on 0.2s, off 0.8s, 3 times) |
+| <span class="tc-lamp amber strobe"></span> | Yellow · Rapid flashing | Action refused, e.g. a double-click with nothing to delete (0.1s on/off, 3 times) |
+| <span class="tc-lamp purple blink"></span> | Purple · Blinking | Delete confirmation, waiting for your second double-click; 0.3s on/off, cancels on timeout |
+| <span class="tc-lamp purple solid"></span> | Purple · Steady | The 3-second cool-down just after deleting; double-clicks are ignored |
+| <span class="tc-lamp red solid"></span> | Red · Steady | System problem (e.g. a gripper dropped out, lit by the backpack) |
+| <span class="tc-lamp red burst"></span> | Red · Burst flashing | Gripper-side problem (lit by the gripper itself, not via the backpack) |
 
-Recording is breathing green; red only ever means a fault. Fast blink and pulse are both yellow and differ only in rhythm: the fast blink is dense, the pulse sparse. The console's System → Capture settings page renders this table as an animated legend that plays each shape and rhythm, so the two are easy to tell apart (see [System settings](system.md)).
+Recording is breathing green; red only ever means a fault. Rapid flashing and pulse are both yellow and differ only in rhythm: rapid flashing is dense, the pulse sparse. The console's System → Capture settings page renders this table as an animated legend that plays each shape and rhythm, so the two are easy to tell apart (see [System settings](system.md)).
 
 ## Voice prompts {#voice-cues}
 
