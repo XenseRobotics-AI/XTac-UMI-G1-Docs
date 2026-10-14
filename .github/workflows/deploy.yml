@@ -1,10 +1,15 @@
 name: Deploy docs
 
 # 站点从 gh-pages 分支发布(仓库 Settings → Pages → Source 选 gh-pages / root):
-#   main → 分支根目录   https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/
-#   dev  → dev/ 子目录  https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/
-# 两个 job 都自己用 git + rsync 写 gh-pages,好处是能精确控制删除范围:
-# main 发布时不碰 dev/,dev 发布时只动 dev/。
+#   main → vX.Y.Z/ 子目录  https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/vX.Y.Z/
+#          版本号取自 mkdocs.yml 页脚的「文档 vX.Y.Z」;同一版本重发会覆盖该目录。
+#          根目录与 latest/ 只放跳转桩,指向最新版本;versions.json 驱动顶栏的版本下拉框。
+#          根目录的维护见 scripts/site_versions.py。
+#   dev  → dev/ 子目录     https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/(不带版本下拉框)
+# 自己用 git + rsync 写 gh-pages,能精确控制删除范围:
+# 发布某个版本只动该版本目录与根目录跳转桩,不碰其它版本与 dev/;dev 发布只动 dev/。
+#
+# 补发旧版本:手动运行,target 选 root,ref 填该版本在 main 上的提交(如 v0.1.0 = 5563ce0)。
 
 on:
   push:
@@ -15,6 +20,7 @@ on:
       - "docs/**"
       - "mkdocs.yml"
       - "requirements.txt"
+      - "scripts/site_versions.py"
       - ".github/workflows/deploy.yml"
   workflow_dispatch:
     inputs:
@@ -24,6 +30,10 @@ on:
         default: dev
         type: choice
         options: [dev, root]
+      ref:
+        description: '(可选)构建哪个提交;留空用当前分支。补发旧版本时填 main 上的提交'
+        required: false
+        default: ''
 
 permissions:
   contents: write
@@ -41,7 +51,15 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+      # tools/:本次运行的 workflow 所在提交,提供发布脚本
+      # src/:要构建的内容,默认同一提交,补发旧版本时是 inputs.ref
       - uses: actions/checkout@v4
+        with:
+          path: tools
+      - uses: actions/checkout@v4
+        with:
+          path: src
+          ref: ${{ inputs.ref || github.sha }}
 
       - name: 确定发布目标
         id: target
@@ -55,8 +73,10 @@ jobs:
               target="dev"
           fi
           if [[ "${target}" == "root" ]]; then
-              echo "subdir=" >> "${GITHUB_OUTPUT}"
-              echo "url=${SITE_BASE}/" >> "${GITHUB_OUTPUT}"
+              python3 tools/scripts/site_versions.py info src | tee -a "${GITHUB_OUTPUT}"
+              version="$(python3 tools/scripts/site_versions.py info src | sed -n 's/^version=//p')"
+              echo "subdir=${version}" >> "${GITHUB_OUTPUT}"
+              echo "url=${SITE_BASE}/${version}/" >> "${GITHUB_OUTPUT}"
           else
               echo "subdir=dev" >> "${GITHUB_OUTPUT}"
               echo "url=${SITE_BASE}/dev/" >> "${GITHUB_OUTPUT}"
@@ -68,14 +88,16 @@ jobs:
         with:
           python-version: "3.12"
           cache: pip
+          cache-dependency-path: src/requirements.txt
 
       - name: 安装依赖
-        run: pip install -r requirements.txt
+        run: pip install -r src/requirements.txt
 
       # 预览站要自成一体:canonical、sitemap 与英文旧地址跳转都得指向 /dev/,
       # 否则读者会被这些链接甩回生产站,看到的还是旧内容。
       - name: 预览站改写站点地址与站名
         if: steps.target.outputs.target == 'dev'
+        working-directory: src
         run: |
           set -euo pipefail
           sed -i "s#${SITE_BASE}/#${SITE_BASE}/dev/#g" mkdocs.yml
@@ -83,7 +105,25 @@ jobs:
           grep -m1 '^site_name:' mkdocs.yml
           grep -m1 '^site_url:' mkdocs.yml
 
+      # 正式版:站点地址加上版本目录,并打开 Material 的版本下拉框(读根目录的 versions.json)。
+      # 只在构建时注入,本地 mkdocs serve 与 dev 预览不受影响;补发旧提交时同样适用。
+      - name: 正式版改写站点地址并启用版本下拉框
+        if: steps.target.outputs.target == 'root'
+        working-directory: src
+        run: |
+          set -euo pipefail
+          version='${{ steps.target.outputs.version }}'
+          sed -i "s#${SITE_BASE}/#${SITE_BASE}/${version}/#g" mkdocs.yml
+          python3 - <<'EOF'
+          t = open('mkdocs.yml', encoding='utf-8').read()
+          assert t.count('\nextra:\n') == 1, 'mkdocs.yml 里应只有一个顶层 extra:'
+          t = t.replace('\nextra:\n', '\nextra:\n  version:\n    provider: mike\n', 1)
+          open('mkdocs.yml', 'w', encoding='utf-8').write(t)
+          EOF
+          grep -m1 '^site_url:' mkdocs.yml
+
       - name: 构建
+        working-directory: src
         run: mkdocs build --strict
         env:
           DISABLE_MKDOCS_2_WARNING: "true"
@@ -94,13 +134,13 @@ jobs:
           subdir='${{ steps.target.outputs.subdir }}'
           git clone -q --depth 1 --branch gh-pages \
               "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" gh-pages
-          if [[ -n "${subdir}" ]]; then
-              # 预览:只替换这一个子目录,根目录的生产站原样不动
-              mkdir -p "gh-pages/${subdir}"
-              rsync -a --delete site/ "gh-pages/${subdir}/"
-          else
-              # 生产:替换根目录下所有内容,但保留 dev/ 与 .git
-              rsync -a --delete --exclude '/dev/' --exclude '/.git/' site/ gh-pages/
+          # 只替换这一个子目录(dev/ 或 vX.Y.Z/),其它版本原样不动
+          mkdir -p "gh-pages/${subdir}"
+          rsync -a --delete src/site/ "gh-pages/${subdir}/"
+          if [[ '${{ steps.target.outputs.target }}' == 'root' ]]; then
+              # 更新版本列表,重建根目录与 latest/ 的跳转桩
+              python3 tools/scripts/site_versions.py publish gh-pages \
+                  '${{ steps.target.outputs.version }}' '${{ steps.target.outputs.title }}'
           fi
           touch gh-pages/.nojekyll
           cd gh-pages
@@ -111,7 +151,7 @@ jobs:
           git add -A
           git -c user.name='github-actions[bot]' \
               -c user.email='41898282+github-actions[bot]@users.noreply.github.com' \
-              commit -q -m "deploy: ${{ github.ref_name }} → ${{ steps.target.outputs.target }} (${GITHUB_SHA::7})"
+              commit -q -m "deploy: ${{ github.ref_name }} → ${subdir} ($(git -C ../src rev-parse --short HEAD))"
           git push -q origin gh-pages
 
       - name: 输出地址
