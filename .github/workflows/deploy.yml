@@ -1,15 +1,17 @@
 name: Deploy docs
 
 # 站点从 gh-pages 分支发布(仓库 Settings → Pages → Source 选 gh-pages / root):
-#   main → vX.Y.Z/ 子目录  https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/vX.Y.Z/
-#          版本号取自 mkdocs.yml 页脚的「文档 vX.Y.Z」;同一版本重发会覆盖该目录。
+#   main → vA.B.C/ 子目录  https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/vA.B.C/
+#          A.B.C 是发布的软件版本(XTac-UMI Collector 版本),不是文档仓库版本:
+#          先读页脚「文档 vX.Y.Z」,再到 docs/common/reference.md 版本表里查它配套的 Collector 版本。
+#          同一 Collector 版本重发会覆盖该目录(放该版本最新的文档)。
 #          根目录与 latest/ 只放跳转桩,指向最新版本;versions.json 驱动顶栏的版本下拉框。
 #          根目录的维护见 scripts/site_versions.py。
 #   dev  → dev/ 子目录     https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/(不带版本下拉框)
 # 自己用 git + rsync 写 gh-pages,能精确控制删除范围:
 # 发布某个版本只动该版本目录与根目录跳转桩,不碰其它版本与 dev/;dev 发布只动 dev/。
 #
-# 补发旧版本:手动运行,target 选 root,ref 填该版本在 main 上的提交(如 v0.1.0 = 5563ce0)。
+# 补发旧版本:手动运行,target 选 root,ref 填该版本在 main 上的提交。
 
 on:
   push:
@@ -73,8 +75,9 @@ jobs:
               target="dev"
           fi
           if [[ "${target}" == "root" ]]; then
-              python3 tools/scripts/site_versions.py info src | tee -a "${GITHUB_OUTPUT}"
-              version="$(python3 tools/scripts/site_versions.py info src | sed -n 's/^version=//p')"
+              info="$(python3 tools/scripts/site_versions.py info src)"
+              echo "${info}" | tee -a "${GITHUB_OUTPUT}"
+              version="$(echo "${info}" | sed -n 's/^version=//p')"
               echo "subdir=${version}" >> "${GITHUB_OUTPUT}"
               echo "url=${SITE_BASE}/${version}/" >> "${GITHUB_OUTPUT}"
           else
@@ -105,7 +108,7 @@ jobs:
           grep -m1 '^site_name:' mkdocs.yml
           grep -m1 '^site_url:' mkdocs.yml
 
-      # 正式版:站点地址加上版本目录,并打开 Material 的版本下拉框(读根目录的 versions.json)。
+      # 正式版:站点地址加上版本目录(Collector 版本),并打开 Material 的版本下拉框(读根目录的 versions.json)。
       # 只在构建时注入,本地 mkdocs serve 与 dev 预览不受影响;补发旧提交时同样适用。
       - name: 正式版改写站点地址并启用版本下拉框
         if: steps.target.outputs.target == 'root'
@@ -134,7 +137,7 @@ jobs:
           subdir='${{ steps.target.outputs.subdir }}'
           git clone -q --depth 1 --branch gh-pages \
               "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" gh-pages
-          # 只替换这一个子目录(dev/ 或 vX.Y.Z/),其它版本原样不动
+          # 只替换这一个子目录(dev/ 或 vA.B.C/),其它版本原样不动
           mkdir -p "gh-pages/${subdir}"
           rsync -a --delete src/site/ "gh-pages/${subdir}/"
           if [[ '${{ steps.target.outputs.target }}' == 'root' ]]; then

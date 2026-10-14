@@ -1,16 +1,21 @@
 #!/usr/bin/env python3
 """文档多版本发布的辅助脚本(给 .github/workflows/deploy.yml 用)。
 
+下拉框里的版本是**发布的软件版本**,即 XTac-UMI Collector 的版本(v0.4.3、v0.4.4…),
+不是文档仓库自己的版本号(页脚的「文档 vX.Y.Z」)。两者的对应关系只有一个出处:
+docs/common/reference.md 的「文档版本与配套软件」表。同一个 Collector 版本若先后出过几个文档版本,
+该目录始终放最新的那一版文档。
+
 gh-pages 的布局:
-  /vX.Y.Z/   每个文档正式版一份完整站点
+  /vA.B.C/   每个 Collector 版本一份完整站点(A.B.C 为 Collector 版本)
   /dev/      dev 分支预览(不进版本列表)
   /latest/   与根目录一样,只放跳转桩,指向最新版本的同名页面
   /versions.json  Material 版本下拉框读取的列表
 
 子命令:
   info <repo_dir>
-      从 mkdocs.yml 页脚读文档版本号,从参考资料页的版本表读配套 SDK 版本,
-      输出 GitHub Actions 的 key=value 行(version / title)。
+      从 mkdocs.yml 页脚读文档版本号,到参考资料页的版本表里找这一行,取配套的 Collector 版本,
+      输出 GitHub Actions 的 key=value 行(version=Collector 版本目录 / title / docs=文档版本)。
   publish <pages_dir> <version> <title>
       把 <version> 写进 versions.json(按版本号从新到旧排序,最新版带 latest 别名),
       清掉根目录与 latest/ 下旧的跳转桩,再按最新版本重新生成。
@@ -36,16 +41,18 @@ def info(repo):
     m = re.search(r'^copyright:.*文档 (v\d+\.\d+\.\d+)', mk, re.M)
     if not m:
         sys.exit('mkdocs.yml 的 copyright 行里找不到「文档 vX.Y.Z」')
-    version = m.group(1)
-    title = version
+    docs = m.group(1)
     ref = open(os.path.join(repo, 'docs/common/reference.md'), encoding='utf-8').read()
-    row = re.search(r'^\| ' + re.escape(version) + r' \|(.*)\|\s*$', ref, re.M)
-    if row:
-        sdk = row.group(1).split('|')[-1].strip()
-        if re.fullmatch(r'\d+\.\d+\.\d+', sdk):
-            title = f'{version} · SDK {sdk}'
-    print(f'version={version}')
-    print(f'title={title}')
+    # 列序:文档版本 | lerobot | XR | Collector | SDK
+    row = re.search(r'^\| ' + re.escape(docs) + r' \|(.*)\|\s*$', ref, re.M)
+    if not row:
+        sys.exit(f'docs/common/reference.md 的版本表里没有 {docs} 这一行')
+    collector = row.group(1).split('|')[2].strip()
+    if not re.fullmatch(r'\d+\.\d+\.\d+', collector):
+        sys.exit(f'{docs} 一行的 Collector 版本不是 A.B.C 格式:{collector!r}')
+    print(f'version=v{collector}')
+    print(f'title=v{collector}')
+    print(f'docs={docs}')
 
 
 STUB = ('<!doctype html><html lang="zh"><head><meta charset="utf-8">'
