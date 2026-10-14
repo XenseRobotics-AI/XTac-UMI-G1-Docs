@@ -87,7 +87,7 @@ The backpack draws about 20W and runs about 3.5–4 hours on the power bank; see
 
 ## Connecting the headset to the backpack {#pico-link}
 
-1. **Start and connect**: the headset and the backpack connect by cable only, so make sure the headset's Type-C port is wired to the backpack's `PICO` port as above. Put on the headset, open XTac-UMI XR, **leave "USB Network" unticked** and "PC IP" empty (it connects to `192.168.100.1` by default), then tap "Connect".
+1. **Start and connect**: the headset and the backpack connect by cable only, so make sure the headset's Type-C port is wired to the backpack's `PICO` port as above. Put on the headset, open XTac-UMI XR, choose "XTac" as the connection (selected by default on first launch; it connects to `192.168.100.1`), then tap "Connect".
 2. **Status icons**: the fold button is at the top right of XR. When tracking accuracy degrades or the link to the backpack drops, both XR and the console's Live monitoring page show an icon; the interface is described in [The app's screen](../common/pico4.md#pico-toolkit-ui).
 3. **Get in position**: stand at the work position facing the working direction before you open XR; where XR first starts becomes the [world-frame origin](../common/pico4.md#pico-frame). **Do not restart XR during collection.**
 

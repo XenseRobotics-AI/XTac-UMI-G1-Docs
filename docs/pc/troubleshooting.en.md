@@ -204,7 +204,7 @@ Record the serial number, connection method, error message and a photo of the se
 ??? failure "XTac-UMI XR cannot connect (Not connected or Connection failed)"
     **Cause:** usually the wired network is not connected properly, or the collection PC's Wi-Fi is still on.
 
-    **Fix:** for a wired connection, tick "USB network"; over Wi-Fi, enter the collection PC's IP in "PC IP"; then tap "Connect". If it still fails, redo the [Network connection](../common/pico4.md#pico-network); the screen is described in [The app's screen](../common/pico4.md#pico-toolkit-ui).
+    **Fix:** for a wired connection, choose "USB Network"; over Wi-Fi, choose "WiFi Network" and enter the collection PC's IP in "PC IP"; then tap "Connect". If it still fails, redo the [Network connection](../common/pico4.md#pico-network); the screen is described in [The app's screen](../common/pico4.md#pico-toolkit-ui).
 
 ??? failure "The headset shows \"Connected\" but the collection PC receives no pose"
     **Cause:** "Connected" only means the app has reached the service. The service on the collection PC may not be running, or the tracker is powered off or unbound.

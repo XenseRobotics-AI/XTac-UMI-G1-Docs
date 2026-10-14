@@ -336,7 +336,7 @@ The grippers' connection and power requirements are in [Gripper connection and s
 ### 4. Connect the headset to the backpack {#deploy-headset-link}
 
 1. Put on the headset and open XTac-UMI XR.
-2. **Leave "USB Network" unticked** and "PC IP" empty (it connects to the backpack at `192.168.100.1` by default).
+2. Choose "XTac" as the connection (selected by default on first launch; it connects to the backpack at `192.168.100.1`).
 3. Tap "Connect".
 
 The interface and connection states are in [Pico4 headset and tracker setup](../common/pico4.md#pico-toolkit-ui); detailed steps are in [Connecting the headset to the backpack](unbox-connect.md#pico-link).

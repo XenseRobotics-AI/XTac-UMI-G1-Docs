@@ -7,7 +7,7 @@
 |---|---|---|
 | Where the headset plugs in | The backpack's `PICO` port, **wired only** | The collection PC's Type-C port (wired USB network sharing), or the same Wi-Fi as the collection PC |
 | Where the pose service runs | The XenseVR runtime is built into XTac-UMI Collector and is up once the backpack boots | The [XenseVR PC Service](../pc/host-setup.md#35) on the collection PC, started by hand before every session |
-| How the app connects | **Leave "USB Network" unticked** and "PC IP" empty → tap "Connect" (connects to `192.168.100.1` by default) | Wired: **tick "USB Network"** → tap "Connect" (connects to `192.168.58.1` by default); Wi-Fi: leave it unticked and enter the collection PC's IP under "PC IP" |
+| How the app connects | Choose "XTac" (selected by default on first launch; connects to `192.168.100.1`) → tap "Connect" | Wired: choose "USB Network" (connects to `192.168.58.1`) → tap "Connect"; Wi-Fi: choose "WiFi Network", enter the collection PC's IP under "PC IP" and save → tap "Connect" |
 
 - **Factory-configured**: developer mode, power policy, app, tracker binding and tracking mode survive power cycles (redo them only after a factory reset or a headset swap); start at [Network connection](#pico-network).
 - **Every session**: plug in, short-press the tracker's power button until the blue light comes on, [connect in the app](#pico-toolkit-ui), [align at startup](#pico-frame).
@@ -48,7 +48,7 @@ Otherwise, screen-off or sleep between episodes (also triggered by taking the he
 
 ## Installing XTac-UMI XR {#pico-app}
 
-The APK is named `XTac-UMI-XR-<version>.apk`; the current version is 0.3.2. Install it from the headset's file manager:
+The APK is named `XTac-UMI-XR-<version>.apk`; the current version is 0.3.3. Install it from the headset's file manager:
 
 1. Connect the headset to the collection PC over USB and copy the APK into the headset's `Download/` directory.
 
@@ -81,15 +81,15 @@ On both editions, set USB up on the headset first:
 
     1. Run the headset cable (Pico → Pack, Type-C to Type-C) from the headset's side Type-C port to the backpack's `PICO` port; see [Unboxing, cabling and power](../backpack/unbox-connect.md#order). The connection is the same whether the backpack runs on the adapter or a power bank. The headset cannot use Wi-Fi on the Backpack Kit.
     2. Power on the backpack (the pose service starts with it).
-    3. Open XTac-UMI XR, leave "USB Network" unticked and "PC IP" empty (connects to the backpack at `192.168.100.1` by default), then tap "Connect".
+    3. Open XTac-UMI XR, choose "XTac" as the connection (selected by default on first launch; the address is fixed to the backpack at `192.168.100.1`), then tap "Connect".
 
 === "Developer Kit"
 
     1. Start the service on the collection PC first with `runService.sh` (see [Start the XenseVR PC Service](../pc/host-setup.md#35)); otherwise the app cannot connect.
     2. Connect the headset directly to the collection PC with a Type-C cable; the headset assigns the collection PC an IP.
-    3. Open XTac-UMI XR, tick "USB Network" and tap "Connect": the app connects to the collection PC (`192.168.58.1`) by itself and Status changes to "Connected" (see [The app's screen](#pico-toolkit-ui)).
+    3. Open XTac-UMI XR, choose "USB Network" as the connection and tap "Connect": the app connects to the collection PC (`192.168.58.1`) by itself and Status changes to "Connected" (see [The app's screen](#pico-toolkit-ui)).
 
-    Over Wi-Fi: put the headset and the collection PC on the same network, leave "USB Network" unticked, enter the collection PC's IP in "PC IP", then tap "Connect".
+    Over Wi-Fi: put the headset and the collection PC on the same network, choose "WiFi Network", tap "PC IP", enter the collection PC's IP and save, then tap "Connect".
 
     !!! warning "On the wired link, turn the collection PC's Wi-Fi off"
         The wired shared network contends with other networks on the collection PC (Wi-Fi above all) for routing and interfaces, leaving the tracker unreachable or its pose unstable; keep only the headset's shared network.
@@ -169,21 +169,13 @@ With the headset on, open XTac-UMI XR from the Library to reach the "XENSE XR Co
 | Tracker Mode | Should read "Independent Tracking" (the XR app's name for Pico's "Object Tracking" mode); if not, redo [Tracking mode](#pico-tracker) |
 | Pico Hardware | Should read "Enterprise" |
 | Status | Until "Connected", the collection unit reads no pose |
-| USB Network | Developer Kit wired: tick it, and the app connects to the collection PC (`192.168.58.1`) by itself. **Backpack Kit: leave unticked** |
-| PC IP | Backpack Kit: leave empty (connects to the backpack at `192.168.100.1` by default); Developer Kit: the collection PC's IP over Wi-Fi, empty when wired |
+| Connection | "XTac": Backpack Kit, connects to the backpack at `192.168.100.1`, selected by default on first launch; "USB Network": Developer Kit wired, connects to the collection PC at `192.168.58.1`; "WiFi Network": Developer Kit wireless. Cannot be changed while connected or connecting |
+| PC IP | Under "XTac" it shows the backpack's address and cannot be edited; under "WiFi Network" tap it, enter the collection PC's IP and save; under "USB Network" nothing to enter |
 | Connect / Disconnect | Tap "Connect"; once connected the button turns into "Disconnect" |
 
-=== "Connecting..."
+Choose the connection as in the table and tap "Connect"; once Status reads "Connected", you can start collecting. From then on XR reconnects automatically with the last connection each time it opens; after you tap "Disconnect" it stops reconnecting until you tap "Connect" again.
 
-    On opening, Status reads "Connecting...". Set the items as in the table, then tap "Connect".
-
-    ![XTac-UMI XR console: Connecting...](../assets/pico4/xr-console-idle-en.webp){ width="560" }
-
-=== "Connected"
-
-    Once "Connected", you can start collecting.
-
-    ![XTac-UMI XR console: connected](../assets/pico4/xr-console-connected-en.webp){ width="560" }
+![XTac-UMI XR console: XTac selected, Connected](../assets/pico4/xr-console-xtac-en.webp){ width="560" }
 
 How the two editions differ:
 

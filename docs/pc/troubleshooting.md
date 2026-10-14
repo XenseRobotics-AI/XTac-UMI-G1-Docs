@@ -204,7 +204,7 @@
 ??? failure "XTac-UMI XR 始终无法连接（未连接或连接失败）"
     **原因**：通常是有线网络未正确连接，或电脑 WiFi 未关闭。
 
-    **解决**：有线连接时勾选「USB网络」；WiFi 连接时在「PC IP」填写主机 IP，再点「连接」。仍无法连接时按[网络连接](../common/pico4.md#pico-network)重连，界面说明见[打开 App 后的界面](../common/pico4.md#pico-toolkit-ui)。
+    **解决**：有线连接时连接方式选「USB网络」；WiFi 连接时选「WiFi网络」并在「PC IP」填写主机 IP，再点「连接」。仍无法连接时按[网络连接](../common/pico4.md#pico-network)重连，界面说明见[打开 App 后的界面](../common/pico4.md#pico-toolkit-ui)。
 
 ??? failure "头显显示「连接成功」，PC 端却收不到任何位姿"
     **原因**：「连接成功」仅表示 App 已连接到服务。主机服务可能未启动，或追踪器未开机、未绑定。
