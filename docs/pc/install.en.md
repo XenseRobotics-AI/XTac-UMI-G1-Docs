@@ -194,7 +194,7 @@ Both paths produce the same collection environment; pick one.
     ./docker/install_customer.sh
     ```
 
-    The script, in order: checks the system and GPU driver → installs Docker and the NVIDIA Container Toolkit as needed (and registers the NVIDIA runtime) → installs the ModemManager blocking rule from [Stop ModemManager grabbing the port (udev)](host-setup.md#32) → pulls the image → runs a CUDA and graphics smoke test. Cloning the repo is only how you get `compose.yaml` and the script.
+    The script, in order: checks the system and GPU driver → installs Docker and the NVIDIA Container Toolkit as needed (and registers the NVIDIA runtime) → installs the ModemManager blocking rule from [Stop ModemManager grabbing the port (udev)](host-setup.md#32) → pulls the image → runs a CUDA and graphics smoke test. Cloning the repo is only how you get `compose.yaml` and the script. The script **does not remove `brltty`**; run `sudo apt purge -y brltty` yourself, see [Remove brltty](host-setup.md#brltty).
 
     Behind a proxy:
 

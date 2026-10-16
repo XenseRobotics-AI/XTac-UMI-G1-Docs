@@ -6,7 +6,22 @@
 ## 1. 安装 SDK {#install}
 
 装好数采环境（[安装](../pc/install.md)）就已经带有 SDK 0.4.3，不需要另外安装。示例脚本在数采仓库的
-`third_party/taccap-gripper/python/examples/` 下。串口权限见 [串口权限](../pc/host-setup.md#31)。
+`third_party/taccap-gripper/python/examples/` 下。
+
+!!! danger "首次使用前先做三项主机配置，否则夹爪连不上"
+    卸载 `brltty`、把当前用户加入 `dialout` 组、安装屏蔽 ModemManager 的 udev 规则，然后注销重新登录、重新插拔夹爪：
+
+    ```bash
+    sudo apt purge -y brltty                     # 1. 卸载 brltty
+    sudo usermod -aG dialout "$USER"             # 2. 加入 dialout 组
+    sudo tee /etc/udev/rules.d/99-taccap-ignore-modemmanager.rules >/dev/null <<'EOF'
+    # XTac-UMI G1 MCUs are CH343 USB-serial (1a86:55d2) — keep ModemManager off them
+    ACTION=="add|change", SUBSYSTEMS=="usb", ATTRS{idVendor}=="1a86", ENV{ID_MM_DEVICE_IGNORE}="1"
+    EOF
+    sudo udevadm control --reload-rules && sudo udevadm trigger   # 3. 屏蔽 ModemManager
+    ```
+
+    原因与验证方法见[主机配置 · 首次使用必做](../pc/host-setup.md#first-use)。
 
 验证（在数采仓库根目录、数采环境里）：
 

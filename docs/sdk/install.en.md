@@ -27,6 +27,9 @@ pip install . --no-build-isolation      # takes a few minutes
 sudo usermod -aG dialout,video "$USER"  # serial and camera permissions; takes effect after logging out and back in
 ```
 
+!!! danger "A standalone install needs the same three host settings"
+    Besides the `dialout` group above, remove `brltty` and install the udev rule that keeps ModemManager off, or the gripper will not connect; see [Host setup · Required on first use](../pc/host-setup.md#first-use).
+
 Verify the same way as above; it should print `taccap-gripper OK; version 0.4.3`.
 
 !!! warning "Common problems"

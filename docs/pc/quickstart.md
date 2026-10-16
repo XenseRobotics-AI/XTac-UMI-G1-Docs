@@ -4,7 +4,7 @@
 
 - 硬件已接好 → [夹爪连接](../common/gripper.md#install)
 - 环境已安装，已进入采集环境（`mamba activate xense-taccap` 或 Docker 容器） → [安装](install.md)
-- 主机已配置串口权限并关闭 ModemManager 抢占 → [主机配置](host-setup.md#31)
+- 主机已卸载 brltty、配置串口权限、屏蔽 ModemManager（缺一项夹爪连不上） → [主机配置 · 首次使用必做](host-setup.md#first-use)
 - 每只主夹爪已标定（没标定会被拒绝连接） → [夹爪标定](calibration.md#41)
 - 仓库、SDK 与夹爪固件都是最新版本 → [必须升级到最新版本](versions.md#required)
 

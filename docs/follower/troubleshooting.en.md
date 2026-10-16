@@ -9,7 +9,7 @@ On this page, **power-cycle** means unplugging the 24V power cable, waiting abou
     **Fix**:
 
     - Confirm that both the USB cable and the 24V supply are connected; `lsusb` should list `1a86:55d2`. If it does not, try another cable or USB port.
-    - Confirm that the current user has been added to the `dialout` group and has logged in again; see [Serial permissions (dialout)](../pc/host-setup.md#31).
+    - Confirm [Host setup · Required on first use](../pc/host-setup.md#first-use) is done: `brltty` removed, the current user in the `dialout` group and logged in again, and the udev rule that keeps ModemManager off installed.
     - Close the collection program and any other program using the gripper, then scan again.
     - If it still shows `Role.Unknown` or an empty serial number, contact [technical support](../common/reference.md#support).
 

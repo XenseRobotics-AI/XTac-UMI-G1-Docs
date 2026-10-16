@@ -9,7 +9,7 @@
     **解决**：
 
     - 确认 USB 线与 24V 电源均已接好，`lsusb` 输出中应有 `1a86:55d2`。如没有，更换线缆或 USB 口。
-    - 确认当前用户已加入 `dialout` 组并已重新登录，见[串口权限](../pc/host-setup.md#31)。
+    - 确认已完成[主机配置 · 首次使用必做](../pc/host-setup.md#first-use)：已卸载 `brltty`、当前用户已加入 `dialout` 组并重新登录、已安装屏蔽 ModemManager 的 udev 规则。
     - 关闭数采程序及其他占用夹爪的程序，然后重新扫描。
     - 仍显示 `Role.Unknown` 或序列号为空时，联系[技术支持](../common/reference.md#support)。
 

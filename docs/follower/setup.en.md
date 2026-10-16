@@ -6,7 +6,22 @@ the follower gripper needs **both USB Type-C and 24V connected**.
 ## 1. Install the SDK {#install}
 
 Once the collection environment is installed ([Installation](../pc/install.md)), SDK 0.4.3 is already included; there is nothing extra to install. The example scripts are in the data-collection repository under
-`third_party/taccap-gripper/python/examples/`. For serial port permissions, see [Serial permissions (dialout)](../pc/host-setup.md#31).
+`third_party/taccap-gripper/python/examples/`.
+
+!!! danger "Before first use, complete three host settings or the gripper will not connect"
+    Remove `brltty`, add the current user to the `dialout` group and install the udev rule that keeps ModemManager off, then log out and back in and re-plug the gripper:
+
+    ```bash
+    sudo apt purge -y brltty                     # 1. remove brltty
+    sudo usermod -aG dialout "$USER"             # 2. join the dialout group
+    sudo tee /etc/udev/rules.d/99-taccap-ignore-modemmanager.rules >/dev/null <<'EOF'
+    # XTac-UMI G1 MCUs are CH343 USB-serial (1a86:55d2) — keep ModemManager off them
+    ACTION=="add|change", SUBSYSTEMS=="usb", ATTRS{idVendor}=="1a86", ENV{ID_MM_DEVICE_IGNORE}="1"
+    EOF
+    sudo udevadm control --reload-rules && sudo udevadm trigger   # 3. keep ModemManager off
+    ```
+
+    The reasons and how to verify each are in [Host setup · Required on first use](../pc/host-setup.md#first-use).
 
 Verify (from the data-collection repository root, inside the collection environment):
 

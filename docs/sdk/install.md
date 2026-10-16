@@ -27,6 +27,9 @@ pip install . --no-build-isolation      # 需要几分钟
 sudo usermod -aG dialout,video "$USER"  # 串口与相机权限,注销后重新登录生效
 ```
 
+!!! danger "单独安装同样要做三项主机配置"
+    除了上面的 `dialout` 组，还要卸载 `brltty`、安装屏蔽 ModemManager 的 udev 规则，否则夹爪连不上，见[主机配置 · 首次使用必做](../pc/host-setup.md#first-use)。
+
 验证方法同上，应输出 `taccap-gripper OK; version 0.4.3`。
 
 !!! warning "常见问题"

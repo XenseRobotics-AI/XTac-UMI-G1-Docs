@@ -1,6 +1,6 @@
 # 故障排查
 
-多数问题由串口权限不足或 ModemManager 抢占串口引起，请先查阅「串口权限与设备发现」。排查前请先按[一页速通 · 自检](quickstart.md#self-check)完成自检。
+多数连接问题由 `brltty` 未卸载、串口权限不足或 ModemManager 抢占串口引起，请先确认已完成[主机配置 · 首次使用必做](host-setup.md#first-use)。排查前请先按[一页速通 · 自检](quickstart.md#self-check)完成自检。
 
 ## 反馈问题请附上完整日志 {#logs}
 
@@ -101,7 +101,7 @@
     - ModemManager 在热插拔时会用 AT 指令探测 CH343 串口数秒，`brltty` 也会占用串口。使用容器时，相关规则需安装在宿主机上。
     - 夹爪串口被其他程序独占，如上一次的采集、标定或示例脚本未退出。
 
-    **解决**：先关闭占用串口的程序。对于 ModemManager，临时方案是插好夹爪后等待约 3 秒；永久方案是添加忽略 `1a86` 设备的 udev 规则（Docker 路径的 `install_customer.sh` 已安装该规则）。规则与验证方法见[关闭 ModemManager 抢占](host-setup.md#32)，安装后重新插拔夹爪。
+    **解决**：先关闭占用串口的程序。`brltty` 用 `sudo apt purge -y brltty` [卸载](host-setup.md#brltty)。对于 ModemManager，临时方案是插好夹爪后等待约 3 秒；永久方案是添加忽略 `1a86` 设备的 udev 规则（Docker 路径的 `install_customer.sh` 已安装该规则）。规则与验证方法见[关闭 ModemManager 抢占](host-setup.md#32)，安装后重新插拔夹爪。
 
 ??? failure "修复权限后 `firmware_sn` 仍为空 / `role=Unknown`"
     **原因**：SN 未烧录、串口读取仍然失败，或固件通信、设备配置异常。SN 为空时无法推断固件版本。
