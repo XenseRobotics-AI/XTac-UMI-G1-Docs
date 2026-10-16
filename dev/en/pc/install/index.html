@@ -2523,7 +2523,7 @@
 </span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="nb">cd</span><span class="w"> </span>xense-taccap-lerobot
 </span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>./docker/install_customer.sh
 </span></code></pre></div>
-<p>The script, in order: checks the system and GPU driver → installs Docker and the NVIDIA Container Toolkit as needed (and registers the NVIDIA runtime) → installs the ModemManager blocking rule from <a href="../host-setup/#32">Stop ModemManager grabbing the port (udev)</a> → pulls the image → runs a CUDA and graphics smoke test. Cloning the repo is only how you get <code>compose.yaml</code> and the script.</p>
+<p>The script, in order: checks the system and GPU driver → installs Docker and the NVIDIA Container Toolkit as needed (and registers the NVIDIA runtime) → installs the ModemManager blocking rule from <a href="../host-setup/#32">Stop ModemManager grabbing the port (udev)</a> → pulls the image → runs a CUDA and graphics smoke test. Cloning the repo is only how you get <code>compose.yaml</code> and the script. The script <strong>does not remove <code>brltty</code></strong>; run <code>sudo apt purge -y brltty</code> yourself, see <a href="../host-setup/#brltty">Remove brltty</a>.</p>
 <p>Behind a proxy:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="nv">XENSE_PROXY_URL</span><span class="o">=</span>http://127.0.0.1:7897<span class="w"> </span>./docker/install_customer.sh
 </span></code></pre></div>

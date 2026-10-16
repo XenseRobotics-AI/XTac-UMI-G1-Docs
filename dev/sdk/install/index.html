@@ -1564,7 +1564,7 @@
   <a href="#standalone" class="md-nav__link">
     <span class="md-ellipsis">
       
-        不使用数采仓库时单独安装（可选）
+        单独安装（背包版或不用数采仓库）
       
     </span>
   </a>
@@ -2171,37 +2171,21 @@
 </span></code></pre></div>
 <p>应输出 <code>taccap-gripper OK; version 0.4.3</code>。版本不对时，拉子模块并重跑 <code>./setup_env.sh --install</code>，
 见 <a href="../../pc/install/#22">克隆仓库与子模块</a>。</p>
-<h3 id="standalone">不使用数采仓库时单独安装（可选）<a class="headerlink" href="#standalone" title="锚点链接">¶</a></h3>
-<p>只想在别的机器上开发、不需要数采仓库时，也可以单独安装。需要 Ubuntu 22.04 及以上，以及 <code>mamba</code> 或
-<code>conda</code>。SDK 从源码编译，示例脚本也在源码目录里，装完请保留。</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>git<span class="w"> </span>clone<span class="w"> </span>--branch<span class="w"> </span>v0.4.3<span class="w"> </span>https://github.com/XenseRobotics-AI/TacCap-Gripper.git
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="nb">cd</span><span class="w"> </span>TacCap-Gripper
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>mamba<span class="w"> </span>env<span class="w"> </span>create<span class="w"> </span>-f<span class="w"> </span>environment.yml<span class="w">     </span><span class="c1"># 新建名为 taccap 的环境,包含编译所需的全部依赖</span>
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>mamba<span class="w"> </span>activate<span class="w"> </span>taccap
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>pip<span class="w"> </span>install<span class="w"> </span>.<span class="w"> </span>--no-build-isolation<span class="w">      </span><span class="c1"># 需要几分钟</span>
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>sudo<span class="w"> </span>usermod<span class="w"> </span>-aG<span class="w"> </span>dialout,video<span class="w"> </span><span class="s2">"</span><span class="nv">$USER</span><span class="s2">"</span><span class="w">  </span><span class="c1"># 串口与相机权限,注销后重新登录生效</span>
-</span></code></pre></div>
-<p>验证方法同上，应输出 <code>taccap-gripper OK; version 0.4.3</code>。</p>
-<div class="admonition warning">
-<p class="admonition-title">常见问题</p>
-<ul>
-<li><strong>必须先 <code>mamba activate taccap</code> 再安装</strong>，<code>--no-build-isolation</code> 也不要省，否则编译会报错。</li>
-<li>版本不是 0.4.3：当前环境加载了别处的 SDK。换一个干净的终端，只激活 <code>taccap</code> 再试。</li>
-</ul>
-</div>
+<h3 id="standalone">单独安装（背包版或不用数采仓库）<a class="headerlink" href="#standalone" title="锚点链接">¶</a></h3>
+<p>背包版客户，或不使用数采仓库的电脑，按<a href="../../follower/setup/#install">从夹爪 · 准备与自检 · 安装 SDK 与主机配置</a>从零安装：Miniforge → <code>v4l-utils</code> → 下载 SDK → 创建 mamba 环境 → 编译安装 → 主机配置。主夹爪与从夹爪用的是同一套步骤。</p>
 <h2 id="self-check">硬件自检<a class="headerlink" href="#self-check" title="锚点链接">¶</a></h2>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"from xense.taccap import scan_grippers</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="s2">for g in scan_grippers(): print(g.side, g.role, g.firmware_sn)"</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"from xense.taccap import scan_grippers</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="s2">for g in scan_grippers(): print(g.side, g.role, g.firmware_sn)"</span>
 </span></code></pre></div>
 <p>每只夹爪一行，主夹爪为 <code>Role.Leader</code>（序列号以 <code>m</code> 结尾），从夹爪为 <code>Role.Follower</code>（以 <code>s</code> 结尾）。
 扫描会中断其他正在使用夹爪的程序，先停掉它们。从夹爪接着看 <a href="../../follower/setup/#self-check">准备与自检</a>；
 串口权限等问题见 <a href="../../pc/host-setup/">主机配置</a>。</p>
 <h2 id="cpp">集成到 C++ / ROS 2 工程<a class="headerlink" href="#cpp" title="锚点链接">¶</a></h2>
 <p>把 SDK 源码作为 CMake 子目录引入，链接 <code>taccap_core</code>：</p>
-<div class="language-cmake highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nb">set</span><span class="p">(</span><span class="s">TACCAP_BUILD_PYTHON</span><span class="w">   </span><span class="s">OFF</span><span class="w"> </span><span class="s">CACHE</span><span class="w"> </span><span class="s">BOOL</span><span class="w"> </span><span class="s2">""</span><span class="w"> </span><span class="s">FORCE</span><span class="p">)</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nb">set</span><span class="p">(</span><span class="s">TACCAP_BUILD_EXAMPLES</span><span class="w"> </span><span class="s">OFF</span><span class="w"> </span><span class="s">CACHE</span><span class="w"> </span><span class="s">BOOL</span><span class="w"> </span><span class="s2">""</span><span class="w"> </span><span class="s">FORCE</span><span class="p">)</span>
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="nb">add_subdirectory</span><span class="p">(</span><span class="s">path/to/TacCap-Gripper</span><span class="w"> </span><span class="s">taccap-gripper-build</span><span class="p">)</span>
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="nb">target_link_libraries</span><span class="p">(</span><span class="s">my_target</span><span class="w"> </span><span class="s">PRIVATE</span><span class="w"> </span><span class="s">taccap_core</span><span class="p">)</span>
+<div class="language-cmake highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nb">set</span><span class="p">(</span><span class="s">TACCAP_BUILD_PYTHON</span><span class="w">   </span><span class="s">OFF</span><span class="w"> </span><span class="s">CACHE</span><span class="w"> </span><span class="s">BOOL</span><span class="w"> </span><span class="s2">""</span><span class="w"> </span><span class="s">FORCE</span><span class="p">)</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="nb">set</span><span class="p">(</span><span class="s">TACCAP_BUILD_EXAMPLES</span><span class="w"> </span><span class="s">OFF</span><span class="w"> </span><span class="s">CACHE</span><span class="w"> </span><span class="s">BOOL</span><span class="w"> </span><span class="s2">""</span><span class="w"> </span><span class="s">FORCE</span><span class="p">)</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="nb">add_subdirectory</span><span class="p">(</span><span class="s">path/to/TacCap-Gripper</span><span class="w"> </span><span class="s">taccap-gripper-build</span><span class="p">)</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="nb">target_link_libraries</span><span class="p">(</span><span class="s">my_target</span><span class="w"> </span><span class="s">PRIVATE</span><span class="w"> </span><span class="s">taccap_core</span><span class="p">)</span>
 </span></code></pre></div>
 <p>编译使用上面单独安装时创建的 <code>taccap</code> 环境，其中已含全部编译依赖。C++ 接口与 Python 同名，位于 <code>xense::taccap</code> 命名空间。</p>
 

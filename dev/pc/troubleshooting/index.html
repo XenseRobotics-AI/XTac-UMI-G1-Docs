@@ -2229,7 +2229,7 @@
 
 
 <h1 id="故障排查">故障排查<a class="headerlink" href="#故障排查" title="锚点链接">¶</a></h1>
-<p>多数问题由串口权限不足或 ModemManager 抢占串口引起，请先查阅「串口权限与设备发现」。排查前请先按<a href="../quickstart/#self-check">一页速通 · 自检</a>完成自检。</p>
+<p>多数连接问题由 <code>brltty</code> 未卸载、串口权限不足或 ModemManager 抢占串口引起，请先确认已完成<a href="../host-setup/#first-use">主机配置 · 首次使用必做</a>。排查前请先按<a href="../quickstart/#self-check">一页速通 · 自检</a>完成自检。</p>
 <h2 id="logs">反馈问题请附上完整日志<a class="headerlink" href="#logs" title="锚点链接">¶</a></h2>
 <p>完整日志位于 <code>~/xenselogs/session_&lt;时间戳&gt;.log</code>，每次运行生成一份。反馈时请附上整个文件。</p>
 <ul>
@@ -2327,7 +2327,7 @@
 <li>ModemManager 在热插拔时会用 AT 指令探测 CH343 串口数秒，<code>brltty</code> 也会占用串口。使用容器时，相关规则需安装在宿主机上。</li>
 <li>夹爪串口被其他程序独占，如上一次的采集、标定或示例脚本未退出。</li>
 </ul>
-<p><strong>解决</strong>：先关闭占用串口的程序。对于 ModemManager，临时方案是插好夹爪后等待约 3 秒；永久方案是添加忽略 <code>1a86</code> 设备的 udev 规则（Docker 路径的 <code>install_customer.sh</code> 已安装该规则）。规则与验证方法见<a href="../host-setup/#32">关闭 ModemManager 抢占</a>，安装后重新插拔夹爪。</p>
+<p><strong>解决</strong>：先关闭占用串口的程序。<code>brltty</code> 用 <code>sudo apt purge -y brltty</code> <a href="../host-setup/#brltty">卸载</a>。对于 ModemManager，临时方案是插好夹爪后等待约 3 秒；永久方案是添加忽略 <code>1a86</code> 设备的 udev 规则（Docker 路径的 <code>install_customer.sh</code> 已安装该规则）。规则与验证方法见<a href="../host-setup/#32">关闭 ModemManager 抢占</a>，安装后重新插拔夹爪。</p>
 </details>
 <details class="failure">
 <summary>修复权限后 <code>firmware_sn</code> 仍为空 / <code>role=Unknown</code></summary>
@@ -2442,7 +2442,7 @@
 <details class="failure">
 <summary>XTac-UMI XR 始终无法连接（未连接或连接失败）</summary>
 <p><strong>原因</strong>：通常是有线网络未正确连接，或电脑 WiFi 未关闭。</p>
-<p><strong>解决</strong>：有线连接时勾选「USB网络」；WiFi 连接时在「PC IP」填写主机 IP，再点「连接」。仍无法连接时按<a href="../../common/pico4/#pico-network">网络连接</a>重连，界面说明见<a href="../../common/pico4/#pico-toolkit-ui">打开 App 后的界面</a>。</p>
+<p><strong>解决</strong>：有线连接时连接方式选「USB网络」；WiFi 连接时选「WiFi网络」并在「PC IP」填写主机 IP，再点「连接」。仍无法连接时按<a href="../../common/pico4/#pico-network">网络连接</a>重连，界面说明见<a href="../../common/pico4/#pico-toolkit-ui">打开 App 后的界面</a>。</p>
 </details>
 <details class="failure">
 <summary>头显显示「连接成功」，PC 端却收不到任何位姿</summary>

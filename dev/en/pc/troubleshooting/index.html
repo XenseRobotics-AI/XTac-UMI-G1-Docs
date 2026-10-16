@@ -2229,7 +2229,7 @@
 
 
 <h1 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="锚点链接">¶</a></h1>
-<p>Most problems are caused by insufficient serial permissions or ModemManager claiming the serial port, so check "Serial permissions and device discovery" first. Before troubleshooting, run the <a href="../quickstart/#self-check">Quickstart · Self-check</a>.</p>
+<p>Most connection problems come from <code>brltty</code> still being installed, missing serial permissions or ModemManager claiming the serial port, so first confirm <a href="../host-setup/#first-use">Host setup · Required on first use</a> is done. Before troubleshooting, run the <a href="../quickstart/#self-check">Quickstart · Self-check</a>.</p>
 <h2 id="logs">Attach the full log when reporting a problem<a class="headerlink" href="#logs" title="锚点链接">¶</a></h2>
 <p>The full log is at <code>~/xenselogs/session_&lt;timestamp&gt;.log</code>; each run creates one file. Attach the entire file when reporting a problem.</p>
 <ul>
@@ -2327,7 +2327,7 @@
 <li>On every hot-plug, ModemManager probes the CH343 serial port with AT commands for several seconds; <code>brltty</code> also claims the port. For containers, the rule must be installed on the host.</li>
 <li>Another program holds the gripper's serial port exclusively, e.g. a previous recording, calibration or example script that has not exited.</li>
 </ul>
-<p><strong>Fix:</strong> close the program holding the port first. For ModemManager, the temporary workaround is to wait about 3s after plugging in; the permanent fix is a udev rule that ignores <code>1a86</code> devices (<code>install_customer.sh</code> on the Docker path already installs it). The rule and its verification are in <a href="../host-setup/#32">Stop ModemManager grabbing the port (udev)</a>. Re-plug the gripper after installing the rule.</p>
+<p><strong>Fix:</strong> close the program holding the port first. <a href="../host-setup/#brltty">Remove</a> <code>brltty</code> with <code>sudo apt purge -y brltty</code>. For ModemManager, the temporary workaround is to wait about 3s after plugging in; the permanent fix is a udev rule that ignores <code>1a86</code> devices (<code>install_customer.sh</code> on the Docker path already installs it). The rule and its verification are in <a href="../host-setup/#32">Stop ModemManager grabbing the port (udev)</a>. Re-plug the gripper after installing the rule.</p>
 </details>
 <details class="failure">
 <summary><code>firmware_sn</code> is still empty after fixing permissions / <code>role=Unknown</code></summary>
@@ -2442,7 +2442,7 @@
 <details class="failure">
 <summary>XTac-UMI XR cannot connect (Not connected or Connection failed)</summary>
 <p><strong>Cause:</strong> usually the wired network is not connected properly, or the collection PC's Wi-Fi is still on.</p>
-<p><strong>Fix:</strong> for a wired connection, tick "USB network"; over Wi-Fi, enter the collection PC's IP in "PC IP"; then tap "Connect". If it still fails, redo the <a href="../../common/pico4/#pico-network">Network connection</a>; the screen is described in <a href="../../common/pico4/#pico-toolkit-ui">The app's screen</a>.</p>
+<p><strong>Fix:</strong> for a wired connection, choose "USB Network"; over Wi-Fi, choose "WiFi Network" and enter the collection PC's IP in "PC IP"; then tap "Connect". If it still fails, redo the <a href="../../common/pico4/#pico-network">Network connection</a>; the screen is described in <a href="../../common/pico4/#pico-toolkit-ui">The app's screen</a>.</p>
 </details>
 <details class="failure">
 <summary>The headset shows \"Connected\" but the collection PC receives no pose</summary>
