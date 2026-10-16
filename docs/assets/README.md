@@ -9,7 +9,7 @@
 
 | 子目录 | 用途 | 对应页面 |
 |---|---|---|
-| `brand/` | 站点 logo(`logo.svg` 深色版、`logo-light.svg` 白色版给黑色页眉)、favicon | 主题 |
+| `brand/` | 首页字标 `logo-black.png`(浅色主题)/ `logo-white.png`(深色主题),源自 Pictures/LOGO-PNG 的 XenseLogo-black / -white;页脚 `logo-footer.png`;`logo.svg` / `logo-light.svg` 备用 | 主题 |
 | `product/` | 产品渲染图、背包接口与标签照片、接线图 | 首页、product/ |
 | `backpack/` | XTac-UMI Collector 控制台截图(2026-10-07 起按 0.4.3 重截,仍是旧图的见下方[待重截](#placeholder);文件名沿用 Taccap-User-Doc;首页与 product/ 的控制台展示图也从这里取) | 首页、product/、backpack/ |
 | `pico4/` | Pico4 Ultra 企业版系统与 APP 截图 | common/pico4 |
