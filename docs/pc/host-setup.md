@@ -15,7 +15,7 @@
 
     ```bash
     sudo apt purge -y brltty                     # 1. 卸载 brltty
-    sudo usermod -aG dialout "$USER"             # 2. 加入 dialout 组
+    sudo usermod -aG dialout,video "$USER"       # 2. 加入 dialout / video 组
     sudo tee /etc/udev/rules.d/99-taccap-ignore-modemmanager.rules >/dev/null <<'EOF'
     # XTac-UMI G1 MCUs are CH343 USB-serial (1a86:55d2) — keep ModemManager off them
     ACTION=="add|change", SUBSYSTEMS=="usb", ATTRS{idVendor}=="1a86", ENV{ID_MM_DEVICE_IGNORE}="1"

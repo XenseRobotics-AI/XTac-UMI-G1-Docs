@@ -1,40 +1,109 @@
 # Setup and self-check
 
-Complete these four steps in order before putting the follower gripper to work. Hardware mounting and wiring are in [Gripper connection and serial numbers → Follower gripper mounting and connection](../common/gripper.md#follower-install);
+Complete these four steps in order before putting the follower gripper to work. Step 1 installs the SDK from scratch and applies to both the Backpack Kit and the Developer Kit. Hardware mounting and wiring are in [Gripper connection and serial numbers → Follower gripper mounting and connection](../common/gripper.md#follower-install);
 the follower gripper needs **both USB Type-C and 24V connected**.
 
-## 1. Install the SDK {#install}
+## 1. Install the SDK and set up the host {#install}
 
-Once the collection environment is installed ([Installation](../pc/install.md)), SDK 0.4.3 is already included; there is nothing extra to install. The example scripts are in the data-collection repository under
-`third_party/taccap-gripper/python/examples/`.
+Whether you have the Backpack Kit or the Developer Kit, any computer that runs the SDK to control a gripper needs the setup below (once per computer).
+It requires Ubuntu 22.04 or 24.04 (x86_64). Copy and run the steps in order.
 
-!!! danger "Before first use, complete three host settings or the gripper will not connect"
-    Remove `brltty`, add the current user to the `dialout` group and install the udev rule that keeps ModemManager off, then log out and back in and re-plug the gripper:
+!!! tip "Computers that already have the Developer Kit collection environment"
+    The collection environment already includes SDK 0.4.3 (`third_party/taccap-gripper` in the data-collection repository). Skip steps 1–5,
+    go to that directory inside the collection environment and start from [step 6](#host).
 
-    ```bash
-    sudo apt purge -y brltty                     # 1. remove brltty
-    sudo usermod -aG dialout "$USER"             # 2. join the dialout group
-    sudo tee /etc/udev/rules.d/99-taccap-ignore-modemmanager.rules >/dev/null <<'EOF'
-    # XTac-UMI G1 MCUs are CH343 USB-serial (1a86:55d2) — keep ModemManager off them
-    ACTION=="add|change", SUBSYSTEMS=="usb", ATTRS{idVendor}=="1a86", ENV{ID_MM_DEVICE_IGNORE}="1"
-    EOF
-    sudo udevadm control --reload-rules && sudo udevadm trigger   # 3. keep ModemManager off
-    ```
+### Step 1: install Miniforge (mamba) {#miniforge}
 
-    The reasons and how to verify each are in [Host setup · Required on first use](../pc/host-setup.md#first-use).
-
-Verify (from the data-collection repository root, inside the collection environment):
+Check whether it is already installed:
 
 ```bash
-cd third_party/taccap-gripper
+mamba --version
+```
+
+If it prints a version, skip this step. Otherwise:
+
+```bash
+curl -L -O "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh"
+bash Miniforge3-$(uname)-$(uname -m).sh
+```
+
+Press Enter through the prompts, type `yes` at the license and again when asked to initialize the shell. Then **close the terminal and open a new one**; `mamba --version` should print a version.
+
+### Step 2: install system packages {#apt}
+
+```bash
+sudo apt update
+sudo apt install -y git curl v4l-utils
+```
+
+`v4l-utils` provides `v4l2-ctl`, used to inspect the wrist camera.
+
+### Step 3: download the SDK {#clone}
+
+```bash
+cd ~
+git clone --branch v0.4.3 https://github.com/XenseRobotics-AI/TacCap-Gripper.git
+cd TacCap-Gripper
+```
+
+The example scripts live in this directory; **do not delete it** after installing.
+
+### Step 4: create the mamba environment {#env}
+
+```bash
+mamba env create -f environment.yml
+mamba activate taccap
+```
+
+This creates an environment named `taccap` with the compiler, CMake, OpenCV and Python 3.12; it takes a few minutes.
+From then on, **run `mamba activate taccap` first in every new terminal**; it is active when the prompt starts with `(taccap)`.
+
+### Step 5: build and install the SDK {#build}
+
+From the `TacCap-Gripper` directory, inside the `taccap` environment:
+
+```bash
+uv pip install -e . --no-build-isolation
+```
+
+This takes a few minutes. Verify:
+
+```bash
 python -c "import xense.taccap as t; print(t.hello())"
 ```
 
-It should print `taccap-gripper OK; version 0.4.3`. A different version means the SDK submodule was not updated or not rebuilt; see
-[Follower gripper troubleshooting](troubleshooting.md#connect).
+It should print `taccap-gripper OK; version 0.4.3`.
 
-All subsequent commands are run from the `third_party/taccap-gripper` directory, inside the collection environment. To install the SDK on its own without the data-collection repository, see
-[SDK appendix → Install and build](../sdk/install.md).
+!!! warning "Build errors or the wrong version"
+    - Run `mamba activate taccap` before installing, and keep `--no-build-isolation`.
+    - Version is not 0.4.3: this terminal is loading an SDK from somewhere else. Close it, open a new one, run only `mamba activate taccap` and try again.
+
+### Step 6: host setup (miss one and the gripper will not connect) {#host}
+
+!!! danger "This is the step most often missed, and without it the gripper will not connect"
+    In order: remove `brltty` (the braille driver shipped with Ubuntu, which grabs the gripper's serial port) → add the current user to the `dialout` (serial) and `video` (camera) groups → install a udev rule that stops ModemManager (the modem service) from holding the gripper's serial port on plug-in.
+
+```bash
+sudo apt purge -y brltty
+sudo usermod -aG dialout,video "$USER"
+sudo tee /etc/udev/rules.d/99-taccap-ignore-modemmanager.rules >/dev/null <<'EOF'
+# XTac-UMI G1 MCUs are CH343 USB-serial (1a86:55d2) — keep ModemManager off them
+ACTION=="add|change", SUBSYSTEMS=="usb", ATTRS{idVendor}=="1a86", ENV{ID_MM_DEVICE_IGNORE}="1"
+EOF
+sudo udevadm control --reload-rules && sudo udevadm trigger
+```
+
+Then **log out and back in** (or reboot) so the group membership applies. After logging back in, connect the gripper and check each item:
+
+```bash
+dpkg -l brltty | grep ^ii                    # no output = brltty removed
+groups | grep -o -E "dialout|video"          # should print both dialout and video
+udevadm info -q property -n /dev/ttyACM0 | grep ID_MM_DEVICE_IGNORE   # should be ID_MM_DEVICE_IGNORE=1
+```
+
+Why each one matters is in [Host setup · Required on first use](../pc/host-setup.md#first-use).
+
+All later commands run from the `TacCap-Gripper` directory (`third_party/taccap-gripper` in the Developer Kit collection environment), inside the activated environment.
 
 ## 2. Find the device {#discover}
 

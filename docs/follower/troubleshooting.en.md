@@ -29,9 +29,12 @@ On this page, **power-cycle** means unplugging the 24V power cable, waiting abou
     **Fix**: upgrade to the version bundled with the SDK as described in [Upgrade the gripper firmware](firmware.md#mcu-ota), then power-cycle.
 
 ??? failure "`hello()` shows a version other than 0.4.3, or `import` fails"
-    **Cause**: the SDK submodule was not updated, or was not rebuilt after updating.
+    **Cause**: the wrong environment is active, the SDK was not rebuilt, or (Developer Kit collection environment) the submodule was not updated.
 
-    **Fix**: from the data-collection repository root, update the submodules and rerun the install script:
+    **Fix**:
+
+    - Standalone SDK: open a new terminal, run `mamba activate taccap` and rerun `uv pip install -e . --no-build-isolation` in the `TacCap-Gripper` directory; see [Install the SDK and set up the host](setup.md#build).
+    - Developer Kit collection environment: from the data-collection repository root, update the submodules and rerun the install script:
 
     ```bash
     git submodule update --init --recursive

@@ -5,9 +5,9 @@
 
 ![XTac-UMI G1 从夹爪](../assets/product/follower-scene-front.webp){ width="720" }
 
-!!! note "本章使用数采环境自带的 SDK 0.4.3"
-    本章按 [TacCap-Gripper](https://github.com/XenseRobotics-AI/TacCap-Gripper) **v0.4.3** 编写，
-    数采环境里自带的就是这一版，见 [准备与自检](setup.md#install)。
+!!! note "本章按 SDK 0.4.3 编写，背包版与 PC 版都适用"
+    本章按 [TacCap-Gripper](https://github.com/XenseRobotics-AI/TacCap-Gripper) **v0.4.3** 编写。
+    无论用哪种形态，运行 SDK 的电脑都要先按[准备与自检 · 安装 SDK 与主机配置](setup.md#install)装好 SDK 并完成主机配置。
 
 ## 和主夹爪的区别 {#vs-leader}
 

@@ -29,9 +29,12 @@
     **解决**：按[升级夹爪固件](firmware.md#mcu-ota)升级到 SDK 附带的版本，然后断电重启。
 
 ??? failure "`hello()` 显示的版本不是 0.4.3，或 `import` 报错"
-    **原因**：SDK 子模块未更新，或更新后未重新编译。
+    **原因**：没有激活正确的环境、SDK 未重新编译，或（PC 版数采环境）子模块未更新。
 
-    **解决**：在数采仓库根目录更新子模块，并重新运行安装脚本：
+    **解决**：
+
+    - 单独安装的 SDK：开一个新终端，执行 `mamba activate taccap`，在 `TacCap-Gripper` 目录重新运行 `uv pip install -e . --no-build-isolation`，见[安装 SDK 与主机配置](setup.md#build)。
+    - PC 版数采环境：在数采仓库根目录更新子模块，并重新运行安装脚本：
 
     ```bash
     git submodule update --init --recursive
