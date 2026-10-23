@@ -2527,7 +2527,7 @@
 </span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="nb">cd</span><span class="w"> </span>xense-taccap-lerobot
 </span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>./docker/install_customer.sh
 </span></code></pre></div>
-<p>脚本依次：检查系统与显卡驱动 → 按需装 Docker 与 NVIDIA Container Toolkit（并注册 NVIDIA runtime）→ 装<a href="../host-setup/#32">关闭 ModemManager 抢占（udev）</a>中的屏蔽规则 → 拉取镜像 → CUDA 与图形冒烟测试。克隆仓库只为拿 <code>compose.yaml</code> 和脚本。</p>
+<p>脚本依次：检查系统与显卡驱动 → 按需装 Docker 与 NVIDIA Container Toolkit（并注册 NVIDIA runtime）→ 装<a href="../host-setup/#32">关闭 ModemManager 抢占（udev）</a>中的屏蔽规则 → 拉取镜像 → CUDA 与图形冒烟测试。克隆仓库只为拿 <code>compose.yaml</code> 和脚本。脚本<strong>不会卸载 <code>brltty</code></strong>，仍须手动执行 <code>sudo apt purge -y brltty</code>，见<a href="../host-setup/#brltty">卸载 brltty</a>。</p>
 <p>走代理：</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="nv">XENSE_PROXY_URL</span><span class="o">=</span>http://127.0.0.1:7897<span class="w"> </span>./docker/install_customer.sh
 </span></code></pre></div>

@@ -1759,10 +1759,82 @@
   <a href="#install" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1. 安装 SDK
+        1. 安装 SDK 与主机配置
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="1. 安装 SDK 与主机配置">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#miniforge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第 1 步：安装 Miniforge（mamba）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#apt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第 2 步：安装系统软件包
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#clone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第 3 步：下载 SDK
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#env" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第 4 步：创建 mamba 环境
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#build" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第 5 步：编译安装 SDK
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#host" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第 6 步：主机配置（缺一项就连不上）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -2158,26 +2230,80 @@
 
 
 <h1 id="准备与自检">准备与自检<a class="headerlink" href="#准备与自检" title="锚点链接">¶</a></h1>
-<p>依次完成四步再投入使用。安装接线见 <a href="../../common/gripper/#follower-install">夹爪连接与序列号 → 从夹爪安装与连接</a>，
-从夹爪要 <strong>USB Type-C 和 24V 两路都接上</strong>。</p>
-<h2 id="install">1. 安装 SDK<a class="headerlink" href="#install" title="锚点链接">¶</a></h2>
-<p>装好数采环境（<a href="../../pc/install/">安装</a>）就已经带有 SDK 0.4.3，不需要另外安装。示例脚本在数采仓库的
-<code>third_party/taccap-gripper/python/examples/</code> 下。串口权限见 <a href="../../pc/host-setup/#31">串口权限</a>。</p>
-<p>验证（在数采仓库根目录、数采环境里）：</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nb">cd</span><span class="w"> </span>third_party/taccap-gripper
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"import xense.taccap as t; print(t.hello())"</span>
+<p>依次完成四步再投入使用。第 1 步从零装好 SDK，背包版与 PC 版都适用。安装接线见 <a href="../../common/gripper/#follower-install">夹爪连接与序列号 → 从夹爪安装与连接</a>，从夹爪要 <strong>USB Type-C 和 24V 两路都接上</strong>。</p>
+<h2 id="install">1. 安装 SDK 与主机配置<a class="headerlink" href="#install" title="锚点链接">¶</a></h2>
+<p>无论用背包版还是 PC 版，只要用 SDK 控制夹爪，都要在运行 SDK 的电脑上做完下面的配置（每台电脑做一次）。系统要求 Ubuntu 22.04 或 24.04（x86_64）。按顺序复制执行即可。</p>
+<div class="admonition tip">
+<p class="admonition-title">已装好 PC 版数采环境的电脑</p>
+<p>数采环境里已经带有 SDK 0.4.3（数采仓库的 <code>third_party/taccap-gripper</code>），跳过第 1–5 步，在数采环境里进入该目录，从<a href="#host">第 6 步</a>做起。</p>
+</div>
+<h3 id="miniforge">第 1 步：安装 Miniforge（mamba）<a class="headerlink" href="#miniforge" title="锚点链接">¶</a></h3>
+<p>先检查是否已经装过：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>mamba<span class="w"> </span>--version
 </span></code></pre></div>
-<p>应输出 <code>taccap-gripper OK; version 0.4.3</code>。版本不对说明 SDK 子模块没更新或没重新编译，见
-<a href="../troubleshooting/#connect">从夹爪故障排查</a>。</p>
-<p>后续命令均在 <code>third_party/taccap-gripper</code> 目录、数采环境中运行。不用数采仓库、单独安装 SDK 见
-<a href="../../sdk/install/">SDK 附录 → 安装与构建</a>。</p>
+<p>能打印版本号就跳过这一步。否则：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>curl<span class="w"> </span>-L<span class="w"> </span>-O<span class="w"> </span><span class="s2">"https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-</span><span class="k">$(</span>uname<span class="k">)</span><span class="s2">-</span><span class="k">$(</span>uname<span class="w"> </span>-m<span class="k">)</span><span class="s2">.sh"</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>bash<span class="w"> </span>Miniforge3-<span class="k">$(</span>uname<span class="k">)</span>-<span class="k">$(</span>uname<span class="w"> </span>-m<span class="k">)</span>.sh
+</span></code></pre></div>
+<p>一路回车，看到许可协议输入 <code>yes</code>，问是否初始化 shell 时也输入 <code>yes</code>。装完<strong>关掉终端再开一个新的</strong>，<code>mamba --version</code> 能打印版本号即可。</p>
+<h3 id="apt">第 2 步：安装系统软件包<a class="headerlink" href="#apt" title="锚点链接">¶</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>update
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>git<span class="w"> </span>curl<span class="w"> </span>v4l-utils
+</span></code></pre></div>
+<p><code>v4l-utils</code> 提供 <code>v4l2-ctl</code>，用来查看腕部相机。</p>
+<h3 id="clone">第 3 步：下载 SDK<a class="headerlink" href="#clone" title="锚点链接">¶</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nb">cd</span><span class="w"> </span>~
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>git<span class="w"> </span>clone<span class="w"> </span>--branch<span class="w"> </span>v0.4.3<span class="w"> </span>https://github.com/XenseRobotics-AI/TacCap-Gripper.git
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="nb">cd</span><span class="w"> </span>TacCap-Gripper
+</span></code></pre></div>
+<p>示例脚本就在这个目录里，装完<strong>不要删除</strong>。</p>
+<h3 id="env">第 4 步：创建 mamba 环境<a class="headerlink" href="#env" title="锚点链接">¶</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>mamba<span class="w"> </span>env<span class="w"> </span>create<span class="w"> </span>-f<span class="w"> </span>environment.yml
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>mamba<span class="w"> </span>activate<span class="w"> </span>taccap
+</span></code></pre></div>
+<p>会新建名为 <code>taccap</code> 的环境，自动装好编译器、CMake、OpenCV 与 Python 3.12，需要几分钟。之后<strong>每次打开新终端都要先执行 <code>mamba activate taccap</code></strong>，命令行开头出现 <code>(taccap)</code> 才算激活。</p>
+<h3 id="build">第 5 步：编译安装 SDK<a class="headerlink" href="#build" title="锚点链接">¶</a></h3>
+<p>在 <code>TacCap-Gripper</code> 目录、<code>taccap</code> 环境里执行：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.<span class="w"> </span>--no-build-isolation
+</span></code></pre></div>
+<p>需要几分钟。验证：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"import xense.taccap as t; print(t.hello())"</span>
+</span></code></pre></div>
+<p>应输出 <code>taccap-gripper OK; version 0.4.3</code>。</p>
+<div class="admonition warning">
+<p class="admonition-title">编译报错或版本不对</p>
+<ul>
+<li>必须先 <code>mamba activate taccap</code> 再安装，<code>--no-build-isolation</code> 不能省。</li>
+<li>版本不是 0.4.3：当前终端加载了别处的 SDK。关掉终端，开一个新的，只执行 <code>mamba activate taccap</code> 再试。</li>
+</ul>
+</div>
+<h3 id="host">第 6 步：主机配置（缺一项就连不上）<a class="headerlink" href="#host" title="锚点链接">¶</a></h3>
+<div class="admonition danger">
+<p class="admonition-title">这一步最容易漏，漏了夹爪会连不上</p>
+<p>依次：卸载 <code>brltty</code>（Ubuntu 自带的盲文驱动，会抢占夹爪串口）→ 把当前用户加入 <code>dialout</code>（串口）与 <code>video</code>（相机）组 → 安装 udev 规则，阻止 ModemManager（调制解调器服务）在插拔时占用夹爪串口。</p>
+</div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>purge<span class="w"> </span>-y<span class="w"> </span>brltty
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>sudo<span class="w"> </span>usermod<span class="w"> </span>-aG<span class="w"> </span>dialout,video<span class="w"> </span><span class="s2">"</span><span class="nv">$USER</span><span class="s2">"</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/udev/rules.d/99-taccap-ignore-modemmanager.rules<span class="w"> </span>&gt;/dev/null<span class="w"> </span><span class="s">&lt;&lt;'EOF'</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="s"># XTac-UMI G1 MCUs are CH343 USB-serial (1a86:55d2) — keep ModemManager off them</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="s">ACTION=="add|change", SUBSYSTEMS=="usb", ATTRS{idVendor}=="1a86", ENV{ID_MM_DEVICE_IGNORE}="1"</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="s">EOF</span>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>sudo<span class="w"> </span>udevadm<span class="w"> </span>control<span class="w"> </span>--reload-rules<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>udevadm<span class="w"> </span>trigger
+</span></code></pre></div>
+<p>然后<strong>注销并重新登录</strong>（或重启电脑），用户组才会生效。重新登录后接好夹爪，逐项确认：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>dpkg<span class="w"> </span>-l<span class="w"> </span>brltty<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>^ii<span class="w">                    </span><span class="c1"># 没有输出 = brltty 已卸载</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>groups<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-o<span class="w"> </span>-E<span class="w"> </span><span class="s2">"dialout|video"</span><span class="w">          </span><span class="c1"># 应同时打印 dialout 和 video</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>udevadm<span class="w"> </span>info<span class="w"> </span>-q<span class="w"> </span>property<span class="w"> </span>-n<span class="w"> </span>/dev/ttyACM0<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>ID_MM_DEVICE_IGNORE<span class="w">   </span><span class="c1"># 应为 ID_MM_DEVICE_IGNORE=1</span>
+</span></code></pre></div>
+<p>三项的原理见<a href="../../pc/host-setup/#first-use">主机配置 · 首次使用必做</a>。</p>
+<p>后续命令都在 <code>TacCap-Gripper</code> 目录（PC 版数采环境为 <code>third_party/taccap-gripper</code>）、已激活的环境里运行。</p>
 <h2 id="discover">2. 找到设备<a class="headerlink" href="#discover" title="锚点链接">¶</a></h2>
 <p>上电后等夹爪自己开合一次、停下来（约 10 秒），再运行：</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"from xense.taccap import scan_grippers</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="s2">for g in scan_grippers(): print(g.side, g.role, g.firmware_sn)"</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"from xense.taccap import scan_grippers</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="s2">for g in scan_grippers(): print(g.side, g.role, g.firmware_sn)"</span>
 </span></code></pre></div>
 <p>每只夹爪一行，从夹爪应显示 <code>Role.Follower</code>，序列号以 <code>s</code> 结尾，例如：</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Side.Left Role.Follower TCGU01A24A0001s
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>Side.Left Role.Follower TCGU01A24A0001s
 </span></code></pre></div>
 <p>示例脚本都用 <code>left</code>、<code>right</code> 或完整序列号指定夹爪，只接一只时可以省略。</p>
 <div class="admonition warning">
@@ -2190,17 +2316,17 @@
 <p>扫描设备（包括每个示例脚本启动时）会中断正在运行的其他程序，正在夹持的从夹爪会卸力。先停掉其他程序。</p>
 </div>
 <h2 id="self-check">3. 自检<a class="headerlink" href="#self-check" title="锚点链接">¶</a></h2>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>python<span class="w"> </span>python/examples/follower_status.py<span class="w"> </span>left
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>python<span class="w"> </span>python/examples/follower_status.py<span class="w"> </span>left
 </span></code></pre></div>
 <p>这个脚本只读，不会让电机动。正常输出中要看的几行（中间省略）：</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>[fw] FirmwareVersion(1.2.16.0)
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>...
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>[归一化] g.position() = 0.9183
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>...
-</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>[故障] 电机 0x00000000  锁存 0x00000000  固件 0x00000000
-</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>...
-</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>  299 帧 / 3.01 s = 99.5 Hz
-</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>  固件状态时间戳推进 3005 ms,墙钟 3006 ms  OK
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>[fw] FirmwareVersion(1.2.16.0)
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>...
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>[归一化] g.position() = 0.9183
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>...
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>[故障] 电机 0x00000000  锁存 0x00000000  固件 0x00000000
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>...
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>  299 帧 / 3.01 s = 99.5 Hz
+</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>  固件状态时间戳推进 3005 ms,墙钟 3006 ms  OK
 </span></code></pre></div>
 <table>
 <thead>
@@ -2235,7 +2361,7 @@
 </table>
 <h2 id="motion-check">4. 运动自检<a class="headerlink" href="#motion-check" title="锚点链接">¶</a></h2>
 <p>用键盘控制台让从夹爪实际动一次，确认安全保护已生效，开合、力矩和温度都正常：</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>python<span class="w"> </span>python/examples/gripper_console.py<span class="w"> </span>left
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>python<span class="w"> </span>python/examples/gripper_console.py<span class="w"> </span>left
 </span></code></pre></div>
 <div class="admonition danger">
 <p class="admonition-title">会驱动真实电机</p>

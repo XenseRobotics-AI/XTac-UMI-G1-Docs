@@ -1307,6 +1307,28 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
       
         <li class="md-nav__item">
+  <a href="#first-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Required on first use
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#brltty" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Remove brltty
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#31" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2222,44 +2244,69 @@
 
 
 <h1 id="host-setup">Host setup<a class="headerlink" href="#host-setup" title="锚点链接">¶</a></h1>
-<p>A gripper that shows up in the device list cannot necessarily be opened. This page covers two one-off settings (serial permissions and ModemManager), how devices are assigned to left and right by serial number, and starting the XenseVR PC Service. Headset and tracker setup is in <a href="../../common/pico4/">Pico4 headset and tracker setup</a>.</p>
+<p>A gripper that shows up in the device list cannot necessarily be opened. This page first covers three one-off settings (removing brltty, serial permissions, keeping ModemManager off the port), then how devices are assigned to left and right by serial number, and finally starting the XenseVR PC Service. Headset and tracker setup is in <a href="../../common/pico4/">Pico4 headset and tracker setup</a>.</p>
+<h2 id="first-use">Required on first use<a class="headerlink" href="#first-use" title="锚点链接">¶</a></h2>
+<div class="admonition danger">
+<p class="admonition-title">Skip any of these three host settings and the gripper may fail to connect</p>
+<p>Before a new collection PC talks to a gripper for the first time (leader, follower or SDK-only use alike), complete all three:</p>
+<ol>
+<li><strong><a href="#brltty">Remove brltty</a></strong>: the braille driver shipped with Ubuntu grabs the gripper's serial port.</li>
+<li><strong><a href="#31">Join the dialout group</a></strong>: without serial permissions the SDK can list the gripper but cannot open it.</li>
+<li><strong><a href="#32">Install the udev rule that keeps ModemManager off</a></strong>: the modem service holds the serial port for a few seconds on every plug-in.</li>
+</ol>
+<p>All three are one-off. Run them in one go:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>purge<span class="w"> </span>-y<span class="w"> </span>brltty<span class="w">                     </span><span class="c1"># 1. remove brltty</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>sudo<span class="w"> </span>usermod<span class="w"> </span>-aG<span class="w"> </span>dialout,video<span class="w"> </span><span class="s2">"</span><span class="nv">$USER</span><span class="s2">"</span><span class="w">       </span><span class="c1"># 2. join the dialout / video groups</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/udev/rules.d/99-taccap-ignore-modemmanager.rules<span class="w"> </span>&gt;/dev/null<span class="w"> </span><span class="s">&lt;&lt;'EOF'</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="s"># XTac-UMI G1 MCUs are CH343 USB-serial (1a86:55d2) — keep ModemManager off them</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="s">ACTION=="add|change", SUBSYSTEMS=="usb", ATTRS{idVendor}=="1a86", ENV{ID_MM_DEVICE_IGNORE}="1"</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="s">EOF</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>sudo<span class="w"> </span>udevadm<span class="w"> </span>control<span class="w"> </span>--reload-rules<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>udevadm<span class="w"> </span>trigger<span class="w">   </span><span class="c1"># 3. keep ModemManager off</span>
+</span></code></pre></div>
+<p>Then <strong>log out and back in</strong> (dialout membership only applies to a new session), re-plug the gripper and verify each item as described in its section.</p>
+</div>
+<h2 id="brltty">Remove brltty<a class="headerlink" href="#brltty" title="锚点链接">¶</a></h2>
+<p><code>brltty</code> is the braille display driver installed by default on Ubuntu. It claims <code>1a86</code> USB serial devices as braille displays, so the gripper's serial port is taken and cannot be opened. A collection PC has no braille display; remove it:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>purge<span class="w"> </span>-y<span class="w"> </span>brltty
+</span></code></pre></div>
+<p>Verify: <code>dpkg -l brltty | grep ^ii</code> prints nothing. Re-plug the gripper afterwards.</p>
 <h2 id="31">Serial permissions (dialout)<a class="headerlink" href="#31" title="锚点链接">¶</a></h2>
 <p>The gripper MCU enumerates as <code>/dev/ttyACM*</code>, owned by group <code>dialout</code>. Outside that group the SDK cannot open the port, so <code>scan_grippers()</code> reports <code>role=Unknown</code> with an empty <code>firmware_sn</code>:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>RuntimeError: No leader gripper discovered for the left side.
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a># underneath: IoError: SerialBus: open(/dev/serial/by-id/...): Permission denied
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>RuntimeError: No leader gripper discovered for the left side.
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a># underneath: IoError: SerialBus: open(/dev/serial/by-id/...): Permission denied
 </span></code></pre></div>
 <p>Join the group once:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sudo<span class="w"> </span>usermod<span class="w"> </span>-aG<span class="w"> </span>dialout<span class="w"> </span><span class="s2">"</span><span class="nv">$USER</span><span class="s2">"</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>sudo<span class="w"> </span>usermod<span class="w"> </span>-aG<span class="w"> </span>dialout<span class="w"> </span><span class="s2">"</span><span class="nv">$USER</span><span class="s2">"</span>
 </span></code></pre></div>
 <div class="admonition warning">
 <p class="admonition-title">Log out and back in after changing groups, or the change has no effect</p>
 <p>The current terminal keeps the old permissions. Log out and back in (or run <code>newgrp dialout</code>), re-plug the gripper, then verify.</p>
 </div>
 <p>Verify: <code>role</code> is <code>Leader</code>/<code>Follower</code> and <code>firmware_sn</code> is non-empty:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"from xense.taccap import scan_grippers</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="s2">for g in scan_grippers(): print(g.side.name, g.role.name, repr(g.firmware_sn))"</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"from xense.taccap import scan_grippers</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="s2">for g in scan_grippers(): print(g.side.name, g.role.name, repr(g.firmware_sn))"</span>
 </span></code></pre></div>
 <p>If <code>firmware_sn</code> stays empty after fixing permissions, the SN may not be burned in, the serial read may be failing, or firmware communication may be faulty; it does not tell you the firmware version. Save the full error, retest with another cable and port, and contact the device or firmware team if it persists.</p>
 <h2 id="32">Stop ModemManager grabbing the port (udev)<a class="headerlink" href="#32" title="锚点链接">¶</a></h2>
-<p>With the <a href="../install/#docker">Docker image</a>, <code>install_customer.sh</code> has already installed this rule on the host.</p>
+<p>With the <a href="../install/#docker">Docker image</a>, <code>install_customer.sh</code> has already installed this rule on the host (it does not remove <code>brltty</code>).</p>
 <p>The gripper MCU is a CH343 USB-serial device (<code>1a86:55d2</code>, CDC-ACM). On every hot-plug, ModemManager (the default cellular-modem service on Ubuntu/GNOME) probes the fresh port with AT commands and holds it for a few seconds, so connecting fails:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>IoError: SerialBus: open(/dev/serial/by-id/usb-1a86_USB_Dual_Serial_..-if02): Device or resource busy
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>IoError: SerialBus: open(/dev/serial/by-id/usb-1a86_USB_Dual_Serial_..-if02): Device or resource busy
 </span></code></pre></div>
 <ul>
 <li><strong>Symptom</strong>: the first launch works, but relaunching right after moving to another port fails with <code>Device or resource busy</code>. It is not a tactile, camera or bandwidth problem.</li>
-<li><strong>brltty</strong>: the braille driver <code>brltty</code> grabs <code>1a86</code> too.</li>
+<li><strong>brltty</strong>: the braille driver <code>brltty</code> grabs <code>1a86</code> too; the udev rule does not stop it, so <a href="#brltty">remove it</a> separately.</li>
 <li><strong>Stopgap</strong>: wait about 3s after plugging in before launching.</li>
 </ul>
 <p>Permanent fix (real modems are unaffected):</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/udev/rules.d/99-taccap-ignore-modemmanager.rules<span class="w"> </span>&gt;/dev/null<span class="w"> </span><span class="s">&lt;&lt;'EOF'</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="s"># XTac-UMI G1 MCUs are CH343 USB-serial (1a86:55d2) — keep ModemManager off them</span>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="s">ACTION=="add|change", SUBSYSTEMS=="usb", ATTRS{idVendor}=="1a86", ENV{ID_MM_DEVICE_IGNORE}="1"</span>
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="s">EOF</span>
-</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>sudo<span class="w"> </span>udevadm<span class="w"> </span>control<span class="w"> </span>--reload-rules<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>udevadm<span class="w"> </span>trigger
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/udev/rules.d/99-taccap-ignore-modemmanager.rules<span class="w"> </span>&gt;/dev/null<span class="w"> </span><span class="s">&lt;&lt;'EOF'</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="s"># XTac-UMI G1 MCUs are CH343 USB-serial (1a86:55d2) — keep ModemManager off them</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="s">ACTION=="add|change", SUBSYSTEMS=="usb", ATTRS{idVendor}=="1a86", ENV{ID_MM_DEVICE_IGNORE}="1"</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="s">EOF</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>sudo<span class="w"> </span>udevadm<span class="w"> </span>control<span class="w"> </span>--reload-rules<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>udevadm<span class="w"> </span>trigger
 </span></code></pre></div>
 <p>Verify:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>udevadm<span class="w"> </span>info<span class="w"> </span>-q<span class="w"> </span>property<span class="w"> </span>-n<span class="w"> </span>/dev/ttyACM0<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>ID_MM_DEVICE_IGNORE<span class="w">   </span><span class="c1"># -&gt; ID_MM_DEVICE_IGNORE=1</span>
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>mmcli<span class="w"> </span>-L<span class="w">                                                               </span><span class="c1"># gripper no longer listed</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>udevadm<span class="w"> </span>info<span class="w"> </span>-q<span class="w"> </span>property<span class="w"> </span>-n<span class="w"> </span>/dev/ttyACM0<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>ID_MM_DEVICE_IGNORE<span class="w">   </span><span class="c1"># -&gt; ID_MM_DEVICE_IGNORE=1</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>mmcli<span class="w"> </span>-L<span class="w">                                                               </span><span class="c1"># gripper no longer listed</span>
 </span></code></pre></div>
 <p>Delete the rule file and reload to revert; a dedicated collection PC with no cellular module can also <code>sudo systemctl disable --now ModemManager</code>.</p>
 <h2 id="33">Device auto-discovery and the odd-left/even-right rule<a class="headerlink" href="#33" title="锚点链接">¶</a></h2>
@@ -2302,7 +2349,7 @@
 </ul>
 <h3 id="usb-budget">USB bandwidth budget<a class="headerlink" href="#usb-budget" title="锚点链接">¶</a></h3>
 <p>When a camera will not open, check bandwidth first. Every open UVC camera reserves its own share of isochronous bandwidth: a USB 2.0 bus has 480 Mbit/s, about 384 Mbit/s of it for isochronous transfers. A bimanual setup has six cameras (four tactile + two wrist cameras), plus the laptop's built-in webcam.</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>lsusb<span class="w"> </span>-t
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>lsusb<span class="w"> </span>-t
 </span></code></pre></div>
 <ul>
 <li><strong>Count cameras</strong>: each <code>480M</code> <code>root_hub</code> line is one budget. Three per bus on two buses is comfortable; six on one bus must be measured, as sensor batches request different amounts.</li>
@@ -2317,7 +2364,7 @@
 </ul>
 <h2 id="35">Start the XenseVR PC Service<a class="headerlink" href="#35" title="锚点链接">¶</a></h2>
 <p>Collection reads poses from the XenseVR PC Service (RoboticsService) daemon. The <a href="../install/#docker">Docker image</a> launches it on start; without the tracker, turn it off with <code>START_XENSEVR_SERVICE=0</code>.</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>/opt/apps/roboticsservice/runService.sh
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>/opt/apps/roboticsservice/runService.sh
 </span></code></pre></div>
 <ul>
 <li><strong>Naming</strong>: the headset app is <strong>XTac-UMI XR</strong>; the service on the collection PC is <strong>XenseVR PC Service</strong>. The package <code>XenseVR-PC-Service_&lt;version&gt;_amd64.deb</code> installs into <code>/opt/apps/roboticsservice/</code>, and the Python package is <code>xensevr_pc_service_sdk</code>.</li>

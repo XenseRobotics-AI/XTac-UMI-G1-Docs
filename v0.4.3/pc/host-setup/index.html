@@ -1307,6 +1307,28 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
       
         <li class="md-nav__item">
+  <a href="#first-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        首次使用必做
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#brltty" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        卸载 brltty
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#31" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2222,44 +2244,69 @@
 
 
 <h1 id="主机配置">主机配置<a class="headerlink" href="#主机配置" title="锚点链接">¶</a></h1>
-<p>夹爪能被列出不等于能被打开。本页做两项一次性配置（串口权限、ModemManager），说明设备如何按序列号分左右，再启动 XenseVR PC Service；头显与追踪器配置见<a href="../../common/pico4/">Pico4 头显与追踪器</a>。</p>
+<p>夹爪能被列出不等于能被打开。本页先做三项一次性配置（卸载 brltty、串口权限、屏蔽 ModemManager），再说明设备如何按序列号分左右，最后启动 XenseVR PC Service；头显与追踪器配置见<a href="../../common/pico4/">Pico4 头显与追踪器</a>。</p>
+<h2 id="first-use">首次使用必做<a class="headerlink" href="#first-use" title="锚点链接">¶</a></h2>
+<div class="admonition danger">
+<p class="admonition-title">三项主机配置缺一项，夹爪就可能连不上</p>
+<p>新主机第一次接夹爪（主夹爪、从夹爪、只用 SDK 都一样）之前，必须做完这三项：</p>
+<ol>
+<li><strong><a href="#brltty">卸载 brltty</a></strong>：Ubuntu 自带的盲文驱动，会抢占夹爪串口。</li>
+<li><strong><a href="#31">加入 dialout 组</a></strong>：没有串口权限，SDK 能列出夹爪但打不开。</li>
+<li><strong><a href="#32">安装 udev 规则屏蔽 ModemManager</a></strong>：调制解调器服务会在每次插拔时占用串口几秒。</li>
+</ol>
+<p>都是一次性设置。一次执行完：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>purge<span class="w"> </span>-y<span class="w"> </span>brltty<span class="w">                     </span><span class="c1"># 1. 卸载 brltty</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>sudo<span class="w"> </span>usermod<span class="w"> </span>-aG<span class="w"> </span>dialout,video<span class="w"> </span><span class="s2">"</span><span class="nv">$USER</span><span class="s2">"</span><span class="w">       </span><span class="c1"># 2. 加入 dialout / video 组</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/udev/rules.d/99-taccap-ignore-modemmanager.rules<span class="w"> </span>&gt;/dev/null<span class="w"> </span><span class="s">&lt;&lt;'EOF'</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="s"># XTac-UMI G1 MCUs are CH343 USB-serial (1a86:55d2) — keep ModemManager off them</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="s">ACTION=="add|change", SUBSYSTEMS=="usb", ATTRS{idVendor}=="1a86", ENV{ID_MM_DEVICE_IGNORE}="1"</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="s">EOF</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>sudo<span class="w"> </span>udevadm<span class="w"> </span>control<span class="w"> </span>--reload-rules<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>udevadm<span class="w"> </span>trigger<span class="w">   </span><span class="c1"># 3. 屏蔽 ModemManager</span>
+</span></code></pre></div>
+<p>然后<strong>注销并重新登录</strong>（dialout 组重登后才生效），重新插拔夹爪，再按各节的方法验证。</p>
+</div>
+<h2 id="brltty">卸载 brltty<a class="headerlink" href="#brltty" title="锚点链接">¶</a></h2>
+<p><code>brltty</code> 是 Ubuntu 默认安装的盲文显示器驱动，会把 <code>1a86</code> 的 USB 串口设备当成盲文显示器认领，夹爪串口因此被占用、打不开。采集主机用不到盲文显示器，直接卸载：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>purge<span class="w"> </span>-y<span class="w"> </span>brltty
+</span></code></pre></div>
+<p>验证：<code>dpkg -l brltty | grep ^ii</code> 没有输出。卸载后重新插拔夹爪。</p>
 <h2 id="31">串口权限（dialout）<a class="headerlink" href="#31" title="锚点链接">¶</a></h2>
 <p>夹爪 MCU 枚举为 <code>/dev/ttyACM*</code>，属 <code>dialout</code> 组。不在该组时 SDK 打不开串口，<code>scan_grippers()</code> 报 <code>role=Unknown</code>、<code>firmware_sn</code> 为空：</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>RuntimeError: No leader gripper discovered for the left side.
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a># 底层实为: IoError: SerialBus: open(/dev/serial/by-id/...): Permission denied
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>RuntimeError: No leader gripper discovered for the left side.
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a># 底层实为: IoError: SerialBus: open(/dev/serial/by-id/...): Permission denied
 </span></code></pre></div>
 <p>一次性加入组：</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sudo<span class="w"> </span>usermod<span class="w"> </span>-aG<span class="w"> </span>dialout<span class="w"> </span><span class="s2">"</span><span class="nv">$USER</span><span class="s2">"</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>sudo<span class="w"> </span>usermod<span class="w"> </span>-aG<span class="w"> </span>dialout<span class="w"> </span><span class="s2">"</span><span class="nv">$USER</span><span class="s2">"</span>
 </span></code></pre></div>
 <div class="admonition warning">
 <p class="admonition-title">改完组必须重登，否则等于没做</p>
 <p>当前终端仍是旧权限。注销重登（或执行 <code>newgrp dialout</code>），重新插拔夹爪，再验证。</p>
 </div>
 <p>验证：<code>role</code> 为 <code>Leader</code>/<code>Follower</code>，<code>firmware_sn</code> 非空：</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"from xense.taccap import scan_grippers</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="s2">for g in scan_grippers(): print(g.side.name, g.role.name, repr(g.firmware_sn))"</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"from xense.taccap import scan_grippers</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="s2">for g in scan_grippers(): print(g.side.name, g.role.name, repr(g.firmware_sn))"</span>
 </span></code></pre></div>
 <p>修好权限后 <code>firmware_sn</code> 仍为空：可能是 SN 未烧录、串口读取失败或固件通信异常，不能据此推断固件版本。保存完整报错，换线、换口复测，仍异常联系设备或固件团队。</p>
 <h2 id="32">关闭 ModemManager 抢占（udev）<a class="headerlink" href="#32" title="锚点链接">¶</a></h2>
-<p>用 <a href="../install/#docker">Docker 交付镜像</a>时，<code>install_customer.sh</code> 已在主机上装好这条规则。</p>
+<p>用 <a href="../install/#docker">Docker 交付镜像</a>时，<code>install_customer.sh</code> 已在主机上装好这条规则（但不会卸载 <code>brltty</code>）。</p>
 <p>夹爪 MCU 是 CH343 USB 串口（<code>1a86:55d2</code>，CDC-ACM）。每次热插拔，ModemManager（Ubuntu/GNOME 默认的蜂窝调制解调器服务）会用 AT 指令探测新端口并占用几秒，连接失败：</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>IoError: SerialBus: open(/dev/serial/by-id/usb-1a86_USB_Dual_Serial_..-if02): Device or resource busy
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>IoError: SerialBus: open(/dev/serial/by-id/usb-1a86_USB_Dual_Serial_..-if02): Device or resource busy
 </span></code></pre></div>
 <ul>
 <li><strong>症状</strong>：第一次启动正常，换口后立即重启就 busy；不是触觉、相机或带宽问题。</li>
-<li><strong>brltty</strong>：盲文驱动 <code>brltty</code> 也会抢占 <code>1a86</code>。</li>
+<li><strong>brltty</strong>：盲文驱动 <code>brltty</code> 也会抢占 <code>1a86</code>，udev 规则管不到它，须单独<a href="#brltty">卸载</a>。</li>
 <li><strong>临时办法</strong>：插好后等约 3 秒再启动。</li>
 </ul>
 <p>永久修复（不影响真正的调制解调器）：</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/udev/rules.d/99-taccap-ignore-modemmanager.rules<span class="w"> </span>&gt;/dev/null<span class="w"> </span><span class="s">&lt;&lt;'EOF'</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="s"># XTac-UMI G1 MCUs are CH343 USB-serial (1a86:55d2) — keep ModemManager off them</span>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="s">ACTION=="add|change", SUBSYSTEMS=="usb", ATTRS{idVendor}=="1a86", ENV{ID_MM_DEVICE_IGNORE}="1"</span>
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="s">EOF</span>
-</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>sudo<span class="w"> </span>udevadm<span class="w"> </span>control<span class="w"> </span>--reload-rules<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>udevadm<span class="w"> </span>trigger
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/udev/rules.d/99-taccap-ignore-modemmanager.rules<span class="w"> </span>&gt;/dev/null<span class="w"> </span><span class="s">&lt;&lt;'EOF'</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="s"># XTac-UMI G1 MCUs are CH343 USB-serial (1a86:55d2) — keep ModemManager off them</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="s">ACTION=="add|change", SUBSYSTEMS=="usb", ATTRS{idVendor}=="1a86", ENV{ID_MM_DEVICE_IGNORE}="1"</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="s">EOF</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>sudo<span class="w"> </span>udevadm<span class="w"> </span>control<span class="w"> </span>--reload-rules<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>udevadm<span class="w"> </span>trigger
 </span></code></pre></div>
 <p>验证：</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>udevadm<span class="w"> </span>info<span class="w"> </span>-q<span class="w"> </span>property<span class="w"> </span>-n<span class="w"> </span>/dev/ttyACM0<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>ID_MM_DEVICE_IGNORE<span class="w">   </span><span class="c1"># -&gt; ID_MM_DEVICE_IGNORE=1</span>
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>mmcli<span class="w"> </span>-L<span class="w">                                                               </span><span class="c1"># 夹爪不再被列出</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>udevadm<span class="w"> </span>info<span class="w"> </span>-q<span class="w"> </span>property<span class="w"> </span>-n<span class="w"> </span>/dev/ttyACM0<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>ID_MM_DEVICE_IGNORE<span class="w">   </span><span class="c1"># -&gt; ID_MM_DEVICE_IGNORE=1</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>mmcli<span class="w"> </span>-L<span class="w">                                                               </span><span class="c1"># 夹爪不再被列出</span>
 </span></code></pre></div>
 <p>删除规则文件并重载即可还原；无蜂窝模块的专用主机也可 <code>sudo systemctl disable --now ModemManager</code>。</p>
 <h2 id="33">设备自动发现与"单左双右"<a class="headerlink" href="#33" title="锚点链接">¶</a></h2>
@@ -2302,7 +2349,7 @@
 </ul>
 <h3 id="usb-budget">USB 带宽预算<a class="headerlink" href="#usb-budget" title="锚点链接">¶</a></h3>
 <p>相机打不开先查带宽。每个 UVC 相机打开期间独占一份等时带宽：一条 USB 2.0 总线 480 Mbit/s，约 384 Mbit/s 给等时传输。双夹爪共六个相机（四路触觉 + 两路腕相机），另有笔记本自带摄像头。</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>lsusb<span class="w"> </span>-t
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>lsusb<span class="w"> </span>-t
 </span></code></pre></div>
 <ul>
 <li><strong>数相机</strong>：每行 <code>480M</code> 的 <code>root_hub</code> 是一份预算。两条各挂三个宽裕；六个挤一条要实测，各批次申请量不同。</li>
@@ -2317,7 +2364,7 @@
 </ul>
 <h2 id="35">启动 XenseVR PC Service<a class="headerlink" href="#35" title="锚点链接">¶</a></h2>
 <p>采集单元从 XenseVR PC Service（RoboticsService）守护进程读位姿。<a href="../install/#docker">Docker 交付镜像</a>启动时自动拉起它，不用追踪器时可用 <code>START_XENSEVR_SERVICE=0</code> 关掉。</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>/opt/apps/roboticsservice/runService.sh
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>/opt/apps/roboticsservice/runService.sh
 </span></code></pre></div>
 <ul>
 <li><strong>命名</strong>：头显上的 APP 叫 <strong>XTac-UMI XR</strong>，电脑端服务叫 <strong>XenseVR PC Service</strong>。安装包 <code>XenseVR-PC-Service_&lt;版本&gt;_amd64.deb</code> 装到 <code>/opt/apps/roboticsservice/</code>，Python 包是 <code>xensevr_pc_service_sdk</code>。</li>

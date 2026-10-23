@@ -2314,17 +2314,14 @@
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>python<span class="w"> </span>-m<span class="w"> </span>lerobot.robots.taccap_gripper.check_tracker
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="c1"># Pin a specific tracker SN (like PC2310MLL3200496G):</span>
 </span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>python<span class="w"> </span>-m<span class="w"> </span>lerobot.robots.taccap_gripper.check_tracker<span class="w"> </span>&lt;tracker<span class="w"> </span>SN&gt;
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="c1"># Apply that side's built-in tracker→TCP mount transform:</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="c1"># Convert to that side's gripper tip:</span>
 </span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>python<span class="w"> </span>-m<span class="w"> </span>lerobot.robots.taccap_gripper.check_tracker<span class="w"> </span>--side<span class="w"> </span>right
 </span></code></pre></div>
-<p>Prints <code>raw</code> (the tracker's own pose) and <code>ee</code> (the TCP after the mount transform) at 10Hz. Wave the gripper: <code>raw xyz</code> should change smoothly and the SN should match (<a href="../../common/pico4/#pico-tracker-sn">Reading a tracker SN</a>).</p>
+<p>Prints <code>raw</code> (the tracker's own pose) and <code>ee</code> (the gripper tip pose) at 10Hz. Wave the gripper: <code>raw xyz</code> should change smoothly and the SN should match (<a href="../../common/pico4/#pico-tracker-sn">Reading a tracker SN</a>).</p>
 <ul>
-<li><strong>Mount transform</strong>: the rigid tracker-to-TCP offset is built in (measured off the CAD assembly), each side separately; the two are close to mirror images but not identical (0.03° apart in rotation, 1.27mm in translation).</li>
-<li><strong><code>--side</code></strong>: picks which side to apply; without it the transform is identity and <code>ee</code> follows <code>raw</code>.</li>
-<li><strong>Override</strong>: after re-machining the mount, set <code>--robot.tracker_to_ee_pos</code> / <code>--robot.tracker_to_ee_quat</code>; the two are independent, so you can pin just the translation.</li>
-<li><strong>Pivot check</strong>: rest the midpoint of the two fingers on a fixed point and sweep the handle through many orientations; <code>ee xyz</code> should barely move while <code>raw xyz</code> swings widely, and the drift is the transform's error. Test both sides; a left value mirrored the wrong way makes <code>ee</code> swing about twice as far as it should.</li>
+<li><strong>Mount transform</strong>: the tracker-to-gripper-tip transform is built in, one per side, with nothing to set; <code>--side</code> picks which side to apply, and without it <code>ee</code> equals <code>raw</code>.</li>
+<li><strong>Pivot check</strong>: rest the midpoint of the two fingers on a fixed point and turn the handle; <code>ee xyz</code> should barely move while <code>raw xyz</code> changes widely.</li>
 <li><strong>Rerun</strong>: add <code>--display_data=true</code> when you <a href="../recording/#preview">preview before recording</a> to see gripper data and tracker poses together.</li>
-<li><strong>Quaternion jumps</strong>: hemisphere flips are handled by a continuity fix; if you still see jumps, file a bug.</li>
 </ul>
 <p>Next → <a href="../recording/">Data collection</a>.</p>
 

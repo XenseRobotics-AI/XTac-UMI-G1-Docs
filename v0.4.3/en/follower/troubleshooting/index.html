@@ -2166,7 +2166,7 @@ On this page, <strong>power-cycle</strong> means unplugging the 24V power cable,
 <p><strong>Fix</strong>:</p>
 <ul>
 <li>Confirm that both the USB cable and the 24V supply are connected; <code>lsusb</code> should list <code>1a86:55d2</code>. If it does not, try another cable or USB port.</li>
-<li>Confirm that the current user has been added to the <code>dialout</code> group and has logged in again; see <a href="../../pc/host-setup/#31">Serial permissions (dialout)</a>.</li>
+<li>Confirm <a href="../../pc/host-setup/#first-use">Host setup · Required on first use</a> is done: <code>brltty</code> removed, the current user in the <code>dialout</code> group and logged in again, and the udev rule that keeps ModemManager off installed.</li>
 <li>Close the collection program and any other program using the gripper, then scan again.</li>
 <li>If it still shows <code>Role.Unknown</code> or an empty serial number, contact <a href="../../common/reference/#support">technical support</a>.</li>
 </ul>
@@ -2188,8 +2188,12 @@ On this page, <strong>power-cycle</strong> means unplugging the 24V power cable,
 </details>
 <details class="failure">
 <summary><code>hello()</code> shows a version other than 0.4.3, or <code>import</code> fails</summary>
-<p><strong>Cause</strong>: the SDK submodule was not updated, or was not rebuilt after updating.</p>
-<p><strong>Fix</strong>: from the data-collection repository root, update the submodules and rerun the install script:</p>
+<p><strong>Cause</strong>: the wrong environment is active, the SDK was not rebuilt, or (Developer Kit collection environment) the submodule was not updated.</p>
+<p><strong>Fix</strong>:</p>
+<ul>
+<li>Standalone SDK: open a new terminal, run <code>mamba activate taccap</code> and rerun <code>uv pip install -e . --no-build-isolation</code> in the <code>TacCap-Gripper</code> directory; see <a href="../setup/#build">Install the SDK and set up the host</a>.</li>
+<li>Developer Kit collection environment: from the data-collection repository root, update the submodules and rerun the install script:</li>
+</ul>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>git<span class="w"> </span>submodule<span class="w"> </span>update<span class="w"> </span>--init<span class="w"> </span>--recursive
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>./setup_env.sh<span class="w"> </span>--install
 </span></code></pre></div>
