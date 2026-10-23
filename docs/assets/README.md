@@ -61,7 +61,7 @@
 | `pico4-ultra-enterprise.webp` | Pico4 Ultra 企业版头显与手柄,已去背景 | PICO 官方产品图,原图与抠图在 `materials/pico4-orig/` |
 | `pico4-motion-trackers.webp` | Pico4 Ultra 运动追踪器(出厂腕带形态),已去背景 | 同上 |
 | `xr-console-xtac.webp`（及 `-en`） | XTac-UMI XR 0.3.3 控制台主界面，企业版、独立追踪，连接方式 XTac，连接成功 | 产品提供的 0.3.3 界面截图（2026-10-14） |
-| `xr-console-idle.webp` / `xr-console-connected.webp`（及 `-en`） | XTac-UMI XR 0.3.2 控制台主界面（旧版勾选框界面，仅 PC 版一页速通仍在用），企业版、独立追踪，未连接 / 连接成功 | 用浏览器渲染安装包内的界面网页（`assets/html/index.html`）得到，原图在 `materials/pico4-orig/` |
+| `xr-console-usb.webp`（及 `-en`） | XTac-UMI XR 0.3.3 控制台主界面，企业版、独立追踪，连接方式 USB网络，连接成功（PC 版一页速通） | XR 仓库 tag `1.3.3` 的 `XenseVR_UI` 构建后用浏览器渲染（1080×720 @1.5x），2026-10-23 |
 
 这两张是第三方官方图片,不是我们自己拍摄或渲染的;替换或新增同类图片时注意来源与使用授权。
 

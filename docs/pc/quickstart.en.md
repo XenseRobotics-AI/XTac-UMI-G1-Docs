@@ -14,7 +14,7 @@ From power-on to your first recorded episode. Before you start, make sure the fo
 2. Connect the headset to the collection PC by cable and **turn off the collection PC's Wi-Fi**.
 3. Turn on the headset and short-press the tracker power button until the LED is solid blue.
 4. Start the XenseVR PC Service: `/opt/apps/roboticsservice/runService.sh`
-5. **Facing the same direction as the robot**, open XTac-UMI XR and tap Connect; Status changes to "Connected".
+5. **Facing the same direction as the robot**, open XTac-UMI XR, choose "USB Network" as the connection and tap "Connect"; Status changes to "Connected".
 
 <div class="tc-pair" markdown>
 
@@ -24,7 +24,7 @@ From power-on to your first recorded episode. Before you start, make sure the fo
 </figure>
 
 <figure class="tc-shot" markdown>
-![XTac-UMI XR console: Connected](../assets/pico4/xr-console-connected-en.webp)
+![XTac-UMI XR console: USB Network selected, Connected](../assets/pico4/xr-console-usb-en.webp)
 <figcaption>XTac-UMI XR Status changes to "Connected"</figcaption>
 </figure>
 
