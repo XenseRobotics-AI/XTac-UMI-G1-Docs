@@ -55,3 +55,4 @@ The **continuous stall rating** is the torque the fingers can hold indefinitely 
 4. Write your own program: [API and examples](api.md)
 5. Upgrade the firmware: [Firmware and motor upgrades](firmware.md)
 6. When something goes wrong: [Follower gripper troubleshooting](troubleshooting.md)
+7. Add it to your robot model: [XTac-UMI-Description](https://github.com/XenseRobotics-AI/XTac-UMI-Description) (URDF, Xacro, MJCF, USD; ROS 2 supported)

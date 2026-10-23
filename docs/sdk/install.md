@@ -40,3 +40,5 @@ target_link_libraries(my_target PRIVATE taccap_core)
 ```
 
 编译使用上面单独安装时创建的 `taccap` 环境，其中已含全部编译依赖。C++ 接口与 Python 同名，位于 `xense::taccap` 命名空间。
+
+ROS 2 里的夹爪模型（URDF / Xacro）见 [XTac-UMI-Description](https://github.com/XenseRobotics-AI/XTac-UMI-Description)。

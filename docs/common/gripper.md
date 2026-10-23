@@ -92,6 +92,8 @@
 
     ![从夹爪法兰安装尺寸](../assets/hardware/follower-flange-2.webp){ width="420" }
 
+把从夹爪加进机器人模型（URDF / MJCF / USD）时，用 [XTac-UMI-Description](https://github.com/XenseRobotics-AI/XTac-UMI-Description) 提供的夹爪模型。
+
 ### 电源与通信连接
 
 ![从夹爪连接关系简图](../assets/hardware/follower-connection.webp){ width="560" }

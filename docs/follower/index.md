@@ -56,3 +56,4 @@
 4. 写自己的程序：[API 与示例](api.md)
 5. 升级固件：[固件与电机升级](firmware.md)
 6. 出问题时：[从夹爪故障排查](troubleshooting.md)
+7. 加进机器人模型：[XTac-UMI-Description](https://github.com/XenseRobotics-AI/XTac-UMI-Description)（URDF、Xacro、MJCF、USD，支持 ROS 2）

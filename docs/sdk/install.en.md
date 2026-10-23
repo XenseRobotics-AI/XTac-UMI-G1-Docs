@@ -40,3 +40,5 @@ target_link_libraries(my_target PRIVATE taccap_core)
 ```
 
 For the build environment use the `taccap` environment created by the standalone install above; it has every build dependency. The C++ interface uses the same names as Python, in the `xense::taccap` namespace.
+
+For gripper models in ROS 2 (URDF / Xacro), see [XTac-UMI-Description](https://github.com/XenseRobotics-AI/XTac-UMI-Description).

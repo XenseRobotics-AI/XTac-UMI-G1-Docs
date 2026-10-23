@@ -119,17 +119,14 @@ Step 2/2: open the gripper to its MECHANICAL LIMIT.
 python -m lerobot.robots.taccap_gripper.check_tracker
 # 指定某个 tracker SN(形如 PC2310MLL3200496G):
 python -m lerobot.robots.taccap_gripper.check_tracker <tracker SN>
-# 应用该侧内置的 tracker→TCP 安装变换:
+# 换算到该侧夹爪末端:
 python -m lerobot.robots.taccap_gripper.check_tracker --side right
 ```
 
-以 10Hz 打印 `raw`（追踪器自身位姿）与 `ee`（经安装变换后的 TCP）。挥动夹爪，`raw xyz` 应平滑变化、SN 与预期一致（[读取追踪器 SN](../common/pico4.md#pico-tracker-sn)）。
+以 10Hz 打印 `raw`（追踪器自身位姿）与 `ee`（夹爪末端位姿）。挥动夹爪，`raw xyz` 应平滑变化、SN 与预期一致（[读取追踪器 SN](../common/pico4.md#pico-tracker-sn)）。
 
-- **安装变换**：追踪器到 TCP 的刚性偏移已内置（取自 CAD 装配实测），左右各自实测，接近镜像但不完全相同（旋转差 0.03°、平移差 1.27mm）。
-- **`--side`**：选套用哪一侧；不带时变换是单位阵，`ee` 跟随 `raw`。
-- **覆盖**：重新加工过安装座时设 `--robot.tracker_to_ee_pos` / `--robot.tracker_to_ee_quat`，两者独立，可只钉平移。
-- **支点检查**：两指中点抵住固定点，握柄多姿态摆动；`ee xyz` 应基本不动而 `raw xyz` 大幅摆动，漂移量即变换误差。左右都测；左侧镜像方向错时 `ee` 摆幅约为应有的两倍。
+- **安装变换**：追踪器到夹爪末端的变换已内置，左右各一套，无需设置；`--side` 选用哪一侧，不带时 `ee` 与 `raw` 相同。
+- **支点检查**：两指中点抵住一个固定点，转动握柄；`ee xyz` 应基本不动，`raw xyz` 大幅变化。
 - **Rerun**：[开录前预览](recording.md#preview)时加 `--display_data=true`，同时看夹爪数据和追踪器位姿。
-- **四元数跳变**：半球翻转已有连续性修正，仍看到跳变请报 bug。
 
 下一步 → [数据采集](recording.md)。

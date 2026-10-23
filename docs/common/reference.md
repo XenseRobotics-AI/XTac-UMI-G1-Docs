@@ -47,7 +47,7 @@
 
 ## 参考资料 {#references}
 
-下表中的仓库都属于 PC 版，除 `xensesdk`（许可证未声明）外均开源；背包版的采集软件不开源，不在此列。
+下表中的仓库除夹爪模型外都属于 PC 版；除 `xensesdk`（许可证未声明）外均开源；背包版的采集软件不开源，不在此列。
 
 | 资源 | 地址 | 说明 |
 |---|---|---|
@@ -55,6 +55,7 @@
 | 夹爪 SDK `TacCap-Gripper` | <https://github.com/XenseRobotics-AI/TacCap-Gripper> | 子模块 `third_party/taccap-gripper/`；SDK 文档在 `docs/` 目录 |
 | 追踪器 PC 服务 `XenseVR-PC-Service` | <https://github.com/XenseRobotics-AI/XenseVR-PC-Service> | 不是子模块，以 `.deb` 安装到 `/opt/apps/roboticsservice`，见[一键安装](../pc/install.md#24) |
 | 视触觉传感器 SDK `xensesdk` | <https://github.com/XenseRobotics/xensesdk> | [文档站](https://docs.xenserobotics.com/) |
+| 夹爪模型 `XTac-UMI-Description` | <https://github.com/XenseRobotics-AI/XTac-UMI-Description> | 主夹爪（左 / 右）与从夹爪的 URDF、Xacro、MJCF、USD 模型，含从夹爪法兰转接件；支持 ROS 2 与纯 Python |
 | 本地可视化工具 `xense-lerobot-viewer` | <https://github.com/XenseRobotics-AI/xense-lerobot-viewer> | 开源，在浏览器里查看本地 LeRobot 数据集 |
 
 ## 文档版本与配套软件 {#doc-version}
