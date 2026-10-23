@@ -2362,7 +2362,7 @@
 <ul>
 <li><code>taccap_gripper</code> recording is self-driven; there are no <code>--teleop.*</code> arguments.</li>
 <li>Shifted-frame pairing: the observation from step <em>t-1</em> is paired with the pose from step <em>t</em> as its action (EEF TCP pose + normalized <code>gripper.pos</code>, plus the headset pose with the <a href="#56">head camera</a> on), so each episode is one frame shorter.</li>
-<li><code>tcp.*</code> is the gripper tip, not the tracker: the tracker sits about 195mm from the two-finger midpoint, and a built-in rigid mount transform (measured off the CAD assembly, one per side) is applied before writing. It is body-fixed and independent of orientation and <code>gripper.pos</code>.</li>
+<li><code>tcp.*</code> is the gripper tip, not the tracker, derived from the tracker pose through a built-in mount transform (one per side); the tip and tracker positions are defined in <a href="https://github.com/XenseRobotics-AI/XTac-UMI-Description">XTac-UMI-Description</a>.</li>
 <li>The world frame is gravity-aligned, X forward / Y left / Z up, frozen the instant XTac-UMI XR starts; see <a href="../../common/pico4/#pico-frame">frame alignment</a>.</li>
 <li><code>--display_data=true</code> opens Rerun's <code>/world</code> 3D view (<code>--show_trajectory=false</code> turns the trail off); what it shows and the mount check are in <a href="../../common/coordinates/#world-view">Coordinate frames · The pose view during collection</a>.</li>
 </ul>

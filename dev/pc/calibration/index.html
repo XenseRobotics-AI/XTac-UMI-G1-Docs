@@ -2310,17 +2310,14 @@
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>python<span class="w"> </span>-m<span class="w"> </span>lerobot.robots.taccap_gripper.check_tracker
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="c1"># 指定某个 tracker SN(形如 PC2310MLL3200496G):</span>
 </span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>python<span class="w"> </span>-m<span class="w"> </span>lerobot.robots.taccap_gripper.check_tracker<span class="w"> </span>&lt;tracker<span class="w"> </span>SN&gt;
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="c1"># 应用该侧内置的 tracker→TCP 安装变换:</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="c1"># 换算到该侧夹爪末端:</span>
 </span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>python<span class="w"> </span>-m<span class="w"> </span>lerobot.robots.taccap_gripper.check_tracker<span class="w"> </span>--side<span class="w"> </span>right
 </span></code></pre></div>
-<p>以 10Hz 打印 <code>raw</code>（追踪器自身位姿）与 <code>ee</code>（经安装变换后的 TCP）。挥动夹爪，<code>raw xyz</code> 应平滑变化、SN 与预期一致（<a href="../../common/pico4/#pico-tracker-sn">读取追踪器 SN</a>）。</p>
+<p>以 10Hz 打印 <code>raw</code>（追踪器自身位姿）与 <code>ee</code>（夹爪末端位姿）。挥动夹爪，<code>raw xyz</code> 应平滑变化、SN 与预期一致（<a href="../../common/pico4/#pico-tracker-sn">读取追踪器 SN</a>）。</p>
 <ul>
-<li><strong>安装变换</strong>：追踪器到 TCP 的刚性偏移已内置（取自 CAD 装配实测），左右各自实测，接近镜像但不完全相同（旋转差 0.03°、平移差 1.27mm）。</li>
-<li><strong><code>--side</code></strong>：选套用哪一侧；不带时变换是单位阵，<code>ee</code> 跟随 <code>raw</code>。</li>
-<li><strong>覆盖</strong>：重新加工过安装座时设 <code>--robot.tracker_to_ee_pos</code> / <code>--robot.tracker_to_ee_quat</code>，两者独立，可只钉平移。</li>
-<li><strong>支点检查</strong>：两指中点抵住固定点，握柄多姿态摆动；<code>ee xyz</code> 应基本不动而 <code>raw xyz</code> 大幅摆动，漂移量即变换误差。左右都测；左侧镜像方向错时 <code>ee</code> 摆幅约为应有的两倍。</li>
+<li><strong>安装变换</strong>：追踪器到夹爪末端的变换已内置，左右各一套，无需设置；<code>--side</code> 选用哪一侧，不带时 <code>ee</code> 与 <code>raw</code> 相同。</li>
+<li><strong>支点检查</strong>：两指中点抵住一个固定点，转动握柄；<code>ee xyz</code> 应基本不动，<code>raw xyz</code> 大幅变化。</li>
 <li><strong>Rerun</strong>：<a href="../recording/#preview">开录前预览</a>时加 <code>--display_data=true</code>，同时看夹爪数据和追踪器位姿。</li>
-<li><strong>四元数跳变</strong>：半球翻转已有连续性修正，仍看到跳变请报 bug。</li>
 </ul>
 <p>下一步 → <a href="../recording/">数据采集</a>。</p>
 
