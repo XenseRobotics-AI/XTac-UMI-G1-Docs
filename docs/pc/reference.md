@@ -31,8 +31,8 @@
 | `robot.enable_gripper` / `robot.enable_imu` | `true` / `false` | 夹爪本体读数 / IMU 通道 |
 | `robot.gripper_stream_hz` | `100` | 主夹爪编码器（含 IMU）推流频率；`0` 为每帧轮询；失败则回退并告警 |
 | `robot.gripper_open_rad` | `1.7` | **仅从夹爪用**；主夹爪用固件实测行程上限，未标定拒绝连接，见[夹爪标定](calibration.md#41) |
-| `robot.tracker_to_ee_pos` | `None` | 覆盖 tracker→EE 平移；`None` = **内置实测值** |
-| `robot.tracker_to_ee_quat` | `None` | 覆盖 tracker→EE 旋转 |
+| `robot.tracker_to_ee_pos` | `None` | 覆盖追踪器到夹爪末端的平移；`None` = 内置值（与 [XTac-UMI-Description](https://github.com/XenseRobotics-AI/XTac-UMI-Description) 一致） |
+| `robot.tracker_to_ee_quat` | `None` | 覆盖追踪器到夹爪末端的旋转 |
 | `robot.tracker_wait_timeout` | `10.0` | 等待追踪器数据的秒数 |
 
 上表按单夹爪写，完整字段见主仓库设备说明。`bi_taccap_gripper` 上 `enable_wrist_camera`、`tracker_serial`、`enable_gripper`、`enable_imu`、`gripper_open_rad`、`tracker_to_ee_pos/_quat` 每侧一个，加 `left_` / `right_` 前缀（如 `--robot.left_enable_wrist_camera`），其余两侧共用，见[参数](recording.md#params)。

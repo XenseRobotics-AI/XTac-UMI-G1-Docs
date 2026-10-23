@@ -27,10 +27,10 @@ If the console does not open, see [Troubleshooting](troubleshooting.md#tablet-ad
 
 1. **Put on the headset**, facing the work area.
 2. **Start the app**: open XTac-UMI XR.
-3. **Network settings**: **leave "USB Network" unticked** and "PC IP" empty (it connects to the backpack at `192.168.100.1` by default).
+3. **Network settings**: choose "XTac" as the connection (selected by default on first launch; it connects to the backpack at `192.168.100.1`).
 4. **Connect**: tap "Connect"; you are done when Status shows "Connected".
 
-![XTac-UMI XR console: Connected](../assets/pico4/xr-console-connected-en.webp){ width="560" }
+![XTac-UMI XR console: XTac selected, Connected](../assets/pico4/xr-console-xtac-en.webp){ width="560" }
 
 !!! warning "Do not restart the XR app during collection"
     Restarting resets the world origin, so poses within one dataset stop lining up.

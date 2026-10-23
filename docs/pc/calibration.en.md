@@ -119,17 +119,14 @@ The tracker needs no calibration, and its side is matched from the SN; binding i
 python -m lerobot.robots.taccap_gripper.check_tracker
 # Pin a specific tracker SN (like PC2310MLL3200496G):
 python -m lerobot.robots.taccap_gripper.check_tracker <tracker SN>
-# Apply that side's built-in tracker→TCP mount transform:
+# Convert to that side's gripper tip:
 python -m lerobot.robots.taccap_gripper.check_tracker --side right
 ```
 
-Prints `raw` (the tracker's own pose) and `ee` (the TCP after the mount transform) at 10Hz. Wave the gripper: `raw xyz` should change smoothly and the SN should match ([Reading a tracker SN](../common/pico4.md#pico-tracker-sn)).
+Prints `raw` (the tracker's own pose) and `ee` (the gripper tip pose) at 10Hz. Wave the gripper: `raw xyz` should change smoothly and the SN should match ([Reading a tracker SN](../common/pico4.md#pico-tracker-sn)).
 
-- **Mount transform**: the rigid tracker-to-TCP offset is built in (measured off the CAD assembly), each side separately; the two are close to mirror images but not identical (0.03° apart in rotation, 1.27mm in translation).
-- **`--side`**: picks which side to apply; without it the transform is identity and `ee` follows `raw`.
-- **Override**: after re-machining the mount, set `--robot.tracker_to_ee_pos` / `--robot.tracker_to_ee_quat`; the two are independent, so you can pin just the translation.
-- **Pivot check**: rest the midpoint of the two fingers on a fixed point and sweep the handle through many orientations; `ee xyz` should barely move while `raw xyz` swings widely, and the drift is the transform's error. Test both sides; a left value mirrored the wrong way makes `ee` swing about twice as far as it should.
+- **Mount transform**: the tracker-to-gripper-tip transform is built in, one per side, with nothing to set; `--side` picks which side to apply, and without it `ee` equals `raw`.
+- **Pivot check**: rest the midpoint of the two fingers on a fixed point and turn the handle; `ee xyz` should barely move while `raw xyz` changes widely.
 - **Rerun**: add `--display_data=true` when you [preview before recording](recording.md#preview) to see gripper data and tracker poses together.
-- **Quaternion jumps**: hemisphere flips are handled by a continuity fix; if you still see jumps, file a bug.
 
 Next → [Data collection](recording.md).

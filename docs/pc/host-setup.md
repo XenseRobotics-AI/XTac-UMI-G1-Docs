@@ -1,6 +1,39 @@
 # 主机配置
 
-夹爪能被列出不等于能被打开。本页做两项一次性配置（串口权限、ModemManager），说明设备如何按序列号分左右，再启动 XenseVR PC Service；头显与追踪器配置见[Pico4 头显与追踪器](../common/pico4.md)。
+夹爪能被列出不等于能被打开。本页先做三项一次性配置（卸载 brltty、串口权限、屏蔽 ModemManager），再说明设备如何按序列号分左右，最后启动 XenseVR PC Service；头显与追踪器配置见[Pico4 头显与追踪器](../common/pico4.md)。
+
+## 首次使用必做 {#first-use}
+
+!!! danger "三项主机配置缺一项，夹爪就可能连不上"
+    新主机第一次接夹爪（主夹爪、从夹爪、只用 SDK 都一样）之前，必须做完这三项：
+
+    1. **[卸载 brltty](#brltty)**：Ubuntu 自带的盲文驱动，会抢占夹爪串口。
+    2. **[加入 dialout 组](#31)**：没有串口权限，SDK 能列出夹爪但打不开。
+    3. **[安装 udev 规则屏蔽 ModemManager](#32)**：调制解调器服务会在每次插拔时占用串口几秒。
+
+    都是一次性设置。一次执行完：
+
+    ```bash
+    sudo apt purge -y brltty                     # 1. 卸载 brltty
+    sudo usermod -aG dialout,video "$USER"       # 2. 加入 dialout / video 组
+    sudo tee /etc/udev/rules.d/99-taccap-ignore-modemmanager.rules >/dev/null <<'EOF'
+    # XTac-UMI G1 MCUs are CH343 USB-serial (1a86:55d2) — keep ModemManager off them
+    ACTION=="add|change", SUBSYSTEMS=="usb", ATTRS{idVendor}=="1a86", ENV{ID_MM_DEVICE_IGNORE}="1"
+    EOF
+    sudo udevadm control --reload-rules && sudo udevadm trigger   # 3. 屏蔽 ModemManager
+    ```
+
+    然后**注销并重新登录**（dialout 组重登后才生效），重新插拔夹爪，再按各节的方法验证。
+
+## 卸载 brltty {#brltty}
+
+`brltty` 是 Ubuntu 默认安装的盲文显示器驱动，会把 `1a86` 的 USB 串口设备当成盲文显示器认领，夹爪串口因此被占用、打不开。采集主机用不到盲文显示器，直接卸载：
+
+```bash
+sudo apt purge -y brltty
+```
+
+验证：`dpkg -l brltty | grep ^ii` 没有输出。卸载后重新插拔夹爪。
 
 ## 串口权限（dialout） {#31}
 
@@ -31,7 +64,7 @@ for g in scan_grippers(): print(g.side.name, g.role.name, repr(g.firmware_sn))"
 
 ## 关闭 ModemManager 抢占（udev） {#32}
 
-用 [Docker 交付镜像](install.md#docker)时，`install_customer.sh` 已在主机上装好这条规则。
+用 [Docker 交付镜像](install.md#docker)时，`install_customer.sh` 已在主机上装好这条规则（但不会卸载 `brltty`）。
 
 夹爪 MCU 是 CH343 USB 串口（`1a86:55d2`，CDC-ACM）。每次热插拔，ModemManager（Ubuntu/GNOME 默认的蜂窝调制解调器服务）会用 AT 指令探测新端口并占用几秒，连接失败：
 
@@ -40,7 +73,7 @@ IoError: SerialBus: open(/dev/serial/by-id/usb-1a86_USB_Dual_Serial_..-if02): De
 ```
 
 - **症状**：第一次启动正常，换口后立即重启就 busy；不是触觉、相机或带宽问题。
-- **brltty**：盲文驱动 `brltty` 也会抢占 `1a86`。
+- **brltty**：盲文驱动 `brltty` 也会抢占 `1a86`，udev 规则管不到它，须单独[卸载](#brltty)。
 - **临时办法**：插好后等约 3 秒再启动。
 
 永久修复（不影响真正的调制解调器）：

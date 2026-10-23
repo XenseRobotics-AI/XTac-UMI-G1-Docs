@@ -92,6 +92,8 @@ The follower gripper mounts on the robot's end effector and is not side-specific
 
     ![Follower gripper flange mounting dimensions](../assets/hardware/follower-flange-2.webp){ width="420" }
 
+Adapter hole pattern, mounting frame and gripper models (URDF / MJCF / USD) are in [XTac-UMI-Description](https://github.com/XenseRobotics-AI/XTac-UMI-Description).
+
 ### Power and communication connection
 
 ![Follower gripper connection diagram](../assets/hardware/follower-connection.webp){ width="560" }

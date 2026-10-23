@@ -5,9 +5,9 @@ This chapter shows how to control the follower gripper with the `xense.taccap` S
 
 ![XTac-UMI G1 follower gripper](../assets/product/follower-scene-front.webp){ width="720" }
 
-!!! note "This chapter uses SDK 0.4.3, which ships with the collection environment"
-    This chapter is written against [TacCap-Gripper](https://github.com/XenseRobotics-AI/TacCap-Gripper) **v0.4.3**,
-    the version bundled with the collection environment; see [Setup and self-check](setup.md#install).
+!!! note "This chapter is written for SDK 0.4.3 and applies to both kits"
+    This chapter is written against [TacCap-Gripper](https://github.com/XenseRobotics-AI/TacCap-Gripper) **v0.4.3**.
+    Whichever kit you have, the computer that runs the SDK must first install it and complete host setup per [Setup and self-check · Install the SDK and set up the host](setup.md#install).
 
 ## How it differs from the leader gripper {#vs-leader}
 
@@ -55,3 +55,4 @@ The **continuous stall rating** is the torque the fingers can hold indefinitely 
 4. Write your own program: [API and examples](api.md)
 5. Upgrade the firmware: [Firmware and motor upgrades](firmware.md)
 6. When something goes wrong: [Follower gripper troubleshooting](troubleshooting.md)
+7. Add it to your robot model: [XTac-UMI-Description](https://github.com/XenseRobotics-AI/XTac-UMI-Description) (URDF, Xacro, MJCF, USD; ROS 2 supported)

@@ -4,7 +4,7 @@ From power-on to your first recorded episode. Before you start, make sure the fo
 
 - Hardware connected → [Leader gripper connection and use](../common/gripper.md#install)
 - Environment installed and active (`mamba activate xense-taccap` or the Docker container) → [Installation](install.md)
-- Collection PC configured: serial permissions, ModemManager kept off the ports → [Host setup](host-setup.md#31)
+- Collection PC configured: brltty removed, serial permissions, ModemManager kept off the ports (miss one and the gripper will not connect) → [Host setup · Required on first use](host-setup.md#first-use)
 - Every leader gripper calibrated (an uncalibrated leader is refused) → [Gripper calibration (zero + travel)](calibration.md#41)
 - Repo, SDK and gripper firmware all up to date → [You must upgrade to the latest versions](versions.md#required)
 

@@ -1,6 +1,6 @@
 # Troubleshooting
 
-Most problems are caused by insufficient serial permissions or ModemManager claiming the serial port, so check "Serial permissions and device discovery" first. Before troubleshooting, run the [Quickstart · Self-check](quickstart.md#self-check).
+Most connection problems come from `brltty` still being installed, missing serial permissions or ModemManager claiming the serial port, so first confirm [Host setup · Required on first use](host-setup.md#first-use) is done. Before troubleshooting, run the [Quickstart · Self-check](quickstart.md#self-check).
 
 ## Attach the full log when reporting a problem {#logs}
 
@@ -101,7 +101,7 @@ Record the serial number, connection method, error message and a photo of the se
     - On every hot-plug, ModemManager probes the CH343 serial port with AT commands for several seconds; `brltty` also claims the port. For containers, the rule must be installed on the host.
     - Another program holds the gripper's serial port exclusively, e.g. a previous recording, calibration or example script that has not exited.
 
-    **Fix:** close the program holding the port first. For ModemManager, the temporary workaround is to wait about 3s after plugging in; the permanent fix is a udev rule that ignores `1a86` devices (`install_customer.sh` on the Docker path already installs it). The rule and its verification are in [Stop ModemManager grabbing the port (udev)](host-setup.md#32). Re-plug the gripper after installing the rule.
+    **Fix:** close the program holding the port first. [Remove](host-setup.md#brltty) `brltty` with `sudo apt purge -y brltty`. For ModemManager, the temporary workaround is to wait about 3s after plugging in; the permanent fix is a udev rule that ignores `1a86` devices (`install_customer.sh` on the Docker path already installs it). The rule and its verification are in [Stop ModemManager grabbing the port (udev)](host-setup.md#32). Re-plug the gripper after installing the rule.
 
 ??? failure "`firmware_sn` is still empty after fixing permissions / `role=Unknown`"
     **Cause:** the SN was not written, the serial read still fails, or firmware communication or device configuration is faulty. An empty SN does not indicate the firmware version.
@@ -204,7 +204,7 @@ Record the serial number, connection method, error message and a photo of the se
 ??? failure "XTac-UMI XR cannot connect (Not connected or Connection failed)"
     **Cause:** usually the wired network is not connected properly, or the collection PC's Wi-Fi is still on.
 
-    **Fix:** for a wired connection, tick "USB network"; over Wi-Fi, enter the collection PC's IP in "PC IP"; then tap "Connect". If it still fails, redo the [Network connection](../common/pico4.md#pico-network); the screen is described in [The app's screen](../common/pico4.md#pico-toolkit-ui).
+    **Fix:** for a wired connection, choose "USB Network"; over Wi-Fi, choose "WiFi Network" and enter the collection PC's IP in "PC IP"; then tap "Connect". If it still fails, redo the [Network connection](../common/pico4.md#pico-network); the screen is described in [The app's screen](../common/pico4.md#pico-toolkit-ui).
 
 ??? failure "The headset shows \"Connected\" but the collection PC receives no pose"
     **Cause:** "Connected" only means the app has reached the service. The service on the collection PC may not be running, or the tracker is powered off or unbound.

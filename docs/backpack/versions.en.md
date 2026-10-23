@@ -12,7 +12,7 @@ Matched to XTac-UMI Collector 0.4.3. The software and hardware versions across t
 | Backpack OS firmware | V1.2.0 | Pre-installed at the factory, upgraded by technical support |
 | XTac-UMI Collector (collection unit) | 0.4.3 | The console's System → [Device information](system.md#device-info), "Collector version"; upgrading is in [Upgrades and OTA](update.md) |
 | Pico OS | 5.15.5.U or above recommended | Headset Settings → General → About; upgrading is in [Pico4 headset and tracker setup](../common/pico4.md#pico-system) |
-| XTac-UMI XR (headset app) | 0.3.2 | The headset's app library; installing and upgrading are in [Pico4 headset and tracker setup](../common/pico4.md#pico-app) |
+| XTac-UMI XR (headset app) | 0.3.3 | The headset's app library; installing and upgrading are in [Pico4 headset and tracker setup](../common/pico4.md#pico-app) |
 | Leader gripper firmware | ≥ 1.2.5 | The console's System → [Device information](system.md#device-info), "Gripper MCU"; upgrading is at System → [Gripper configuration](system.md#gripper) |
 
 Upgrading the Backpack Kit's collection unit is done entirely in the console, with no PC needed. The Developer Kit has its own baseline, see [Developer Kit · Versions and upgrades](../pc/versions.md#required).

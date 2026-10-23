@@ -1,25 +1,105 @@
 # 准备与自检
 
-依次完成四步再投入使用。安装接线见 [夹爪连接与序列号 → 从夹爪安装与连接](../common/gripper.md#follower-install)，
-从夹爪要 **USB Type-C 和 24V 两路都接上**。
+依次完成四步再投入使用。第 1 步从零装好 SDK，背包版与 PC 版都适用。安装接线见 [夹爪连接与序列号 → 从夹爪安装与连接](../common/gripper.md#follower-install)，从夹爪要 **USB Type-C 和 24V 两路都接上**。
 
-## 1. 安装 SDK {#install}
+## 1. 安装 SDK 与主机配置 {#install}
 
-装好数采环境（[安装](../pc/install.md)）就已经带有 SDK 0.4.3，不需要另外安装。示例脚本在数采仓库的
-`third_party/taccap-gripper/python/examples/` 下。串口权限见 [串口权限](../pc/host-setup.md#31)。
+无论用背包版还是 PC 版，只要用 SDK 控制夹爪，都要在运行 SDK 的电脑上做完下面的配置（每台电脑做一次）。系统要求 Ubuntu 22.04 或 24.04（x86_64）。按顺序复制执行即可。
 
-验证（在数采仓库根目录、数采环境里）：
+!!! tip "已装好 PC 版数采环境的电脑"
+    数采环境里已经带有 SDK 0.4.3（数采仓库的 `third_party/taccap-gripper`），跳过第 1–5 步，在数采环境里进入该目录，从[第 6 步](#host)做起。
+
+### 第 1 步：安装 Miniforge（mamba） {#miniforge}
+
+先检查是否已经装过：
 
 ```bash
-cd third_party/taccap-gripper
+mamba --version
+```
+
+能打印版本号就跳过这一步。否则：
+
+```bash
+curl -L -O "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh"
+bash Miniforge3-$(uname)-$(uname -m).sh
+```
+
+一路回车，看到许可协议输入 `yes`，问是否初始化 shell 时也输入 `yes`。装完**关掉终端再开一个新的**，`mamba --version` 能打印版本号即可。
+
+### 第 2 步：安装系统软件包 {#apt}
+
+```bash
+sudo apt update
+sudo apt install -y git curl v4l-utils
+```
+
+`v4l-utils` 提供 `v4l2-ctl`，用来查看腕部相机。
+
+### 第 3 步：下载 SDK {#clone}
+
+```bash
+cd ~
+git clone --branch v0.4.3 https://github.com/XenseRobotics-AI/TacCap-Gripper.git
+cd TacCap-Gripper
+```
+
+示例脚本就在这个目录里，装完**不要删除**。
+
+### 第 4 步：创建 mamba 环境 {#env}
+
+```bash
+mamba env create -f environment.yml
+mamba activate taccap
+```
+
+会新建名为 `taccap` 的环境，自动装好编译器、CMake、OpenCV 与 Python 3.12，需要几分钟。之后**每次打开新终端都要先执行 `mamba activate taccap`**，命令行开头出现 `(taccap)` 才算激活。
+
+### 第 5 步：编译安装 SDK {#build}
+
+在 `TacCap-Gripper` 目录、`taccap` 环境里执行：
+
+```bash
+uv pip install -e . --no-build-isolation
+```
+
+需要几分钟。验证：
+
+```bash
 python -c "import xense.taccap as t; print(t.hello())"
 ```
 
-应输出 `taccap-gripper OK; version 0.4.3`。版本不对说明 SDK 子模块没更新或没重新编译，见
-[从夹爪故障排查](troubleshooting.md#connect)。
+应输出 `taccap-gripper OK; version 0.4.3`。
 
-后续命令均在 `third_party/taccap-gripper` 目录、数采环境中运行。不用数采仓库、单独安装 SDK 见
-[SDK 附录 → 安装与构建](../sdk/install.md)。
+!!! warning "编译报错或版本不对"
+    - 必须先 `mamba activate taccap` 再安装，`--no-build-isolation` 不能省。
+    - 版本不是 0.4.3：当前终端加载了别处的 SDK。关掉终端，开一个新的，只执行 `mamba activate taccap` 再试。
+
+### 第 6 步：主机配置（缺一项就连不上） {#host}
+
+!!! danger "这一步最容易漏，漏了夹爪会连不上"
+    依次：卸载 `brltty`（Ubuntu 自带的盲文驱动，会抢占夹爪串口）→ 把当前用户加入 `dialout`（串口）与 `video`（相机）组 → 安装 udev 规则，阻止 ModemManager（调制解调器服务）在插拔时占用夹爪串口。
+
+```bash
+sudo apt purge -y brltty
+sudo usermod -aG dialout,video "$USER"
+sudo tee /etc/udev/rules.d/99-taccap-ignore-modemmanager.rules >/dev/null <<'EOF'
+# XTac-UMI G1 MCUs are CH343 USB-serial (1a86:55d2) — keep ModemManager off them
+ACTION=="add|change", SUBSYSTEMS=="usb", ATTRS{idVendor}=="1a86", ENV{ID_MM_DEVICE_IGNORE}="1"
+EOF
+sudo udevadm control --reload-rules && sudo udevadm trigger
+```
+
+然后**注销并重新登录**（或重启电脑），用户组才会生效。重新登录后接好夹爪，逐项确认：
+
+```bash
+dpkg -l brltty | grep ^ii                    # 没有输出 = brltty 已卸载
+groups | grep -o -E "dialout|video"          # 应同时打印 dialout 和 video
+udevadm info -q property -n /dev/ttyACM0 | grep ID_MM_DEVICE_IGNORE   # 应为 ID_MM_DEVICE_IGNORE=1
+```
+
+三项的原理见[主机配置 · 首次使用必做](../pc/host-setup.md#first-use)。
+
+后续命令都在 `TacCap-Gripper` 目录（PC 版数采环境为 `third_party/taccap-gripper`）、已激活的环境里运行。
 
 ## 2. 找到设备 {#discover}
 

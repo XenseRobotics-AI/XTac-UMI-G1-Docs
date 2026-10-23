@@ -9,7 +9,7 @@
 
 | 子目录 | 用途 | 对应页面 |
 |---|---|---|
-| `brand/` | 站点 logo(`logo.svg` 深色版、`logo-light.svg` 白色版给黑色页眉)、favicon | 主题 |
+| `brand/` | 首页字标 `logo-black.png`(浅色主题)/ `logo-white.png`(深色主题),源自 Pictures/LOGO-PNG 的 XenseLogo-black / -white;页脚 `logo-footer.png`;`logo.svg` / `logo-light.svg` 备用 | 主题 |
 | `product/` | 产品渲染图、背包接口与标签照片、接线图 | 首页、product/ |
 | `backpack/` | XTac-UMI Collector 控制台截图(2026-10-07 起按 0.4.3 重截,仍是旧图的见下方[待重截](#placeholder);文件名沿用 Taccap-User-Doc;首页与 product/ 的控制台展示图也从这里取) | 首页、product/、backpack/ |
 | `pico4/` | Pico4 Ultra 企业版系统与 APP 截图 | common/pico4 |
@@ -60,7 +60,8 @@
 |---|---|---|
 | `pico4-ultra-enterprise.webp` | Pico4 Ultra 企业版头显与手柄,已去背景 | PICO 官方产品图,原图与抠图在 `materials/pico4-orig/` |
 | `pico4-motion-trackers.webp` | Pico4 Ultra 运动追踪器(出厂腕带形态),已去背景 | 同上 |
-| `xr-console-idle.webp` / `xr-console-connected.webp`（及 `-en`） | XTac-UMI XR 0.3.2 控制台主界面，企业版、独立追踪，未连接 / 连接成功 | 用浏览器渲染安装包内的界面网页（`assets/html/index.html`）得到，原图在 `materials/pico4-orig/` |
+| `xr-console-xtac.webp`（及 `-en`） | XTac-UMI XR 0.3.3 控制台主界面，企业版、独立追踪，连接方式 XTac，连接成功 | 产品提供的 0.3.3 界面截图（2026-10-14） |
+| `xr-console-idle.webp` / `xr-console-connected.webp`（及 `-en`） | XTac-UMI XR 0.3.2 控制台主界面（旧版勾选框界面，仅 PC 版一页速通仍在用），企业版、独立追踪，未连接 / 连接成功 | 用浏览器渲染安装包内的界面网页（`assets/html/index.html`）得到，原图在 `materials/pico4-orig/` |
 
 这两张是第三方官方图片,不是我们自己拍摄或渲染的;替换或新增同类图片时注意来源与使用授权。
 

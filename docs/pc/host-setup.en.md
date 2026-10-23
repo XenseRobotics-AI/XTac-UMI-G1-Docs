@@ -1,6 +1,39 @@
 # Host setup
 
-A gripper that shows up in the device list cannot necessarily be opened. This page covers two one-off settings (serial permissions and ModemManager), how devices are assigned to left and right by serial number, and starting the XenseVR PC Service. Headset and tracker setup is in [Pico4 headset and tracker setup](../common/pico4.md).
+A gripper that shows up in the device list cannot necessarily be opened. This page first covers three one-off settings (removing brltty, serial permissions, keeping ModemManager off the port), then how devices are assigned to left and right by serial number, and finally starting the XenseVR PC Service. Headset and tracker setup is in [Pico4 headset and tracker setup](../common/pico4.md).
+
+## Required on first use {#first-use}
+
+!!! danger "Skip any of these three host settings and the gripper may fail to connect"
+    Before a new collection PC talks to a gripper for the first time (leader, follower or SDK-only use alike), complete all three:
+
+    1. **[Remove brltty](#brltty)**: the braille driver shipped with Ubuntu grabs the gripper's serial port.
+    2. **[Join the dialout group](#31)**: without serial permissions the SDK can list the gripper but cannot open it.
+    3. **[Install the udev rule that keeps ModemManager off](#32)**: the modem service holds the serial port for a few seconds on every plug-in.
+
+    All three are one-off. Run them in one go:
+
+    ```bash
+    sudo apt purge -y brltty                     # 1. remove brltty
+    sudo usermod -aG dialout,video "$USER"       # 2. join the dialout / video groups
+    sudo tee /etc/udev/rules.d/99-taccap-ignore-modemmanager.rules >/dev/null <<'EOF'
+    # XTac-UMI G1 MCUs are CH343 USB-serial (1a86:55d2) — keep ModemManager off them
+    ACTION=="add|change", SUBSYSTEMS=="usb", ATTRS{idVendor}=="1a86", ENV{ID_MM_DEVICE_IGNORE}="1"
+    EOF
+    sudo udevadm control --reload-rules && sudo udevadm trigger   # 3. keep ModemManager off
+    ```
+
+    Then **log out and back in** (dialout membership only applies to a new session), re-plug the gripper and verify each item as described in its section.
+
+## Remove brltty {#brltty}
+
+`brltty` is the braille display driver installed by default on Ubuntu. It claims `1a86` USB serial devices as braille displays, so the gripper's serial port is taken and cannot be opened. A collection PC has no braille display; remove it:
+
+```bash
+sudo apt purge -y brltty
+```
+
+Verify: `dpkg -l brltty | grep ^ii` prints nothing. Re-plug the gripper afterwards.
 
 ## Serial permissions (dialout) {#31}
 
@@ -31,7 +64,7 @@ If `firmware_sn` stays empty after fixing permissions, the SN may not be burned 
 
 ## Stop ModemManager grabbing the port (udev) {#32}
 
-With the [Docker image](install.md#docker), `install_customer.sh` has already installed this rule on the host.
+With the [Docker image](install.md#docker), `install_customer.sh` has already installed this rule on the host (it does not remove `brltty`).
 
 The gripper MCU is a CH343 USB-serial device (`1a86:55d2`, CDC-ACM). On every hot-plug, ModemManager (the default cellular-modem service on Ubuntu/GNOME) probes the fresh port with AT commands and holds it for a few seconds, so connecting fails:
 
@@ -40,7 +73,7 @@ IoError: SerialBus: open(/dev/serial/by-id/usb-1a86_USB_Dual_Serial_..-if02): De
 ```
 
 - **Symptom**: the first launch works, but relaunching right after moving to another port fails with `Device or resource busy`. It is not a tactile, camera or bandwidth problem.
-- **brltty**: the braille driver `brltty` grabs `1a86` too.
+- **brltty**: the braille driver `brltty` grabs `1a86` too; the udev rule does not stop it, so [remove it](#brltty) separately.
 - **Stopgap**: wait about 3s after plugging in before launching.
 
 Permanent fix (real modems are unaffected):

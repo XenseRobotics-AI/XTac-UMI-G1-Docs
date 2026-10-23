@@ -6,7 +6,7 @@
 
 - `taccap_gripper` 录制自驱动，没有 `--teleop.*` 参数。
 - 移位帧（shifted-frame）配对：*t-1* 步的观测配 *t* 步的位姿作动作（EEF TCP 位姿 + 归一化 `gripper.pos`，开[头显相机](#56)时加头显位姿），每集因此少 1 帧。
-- `tcp.*` 是夹爪末端而非追踪器：追踪器离两指中点约 195mm，落盘前乘上内置刚性安装变换（CAD 装配实测，左右各一套），机体固连，与姿态和 `gripper.pos` 无关。
+- `tcp.*` 是夹爪末端而非追踪器，由追踪器位姿经内置安装变换（左右各一套）得到；末端与追踪器位置的定义见 [XTac-UMI-Description](https://github.com/XenseRobotics-AI/XTac-UMI-Description)。
 - 世界系重力对齐，X 前 / Y 左 / Z 上，在 XTac-UMI XR 启动瞬间冻结，见[坐标系对齐](../common/pico4.md#pico-frame)。
 - `--display_data=true` 开出 Rerun 的 `/world` 3D 视图（`--show_trajectory=false` 关轨迹），元素含义与装配检查见[坐标系 · `/world` 3D 视图](../common/coordinates.md#world-view)。
 

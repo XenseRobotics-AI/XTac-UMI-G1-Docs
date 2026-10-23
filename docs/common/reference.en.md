@@ -47,7 +47,7 @@ Please include:
 
 ## References {#references}
 
-The repositories below belong to the Developer Kit and are all open source except `xensesdk`, whose license is not stated; the Backpack Kit's collection software is not open source and is not listed.
+The repositories below belong to the Developer Kit (apart from the gripper models) and are all open source except `xensesdk`, whose license is not stated; the Backpack Kit's collection software is not open source and is not listed.
 
 | Resource | URL | Notes |
 |---|---|---|
@@ -55,6 +55,7 @@ The repositories below belong to the Developer Kit and are all open source excep
 | Gripper SDK `TacCap-Gripper` | <https://github.com/XenseRobotics-AI/TacCap-Gripper> | Submodule `third_party/taccap-gripper/`; SDK docs in `docs/` |
 | Tracker PC service `XenseVR-PC-Service` | <https://github.com/XenseRobotics-AI/XenseVR-PC-Service> | Not a submodule; installed as a `.deb` into `/opt/apps/roboticsservice`, see [One-shot install](../pc/install.md#24) |
 | Visuotactile sensor SDK `xensesdk` | <https://github.com/XenseRobotics/xensesdk> | [Docs site](https://docs.xenserobotics.com/) |
+| Gripper models `XTac-UMI-Description` | <https://github.com/XenseRobotics-AI/XTac-UMI-Description> | URDF, Xacro, MJCF and USD models of the leader (left / right) and follower grippers, including the follower flange adapter; for ROS 2 and plain Python |
 | Local viewer `xense-lerobot-viewer` | <https://github.com/XenseRobotics-AI/xense-lerobot-viewer> | Open source; browse a local LeRobot dataset in the browser |
 
 ## Documentation version and matching software {#doc-version}

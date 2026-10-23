@@ -9,7 +9,7 @@
     **解决**：
 
     - 确认 USB 线与 24V 电源均已接好，`lsusb` 输出中应有 `1a86:55d2`。如没有，更换线缆或 USB 口。
-    - 确认当前用户已加入 `dialout` 组并已重新登录，见[串口权限](../pc/host-setup.md#31)。
+    - 确认已完成[主机配置 · 首次使用必做](../pc/host-setup.md#first-use)：已卸载 `brltty`、当前用户已加入 `dialout` 组并重新登录、已安装屏蔽 ModemManager 的 udev 规则。
     - 关闭数采程序及其他占用夹爪的程序，然后重新扫描。
     - 仍显示 `Role.Unknown` 或序列号为空时，联系[技术支持](../common/reference.md#support)。
 
@@ -29,9 +29,12 @@
     **解决**：按[升级夹爪固件](firmware.md#mcu-ota)升级到 SDK 附带的版本，然后断电重启。
 
 ??? failure "`hello()` 显示的版本不是 0.4.3，或 `import` 报错"
-    **原因**：SDK 子模块未更新，或更新后未重新编译。
+    **原因**：没有激活正确的环境、SDK 未重新编译，或（PC 版数采环境）子模块未更新。
 
-    **解决**：在数采仓库根目录更新子模块，并重新运行安装脚本：
+    **解决**：
+
+    - 单独安装的 SDK：开一个新终端，执行 `mamba activate taccap`，在 `TacCap-Gripper` 目录重新运行 `uv pip install -e . --no-build-isolation`，见[安装 SDK 与主机配置](setup.md#build)。
+    - PC 版数采环境：在数采仓库根目录更新子模块，并重新运行安装脚本：
 
     ```bash
     git submodule update --init --recursive

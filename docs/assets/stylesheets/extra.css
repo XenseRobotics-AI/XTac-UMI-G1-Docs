@@ -225,7 +225,7 @@ html[lang="en"] .md-typeset .tc-hero h1 {
   width: auto;
   margin: 0 auto 1rem;
 }
-/* 白字绿点用于深色主题,黑字绿点用于浅色主题 */
+/* 白色字标用于深色主题,黑色字标用于浅色主题 */
 [data-md-color-scheme="default"] .md-typeset .tc-only-dark,
 [data-md-color-scheme="slate"] .md-typeset .tc-only-light {
   display: none;

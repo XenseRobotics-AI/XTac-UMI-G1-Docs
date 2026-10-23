@@ -51,7 +51,7 @@ The frame rate used during collection can be set as needed (the Developer Kit re
 
 ![Follower gripper dimensions (mm)](../assets/product/follower-dimensions.webp){ width="760" }
 
-How to use it is in [Follower gripper overview](../follower/index.md).
+How to use it is in [Follower gripper overview](../follower/index.md); the flange interface, frames and 3D models are in [XTac-UMI-Description](https://github.com/XenseRobotics-AI/XTac-UMI-Description).
 
 ## Tracking and synchronization
 

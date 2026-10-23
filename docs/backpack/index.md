@@ -336,7 +336,7 @@
 ### 4. 头显连接背包 {#deploy-headset-link}
 
 1. 戴上头显，打开 XTac-UMI XR。
-2. **不勾选**「USB网络」，「PC IP」留空（默认连接背包的 `192.168.100.1`）。
+2. 连接方式选「XTac」（首次启动默认已选中，连接背包的 `192.168.100.1`）。
 3. 点击「连接」。
 
 界面与连接状态说明见 [Pico4 头显与追踪器](../common/pico4.md#pico-toolkit-ui)，详细步骤见[头显接背包](unbox-connect.md#pico-link)。
