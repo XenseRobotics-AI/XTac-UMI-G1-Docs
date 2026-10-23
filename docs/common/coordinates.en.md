@@ -40,6 +40,4 @@ Every pose in a dataset is referenced to this world frame: the Developer Kit wri
 
 The three axes of the headset's own body frame follow the same convention as the world frame: X forward (along the normal of the front camera mounting face), Y left, Z up, right-handed. <!-- TBD: origin definition -->
 
-<!-- TBD: gripper local frame definition -->
-
-The `tcp.*` the Developer Kit writes is derived from the tracker pose through the measured tracker→EE transform built in for each side, which can be overridden with `robot.tracker_to_ee_pos` / `robot.tracker_to_ee_quat`, see [RobotConfig options](../pc/reference.md#robotconfig).
+The gripper's local frames, end-effector (EEF) definition, tracker mounting position and follower flange interface are defined in [XTac-UMI-Description](https://github.com/XenseRobotics-AI/XTac-UMI-Description) (URDF / MJCF / USD and a frame specification). The `tcp.*` the Developer Kit writes is the gripper tip under that definition; to customize it, see [RobotConfig options](../pc/reference.md#robotconfig).

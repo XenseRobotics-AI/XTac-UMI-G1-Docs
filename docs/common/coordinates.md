@@ -40,6 +40,4 @@
 
 头显本体坐标系的三轴与世界系同一约定：X 前（前部相机安装面法线方向）、Y 左、Z 上，右手系。<!-- 待补：原点定义 -->
 
-<!-- 待补：夹爪局部坐标系定义 -->
-
-PC 版落盘的 `tcp.*` 由追踪器位姿经每侧内置的实测 tracker→EE 变换得到，可用 `robot.tracker_to_ee_pos` / `robot.tracker_to_ee_quat` 覆盖，见 [RobotConfig 配置项](../pc/reference.md#robotconfig)。
+夹爪的局部坐标系、末端（EEF）定义、追踪器安装位置与从夹爪法兰接口，以 [XTac-UMI-Description](https://github.com/XenseRobotics-AI/XTac-UMI-Description) 为准（URDF / MJCF / USD 与坐标系说明）。PC 版落盘的 `tcp.*` 即该定义下的夹爪末端；需要自定义时见 [RobotConfig 配置项](../pc/reference.md#robotconfig)。

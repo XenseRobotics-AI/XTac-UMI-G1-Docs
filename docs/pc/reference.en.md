@@ -31,8 +31,8 @@ Workflow: [Data collection](recording.md); errors: [Troubleshooting](troubleshoo
 | `robot.enable_gripper` / `robot.enable_imu` | `true` / `false` | The gripper's own readings / the IMU channel |
 | `robot.gripper_stream_hz` | `100` | Leader encoder (incl. IMU) push rate; `0` polls every frame; on stream failure it falls back and warns |
 | `robot.gripper_open_rad` | `1.7` | **Follower only**; a leader uses the measured travel limit in its firmware and is refused if uncalibrated, see [Gripper calibration (zero + travel)](calibration.md#41) |
-| `robot.tracker_to_ee_pos` | `None` | Override the tracker→EE translation; `None` = **built-in measured value** |
-| `robot.tracker_to_ee_quat` | `None` | Override the tracker→EE rotation |
+| `robot.tracker_to_ee_pos` | `None` | Override the tracker-to-gripper-tip translation; `None` = built-in value (matches [XTac-UMI-Description](https://github.com/XenseRobotics-AI/XTac-UMI-Description)) |
+| `robot.tracker_to_ee_quat` | `None` | Override the tracker-to-gripper-tip rotation |
 | `robot.tracker_wait_timeout` | `10.0` | Seconds to wait for tracker data |
 
 The table is written for a single gripper; the full field list is in the main repo's device notes. On `bi_taccap_gripper`, `enable_wrist_camera`, `tracker_serial`, `enable_gripper`, `enable_imu`, `gripper_open_rad` and `tracker_to_ee_pos/_quat` are per side with a `left_` / `right_` prefix (for example `--robot.left_enable_wrist_camera`); the rest are shared by both sides, see [Parameters](recording.md#params).

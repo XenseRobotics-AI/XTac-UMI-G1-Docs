@@ -6,7 +6,7 @@ First confirm the devices work with `lerobot-teleoperate`, then record a `LeRobo
 
 - `taccap_gripper` recording is self-driven; there are no `--teleop.*` arguments.
 - Shifted-frame pairing: the observation from step *t-1* is paired with the pose from step *t* as its action (EEF TCP pose + normalized `gripper.pos`, plus the headset pose with the [head camera](#56) on), so each episode is one frame shorter.
-- `tcp.*` is the gripper tip, not the tracker: the tracker sits about 195mm from the two-finger midpoint, and a built-in rigid mount transform (measured off the CAD assembly, one per side) is applied before writing. It is body-fixed and independent of orientation and `gripper.pos`.
+- `tcp.*` is the gripper tip, not the tracker, derived from the tracker pose through a built-in mount transform (one per side); the tip and tracker positions are defined in [XTac-UMI-Description](https://github.com/XenseRobotics-AI/XTac-UMI-Description).
 - The world frame is gravity-aligned, X forward / Y left / Z up, frozen the instant XTac-UMI XR starts; see [frame alignment](../common/pico4.md#pico-frame).
 - `--display_data=true` opens Rerun's `/world` 3D view (`--show_trajectory=false` turns the trail off); what it shows and the mount check are in [Coordinate frames · The pose view during collection](../common/coordinates.md#world-view).
 

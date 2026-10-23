@@ -51,7 +51,7 @@ XTac-UMI G1 夹爪、定位系统与数采背包的规格。接线见[夹爪连�
 
 ![从夹爪外形尺寸（mm）](../assets/product/follower-dimensions.webp){ width="760" }
 
-使用方法见[从夹爪](../follower/index.md)。
+使用方法见[从夹爪](../follower/index.md)；法兰接口、坐标系与三维模型见 [XTac-UMI-Description](https://github.com/XenseRobotics-AI/XTac-UMI-Description)。
 
 ## 定位与同步
 
