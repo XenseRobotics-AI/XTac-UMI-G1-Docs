@@ -3,7 +3,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="XTac-UMI 手持式多模态数据采集系统:XTac-UMI G1 视触觉夹爪、数采背包与 PC 开发套件的产品介绍与使用手册">
+        <meta name="description" content="XTac UMI 穿戴式多模态数据采集系统:XTac UMI G1 视触觉夹爪、数采背包与 PC 开发套件的产品介绍与使用手册">
       
       
         <meta name="author" content="千觉机器人">
@@ -26,18 +26,18 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
     
     
       
-        <title>数据采集 - XTac-UMI 文档 (预览)</title>
+        <title>数据采集 - XTac UMI 文档 (预览)</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
       
       
 
@@ -109,7 +109,7 @@
 
 <header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="页眉">
-    <a href="../.." title="XTac-UMI 文档 (预览)" class="md-header__button md-logo" aria-label="XTac-UMI 文档 (预览)" data-md-component="logo">
+    <a href="../.." title="XTac UMI 文档 (预览)" class="md-header__button md-logo" aria-label="XTac UMI 文档 (预览)" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
@@ -123,7 +123,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            XTac-UMI 文档 (预览)
+            XTac UMI 文档 (预览)
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -403,13 +403,13 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="导航栏" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="XTac-UMI 文档 (预览)" class="md-nav__button md-logo" aria-label="XTac-UMI 文档 (预览)" data-md-component="logo">
+    <a href="../.." title="XTac UMI 文档 (预览)" class="md-nav__button md-logo" aria-label="XTac UMI 文档 (预览)" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
 
     </a>
-    XTac-UMI 文档 (预览)
+    XTac UMI 文档 (预览)
   </label>
   
     <div class="md-nav__source">
@@ -521,7 +521,7 @@
   <span class="md-ellipsis">
     
   
-    认识 XTac-UMI G1
+    认识 XTac UMI G1
   
 
     
@@ -2363,7 +2363,7 @@
 <li><code>taccap_gripper</code> 录制自驱动，没有 <code>--teleop.*</code> 参数。</li>
 <li>移位帧（shifted-frame）配对：<em>t-1</em> 步的观测配 <em>t</em> 步的位姿作动作（EEF TCP 位姿 + 归一化 <code>gripper.pos</code>，开<a href="#56">头显相机</a>时加头显位姿），每集因此少 1 帧。</li>
 <li><code>tcp.*</code> 是夹爪末端而非追踪器，由追踪器位姿经内置安装变换（左右各一套）得到；末端与追踪器位置的定义见 <a href="https://github.com/XenseRobotics-AI/XTac-UMI-Description">XTac-UMI-Description</a>。</li>
-<li>世界系重力对齐，X 前 / Y 左 / Z 上，在 XTac-UMI XR 启动瞬间冻结，见<a href="../../common/pico4/#pico-frame">坐标系对齐</a>。</li>
+<li>世界系重力对齐，X 前 / Y 左 / Z 上，在 XTac UMI XR 启动瞬间冻结，见<a href="../../common/pico4/#pico-frame">坐标系对齐</a>。</li>
 <li><code>--display_data=true</code> 开出 Rerun 的 <code>/world</code> 3D 视图（<code>--show_trajectory=false</code> 关轨迹），元素含义与装配检查见<a href="../../common/coordinates/#world-view">坐标系 · <code>/world</code> 3D 视图</a>。</li>
 </ul>
 <h2 id="preview">开录前预览<a class="headerlink" href="#preview" title="锚点链接">¶</a></h2>
@@ -2611,7 +2611,7 @@
 </tr>
 </tbody>
 </table>
-<p><strong>设备参数 <code>--robot.*</code>（XTac-UMI G1 专属）</strong></p>
+<p><strong>设备参数 <code>--robot.*</code>（XTac UMI G1 专属）</strong></p>
 <p>只列本页用到的项，完整配置项见 <a href="../reference/#robotconfig"><code>RobotConfig</code> 常用配置项</a>。</p>
 <table>
 <thead>
@@ -3009,8 +3009,8 @@
 <tr>
 <td>坐标一致</td>
 <td>与其它集同一原点</td>
-<td>中途重启 XTac-UMI XR，位姿集间跳变</td>
-<td>不重启 XTac-UMI XR</td>
+<td>中途重启 XTac UMI XR，位姿集间跳变</td>
+<td>不重启 XTac UMI XR</td>
 </tr>
 <tr>
 <td>夹爪读数</td>
@@ -3034,7 +3034,7 @@
 </table>
 <p>报错先查<a href="../troubleshooting/">故障排查</a>。</p>
 <h3 id="采集前">采集前<a class="headerlink" href="#采集前" title="锚点链接">¶</a></h3>
-<p>全程不要重启 XTac-UMI XR（原因见<a href="../../common/pico4/#pico-frame">坐标系对齐</a>）；不得不重启时，之后的数据当作新数据集。</p>
+<p>全程不要重启 XTac UMI XR（原因见<a href="../../common/pico4/#pico-frame">坐标系对齐</a>）；不得不重启时，之后的数据当作新数据集。</p>
 <ul>
 <li>没标定的主夹爪连不上，预览时复核机械行程即可；每台主夹爪标一次（存 flash），双夹爪两侧都要标，见<a href="../calibration/#41">夹爪标定</a>。</li>
 <li><code>scan_grippers</code> 输出 side/role/firmware_sn 正常；追踪器有电、有位姿。</li>
@@ -3060,7 +3060,7 @@
 <p>先采 5~10 条，用 <a href="../dataset/#62"><code>lerobot-check-dataset</code></a> 校验并回放抽查，再规模化采集。</p>
 <h3 id="采集自查清单">采集自查清单<a class="headerlink" href="#采集自查清单" title="锚点链接">¶</a></h3>
 <ul>
-<li>[ ] 采集期间未重启 XTac-UMI XR</li>
+<li>[ ] 采集期间未重启 XTac UMI XR</li>
 <li>[ ] 闭合时 <code>gripper.pos</code>≈0</li>
 <li>[ ] 追踪器有位姿、轨迹正常</li>
 <li>[ ] 数采电脑 WiFi 已关</li>
@@ -3087,7 +3087,7 @@
 </ul>
 <div class="admonition warning">
 <p class="admonition-title">头显的分辨率和 <code>--robot.head_camera_width/_height</code> 必须一致</p>
-<p>只接受 <code>640x480</code>（默认）、<code>1024x768</code>、<code>1280x960</code> 三档。XTac-UMI XR 默认每眼输出 640x480，与采集端默认一致，不用加参数；命令行参数只声明预期。</p>
+<p>只接受 <code>640x480</code>（默认）、<code>1024x768</code>、<code>1280x960</code> 三档。XTac UMI XR 默认每眼输出 640x480，与采集端默认一致，不用加参数；命令行参数只声明预期。</p>
 <ul>
 <li>填别的或首帧尺寸与配置不符都会报错（后者在 connect 时），不会悄悄重采样改掉视场角。</li>
 <li>三档都是 4:3，同传感器（PICO 相机接口单帧上限 2328x1748 也是 4:3），16:9 只会裁剪或拉伸。</li>
@@ -3236,10 +3236,10 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.tracking", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "navigation.footer", "toc.follow", "toc.integrate", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.tooltips"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.tracking", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "navigation.footer", "toc.follow", "toc.integrate", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.tooltips"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      <script src="../../assets/javascripts/bundle.c21346df.min.js"></script>
       
         <script src="../../assets/javascripts/arch.js"></script>
       

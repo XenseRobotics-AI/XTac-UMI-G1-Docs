@@ -3,7 +3,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="XTac-UMI 手持式多模态数据采集系统:XTac-UMI G1 视触觉夹爪、数采背包与 PC 开发套件的产品介绍与使用手册">
+        <meta name="description" content="XTac UMI 穿戴式多模态数据采集系统:XTac UMI G1 视触觉夹爪、数采背包与 PC 开发套件的产品介绍与使用手册">
       
       
         <meta name="author" content="XenseRobotics">
@@ -26,18 +26,18 @@
       
       
       <link rel="icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
     
     
       
-        <title>Data collection - XTac-UMI Docs</title>
+        <title>Data collection - XTac UMI Docs</title>
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.57a0d79d.min.css">
       
         
-        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.fb2fffe2.min.css">
       
       
 
@@ -109,7 +109,7 @@
 
 <header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../../" title="XTac-UMI Docs" class="md-header__button md-logo" aria-label="XTac-UMI Docs" data-md-component="logo">
+    <a href="../../" title="XTac UMI Docs" class="md-header__button md-logo" aria-label="XTac UMI Docs" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
@@ -123,7 +123,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            XTac-UMI Docs
+            XTac UMI Docs
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -403,13 +403,13 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../" title="XTac-UMI Docs" class="md-nav__button md-logo" aria-label="XTac-UMI Docs" data-md-component="logo">
+    <a href="../../" title="XTac UMI Docs" class="md-nav__button md-logo" aria-label="XTac UMI Docs" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
 
     </a>
-    XTac-UMI Docs
+    XTac UMI Docs
   </label>
   
     <div class="md-nav__source">
@@ -521,7 +521,7 @@
   <span class="md-ellipsis">
     
   
-    XTac-UMI G1
+    XTac UMI G1
   
 
     
@@ -605,7 +605,7 @@
   <span class="md-ellipsis">
     
   
-    The XTac-UMI Backpack
+    The XTac UMI Backpack
   
 
     
@@ -2363,7 +2363,7 @@
 <li><code>taccap_gripper</code> recording is self-driven; there are no <code>--teleop.*</code> arguments.</li>
 <li>Shifted-frame pairing: the observation from step <em>t-1</em> is paired with the pose from step <em>t</em> as its action (EEF TCP pose + normalized <code>gripper.pos</code>, plus the headset pose with the <a href="#56">head camera</a> on), so each episode is one frame shorter.</li>
 <li><code>tcp.*</code> is the gripper tip, not the tracker, derived from the tracker pose through a built-in mount transform (one per side); the tip and tracker positions are defined in <a href="https://github.com/XenseRobotics-AI/XTac-UMI-Description">XTac-UMI-Description</a>.</li>
-<li>The world frame is gravity-aligned, X forward / Y left / Z up, frozen the instant XTac-UMI XR starts; see <a href="../../common/pico4/#pico-frame">frame alignment</a>.</li>
+<li>The world frame is gravity-aligned, X forward / Y left / Z up, frozen the instant XTac UMI XR starts; see <a href="../../common/pico4/#pico-frame">frame alignment</a>.</li>
 <li><code>--display_data=true</code> opens Rerun's <code>/world</code> 3D view (<code>--show_trajectory=false</code> turns the trail off); what it shows and the mount check are in <a href="../../common/coordinates/#world-view">Coordinate frames · The pose view during collection</a>.</li>
 </ul>
 <h2 id="preview">Preview before recording<a class="headerlink" href="#preview" title="锚点链接">¶</a></h2>
@@ -2611,7 +2611,7 @@
 </tr>
 </tbody>
 </table>
-<p><strong>Device parameters <code>--robot.*</code> (XTac-UMI G1 specific)</strong></p>
+<p><strong>Device parameters <code>--robot.*</code> (XTac UMI G1 specific)</strong></p>
 <p>Only items used on this page; for the full set see <a href="../reference/#robotconfig">Common <code>RobotConfig</code> options</a>.</p>
 <table>
 <thead>
@@ -3009,8 +3009,8 @@
 <tr>
 <td>Coordinate consistency</td>
 <td>Same origin as other episodes</td>
-<td>XTac-UMI XR restarted mid-collection, pose jumps between episodes</td>
-<td>Never restart XTac-UMI XR</td>
+<td>XTac UMI XR restarted mid-collection, pose jumps between episodes</td>
+<td>Never restart XTac UMI XR</td>
 </tr>
 <tr>
 <td>Gripper reading</td>
@@ -3034,7 +3034,7 @@
 </table>
 <p>On errors, start with <a href="../troubleshooting/">Troubleshooting</a>.</p>
 <h3 id="before-collecting">Before collecting<a class="headerlink" href="#before-collecting" title="锚点链接">¶</a></h3>
-<p>Never restart XTac-UMI XR during collection (see <a href="../../common/pico4/#pico-frame">frame alignment</a>); if you must, treat everything after it as a new dataset.</p>
+<p>Never restart XTac UMI XR during collection (see <a href="../../common/pico4/#pico-frame">frame alignment</a>); if you must, treat everything after it as a new dataset.</p>
 <ul>
 <li>An uncalibrated leader gripper cannot connect, so the preview only double-checks the mechanical travel; each leader gripper is calibrated once (stored in flash), both sides on a bimanual setup, see <a href="../calibration/#41">gripper calibration</a>.</li>
 <li><code>scan_grippers</code> reports sensible side/role/firmware_sn; the tracker is charged and producing a pose.</li>
@@ -3060,7 +3060,7 @@
 <p>Record 5–10 episodes first, verify with <a href="../dataset/#62"><code>lerobot-check-dataset</code></a> and replay a few, then scale up.</p>
 <h3 id="pre-flight-checklist">Pre-flight checklist<a class="headerlink" href="#pre-flight-checklist" title="锚点链接">¶</a></h3>
 <ul>
-<li>[ ] XTac-UMI XR not restarted during collection</li>
+<li>[ ] XTac UMI XR not restarted during collection</li>
 <li>[ ] <code>gripper.pos</code> ≈ 0 when closed</li>
 <li>[ ] Tracker has a pose, trajectory looks right</li>
 <li>[ ] Collection PC Wi-Fi off</li>
@@ -3087,7 +3087,7 @@
 </ul>
 <div class="admonition warning">
 <p class="admonition-title">The headset's resolution and <code>--robot.head_camera_width/_height</code> must agree</p>
-<p>Only <code>640x480</code> (default), <code>1024x768</code> and <code>1280x960</code> are accepted. XTac-UMI XR outputs 640x480 per eye by default, matching the collection unit, so there is nothing to pass; the flags only declare what you expect.</p>
+<p>Only <code>640x480</code> (default), <code>1024x768</code> and <code>1280x960</code> are accepted. XTac UMI XR outputs 640x480 per eye by default, matching the collection unit, so there is nothing to pass; the flags only declare what you expect.</p>
 <ul>
 <li>Any other value, or a first frame that disagrees with the config (at connect), is an error; nothing is silently resampled to change the field of view.</li>
 <li>All three are 4:3, like the sensor (the PICO camera API's per-frame cap of 2328x1748 is also 4:3); 16:9 only gets a crop or a stretch.</li>
@@ -3236,10 +3236,10 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.tracking", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "navigation.footer", "toc.follow", "toc.integrate", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.tooltips"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.tracking", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "navigation.footer", "toc.follow", "toc.integrate", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.tooltips"], "search": "../../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.c21346df.min.js"></script>
       
         <script src="../../../assets/javascripts/arch.js"></script>
       
