@@ -87,7 +87,7 @@ It should print `taccap-gripper OK; version 0.4.3`.
 sudo apt purge -y brltty
 sudo usermod -aG dialout,video "$USER"
 sudo tee /etc/udev/rules.d/99-taccap-ignore-modemmanager.rules >/dev/null <<'EOF'
-# XTac-UMI G1 MCUs are CH343 USB-serial (1a86:55d2) — keep ModemManager off them
+# XTac UMI G1 MCUs are CH343 USB-serial (1a86:55d2); keep ModemManager off them
 ACTION=="add|change", SUBSYSTEMS=="usb", ATTRS{idVendor}=="1a86", ENV{ID_MM_DEVICE_IGNORE}="1"
 EOF
 sudo udevadm control --reload-rules && sudo udevadm trigger

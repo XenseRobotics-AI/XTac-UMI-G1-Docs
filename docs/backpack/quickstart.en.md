@@ -3,7 +3,7 @@
 This page takes you from powering on to your first exported dataset; follow the steps in order.
 
 !!! note "Before you start"
-    - **Headset and trackers**: the Pico system is updated, XTac-UMI XR is installed and both trackers are paired; see [Pico4 headset and tracker setup](../common/pico4.md).
+    - **Headset and trackers**: the Pico system is updated, XTac UMI XR is installed and both trackers are paired; see [Pico4 headset and tracker setup](../common/pico4.md).
     - **Gripper calibration**: the leader grippers are calibrated; see console → System → [Gripper](system.md#gripper).
 
 ## 1. Wiring and power {#power-on}
@@ -26,11 +26,11 @@ If the console does not open, see [Troubleshooting](troubleshooting.md#tablet-ad
 ## 3. Connect the headset {#headset}
 
 1. **Put on the headset**, facing the work area.
-2. **Start the app**: open XTac-UMI XR.
+2. **Start the app**: open XTac UMI XR.
 3. **Network settings**: choose "XTac" as the connection (selected by default on first launch; it connects to the backpack at `192.168.100.1`).
 4. **Connect**: tap "Connect"; you are done when Status shows "Connected".
 
-![XTac-UMI XR console: XTac selected, Connected](../assets/pico4/xr-console-xtac-en.webp){ width="560" }
+![XTac UMI XR console: XTac selected, Connected](../assets/pico4/xr-console-xtac-en.webp){ width="560" }
 
 !!! warning "Do not restart the XR app during collection"
     Restarting resets the world origin, so poses within one dataset stop lining up.

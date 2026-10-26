@@ -5,7 +5,7 @@ description: Before recording, confirm the views, poses, gripper opening and dis
 # Live monitoring and recording
 
 
-This page covers the "Live monitoring" page of the XTac-UMI Collector console (below, "the console"). Gripper button gestures, LED patterns and voice announcement wording are in [Gripper buttons, LEDs and voice](gripper.md#buttons-leds); this page only links to them.
+This page covers the "Live monitoring" page of the XTac UMI Collector console (below, "the console"). Gripper button gestures, LED patterns and voice announcement wording are in [Gripper buttons, LEDs and voice](gripper.md#buttons-leds); this page only links to them.
 
 ![The Live monitoring page](../assets/backpack/monitor-live-en.webp)
 

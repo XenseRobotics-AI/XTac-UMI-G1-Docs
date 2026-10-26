@@ -3,7 +3,7 @@
 The gripper is the same on both editions; only where the cable goes and how detection is checked are split into "Backpack Kit / Developer Kit" tabs.
 
 - Backpack Kit buttons, LEDs and voice: [Gripper buttons, LEDs and voice](../backpack/gripper.md).
-- Product positioning and components: [XTac-UMI G1](../product/g1.md); specs: [Technical specifications](../product/specs.md#specs).
+- Product positioning and components: [XTac UMI G1](../product/g1.md); specs: [Technical specifications](../product/specs.md#specs).
 
 ## Leader gripper connection and use {#install}
 

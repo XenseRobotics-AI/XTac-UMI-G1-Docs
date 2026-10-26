@@ -1,6 +1,6 @@
 # 技术参数
 
-XTac-UMI G1 夹爪、定位系统与数采背包的规格。接线见[夹爪连接与序列号](../common/gripper.md)，两种配置的取舍见[产品线与配置对比](editions.md)。
+XTac UMI G1 夹爪、定位系统与数采背包的规格。接线见[夹爪连接与序列号](../common/gripper.md)，两种配置的取舍见[产品线与配置对比](editions.md)。
 
 ## 主夹爪 {#specs}
 

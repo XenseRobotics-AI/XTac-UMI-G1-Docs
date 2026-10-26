@@ -3,7 +3,7 @@
 两种配置夹爪相同，仅「线接到哪、识别怎么核」分「背包版 / PC 版」标签页写。
 
 - 背包版按键、指示灯与语音见[夹爪按键、指示灯与语音](../backpack/gripper.md)。
-- 产品定位与组成见[认识 XTac-UMI G1](../product/g1.md)，规格见[技术参数](../product/specs.md#specs)。
+- 产品定位与组成见[认识 XTac UMI G1](../product/g1.md)，规格见[技术参数](../product/specs.md#specs)。
 
 ## 主夹爪连接与使用 {#install}
 

@@ -8,15 +8,15 @@ hide:
 
 <div class="tc-hero__text" markdown>
 
-<span class="tc-eyebrow">XTac-UMI · 手持式多模态数据采集系统</span>
+<span class="tc-eyebrow">XTac UMI · 手持式多模态数据采集系统</span>
 
 # 让机器人数据集<br>拥有触觉
 
 <p class="tc-sub">双手触觉、视觉与位姿同步记录<br>一次人类示范，直接得到可训练的数据集</p>
 
-<p class="tc-note">XTac-UMI&nbsp;G1 双夹爪配合 Pico4&nbsp;Ultra&nbsp;企业版头显<br>背包版、PC 版两种配置可选</p>
+<p class="tc-note">XTac UMI&nbsp;G1 双夹爪配合 Pico4&nbsp;Ultra&nbsp;企业版头显<br>背包版、PC 版两种配置可选</p>
 
-[认识 XTac-UMI G1](product/g1.md){ .md-button .md-button--primary }
+[认识 XTac UMI G1](product/g1.md){ .md-button .md-button--primary }
 [选择配置](product/editions.md){ .md-button }
 
 </div>
@@ -84,11 +84,11 @@ hide:
 
 <div class="grid cards xu-cards" markdown>
 
--   ![XTac-UMI 数采背包](assets/product/backpack-card.webp){ .xu-card__img }
+-   ![XTac UMI 数采背包](assets/product/backpack-card.webp){ .xu-card__img }
 
     <span class="xu-tag xu-tag--backpack">背包版</span>
 
-    **XTac-UMI 数采背包**{ .xu-card__title }
+    **XTac UMI 数采背包**{ .xu-card__title }
 
     ---
 
@@ -104,11 +104,11 @@ hide:
     [了解背包](product/backpack.md){ .md-button }
     { .xu-card__actions }
 
--   ![XTac-UMI G1 视触觉夹爪](assets/product/g1-card.webp){ .xu-card__img }
+-   ![XTac UMI G1 视触觉夹爪](assets/product/g1-card.webp){ .xu-card__img }
 
     <span class="xu-tag xu-tag--pc">PC 版</span>
 
-    **XTac-UMI G1 开发套件（开源）**{ .xu-card__title }
+    **XTac UMI G1 开发套件（开源）**{ .xu-card__title }
 
     ---
 
@@ -155,7 +155,7 @@ hide:
 
 <div class="tc-feature__text" markdown>
 
-用 XTac-UMI G1 双夹爪采集的视触觉操作数据，以 LeRobotDataset v3 格式按 CC BY-SA 4.0 协议开放，可直接下载训练。
+用 XTac UMI G1 双夹爪采集的视触觉操作数据，以 LeRobotDataset v3 格式按 CC BY-SA 4.0 协议开放，可直接下载训练。
 
 - **122 个任务**：覆盖办公、家庭、工作台三类场景
 - **17,690 条人类示范**：共 370 小时、约 4,000 万帧

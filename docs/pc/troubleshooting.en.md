@@ -182,17 +182,17 @@ Record the serial number, connection method, error message and a photo of the se
 ## Pico4U tracker and pose
 
 ??? failure "No pose / the tracker cannot connect / the pose is unstable"
-    **Cause:** most commonly, the collection PC's Wi-Fi conflicts with the Pico4 Ultra Enterprise wired network sharing. Other causes: the service or XTac-UMI XR is not running, or the tracker is unpaired or its battery is depleted.
+    **Cause:** most commonly, the collection PC's Wi-Fi conflicts with the Pico4 Ultra Enterprise wired network sharing. Other causes: the service or XTac UMI XR is not running, or the tracker is unpaired or its battery is depleted.
 
     **Fix:** turn off the collection PC's Wi-Fi (see [Network connection](../common/pico4.md#pico-network)); check each step in [Quickstart · Power on and connect](quickstart.md#power-on); start the service with `/opt/apps/roboticsservice/runService.sh`; if needed, run the self-check `python -m lerobot.robots.taccap_gripper.check_tracker`.
 
 ??? failure "The pose reference frame drifts between episodes"
-    **Cause:** XTac-UMI XR was restarted between episodes, which reset the world origin.
+    **Cause:** XTac UMI XR was restarted between episodes, which reset the world origin.
 
-    **Fix:** do not restart XTac-UMI XR between episodes. Treat data recorded after a restart as a new dataset, see [Startup and frame alignment](../common/pico4.md#pico-frame).
+    **Fix:** do not restart XTac UMI XR between episodes. Treat data recorded after a restart as a new dataset, see [Startup and frame alignment](../common/pico4.md#pico-frame).
 
 ??? failure "The pose drops out between episodes / the headset turns off its screen automatically"
-    **Cause:** screen-off and sleep are still enabled on the headset; once it suspends, XTac-UMI XR is paused or terminated.
+    **Cause:** screen-off and sleep are still enabled on the headset; once it suspends, XTac UMI XR is paused or terminated.
 
     **Fix:** in Enterprise settings → System settings → Power policy, set "System sleep" and then "Screen off" to "Never" (in the reverse order, screen-off is clamped back to a finite value), see [System settings: developer mode and power policy](../common/pico4.md#pico-system).
 
@@ -201,7 +201,7 @@ Record the serial number, connection method, error message and a photo of the se
 
     **Fix:** bind both trackers in the "Motion Tracker" app. Before pairing, hold the tracker's power button for about 6 seconds until the light alternates blue and red, then tap "Start pairing". See [Binding the tracker to the headset](../common/pico4.md#pico-tracker-bind).
 
-??? failure "XTac-UMI XR cannot connect (Not connected or Connection failed)"
+??? failure "XTac UMI XR cannot connect (Not connected or Connection failed)"
     **Cause:** usually the wired network is not connected properly, or the collection PC's Wi-Fi is still on.
 
     **Fix:** for a wired connection, choose "USB Network"; over Wi-Fi, choose "WiFi Network" and enter the collection PC's IP in "PC IP"; then tap "Connect". If it still fails, redo the [Network connection](../common/pico4.md#pico-network); the screen is described in [The app's screen](../common/pico4.md#pico-toolkit-ui).

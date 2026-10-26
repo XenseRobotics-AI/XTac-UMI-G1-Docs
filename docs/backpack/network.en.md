@@ -1,6 +1,6 @@
 # Network and console access
 
-This page explains how to open the XTac-UMI Collector console (below, "the console"). The recommended way is the bundled tablet over USB, which can also put the backpack and the tablet on the site Wi-Fi together.
+This page explains how to open the XTac UMI Collector console (below, "the console"). The recommended way is the bundled tablet over USB, which can also put the backpack and the tablet on the site Wi-Fi together.
 
 ## Identifying the unit: by its label, not by IP {#label}
 

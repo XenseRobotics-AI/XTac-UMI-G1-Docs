@@ -3,7 +3,7 @@
 本页带您从设备开机走到导出第一份数据集，按顺序操作即可。
 
 !!! note "开始前确认"
-    - **头显与追踪器**：Pico 系统已升级，已安装 XTac-UMI XR，两只追踪器已配对，见 [Pico4 头显与追踪器](../common/pico4.md)。
+    - **头显与追踪器**：Pico 系统已升级，已安装 XTac UMI XR，两只追踪器已配对，见 [Pico4 头显与追踪器](../common/pico4.md)。
     - **夹爪标定**：主夹爪已完成标定，见 控制台 → 系统 → [夹爪配置](system.md#gripper)。
 
 ## 1. 接线与上电 {#power-on}
@@ -26,11 +26,11 @@
 ## 3. 连接头显 {#headset}
 
 1. **佩戴头显**：面朝作业方向戴好头显。
-2. **启动应用**：打开 XTac-UMI XR。
+2. **启动应用**：打开 XTac UMI XR。
 3. **网络设置**：连接方式选「XTac」（首次启动默认已选中，连接背包的 `192.168.100.1`）。
 4. **建立连接**：点「连接」，网络状态显示「连接成功」即完成。
 
-![XTac-UMI XR 控制台：连接方式选 XTac，连接成功](../assets/pico4/xr-console-xtac.webp){ width="560" }
+![XTac UMI XR 控制台：连接方式选 XTac，连接成功](../assets/pico4/xr-console-xtac.webp){ width="560" }
 
 !!! warning "采集期间不要重启 XR 应用"
     重启会重设世界坐标系原点，同一数据集里的位姿就对不上了。

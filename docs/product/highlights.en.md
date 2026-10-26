@@ -1,12 +1,12 @@
 # Highlights
 
-**XTac-UMI G1** is a multimodal UMI data-collection gripper whose fingertips carry Xense's own **visuotactile sensors**, seeing exactly where, how hard and how stably every contact happens. A handheld demonstration records touch, vision and pose in sync, turning out high-quality robot manipulation data for imitation learning, VLA model training and tactile research.
+**XTac UMI G1** is a multimodal UMI data-collection gripper whose fingertips carry Xense's own **visuotactile sensors**, seeing exactly where, how hard and how stably every contact happens. A handheld demonstration records touch, vision and pose in sync, turning out high-quality robot manipulation data for imitation learning, VLA model training and tactile research.
 
 <figure class="tc-video">
 <video controls preload="none" playsinline poster="../../../assets/highlights/video-poster.webp">
 <source src="../../../assets/video/xtac-umi-g1-market.mp4" type="video/mp4">
 </video>
-<figcaption>XTac-UMI G1 product video</figcaption>
+<figcaption>XTac UMI G1 product video</figcaption>
 </figure>
 
 ## Core value
@@ -95,7 +95,7 @@
 
 ## Product appearance
 
-![The full XTac-UMI G1 set: leader grippers, follower gripper and collection backpack](../assets/product/g1-family-scene.webp){ width="560" }
+![The full XTac UMI G1 set: leader grippers, follower gripper and collection backpack](../assets/product/g1-family-scene.webp){ width="560" }
 
 === "Leader gripper, five views"
 

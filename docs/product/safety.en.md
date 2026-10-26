@@ -53,7 +53,7 @@ See also [Gripper connection and serial numbers](../common/gripper.md), the Back
 - The `DC` port takes only the supplied 12V 3A (36W) adapter, or the supplied power bank over the supplied 0.3m 12V PD power cable; do not substitute another source or cable. Wiring: [Adapter power](../backpack/unbox-connect.md#adapter) and [Power-bank power](../backpack/unbox-connect.md#powerbank).
 - Grippers plug into `UMI-L` / `UMI-R` and are powered by the backpack; connect and disconnect as in the [Gripper](#gripper) table, stopping recording first (the console's "Stop recording", or a long press on the left gripper).
 - An underpowered headset shuts down and collection stops with it; do not add devices to the power bank mid-run.
-- On individual units the `DC`, `PICO` or `USB` port may make poor contact, a hardware fault; do not force the connector — note the serial number on the body and send it in for repair.
+- On individual units the `DC`, `PICO` or `USB` port may make poor contact, a hardware fault; do not force the connector; note the serial number on the body and send it in for repair.
 - Do not block the fan outlet. After long use, overheating can drop the Wi-Fi, which a restart recovers; check the fan is turning, and report it if it keeps happening.
 - Applying a system update restarts the service; confirm no collection is in progress first.
 - The device back end is for technical support only; do not log in or change the configuration yourself, and contact technical support when diagnosis is needed, see [Advanced diagnosis: handled by technical support](../backpack/network.md#ssh).
@@ -61,8 +61,8 @@ See also [Gripper connection and serial numbers](../common/gripper.md), the Back
 
 ## Headset and trackers {#headset}
 
-!!! danger "Never restart XTac-UMI XR during a collection run"
-    A restart resets the world frame's origin and orientation, so earlier and later episodes of one dataset no longer share a reference frame — and nothing in the data reveals it. Do not restart between episodes either; screen-off or sleep suspends the app the same way.
+!!! danger "Never restart XTac UMI XR during a collection run"
+    A restart resets the world frame's origin and orientation, so earlier and later episodes of one dataset no longer share a reference frame, and nothing in the data reveals it. Do not restart between episodes either; screen-off or sleep suspends the app the same way.
 
 !!! warning "Set both the headset's system sleep and its screen timeout to \"Never\""
     System sleep first, screen timeout second; the other way round, the screen timeout's "Never" is clamped back to a finite value. Steps: [Pico4 headset and tracker setup](../common/pico4.md#pico-system).
@@ -79,7 +79,7 @@ See also [Gripper connection and serial numbers](../common/gripper.md), the Back
 - After upload, episodes are marked "Uploaded" and local files are kept by default; they are removed only if you tick clean-up before uploading or [archive](../backpack/projects-export.md#archive) afterwards, after which the episode can no longer be replayed or exported in any format.
 - For a local copy, pick the "Download to device" destination in the export dialog and collect the archive before cleaning up or archiving.
 - Upload credentials (ModelScope token, S3 keys, FTP password and so on) are stored on the device and not shown again after saving.
-- Choose a "Private (recommended)" repository when creating an upload configuration — publishing publicly cannot be undone. After uploading to the wrong account, programmatic deletion is limited and you must use the ModelScope web console; check which configuration a project is bound to when you create it.
+- Choose a "Private (recommended)" repository when creating an upload configuration; publishing publicly cannot be undone. After uploading to the wrong account, programmatic deletion is limited and you must use the ModelScope web console; check which configuration a project is bound to when you create it.
 - Developer Kit uploads to the Hugging Face Hub need `--private` for a private repository, see [Pushing to the Hugging Face Hub and backup](../pc/dataset.md#64).
 - Collected data is stored only on your local device and upload destinations you configure. Recordings may capture faces, screens or other personal information; inform the people involved and obtain consent beforehand, and handle and store data under local law.
 

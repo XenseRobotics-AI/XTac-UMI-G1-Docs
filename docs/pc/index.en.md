@@ -1,4 +1,4 @@
-# XTac-UMI G1 Developer Kit
+# XTac UMI G1 Developer Kit
 
 The Developer Kit (PC edition) runs collection on your own x86 collection PC: the grippers and headset connect to it directly by cable, recording runs on open-source LeRobot and produces a LeRobotDataset v3 you can push to the Hugging Face Hub. The collection software and gripper SDK are open source, built for research and algorithm teams who want to customize freely.
 
@@ -70,7 +70,7 @@ Hover over (or tap) any block to see where its data comes from and where it goes
 
 <div class="tc-arch"><script type="application/json">
 {
-  "title": "XTac-UMI G1 collection system architecture",
+  "title": "XTac UMI G1 collection system architecture",
   "tiers": [
     "① Grippers only",
     "② With wrist pose",
@@ -122,7 +122,7 @@ Hover over (or tap) any block to see where its data comes from and where it goes
     "headset": {
       "title": "Headset",
       "sub": "Pico4 Ultra Enterprise",
-      "desc": "Runs XTac-UMI XR, tracks both trackers and sends the poses to the collection PC over a cable (recommended) or Wi-Fi; in tier ③ it also streams its own stereo cameras as a first-person view, plus the head pose. The world origin is where the headset was when the XR app started."
+      "desc": "Runs XTac UMI XR, tracks both trackers and sends the poses to the collection PC over a cable (recommended) or Wi-Fi; in tier ③ it also streams its own stereo cameras as a first-person view, plus the head pose. The world origin is where the headset was when the XR app started."
     },
     "sdk": {
       "title": "xense.taccap",
@@ -196,7 +196,7 @@ Taking a bimanual setup as the example, each dataset row is the **observation** 
 
 <div class="tc-arch" data-diagram="frame"><script type="application/json">
 {
-  "title": "What makes up one XTac-UMI G1 dataset row",
+  "title": "What makes up one XTac UMI G1 dataset row",
   "tiers": ["① Grippers only", "② With wrist pose", "③ Full setup"],
   "cols": {"src": "Source", "obs": "Observation · frame t-1", "act": "Action · frame t", "out": "Stored as"},
   "groups": {"img": "observation.images · {n} streams", "state": "observation.state · {n}-D", "act": "action · {n}-D"},

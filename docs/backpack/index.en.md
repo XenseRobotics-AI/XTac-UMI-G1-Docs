@@ -1,6 +1,6 @@
-# Backpack Kit: the XTac-UMI Backpack
+# Backpack Kit: the XTac UMI Backpack
 
-Welcome to the XTac-UMI Backpack. This page is the getting-started guide for the Backpack Kit:
+Welcome to the XTac UMI Backpack. This page is the getting-started guide for the Backpack Kit:
 
 - **First deployment**: when you first receive the Backpack Kit, work through the [first deployment checklist](#first-deploy) on this page.
 - **Daily collection**: before each collection session, check the [daily collection cheat sheet](#daily).
@@ -8,7 +8,7 @@ Welcome to the XTac-UMI Backpack. This page is the getting-started guide for the
 
 ## What the Backpack Kit is {#overview}
 
-- **The backpack is the host**: the collection software, XTac-UMI Collector, runs on the backpack, and collection, replay and export all happen in its console. A tablet, phone or computer just opens the console in a browser; no separate collection PC is needed.
+- **The backpack is the host**: the collection software, XTac UMI Collector, runs on the backpack, and collection, replay and export all happen in its console. A tablet, phone or computer just opens the console in a browser; no separate collection PC is needed.
 - **One-person operation**: the gripper buttons start and stop recording, and the LEDs and voice prompts report the state, so one person can run the whole collection.
 - **What is recorded**: each episode is saved as one raw MCAP recording, capturing the left and right wrist fisheye views, four visuotactile feeds, the headset images, the 6-DoF poses of the headset and both trackers, and the gripper opening in sync.
 - **Export**: export per task as a [LeRobot dataset](projects-export.md#lerobot) or [MCAP](projects-export.md#mcap), then download an archive or upload to ModelScope, S3, FTP or NFS.
@@ -18,7 +18,7 @@ The box contents are in [Box contents and wiring](../product/editions.md#kit); c
 
 ![The console's Live monitoring page: every camera, the visuotactile images and the poses on one screen](../assets/backpack/monitor-live-en.webp)
 
-The console shows every camera, the visuotactile images and the poses on one screen, with the gripper opening updated in real time; recording state, free disk space and tracker-loss alerts are on the same screen, viewable from a tablet or phone. What to check before recording is in [Confirm in the console before recording](monitor-record.md#checks), and the product introduction is in [The XTac-UMI Backpack](../product/backpack.md).
+The console shows every camera, the visuotactile images and the poses on one screen, with the gripper opening updated in real time; recording state, free disk space and tracker-loss alerts are on the same screen, viewable from a tablet or phone. What to check before recording is in [Confirm in the console before recording](monitor-record.md#checks), and the product introduction is in [The XTac UMI Backpack](../product/backpack.md).
 
 ## System composition {#system}
 
@@ -79,7 +79,7 @@ The whole capture happens in the backpack: every device plugs into it, it stores
     "headset": {
       "title": "Headset",
       "sub": "Pico4 Ultra Enterprise",
-      "desc": "Runs XTac-UMI XR and sends poses to the backpack over a Type-C cable (wired only); in modes that record the headset it also sends stereo or right-eye images (640 × 480 or 1024 × 768 per eye)."
+      "desc": "Runs XTac UMI XR and sends poses to the backpack over a Type-C cable (wired only); in modes that record the headset it also sends stereo or right-eye images (640 × 480 or 1024 × 768 per eye)."
     },
     "mcu": {
       "title": "Gripper data",
@@ -310,7 +310,7 @@ Export formats and the extra files are in [LeRobot dataset](projects-export.md#l
 - **System update**: update Pico OS to 5.15.5.U or later.
 - **System settings**: [turn on developer mode and set screen-off and sleep to "Never"](../common/pico4.md#pico-system).
 - **Trackers**: [pair the two trackers with the headset](../common/pico4.md#pico-tracker-bind) by the "odd left, even right" rule and switch them to independent tracking mode.
-- **Software**: [install XTac-UMI XR](../common/pico4.md#pico-app) on the headset.
+- **Software**: [install XTac UMI XR](../common/pico4.md#pico-app) on the headset.
 
 ### 2. Wiring and power {#deploy-wiring}
 
@@ -335,7 +335,7 @@ The grippers' connection and power requirements are in [Gripper connection and s
 
 ### 4. Connect the headset to the backpack {#deploy-headset-link}
 
-1. Put on the headset and open XTac-UMI XR.
+1. Put on the headset and open XTac UMI XR.
 2. Choose "XTac" as the connection (selected by default on first launch; it connects to the backpack at `192.168.100.1`).
 3. Tap "Connect".
 
@@ -362,7 +362,7 @@ The [capture mode](system.md#capture-mode) is a fixed property of a project. Whe
 
 Every working day, follow the [Quickstart](quickstart.md): wire and power up → tablet over USB to open the console → connect the headset → pick a project and task → check before recording → record with the buttons → export.
 
-Do not restart XTac-UMI XR during collection: a restart resets the world origin, so the pose reference within one dataset stops being consistent; see [Startup and frame alignment](../common/pico4.md#pico-frame).
+Do not restart XTac UMI XR during collection: a restart resets the world origin, so the pose reference within one dataset stops being consistent; see [Startup and frame alignment](../common/pico4.md#pico-frame).
 
 ## After recording: replay, review and export {#after}
 
@@ -410,7 +410,7 @@ Archiving keeps only the record and clears the raw files; clean-up protects form
 ## Common questions {#faq}
 
 - [Cannot reach the console](troubleshooting.md#connect): try the tablet over USB first; on the hotspot, confirm the device supports 5GHz, that you are on this backpack's hotspot and that the address includes `http://`; power-cycle the backpack if it becomes unresponsive.
-- [Tracker lost](troubleshooting.md#tracker): when tracking accuracy degrades or the headset disconnects, both XTac-UMI XR and the Live monitoring page show an icon. Check whether the tracker's blue light is on and whether the [pairing](../common/pico4.md#pico-tracker-bind) is correct.
+- [Tracker lost](troubleshooting.md#tracker): when tracking accuracy degrades or the headset disconnects, both XTac UMI XR and the Live monitoring page show an icon. Check whether the tracker's blue light is on and whether the [pairing](../common/pico4.md#pico-tracker-bind) is correct.
 - [Recording refused](troubleshooting.md#record): once the recording disk reaches 80% used, starting a recording is refused with a message that the recording disk is N% used and has reached the 80% limit. Upload or download the data you have already collected, then [archive](projects-export.md#archive) to free space, or delete the episodes you do not need.
 - [Replay and live preview cannot run at the same time](playback.md): when replay is refused, close the Live monitoring page open in another tab or on another device.
 - While a recording is in progress, switching project / task, gripper calibration, firmware upgrades, system updates and similar operations are all refused; stop recording first. The capture mode is fixed with the project and can never be switched.
@@ -418,4 +418,4 @@ Archiving keeps only the record and clears the raw files; clean-up protects form
 
 ## Versions {#version}
 
-This page is written against XTac-UMI Collector 0.4.3. Each component's [version baseline](versions.md#baseline) is whatever the console's System page shows, and upgrades are in [Upgrades and OTA](update.md); the serial numbers in the text are only examples.
+This page is written against XTac UMI Collector 0.4.3. Each component's [version baseline](versions.md#baseline) is whatever the console's System page shows, and upgrades are in [Upgrades and OTA](update.md); the serial numbers in the text are only examples.

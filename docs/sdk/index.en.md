@@ -1,6 +1,6 @@
 # SDK overview
 
-`xense.taccap` (repository [TacCap-Gripper](https://github.com/XenseRobotics-AI/TacCap-Gripper)) is the SDK for the XTac-UMI G1
+`xense.taccap` (repository [TacCap-Gripper](https://github.com/XenseRobotics-AI/TacCap-Gripper)) is the SDK for the XTac UMI G1
 grippers. It provides both Python and C++ interfaces, for writing your own programs that read the leader gripper and control the follower gripper.
 
 !!! note "This appendix is written for SDK 0.4.3"

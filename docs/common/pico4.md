@@ -1,12 +1,12 @@
 # Pico4 头显与追踪器配置 {#34}
 
-- **组成**：Pico4 Ultra 企业版配套的独立运动追踪器装在夹爪顶部提供 6-DoF 位姿，头显上的 XTac-UMI XR（VR 客户端 APP）把位姿送到采集单元。
+- **组成**：Pico4 Ultra 企业版配套的独立运动追踪器装在夹爪顶部提供 6-DoF 位姿，头显上的 XTac UMI XR（VR 客户端 APP）把位姿送到采集单元。
 - **两种形态**：只差下表三处，分「背包版 / PC 版」标签页写。
 
 | | 背包版 | PC 版 |
 |---|---|---|
 | 头显接到哪 | 数采背包的 `PICO` 口，**只能有线** | 数采主机的 Type-C 口（USB 有线共享网络），或与主机接同一 WiFi |
-| 位姿服务 | XenseVR 运行时内置于 XTac-UMI Collector，开机自启 | 数采主机上的 [XenseVR PC Service](../pc/host-setup.md#35)，每次采集前手动启动 |
+| 位姿服务 | XenseVR 运行时内置于 XTac UMI Collector，开机自启 | 数采主机上的 [XenseVR PC Service](../pc/host-setup.md#35)，每次采集前手动启动 |
 | APP 连接 | 连接方式选「XTac」（首次启动默认选中，连 `192.168.100.1`）→ 点「连接」 | 有线：选「USB网络」（连 `192.168.58.1`）→ 点「连接」；WiFi：选「WiFi网络」，在「PC IP」填数采主机 IP 并保存 → 点「连接」 |
 
 - **出厂已配置**：开发者模式、电源策略、APP、追踪器绑定、追踪模式断电不丢（恢复出厂或换头显才重做），从[网络连接](#pico-network)开始。
@@ -44,9 +44,9 @@
 !!! warning "先休眠、后灭屏，顺序不能反"
     灭屏时间受系统休眠约束，休眠仍为默认值时，灭屏的「永不」会被钳回有限值，看似设好实际没生效。改完退出设置再进来，确认两项都是「永不」。
 
-不关的话，采集间隙灭屏/休眠（摘下头显放置也会触发）会挂起或杀掉 XTac-UMI XR，而重启它会重设世界系（见[坐标系对齐](#pico-frame)）。
+不关的话，采集间隙灭屏/休眠（摘下头显放置也会触发）会挂起或杀掉 XTac UMI XR，而重启它会重设世界系（见[坐标系对齐](#pico-frame)）。
 
-## 安装 XTac-UMI XR {#pico-app}
+## 安装 XTac UMI XR {#pico-app}
 
 APK 文件名形如 `XTac-UMI-XR-<版本>.apk`，当前版本 0.3.3，用头显文件管理安装：
 
@@ -58,7 +58,7 @@ APK 文件名形如 `XTac-UMI-XR-<版本>.apk`，当前版本 0.3.3，用头显�
 
     ![文件管理 → Download](../assets/pico4/install-step2-filemanager.webp){ width="480" }
 
-3. 点 APK，在「要安装此应用吗？」里选「安装」，装好后「资源库」里出现 XTac-UMI XR。
+3. 点 APK，在「要安装此应用吗？」里选「安装」，装好后「资源库」里出现 XTac UMI XR。
 
     ![确认安装](../assets/pico4/install-step3-confirm.webp){ width="480" }
 
@@ -81,13 +81,13 @@ APK 文件名形如 `XTac-UMI-XR-<版本>.apk`，当前版本 0.3.3，用头显�
 
     1. 头显连接线（Pico → Pack，双 Type-C）从头显侧面 Type-C 口接到背包 `PICO` 口；适配器与充电宝供电都这样接，见[开箱、接线与供电](../backpack/unbox-connect.md#order)。背包版不支持头显走 WiFi。
     2. 背包开机（位姿服务随之启动）。
-    3. 打开 XTac-UMI XR，连接方式选「XTac」（首次启动默认已选中，地址固定为背包 `192.168.100.1`），点「连接」。
+    3. 打开 XTac UMI XR，连接方式选「XTac」（首次启动默认已选中，地址固定为背包 `192.168.100.1`），点「连接」。
 
 === "PC 版"
 
     1. 电脑端先启动服务 `runService.sh`（见[启动 XenseVR PC Service](../pc/host-setup.md#35)），否则 APP 连不上。
     2. Type-C 线直连头显与数采主机，头显给主机分配 IP。
-    3. 打开 XTac-UMI XR，连接方式选「USB网络」，点「连接」，自动连数采主机（`192.168.58.1`），网络状态变为「连接成功」（见[打开 App 后的界面](#pico-toolkit-ui)）。
+    3. 打开 XTac UMI XR，连接方式选「USB网络」，点「连接」，自动连数采主机（`192.168.58.1`），网络状态变为「连接成功」（见[打开 App 后的界面](#pico-toolkit-ui)）。
 
     走 WiFi：头显与数采主机接同一网络，连接方式选「WiFi网络」，点「PC IP」输入主机 IP 并保存，再点「连接」。
 
@@ -96,7 +96,7 @@ APK 文件名形如 `XTac-UMI-XR-<版本>.apk`，当前版本 0.3.3，用头显�
 
 ## 绑定运动追踪器到头显 {#pico-tracker-bind}
 
-首次使用或更换追踪器后，须先把 PICO Motion Tracker 绑定到这台头显，否则追踪模式选不到它，XTac-UMI XR 与采集单元也发现不了其 SN。
+首次使用或更换追踪器后，须先把 PICO Motion Tracker 绑定到这台头显，否则追踪模式选不到它，XTac UMI XR 与采集单元也发现不了其 SN。
 
 配对前：
 
@@ -128,7 +128,7 @@ APK 文件名形如 `XTac-UMI-XR-<版本>.apk`，当前版本 0.3.3，用头显�
 ### 读取追踪器 SN {#pico-tracker-sn}
 
 - **作用**：定左右（`G` 前一个数字单左双右），也是采集单元识别追踪器的依据。
-- **从二维码取**：完整 SN（形如 `PC2310MLL3200496G`）取自追踪器背面二维码；「体感追踪器」App 只显示短编号（如 `Tracker 150399`），XTac-UMI XR 的 Network 面板的 SN（如 `PA9410MGL…`）是头显自己的。
+- **从二维码取**：完整 SN（形如 `PC2310MLL3200496G`）取自追踪器背面二维码；「体感追踪器」App 只显示短编号（如 `Tracker 150399`），XTac UMI XR 的 Network 面板的 SN（如 `PA9410MGL…`）是头显自己的。
 
 === "背包版"
 
@@ -145,7 +145,7 @@ APK 文件名形如 `XTac-UMI-XR-<版本>.apk`，当前版本 0.3.3，用头显�
     print(xrt.get_motion_tracker_serial_numbers())   # 例:['PC2310MLL3200496G', ...]
     ```
 
-    - **前提**：追踪器已绑定开机 → XTac-UMI XR [「连接成功」](#pico-toolkit-ui) → 主机已启动 [PC Service](../pc/host-setup.md#35)，少一步返回空列表。
+    - **前提**：追踪器已绑定开机 → XTac UMI XR [「连接成功」](#pico-toolkit-ui) → 主机已启动 [PC Service](../pc/host-setup.md#35)，少一步返回空列表。
     - **钉住 SN**：可用 `--robot.tracker_serial=<SN>` 跳过[自动匹配](../pc/host-setup.md#33)；写配置前逐个摇晃夹爪确认 SN 对应哪只手。
 
 ## 追踪模式 {#pico-tracker}
@@ -162,7 +162,7 @@ APK 文件名形如 `XTac-UMI-XR-<版本>.apk`，当前版本 0.3.3，用头显�
 
 ## 打开 App 后的界面 {#pico-toolkit-ui}
 
-戴上头显，从资源库打开 XTac-UMI XR，进入「XENSE XR 控制台」，连接只用左侧这几项：
+戴上头显，从资源库打开 XTac UMI XR，进入「XENSE XR 控制台」，连接只用左侧这几项：
 
 | 项目 | 说明 |
 |---|---|
@@ -175,7 +175,7 @@ APK 文件名形如 `XTac-UMI-XR-<版本>.apk`，当前版本 0.3.3，用头显�
 
 按上表选好连接方式后点「连接」，网络状态变为「连接成功」即可开始采集。之后每次打开 XR 都会按上次的连接方式自动连接；手动点「断开」后不再自动重连，要再点一次「连接」。
 
-![XTac-UMI XR 控制台：连接方式选 XTac，连接成功](../assets/pico4/xr-console-xtac.webp){ width="560" }
+![XTac UMI XR 控制台：连接方式选 XTac，连接成功](../assets/pico4/xr-console-xtac.webp){ width="560" }
 
 两种形态的差别：
 
@@ -195,9 +195,9 @@ APK 文件名形如 `XTac-UMI-XR-<版本>.apk`，当前版本 0.3.3，用头显�
 
 ## 启动与坐标系对齐 {#pico-frame}
 
-- **启动**：与机器人朝向一致（朝机器人的正前方）启动 XTac-UMI XR，再在 APP 里[连上](#pico-toolkit-ui)；启动瞬间冻结世界系原点与方向。
+- **启动**：与机器人朝向一致（朝机器人的正前方）启动 XTac UMI XR，再在 APP 里[连上](#pico-toolkit-ui)；启动瞬间冻结世界系原点与方向。
 - **世界系定义**：轴向、原点、冻结规则与示意图见[坐标系](coordinates.md)，所有位姿以它为参考。
 
-!!! danger "启动时与机器人朝向一致；分集之间不要重启 XTac-UMI XR"
+!!! danger "启动时与机器人朝向一致；分集之间不要重启 XTac UMI XR"
     - **朝向一致**：世界系 X 轴才对齐机器人正前方；只看朝向，站在哪里不影响。
     - **不要重启**：重启后原点/方向会变，同一数据集内位姿参考系不一致。

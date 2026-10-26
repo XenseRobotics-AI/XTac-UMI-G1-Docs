@@ -17,7 +17,7 @@ A gripper that shows up in the device list cannot necessarily be opened. This pa
     sudo apt purge -y brltty                     # 1. remove brltty
     sudo usermod -aG dialout,video "$USER"       # 2. join the dialout / video groups
     sudo tee /etc/udev/rules.d/99-taccap-ignore-modemmanager.rules >/dev/null <<'EOF'
-    # XTac-UMI G1 MCUs are CH343 USB-serial (1a86:55d2) — keep ModemManager off them
+    # XTac UMI G1 MCUs are CH343 USB-serial (1a86:55d2); keep ModemManager off them
     ACTION=="add|change", SUBSYSTEMS=="usb", ATTRS{idVendor}=="1a86", ENV{ID_MM_DEVICE_IGNORE}="1"
     EOF
     sudo udevadm control --reload-rules && sudo udevadm trigger   # 3. keep ModemManager off
@@ -80,7 +80,7 @@ Permanent fix (real modems are unaffected):
 
 ```bash
 sudo tee /etc/udev/rules.d/99-taccap-ignore-modemmanager.rules >/dev/null <<'EOF'
-# XTac-UMI G1 MCUs are CH343 USB-serial (1a86:55d2) — keep ModemManager off them
+# XTac UMI G1 MCUs are CH343 USB-serial (1a86:55d2); keep ModemManager off them
 ACTION=="add|change", SUBSYSTEMS=="usb", ATTRS{idVendor}=="1a86", ENV{ID_MM_DEVICE_IGNORE}="1"
 EOF
 sudo udevadm control --reload-rules && sudo udevadm trigger
@@ -132,7 +132,7 @@ lsusb -t
 
 ## Pico4U headset and trackers
 
-The Pico4U tracker on top of the gripper provides the 6-DoF pose; the headset runs XTac-UMI XR, and the pose reaches collection via the [XenseVR PC Service](#35) below. Unboxing, installing XTac-UMI XR, network, tracker binding, tracking mode and startup alignment are in [Pico4 headset and tracker setup](../common/pico4.md).
+The Pico4U tracker on top of the gripper provides the 6-DoF pose; the headset runs XTac UMI XR, and the pose reaches collection via the [XenseVR PC Service](#35) below. Unboxing, installing XTac UMI XR, network, tracker binding, tracking mode and startup alignment are in [Pico4 headset and tracker setup](../common/pico4.md).
 
 - **Factory-configured headset**: start at [Network connection](../common/pico4.md#pico-network).
 - **Before every session**: plug in the USB, short-press the tracker's power button until the blue light comes on, [tap "Connect"](../common/pico4.md#pico-toolkit-ui) and do the [startup alignment](../common/pico4.md#pico-frame).
@@ -145,7 +145,7 @@ Collection reads poses from the XenseVR PC Service (RoboticsService) daemon. The
 /opt/apps/roboticsservice/runService.sh
 ```
 
-- **Naming**: the headset app is **XTac-UMI XR**; the service on the collection PC is **XenseVR PC Service**. The package `XenseVR-PC-Service_<version>_amd64.deb` installs into `/opt/apps/roboticsservice/`, and the Python package is `xensevr_pc_service_sdk`.
+- **Naming**: the headset app is **XTac UMI XR**; the service on the collection PC is **XenseVR PC Service**. The package `XenseVR-PC-Service_<version>_amd64.deb` installs into `/opt/apps/roboticsservice/`, and the Python package is `xensevr_pc_service_sdk`.
 - **Single instance**: starting a second one fails or conflicts.
 - **Data**: the service supplies Head / controllers / hand tracking / full-body mocap / tracker data; collection uses the tracker pose (with an `sn` per tracker) and the head pose (paired with the [headset's stereo frames](recording.md#56)).
 - **Headset frames**: they share one connection with the trackers, so with the service down neither works; this needs the service at v0.2.0 or later (see [You must upgrade to the latest versions](versions.md#required)), while tracker-only use works with any version.

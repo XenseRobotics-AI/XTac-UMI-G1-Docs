@@ -8,13 +8,13 @@ This page walks you through turning the parts in the box into a system that powe
 
 The box contents and quantities are in [Product line and configuration comparison](../product/editions.md). Before cabling, check these three:
 
-1. **Leader grippers (XTac-UMI G1)**
+1. **Leader grippers (XTac UMI G1)**
     - One left and one right: an odd last digit of the serial number means left, an even one means right; see [Serial numbers and side identification](../common/gripper.md#sn).
     - The Type-C cables' locking connectors are undamaged, and nothing is lodged in the gripper connectors.
 2. **Backpack body label**
     - It carries this device's SN, hotspot name and password, and device name, which you need to identify it and get it online, so do not peel it off; see [Identifying the unit: by its label, not by IP](network.md#label).
 3. **Headset setup**
-    - Done as described in [Pico4 headset and tracker setup](../common/pico4.md): developer mode on, screen timeout and sleep set to "Never", both trackers paired, XTac-UMI XR installed.
+    - Done as described in [Pico4 headset and tracker setup](../common/pico4.md): developer mode on, screen timeout and sleep set to "Never", both trackers paired, XTac UMI XR installed.
 
 !!! note
     Cabling does not depend on this software setup, but without it the headset cannot connect.
@@ -30,7 +30,7 @@ The box contents and quantities are in [Product line and configuration compariso
 | Ethernet | Rear panel | RJ45, to a router's LAN port |
 | TF, HDMI, headphone | Rear panel | Not used in day-to-day collection |
 
-The connector drawing is in [The XTac-UMI Backpack](../product/backpack.md#ports).
+The connector drawing is in [The XTac UMI Backpack](../product/backpack.md#ports).
 
 ## Connection and disconnection order {#order}
 
@@ -87,7 +87,7 @@ The backpack draws about 20W and runs about 3.5–4 hours on the power bank; see
 
 ## Connecting the headset to the backpack {#pico-link}
 
-1. **Start and connect**: the headset and the backpack connect by cable only, so make sure the headset's Type-C port is wired to the backpack's `PICO` port as above. Put on the headset, open XTac-UMI XR, choose "XTac" as the connection (selected by default on first launch; it connects to `192.168.100.1`), then tap "Connect".
+1. **Start and connect**: the headset and the backpack connect by cable only, so make sure the headset's Type-C port is wired to the backpack's `PICO` port as above. Put on the headset, open XTac UMI XR, choose "XTac" as the connection (selected by default on first launch; it connects to `192.168.100.1`), then tap "Connect".
 2. **Status icons**: the fold button is at the top right of XR. When tracking accuracy degrades or the link to the backpack drops, both XR and the console's Live monitoring page show an icon; the interface is described in [The app's screen](../common/pico4.md#pico-toolkit-ui).
 3. **Get in position**: stand at the work position facing the working direction before you open XR; where XR first starts becomes the [world-frame origin](../common/pico4.md#pico-frame). **Do not restart XR during collection.**
 

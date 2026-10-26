@@ -1,12 +1,12 @@
 # Pico4 headset and tracker setup {#34}
 
-- **Components**: the standalone tracker that ships with the Pico4 Ultra Enterprise mounts on top of the gripper and provides the 6-DoF pose; XTac-UMI XR (the VR client app) on the headset sends it to the collection unit.
+- **Components**: the standalone tracker that ships with the Pico4 Ultra Enterprise mounts on top of the gripper and provides the 6-DoF pose; XTac UMI XR (the VR client app) on the headset sends it to the collection unit.
 - **Two editions**: only the three rows below differ; those steps are split into "Backpack Kit / Developer Kit" tabs.
 
 | | Backpack Kit | Developer Kit |
 |---|---|---|
 | Where the headset plugs in | The backpack's `PICO` port, **wired only** | The collection PC's Type-C port (wired USB network sharing), or the same Wi-Fi as the collection PC |
-| Where the pose service runs | The XenseVR runtime is built into XTac-UMI Collector and is up once the backpack boots | The [XenseVR PC Service](../pc/host-setup.md#35) on the collection PC, started by hand before every session |
+| Where the pose service runs | The XenseVR runtime is built into XTac UMI Collector and is up once the backpack boots | The [XenseVR PC Service](../pc/host-setup.md#35) on the collection PC, started by hand before every session |
 | How the app connects | Choose "XTac" (selected by default on first launch; connects to `192.168.100.1`) → tap "Connect" | Wired: choose "USB Network" (connects to `192.168.58.1`) → tap "Connect"; Wi-Fi: choose "WiFi Network", enter the collection PC's IP under "PC IP" and save → tap "Connect" |
 
 - **Factory-configured**: developer mode, power policy, app, tracker binding and tracking mode survive power cycles (redo them only after a factory reset or a headset swap); start at [Network connection](#pico-network).
@@ -44,9 +44,9 @@
 !!! warning "Sleep first, screen-off second; the order cannot be reversed"
     Screen-off ("Turn Off Screen After") is bounded by system sleep ("System Goes to Sleep After"): while sleep is still at its default, screen-off's "Never" is clamped back to a finite value, so it looks set but is not in effect. Leave Settings and come back to confirm both read "Never".
 
-Otherwise, screen-off or sleep between episodes (also triggered by taking the headset off and setting it down) suspends or kills XTac-UMI XR, and restarting it resets the world frame (see [Frame alignment](#pico-frame)).
+Otherwise, screen-off or sleep between episodes (also triggered by taking the headset off and setting it down) suspends or kills XTac UMI XR, and restarting it resets the world frame (see [Frame alignment](#pico-frame)).
 
-## Installing XTac-UMI XR {#pico-app}
+## Installing XTac UMI XR {#pico-app}
 
 The APK is named `XTac-UMI-XR-<version>.apk`; the current version is 0.3.3. Install it from the headset's file manager:
 
@@ -58,7 +58,7 @@ The APK is named `XTac-UMI-XR-<version>.apk`; the current version is 0.3.3. Inst
 
     ![File Manager → Download](../assets/pico4/install-step2-filemanager-en.webp){ width="480" }
 
-3. Tap the APK and tap "Install" in the installation prompt; XTac-UMI XR then appears in the "Library".
+3. Tap the APK and tap "Install" in the installation prompt; XTac UMI XR then appears in the "Library".
 
     ![Confirming the install](../assets/pico4/install-step3-confirm-en.webp){ width="480" }
 
@@ -81,13 +81,13 @@ On both editions, set USB up on the headset first:
 
     1. Run the headset cable (Pico → Pack, Type-C to Type-C) from the headset's side Type-C port to the backpack's `PICO` port; see [Unboxing, cabling and power](../backpack/unbox-connect.md#order). The connection is the same whether the backpack runs on the adapter or a power bank. The headset cannot use Wi-Fi on the Backpack Kit.
     2. Power on the backpack (the pose service starts with it).
-    3. Open XTac-UMI XR, choose "XTac" as the connection (selected by default on first launch; the address is fixed to the backpack at `192.168.100.1`), then tap "Connect".
+    3. Open XTac UMI XR, choose "XTac" as the connection (selected by default on first launch; the address is fixed to the backpack at `192.168.100.1`), then tap "Connect".
 
 === "Developer Kit"
 
     1. Start the service on the collection PC first with `runService.sh` (see [Start the XenseVR PC Service](../pc/host-setup.md#35)); otherwise the app cannot connect.
     2. Connect the headset directly to the collection PC with a Type-C cable; the headset assigns the collection PC an IP.
-    3. Open XTac-UMI XR, choose "USB Network" as the connection and tap "Connect": the app connects to the collection PC (`192.168.58.1`) by itself and Status changes to "Connected" (see [The app's screen](#pico-toolkit-ui)).
+    3. Open XTac UMI XR, choose "USB Network" as the connection and tap "Connect": the app connects to the collection PC (`192.168.58.1`) by itself and Status changes to "Connected" (see [The app's screen](#pico-toolkit-ui)).
 
     Over Wi-Fi: put the headset and the collection PC on the same network, choose "WiFi Network", tap "PC IP", enter the collection PC's IP and save, then tap "Connect".
 
@@ -96,7 +96,7 @@ On both editions, set USB up on the headset first:
 
 ## Binding the tracker to the headset {#pico-tracker-bind}
 
-On first use, or after swapping a tracker, bind the PICO Motion Tracker to this headset first; otherwise the headset cannot track it and neither XTac-UMI XR nor the collection unit will discover its SN.
+On first use, or after swapping a tracker, bind the PICO Motion Tracker to this headset first; otherwise the headset cannot track it and neither XTac UMI XR nor the collection unit will discover its SN.
 
 Before pairing:
 
@@ -128,7 +128,7 @@ The binding is stored on the headset and survives power cycles and app restarts.
 ### Reading a tracker SN {#pico-tracker-sn}
 
 - **Purpose**: it sets the side (the digit before the `G`, odd-left / even-right) and is how the collection unit identifies a tracker.
-- **From the QR code**: the full SN (shaped like `PC2310MLL3200496G`) comes from the QR code on the back of the tracker; the "PICO Motion Tracker" app only shows a short number (e.g. `Tracker 150399`), and the SN on XTac-UMI XR's Network panel (e.g. `PA9410MGL…`) is the headset's own.
+- **From the QR code**: the full SN (shaped like `PC2310MLL3200496G`) comes from the QR code on the back of the tracker; the "PICO Motion Tracker" app only shows a short number (e.g. `Tracker 150399`), and the SN on XTac UMI XR's Network panel (e.g. `PA9410MGL…`) is the headset's own.
 
 === "Backpack Kit"
 
@@ -145,7 +145,7 @@ The binding is stored on the headset and survives power cycles and app restarts.
     print(xrt.get_motion_tracker_serial_numbers())   # e.g. ['PC2310MLL3200496G', ...]
     ```
 
-    - **Prerequisites**: tracker bound and on → XTac-UMI XR ["Connected"](#pico-toolkit-ui) → [PC Service](../pc/host-setup.md#35) running on the collection PC; miss one and you get an empty list.
+    - **Prerequisites**: tracker bound and on → XTac UMI XR ["Connected"](#pico-toolkit-ui) → [PC Service](../pc/host-setup.md#35) running on the collection PC; miss one and you get an empty list.
     - **Pin the SN**: `--robot.tracker_serial=<SN>` skips [auto-matching](../pc/host-setup.md#33); shake one gripper at a time to confirm which SN is which hand before writing it into your config.
 
 ## Tracking mode {#pico-tracker}
@@ -162,7 +162,7 @@ Once bound, open "PICO Motion Tracker" on the headset → Settings → "Tracking
 
 ## The app's screen {#pico-toolkit-ui}
 
-With the headset on, open XTac-UMI XR from the Library to reach the "XENSE XR Console". Connecting only uses these items on the left:
+With the headset on, open XTac UMI XR from the Library to reach the "XENSE XR Console". Connecting only uses these items on the left:
 
 | Item | What it means |
 |---|---|
@@ -175,7 +175,7 @@ With the headset on, open XTac-UMI XR from the Library to reach the "XENSE XR Co
 
 Choose the connection as in the table and tap "Connect"; once Status reads "Connected", you can start collecting. From then on XR reconnects automatically with the last connection each time it opens; after you tap "Disconnect" it stops reconnecting until you tap "Connect" again.
 
-![XTac-UMI XR console: XTac selected, Connected](../assets/pico4/xr-console-xtac-en.webp){ width="560" }
+![XTac UMI XR console: XTac selected, Connected](../assets/pico4/xr-console-xtac-en.webp){ width="560" }
 
 How the two editions differ:
 
@@ -195,9 +195,9 @@ How the two editions differ:
 
 ## Startup and frame alignment {#pico-frame}
 
-- **Launch**: face the same direction as the robot (towards the robot's front) when you launch XTac-UMI XR, then [connect in the app](#pico-toolkit-ui); the world frame's origin and orientation freeze at launch.
+- **Launch**: face the same direction as the robot (towards the robot's front) when you launch XTac UMI XR, then [connect in the app](#pico-toolkit-ui); the world frame's origin and orientation freeze at launch.
 - **World frame definition**: axes, origin, freeze rule and diagram are in [Coordinate frames](coordinates.md); every pose in the dataset is referenced to it.
 
-!!! danger "Face the same direction as the robot at launch; do not restart XTac-UMI XR between episodes"
+!!! danger "Face the same direction as the robot at launch; do not restart XTac UMI XR between episodes"
     - **Same direction**: this aligns world X with the robot's forward direction; only your heading matters, not where you stand.
     - **Do not restart**: a restart changes the origin and orientation, leaving poses inside one dataset in different frames.
