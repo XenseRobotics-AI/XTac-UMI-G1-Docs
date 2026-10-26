@@ -40,7 +40,7 @@ hide:
 <div class="tc-brandline">
 <img class="tc-brandline__logo tc-only-dark" src="assets/brand/logo-white.png" alt="XENSE 千觉">
 <img class="tc-brandline__logo tc-only-light" src="assets/brand/logo-black.png" alt="XENSE 千觉">
-<p class="tc-slogan">触觉点亮物理智能</p>
+<p class="tc-slogan">触觉&nbsp;点亮物理智能</p>
 </div>
 
 <div class="xu-stats" markdown>

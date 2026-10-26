@@ -57,11 +57,11 @@
 
     ---
 
-    穿戴式主端轻巧易上手，抓取、搬运、插拔、薄片夹取等任务都能完成。
+    穿戴式主夹爪轻巧易上手，抓取、搬运、插拔、薄片夹取等任务都能完成。
 
 -   ![双手持主夹爪，叠加实时位姿坐标轴](../assets/highlights/system-sync.webp){ .tc-card-img loading=lazy }
 
-    :material-sync: __高精度同步输出，沉淀高质量数据__
+    :material-sync: __高精度位姿与高质量数据__
 
     ---
 
@@ -81,7 +81,7 @@
 
     ---
 
-    轻量主端加背负式单元，实验室、家庭、现场皆可采。
+    轻量主夹爪加背负式单元，实验室、家庭、现场皆可采。
 
 -   ![指尖夹取细链](../assets/highlights/fingertip.webp){ .tc-card-img loading=lazy }
 

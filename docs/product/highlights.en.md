@@ -61,7 +61,7 @@
 
 -   ![Two leader grippers with live pose axes overlaid](../assets/highlights/system-sync.webp){ .tc-card-img loading=lazy }
 
-    :material-sync: __Precise, synchronized output__
+    :material-sync: __High-precision pose, high-quality data__
 
     ---
 
