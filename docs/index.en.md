@@ -8,7 +8,7 @@ hide:
 
 <div class="tc-hero__text" markdown>
 
-<span class="tc-eyebrow">XTac UMI · Handheld multimodal data collection</span>
+<span class="tc-eyebrow">XTac UMI · Wearable multimodal data collection</span>
 
 # Give robot datasets<br>a sense of touch
 

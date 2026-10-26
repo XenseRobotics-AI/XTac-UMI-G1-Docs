@@ -6,7 +6,7 @@ A lookup appendix shared by both editions: terms, feedback channels and related 
 
 | Term | Meaning |
 |---|---|
-| **XTac UMI G1** | The handheld UMI data-collection gripper, the sensor carrier shared by both editions; see [XTac UMI G1](../product/g1.md) |
+| **XTac UMI G1** | The wearable UMI data-collection gripper, the sensor carrier shared by both editions; see [XTac UMI G1](../product/g1.md) |
 | **Backpack** | The Backpack Kit's collection unit: an RK3588 compute node that the grippers and the headset plug into and that runs XTac UMI Collector; formally the XTac UMI Backpack, see [The XTac UMI Backpack](../product/backpack.md) |
 | **XTac UMI Collector** | The collection software on the backpack: it takes in the cameras, the gripper MCUs and the headset pose, and handles recording, replay, export and device management; version baseline 0.4.3, the device's System page is authoritative |
 | **Console** | Collector's browser UI, opened from a tablet, phone or PC connected to the backpack; the live monitor, projects and system pages all live there |

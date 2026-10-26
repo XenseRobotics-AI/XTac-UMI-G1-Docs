@@ -8,7 +8,7 @@ hide:
 
 <div class="tc-hero__text" markdown>
 
-<span class="tc-eyebrow">XTac UMI · 手持式多模态数据采集系统</span>
+<span class="tc-eyebrow">XTac UMI · 穿戴式多模态数据采集系统</span>
 
 # 让机器人数据集<br>拥有触觉
 
