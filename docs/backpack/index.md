@@ -1,6 +1,6 @@
-# 背包版：XTac-UMI 数采背包
+# 背包版：XTac UMI 数采背包
 
-欢迎使用 XTac-UMI 数采背包。本页是背包版的入门指引：
+欢迎使用 XTac UMI 数采背包。本页是背包版的入门指引：
 
 - **首次部署**：初次拿到设备时，按本页的[首次部署清单](#first-deploy)完成初始化配置。
 - **日常采集**：开始采集任务前，查阅[日常采集速查](#daily)。
@@ -8,7 +8,7 @@
 
 ## 这一版是什么 {#overview}
 
-- **背包即主机**：采集软件 XTac-UMI Collector 运行在背包里，采集、回放与导出都在背包的控制台完成。平板、手机或电脑只用浏览器打开控制台，不需要另配数采主机。
+- **背包即主机**：采集软件 XTac UMI Collector 运行在背包里，采集、回放与导出都在背包的控制台完成。平板、手机或电脑只用浏览器打开控制台，不需要另配数采主机。
 - **单人作业**：夹爪按键开始、停止录制，指示灯与语音反馈状态，一个人就能完成整套采集。
 - **采集内容**：每条录制保存为一个 MCAP 原始记录，同步记录左右腕部鱼眼、四路视触觉、头显画面、头显与双追踪器的 6-DoF 位姿和夹爪开合度。
 - **导出**：按任务导出 [LeRobot 数据集](projects-export.md#lerobot)或 [MCAP](projects-export.md#mcap)，可以下载压缩包，也可以上传到 ModelScope、S3、FTP 或 NFS。
@@ -79,7 +79,7 @@
     "headset": {
       "title": "头显",
       "sub": "Pico4 Ultra 企业版",
-      "desc": "运行 XTac-UMI XR，经 Type-C 线把位姿送到背包，只能有线连接；录头显画面的模式下还送来双目或右单目画面（每眼 640 × 480 或 1024 × 768）。"
+      "desc": "运行 XTac UMI XR，经 Type-C 线把位姿送到背包，只能有线连接；录头显画面的模式下还送来双目或右单目画面（每眼 640 × 480 或 1024 × 768）。"
     },
     "mcu": {
       "title": "夹爪数据",
@@ -310,7 +310,7 @@
 - **系统升级**：将 Pico OS 升级至 5.15.5.U 或以上版本。
 - **系统设置**：[开启开发者模式，并将灭屏与休眠时间设为「永不」](../common/pico4.md#pico-system)。
 - **追踪器设置**：将两只追踪器按「左奇右偶」规则[与头显配对](../common/pico4.md#pico-tracker-bind)，并切换至独立追踪模式。
-- **软件安装**：在头显中[安装 XTac-UMI XR](../common/pico4.md#pico-app)。
+- **软件安装**：在头显中[安装 XTac UMI XR](../common/pico4.md#pico-app)。
 
 ### 2. 接线与供电 {#deploy-wiring}
 
@@ -335,7 +335,7 @@
 
 ### 4. 头显连接背包 {#deploy-headset-link}
 
-1. 戴上头显，打开 XTac-UMI XR。
+1. 戴上头显，打开 XTac UMI XR。
 2. 连接方式选「XTac」（首次启动默认已选中，连接背包的 `192.168.100.1`）。
 3. 点击「连接」。
 
@@ -362,7 +362,7 @@
 
 每天开工照[一页速通](quickstart.md)走一遍：接线上电 → 平板插 USB 打开控制台 → 连接头显 → 选项目与任务 → 开录前检查 → 按键录制 → 导出。
 
-采集全程不要重启 XTac-UMI XR：重启会重设世界坐标系原点，同一数据集内的位姿参考系就不一致了，见[启动与坐标系对齐](../common/pico4.md#pico-frame)。
+采集全程不要重启 XTac UMI XR：重启会重设世界坐标系原点，同一数据集内的位姿参考系就不一致了，见[启动与坐标系对齐](../common/pico4.md#pico-frame)。
 
 ## 录完之后：回放、检查与导出 {#after}
 
@@ -410,7 +410,7 @@
 ## 常见问题 {#faq}
 
 - [连不上控制台](troubleshooting.md#connect)：先用平板插 USB 进入；走热点时确认设备支持 5GHz、连的是这台背包的热点、地址带了 `http://` 前缀；偶发无响应时给背包重新上电。
-- [追踪器丢失](troubleshooting.md#tracker)：追踪精度不准或头显断开时，XTac-UMI XR 与监控页都会有图标提示；先看追踪器是否亮蓝灯、[配对](../common/pico4.md#pico-tracker-bind)是否正确。
+- [追踪器丢失](troubleshooting.md#tracker)：追踪精度不准或头显断开时，XTac UMI XR 与监控页都会有图标提示；先看追踪器是否亮蓝灯、[配对](../common/pico4.md#pico-tracker-bind)是否正确。
 - [开录被拒](troubleshooting.md#record)：录制盘已用达到 80% 时拒绝开始录制，提示「录制盘已用 N%（剩余 …），达到 80% 上限，已拒绝开录」；先把已采数据上传或下载走，再[归档](projects-export.md#archive)腾空间，或删掉不要的条目。
 - [回放与实时预览不能同时进行](playback.md)：回放被拒时，先关掉其他标签页或其他设备上打开的实时监控。
 - 录制进行中，切换项目 / 任务、夹爪标定、固件升级、系统更新等操作都会被拒绝，先停止录制；采集模式随项目固定，任何时候都不能切换。
@@ -418,4 +418,4 @@
 
 ## 版本 {#version}
 
-本页按 XTac-UMI Collector 0.4.3 编写，各组件的[版本基线](versions.md#baseline)以控制台系统页显示为准，升级见[升级与 OTA](update.md)；文中的序列号只是示例。
+本页按 XTac UMI Collector 0.4.3 编写，各组件的[版本基线](versions.md#baseline)以控制台系统页显示为准，升级见[升级与 OTA](update.md)；文中的序列号只是示例。

@@ -17,7 +17,7 @@
     sudo apt purge -y brltty                     # 1. 卸载 brltty
     sudo usermod -aG dialout,video "$USER"       # 2. 加入 dialout / video 组
     sudo tee /etc/udev/rules.d/99-taccap-ignore-modemmanager.rules >/dev/null <<'EOF'
-    # XTac-UMI G1 MCUs are CH343 USB-serial (1a86:55d2) — keep ModemManager off them
+    # XTac UMI G1 MCUs are CH343 USB-serial (1a86:55d2); keep ModemManager off them
     ACTION=="add|change", SUBSYSTEMS=="usb", ATTRS{idVendor}=="1a86", ENV{ID_MM_DEVICE_IGNORE}="1"
     EOF
     sudo udevadm control --reload-rules && sudo udevadm trigger   # 3. 屏蔽 ModemManager
@@ -80,7 +80,7 @@ IoError: SerialBus: open(/dev/serial/by-id/usb-1a86_USB_Dual_Serial_..-if02): De
 
 ```bash
 sudo tee /etc/udev/rules.d/99-taccap-ignore-modemmanager.rules >/dev/null <<'EOF'
-# XTac-UMI G1 MCUs are CH343 USB-serial (1a86:55d2) — keep ModemManager off them
+# XTac UMI G1 MCUs are CH343 USB-serial (1a86:55d2); keep ModemManager off them
 ACTION=="add|change", SUBSYSTEMS=="usb", ATTRS{idVendor}=="1a86", ENV{ID_MM_DEVICE_IGNORE}="1"
 EOF
 sudo udevadm control --reload-rules && sudo udevadm trigger
@@ -132,7 +132,7 @@ lsusb -t
 
 ## Pico4 头显与追踪器
 
-夹爪顶部的 Pico4 Ultra 企业版追踪器提供 6-DoF 位姿，头显运行 XTac-UMI XR，位姿经下面的 [XenseVR PC Service](#35) 送到采集单元。开箱、装 XTac-UMI XR、网络、追踪器绑定、追踪模式与启动对齐见[Pico4 头显与追踪器](../common/pico4.md)。
+夹爪顶部的 Pico4 Ultra 企业版追踪器提供 6-DoF 位姿，头显运行 XTac UMI XR，位姿经下面的 [XenseVR PC Service](#35) 送到采集单元。开箱、装 XTac UMI XR、网络、追踪器绑定、追踪模式与启动对齐见[Pico4 头显与追踪器](../common/pico4.md)。
 
 - **出厂已配置**：从[网络连接](../common/pico4.md#pico-network)开始。
 - **每次采集前**：接 USB、短按追踪器电源键到蓝灯亮、[点「连接」](../common/pico4.md#pico-toolkit-ui)、[启动对齐](../common/pico4.md#pico-frame)。
@@ -145,7 +145,7 @@ lsusb -t
 /opt/apps/roboticsservice/runService.sh
 ```
 
-- **命名**：头显上的 APP 叫 **XTac-UMI XR**，电脑端服务叫 **XenseVR PC Service**。安装包 `XenseVR-PC-Service_<版本>_amd64.deb` 装到 `/opt/apps/roboticsservice/`，Python 包是 `xensevr_pc_service_sdk`。
+- **命名**：头显上的 APP 叫 **XTac UMI XR**，电脑端服务叫 **XenseVR PC Service**。安装包 `XenseVR-PC-Service_<版本>_amd64.deb` 装到 `/opt/apps/roboticsservice/`，Python 包是 `xensevr_pc_service_sdk`。
 - **单实例**：重复启动会失败或冲突。
 - **数据**：服务提供 Head / 手柄 / 手势 / 全身动捕 / Tracker 多类数据，数采用 Tracker 位姿（带 `sn` 区分追踪器）和头部位姿（配合[头显双目画面](recording.md#56)）。
 - **头显画面**：与追踪器共用同一条连接，服务没起来两者都没有；需服务 ≥ v0.2.0（见[版本基线](versions.md#required)），只用追踪器不限版本。

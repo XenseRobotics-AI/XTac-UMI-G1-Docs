@@ -1,6 +1,6 @@
 # Gripper buttons, LEDs and voice {#buttons-leds}
 
-On the Backpack Kit the gripper's two side buttons start, stop and delete recordings, the LED reports the current state, and the device gives voice announcements. The buttons and LED patterns are handled by XTac-UMI Collector on the backpack, so no browser needs to be online. How to connect the grippers and tell left from right by serial number is in [Gripper connection and serial numbers](../common/gripper.md).
+On the Backpack Kit the gripper's two side buttons start, stop and delete recordings, the LED reports the current state, and the device gives voice announcements. The buttons and LED patterns are handled by XTac UMI Collector on the backpack, so no browser needs to be online. How to connect the grippers and tell left from right by serial number is in [Gripper connection and serial numbers](../common/gripper.md).
 
 ![Leader gripper controls (port / buttons / LED)](../assets/hardware/master-controls.webp){ width="480" }
 
@@ -44,11 +44,11 @@ While collecting, both hands are on the grippers and your eyes on the scene, so 
 | When | What it says |
 |---|---|
 | Recording starts | "Recording started." |
-| An episode finishes | "Recording complete. Please reset the scene." — reset the scene and get ready for the next one |
-| A fatal problem while recording | "Recording failed." — that episode is unusable |
+| An episode finishes | "Recording complete. Please reset the scene." Reset the scene and get ready for the next one |
+| A fatal problem while recording | "Recording failed." That episode is unusable |
 | A gripper drops off while recording | "Gripper connection failed." |
 | The headset drops off while recording | "Pico connection failed." |
-| A tracker drops off while recording | "Tracker connection failed." — the headset may still be connected, so check the tracker on your hand first |
+| A tracker drops off while recording | "Tracker connection failed." The headset may still be connected, so check the tracker on your hand first |
 | Right gripper single press to mark a subtask | Subtask marker tone (no speech) |
 
 - **Language**: Chinese or English, following the console's interface language by default.

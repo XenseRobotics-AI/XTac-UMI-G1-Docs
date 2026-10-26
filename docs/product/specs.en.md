@@ -1,6 +1,6 @@
 # Technical specifications
 
-Specifications for the XTac-UMI G1 grippers, the tracking system and the backpack. Wiring is in [Gripper connection and serial numbers](../common/gripper.md); choosing between the editions is in [Product line and configuration comparison](editions.md).
+Specifications for the XTac UMI G1 grippers, the tracking system and the backpack. Wiring is in [Gripper connection and serial numbers](../common/gripper.md); choosing between the editions is in [Product line and configuration comparison](editions.md).
 
 ## Leader gripper {#specs}
 
@@ -65,7 +65,7 @@ How to use it is in [Follower gripper overview](../follower/index.md); the flang
 
 ## The backpack {#backpack}
 
-The Backpack Kit's collection unit: the grippers and headset plug into it and the console opens in a browser. See [The XTac-UMI Backpack](backpack.md).
+The Backpack Kit's collection unit: the grippers and headset plug into it and the console opens in a browser. See [The XTac UMI Backpack](backpack.md).
 
 | Parameter | Specification |
 |---|---|

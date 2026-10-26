@@ -1,6 +1,6 @@
 # Troubleshooting
 
-This page lists the cause and fix for each symptom. The most common issues are being unable to reach the XTac-UMI Collector console (below, "the console"), recording being refused, and the export pre-check failing. Before troubleshooting, listen for the voice announcement and check the gripper LEDs and the Live monitoring page's status dots; LED meanings are in [Gripper buttons, LEDs and voice](gripper.md#buttons-leds).
+This page lists the cause and fix for each symptom. The most common issues are being unable to reach the XTac UMI Collector console (below, "the console"), recording being refused, and the export pre-check failing. Before troubleshooting, listen for the voice announcement and check the gripper LEDs and the Live monitoring page's status dots; LED meanings are in [Gripper buttons, LEDs and voice](gripper.md#buttons-leds).
 
 !!! danger "Odor, smoke, obvious overheating, structural damage or damaged cable insulation"
     Cut the power and stop using the device immediately. Note the serial number on the body and contact technical support.
@@ -34,7 +34,7 @@ This page lists the cause and fix for each symptom. The most common issues are b
 
     - Move the grippers back into the headset's field of view.
     - Confirm that both trackers show blue, are [paired to the headset](../common/pico4.md#pico-tracker-bind) and are in independent tracking mode.
-    - For "Pico offline", check that XTac-UMI XR is connected; see [The app's screen](../common/pico4.md#pico-toolkit-ui).
+    - For "Pico offline", check that XTac UMI XR is connected; see [The app's screen](../common/pico4.md#pico-toolkit-ui).
 
 ??? failure "The pose is shown as online, but the 3D model does not move"
     **Cause:** the tracker app in the headset has not fully started (for example, on first use of the day without pressing the tracker button). The badge may still show online.
@@ -171,7 +171,7 @@ This page lists the cause and fix for each symptom. The most common issues are b
 
     **Fix:**
 
-    - Check the cable from the headset to the backpack's `PICO` port, the headset battery, and that XTac-UMI XR is running. For a tracker dropout, check the tracker.
+    - Check the cable from the headset to the backpack's `PICO` port, the headset battery, and that XTac UMI XR is running. For a tracker dropout, check the tracker.
     - Recording **does not resume automatically**. Start a new recording once ready; see [Headset disconnects while recording](monitor-record.md#pico-disconnect).
 
 ??? failure "A recording shows as failed, with power loss or a system restart as the reason"
@@ -202,7 +202,7 @@ This page lists the cause and fix for each symptom. The most common issues are b
 
     **Fix:** refer to the gesture table in [Buttons](gripper.md#buttons). Current bindings are at System → [Capture settings](system.md#capture-settings).
 
-??? failure "The device is silent — no voice announcement when recording starts or stops"
+??? failure "The device is silent: no voice announcement when recording starts or stops"
     **Cause:** announcements play through the headset by default, and through the backpack's onboard speaker only when the headset is unavailable. If both are silent, the announcements are usually muted or the volume is 0.
 
     **Fix:**

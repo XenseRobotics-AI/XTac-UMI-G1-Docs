@@ -1,4 +1,4 @@
-# PC 版：XTac-UMI G1 开发套件
+# PC 版：XTac UMI G1 开发套件
 
 PC 版把采集交给您自己的 x86 工作站：夹爪和头显用线直连工作站，基于开源 LeRobot 录制，直接得到 LeRobotDataset v3，可推送到 Hugging Face Hub。采集软件与夹爪 SDK 开源，适合科研与算法团队自由二次开发。
 
@@ -70,7 +70,7 @@ PC 版把采集交给您自己的 x86 工作站：夹爪和头显用线直连工
 
 <div class="tc-arch"><script type="application/json">
 {
-  "title": "XTac-UMI G1 数采系统架构",
+  "title": "XTac UMI G1 数采系统架构",
   "tiers": [
     "① 只有夹爪",
     "② 带腕部位姿",
@@ -122,7 +122,7 @@ PC 版把采集交给您自己的 x86 工作站：夹爪和头显用线直连工
     "headset": {
       "title": "头显",
       "sub": "Pico4 Ultra 企业版",
-      "desc": "运行 XTac-UMI XR，跟踪两个追踪器，经有线（推荐）或 WiFi 把位姿发给数采电脑；③ 档还用自带双目相机拍第一视角画面并提供头部位姿。世界坐标原点是 XR 应用启动时头显所在的位置。"
+      "desc": "运行 XTac UMI XR，跟踪两个追踪器，经有线（推荐）或 WiFi 把位姿发给数采电脑；③ 档还用自带双目相机拍第一视角画面并提供头部位姿。世界坐标原点是 XR 应用启动时头显所在的位置。"
     },
     "sdk": {
       "title": "xense.taccap",
@@ -196,7 +196,7 @@ PC 版把采集交给您自己的 x86 工作站：夹爪和头显用线直连工
 
 <div class="tc-arch" data-diagram="frame"><script type="application/json">
 {
-  "title": "XTac-UMI G1 数据集每一行的组成",
+  "title": "XTac UMI G1 数据集每一行的组成",
   "tiers": ["① 只有夹爪", "② 带腕部位姿", "③ 完全体"],
   "cols": {"src": "来源", "obs": "观测 · 第 t-1 帧", "act": "动作 · 第 t 帧", "out": "落盘"},
   "groups": {"img": "observation.images · {n} 路", "state": "observation.state · {n} 维", "act": "action · {n} 维"},

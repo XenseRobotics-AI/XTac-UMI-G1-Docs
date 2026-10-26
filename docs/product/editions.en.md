@@ -1,6 +1,6 @@
 # Product line and configuration comparison
 
-XTac-UMI comes in two configurations that share the same XTac-UMI G1 grippers and Pico4 Ultra Enterprise headset and record the same data:
+XTac UMI comes in two configurations that share the same XTac UMI G1 grippers and Pico4 Ultra Enterprise headset and record the same data:
 
 - **Backpack Kit**: the backpack runs all collection and a tablet browser is the console; turnkey and built for large-scale field collection. The collection software is not open source.
 - **Developer Kit (open source)**: the grippers and headset connect straight to your collection PC and record with open-source LeRobot; built for research and algorithm teams who want to customize freely.
@@ -9,11 +9,11 @@ This page compares the two and lists each edition's box contents and wiring.
 
 <div class="grid cards xu-cards" markdown>
 
--   ![The XTac-UMI data collection backpack](../assets/product/backpack-card.webp){ .xu-card__img }
+-   ![The XTac UMI data collection backpack](../assets/product/backpack-card.webp){ .xu-card__img }
 
     <span class="xu-tag xu-tag--backpack">Backpack Kit</span>
 
-    **XTac-UMI Backpack**{ .xu-card__title }
+    **XTac UMI Backpack**{ .xu-card__title }
 
     ---
 
@@ -21,11 +21,11 @@ This page compares the two and lists each edition's box contents and wiring.
 
     [Quickstart](../backpack/quickstart.md){ .md-button .md-button--primary }
 
--   ![XTac-UMI G1 visuotactile gripper](../assets/product/g1-card.webp){ .xu-card__img }
+-   ![XTac UMI G1 visuotactile gripper](../assets/product/g1-card.webp){ .xu-card__img }
 
     <span class="xu-tag xu-tag--pc">Developer Kit</span>
 
-    **XTac-UMI G1 Developer Kit (open source)**{ .xu-card__title }
+    **XTac UMI G1 Developer Kit (open source)**{ .xu-card__title }
 
     ---
 
@@ -37,7 +37,7 @@ This page compares the two and lists each edition's box contents and wiring.
 
 ## How the two differ
 
-| | Backpack Kit · XTac-UMI Backpack | Developer Kit · XTac-UMI G1 Developer Kit |
+| | Backpack Kit · XTac UMI Backpack | Developer Kit · XTac UMI G1 Developer Kit |
 |---|---|---|
 | Compute | The backpack in the box | Your own x86 collection PC, NVIDIA GPU recommended |
 | Interface | Browser console; a tablet is enough | Terminal + Rerun preview window |
@@ -56,7 +56,7 @@ This page compares the two and lists each edition's box contents and wiring.
 
     | Item | Qty | Spec and notes |
     |---|---|---|
-    | XTac-UMI G1 leader gripper | 2 | One left and one right, told apart by the last digit of the serial number: odd is left, even is right |
+    | XTac UMI G1 leader gripper | 2 | One left and one right, told apart by the last digit of the serial number: odd is left, even is right |
     | Leader gripper cable | 2 | Type-C to Type-C, 1.5m, one per side; locking connector at the gripper end, the other end into the backpack's `UMI-L` / `UMI-R` |
     | Pico4 Ultra Enterprise headset | 1 | With controllers and trackers; the trackers mount on top of the two leader grippers |
     | Tracker charging dock | 1 | Three-way |
@@ -85,7 +85,7 @@ This page compares the two and lists each edition's box contents and wiring.
 
     | Item | Qty | Spec and notes |
     |---|---|---|
-    | XTac-UMI G1 leader gripper | 2 | One left and one right, told apart by the last digit of the serial number: odd is left, even is right |
+    | XTac UMI G1 leader gripper | 2 | One left and one right, told apart by the last digit of the serial number: odd is left, even is right |
     | Leader gripper cable | 2 | Type-C to Type-A, USB 2.0, 3m; locking connector at the gripper end |
     | Pico4 Ultra Enterprise headset | 1 | With controllers and trackers; the trackers mount on top of the two leader grippers |
     | Tracker charging dock | 1 | Three-way |
@@ -95,7 +95,7 @@ This page compares the two and lists each edition's box contents and wiring.
 
     | Item | Qty | Spec and notes |
     |---|---|---|
-    | XTac-UMI G1 follower gripper | 2 | One left and one right, mounted on the robot's end effector |
+    | XTac UMI G1 follower gripper | 2 | One left and one right, mounted on the robot's end effector |
     | 24V power adapter | 2 | 24V 2.5A, 4.5m lead with ferrite, one per follower |
     | Cable sleeve | 1 | 3m, for routing cables along the arm |
 

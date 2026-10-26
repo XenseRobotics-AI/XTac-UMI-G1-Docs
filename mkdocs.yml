@@ -1,13 +1,13 @@
 # =============================================================================
-# XTac-UMI G1 数采快速使用手册 · mkdocs-material 配置
+# XTac UMI G1 数采快速使用手册 · mkdocs-material 配置
 # 中英双语(中文默认 / English via mkdocs-static-i18n · suffix 结构)
 # 本地预览:  mkdocs serve
 # 构建:      mkdocs build --strict
 # 发布:      GitHub Actions -> gh-pages(见 .github/workflows/deploy.yml)
 # =============================================================================
 
-site_name: XTac-UMI 文档
-site_description: XTac-UMI 手持式多模态数据采集系统:XTac-UMI G1 视触觉夹爪、数采背包与 PC 开发套件的产品介绍与使用手册
+site_name: XTac UMI 文档
+site_description: XTac UMI 穿戴式多模态数据采集系统:XTac UMI G1 视触觉夹爪、数采背包与 PC 开发套件的产品介绍与使用手册
 site_author: 千觉机器人
 site_url: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/
 copyright: Copyright &copy; 2026 千觉机器人科技(上海)有限公司 · 文档 v0.1.1
@@ -96,7 +96,7 @@ plugins:
         - locale: en
           name: English
           build: true
-          site_name: "XTac-UMI Docs"
+          site_name: "XTac UMI Docs"
           site_author: XenseRobotics
           copyright: Copyright &copy; 2026 XenseRobotics Co., Ltd. · Docs v0.1.1
           nav_translations:
@@ -104,8 +104,8 @@ plugins:
             首页: Home
             产品亮点: Highlights
             产品线与配置对比: Editions
-            认识 XTac-UMI G1: XTac-UMI G1
-            认识数采背包: The XTac-UMI Backpack
+            认识 XTac UMI G1: XTac UMI G1
+            认识数采背包: The XTac UMI Backpack
             技术参数: Specifications
             安全与合规: Safety and compliance
             背包版: Backpack Kit
@@ -268,7 +268,7 @@ extra:
 nav:
   - 产品:
       - 首页: index.md
-      - 认识 XTac-UMI G1: product/g1.md
+      - 认识 XTac UMI G1: product/g1.md
       - 产品亮点: product/highlights.md
       - 产品线与配置对比: product/editions.md
       - 认识数采背包: product/backpack.md

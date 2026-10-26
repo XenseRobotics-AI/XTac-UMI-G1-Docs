@@ -8,15 +8,15 @@ hide:
 
 <div class="tc-hero__text" markdown>
 
-<span class="tc-eyebrow">XTac-UMI · Handheld multimodal data collection</span>
+<span class="tc-eyebrow">XTac UMI · Wearable multimodal data collection</span>
 
 # Give robot datasets<br>a sense of touch
 
 <p class="tc-sub">Two-handed touch, vision and pose in sync<br>One demonstration, a training-ready dataset</p>
 
-<p class="tc-note">XTac-UMI&nbsp;G1 grippers with the Pico4&nbsp;Ultra&nbsp;Enterprise headset<br>in a Backpack Kit or a Developer Kit</p>
+<p class="tc-note">XTac UMI&nbsp;G1 grippers with the Pico4&nbsp;Ultra&nbsp;Enterprise headset<br>in a Backpack Kit or a Developer Kit</p>
 
-[About XTac-UMI G1](product/g1.md){ .md-button .md-button--primary }
+[About XTac UMI G1](product/g1.md){ .md-button .md-button--primary }
 [Choose an edition](product/editions.md){ .md-button }
 
 </div>
@@ -85,11 +85,11 @@ Both editions use the same grippers and headset and produce the same data. The B
 
 <div class="grid cards xu-cards" markdown>
 
--   ![The XTac-UMI data collection backpack](assets/product/backpack-card.webp){ .xu-card__img }
+-   ![The XTac UMI data collection backpack](assets/product/backpack-card.webp){ .xu-card__img }
 
     <span class="xu-tag xu-tag--backpack">Backpack Kit</span>
 
-    **XTac-UMI Backpack**{ .xu-card__title }
+    **XTac UMI Backpack**{ .xu-card__title }
 
     ---
 
@@ -105,11 +105,11 @@ Both editions use the same grippers and headset and produce the same data. The B
     [About the backpack](product/backpack.md){ .md-button }
     { .xu-card__actions }
 
--   ![XTac-UMI G1 visuotactile gripper](assets/product/g1-card.webp){ .xu-card__img }
+-   ![XTac UMI G1 visuotactile gripper](assets/product/g1-card.webp){ .xu-card__img }
 
     <span class="xu-tag xu-tag--pc">Developer Kit</span>
 
-    **XTac-UMI G1 Developer Kit (open source)**{ .xu-card__title }
+    **XTac UMI G1 Developer Kit (open source)**{ .xu-card__title }
 
     ---
 
@@ -156,7 +156,7 @@ Both editions use the same grippers and headset and produce the same data. The B
 
 <div class="tc-feature__text" markdown>
 
-Visuotactile manipulation data collected with XTac-UMI G1 grippers, released as LeRobotDataset v3 under CC BY-SA 4.0 and ready to download and train on.
+Visuotactile manipulation data collected with XTac UMI G1 grippers, released as LeRobotDataset v3 under CC BY-SA 4.0 and ready to download and train on.
 
 - **122 tasks** across office, home and workbench scenes
 - **17,690 demonstrations**: 370 hours, about 40 million frames

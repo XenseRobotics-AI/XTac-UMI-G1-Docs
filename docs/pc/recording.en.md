@@ -7,7 +7,7 @@ First confirm the devices work with `lerobot-teleoperate`, then record a `LeRobo
 - `taccap_gripper` recording is self-driven; there are no `--teleop.*` arguments.
 - Shifted-frame pairing: the observation from step *t-1* is paired with the pose from step *t* as its action (EEF TCP pose + normalized `gripper.pos`, plus the headset pose with the [head camera](#56) on), so each episode is one frame shorter.
 - `tcp.*` is the gripper tip, not the tracker, derived from the tracker pose through a built-in mount transform (one per side); the tip and tracker positions are defined in [XTac-UMI-Description](https://github.com/XenseRobotics-AI/XTac-UMI-Description).
-- The world frame is gravity-aligned, X forward / Y left / Z up, frozen the instant XTac-UMI XR starts; see [frame alignment](../common/pico4.md#pico-frame).
+- The world frame is gravity-aligned, X forward / Y left / Z up, frozen the instant XTac UMI XR starts; see [frame alignment](../common/pico4.md#pico-frame).
 - `--display_data=true` opens Rerun's `/world` 3D view (`--show_trajectory=false` turns the trail off); what it shows and the mount check are in [Coordinate frames · The pose view during collection](../common/coordinates.md#world-view).
 
 ## Preview before recording {#preview}
@@ -105,7 +105,7 @@ For the complete definitions see lerobot's official [recording guide](https://hu
 | `play_sounds` | `true` | Spoken announcements; always silent in the container (no speech synthesizer), audible on the host |
 | `resume` | `false` | Continue an existing dataset; looks only locally and errors out if the dataset is not found; never downloads from the Hub; `--robot.id` must match the dataset, see [`--robot.id`](#robot-id) |
 
-**Device parameters `--robot.*` (XTac-UMI G1 specific)**
+**Device parameters `--robot.*` (XTac UMI G1 specific)**
 
 Only items used on this page; for the full set see [Common `RobotConfig` options](reference.md#robotconfig).
 
@@ -314,7 +314,7 @@ With `libsvtav1` the CPU both encodes and captures; a bimanual setup has six to 
 | Steadiness | Smooth, even motion | Abrupt stops and turns, noisy IMU/pose | Move evenly |
 | Tactile signal | Real contact and deformation | Empty grasp, no signal in the tactile image | Confirm contact in the Rerun tactile view |
 | Camera visibility | Target within the wrist camera's view | Hand or cable blocking it, or overexposure/flicker | Clear obstructions, adjust the grip angle |
-| Coordinate consistency | Same origin as other episodes | XTac-UMI XR restarted mid-collection, pose jumps between episodes | Never restart XTac-UMI XR |
+| Coordinate consistency | Same origin as other episodes | XTac UMI XR restarted mid-collection, pose jumps between episodes | Never restart XTac UMI XR |
 | Gripper reading | `gripper.pos` ≈ 0 closed, sensible when open | Not calibrated, `gripper.pos` ≠ 0 when closed | Confirm it is closed, then re-zero if needed, see [gripper calibration](calibration.md#41) |
 | Dropped frames | No warnings | Dropped-frame warnings in the log | Raise `encoder_threads`, use `vcodec=auto`, see [streaming encoding](#54) |
 | First frame | The motion starts normally | The key action lands in the dropped first frame | Hold still 0.5–1s after start; give `--dataset.episode_time_s` enough room |
@@ -323,7 +323,7 @@ On errors, start with [Troubleshooting](troubleshooting.md).
 
 ### Before collecting
 
-Never restart XTac-UMI XR during collection (see [frame alignment](../common/pico4.md#pico-frame)); if you must, treat everything after it as a new dataset.
+Never restart XTac UMI XR during collection (see [frame alignment](../common/pico4.md#pico-frame)); if you must, treat everything after it as a new dataset.
 
 - An uncalibrated leader gripper cannot connect, so the preview only double-checks the mechanical travel; each leader gripper is calibrated once (stored in flash), both sides on a bimanual setup, see [gripper calibration](calibration.md#41).
 - `scan_grippers` reports sensible side/role/firmware_sn; the tracker is charged and producing a pose.
@@ -353,7 +353,7 @@ Record 5–10 episodes first, verify with [`lerobot-check-dataset`](dataset.md#6
 
 ### Pre-flight checklist
 
-- [ ] XTac-UMI XR not restarted during collection
+- [ ] XTac UMI XR not restarted during collection
 - [ ] `gripper.pos` ≈ 0 when closed
 - [ ] Tracker has a pose, trajectory looks right
 - [ ] Collection PC Wi-Fi off
@@ -382,7 +382,7 @@ lerobot-record \
 - Prerequisites: XenseVR PC Service ≥ v0.2.0 (older versions do not forward frames, see [version baseline](versions.md#required)); the headset app is streaming and connected to the [PC Service](host-setup.md#35). Camera and tracker share one SDK connection; turning one off does not disconnect the other.
 
 !!! warning "The headset's resolution and `--robot.head_camera_width/_height` must agree"
-    Only `640x480` (default), `1024x768` and `1280x960` are accepted. XTac-UMI XR outputs 640x480 per eye by default, matching the collection unit, so there is nothing to pass; the flags only declare what you expect.
+    Only `640x480` (default), `1024x768` and `1280x960` are accepted. XTac UMI XR outputs 640x480 per eye by default, matching the collection unit, so there is nothing to pass; the flags only declare what you expect.
 
     - Any other value, or a first frame that disagrees with the config (at connect), is an error; nothing is silently resampled to change the field of view.
     - All three are 4:3, like the sensor (the PICO camera API's per-frame cap of 2328x1748 is also 4:3); 16:9 only gets a crop or a stretch.

@@ -182,17 +182,17 @@
 ## Pico4 追踪器与位姿
 
 ??? failure "无位姿 / 追踪器无法连接 / 位姿不稳"
-    **原因**：最常见的原因是电脑 WiFi 与 Pico4 Ultra 企业版的有线共享网络冲突；其次是服务或 XTac-UMI XR 未启动，或追踪器未配对、电量耗尽。
+    **原因**：最常见的原因是电脑 WiFi 与 Pico4 Ultra 企业版的有线共享网络冲突；其次是服务或 XTac UMI XR 未启动，或追踪器未配对、电量耗尽。
 
     **解决**：关闭电脑 WiFi（见[网络连接](../common/pico4.md#pico-network)）；按[上电顺序](quickstart.md#power-on)逐项确认；运行 `/opt/apps/roboticsservice/runService.sh` 启动服务；必要时运行 `python -m lerobot.robots.taccap_gripper.check_tracker` 自检。
 
 ??? failure "位姿参考系在 episode 之间漂移"
-    **原因**：分段采集期间重启了 XTac-UMI XR，世界原点被重置。
+    **原因**：分段采集期间重启了 XTac UMI XR，世界原点被重置。
 
-    **解决**：episode 之间不要重启 XTac-UMI XR。重启后采集的数据应作为新数据集，见[坐标系对齐](../common/pico4.md#pico-frame)。
+    **解决**：episode 之间不要重启 XTac UMI XR。重启后采集的数据应作为新数据集，见[坐标系对齐](../common/pico4.md#pico-frame)。
 
 ??? failure "采集间隙位姿中断 / 头显自动灭屏"
-    **原因**：头显未关闭灭屏与休眠，进入挂起后 XTac-UMI XR 被暂停或终止。
+    **原因**：头显未关闭灭屏与休眠，进入挂起后 XTac UMI XR 被暂停或终止。
 
     **解决**：进入 企业设置 → 系统设置 → 电源策略，先将「系统休眠」、再将「灭屏」设为「永不」（顺序颠倒时，灭屏会被限制回有限值），见[系统设置](../common/pico4.md#pico-system)。
 
@@ -201,7 +201,7 @@
 
     **解决**：在「体感追踪器」App 中绑定两枚追踪器。配对前长按追踪器电源键约 6 秒，至蓝红交替闪烁，再点击「开始配对」。见[绑定追踪器](../common/pico4.md#pico-tracker-bind)。
 
-??? failure "XTac-UMI XR 始终无法连接（未连接或连接失败）"
+??? failure "XTac UMI XR 始终无法连接（未连接或连接失败）"
     **原因**：通常是有线网络未正确连接，或电脑 WiFi 未关闭。
 
     **解决**：有线连接时连接方式选「USB网络」；WiFi 连接时选「WiFi网络」并在「PC IP」填写主机 IP，再点「连接」。仍无法连接时按[网络连接](../common/pico4.md#pico-network)重连，界面说明见[打开 App 后的界面](../common/pico4.md#pico-toolkit-ui)。

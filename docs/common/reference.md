@@ -6,23 +6,23 @@
 
 | 术语 | 含义 |
 |---|---|
-| **XTac-UMI G1** | 手持式 UMI 数采夹爪，两种形态共用的传感器载体；见[认识 XTac-UMI G1](../product/g1.md) |
-| **数采背包** | 背包版的采集单元：RK3588 计算节点，夹爪与头显都接到它上面，XTac-UMI Collector 在它上面运行；正式名 XTac-UMI 数采背包，见[认识数采背包](../product/backpack.md) |
-| **XTac-UMI Collector** | 数采背包上的采集软件，接入相机、夹爪 MCU 与头显位姿，负责录制、回放、导出与设备管理；版本基线 0.4.3，以系统页为准 |
+| **XTac UMI G1** | 穿戴式 UMI 数采夹爪，两种形态共用的传感器载体；见[认识 XTac UMI G1](../product/g1.md) |
+| **数采背包** | 背包版的采集单元：RK3588 计算节点，夹爪与头显都接到它上面，XTac UMI Collector 在它上面运行；正式名 XTac UMI 数采背包，见[认识数采背包](../product/backpack.md) |
+| **XTac UMI Collector** | 数采背包上的采集软件，接入相机、夹爪 MCU 与头显位姿，负责录制、回放、导出与设备管理；版本基线 0.4.3，以系统页为准 |
 | **控制台** | Collector 的浏览器界面，平板、手机、电脑连上背包后打开；实时监控、项目、系统等页面都在里面 |
 | **项目 / 任务 / episode** | 背包版的数据组织层级：项目下建任务，任务带 LeRobot 语言指令，每次开录到停录是一条 episode |
 | **MCAP** | 背包版每条 episode 的原始记录格式，按 topic 存相机、编码器、IMU、位姿与事件；导出 LeRobot 时从它转换 |
 | **OTA bundle** | 背包版 Collector 的升级包（`.tar.zst`），在控制台 系统 → 系统更新 页上传、校验、应用并重启，可回滚到上一版本；PC 版夹爪固件的 OTA 见[固件升级](../pc/versions.md#ota) |
 | **SoftAP** | 数采背包自建的常驻 WiFi 热点，SSID `xense-<序列号后 6 位>`，只有 5GHz，网关固定 `192.168.44.1`；不依赖现场网络的兜底入口 |
-| **TacCap** | 包名 `xense.taccap`、设备类型 `taccap_gripper` 与背包机身标签里的名字（Tactile Capture）；产品名为 XTac-UMI G1 |
+| **TacCap** | 包名 `xense.taccap`、设备类型 `taccap_gripper` 与背包机身标签里的名字（Tactile Capture）；产品名为 XTac UMI G1 |
 | **UMI** | Universal Manipulation Interface，手持式主夹爪数采范式 |
 | **Leader / Follower** | 主夹爪 / 从夹爪；序列号 patch `m` = leader，`s` = follower |
-| **V2.1**（固件） | 固件的**命令集**版本——实现了哪些命令，不是构建号（构建号是 leader `≥ 1.2.0` / follower `≥ 1.1.0`，更高版本同样支持），也不是帧格式（帧格式为 V1.8）。行程标定命令由 V2.1 引入 → [三套编号](../pc/versions.md#v21) |
+| **V2.1**（固件） | 固件的**命令集**版本，表示实现了哪些命令，不是构建号（构建号是 leader `≥ 1.2.0` / follower `≥ 1.1.0`，更高版本同样支持），也不是帧格式（帧格式为 V1.8）。行程标定命令由 V2.1 引入 → [三套编号](../pc/versions.md#v21) |
 | **单左双右** | 4 位序列号最后一位：奇→左，偶→右；夹爪、传感器与追踪器都按这条规则，见[序列号与左右识别](gripper.md#sn) |
 | **GSPS** | 视触觉传感器（左右指各一），序列号 `GSPS01...` |
 | **XC** | 腕部 UVC 相机，序列号 `XC...` |
-| **XTac-UMI XR** | 装在 Pico4 头显上的 VR 客户端 APP（原名 XenseVR-Toolkit），把头显与追踪器位姿送到采集单元，启动瞬间建立世界坐标系；见 [Pico4 头显与追踪器配置](pico4.md) |
-| **XenseVR PC Service / 运行时** | 接收头显位姿的服务，是 XTac-UMI XR 在采集单元这一端的对端（服务名没跟着 APP 一起改）：PC 版是数采主机上的守护进程，要手动启动；背包版内置在 Collector 里 |
+| **XTac UMI XR** | 装在 Pico4 头显上的 VR 客户端 APP（原名 XenseVR-Toolkit），把头显与追踪器位姿送到采集单元，启动瞬间建立世界坐标系；见 [Pico4 头显与追踪器配置](pico4.md) |
+| **XenseVR PC Service / 运行时** | 接收头显位姿的服务，是 XTac UMI XR 在采集单元这一端的对端（服务名没跟着 APP 一起改）：PC 版是数采主机上的守护进程，要手动启动；背包版内置在 Collector 里 |
 | **tcp** | Tool Center Point，末端执行器位姿（`tcp.x/y/z` + 6D 旋转 `r1..r6`），坐标系见[坐标系](coordinates.md) |
 | **6D rotation** | 旋转矩阵 R（世界 ← 本体）的**前两列**：`r1..r3` = 第一列 = 本体 X 轴在世界系下的方向，`r4..r6` = 第二列 = Y 轴；第三列为叉积，可算回 → [约定详解](../pc/recording.md#53) |
 | **shifted-frame** | 移位帧配对：t-1 观测配 t 动作 |
@@ -63,7 +63,7 @@
 本手册的版本号独立于各软件，页脚标注的就是当前文档版本。每个文档正式版对应下面四个软件的一组版本，**四者一起定版、一起更新**；
 设备上的版本与这张表不一致时，以这张表为准升级，或使用与设备版本对应的文档版本。
 
-| 文档版本 | xense-taccap-lerobot（PC 版数采） | XTac-UMI XR（头显应用） | XTac-UMI Collector（背包版采集单元） | TacCap-Gripper SDK（夹爪 SDK） |
+| 文档版本 | xense-taccap-lerobot（PC 版数采） | XTac UMI XR（头显应用） | XTac UMI Collector（背包版采集单元） | TacCap-Gripper SDK（夹爪 SDK） |
 |---|---|---|---|---|
 | v0.1.1 | v0.1.1 | 0.3.3 | 0.4.3 | 0.4.3 |
 | v0.1.0 | v0.1.0 | 0.3.2 | 0.4.3 | 0.4.1 |

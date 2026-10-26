@@ -3,7 +3,7 @@
 从夹爪（Follower）装在机器人末端，由电机驱动开合。主夹爪拿在手里采集动作，从夹爪在机器人上执行动作。
 本章介绍怎样用 `xense.taccap` SDK 控制从夹爪。
 
-![XTac-UMI G1 从夹爪](../assets/product/follower-scene-front.webp){ width="720" }
+![XTac UMI G1 从夹爪](../assets/product/follower-scene-front.webp){ width="720" }
 
 !!! note "本章按 SDK 0.4.3 编写，背包版与 PC 版都适用"
     本章按 [TacCap-Gripper](https://github.com/XenseRobotics-AI/TacCap-Gripper) **v0.4.3** 编写。

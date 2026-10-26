@@ -1,6 +1,6 @@
 # 产品线与配置对比
 
-XTac-UMI 提供两种配置，使用同一套 XTac-UMI G1 夹爪与 Pico4 Ultra 企业版头显，采集到的数据定义一致：
+XTac UMI 提供两种配置，使用同一套 XTac UMI G1 夹爪与 Pico4 Ultra 企业版头显，采集到的数据定义一致：
 
 - **背包版**：数采背包完成全部采集，平板浏览器即控制台，开箱即用，适合规模化现场采集；采集软件不开源。
 - **PC 版（开源）**：夹爪与头显直连您的工作站，基于开源 LeRobot 录制，适合科研与算法团队自由二次开发。
@@ -9,11 +9,11 @@ XTac-UMI 提供两种配置，使用同一套 XTac-UMI G1 夹爪与 Pico4 Ultra 
 
 <div class="grid cards xu-cards" markdown>
 
--   ![XTac-UMI 数采背包](../assets/product/backpack-card.webp){ .xu-card__img }
+-   ![XTac UMI 数采背包](../assets/product/backpack-card.webp){ .xu-card__img }
 
     <span class="xu-tag xu-tag--backpack">背包版</span>
 
-    **XTac-UMI 数采背包**{ .xu-card__title }
+    **XTac UMI 数采背包**{ .xu-card__title }
 
     ---
 
@@ -21,11 +21,11 @@ XTac-UMI 提供两种配置，使用同一套 XTac-UMI G1 夹爪与 Pico4 Ultra 
 
     [快速开始](../backpack/quickstart.md){ .md-button .md-button--primary }
 
--   ![XTac-UMI G1 视触觉夹爪](../assets/product/g1-card.webp){ .xu-card__img }
+-   ![XTac UMI G1 视触觉夹爪](../assets/product/g1-card.webp){ .xu-card__img }
 
     <span class="xu-tag xu-tag--pc">PC 版</span>
 
-    **XTac-UMI G1 开发套件（开源）**{ .xu-card__title }
+    **XTac UMI G1 开发套件（开源）**{ .xu-card__title }
 
     ---
 
@@ -37,7 +37,7 @@ XTac-UMI 提供两种配置，使用同一套 XTac-UMI G1 夹爪与 Pico4 Ultra 
 
 ## 两种配置的差别
 
-| | 背包版 · XTac-UMI 数采背包 | PC 版 · XTac-UMI G1 开发套件 |
+| | 背包版 · XTac UMI 数采背包 | PC 版 · XTac UMI G1 开发套件 |
 |---|---|---|
 | 计算 | 随机附带的数采背包 | 自备 x86 工作站，建议配 NVIDIA 显卡 |
 | 操作界面 | 浏览器控制台，平板即可 | 终端命令 + Rerun 预览窗口 |
@@ -56,7 +56,7 @@ XTac-UMI 提供两种配置，使用同一套 XTac-UMI G1 夹爪与 Pico4 Ultra 
 
     | 物品 | 数量 | 规格与说明 |
     |---|---|---|
-    | XTac-UMI G1 主夹爪 | 2 | 左右各一，按序列号末位区分：单数左、双数右 |
+    | XTac UMI G1 主夹爪 | 2 | 左右各一，按序列号末位区分：单数左、双数右 |
     | 主夹爪连接线 | 2 | 双 Type-C，1.5m，左右各一；夹爪端为锁紧接头，另一端接背包 `UMI-L` / `UMI-R` |
     | Pico4 Ultra 企业版头显 | 1 | 含手柄与运动追踪器，追踪器装在两只主夹爪顶部 |
     | 追踪器充电底座 | 1 | 一拖三 |
@@ -85,7 +85,7 @@ XTac-UMI 提供两种配置，使用同一套 XTac-UMI G1 夹爪与 Pico4 Ultra 
 
     | 物品 | 数量 | 规格与说明 |
     |---|---|---|
-    | XTac-UMI G1 主夹爪 | 2 | 左右各一，按序列号末位区分：单数左、双数右 |
+    | XTac UMI G1 主夹爪 | 2 | 左右各一，按序列号末位区分：单数左、双数右 |
     | 主夹爪连接线 | 2 | Type-C 转 Type-A，USB 2.0，3m；夹爪端为锁紧接头 |
     | Pico4 Ultra 企业版头显 | 1 | 含手柄与运动追踪器，追踪器装在两只主夹爪顶部 |
     | 追踪器充电底座 | 1 | 一拖三 |
@@ -95,7 +95,7 @@ XTac-UMI 提供两种配置，使用同一套 XTac-UMI G1 夹爪与 Pico4 Ultra 
 
     | 物品 | 数量 | 规格与说明 |
     |---|---|---|
-    | XTac-UMI G1 从夹爪 | 2 | 左右各一，装在机器人末端 |
+    | XTac UMI G1 从夹爪 | 2 | 左右各一，装在机器人末端 |
     | 24V 电源适配器 | 2 | 24V 2.5A，线长 4.5m，带磁环，每只从夹爪一个 |
     | 束线带 | 1 | 3m，沿机械臂整理线缆 |
 

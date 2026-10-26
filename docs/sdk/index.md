@@ -1,6 +1,6 @@
 # SDK 概览
 
-`xense.taccap`（仓库 [TacCap-Gripper](https://github.com/XenseRobotics-AI/TacCap-Gripper)）是 XTac-UMI G1
+`xense.taccap`（仓库 [TacCap-Gripper](https://github.com/XenseRobotics-AI/TacCap-Gripper)）是 XTac UMI G1
 夹爪的开发包，提供 Python 与 C++ 两种接口，用于自己编写程序读取主夹爪、控制从夹爪。
 
 !!! note "本附录按 SDK 0.4.3 编写"

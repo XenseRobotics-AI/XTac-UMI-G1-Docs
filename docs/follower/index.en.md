@@ -3,7 +3,7 @@
 The follower gripper mounts on the robot's end effector and opens and closes under motor drive. You hold the leader gripper to capture the motion; the follower gripper performs it on the robot.
 This chapter shows how to control the follower gripper with the `xense.taccap` SDK.
 
-![XTac-UMI G1 follower gripper](../assets/product/follower-scene-front.webp){ width="720" }
+![XTac UMI G1 follower gripper](../assets/product/follower-scene-front.webp){ width="720" }
 
 !!! note "This chapter is written for SDK 0.4.3 and applies to both kits"
     This chapter is written against [TacCap-Gripper](https://github.com/XenseRobotics-AI/TacCap-Gripper) **v0.4.3**.

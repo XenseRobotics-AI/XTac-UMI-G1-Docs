@@ -7,7 +7,7 @@
 - `taccap_gripper` 录制自驱动，没有 `--teleop.*` 参数。
 - 移位帧（shifted-frame）配对：*t-1* 步的观测配 *t* 步的位姿作动作（EEF TCP 位姿 + 归一化 `gripper.pos`，开[头显相机](#56)时加头显位姿），每集因此少 1 帧。
 - `tcp.*` 是夹爪末端而非追踪器，由追踪器位姿经内置安装变换（左右各一套）得到；末端与追踪器位置的定义见 [XTac-UMI-Description](https://github.com/XenseRobotics-AI/XTac-UMI-Description)。
-- 世界系重力对齐，X 前 / Y 左 / Z 上，在 XTac-UMI XR 启动瞬间冻结，见[坐标系对齐](../common/pico4.md#pico-frame)。
+- 世界系重力对齐，X 前 / Y 左 / Z 上，在 XTac UMI XR 启动瞬间冻结，见[坐标系对齐](../common/pico4.md#pico-frame)。
 - `--display_data=true` 开出 Rerun 的 `/world` 3D 视图（`--show_trajectory=false` 关轨迹），元素含义与装配检查见[坐标系 · `/world` 3D 视图](../common/coordinates.md#world-view)。
 
 ## 开录前预览 {#preview}
@@ -105,7 +105,7 @@ lerobot-record \
 | `play_sounds` | `true` | 语音播报；容器内无语音合成器总是静音，宿主机上跑才有声 |
 | `resume` | `false` | 续录已有数据集；只在本地找，找不到报错，不从 Hub 下载；`--robot.id` 须与数据集一致，见 [`--robot.id`](#robot-id) |
 
-**设备参数 `--robot.*`（XTac-UMI G1 专属）**
+**设备参数 `--robot.*`（XTac UMI G1 专属）**
 
 只列本页用到的项，完整配置项见 [`RobotConfig` 常用配置项](reference.md#robotconfig)。
 
@@ -314,7 +314,7 @@ lerobot-record \
 | 平稳性 | 手持平稳匀速 | 急停急转，IMU/位姿噪声大 | 匀速带动 |
 | 触觉信号 | 抓取时真实接触、有形变 | 空抓，触觉图无信号 | 看 Rerun 触觉确认接触 |
 | 相机可见 | 目标在腕相机视野内 | 手/线缆遮挡，或过曝/频闪 | 清理遮挡、调手持角度 |
-| 坐标一致 | 与其它集同一原点 | 中途重启 XTac-UMI XR，位姿集间跳变 | 不重启 XTac-UMI XR |
+| 坐标一致 | 与其它集同一原点 | 中途重启 XTac UMI XR，位姿集间跳变 | 不重启 XTac UMI XR |
 | 夹爪读数 | `gripper.pos` 闭合≈0、张开合理 | 未标定，闭合时 `gripper.pos`≠0 | 确认闭合后按需重标零点，见[夹爪标定](calibration.md#41) |
 | 丢帧 | 无告警 | 日志丢帧告警 | 增大 `encoder_threads`、`vcodec=auto`，见[流式编码](#54) |
 | 首帧 | 动作起点正常 | 关键动作落在被丢的首帧 | 开录后稳 0.5~1 秒再动，给足 `--dataset.episode_time_s` |
@@ -323,7 +323,7 @@ lerobot-record \
 
 ### 采集前
 
-全程不要重启 XTac-UMI XR（原因见[坐标系对齐](../common/pico4.md#pico-frame)）；不得不重启时，之后的数据当作新数据集。
+全程不要重启 XTac UMI XR（原因见[坐标系对齐](../common/pico4.md#pico-frame)）；不得不重启时，之后的数据当作新数据集。
 
 - 没标定的主夹爪连不上，预览时复核机械行程即可；每台主夹爪标一次（存 flash），双夹爪两侧都要标，见[夹爪标定](calibration.md#41)。
 - `scan_grippers` 输出 side/role/firmware_sn 正常；追踪器有电、有位姿。
@@ -353,7 +353,7 @@ lerobot-record \
 
 ### 采集自查清单
 
-- [ ] 采集期间未重启 XTac-UMI XR
+- [ ] 采集期间未重启 XTac UMI XR
 - [ ] 闭合时 `gripper.pos`≈0
 - [ ] 追踪器有位姿、轨迹正常
 - [ ] 数采电脑 WiFi 已关
@@ -382,7 +382,7 @@ lerobot-record \
 - 前置条件：XenseVR PC Service ≥ v0.2.0（更低版本不转发画面，见[版本基线](versions.md#required)）；头显 APP 正在推流并已连上 [PC Service](host-setup.md#35)。相机和追踪器共用一条 SDK 连接，关掉一个不断开另一个。
 
 !!! warning "头显的分辨率和 `--robot.head_camera_width/_height` 必须一致"
-    只接受 `640x480`（默认）、`1024x768`、`1280x960` 三档。XTac-UMI XR 默认每眼输出 640x480，与采集端默认一致，不用加参数；命令行参数只声明预期。
+    只接受 `640x480`（默认）、`1024x768`、`1280x960` 三档。XTac UMI XR 默认每眼输出 640x480，与采集端默认一致，不用加参数；命令行参数只声明预期。
 
     - 填别的或首帧尺寸与配置不符都会报错（后者在 connect 时），不会悄悄重采样改掉视场角。
     - 三档都是 4:3，同传感器（PICO 相机接口单帧上限 2328x1748 也是 4:3），16:9 只会裁剪或拉伸。

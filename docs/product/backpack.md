@@ -1,8 +1,8 @@
 # 认识数采背包
 
-**XTac-UMI 数采背包**是背包版的采集主机，随采集人员背负移动：夹爪与头显直接接上，平板浏览器即控制台，采集、回放与导出都在背包上完成。
+**XTac UMI 数采背包**是背包版的采集主机，随采集人员背负移动：夹爪与头显直接接上，平板浏览器即控制台，采集、回放与导出都在背包上完成。
 
-![XTac-UMI 数采背包](../assets/product/backpack-ports-front.webp){ width="720" }
+![XTac UMI 数采背包](../assets/product/backpack-ports-front.webp){ width="720" }
 
 [一页速通](../backpack/quickstart.md){ .md-button .md-button--primary }
 [对比两种配置](editions.md){ .md-button }

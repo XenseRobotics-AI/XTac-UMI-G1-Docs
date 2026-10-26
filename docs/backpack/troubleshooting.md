@@ -1,6 +1,6 @@
 # 故障排查
 
-本页按症状列出原因与解决方法。常见问题包括：无法连接 XTac-UMI Collector 控制台（下称控制台）、无法开始录制、导出预检未通过。排查前，请先留意语音播报、夹爪灯语与监控页状态点；灯语见[夹爪按键、指示灯与语音](gripper.md#buttons-leds)。
+本页按症状列出原因与解决方法。常见问题包括：无法连接 XTac UMI Collector 控制台（下称控制台）、无法开始录制、导出预检未通过。排查前，请先留意语音播报、夹爪灯语与监控页状态点；灯语见[夹爪按键、指示灯与语音](gripper.md#buttons-leds)。
 
 !!! danger "异味、冒烟、明显发热、结构破损或线缆破皮"
     立即断电并停止使用，记录机身 SN 后联系技术支持。
@@ -34,7 +34,7 @@
 
     - 将夹爪移回头显视野内。
     - 确认两只追踪器亮蓝灯、已[配对到头显](../common/pico4.md#pico-tracker-bind)，并处于独立追踪模式。
-    - 显示「Pico 未上线」时，检查 XTac-UMI XR 是否已连接，见[打开 App 后的界面](../common/pico4.md#pico-toolkit-ui)。
+    - 显示「Pico 未上线」时，检查 XTac UMI XR 是否已连接，见[打开 App 后的界面](../common/pico4.md#pico-toolkit-ui)。
 
 ??? failure "位姿显示在线，但 3D 模型不动"
     **原因**：头显中的追踪器 App 未真正启动（如当日首次使用且未按追踪器按钮），此时徽章仍可能显示在线。
@@ -171,7 +171,7 @@
 
     **解决**：
 
-    - 检查头显到背包 `PICO` 口的连线、头显电量，以及 XTac-UMI XR 是否在运行。Tracker 掉线时检查 Tracker。
+    - 检查头显到背包 `PICO` 口的连线、头显电量，以及 XTac UMI XR 是否在运行。Tracker 掉线时检查 Tracker。
     - 设备**不会自动续录**。就绪后重新开始录制，详见[录制中头显断联](monitor-record.md#pico-disconnect)。
 
 ??? failure "录制显示失败，原因为断电或系统重启"

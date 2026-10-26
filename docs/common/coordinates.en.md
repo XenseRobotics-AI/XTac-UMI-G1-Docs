@@ -4,18 +4,18 @@ This page defines the frame the pose data lives in: where the world frame is, wh
 
 ## The world frame
 
-The world frame is established and frozen by XTac-UMI XR on the headset at the moment it starts. It is right-handed and gravity-aligned:
+The world frame is established and frozen by XTac UMI XR on the headset at the moment it starts. It is right-handed and gravity-aligned:
 
 | Axis | Direction |
 |---|---|
-| Origin | Where the headset was at the moment XTac-UMI XR first started |
+| Origin | Where the headset was at the moment XTac UMI XR first started |
 | X axis (red) | The device's forward direction, along the normal of the headset's front camera mounting face |
 | Y axis (green) | The device's left, orthogonal to X, fixed by the right-handed convention |
 | Z axis (blue) | The device's up, orthogonal to both X and Y, determined uniquely by the right-hand rule |
 
 ![The world frame frozen at start-up](../assets/pico4/world-frame-origin.webp){ width="420" }
 
-The frame follows the headset only at the instant it starts; once frozen it is fixed in space, and turning your head or walking around does not carry it along. Restarting XTac-UMI XR establishes a new frame, changing both the origin and the orientation. So face the same direction as the robot (towards its front) when you start it, so that the X axis lines up with the robot's forward direction, and do not restart it while collecting one dataset; the steps are in [Startup and frame alignment](pico4.md#pico-frame).
+The frame follows the headset only at the instant it starts; once frozen it is fixed in space, and turning your head or walking around does not carry it along. Restarting XTac UMI XR establishes a new frame, changing both the origin and the orientation. So face the same direction as the robot (towards its front) when you start it, so that the X axis lines up with the robot's forward direction, and do not restart it while collecting one dataset; the steps are in [Startup and frame alignment](pico4.md#pico-frame).
 
 Every pose in a dataset is referenced to this world frame: the Developer Kit writes the end-effector TCP pose `tcp.x/y/z` plus the 6-D rotation `r1..r6` (the first two columns of the rotation matrix, with the convention in [What each frame records](../pc/recording.md#53)); the Backpack Kit records the headset's and the trackers' poses in the MCAP.
 

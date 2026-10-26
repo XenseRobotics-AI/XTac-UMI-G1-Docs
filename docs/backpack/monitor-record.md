@@ -5,7 +5,7 @@ description: 开录前在控制台确认画面、位姿、开合度与磁盘，�
 # 实时监控与录制
 
 
-本页讲 XTac-UMI Collector 控制台（下称控制台）的「实时监控」页。夹爪按键手势、灯语与语音播报详见[夹爪按键与指示灯](gripper.md#buttons-leds)。
+本页讲 XTac UMI Collector 控制台（下称控制台）的「实时监控」页。夹爪按键手势、灯语与语音播报详见[夹爪按键与指示灯](gripper.md#buttons-leds)。
 
 ![实时监控页](../assets/backpack/monitor-live.webp)
 

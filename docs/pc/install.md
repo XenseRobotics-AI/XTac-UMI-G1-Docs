@@ -50,7 +50,7 @@
 
     ```bash
     sudo apt install -y build-essential cmake pkg-config git curl
-    sudo apt install -y libusb-dev    # libusb 不够新,相机就是连不上 —— 见下面这条
+    sudo apt install -y libusb-dev    # libusb 不够新,相机就是连不上,见下面这条
     sudo apt install -y v4l-utils     # 采集用不到,但排查相机全靠它
     ```
 
