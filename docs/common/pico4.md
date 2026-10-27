@@ -70,12 +70,19 @@ APK 文件名形如 `XTac-UMI-XR-<版本>.apk`，当前版本 0.3.3，用头显�
 !!! warning "PC 版的无线只用于临时调试，不要用来正式采集"
     WiFi 要和现场设备抢信道，位姿延迟到达，轻则卡顿、抖动，重则丢帧；录制中看不出，事后难与别的原因区分，整批只能重采。
 
-两种形态都先在头显里设好 USB：
+两种形态都先在头显里设好 USB 与网络：
 
+- **网络设置**：将头显设置为 Host 设备（开发者选项 → 企业设置 → 基础设置 → 拉到最下面 → 网络设置）。
 - **设置路径**：设置 → 开发者选项 → 打开「USB 调试」→「USB 连接」选「传输文件」。
 - **拔插后复查**：拔插 USB 会掉回默认值；选不了就重启 Pico。
 
-![USB 连接选择传输文件](../assets/pico4/usb-shared-network.webp){ width="520" }
+<div class="tc-pair" markdown>
+
+![企业设置 → 基础设置 → 网络设置：将头戴设置为 Host 设备](../assets/pico4/network-host.webp)
+
+![USB 连接选择传输文件](../assets/pico4/usb-shared-network.webp)
+
+</div>
 
 === "背包版"
 

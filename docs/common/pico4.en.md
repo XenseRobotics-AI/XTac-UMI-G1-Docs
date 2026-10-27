@@ -70,12 +70,19 @@ Tracking data goes to the XenseVR pose service on the collection unit. The Backp
 !!! warning "On the Developer Kit, wireless is for quick debugging only, never for real collection"
     Over Wi-Fi the headset competes for the channel with everything on site, so pose data arrives late: at best stutter and jitter, at worst dropped frames. None of it shows while recording and it is hard to tell from other causes afterwards, so the whole batch has to be recollected.
 
-On both editions, set USB up on the headset first:
+On both editions, set up USB and networking on the headset first:
 
+- **Network settings**: set the headset as the Host device (Developer → "Business Settings" → "Basic Settings" → scroll to the bottom → "Network Settings").
 - **Settings path**: Settings → Developer → enable "USB Debug" → set "USB Connection" to "File Transfer".
 - **Re-check after re-plugging**: "USB Connection" reverts to its default whenever the cable is reconnected; if you cannot select it, reboot the Pico.
 
-![USB Connection set to File Transfer](../assets/pico4/usb-shared-network-en.webp){ width="520" }
+<div class="tc-pair" markdown>
+
+![Business Settings → Basic Settings → Network Settings: the headset set as the Host device](../assets/pico4/network-host.webp)
+
+![USB Connection set to File Transfer](../assets/pico4/usb-shared-network-en.webp)
+
+</div>
 
 === "Backpack Kit"
 
