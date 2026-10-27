@@ -983,6 +983,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#initial-pose" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        开录初始位姿检查
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#record-live" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2230,7 +2241,7 @@
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/backpack/monitor-live.webp" data-desc-position="bottom"><img alt="实时监控页" src="../../assets/backpack/monitor-live.webp"></a></p>
 <ul>
 <li><strong>顶栏</strong>：设备状态（视频带宽、CPU、内存、硬盘、相机路数、监控时长、录制时长、系统）。</li>
-<li><strong>中间</strong>：两侧各为一只夹爪的鱼眼与左 / 右指视触觉；中列是头显双目、「双臂 / 头部位姿」3D 视图及下方的左右爪开合角度卡。</li>
+<li><strong>中间</strong>：两侧各为一只夹爪的鱼眼与左 / 右指视触觉；中列是头显双目、「双臂 / 头部位姿」3D 视图（末端带约 1.5 秒的轨迹拖尾）及下方的左右爪开合角度卡。</li>
 <li><strong>底部</strong>：左起「当前任务条数」卡、项目 / 任务选择与录制按钮、实时监控连接卡（「关闭推流」「刷新设备」）。</li>
 </ul>
 <h2 id="checks">开录前在控制台确认<a class="headerlink" href="#checks" title="锚点链接">¶</a></h2>
@@ -2282,6 +2293,8 @@
 <li><strong>采集模式</strong>：「双爪」「双爪 + 头显双目」「双爪 + 头显右单目」三选一。</li>
 <li><strong>PICO 每眼分辨率</strong>：640 × 480 或 1024 × 768，仅录头显画面的模式要选。</li>
 <li><strong>PICO 图像源</strong>：鱼眼图像 / 去畸变图像。</li>
+<li><strong>头显佩戴方式</strong>：戴头 / 挂脖，仅录头显画面的模式要选，默认戴头。挂脖时头显记录的是胸前位姿，<a href="#initial-pose">开录初始位姿检查</a>按挂脖的范围判断；一个数据集只能用一种佩戴方式。</li>
+<li><strong>导出质量</strong>：高质量 / 标准 / 紧凑，作用于项目内所有视频导出；高质量文件较大，紧凑较小。</li>
 <li><strong>触觉矫正图导出方向</strong>：默认 700 × 400 横图，可再逆时针 90° 得 400 × 700。</li>
 <li><strong>腕部鱼眼</strong>：导出时是否矫正畸变。</li>
 <li><strong>上传后端</strong>：可绑定<a href="../system/#upload">系统 → 上传配置</a>里配好的一个作为该项目上传默认，不绑定就上传时再选。</li>
@@ -2359,14 +2372,60 @@
 <li>Pico 就绪：头显已连接，位姿与时钟同步正常；录头显画面的模式还要所选眼的视频正常；</li>
 <li>Tracker 就绪：追踪器已连接、处于「视线内正常追踪」，静止 5 秒以上或移出视野拒绝开录（录制中短暂静止不中断、不计入质检，静止时位置仍准确）；</li>
 <li>头显画面参数与项目对得上：选中项目或头显重连后，设备自动重读单目 / 双目、分辨率与图像源，开录前再核对。<strong>没收到确认、核对超时，或期间头显断过线、参数变过，都拒绝开录</strong>，提示写明是哪一种；</li>
+<li>头显画面时钟正常：某只眼的视频时间比接收时间超前超过 1 秒，提示「头显…眼视频时间同步异常」并拒绝开录。问题在头显应用的相机时钟与同步时钟，不在背包。</li>
+<li>重置坐标系：设备让头显重置世界坐标系并等待完成，失败提示「开录前重置 Pico 坐标系失败」；</li>
+<li>左右 tracker 没有拿反：左右 tracker 的实际位置与夹爪绑定相反，或暂时分辨不出左右，都拒绝开录；</li>
 <li>
-<p>头显画面时钟正常：某只眼的视频时间比接收时间超前超过 1 秒，提示「头显…眼视频时间同步异常」并拒绝开录。问题在头显应用的相机时钟与同步时钟，不在背包。</p>
+<p>双手在初始范围内（录头显画面的模式），见下文<a href="#initial-pose">开录初始位姿检查</a>。</p>
 </li>
 <li>
 <p><strong>被拒时</strong>：弹「无法开始录制」窗口写明原因（按键开录同样）；人不在平板旁就听语音、看灯语。</p>
 </li>
 <li><strong>录满提示</strong>：「任务「…」已达到累计采集目标（N/M），已拒绝开始录制。如需继续采集，请提高任务的目标条数，或删除不应计入目标的录制」。</li>
 </ol>
+<h3 id="initial-pose">开录初始位姿检查<a class="headerlink" href="#initial-pose" title="锚点链接">¶</a></h3>
+<p>同一数据集里每条录制的起始姿势应当一致，训练才好学。录头显画面的模式（「双爪 + 头显双目」「双爪 + 头显右单目」）开录前，设备检查双手是否在<strong>身体前下方的初始范围</strong>内，不在就拒绝开录。界面按钮、夹爪按键和「删除上条并重录」都走这道检查。</p>
+<ul>
+<li><strong>参考系</strong>：以开录这一刻的头显为原点，X 朝前（头显朝向，只取水平方向）、Y 朝左、Z 朝上，单位米。和导出数据用的是同一个参考系，见<a href="../../common/coordinates/#episode-origin">导出数据的原点</a>。</li>
+<li><strong>检查对象</strong>：左右夹爪的末端 TCP 位置，各对一个立方体范围（每个轴有上下限）；右手的范围是左手沿左右方向镜像。</li>
+<li><strong>判定</strong>：最多等 1.5 秒，要求连续几个采样都在范围内（覆盖约 3 帧、100 ms），一个抖动的采样不会单独决定通过或拒绝。</li>
+<li><strong>按佩戴方式选范围</strong>：项目设为「戴头」用戴头的一套，「挂脖」用挂脖的一套。挂脖时原点在胸前，双手相对原点约高 10 cm、更靠前。</li>
+</ul>
+<p>当前设备上的参考范围如下。范围由实测开录姿势统计得来，每个轴再放宽约 5 cm 以容纳不同身高的操作者；<strong>后续版本可能微调，以设备实际提示为准</strong>。</p>
+<table>
+<thead>
+<tr>
+<th>佩戴方式</th>
+<th>前（X）</th>
+<th>左手向左（Y），右手取相反数</th>
+<th>上（Z）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>戴头</td>
+<td>0.15 ~ 0.40</td>
+<td>0.06 ~ 0.39</td>
+<td>−0.65 ~ −0.38</td>
+</tr>
+<tr>
+<td>挂脖</td>
+<td>0.15 ~ 0.45</td>
+<td>0.05 ~ 0.41</td>
+<td>−0.58 ~ −0.26</td>
+</tr>
+</tbody>
+</table>
+<p>按戴头的范围，双手大约在头显前方 15–40 cm、离身体中线左右各 6–39 cm、头显下方 38–65 cm，也就是自然垂臂、小臂前伸、双手分开的姿势。</p>
+<p>被拒时的两种提示：</p>
+<ul>
+<li><strong>越界</strong>：「双手不在开录初始位姿范围内，已阻止录制。请双手回到身体前下方的初始位置，左右自然分开、不要交叉或抬得过高，稳定后重试。（越界：…，单位米）」括号里写明是哪只手、哪个轴、实测值和允许范围。</li>
+<li><strong>拿不到位姿</strong>：「开录前未能拿到同时有效的头显与 tracker 位姿，无法确认双手初始位姿，已阻止录制」。先查头显与 tracker 追踪是否正常。</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">只检查开录那一刻</p>
+<p>检查通过后才开始录制，开录之后怎么动不受限制。导出时也会对每条的前 3 帧再算一次：开录后立刻大幅移动可能让个别条目越界，导出照常完成，只在导出结果里给出提示和条目编号。</p>
+</div>
 <h3 id="record-live">录制中<a class="headerlink" href="#record-live" title="锚点链接">¶</a></h3>
 <ul>
 <li><strong>状态行</strong>：变成「录制中」加走表时长，采集模式徽章仍在；顶栏「录制时长」同步走表。</li>
@@ -2517,7 +2576,7 @@
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      Copyright © 2026 千觉机器人科技(上海)有限公司 · 文档 v0.1.1
+      Copyright © 2026 千觉机器人科技(上海)有限公司 · 文档 v0.1.2
     </div>
   
   

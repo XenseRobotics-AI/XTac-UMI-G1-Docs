@@ -2270,7 +2270,7 @@
 </table>
 <h3 id="new">New projects and tasks<a class="headerlink" href="#new" title="锚点链接">¶</a></h3>
 <ul>
-<li><strong>New project</strong>: enter a name and pick a capture mode (one of three); modes with the headset also pick headset resolution and image type; optionally set tactile export orientation, wrist fisheye correction, upload backend and default export format. <strong>It cannot be changed afterwards</strong>; if it is wrong, delete the empty project and create it again.</li>
+<li><strong>New project</strong>: enter a name and pick a capture mode (one of three); modes with the headset also pick headset resolution, image type and <a href="../monitor-record/#project-task">headset mount</a> (On head / Around neck); optionally set export quality (High quality / Standard / Compact), tactile export orientation, wrist fisheye correction, upload backend and default export format. <strong>It cannot be changed afterwards</strong>; if it is wrong, delete the empty project and create it again.</li>
 <li><strong>New task</strong>: task name (lowercase letters, digits and hyphens, e.g. <code>pick-cube</code>) and task instruction (required; it is the LeRobot language instruction); target count and target duration are optional.</li>
 </ul>
 <h2 id="export">Export<a class="headerlink" href="#export" title="锚点链接">¶</a></h2>
@@ -2281,15 +2281,20 @@
 </div>
 <ol>
 <li><strong>Precheck</strong>: the task's recordings are checked automatically; on success it says the export can go ahead, otherwise it lists the blockers to fix before clicking "Export again".</li>
-<li><strong>Pick recordings</strong>: nothing ticked means all; ticking only narrows the scope.</li>
+<li><strong>Pick recordings</strong>: tick the recordings to process; the header checkbox selects all. With nothing ticked, download, upload, archive and delete are unavailable.</li>
 <li><strong>Pick where it goes</strong>: "Download to device" or "Upload to remote".</li>
 <li><strong>Pick the format</strong>: follow the project setting, LeRobot dataset or MCAP.</li>
 <li><strong>Start</strong>: click "Download …" or "Upload …". Progress runs precheck → transcode → build → pack / upload → done; closing the dialog leaves it running in the background.</li>
+<li><strong>Export notice</strong>: if some episodes started with a hand outside the <a href="../monitor-record/#initial-pose">starting range</a>, the result says "N recordings start with a hand outside the configured range" and lists them; the export still completes, and whether to drop those episodes is up to you.</li>
 </ol>
 <h3 id="download">Download to device<a class="headerlink" href="#download" title="锚点链接">¶</a></h3>
 <p>When it is done, click "Download dataset" or "Download mcap" and the browser saves an archive.</p>
 <h3 id="upload">Upload to remote<a class="headerlink" href="#upload" title="锚点链接">¶</a></h3>
 <p>Pick an <a href="../system/#upload">upload backend</a> (or create one on the spot); optionally tick "Automatically archive after upload (delete local source files; keep metadata only)".</p>
+<ul>
+<li><strong>Confirm the file list</strong>: once packing finishes, "Confirm files to upload" lists the number of files, total size and each file; transfer starts only after you click "Confirm upload". If you close the dialog while it waits, reopening it lets you confirm.</li>
+<li><strong>Progress</strong>: shows the current group, file number, bytes sent, upload speed and the estimated time left in the current group; that estimate covers this group only, not later groups or remote confirmation. During a network retry it shows "Retrying".</li>
+</ul>
 <table>
 <thead>
 <tr>
@@ -2304,6 +2309,10 @@
 </tr>
 <tr>
 <td>S3 object storage</td>
+<td>LeRobot dataset, MCAP</td>
+</tr>
+<tr>
+<td>Tencent Cloud COS</td>
 <td>LeRobot dataset, MCAP</td>
 </tr>
 <tr>
@@ -2351,7 +2360,12 @@
 </tr>
 </tbody>
 </table>
-<p>It also includes <code>meta/taccap_extrinsics.json</code> (tracker extrinsics) and <code>meta/xumi_collection_devices.json</code> (which devices recorded each episode).</p>
+<p>It also includes <code>meta/taccap_extrinsics.json</code> (tracker extrinsics) and <code>meta/xumi_collection_devices.json</code> (which devices recorded each episode and which version exported it).</p>
+<ul>
+<li><strong>Pose origin</strong>: the headset and left / right TCP poses in state and action are relative to the headset at the start of each episode, see <a href="../../common/coordinates/#episode-origin">Coordinate frames · Origin of exported data</a>.</li>
+<li><strong>Dataset-level declarations</strong>: <code>meta/info.json</code> states <code>tcp_frame_convention</code> (currently <code>mirrored-v1</code>: the left-hand TCP is the right-hand convention rotated 180° about its own X axis) and <code>headset_mount</code> (<code>head</code> / <code>neck</code>). A dataset can only have one mount; exporting a mix is an error.</li>
+<li><strong>Do not mix with exports from 0.4.3 or earlier</strong>: the pose origin and the left-hand TCP convention both changed, so tell old and new data apart by the two fields above before merging.</li>
+</ul>
 <h3 id="mcap">MCAP<a class="headerlink" href="#mcap" title="锚点链接">¶</a></h3>
 <p>The export is a training MCAP: one <code>.train.mcap</code> file per recording, built from the same data as the LeRobot dataset in a different container. It holds the state and action aligned to 30Hz, every video stream and the sensor data, and opens directly in Foxglove and similar tools.</p>
 <p>It is not the same file as the raw recording on the backpack:</p>
@@ -2467,7 +2481,7 @@
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      Copyright © 2026 XenseRobotics Co., Ltd. · Docs v0.1.1
+      Copyright © 2026 XenseRobotics Co., Ltd. · Docs v0.1.2
     </div>
   
   

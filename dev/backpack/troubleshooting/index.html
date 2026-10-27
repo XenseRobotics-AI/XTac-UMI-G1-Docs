@@ -2299,7 +2299,8 @@
 <li>「Pico 未就绪」或「Tracker 未就绪」，并附具体原因（如连接超时、位姿或某眼视频缺失、时钟同步缺失、头显配置切换待确认，或 Tracker 不在视野内、静止超过 5 秒未主动追踪）；</li>
 <li>无在线的夹爪 MCU；</li>
 <li>任务已达到累计采集目标；</li>
-<li>录制盘已用空间达到 80%。</li>
+<li>录制盘已用空间达到 80%；</li>
+<li>开录前重置头显坐标系失败、左右 tracker 拿反，或双手不在初始范围内（见以下几条）。</li>
 </ul>
 <p><strong>解决</strong>：</p>
 <ul>
@@ -2319,6 +2320,31 @@
 <li>或新建任务，从零开始计数。</li>
 </ul>
 <p>计数口径见<a href="../monitor-record/#project-task">选项目与任务</a>。</p>
+</details>
+<details class="failure">
+<summary>开录被拒：「双手不在开录初始位姿范围内，已阻止录制」</summary>
+<p><strong>原因</strong>：录头显画面的模式，开录前要求双手在身体前下方的初始范围内。提示括号里写明越界的手、轴、实测值和允许范围（单位米），机制见<a href="../monitor-record/#initial-pose">开录初始位姿检查</a>。</p>
+<p><strong>解决</strong>：</p>
+<ul>
+<li>目视前方，双手回到身体前下方，自然分开、不要交叉或抬得过高，稳定一下再开录。</li>
+<li>总是 Z 轴越界（太高或太低）：核对项目的「头显佩戴方式」是否与实际一致，挂脖用戴头的范围会显得双手偏高；佩戴方式建完不能改，选错了只能新建项目。</li>
+<li>头显戴歪、开录时低头或侧身，也会让范围整体偏移。</li>
+</ul>
+</details>
+<details class="failure">
+<summary>开录被拒：「开录前未能拿到同时有效的头显与 tracker 位姿」</summary>
+<p><strong>原因</strong>：1.5 秒内没有拿到头显与两只 tracker 同时有效的位姿，无法判断双手位置。</p>
+<p><strong>解决</strong>：按<a href="#tracker">头显与追踪器</a>排查：tracker 在头显视野内、亮蓝灯，监控页位姿卡为绿点；轻微移动夹爪唤醒 tracker 后重试。</p>
+</details>
+<details class="failure">
+<summary>开录被拒：「检测到左右 tracker 位置与夹爪绑定相反」或「暂时无法确认左右夹爪位置」</summary>
+<p><strong>原因</strong>：开录前设备核对左右 tracker 的实际位置。左右拿反、tracker 装错或绑定反了会被拒绝；双手交叉、靠得太近或追踪不稳时分辨不出左右，也会被拒绝。</p>
+<p><strong>解决</strong>：目视前方，双手自然分开、不要交叉，轻微移动唤醒 tracker 后重试。仍提示相反时，核对左右夹爪没有拿反，并按<a href="#tracker">左右夹爪的位姿互换</a>检查 tracker 安装与绑定。</p>
+</details>
+<details class="failure">
+<summary>开录被拒：「开录前重置 Pico 坐标系失败」</summary>
+<p><strong>原因</strong>：每次开录前设备都要让头显重置世界坐标系并等待完成。头显断开、XTac UMI XR 未在前台运行，或 XR 版本不支持重置时会失败，冒号后写明原因。</p>
+<p><strong>解决</strong>：确认头显已连接、XTac UMI XR 在前台运行并显示「连接成功」，版本符合<a href="../versions/#baseline">版本基线</a>，再重试。</p>
 </details>
 <details class="failure">
 <summary>开录被拒：「录制盘已用 N%，达到 80% 上限」</summary>
@@ -2446,8 +2472,13 @@
 </details>
 <details class="failure">
 <summary>LeRobot 数据集体积超出预期</summary>
-<p><strong>原因</strong>：多路视频同时录制，导出的 LeRobot 数据集约 0.5GB/小时，属于正常。受硬件编码限制，体积难以进一步缩小。</p>
-<p><strong>解决</strong>：传输与存储请按此量级预留空间。</p>
+<p><strong>原因</strong>：多路视频同时录制，导出的 LeRobot 数据集约 0.5GB/小时，属于正常。体积主要由项目的「导出质量」决定。</p>
+<p><strong>解决</strong>：传输与存储请按此量级预留空间。对体积敏感的新项目，建项目时把导出质量选为「紧凑」；已有项目的导出质量不能改。</p>
+</details>
+<details class="failure">
+<summary>升级后，已导出或已上传的数据集显示需要重新导出</summary>
+<p><strong>原因</strong>：这是预期行为。0.4.6 起导出的位姿以每条开录时的头显为原点、左手 TCP 改用镜像约定，位姿数值整体变化，旧导出因此标为过期。原始录制不受影响。</p>
+<p><strong>解决</strong>：对仍保留原始文件的录制重新导出。已归档的录制无法重新导出，保留旧导出即可；新旧导出不要合进同一个数据集，用 <code>meta/info.json</code> 的 <code>tcp_frame_convention</code> 区分，见<a href="../projects-export/#lerobot">导出格式</a>。</p>
 </details>
 <h2 id="update">升级<a class="headerlink" href="#update" title="锚点链接">¶</a></h2>
 <details class="failure">
@@ -2558,7 +2589,7 @@
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      Copyright © 2026 千觉机器人科技(上海)有限公司 · 文档 v0.1.1
+      Copyright © 2026 千觉机器人科技(上海)有限公司 · 文档 v0.1.2
     </div>
   
   

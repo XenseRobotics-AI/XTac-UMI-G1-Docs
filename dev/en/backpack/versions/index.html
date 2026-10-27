@@ -1118,6 +1118,17 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#v046" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.4.6 (2026-10-27)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#v043" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2173,7 +2184,7 @@
 <h1 id="versions">Versions<a class="headerlink" href="#versions" title="锚点链接">¶</a></h1>
 <p>This page gives the version baseline for the Backpack Kit's components, and the customer-facing highlights of the XTac UMI Collector version it is written against. Go by the version numbers you read on your own devices: the collection unit and the gripper firmware are on the console's System → <a href="../system/#device-info">Device information</a>, the headset is in the Pico settings, and the tablet is in its system settings.</p>
 <h2 id="baseline">Version baseline<a class="headerlink" href="#baseline" title="锚点链接">¶</a></h2>
-<p>Matched to XTac UMI Collector 0.4.3. The software and hardware versions across the set have to match each other, so come back to this table after upgrading any one of them.</p>
+<p>Matched to XTac UMI Collector 0.4.6. The software and hardware versions across the set have to match each other, so come back to this table after upgrading any one of them.</p>
 <table>
 <thead>
 <tr>
@@ -2205,7 +2216,7 @@
 </tr>
 <tr>
 <td>XTac UMI XR (headset app)</td>
-<td>0.3.3</td>
+<td>0.3.6</td>
 <td>The headset's app library; installing and upgrading are in <a href="../../common/pico4/#pico-app">Pico4 headset and tracker setup</a></td>
 </tr>
 <tr>
@@ -2218,6 +2229,19 @@
 <p>Upgrading the Backpack Kit's collection unit is done entirely in the console, with no PC needed. The Developer Kit has its own baseline, see <a href="../../pc/versions/#required">Developer Kit · Versions and upgrades</a>.</p>
 <h2 id="history">Version highlights<a class="headerlink" href="#history" title="锚点链接">¶</a></h2>
 <p>Only recent versions are listed here. For earlier versions, the device shows each version's changes the first time you enter the console after upgrading.</p>
+<h3 id="v046">0.4.6 (2026-10-27)<a class="headerlink" href="#v046" title="锚点链接">¶</a></h3>
+<p>Changes since 0.4.3:</p>
+<ol>
+<li><strong>Starting-pose check</strong>: in modes that record headset video, the device checks before every recording that both hands are in the starting range in front of and below the body, and refuses to record otherwise; the range follows the project's headset mount, see <a href="../monitor-record/#initial-pose">Starting-pose check</a>.</li>
+<li><strong>Coordinate reset before every recording</strong>: before each recording the device has the headset reset its world frame, and checks that the left and right trackers are not swapped.</li>
+<li><strong>Two new project settings</strong>: "Headset mount" (On head / Around neck, only for modes that record headset video) and "Export quality" (High quality / Standard / Compact), both fixed after creation, see <a href="../monitor-record/#project-task">Picking a project and task</a>.</li>
+<li><strong>Exported poses are relative to the headset at the start of each episode</strong>: the headset position at frame 0 of each recording is the origin and its heading is the X axis, with Z still up, see <a href="../../common/coordinates/#episode-origin">Coordinate frames · Origin of exported data</a>. Poses are now interpolated to each frame time and camera frame times are more accurate; the left-hand TCP uses the mirrored convention (<code>tcp_frame_convention = mirrored-v1</code>).</li>
+<li><strong>Re-export after upgrading</strong>: pose values change throughout, so datasets exported or uploaded before the upgrade show as needing re-export; do not mix old and new exports in one dataset. Raw recordings are unaffected.</li>
+<li><strong>Export and upload</strong>: download, upload, archive and delete all require ticking recordings first; before an upload starts, the device lists the files and waits for you to confirm; uploads show the speed and the estimated time left for the current group; Tencent Cloud COS is a new upload backend. Deleting a recording also cleans up its exported artifacts.</li>
+<li><strong>Diagnostics package</strong>: System → Device info downloads an encrypted diagnostics package (application logs, kernel log and version information) in one click; hand it to technical support with a fault report.</li>
+<li><strong>Other</strong>: the interface language selector moved to the System sidebar; the pose view shows a trail of about 1.5 seconds behind each end effector.</li>
+<li><strong>Matching headset app</strong>: XTac UMI XR moves to 0.3.6, which the coordinate reset before recording relies on; headset video streams at a steadier cadence.</li>
+</ol>
 <h3 id="v043">0.4.3 (2026-09-29)<a class="headerlink" href="#v043" title="锚点链接">¶</a></h3>
 <ol>
 <li>The console is available in Chinese and English, following the browser language by default and switchable on the System page; the voice announcement language follows the interface and can also be chosen separately.</li>
@@ -2319,7 +2343,7 @@
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      Copyright © 2026 XenseRobotics Co., Ltd. · Docs v0.1.1
+      Copyright © 2026 XenseRobotics Co., Ltd. · Docs v0.1.2
     </div>
   
   

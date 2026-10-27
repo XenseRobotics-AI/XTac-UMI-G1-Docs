@@ -2322,7 +2322,7 @@
 <p>A read-only page; "Refresh" at the top right reloads it.</p>
 <ul>
 <li><strong>Collector</strong>: software version, build time, device SN (matches the body label).</li>
-<li><strong>Headset</strong>: online status, headset serial number, XUMI software version, resolution and camera parameters.</li>
+<li><strong>Headset</strong>: online status, headset serial number, XUMI software version, resolution and camera parameters, plus the current project's headset mount.</li>
 <li><strong>Grippers</strong>: SN and firmware version of each gripper.</li>
 <li><strong>Cameras</strong>: the camera list, with offline ones marked "(Offline)".</li>
 </ul>
@@ -2333,6 +2333,7 @@
 <li>Wrong camera count on the monitor page: see which feed is "(Offline)".</li>
 <li>Before calibrating: confirm the leader gripper firmware is ≥ 1.2.0.</li>
 </ul>
+<p><strong>Export diagnostics</strong>: "Export diagnostics" on this page downloads an encrypted ZIP with application logs, the kernel log (dmesg) and version information. Hand it to technical support together with the device SN when reporting a fault; if the download fails, retry.</p>
 <h2 id="gripper">Gripper configuration<a class="headerlink" href="#gripper" title="锚点链接">¶</a></h2>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/backpack/gripper-en.webp" data-desc-position="bottom"><img alt="Gripper configuration page" src="../../../assets/backpack/gripper-en.webp"></a></p>
 <p>Gripper opening calibration normalizes the gripper opening to 0–1: write the zero when closed and the maximum travel when fully open. The values are stored in the gripper, survive power loss and moving to another backpack, so each gripper needs calibrating once; the console and the Developer Kit calibration script write the same values. When recalibration is needed is covered in the Developer Kit's <a href="../../pc/calibration/#41">Gripper calibration (zero + travel)</a>.</p>
@@ -2382,10 +2383,12 @@
 </tr>
 </tbody>
 </table>
-<p>The other four:</p>
+<p>The other six:</p>
 <ul>
 <li><strong>PICO resolution</strong>: <code>640x480</code> or <code>1024x768</code> per eye, headset modes only.</li>
 <li><strong>PICO image source</strong>: raw fisheye or undistorted.</li>
+<li><strong>Headset mount</strong>: On head or Around neck, headset modes only; it decides which range the <a href="../monitor-record/#initial-pose">starting-pose check</a> uses. Projects created before 0.4.6 show "On head (not specified, legacy project)".</li>
+<li><strong>Export quality</strong>: High quality, Standard or Compact.</li>
 <li><strong>Wrist fisheye rectification</strong>: see <a href="#undistort">below</a>.</li>
 <li><strong>Tactile rectified-image export orientation</strong>: "Current orientation · 700 × 400 (landscape)" or "Additional 90° counterclockwise · 400 × 700 (aligned with SDK)".</li>
 </ul>
@@ -2436,6 +2439,11 @@
 <td>Bucket, Endpoint, Region, Access Key, Secret Key</td>
 </tr>
 <tr>
+<td>Tencent Cloud COS</td>
+<td>LeRobot, MCAP</td>
+<td>Region (such as <code>ap-guangzhou</code>), full bucket name including APPID (such as <code>dataset-1250000000</code>), SecretId, SecretKey, optional path within the bucket</td>
+</tr>
+<tr>
 <td>FTP / FTPS</td>
 <td>LeRobot, MCAP</td>
 <td>Server, port, username, password, target directory</td>
@@ -2456,6 +2464,7 @@
 <ul>
 <li><strong>ModelScope</strong>: create a token at <a href="https://www.modelscope.cn/my/overview">ModelScope</a> under avatar → Account settings → Access tokens; private repositories are recommended.</li>
 <li><strong>S3</strong>: create the bucket beforehand.</li>
+<li><strong>Tencent Cloud COS</strong>: create the bucket beforehand; HTTPS is used automatically. Set the path (prefix) per data supplier, such as <code>vendors/vendor-a</code>, giving <code>bucket / path / project name / mode prefix-task name-date /</code>; leave it empty for the bucket root. Upload-only accounts work. A task that already has upload records cannot change its path, so a resumed upload never lands in a different directory. Each file can be at most 625 GiB.</li>
 <li><strong>FTP / FTPS</strong>: FTPS is recommended; create the target directory beforehand and write it starting with <code>/</code>.</li>
 <li><strong>NFS</strong>: create the target directory beforehand; the protocol version defaults to "Automatic".</li>
 </ul>
@@ -2610,7 +2619,7 @@
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      Copyright © 2026 XenseRobotics Co., Ltd. · Docs v0.1.1
+      Copyright © 2026 XenseRobotics Co., Ltd. · Docs v0.1.2
     </div>
   
   

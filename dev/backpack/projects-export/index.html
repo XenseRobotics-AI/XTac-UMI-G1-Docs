@@ -2270,7 +2270,7 @@
 </table>
 <h3 id="new">新建项目与任务<a class="headerlink" href="#new" title="锚点链接">¶</a></h3>
 <ul>
-<li><strong>新建项目</strong>：填项目名称，选采集模式（三种之一）；含头显的模式再选头显分辨率与图像类型；可选触觉导出方向、腕部鱼眼矫正、上传后端与默认导出格式。<strong>建好后不能改</strong>，选错了删掉空项目重建。</li>
+<li><strong>新建项目</strong>：填项目名称，选采集模式（三种之一）；含头显的模式再选头显分辨率、图像类型与<a href="../monitor-record/#project-task">头显佩戴方式</a>（戴头 / 挂脖）；可选导出质量（高质量 / 标准 / 紧凑）、触觉导出方向、腕部鱼眼矫正、上传后端与默认导出格式。<strong>建好后不能改</strong>，选错了删掉空项目重建。</li>
 <li><strong>新建任务</strong>：任务名称（小写字母、数字和连字符，如 <code>pick-cube</code>）、任务指令（必填，就是 LeRobot 的语言指令），目标条数与目标时长可留空。</li>
 </ul>
 <h2 id="export">导出<a class="headerlink" href="#export" title="锚点链接">¶</a></h2>
@@ -2281,15 +2281,20 @@
 </div>
 <ol>
 <li><strong>预检</strong>：自动检查任务下的录制，通过显示「预检通过，可导出或上传」；未通过时列出阻塞项，按提示处理后点「重新导出」。</li>
-<li><strong>选录制</strong>：不勾选就是全部，勾选只用来缩小范围。</li>
+<li><strong>选录制</strong>：勾选本次要处理的录制，表头的复选框可一次全选。不勾选时不能下载、上传、归档或删除。</li>
 <li><strong>选去向</strong>：「下载到设备」或「上传到远端」。</li>
 <li><strong>选格式</strong>：跟随项目设置、LeRobot 数据集或 MCAP。</li>
 <li><strong>开始</strong>：点「下载 …」或「上传 …」。进度依次是 预检 → 转码 → 构建 → 打包 / 上传 → 完成；关掉对话框也会在后台继续。</li>
+<li><strong>导出提示</strong>：完成后如有条目开录时双手不在<a href="../monitor-record/#initial-pose">初始范围</a>内，会提示「N 条录制开录时双手位置不在设定范围内」并列出编号；导出照常完成，是否剔除这些条目由你决定。</li>
 </ol>
 <h3 id="download">下载到设备<a class="headerlink" href="#download" title="锚点链接">¶</a></h3>
 <p>完成后点「下载数据集」或「下载 mcap」，浏览器下载一个压缩包。</p>
 <h3 id="upload">上传到远端<a class="headerlink" href="#upload" title="锚点链接">¶</a></h3>
 <p>选一个<a href="../system/#upload">上传后端</a>（或就地新建），可勾选「上传完成后自动归档」。</p>
+<ul>
+<li><strong>确认文件清单</strong>：打包完成后弹出「确认本次上传文件」，列出要上传的文件个数、总大小和文件列表，点「确认上传」才开始传输。等待确认期间关掉对话框，再打开仍可确认。</li>
+<li><strong>进度</strong>：显示当前组、文件序号、已传字节、上传速度和当前组预计剩余时间；剩余时间只算当前这一组，不含后续组和远端确认。网络重试时显示「正在重试」。</li>
+</ul>
 <table>
 <thead>
 <tr>
@@ -2304,6 +2309,10 @@
 </tr>
 <tr>
 <td>S3 对象存储</td>
+<td>LeRobot 数据集、MCAP</td>
+</tr>
+<tr>
+<td>腾讯云 COS</td>
 <td>LeRobot 数据集、MCAP</td>
 </tr>
 <tr>
@@ -2351,7 +2360,12 @@
 </tr>
 </tbody>
 </table>
-<p>另附 <code>meta/taccap_extrinsics.json</code>（追踪器外参）与 <code>meta/xumi_collection_devices.json</code>（每条数据由哪套设备采集）。</p>
+<p>另附 <code>meta/taccap_extrinsics.json</code>（追踪器外参）与 <code>meta/xumi_collection_devices.json</code>（每条数据由哪套设备采集、由哪个版本导出）。</p>
+<ul>
+<li><strong>位姿原点</strong>：状态与动作里的头显、左右 TCP 位姿以每条开录时的头显为原点，见<a href="../../common/coordinates/#episode-origin">坐标系 · 导出数据的原点</a>。</li>
+<li><strong>数据集级声明</strong>：<code>meta/info.json</code> 写明 <code>tcp_frame_convention</code>（当前为 <code>mirrored-v1</code>，左手 TCP 是右手约定绕自身 X 轴转 180°）和 <code>headset_mount</code>（<code>head</code> / <code>neck</code>）。一个数据集只能有一种佩戴方式，混在一起导出会报错。</li>
+<li><strong>和 0.4.3 及更早的导出不能混用</strong>：位姿原点、左手 TCP 约定都变了，合并新旧数据前按上面两个字段区分。</li>
+</ul>
 <h3 id="mcap">MCAP<a class="headerlink" href="#mcap" title="锚点链接">¶</a></h3>
 <p>导出的是训练用 MCAP：每条录制一个 <code>.train.mcap</code> 文件，与 LeRobot 数据集同源，只是换了封装。内容是按 30Hz 对齐后的状态与动作、各路视频和传感器数据，可以直接用 Foxglove 等工具打开。</p>
 <p>它和背包上的原始记录不是同一个文件：</p>
@@ -2467,7 +2481,7 @@
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      Copyright © 2026 千觉机器人科技(上海)有限公司 · 文档 v0.1.1
+      Copyright © 2026 千觉机器人科技(上海)有限公司 · 文档 v0.1.2
     </div>
   
   

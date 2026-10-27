@@ -1118,6 +1118,17 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#v046" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.4.6（2026-10-27）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#v043" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2173,7 +2184,7 @@
 <h1 id="版本">版本<a class="headerlink" href="#版本" title="锚点链接">¶</a></h1>
 <p>本页给出背包版各组件的版本基线，以及 XTac UMI Collector 各版本的对外要点。版本号以你自己设备上读到的为准：采集单元与夹爪固件看控制台 系统 → <a href="../system/#device-info">设备信息</a>，头显在 Pico 设置里看，平板在系统设置里看。</p>
 <h2 id="baseline">版本基线<a class="headerlink" href="#baseline" title="锚点链接">¶</a></h2>
-<p>按 XTac UMI Collector 0.4.3 配套。整套设备的软硬件版本要对应，升级任一组件后回到这张表核对。</p>
+<p>按 XTac UMI Collector 0.4.6 配套。整套设备的软硬件版本要对应，升级任一组件后回到这张表核对。</p>
 <table>
 <thead>
 <tr>
@@ -2195,7 +2206,7 @@
 </tr>
 <tr>
 <td>XTac UMI Collector（采集单元）</td>
-<td>0.4.3</td>
+<td>0.4.6</td>
 <td>控制台 系统 → <a href="../system/#device-info">设备信息</a>「采集端版本」；升级见<a href="../update/">升级与 OTA</a></td>
 </tr>
 <tr>
@@ -2205,7 +2216,7 @@
 </tr>
 <tr>
 <td>XTac UMI XR（头显应用）</td>
-<td>0.3.3</td>
+<td>0.3.6</td>
 <td>头显应用库；安装与升级见 <a href="../../common/pico4/#pico-app">Pico4 头显与追踪器</a></td>
 </tr>
 <tr>
@@ -2218,6 +2229,19 @@
 <p>背包版的采集单元升级全部在控制台里完成，不需要 PC。PC 版的版本基线是另一套，见 <a href="../../pc/versions/#required">PC 版 · 版本与升级</a>。</p>
 <h2 id="history">各版本要点<a class="headerlink" href="#history" title="锚点链接">¶</a></h2>
 <p>这里只列近期版本。更早版本的更新内容，升级后首次进入控制台时会在设备上展示。</p>
+<h3 id="v046">0.4.6（2026-10-27）<a class="headerlink" href="#v046" title="锚点链接">¶</a></h3>
+<p>相对 0.4.3 的变化：</p>
+<ol>
+<li><strong>开录初始位姿检查</strong>：录头显画面的模式，开录前检查双手是否在身体前下方的初始范围内，不在就拒绝开录；范围按项目的头显佩戴方式选用，见<a href="../monitor-record/#initial-pose">开录初始位姿检查</a>。</li>
+<li><strong>开录前自动重置坐标系</strong>：每次开录前，设备先让头显重置世界坐标系，并核对左右 tracker 没有拿反。</li>
+<li><strong>新建项目新增两项</strong>：「头显佩戴方式」（戴头 / 挂脖，仅录头显画面的模式）与「导出质量」（高质量 / 标准 / 紧凑），都是建完固定，见<a href="../monitor-record/#project-task">选项目与任务</a>。</li>
+<li><strong>导出数据的位姿以每条开录时的头显为原点</strong>：每条录制的第 0 帧头显位置为原点、朝向为 X 轴，Z 轴仍朝上，见<a href="../../common/coordinates/#episode-origin">坐标系 · 导出数据的原点</a>。位姿改为插值对齐，相机帧时刻更准；左手 TCP 改用镜像约定（<code>tcp_frame_convention = mirrored-v1</code>）。</li>
+<li><strong>升级后需要重新导出</strong>：位姿数值整体变化，升级前已导出或已上传的数据集会显示需重新导出；新旧导出不要混在同一个数据集里。原始录制不受影响。</li>
+<li><strong>导出与上传</strong>：下载、上传、归档、删除都要先勾选录制；上传前列出本次文件清单，确认后才开始；上传时显示速度和当前组预计剩余时间；新增腾讯云 COS 上传后端。删除录制时一并清理它的导出产物。</li>
+<li><strong>诊断包</strong>：系统 → 设备信息可一键下载加密诊断包（运行日志、内核日志与版本信息），报修时交给技术支持。</li>
+<li><strong>其他</strong>：界面语言切换移到系统页侧栏；位姿视图加了约 1.5 秒的末端轨迹拖尾。</li>
+<li><strong>配套头显应用</strong>：XTac UMI XR 升到 0.3.6，开录前的坐标系重置需要它支持；头显画面推流节奏更稳。</li>
+</ol>
 <h3 id="v043">0.4.3（2026-09-29）<a class="headerlink" href="#v043" title="锚点链接">¶</a></h3>
 <ol>
 <li>控制台支持中英文界面，默认跟随浏览器语言，可在系统页切换；语音播报语言随界面切换，也可单独选。</li>
@@ -2319,7 +2343,7 @@
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      Copyright © 2026 千觉机器人科技(上海)有限公司 · 文档 v0.1.1
+      Copyright © 2026 千觉机器人科技(上海)有限公司 · 文档 v0.1.2
     </div>
   
   
