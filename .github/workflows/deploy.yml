@@ -7,11 +7,13 @@ name: Deploy docs
 #          同一 Collector 版本重发会覆盖该目录(放该版本最新的文档)。
 #          根目录与 latest/ 只放跳转桩,指向最新版本;versions.json 驱动顶栏的版本下拉框。
 #          根目录的维护见 scripts/site_versions.py。
-#   dev  → dev/ 子目录     https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/(不带版本下拉框)
+#   dev  → dev/vA.B.C/ 子目录  https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/vA.B.C/
+#          预览站与正式站同一布局:dev/ 与 dev/latest/ 只放跳转桩,dev/versions.json 驱动预览站自己的版本下拉框,
+#          下拉框里只有各版本的预览版,不会跳回正式站。
 # 自己用 git + rsync 写 gh-pages,能精确控制删除范围:
-# 发布某个版本只动该版本目录与根目录跳转桩,不碰其它版本与 dev/;dev 发布只动 dev/。
+# 发布某个版本只动该版本目录与根目录跳转桩,不碰其它版本与 dev/;dev 发布只动 dev/ 下的该版本目录与跳转桩。
 #
-# 补发旧版本:手动运行,target 选 root,ref 填该版本在 main 上的提交。
+# 补发旧版本:手动运行,target 选 root(或 dev 补预览),ref 填该版本在 main 上的提交。
 
 on:
   push:
@@ -74,16 +76,17 @@ jobs:
           else
               target="dev"
           fi
+          info="$(python3 tools/scripts/site_versions.py info src)"
+          echo "${info}" | tee -a "${GITHUB_OUTPUT}"
+          version="$(echo "${info}" | sed -n 's/^version=//p')"
           if [[ "${target}" == "root" ]]; then
-              info="$(python3 tools/scripts/site_versions.py info src)"
-              echo "${info}" | tee -a "${GITHUB_OUTPUT}"
-              version="$(echo "${info}" | sed -n 's/^version=//p')"
-              echo "subdir=${version}" >> "${GITHUB_OUTPUT}"
-              echo "url=${SITE_BASE}/${version}/" >> "${GITHUB_OUTPUT}"
+              root=''
           else
-              echo "subdir=dev" >> "${GITHUB_OUTPUT}"
-              echo "url=${SITE_BASE}/dev/" >> "${GITHUB_OUTPUT}"
+              root='dev/'
           fi
+          echo "root=${root}" >> "${GITHUB_OUTPUT}"
+          echo "subdir=${root}${version}" >> "${GITHUB_OUTPUT}"
+          echo "url=${SITE_BASE}/${root}${version}/" >> "${GITHUB_OUTPUT}"
           echo "target=${target}" >> "${GITHUB_OUTPUT}"
           echo "发布 ${{ github.ref_name }} → ${target}"
 
@@ -96,27 +99,25 @@ jobs:
       - name: 安装依赖
         run: pip install -r src/requirements.txt
 
-      # 预览站要自成一体:canonical、sitemap 与英文旧地址跳转都得指向 /dev/,
+      # 预览站要自成一体:canonical、sitemap 与英文旧地址跳转都得指向 /dev/vA.B.C/,
       # 否则读者会被这些链接甩回生产站,看到的还是旧内容。
-      - name: 预览站改写站点地址与站名
+      - name: 预览站改站名
         if: steps.target.outputs.target == 'dev'
         working-directory: src
         run: |
           set -euo pipefail
-          sed -i "s#${SITE_BASE}/#${SITE_BASE}/dev/#g" mkdocs.yml
           sed -i "s#^site_name: .*#& (预览)#" mkdocs.yml
           grep -m1 '^site_name:' mkdocs.yml
-          grep -m1 '^site_url:' mkdocs.yml
 
-      # 正式版:站点地址加上版本目录(Collector 版本),并打开 Material 的版本下拉框(读根目录的 versions.json)。
-      # 只在构建时注入,本地 mkdocs serve 与 dev 预览不受影响;补发旧提交时同样适用。
-      - name: 正式版改写站点地址并启用版本下拉框
-        if: steps.target.outputs.target == 'root'
+      # 站点地址加上版本目录(Collector 版本;预览站再多一层 dev/),并打开 Material 的版本下拉框
+      # (读上一级的 versions.json:正式站读根目录的,预览站读 dev/ 的)。
+      # 只在构建时注入,本地 mkdocs serve 不受影响;补发旧提交时同样适用。
+      - name: 改写站点地址并启用版本下拉框
         working-directory: src
         run: |
           set -euo pipefail
-          version='${{ steps.target.outputs.version }}'
-          sed -i "s#${SITE_BASE}/#${SITE_BASE}/${version}/#g" mkdocs.yml
+          subdir='${{ steps.target.outputs.subdir }}'
+          sed -i "s#${SITE_BASE}/#${SITE_BASE}/${subdir}/#g" mkdocs.yml
           python3 - <<'EOF'
           t = open('mkdocs.yml', encoding='utf-8').read()
           assert t.count('\nextra:\n') == 1, 'mkdocs.yml 里应只有一个顶层 extra:'
@@ -137,14 +138,14 @@ jobs:
           subdir='${{ steps.target.outputs.subdir }}'
           git clone -q --depth 1 --branch gh-pages \
               "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" gh-pages
-          # 只替换这一个子目录(dev/ 或 vA.B.C/),其它版本原样不动
+          root='${{ steps.target.outputs.root }}'
+          # 只替换这一个子目录(vA.B.C/ 或 dev/vA.B.C/),其它版本原样不动
           mkdir -p "gh-pages/${subdir}"
           rsync -a --delete src/site/ "gh-pages/${subdir}/"
-          if [[ '${{ steps.target.outputs.target }}' == 'root' ]]; then
-              # 更新版本列表,重建根目录与 latest/ 的跳转桩
-              python3 tools/scripts/site_versions.py publish gh-pages \
-                  '${{ steps.target.outputs.version }}' '${{ steps.target.outputs.title }}'
-          fi
+          # 更新版本列表,重建根目录(或 dev/)与其 latest/ 的跳转桩
+          SITE_PATH="/${{ github.event.repository.name }}/${root}" \
+              python3 tools/scripts/site_versions.py publish "gh-pages/${root}" \
+              '${{ steps.target.outputs.version }}' '${{ steps.target.outputs.title }}'
           touch gh-pages/.nojekyll
           cd gh-pages
           if git diff --quiet && git diff --cached --quiet && [[ -z "$(git status --porcelain)" ]]; then
