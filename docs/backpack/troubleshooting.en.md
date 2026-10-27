@@ -150,8 +150,8 @@ This page lists the cause and fix for each symptom. The most common issues are b
 
     The counting rules are in [Picking a project and task](monitor-record.md#project-task).
 
-??? failure "Recording refused: "Your hands are outside the starting pose range. Recording was blocked.""
-    **Cause:** in modes that record headset video, both hands must be in the starting range in front of and below the body before recording. The parentheses in the message name the hand, axis, measured value and allowed range (metres); how it works is in [Starting-pose check](monitor-record.md#initial-pose).
+??? failure "Recording refused: “Your hands are outside the starting pose range, so recording was blocked”"
+    **Cause:** in modes that record headset video, both hands must be in the starting range in front of and below the body before recording. After the colon the message names each hand, the direction it is off and by how many centimetres (such as "left hand 5 cm too high"); how it works is in [Starting-pose check](monitor-record.md#initial-pose).
 
     **Fix:**
 
@@ -159,17 +159,17 @@ This page lists the cause and fix for each symptom. The most common issues are b
     - The Z axis is always out of range (too high or too low): check that the project's "Headset mount" matches how the headset is actually worn; worn around the neck but set to On head, the hands look too high. The mount is fixed once the project is created, so a wrong one means creating a new project.
     - A crooked headset, or looking down or turning sideways at the start, also shifts the whole range.
 
-??? failure "Recording refused: "Could not get valid headset and tracker poses at the same time""
+??? failure "Recording refused: “Could not get valid headset and tracker poses at the same time”"
     **Cause:** within 1.5 seconds the device did not get valid poses from the headset and both trackers at the same time, so it cannot tell where the hands are.
 
     **Fix:** work through [Headset and trackers](#tracker): the trackers are in the headset's view with a blue LED, and the pose card on the monitor page shows a green dot; move the grippers slightly to wake the trackers, then retry.
 
-??? failure "Recording refused: "The tracker positions are opposite to their left/right gripper bindings" or "Unable to confirm the left/right gripper positions""
+??? failure "Recording refused: “The tracker positions are opposite to their left/right gripper bindings” or “Unable to confirm the left/right gripper positions”"
     **Cause:** before recording, the device checks where the left and right trackers actually are. Swapped grippers, wrongly fitted trackers or swapped bindings are refused; so is a start where left and right cannot be told apart because the hands are crossed, too close together or tracking is unstable.
 
     **Fix:** look forward, hold your hands apart without crossing them, move slightly to wake the trackers and retry. If it still says they are opposite, check the grippers are in the correct hands, and check tracker fitting and binding as in [The left and right gripper poses are swapped](#tracker).
 
-??? failure "Recording refused: "Failed to reset Pico coordinates before recording""
+??? failure "Recording refused: “Failed to reset Pico coordinates before recording”"
     **Cause:** before every recording the device has the headset reset its world frame and waits for it to finish. It fails if the headset is disconnected, XTac UMI XR is not running in the foreground, or the XR version does not support the reset; the reason follows the colon.
 
     **Fix:** make sure the headset is connected, XTac UMI XR is running in the foreground and shows "Connected", and its version matches the [version baseline](versions.md#baseline), then retry.
