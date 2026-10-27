@@ -1,0 +1,3256 @@
+<!DOCTYPE html><html lang="en" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="XTac UMI 穿戴式多模态数据采集系统:XTac UMI G1 视触觉夹爪、数采背包与 PC 开发套件的产品介绍与使用手册">
+      
+      
+        <meta name="author" content="XenseRobotics">
+      
+      
+        <link rel="canonical" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.6/en/pc/recording/">
+      
+      
+        <link rel="prev" href="../calibration/">
+      
+      
+        <link rel="next" href="../dataset/">
+      
+      
+        
+          <link rel="alternate" href="../../../pc/recording/" hreflang="zh">
+        
+          <link rel="alternate" href="./" hreflang="en">
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+    
+    
+      
+        <title>Data collection - XTac UMI Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  <link href="../../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#data-collection" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden="">
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../" title="XTac UMI Docs" class="md-header__button md-logo" aria-label="XTac UMI Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            XTac UMI Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Data collection
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo" aria-label="切换到暗色模式" type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换到暗色模式" for="__palette_1" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"></path></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo" aria-label="切换到亮色模式" type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换到亮色模式" for="__palette_0" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"></path></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="Select language">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"></path></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="../../../pc/recording/" hreflang="zh" class="md-select__link">
+              简体中文
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required="">
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard="" data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"></path></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix="">
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/XenseRobotics-AI/XTac-UMI-G1-Docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    XenseRobotics-AI/XTac-UMI-G1-Docs
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Product
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../backpack/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Backpack Kit
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Developer Kit
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../follower/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Follower gripper
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../common/pico4/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Common
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../" title="XTac UMI Docs" class="md-nav__button md-logo" aria-label="XTac UMI Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    XTac UMI Docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/XenseRobotics-AI/XTac-UMI-G1-Docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    XenseRobotics-AI/XTac-UMI-G1-Docs
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix="">
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Product
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_1" id="__nav_1_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Product
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../product/g1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    XTac UMI G1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../product/highlights/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Highlights
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../product/editions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Editions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../product/backpack/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The XTac UMI Backpack
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../product/specs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Specifications
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../product/safety/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Safety and compliance
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../backpack/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Backpack Kit
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Backpack Kit
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../backpack/quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../backpack/unbox-connect/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unboxing, cabling and power
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../backpack/network/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Network and console access
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../backpack/monitor-record/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Live monitor and recording
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../backpack/gripper/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gripper buttons, LEDs and voice
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../backpack/projects-export/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Projects, export and upload
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../backpack/playback/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Playback
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../backpack/system/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    System settings
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../backpack/update/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Upgrades and OTA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../backpack/versions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Versions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../backpack/troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked="">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Developer Kit
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Developer Kit
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../host-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Host setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../calibration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Calibration and self-check
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data collection
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data collection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#51" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How collection works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#preview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Preview before recording
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#52" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recording
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Recording">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#params" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#robot-id" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        --robot.id and the hardware manifest
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#53" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What each frame records
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#54" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recording options: streaming encoding and encoder warm-up
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Recording options: streaming encoding and encoder warm-up">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#no-gpu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recording on a collection PC with no NVIDIA GPU
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#55" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Episodes and resets
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#collection-standards" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Collection standards
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Collection standards">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#good-episodes-and-common-bad-samples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Good episodes and common bad samples
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#before-collecting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Before collecting
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-to-perform-the-demonstration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How to perform the demonstration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diversity-and-consistency" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diversity and consistency
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#task-definition-and-dataset-organization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Task definition and dataset organization
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#incremental-collection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Incremental collection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pre-flight-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pre-flight checklist
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#56" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Optional: head camera
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#57" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Optional: wrist camera fisheye undistortion
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Optional: wrist camera fisheye undistortion">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fisheye-fallback" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What happens when the fisheye calibration cannot be read
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dataset/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dataset
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../versions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Versions and upgrades
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RobotConfig options
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_10">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../sdk/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SDK and development
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_10" id="__nav_3_10_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    SDK and development
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sdk/install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install and build
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sdk/api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API essentials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sdk/examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Examples
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../follower/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Follower gripper
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Follower gripper
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../follower/setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Setup and self-check
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../follower/control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Motion control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../follower/api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API and examples
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../follower/firmware/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Firmware and motor upgrades
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../follower/troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5">
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Common
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Common
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../common/pico4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pico4 headset and tracker setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../common/gripper/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gripper connection and serial numbers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../common/coordinates/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Coordinate frames
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../common/maintenance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Maintenance
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../common/reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary and support
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="data-collection">Data collection<a class="headerlink" href="#data-collection" title="锚点链接">¶</a></h1>
+<p>First confirm the devices work with <code>lerobot-teleoperate</code>, then record a <code>LeRobotDataset</code> with <code>lerobot-record</code>. Storage, layout, checking and upload are in <a href="../dataset/">Dataset</a>.</p>
+<h2 id="51">How collection works<a class="headerlink" href="#51" title="锚点链接">¶</a></h2>
+<ul>
+<li><code>taccap_gripper</code> recording is self-driven; there are no <code>--teleop.*</code> arguments.</li>
+<li>Shifted-frame pairing: the observation from step <em>t-1</em> is paired with the pose from step <em>t</em> as its action (EEF TCP pose + normalized <code>gripper.pos</code>, plus the headset pose with the <a href="#56">head camera</a> on), so each episode is one frame shorter.</li>
+<li><code>tcp.*</code> is the gripper tip, not the tracker, derived from the tracker pose through a built-in mount transform (one per side); the tip and tracker positions are defined in <a href="https://github.com/XenseRobotics-AI/XTac-UMI-Description">XTac-UMI-Description</a>.</li>
+<li>The world frame is gravity-aligned, X forward / Y left / Z up, frozen the instant XTac UMI XR starts; see <a href="../../common/pico4/#pico-frame">frame alignment</a>.</li>
+<li><code>--display_data=true</code> opens Rerun's <code>/world</code> 3D view (<code>--show_trajectory=false</code> turns the trail off); what it shows and the mount check are in <a href="../../common/coordinates/#world-view">Coordinate frames · The pose view during collection</a>.</li>
+</ul>
+<h2 id="preview">Preview before recording<a class="headerlink" href="#preview" title="锚点链接">¶</a></h2>
+<p><code>lerobot-teleoperate</code> only previews and writes nothing. It takes the same switches as recording; preview at the tier you will record at:</p>
+<table>
+<thead>
+<tr>
+<th>Tier</th>
+<th>Switches</th>
+<th>Needs</th>
+<th>Adds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>① Grippers only</td>
+<td><code>--robot.type=bi_taccap_gripper --robot.enable_tracker=false</code></td>
+<td>No PC Service needed</td>
+<td>Both tactile streams, the wrist camera, <code>gripper.pos</code>; no <code>tcp.*</code></td>
+</tr>
+<tr>
+<td>② With wrist pose (the usual one, this page's default)</td>
+<td><code>--robot.type=bi_taccap_gripper</code> (the tracker is on by default)</td>
+<td>Tracker powered on and <a href="../../common/pico4/#pico-tracker-bind">bound</a>, Pico4U connected, <a href="../host-setup/#35">PC Service running</a></td>
+<td><a href="../../common/coordinates/#world-view"><code>/world</code> view</a> / <code>tcp.*</code></td>
+</tr>
+<tr>
+<td>③ Full setup</td>
+<td><code>--robot.type=xtac_umi_g1</code></td>
+<td>As for ②, plus PC Service ≥ v0.2.0</td>
+<td>Headset stereo frames and head pose, see <a href="#56">head camera</a></td>
+</tr>
+</tbody>
+</table>
+<p>Preview at tier ②:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>lerobot-teleoperate<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">    </span>--robot.type<span class="o">=</span>bi_taccap_gripper<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span>--robot.id<span class="o">=</span><span class="m">0</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span>--fps<span class="o">=</span><span class="m">30</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">    </span>--display_data<span class="o">=</span><span class="nb">true</span>
+</span></code></pre></div>
+<ul>
+<li>On a bimanual setup <code>--robot.type</code> decides whether the headset is included; a <code>--robot.enable_head_camera</code> that contradicts it fails and tells you which type to use.</li>
+<li>For a single gripper use <code>--robot.type=taccap_gripper</code>: with one connected it is picked automatically, with both connected add <code>--robot.side=left|right</code> (required when recording only one).</li>
+<li><code>--teleop_time_s=10</code> exits after ten seconds; <code>--debug_timing=true</code> prints sampling times and the camera count.</li>
+</ul>
+<p>Check each item (pose rows only for ② and ③), then <code>Ctrl+C</code>:</p>
+<table>
+<thead>
+<tr>
+<th>What</th>
+<th>Expected</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Both tactile streams</td>
+<td>Showing; the texture changes clearly when pressed</td>
+</tr>
+<tr>
+<td>Wrist camera</td>
+<td>Showing, no cable or clutter in view</td>
+</tr>
+<tr>
+<td><code>gripper.pos</code></td>
+<td>1.0 wide open, 0.0 closed; short of 1.0, see <a href="../calibration/#413">calibration</a></td>
+</tr>
+<tr>
+<td>The EE marker and trail in <code>/world</code></td>
+<td>Smooth, no jumps or freezing; tracking is lost when the tracker leaves the headset's view or is blocked</td>
+</tr>
+<tr>
+<td>Bimanual: the two trails</td>
+<td>Independent and correctly matched</td>
+</tr>
+</tbody>
+</table>
+<h2 id="52">Recording<a class="headerlink" href="#52" title="锚点链接">¶</a></h2>
+<p>Devices are auto-discovered by serial number and each matched to left/right; tier switches and the single-gripper form are as in the preview.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>lerobot-record<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">    </span>--robot.type<span class="o">=</span>bi_taccap_gripper<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span>--robot.id<span class="o">=</span><span class="m">0</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">    </span>--display_data<span class="o">=</span><span class="nb">false</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">    </span>--dataset.repo_id<span class="o">=</span>&lt;your_org&gt;/&lt;your_dataset&gt;<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">    </span>--dataset.num_episodes<span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">    </span>--dataset.fps<span class="o">=</span><span class="m">30</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">    </span>--dataset.push_to_hub<span class="o">=</span><span class="nb">false</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">    </span>--dataset.episode_time_s<span class="o">=</span><span class="m">120</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">    </span>--dataset.reset_time_s<span class="o">=</span><span class="m">60</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="w">    </span>--dataset.single_task<span class="o">=</span><span class="s1">'Pick up the object'</span>
+</span></code></pre></div>
+<ul>
+<li>Rerun displays on its own thread, so leaving <code>--display_data</code> on costs the collection loop nothing; a lagging viewer drops only on-screen frames and prints <code>Rerun display: N/M frames dropped …</code> at the end.</li>
+<li>Spell out <code>fps=30</code>, <code>episode_time_s=120</code>, <code>reset_time_s=60</code> and <code>push_to_hub=false</code> rather than relying on defaults.</li>
+<li>If a camera or the gripper encoder is lost mid-recording (loose cable, hub brown-out), collection stops, saves what it has and prints <code>Device lost mid-recording</code>; no values are invented. Until a device is declared lost, its last good value is repeated (about 2s for a camera, 1s for the encoder), so the episode's last second or two may be stale; discard it. Check cabling and USB ports (see <a href="../troubleshooting/">Troubleshooting</a>), then <code>--resume</code>.</li>
+</ul>
+<h3 id="params">Parameters<a class="headerlink" href="#params" title="锚点链接">¶</a></h3>
+<p>For the complete definitions see lerobot's official <a href="https://huggingface.co/docs/lerobot/v0.5.1/en/il_robots#record-a-dataset">recording guide</a> (lerobot baseline 0.5.1).</p>
+<p><strong>Dataset parameters <code>--dataset.*</code></strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>repo_id</code></td>
+<td>required</td>
+<td><code>&lt;org&gt;/&lt;name&gt;</code>; convention <code>&lt;org&gt;/&lt;task&gt;_&lt;variant&gt;_&lt;YYYYMMDD&gt;</code>, e.g. <code>Xense/insert_plug_left_20260703</code>, see <a href="../dataset/">Dataset</a></td>
+</tr>
+<tr>
+<td><code>single_task</code></td>
+<td>required</td>
+<td>Task description, written to <code>meta/tasks</code>, e.g. <code>'Pick up the object'</code></td>
+</tr>
+<tr>
+<td><code>root</code></td>
+<td><code>$HF_LEROBOT_HOME/repo_id</code></td>
+<td>Local storage directory, see <a href="../dataset/">Dataset</a></td>
+</tr>
+<tr>
+<td><code>fps</code></td>
+<td><code>30</code></td>
+<td>Sample-rate cap; the sensors themselves run at 120Hz (<a href="../../product/specs/#specs">specs</a>)</td>
+</tr>
+<tr>
+<td><code>episode_time_s</code></td>
+<td><code>120</code></td>
+<td>Length per episode (seconds)</td>
+</tr>
+<tr>
+<td><code>reset_time_s</code></td>
+<td><code>60</code></td>
+<td>Reset time between episodes (seconds)</td>
+</tr>
+<tr>
+<td><code>num_episodes</code></td>
+<td><code>50</code></td>
+<td>Number of episodes to record</td>
+</tr>
+<tr>
+<td><code>video</code></td>
+<td><code>true</code></td>
+<td>Encode as mp4 video</td>
+</tr>
+<tr>
+<td><code>push_to_hub</code></td>
+<td><code>false</code></td>
+<td>Upload to the Hub, see <a href="../dataset/#64">Pushing to the Hugging Face Hub and backup</a></td>
+</tr>
+<tr>
+<td><code>private</code></td>
+<td><code>false</code></td>
+<td>Private Hub repo</td>
+</tr>
+<tr>
+<td><code>tags</code></td>
+<td>none</td>
+<td>Hub tags</td>
+</tr>
+<tr>
+<td><code>streaming_encoding</code></td>
+<td><code>true</code></td>
+<td>Live streaming encoding, see <a href="#54">streaming encoding</a></td>
+</tr>
+<tr>
+<td><code>vcodec</code></td>
+<td><code>auto</code></td>
+<td><code>h264</code>/<code>hevc</code>/<code>libsvtav1</code>/<code>auto</code>/a hardware encoder</td>
+</tr>
+<tr>
+<td><code>encoder_threads</code></td>
+<td>auto</td>
+<td>Threads per encoder instance</td>
+</tr>
+<tr>
+<td><code>encoder_queue_maxsize</code></td>
+<td><code>30</code></td>
+<td>Buffered frames per camera (~1s@30fps)</td>
+</tr>
+<tr>
+<td><code>video_encoding_batch_size</code></td>
+<td><code>1</code></td>
+<td>Episodes accumulated before batch encoding (1=immediately)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Recording control (top-level parameters)</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>robot.type</code></td>
+<td>required</td>
+<td><code>taccap_gripper</code> (single) / <code>bi_taccap_gripper</code> (bimanual) / <code>xtac_umi_g1</code> (bimanual + headset)</td>
+</tr>
+<tr>
+<td><code>robot.id</code></td>
+<td>required</td>
+<td>Station number; pass a bare number (<code>0</code> / <code>1</code>…), prefix added automatically; omitting it is an error, see <a href="#robot-id"><code>--robot.id</code></a></td>
+</tr>
+<tr>
+<td><code>fps</code></td>
+<td><code>30</code></td>
+<td>Main-loop rate, separate from <code>--dataset.fps</code> (recording sample rate), usually the same</td>
+</tr>
+<tr>
+<td><code>display_data</code></td>
+<td><code>false</code></td>
+<td>Show camera streams and the 3D view in Rerun</td>
+</tr>
+<tr>
+<td><code>show_trajectory</code></td>
+<td><code>true</code></td>
+<td>Overlay the 3D pose + trajectory in Rerun (needs <code>display_data</code> and a <code>tcp.*</code>)</td>
+</tr>
+<tr>
+<td><code>display_compressed_images</code></td>
+<td><code>false</code></td>
+<td>JPEG-compress before display, on the display thread; only pays off when the viewer is on another machine (<code>--display_ip</code>)</td>
+</tr>
+<tr>
+<td><code>display_image_every_n</code></td>
+<td><code>1</code></td>
+<td>Refresh camera tiles every N frames (scalars at full rate); for choosing which display frames to drop yourself</td>
+</tr>
+<tr>
+<td><code>play_sounds</code></td>
+<td><code>true</code></td>
+<td>Spoken announcements; always silent in the container (no speech synthesizer), audible on the host</td>
+</tr>
+<tr>
+<td><code>resume</code></td>
+<td><code>false</code></td>
+<td>Continue an existing dataset; looks only locally and errors out if the dataset is not found; never downloads from the Hub; <code>--robot.id</code> must match the dataset, see <a href="#robot-id"><code>--robot.id</code></a></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Device parameters <code>--robot.*</code> (XTac UMI G1 specific)</strong></p>
+<p>Only items used on this page; for the full set see <a href="../reference/#robotconfig">Common <code>RobotConfig</code> options</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>robot.side</code></td>
+<td>auto</td>
+<td><code>left</code>/<code>right</code>; required for a single gripper when both are connected</td>
+</tr>
+<tr>
+<td><code>robot.role</code></td>
+<td><code>leader</code></td>
+<td>Set <code>follower</code> to bind the follower gripper; firmware must be ≥ 1.2.5 or it is refused, below 1.2.11 it warns to upgrade, see <a href="../versions/#ota">Firmware OTA upgrade</a></td>
+</tr>
+<tr>
+<td><code>robot.gripper_stream_hz</code></td>
+<td><code>100</code></td>
+<td>Rate at which the leader firmware pushes encoder (and, when enabled, IMU) readings, <code>0</code> polls every frame; falls back to polling with a warning if the stream fails. Shared on a bimanual setup, no prefix</td>
+</tr>
+<tr>
+<td><code>robot.enable_tracker</code></td>
+<td><code>true</code></td>
+<td>Off means no pose</td>
+</tr>
+<tr>
+<td><code>robot.enable_head_camera</code></td>
+<td><code>false</code></td>
+<td>Single-gripper <code>taccap_gripper</code> only: record the headset; bimanual uses <code>--robot.type=xtac_umi_g1</code> instead, see <a href="#56">head camera</a></td>
+</tr>
+<tr>
+<td><code>robot.head_camera_eyes</code></td>
+<td><code>both</code></td>
+<td><code>both</code> eyes (two keys), or <code>left</code> / <code>right</code> only</td>
+</tr>
+<tr>
+<td><code>robot.head_camera_width/_height</code></td>
+<td><code>640</code> / <code>480</code></td>
+<td>Per-eye size; must match the headset output (default 640x480), see <a href="#56">head camera</a></td>
+</tr>
+<tr>
+<td><code>robot.wrist_undistort</code></td>
+<td><code>false</code></td>
+<td>Undistort the fisheye before recording, see <a href="#57">fisheye undistortion</a></td>
+</tr>
+<tr>
+<td><code>robot.wrist_undistort_balance</code></td>
+<td><code>0.0</code></td>
+<td><code>0</code> keeps the calibrated focal length, <code>1</code> is widest with the most black border</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="admonition-title">On a bimanual setup, the per-unit flags take a <code>left_</code> / <code>right_</code> prefix</p>
+<p>This page writes parameters for the single gripper; under <code>bi_taccap_gripper</code> these exist once per side, and without the prefix the field does not exist:</p>
+<table>
+<thead>
+<tr>
+<th>Single</th>
+<th>Bimanual</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--robot.enable_wrist_camera</code></td>
+<td><code>--robot.left_enable_wrist_camera</code> / <code>--robot.right_enable_wrist_camera</code></td>
+</tr>
+<tr>
+<td><code>--robot.tracker_serial</code></td>
+<td><code>--robot.left_tracker_serial</code> / <code>--robot.right_tracker_serial</code></td>
+</tr>
+<tr>
+<td><code>--robot.enable_gripper</code> / <code>--robot.enable_imu</code></td>
+<td>same, with the <code>left_</code> / <code>right_</code> prefix</td>
+</tr>
+<tr>
+<td><code>--robot.gripper_open_rad</code>, <code>--robot.tracker_to_ee_pos/_quat</code></td>
+<td>same</td>
+</tr>
+</tbody>
+</table>
+<p>Everything else is shared by both sides: <code>--robot.enable_tactile</code>, <code>--robot.enable_tracker</code>, <code>--robot.tactile_*</code>, <code>--robot.wrist_camera_width/_height/_fps/_fourcc</code>, <code>--robot.head_camera_*</code>.</p>
+</div>
+<p>A powered tracker's 6-DoF pose is recorded automatically; the side comes from the digit before the trailing <code>G</code> in its serial (<a href="../host-setup/#33">odd-left / even-right</a>). If the serial does not conform or enumeration is flaky, pin it with <code>--robot.tracker_serial=&lt;SN&gt;</code>.</p>
+<h3 id="robot-id"><code>--robot.id</code> and the hardware manifest<a class="headerlink" href="#robot-id" title="锚点链接">¶</a></h3>
+<p><code>--robot.id</code> is the station number, one per setup (a bimanual setup is one setup), unchanged when a gripper is swapped. It is used in the log prefix, the calibration filename and the hardware manifest, not as a dataset column. The prefix is filled in from <code>--robot.type</code>:</p>
+<table>
+<thead>
+<tr>
+<th>You type</th>
+<th><code>--robot.type</code></th>
+<th>Stored as</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--robot.id=0</code></td>
+<td><code>taccap_gripper</code> (single)</td>
+<td><code>taccap_0</code></td>
+</tr>
+<tr>
+<td><code>--robot.id=0</code></td>
+<td><code>bi_taccap_gripper</code> (bimanual)</td>
+<td><code>bi_taccap_0</code></td>
+</tr>
+<tr>
+<td><code>--robot.id=0</code></td>
+<td><code>xtac_umi_g1</code> (bimanual + headset)</td>
+<td><code>xtac_umi_g1_0</code></td>
+</tr>
+</tbody>
+</table>
+<p>Do not type the prefix by hand: non-numeric values are kept verbatim, so <code>--robot.id=taccap_0</code> still works, but on a bimanual setup it disagrees with the device type. A missing or blank id exits at command-line parse time:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>ValueError: --robot.id is required: the station label for this rig, e.g. --robot.id=0 …
+</span></code></pre></div>
+<p>Identity is recorded in the hardware manifest: <code>lerobot-record</code> writes <code>meta/hardware.json</code> right after <code>connect()</code>, with each gripper's firmware SN and the SNs of its two tactile sensors (each with its observation key).</p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="p">{</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="nt">"robot_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bi_taccap_gripper"</span><span class="p">,</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span><span class="nt">"robot_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bi_taccap_0"</span><span class="p">,</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">  </span><span class="nt">"epochs"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">    </span><span class="p">{</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">      </span><span class="nt">"from_episode"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">      </span><span class="nt">"to_episode"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">      </span><span class="nt">"recorded_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-08-22T16:03:09+08:00"</span><span class="p">,</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="w">      </span><span class="nt">"robot_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bi_taccap_0"</span><span class="p">,</span>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="w">      </span><span class="nt">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"leader"</span><span class="p">,</span>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="w">      </span><span class="nt">"units"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="w">        </span><span class="p">{</span>
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="w">          </span><span class="nt">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"left"</span><span class="p">,</span>
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="w">          </span><span class="nt">"gripper_sn"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TCGU01A24Z0001m"</span><span class="p">,</span>
+</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a><span class="w">          </span><span class="nt">"tactile_sensors"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a><span class="w">            </span><span class="p">{</span><span class="w"> </span><span class="nt">"finger"</span><span class="p">:</span><span class="w"> </span><span class="s2">"left"</span><span class="p">,</span><span class="w">  </span><span class="nt">"observation_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"left_tactile_left"</span><span class="p">,</span><span class="w">  </span><span class="nt">"serial"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GSPS01A25Z0011"</span><span class="w"> </span><span class="p">},</span>
+</span><span id="__span-3-17"><a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a><span class="w">            </span><span class="p">{</span><span class="w"> </span><span class="nt">"finger"</span><span class="p">:</span><span class="w"> </span><span class="s2">"right"</span><span class="p">,</span><span class="w"> </span><span class="nt">"observation_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"left_tactile_right"</span><span class="p">,</span><span class="w"> </span><span class="nt">"serial"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GSPS01A25Z0012"</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-3-18"><a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a><span class="w">          </span><span class="p">],</span>
+</span><span id="__span-3-19"><a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a><span class="w">          </span><span class="nt">"wrist_undistort"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"applied"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-3-20"><a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-3-21"><a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a><span class="w">      </span><span class="p">]</span>
+</span><span id="__span-3-22"><a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-3-23"><a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a><span class="w">  </span><span class="p">]</span>
+</span><span id="__span-3-24"><a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a><span class="p">}</span>
+</span></code></pre></div>
+<ul>
+<li><code>side</code> is which gripper, <code>finger</code> is which tactile sensor on it, each decided by <a href="../host-setup/#33">odd-left / even-right</a>.</li>
+<li><code>observation_key</code> maps a dataset column to a physical sensor.</li>
+<li><code>gripper_sn</code> is the firmware SN, not the CH343 <code>mcu_serial</code> (which changes with the adapter).</li>
+<li>A single gripper has one entry in <code>units</code>; a side that is off records <code>"gripper_sn": null</code>; with <code>--robot.enable_tactile=false</code>, <code>tactile_sensors</code> is an empty list.</li>
+<li>It is a separate file, not in <code>meta/info.json</code>; trackers and wrist cameras are accessories and not listed.</li>
+<li><code>wrist_undistort</code> records whether frames were undistorted and with which intrinsics, <code>{"applied": false}</code> if not; see <a href="#57">fisheye undistortion</a>.</li>
+</ul>
+<p><code>epochs</code> lets one dataset span several setups:</p>
+<ul>
+<li>Each epoch records <code>from_episode</code> / <code>to_episode</code> (half-open, matching <code>dataset_from_index</code> / <code>dataset_to_index</code>) and <code>recorded_at</code>; the open epoch has <code>to_episode</code> <code>null</code>.</li>
+<li>On <code>--resume</code> with the same setup no new epoch is recorded; after a gripper or sensor swap, the old epoch closes at the current episode count and a new one starts.</li>
+<li>A <code>--robot.type</code> mismatch is a different dataset, not a hardware swap: the original file is kept and a warning is logged.</li>
+<li><code>bi_taccap_gripper</code> ↔ <code>xtac_umi_g1</code> (adding or dropping the headset) is also a different dataset, and a dataset recorded on an earlier version with the headset under <code>bi_taccap_gripper</code> cannot be resumed either; both need a new <code>--dataset.repo_id</code>.</li>
+<li>Older datasets (flat <code>units</code>) read back as one open epoch, which only says "nothing indicates the hardware changed".</li>
+</ul>
+<p><strong>One dataset belongs to one station</strong>: on <code>--resume</code>, a <code>--robot.id</code> that differs from the recorded one is refused before any device connects (the error contains <code>refusing to resume it</code>). Resume on the original station or use a new <code>--dataset.repo_id</code>; older datasets with no recorded station are exempt.</p>
+<div class="admonition note">
+<p class="admonition-title">The derived tactile channels can be rebuilt from the dataset alone</p>
+<p>depth / force / difference are computed from the recorded <code>rectify</code> stream: the reference image is each episode's first <code>rectify</code> frame and everything else is fixed by the sensor model, so no physical unit is needed. A <code>meta/runtimes/</code> directory and per-sensor <code>runtime</code> key in older datasets are ignored.</p>
+</div>
+<h2 id="53">What each frame records<a class="headerlink" href="#53" title="锚点链接">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Source</th>
+<th>Enabled by</th>
+<th>Shape / type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>tcp.x</code>, <code>tcp.y</code>, <code>tcp.z</code></td>
+<td>Tracker → EEF TCP position</td>
+<td><code>--robot.enable_tracker</code> (default <code>true</code>)</td>
+<td>float (m)</td>
+</tr>
+<tr>
+<td><code>tcp.r1</code>..<code>tcp.r6</code></td>
+<td>Same, orientation as a 6-D rotation</td>
+<td>as above</td>
+<td>float</td>
+</tr>
+<tr>
+<td><code>gripper.pos</code></td>
+<td>Gripper encoder</td>
+<td><code>--robot.enable_gripper</code> (default <code>true</code>)</td>
+<td>float ∈ [0, 1]</td>
+</tr>
+<tr>
+<td><code>tactile_left</code> / <code>tactile_right</code></td>
+<td>Left and right visuotactile sensors</td>
+<td>recorded by default; <code>--robot.enable_tactile=false</code> is diagnostic only, see the warning below</td>
+<td>uint8, about <code>(400, 700, 3)</code>; size is derived automatically, do not hard-code it</td>
+</tr>
+<tr>
+<td><code>wrist_cam</code></td>
+<td>Wrist camera</td>
+<td><code>--robot.enable_wrist_camera</code> (default <code>true</code>)</td>
+<td>uint8 <code>(H, W, 3)</code></td>
+</tr>
+<tr>
+<td><code>left_head</code> / <code>right_head</code></td>
+<td>Headset stereo, one key per eye</td>
+<td><code>--robot.type=xtac_umi_g1</code> (single gripper: <code>--robot.enable_head_camera=true</code>)</td>
+<td>uint8, <code>(480, 640, 3)</code> by default</td>
+</tr>
+<tr>
+<td><code>head_camera.x/y/z</code></td>
+<td>Headset position (same world frame as <code>tcp.*</code>), also an action</td>
+<td>as above</td>
+<td>float (m)</td>
+</tr>
+<tr>
+<td><code>head_camera.r1..r6</code></td>
+<td>Headset orientation as a 6-D rotation, also an action</td>
+<td>as above</td>
+<td>float</td>
+</tr>
+<tr>
+<td><code>imu.accel.{x,y,z}</code></td>
+<td>Gripper IMU acceleration</td>
+<td><code>--robot.enable_imu</code> (default <code>false</code>, reserved, not recorded)</td>
+<td>float (m/s²)</td>
+</tr>
+<tr>
+<td><code>imu.gyro.{x,y,z}</code></td>
+<td>Gripper IMU angular rate</td>
+<td>as above</td>
+<td>float (rad/s)</td>
+</tr>
+<tr>
+<td><code>imu.mag.{x,y,z}</code></td>
+<td>Gripper IMU magnetometer</td>
+<td>as above</td>
+<td>float (µT)</td>
+</tr>
+</tbody>
+</table>
+<p>The 6-D rotation stores the first two columns (by column, not by row) of the rotation matrix R (world ← body), the same for <code>tcp.*</code> and <code>head_camera.*</code>:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>R = ⎡ r1  r4  · ⎤     column 1 (r1,r2,r3) = direction of the body X axis in the world frame
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>    ⎢ r2  r5  · ⎥     column 2 (r4,r5,r6) = direction of the body Y axis in the world frame
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>    ⎣ r3  r6  · ⎦     column 3 = cross product of the first two; recompute it yourself
+</span></code></pre></div>
+<p>The 9 IMU columns are not recorded by default; to add them use <code>--robot.enable_imu=true</code> (on a bimanual setup it applies to both sides at once, with keys prefixed <code>left_</code> / <code>right_</code>); <code>observation.state</code> goes 10 → 19 for a single gripper, 20 → 38 for bimanual.</p>
+<div class="admonition warning">
+<p class="admonition-title"><code>--robot.enable_tactile=false</code> is a diagnostic switch, do not record with it</p>
+<p>When it is off, the tactile sensors are not discovered, recorded or keyed. It exists only to bisect a USB bandwidth problem (one camera failing to open, a different one each time); see <a href="../troubleshooting/#usb-bandwidth">a camera that will not open</a>. To record one stream fewer, use <code>--robot.enable_wrist_camera=false</code> or <code>--robot.enable_tracker=false</code>.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">By default, what you see in Rerun is what lands on disk</p>
+<ul>
+<li>On disk: <code>--robot.tactile_output_types</code>, default <code>rectify</code> (the raw image with no baseline subtraction); exactly one type, more than one is an error.</li>
+<li>Display: <code>--robot.tactile_display_output_types</code>, also <code>rectify</code> by default (<code>'[]'</code> means the same), so each sensor is read once per frame and screen and dataset show the same image.</li>
+<li>Pointing display at another type adds a display-only, never-recorded output on the same read, keyed like <code>tactile_left_difference</code> and not in <code>observation_features</code>.</li>
+</ul>
+<p><code>difference</code> is an enhanced difference image against the baseline captured at init. If you turn it on (<code>--robot.tactile_display_output_types='["difference"]'</code>):</p>
+<ul>
+<li>It is destructive: force on the gel at connect time is subtracted from the whole session, so keep all four fingertips unloaded at connect.</li>
+<li>Never switch <code>--robot.tactile_output_types</code> to <code>difference</code> just because it looks clearer.</li>
+<li><code>--robot.tactile_diff_gain</code> (default <code>1.0</code>) is its gain and does nothing unless <code>difference</code> is requested; the factory value of 1.5 is noisy on this gel and clips.</li>
+</ul>
+</div>
+<h2 id="54">Recording options: streaming encoding and encoder warm-up<a class="headerlink" href="#54" title="锚点链接">¶</a></h2>
+<p>Video keys (tactile + wrist camera) are encoded live rather than from PNGs at episode end, so there is almost no wait after an episode. On by default (<code>--dataset.streaming_encoding=true</code>):</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>lerobot-record<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">    </span>--robot.type<span class="o">=</span>taccap_gripper<span class="w"> </span>--robot.id<span class="o">=</span><span class="m">0</span><span class="w"> </span>--robot.side<span class="o">=</span>right<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span>--dataset.repo_id<span class="o">=</span>&lt;your_org&gt;/&lt;your_dataset&gt;<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">    </span>--dataset.num_episodes<span class="o">=</span><span class="m">20</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">    </span>--dataset.fps<span class="o">=</span><span class="m">30</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">    </span>--dataset.push_to_hub<span class="o">=</span><span class="nb">false</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">    </span>--dataset.reset_time_s<span class="o">=</span><span class="m">60</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">    </span>--dataset.episode_time_s<span class="o">=</span><span class="m">120</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">    </span>--dataset.single_task<span class="o">=</span><span class="s1">'Pick up the object'</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="w">    </span>--dataset.streaming_encoding<span class="o">=</span><span class="nb">true</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="w">    </span>--dataset.encoder_threads<span class="o">=</span><span class="m">2</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="w">    </span>--dataset.vcodec<span class="o">=</span>auto
+</span></code></pre></div>
+<ul>
+<li>One encoder thread per camera, fed through a bounded queue (<code>--dataset.encoder_queue_maxsize</code>, about one second of frames); when full it waits up to 0.1s, then drops the current frame and warns <code>Encoder queue full … dropped N frame(s)</code> without blocking collection.</li>
+<li>Saving is transactional: a failed save or a Ctrl+C rolls back to the last complete episode, never leaving half an episode, and <code>--resume</code> carries on.</li>
+<li><code>--dataset.vcodec=auto</code> prefers hardware encoding; an NVIDIA GPU is recommended so GPU H.264 encoding takes load off the CPU.</li>
+<li>Encoder warm-up is automatic: encoders are ready before each episode, so warm-up does not eat into the first frame's time budget.</li>
+</ul>
+<h3 id="no-gpu">Recording on a collection PC with no NVIDIA GPU<a class="headerlink" href="#no-gpu" title="锚点链接">¶</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">This is a workaround for a machine below the minimum specification, not a recommendation</p>
+<p>The <a href="../install/#host-spec">collection PC minimum</a> is an NVIDIA RTX 3060 / 8GB VRAM or better. A CPU-only server, a VM or a laptop with no NVIDIA card can record as below, but saves are slow and frames drop sooner; use a compliant collection PC for real collection.</p>
+</div>
+<p>Upgrade such machines to v0.1.0 first.</p>
+<p>The defaults <code>--dataset.vcodec=auto</code> + <code>--dataset.streaming_encoding=true</code> assume an NVIDIA card; without one, turn streaming encoding off:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>lerobot-record<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">    </span>...<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span>--dataset.streaming_encoding<span class="o">=</span><span class="nb">false</span>
+</span></code></pre></div>
+<p><code>--dataset.vcodec=auto</code> probes by actually opening an encode session and falls back to <code>libsvtav1</code> (AV1 on the CPU) with no NVIDIA driver; offline re-encoding chooses the same way (<code>h264_nvenc</code> with NVIDIA). Passing <code>--dataset.vcodec=libsvtav1</code> explicitly also works.</p>
+<p>With <code>libsvtav1</code> the CPU both encodes and captures; a bimanual setup has six to eight images per frame in a 33.3ms budget at 30fps, so <code>[slow_frame] ... overrun=</code> appears. With streaming off, frames are batch-encoded at <code>save_episode()</code>: a slow save only means waiting; a dropped frame cannot be recovered. Ignore the reminder to turn streaming encoding back on. To keep streaming encoding on a many-core server, tune these:</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>When to touch it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--dataset.encoder_threads</code></td>
+<td>auto</td>
+<td>On a big machine <code>libsvtav1</code> takes CPU cores that capture needs; <code>2</code> per encoder is a safe cap</td>
+</tr>
+<tr>
+<td><code>--dataset.encoder_queue_maxsize</code></td>
+<td><code>30</code></td>
+<td>About 1s of buffer at 30fps; a back-pressure valve that stops memory growing when encoding falls behind</td>
+</tr>
+</tbody>
+</table>
+<h2 id="55">Episodes and resets<a class="headerlink" href="#55" title="锚点链接">¶</a></h2>
+<ul>
+<li><code>--dataset.num_episodes=N</code> records several episodes per run.</li>
+<li>Between episodes, reposition the object and scene within <code>--dataset.reset_time_s</code>.</li>
+<li>One complete demonstration per episode, never several attempts.</li>
+<li>Give <code>--dataset.episode_time_s</code> enough room but not too much, or many idle frames accumulate at the end.</li>
+<li>
+<p>Keyboard controls while recording:</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>→</td>
+<td>End the current episode early; during the reset phase, end the reset early</td>
+</tr>
+<tr>
+<td>←</td>
+<td>Discard and re-record this episode; works during recording or the following reset, and the reset time is still given</td>
+</tr>
+<tr>
+<td>Esc</td>
+<td>Save the current episode, then stop recording</td>
+</tr>
+</tbody>
+</table>
+<p>The keyboard listener is global: arrow keys work in <strong>any window</strong>, including Rerun, which steps frames with left/right.</p>
+</li>
+</ul>
+<h2 id="collection-standards">Collection standards<a class="headerlink" href="#collection-standards" title="锚点链接">¶</a></h2>
+<h3 id="good-episodes-and-common-bad-samples">Good episodes and common bad samples<a class="headerlink" href="#good-episodes-and-common-bad-samples" title="锚点链接">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Dimension</th>
+<th>Good</th>
+<th>Bad-sample symptom</th>
+<th>How to avoid it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Completeness</td>
+<td>Approach → grasp → manipulate → finish</td>
+<td>Interrupted</td>
+<td>Finish naturally</td>
+</tr>
+<tr>
+<td>Steadiness</td>
+<td>Smooth, even motion</td>
+<td>Abrupt stops and turns, noisy IMU/pose</td>
+<td>Move evenly</td>
+</tr>
+<tr>
+<td>Tactile signal</td>
+<td>Real contact and deformation</td>
+<td>Empty grasp, no signal in the tactile image</td>
+<td>Confirm contact in the Rerun tactile view</td>
+</tr>
+<tr>
+<td>Camera visibility</td>
+<td>Target within the wrist camera's view</td>
+<td>Hand or cable blocking it, or overexposure/flicker</td>
+<td>Clear obstructions, adjust the grip angle</td>
+</tr>
+<tr>
+<td>Coordinate consistency</td>
+<td>Same origin as other episodes</td>
+<td>XTac UMI XR restarted mid-collection, pose jumps between episodes</td>
+<td>Never restart XTac UMI XR</td>
+</tr>
+<tr>
+<td>Gripper reading</td>
+<td><code>gripper.pos</code> ≈ 0 closed, sensible when open</td>
+<td>Not calibrated, <code>gripper.pos</code> ≠ 0 when closed</td>
+<td>Confirm it is closed, then re-zero if needed, see <a href="../calibration/#41">gripper calibration</a></td>
+</tr>
+<tr>
+<td>Dropped frames</td>
+<td>No warnings</td>
+<td>Dropped-frame warnings in the log</td>
+<td>Raise <code>encoder_threads</code>, use <code>vcodec=auto</code>, see <a href="#54">streaming encoding</a></td>
+</tr>
+<tr>
+<td>First frame</td>
+<td>The motion starts normally</td>
+<td>The key action lands in the dropped first frame</td>
+<td>Hold still 0.5–1s after start; give <code>--dataset.episode_time_s</code> enough room</td>
+</tr>
+</tbody>
+</table>
+<p>On errors, start with <a href="../troubleshooting/">Troubleshooting</a>.</p>
+<h3 id="before-collecting">Before collecting<a class="headerlink" href="#before-collecting" title="锚点链接">¶</a></h3>
+<p>Never restart XTac UMI XR during collection (see <a href="../../common/pico4/#pico-frame">frame alignment</a>); if you must, treat everything after it as a new dataset.</p>
+<ul>
+<li>An uncalibrated leader gripper cannot connect, so the preview only double-checks the mechanical travel; each leader gripper is calibrated once (stored in flash), both sides on a bimanual setup, see <a href="../calibration/#41">gripper calibration</a>.</li>
+<li><code>scan_grippers</code> reports sensible side/role/firmware_sn; the tracker is charged and producing a pose.</li>
+<li>On the wired link, turn the collection PC's Wi-Fi off (it conflicts with wired sharing), see <a href="../../common/pico4/#pico-network">network</a>.</li>
+<li>Stable lighting, a clearly visible target, no cables or clutter blocking the wrist camera.</li>
+<li>A bimanual setup at full load can stream ~280 MB/s, see <a href="../dataset/#storage-planning">storage planning</a>.</li>
+<li>Run the <a href="#preview">preview</a> before recording.</li>
+</ul>
+<h3 id="how-to-perform-the-demonstration">How to perform the demonstration<a class="headerlink" href="#how-to-perform-the-demonstration" title="锚点链接">¶</a></h3>
+<p>Keep the pace similar across demonstrations of the same task so it is easier to learn from; tactile is the core modality, so an empty grasp is worth very little.</p>
+<h3 id="diversity-and-consistency">Diversity and consistency<a class="headerlink" href="#diversity-and-consistency" title="锚点链接">¶</a></h3>
+<ul>
+<li>Keep consistent: the task definition (<code>--dataset.single_task</code>), the intent of the motion, the coordinate origin.</li>
+<li>Vary moderately: the object's initial pose and position, the grasp point, small changes in lighting.</li>
+</ul>
+<h3 id="task-definition-and-dataset-organization">Task definition and dataset organization<a class="headerlink" href="#task-definition-and-dataset-organization" title="锚点链接">¶</a></h3>
+<ul>
+<li>Use a stable, clear English sentence for <code>single_task</code>, identical within a dataset; it is written into <code>tasks</code>.</li>
+<li>One task/variant per dataset; <code>repo_id</code> naming is in <a href="../dataset/">Dataset</a>.</li>
+<li>Keep a device record (gripper and tracker, calibration date); serial numbers are already in <a href="#robot-id"><code>meta/hardware.json</code></a>.</li>
+</ul>
+<h3 id="incremental-collection">Incremental collection<a class="headerlink" href="#incremental-collection" title="锚点链接">¶</a></h3>
+<p>Record 5–10 episodes first, verify with <a href="../dataset/#62"><code>lerobot-check-dataset</code></a> and replay a few, then scale up.</p>
+<h3 id="pre-flight-checklist">Pre-flight checklist<a class="headerlink" href="#pre-flight-checklist" title="锚点链接">¶</a></h3>
+<ul>
+<li>[ ] XTac UMI XR not restarted during collection</li>
+<li>[ ] <code>gripper.pos</code> ≈ 0 when closed</li>
+<li>[ ] Tracker has a pose, trajectory looks right</li>
+<li>[ ] Collection PC Wi-Fi off</li>
+<li>[ ] Tactile images carry signal when grasping</li>
+<li>[ ] Wrist camera view unobstructed</li>
+<li>[ ] No dropped-frame warnings</li>
+<li>[ ] <code>single_task</code> matches this dataset</li>
+<li>[ ] Enough free disk space</li>
+</ul>
+<h2 id="56">Optional: head camera<a class="headerlink" href="#56" title="锚点链接">¶</a></h2>
+<p>Records the Pico4 Ultra Enterprise headset's stereo frames and pose (the operator's first-person view and where they were looking) as <code>left_head</code> / <code>right_head</code> and <code>head_camera.*</code> (see <a href="#53">what each frame records</a>); the latter also goes into the action. Bimanual uses <code>--robot.type=xtac_umi_g1</code>, the single-gripper <code>taccap_gripper</code> adds <code>--robot.enable_head_camera=true</code>; the parameters below apply to both.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>lerobot-record<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">    </span>--robot.type<span class="o">=</span>xtac_umi_g1<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">    </span>--robot.id<span class="o">=</span><span class="m">0</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">    </span>--display_data<span class="o">=</span><span class="nb">false</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">    </span>--dataset.repo_id<span class="o">=</span>&lt;your_org&gt;/&lt;your_dataset&gt;<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">    </span>--dataset.single_task<span class="o">=</span><span class="s1">'Pick up the object'</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w">    </span>--dataset.fps<span class="o">=</span><span class="m">30</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">    </span>--dataset.push_to_hub<span class="o">=</span><span class="nb">false</span>
+</span></code></pre></div>
+<ul>
+<li><code>left_</code> / <code>right_</code> means the headset's left / right eye, not the hands (only <code>{side}_wrist</code> and <code>{side}_tcp.*</code> are per hand); two single-gripper processes that both enable it get the same stream.</li>
+<li>Prerequisites: XenseVR PC Service ≥ v0.2.0 (older versions do not forward frames, see <a href="../versions/#required">version baseline</a>); the headset app is streaming and connected to the <a href="../host-setup/#35">PC Service</a>. Camera and tracker share one SDK connection; turning one off does not disconnect the other.</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">The headset's resolution and <code>--robot.head_camera_width/_height</code> must agree</p>
+<p>Only <code>640x480</code> (default), <code>1024x768</code> and <code>1280x960</code> are accepted. XTac UMI XR outputs 640x480 per eye by default, matching the collection unit, so there is nothing to pass; the flags only declare what you expect.</p>
+<ul>
+<li>Any other value, or a first frame that disagrees with the config (at connect), is an error; nothing is silently resampled to change the field of view.</li>
+<li>All three are 4:3, like the sensor (the PICO camera API's per-frame cap of 2328x1748 is also 4:3); 16:9 only gets a crop or a stretch.</li>
+<li>For a higher resolution, contact <a href="../../common/reference/#support">technical support</a> to change it on the headset, and change both flags to match.</li>
+</ul>
+</div>
+<ul>
+<li><code>--robot.head_camera_eyes=left</code> (or <code>right</code>) records one eye: half the decoding and encoder load, one head video key.</li>
+<li>Changing the resolution or eye selection changes the data; episodes recorded before and after the change cannot be mixed.</li>
+<li>The eyes are two independent messages and a mismatch leaves no trace, so each frame compares both eyes' newest frames: identical sequence numbers mean the same exposure, otherwise timestamps must agree within <code>--robot.head_camera_pair_max_skew_ms</code> (default 20ms, against about 33ms per frame at 30fps); exceeding it only logs a rate-limited warning with the measured skew; recording continues.</li>
+</ul>
+<p><code>head_camera.*</code> is mapped into the <code>tcp.*</code> world frame with the tracker's Pico→world transform. Enabling it adds 9 dimensions to <code>observation.state</code>: 10 → 19 single, 20 → 29 bimanual, and <code>--robot.enable_imu=true</code> adds on top. If it will not connect, see <a href="../troubleshooting/#head-camera">Troubleshooting · Head camera</a>.</p>
+<h2 id="57">Optional: wrist camera fisheye undistortion<a class="headerlink" href="#57" title="锚点链接">¶</a></h2>
+<p>The wrist camera is a 190° fisheye, recorded raw by default. <code>--robot.wrist_undistort=true</code> rectifies it to a rectilinear projection before writing, using the intrinsics in this gripper's flash; <code>--robot.wrist_undistort_balance</code> sets the field of view. Only 640×480 is supported (the firmware fisheye record holds only 8 floats, no image size), so a different <code>--robot.wrist_camera_width/_height</code> exits at command-line parse time.</p>
+<div class="admonition warning">
+<p class="admonition-title">On and off produce two kinds of data, and you cannot tell them apart</p>
+<p>Rectified and raw <code>wrist_cam</code> have identical shape and dtype and mix silently, so recording writes which was used into every unit of <a href="#robot-id"><code>meta/hardware.json</code></a>:</p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nt">"wrist_undistort"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"applied"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="nt">"calibration"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unit"</span><span class="p">,</span><span class="w"> </span><span class="nt">"balance"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="w"> </span><span class="p">}</span>
+</span></code></pre></div>
+<p><code>calibration</code> is <code>"unit"</code> (this gripper's own calibration) or <code>"reference"</code> (the SDK's reference values); changing the setting mid-recording opens a new epoch. Use one setting per dataset.</p>
+</div>
+<h3 id="fisheye-fallback">What happens when the fisheye calibration cannot be read<a class="headerlink" href="#fisheye-fallback" title="锚点链接">¶</a></h3>
+<p>In these cases undistortion does not fail but falls back to the SDK's built-in reference intrinsics:</p>
+<ul>
+<li>The lens was never calibrated (<code>read_fisheye()</code> returns <code>None</code>).</li>
+<li>The firmware returns an all-zero record (1.1.1 and 1.2.2 both do): test with <code>is_usable_fisheye_cal()</code>, not <code>is None</code>, or the remap table from <code>fx = fy = 0</code> yields a pure black image without raising.</li>
+<li>The firmware predates command set V2.0.</li>
+</ul>
+<p>The fallback warns <code>Wrist undistortion is using the SDK's REFERENCE intrinsics ... Rectification will be approximate</code> and records <code>"calibration": "reference"</code> in the manifest. In code, prefer <code>Calibration::resolve_fisheye()</code> (returns <code>(calibration, is_reference, reason)</code>) over <code>read_fisheye()</code>.</p>
+<p>The reference values are good enough for viewing, but the principal point drifts per unit (37.7px off on one unit); to measure in pixels on the rectified image (visual servoing, hand-eye calibration, size estimation), store this unit's own calibration first: <code>python third_party/taccap-gripper/python/examples/fisheye_cal.py set-fisheye right</code> (with two connected, pick <code>left</code> / <code>right</code> or a full SN; omit with one).</p>
+<p>An off-center or slightly tilted rectified frame does not mean bad calibration: undistortion centers on the principal point, not the frame center, the sensor need not sit on the optical center, and fisheye barrel distortion hides this (one unit: <code>cx = 359.1</code>, fingertip midpoint x = 360.1, about 1px apart). Do not change <code>cx</code>; forcing 320 makes it worse and adds tilt.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden="">
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer">
+        
+          
+          <a href="../calibration/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Calibration and self-check">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Calibration and self-check
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../dataset/" class="md-footer__link md-footer__link--next" aria-label="Next: Dataset">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Dataset
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © 2026 XenseRobotics Co., Ltd. · Docs v0.1.2
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/XenseRobotics-AI/XTac-UMI-G1-Docs" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.tracking", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "navigation.footer", "toc.follow", "toc.integrate", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.tooltips"], "search": "../../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+        <script src="../../../assets/javascripts/arch.js"></script>
+      
+        <script src="../../../assets/javascripts/tabs-toc.js"></script>
+      
+    
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>
