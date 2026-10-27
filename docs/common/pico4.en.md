@@ -48,7 +48,7 @@ Otherwise, screen-off or sleep between episodes (also triggered by taking the he
 
 ## Installing XTac UMI XR {#pico-app}
 
-The APK is named `XTac-UMI-XR-<version>.apk`; the current version is 0.3.3. Install it from the headset's file manager:
+The APK is named `XTac-UMI-XR-<version>.apk`; the current version is 0.3.6. Install it from the headset's file manager:
 
 1. Connect the headset to the collection PC over USB and copy the APK into the headset's `Download/` directory.
 
@@ -173,7 +173,7 @@ With the headset on, open XTac UMI XR from the Library to reach the "XENSE XR Co
 
 | Item | What it means |
 |---|---|
-| Tracker Mode | Should read "Independent Tracking" (the XR app's name for Pico's "Object Tracking" mode); if not, redo [Tracking mode](#pico-tracker) |
+| Tracker Mode | Should read "object tracking" (Pico's "Object Tracking" mode); if not, redo [Tracking mode](#pico-tracker) |
 | Pico Hardware | Should read "Enterprise" |
 | Status | Until "Connected", the collection unit reads no pose |
 | Connection | "XTac": Backpack Kit, connects to the backpack at `192.168.100.1`, selected by default on first launch; "USB Network": Developer Kit wired, connects to the collection PC at `192.168.58.1`; "WiFi Network": Developer Kit wireless. Cannot be changed while connected or connecting |

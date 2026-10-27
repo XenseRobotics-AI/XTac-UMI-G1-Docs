@@ -10,7 +10,7 @@ This page covers the "Live monitoring" page of the XTac UMI Collector console (b
 ![The Live monitoring page](../assets/backpack/monitor-live-en.webp)
 
 - **Top bar**: device status (bandwidth, CPU, memory, disk, cameras, live time, recording time, system).
-- **Middle**: the side columns each hold one gripper's fisheye view plus its left-finger / right-finger visuotactile feeds; the center column holds the headset's stereo pair, the "Arm / headset pose" 3D view and, below it, the left and right gripper opening-angle cards.
+- **Middle**: the side columns each hold one gripper's fisheye view plus its left-finger / right-finger visuotactile feeds; the center column holds the headset's stereo pair, the "Arm / headset pose" 3D view (with a trail of about 1.5 seconds behind each end effector) and, below it, the left and right gripper opening-angle cards.
 - **Bottom**: from the left, the "Current task episodes" card, the project / task selectors with the record button, and the "Live monitoring" connection card ("Stop streaming", "Refresh devices").
 
 ## Confirm in the console before recording {#checks}
@@ -37,6 +37,8 @@ A new project fixes its **capture config** at creation. **Once created it is fro
 - **Capture mode**: one of "Dual gripper", "Dual gripper + stereo headset", "Dual gripper + headset right eye".
 - **PICO resolution per eye**: 640 × 480 or 1024 × 768, only for modes that record headset video.
 - **PICO image source**: fisheye or undistorted images.
+- **Headset mount**: On head / Around neck, only for modes that record headset video; On head by default. Around the neck the headset tracks the chest, and the [starting-pose check](#initial-pose) uses the neck range. A dataset can only have one mount.
+- **Export quality**: High quality / Standard / Compact, for all video exports in the project; High quality produces larger files, Compact smaller ones.
 - **Tactile rectified image export orientation**: 700 × 400 landscape by default, or a further 90° counterclockwise for 400 × 700.
 - **Wrist fisheye**: whether to rectify its distortion on export.
 - **Upload backend**: you can bind one configured at [System → Upload configurations](system.md#upload) as the project's default for uploads; without a binding you pick one at upload time.
@@ -95,9 +97,38 @@ Whether started from a gripper button or the console, the device checks these in
 5. Tracker ready: the trackers are connected and "tracking normally within the field of view"; recording is refused if a tracker has been still for more than 5 seconds or has left the field of view (brief stillness mid-recording does not interrupt and is not counted against quality; the position stays accurate while still);
 6. The headset's video parameters match the project: after you select a project or the headset reconnects, the device re-reads mono / stereo, resolution and image source automatically, then checks again just before recording. **If no confirmation arrives, the check times out, or the headset disconnected or its parameters changed meanwhile, recording is refused**, and the message says which;
 7. The headset's video clock is sane: if one eye's video time runs more than 1 second ahead of the time it was received, you get "headset … eye video time sync abnormal" and recording is refused. The problem is the headset app's camera clock versus its sync clock, not the backpack.
+8. Coordinate reset: the device has the headset reset its world frame and waits for it to finish; on failure you get "Failed to reset Pico coordinates before recording";
+9. Trackers not swapped: if the trackers' actual positions are opposite to their left / right gripper bindings, or left and right cannot be told apart yet, recording is refused;
+10. Hands in the starting range (modes that record headset video), see [Starting-pose check](#initial-pose) below.
 
 - **When refused**: an "Unable to start recording" dialog states the reason (the same for a gripper-button start); away from the tablet, listen for the announcement and watch the LEDs.
 - **Message when the target is met**: "Task '…' has reached its cumulative collection target (N/M); recording refused. To keep collecting, raise the task's target count or delete recordings that should not count towards the target."
+
+### Starting-pose check {#initial-pose}
+
+Every episode in a dataset should start from the same posture, which makes it easier to learn from. In modes that record headset video ("Dual gripper + headset stereo", "Dual gripper + headset right eye"), the device checks before recording that both hands are **in the starting range in front of and below the body**, and refuses to record otherwise. The console button, gripper buttons and "Delete last and re-record" all go through this check.
+
+- **Reference frame**: the headset at the moment recording starts is the origin, X points forward (the headset's heading, horizontal only), Y left, Z up, in metres. It is the same frame the exported data uses, see [Origin of exported data](../common/coordinates.md#episode-origin).
+- **What is checked**: the TCP position of each gripper against its own box (a lower and upper limit on each axis); the right hand's box is the left hand's mirrored left-to-right.
+- **How it decides**: it waits up to 1.5 seconds and needs several consecutive samples inside the box (spanning about 3 frames, 100 ms), so a single noisy sample neither passes nor fails a start.
+- **Range by mount**: an "On head" project uses the head range, "Around neck" the neck range. Around the neck the origin is at the chest, so the hands sit about 10 cm higher and a little further forward relative to it.
+
+The current reference ranges on the device are below. They come from measured starting postures, widened by about 5 cm on each axis to fit operators of different heights; **later versions may fine-tune them, so go by what the device reports**.
+
+| Mount | Forward (X) | Left hand leftward (Y), negated for the right hand | Up (Z) |
+|---|---|---|---|
+| On head | 0.15 to 0.40 | 0.06 to 0.39 | −0.65 to −0.38 |
+| Around neck | 0.15 to 0.45 | 0.05 to 0.41 | −0.58 to −0.26 |
+
+With the head range, the hands sit roughly 15–40 cm in front of the headset, 6–39 cm either side of the body's midline and 38–65 cm below the headset: arms hanging naturally, forearms forward, hands apart.
+
+The two refusal messages:
+
+- **Out of range**: "Your hands are outside the starting pose range. Recording was blocked. Return both hands to the starting position in front of and below your body, hold them apart without crossing or raising them too high, keep still, and retry. (Out of range: …, metres)" The parentheses name the hand, the axis, the measured value and the allowed range.
+- **No pose**: "Could not get valid headset and tracker poses at the same time, so the starting hand pose cannot be confirmed. Recording was blocked." Check that the headset and trackers are tracking first.
+
+!!! note "Only the moment recording starts is checked"
+    Recording begins only after the check passes; how you move afterwards is not limited. Exports re-run the check on each episode's first 3 frames: moving sharply right after the start can put a few episodes out of range, and the export still completes, just with a notice listing those episodes.
 
 ### While recording {#record-live}
 

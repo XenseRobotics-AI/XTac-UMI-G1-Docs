@@ -418,4 +418,4 @@
 
 ## 版本 {#version}
 
-本页按 XTac UMI Collector 0.4.3 编写，各组件的[版本基线](versions.md#baseline)以控制台系统页显示为准，升级见[升级与 OTA](update.md)；文中的序列号只是示例。
+本页按 XTac UMI Collector 0.4.6 编写，各组件的[版本基线](versions.md#baseline)以控制台系统页显示为准，升级见[升级与 OTA](update.md)；文中的序列号只是示例。

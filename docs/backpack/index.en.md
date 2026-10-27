@@ -418,4 +418,4 @@ Archiving keeps only the record and clears the raw files; clean-up protects form
 
 ## Versions {#version}
 
-This page is written against XTac UMI Collector 0.4.3. Each component's [version baseline](versions.md#baseline) is whatever the console's System page shows, and upgrades are in [Upgrades and OTA](update.md); the serial numbers in the text are only examples.
+This page is written against XTac UMI Collector 0.4.6. Each component's [version baseline](versions.md#baseline) is whatever the console's System page shows, and upgrades are in [Upgrades and OTA](update.md); the serial numbers in the text are only examples.

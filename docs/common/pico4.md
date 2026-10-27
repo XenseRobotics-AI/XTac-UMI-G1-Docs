@@ -48,7 +48,7 @@
 
 ## 安装 XTac UMI XR {#pico-app}
 
-APK 文件名形如 `XTac-UMI-XR-<版本>.apk`，当前版本 0.3.3，用头显文件管理安装：
+APK 文件名形如 `XTac-UMI-XR-<版本>.apk`，当前版本 0.3.6，用头显文件管理安装：
 
 1. USB 线连头显与电脑，把 APK 拷到头显的 `Download/` 目录。
 

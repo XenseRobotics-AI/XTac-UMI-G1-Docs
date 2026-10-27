@@ -24,7 +24,7 @@ The interface language is also switched here; by default it follows the browser.
 A read-only page; "Refresh" at the top right reloads it.
 
 - **Collector**: software version, build time, device SN (matches the body label).
-- **Headset**: online status, headset serial number, XUMI software version, resolution and camera parameters.
+- **Headset**: online status, headset serial number, XUMI software version, resolution and camera parameters, plus the current project's headset mount.
 - **Grippers**: SN and firmware version of each gripper.
 - **Cameras**: the camera list, with offline ones marked "(Offline)".
 
@@ -34,6 +34,8 @@ When to look here:
 - After an upgrade: check that the version and build time changed.
 - Wrong camera count on the monitor page: see which feed is "(Offline)".
 - Before calibrating: confirm the leader gripper firmware is ≥ 1.2.0.
+
+**Export diagnostics**: "Export diagnostics" on this page downloads an encrypted ZIP with application logs, the kernel log (dmesg) and version information. Hand it to technical support together with the device SN when reporting a fault; if the download fails, retry.
 
 ## Gripper configuration {#gripper}
 
@@ -67,10 +69,12 @@ Shows the current project's capture config, read-only. These are chosen when you
 | Dual gripper + stereo headset | 2 grippers | PICO stereo pair | 8 |
 | Dual gripper + headset right eye | 2 grippers | PICO right eye | 7 |
 
-The other four:
+The other six:
 
 - **PICO resolution**: `640x480` or `1024x768` per eye, headset modes only.
 - **PICO image source**: raw fisheye or undistorted.
+- **Headset mount**: On head or Around neck, headset modes only; it decides which range the [starting-pose check](monitor-record.md#initial-pose) uses. Projects created before 0.4.6 show "On head (not specified, legacy project)".
+- **Export quality**: High quality, Standard or Compact.
 - **Wrist fisheye rectification**: see [below](#undistort).
 - **Tactile rectified-image export orientation**: "Current orientation · 700 × 400 (landscape)" or "Additional 90° counterclockwise · 400 × 700 (aligned with SDK)".
 
@@ -116,6 +120,7 @@ Save remote upload accounts here; you can keep several, each with its own name. 
 |---|---|---|
 | ModelScope | LeRobot, MCAP | Owner, Token, visibility for new repositories |
 | S3 object storage | LeRobot, MCAP | Bucket, Endpoint, Region, Access Key, Secret Key |
+| Tencent Cloud COS | LeRobot, MCAP | Region (such as `ap-guangzhou`), full bucket name including APPID (such as `dataset-1250000000`), SecretId, SecretKey, optional path within the bucket |
 | FTP / FTPS | LeRobot, MCAP | Server, port, username, password, target directory |
 | NFS network storage | LeRobot, MCAP | Server, export path, protocol version |
 | STS | MCAP only | Server, Account, Project, Project Type |
@@ -124,6 +129,7 @@ Uploads go to **`<root>/ project name / mode prefix-task name-date /`**; the dev
 
 - **ModelScope**: create a token at [ModelScope](https://www.modelscope.cn/my/overview) under avatar → Account settings → Access tokens; private repositories are recommended.
 - **S3**: create the bucket beforehand.
+- **Tencent Cloud COS**: create the bucket beforehand; HTTPS is used automatically. Set the path (prefix) per data supplier, such as `vendors/vendor-a`, giving `bucket / path / project name / mode prefix-task name-date /`; leave it empty for the bucket root. Upload-only accounts work. A task that already has upload records cannot change its path, so a resumed upload never lands in a different directory. Each file can be at most 625 GiB.
 - **FTP / FTPS**: FTPS is recommended; create the target directory beforehand and write it starting with `/`.
 - **NFS**: create the target directory beforehand; the protocol version defaults to "Automatic".
 

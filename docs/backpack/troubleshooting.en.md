@@ -129,7 +129,8 @@ This page lists the cause and fix for each symptom. The most common issues are b
     - "Pico not ready" or "Tracker not ready", with the specific reason (such as a connection timeout, missing pose or video from one eye, missing clock sync, a headset configuration change awaiting confirmation, or a Tracker out of view or still for more than 5 seconds without active tracking);
     - no gripper MCU online;
     - the task has reached its cumulative collection target;
-    - the recording disk is 80% used.
+    - the recording disk is 80% used;
+    - resetting the headset's coordinates before recording failed, the trackers are swapped, or the hands are outside the starting range (see the entries below).
 
     **Fix:**
 
@@ -148,6 +149,30 @@ This page lists the cause and fix for each symptom. The most common issues are b
     - or create a new task to count from zero.
 
     The counting rules are in [Picking a project and task](monitor-record.md#project-task).
+
+??? failure "Recording refused: "Your hands are outside the starting pose range. Recording was blocked.""
+    **Cause:** in modes that record headset video, both hands must be in the starting range in front of and below the body before recording. The parentheses in the message name the hand, axis, measured value and allowed range (metres); how it works is in [Starting-pose check](monitor-record.md#initial-pose).
+
+    **Fix:**
+
+    - Look forward, bring both hands back in front of and below your body, apart, not crossed and not raised too high, hold still for a moment and start again.
+    - The Z axis is always out of range (too high or too low): check that the project's "Headset mount" matches how the headset is actually worn; worn around the neck but set to On head, the hands look too high. The mount is fixed once the project is created, so a wrong one means creating a new project.
+    - A crooked headset, or looking down or turning sideways at the start, also shifts the whole range.
+
+??? failure "Recording refused: "Could not get valid headset and tracker poses at the same time""
+    **Cause:** within 1.5 seconds the device did not get valid poses from the headset and both trackers at the same time, so it cannot tell where the hands are.
+
+    **Fix:** work through [Headset and trackers](#tracker): the trackers are in the headset's view with a blue LED, and the pose card on the monitor page shows a green dot; move the grippers slightly to wake the trackers, then retry.
+
+??? failure "Recording refused: "The tracker positions are opposite to their left/right gripper bindings" or "Unable to confirm the left/right gripper positions""
+    **Cause:** before recording, the device checks where the left and right trackers actually are. Swapped grippers, wrongly fitted trackers or swapped bindings are refused; so is a start where left and right cannot be told apart because the hands are crossed, too close together or tracking is unstable.
+
+    **Fix:** look forward, hold your hands apart without crossing them, move slightly to wake the trackers and retry. If it still says they are opposite, check the grippers are in the correct hands, and check tracker fitting and binding as in [The left and right gripper poses are swapped](#tracker).
+
+??? failure "Recording refused: "Failed to reset Pico coordinates before recording""
+    **Cause:** before every recording the device has the headset reset its world frame and waits for it to finish. It fails if the headset is disconnected, XTac UMI XR is not running in the foreground, or the XR version does not support the reset; the reason follows the colon.
+
+    **Fix:** make sure the headset is connected, XTac UMI XR is running in the foreground and shows "Connected", and its version matches the [version baseline](versions.md#baseline), then retry.
 
 ??? failure "Recording refused: “Recording disk is N% used, at the 80% limit”"
     **Cause:** recording is refused at 80% usage. The remaining 20% is reserved for transcode intermediates and exports, preventing truncated MCAP files on a full disk.
@@ -264,9 +289,14 @@ This page lists the cause and fix for each symptom. The most common issues are b
     - Save the changes and click "Test read/write" again. If it still fails, contact technical support with the exact check message, device SN, console version and backend type.
 
 ??? failure "The LeRobot dataset is larger than expected"
-    **Cause:** multiple video feeds are recorded simultaneously; about 0.5GB per hour of exported LeRobot dataset is normal. The hardware encoder limits how far the size can be reduced.
+    **Cause:** multiple video feeds are recorded simultaneously; about 0.5GB per hour of exported LeRobot dataset is normal. The size is mostly set by the project's "Export quality".
 
-    **Fix:** plan transfer and storage capacity at this scale.
+    **Fix:** plan transfer and storage capacity at this scale. For a new project where size matters, choose "Compact" export quality when creating it; an existing project's export quality cannot be changed.
+
+??? failure "After upgrading, exported or uploaded datasets show as needing re-export"
+    **Cause:** this is expected. From 0.4.6, exported poses are relative to the headset at the start of each episode and the left-hand TCP uses the mirrored convention, so pose values change throughout and old exports are marked stale. Raw recordings are unaffected.
+
+    **Fix:** re-export recordings whose raw files are still on the device. Archived recordings cannot be re-exported; keep their old exports. Do not merge old and new exports into one dataset; tell them apart by `tcp_frame_convention` in `meta/info.json`, see [Export formats](projects-export.md#lerobot).
 
 ## Upgrades {#update}
 
