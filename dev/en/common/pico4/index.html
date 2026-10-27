@@ -2306,12 +2306,16 @@
 <p class="admonition-title">On the Developer Kit, wireless is for quick debugging only, never for real collection</p>
 <p>Over Wi-Fi the headset competes for the channel with everything on site, so pose data arrives late: at best stutter and jitter, at worst dropped frames. None of it shows while recording and it is hard to tell from other causes afterwards, so the whole batch has to be recollected.</p>
 </div>
-<p>On both editions, set USB up on the headset first:</p>
+<p>On both editions, set up USB and networking on the headset first:</p>
 <ul>
+<li><strong>Network settings</strong>: set the headset as the Host device (Developer → "Business Settings" → "Basic Settings" → scroll to the bottom → "Network Settings").</li>
 <li><strong>Settings path</strong>: Settings → Developer → enable "USB Debug" → set "USB Connection" to "File Transfer".</li>
 <li><strong>Re-check after re-plugging</strong>: "USB Connection" reverts to its default whenever the cable is reconnected; if you cannot select it, reboot the Pico.</li>
 </ul>
-<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/pico4/usb-shared-network-en.webp" data-desc-position="bottom"><img alt="USB Connection set to File Transfer" src="../../../assets/pico4/usb-shared-network-en.webp" width="520"></a></p>
+<div class="tc-pair">
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/pico4/network-host.webp" data-desc-position="bottom"><img alt="Business Settings → Basic Settings → Network Settings: the headset set as the Host device" src="../../../assets/pico4/network-host.webp"></a></p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/pico4/usb-shared-network-en.webp" data-desc-position="bottom"><img alt="USB Connection set to File Transfer" src="../../../assets/pico4/usb-shared-network-en.webp"></a></p>
+</div>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">Backpack Kit</label><label for="__tabbed_1_2">Developer Kit</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
