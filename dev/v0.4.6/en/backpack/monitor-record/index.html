@@ -2393,9 +2393,9 @@
 <li><strong>Reference frame</strong>: the headset at the moment recording starts is the origin, X points forward (the headset's heading, horizontal only), Y left, Z up, in metres. It is the same frame the exported data uses, see <a href="../../common/coordinates/#episode-origin">Origin of exported data</a>.</li>
 <li><strong>What is checked</strong>: the TCP position of each gripper against its own box (a lower and upper limit on each axis); the right hand's box is the left hand's mirrored left-to-right.</li>
 <li><strong>How it decides</strong>: it waits up to 1.5 seconds and needs several consecutive samples inside the box (spanning about 3 frames, 100 ms), so a single noisy sample neither passes nor fails a start.</li>
-<li><strong>Range by mount</strong>: an "On head" project uses the head range, "Around neck" the neck range. Around the neck the origin is at the chest, so the hands sit about 10 cm higher and a little further forward relative to it.</li>
+<li><strong>Range by mount</strong>: an "On head" project uses the head range, "Around neck" the neck range. Around the neck the origin is at the chest, so the hands sit higher relative to it (by about 5–20 cm, depending on the operator); the neck range is therefore wider up and down.</li>
 </ul>
-<p>The current reference ranges on the device are below. They come from measured starting postures, widened by about 5 cm on each axis to fit operators of different heights; <strong>later versions may fine-tune them, so go by what the device reports</strong>.</p>
+<p>The current reference ranges on the device are below. They start from measured starting postures, with each edge pushed outward to a whole 10 cm to fit operators of different heights and habits; only the inner left-right edge stays at 5 cm, so the hands are always at least 10 cm apart. <strong>Later versions may fine-tune them, so go by what the device reports</strong>.</p>
 <table>
 <thead>
 <tr>
@@ -2408,22 +2408,22 @@
 <tbody>
 <tr>
 <td>On head</td>
-<td>0.15 to 0.40</td>
-<td>0.06 to 0.39</td>
-<td>−0.65 to −0.38</td>
+<td>0.10 to 0.50</td>
+<td>0.05 to 0.40</td>
+<td>−0.70 to −0.30</td>
 </tr>
 <tr>
 <td>Around neck</td>
-<td>0.15 to 0.45</td>
-<td>0.05 to 0.41</td>
-<td>−0.58 to −0.26</td>
+<td>0.10 to 0.50</td>
+<td>0.05 to 0.50</td>
+<td>−0.70 to −0.10</td>
 </tr>
 </tbody>
 </table>
-<p>With the head range, the hands sit roughly 15–40 cm in front of the headset, 6–39 cm either side of the body's midline and 38–65 cm below the headset: arms hanging naturally, forearms forward, hands apart.</p>
+<p>With the head range, the hands sit roughly 10–50 cm in front of the headset, 5–40 cm either side of the body's midline and 30–70 cm below the headset: arms hanging naturally, forearms forward, hands apart. The neck range is looser up and down; it mainly catches hands hanging too low or raised to the face.</p>
 <p>The two refusal messages:</p>
 <ul>
-<li><strong>Out of range</strong>: "Your hands are outside the starting pose range. Recording was blocked. Return both hands to the starting position in front of and below your body, hold them apart without crossing or raising them too high, keep still, and retry. (Out of range: …, metres)" The parentheses name the hand, the axis, the measured value and the allowed range.</li>
+<li><strong>Out of range</strong>: "Your hands are outside the starting pose range, so recording was blocked: left hand 5 cm too high, right hand 2 cm too far left. Adjust as indicated, hold still, and retry." After the colon, each item names a hand, the direction it is off (too high / too low / too far left / right / forward / back) and by how many centimetres; move that far the opposite way to be back in range.</li>
 <li><strong>No pose</strong>: "Could not get valid headset and tracker poses at the same time, so the starting hand pose cannot be confirmed. Recording was blocked." Check that the headset and trackers are tracking first.</li>
 </ul>
 <div class="admonition note">
