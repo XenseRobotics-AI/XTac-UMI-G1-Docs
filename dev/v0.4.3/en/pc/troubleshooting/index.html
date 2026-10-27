@@ -1,0 +1,2771 @@
+<!DOCTYPE html><html lang="en" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="XTac UMI 穿戴式多模态数据采集系统:XTac UMI G1 视触觉夹爪、数采背包与 PC 开发套件的产品介绍与使用手册">
+      
+      
+        <meta name="author" content="XenseRobotics">
+      
+      
+        <link rel="canonical" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.3/en/pc/troubleshooting/">
+      
+      
+        <link rel="prev" href="../../sdk/examples/">
+      
+      
+        <link rel="next" href="../../follower/">
+      
+      
+        
+          <link rel="alternate" href="../../../pc/troubleshooting/" hreflang="zh">
+        
+          <link rel="alternate" href="./" hreflang="en">
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+    
+    
+      
+        <title>Troubleshooting - XTac UMI Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  <link href="../../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#troubleshooting" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden="">
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../" title="XTac UMI Docs" class="md-header__button md-logo" aria-label="XTac UMI Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            XTac UMI Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Troubleshooting
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo" aria-label="切换到暗色模式" type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换到暗色模式" for="__palette_1" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"></path></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo" aria-label="切换到亮色模式" type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换到亮色模式" for="__palette_0" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"></path></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="Select language">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"></path></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="../../../pc/troubleshooting/" hreflang="zh" class="md-select__link">
+              简体中文
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required="">
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard="" data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"></path></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix="">
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/XenseRobotics-AI/XTac-UMI-G1-Docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    XenseRobotics-AI/XTac-UMI-G1-Docs
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Product
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../backpack/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Backpack Kit
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Developer Kit
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../follower/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Follower gripper
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../common/pico4/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Common
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../" title="XTac UMI Docs" class="md-nav__button md-logo" aria-label="XTac UMI Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    XTac UMI Docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/XenseRobotics-AI/XTac-UMI-G1-Docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    XenseRobotics-AI/XTac-UMI-G1-Docs
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix="">
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Product
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_1" id="__nav_1_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Product
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../product/g1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    XTac UMI G1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../product/highlights/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Highlights
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../product/editions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Editions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../product/backpack/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The XTac UMI Backpack
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../product/specs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Specifications
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../product/safety/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Safety and compliance
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../backpack/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Backpack Kit
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Backpack Kit
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../backpack/quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../backpack/unbox-connect/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unboxing, cabling and power
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../backpack/network/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Network and console access
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../backpack/monitor-record/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Live monitor and recording
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../backpack/gripper/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gripper buttons, LEDs and voice
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../backpack/projects-export/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Projects, export and upload
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../backpack/playback/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Playback
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../backpack/system/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    System settings
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../backpack/update/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Upgrades and OTA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../backpack/versions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Versions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../backpack/troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked="">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Developer Kit
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Developer Kit
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../host-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Host setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../calibration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Calibration and self-check
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../recording/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data collection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dataset/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dataset
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../versions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Versions and upgrades
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RobotConfig options
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_10">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../sdk/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SDK and development
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_10" id="__nav_3_10_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    SDK and development
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sdk/install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install and build
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sdk/api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API essentials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sdk/examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Examples
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#logs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Attach the full log when reporting a problem
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#environment-and-installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Environment and installation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hardware" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hardware faults
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#serial-permissions-and-device-discovery" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Serial permissions and device discovery
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Serial permissions and device discovery">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#usb-bandwidth" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Not enough USB bandwidth
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pico4u-tracker-and-pose" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pico4U tracker and pose
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#head-camera" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Head camera
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#collecting-and-recording" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Collecting and recording
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-and-disk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data and disk
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Docker image
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../follower/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Follower gripper
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Follower gripper
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../follower/setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Setup and self-check
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../follower/control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Motion control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../follower/api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API and examples
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../follower/firmware/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Firmware and motor upgrades
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../follower/troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5">
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Common
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Common
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../common/pico4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pico4 headset and tracker setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../common/gripper/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gripper connection and serial numbers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../common/coordinates/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Coordinate frames
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../common/maintenance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Maintenance
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../common/reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary and support
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="锚点链接">¶</a></h1>
+<p>Most connection problems come from <code>brltty</code> still being installed, missing serial permissions or ModemManager claiming the serial port, so first confirm <a href="../host-setup/#first-use">Host setup · Required on first use</a> is done. Before troubleshooting, run the <a href="../quickstart/#self-check">Quickstart · Self-check</a>.</p>
+<h2 id="logs">Attach the full log when reporting a problem<a class="headerlink" href="#logs" title="锚点链接">¶</a></h2>
+<p>The full log is at <code>~/xenselogs/session_&lt;timestamp&gt;.log</code>; each run creates one file. Attach the entire file when reporting a problem.</p>
+<ul>
+<li>The log contains the collection program, <code>xensesdk</code> and encoding library logs, plus key-press timestamps; the <code>[session]</code> line records the collection PC, encoding and camera configuration.</li>
+<li>Only the latest 15 files are kept. Change the log directory with <code>XENSE_LOG_DIR</code> and the on-screen log level with <code>XENSE_LOG_LEVEL</code>.</li>
+</ul>
+<h2 id="environment-and-installation">Environment and installation<a class="headerlink" href="#environment-and-installation" title="锚点链接">¶</a></h2>
+<details class="failure">
+<summary><code>setup_env.sh --install</code> fails at startup with <code>needs system packages that are not installed</code></summary>
+<p><strong>Cause:</strong> the hardware SDKs are compiled locally, and some of <code>build-essential</code> / <code>cmake</code> / <code>pkg-config</code> / <code>git</code> / <code>curl</code> are missing.</p>
+<p><strong>Fix:</strong> install the packages named in the printed command; the full list is in <a href="../install/#apt">System packages</a>. The following two items only produce warnings, but must also be installed:</p>
+<ul>
+<li><code>libusb-0.1.so.4</code> (provided by <code>libusb-dev</code>): a camera runtime dependency; if it is missing, the failure only appears at <code>connect()</code>;</li>
+<li><code>v4l-utils</code>: provides <code>v4l2-ctl</code> for camera troubleshooting.</li>
+</ul>
+</details>
+<details class="failure">
+<summary><code>import xensesdk</code> / <code>import xensevr_pc_service_sdk</code> / <code>import xense.taccap</code> fails</summary>
+<p><strong>Cause:</strong> the environment is incompletely installed or not activated.</p>
+<p><strong>Fix:</strong> run <code>mamba activate xense-taccap</code>, then run <code>./setup_env.sh --install</code> again. To verify each module, see <a href="../install/#25">Verify the install</a>.</p>
+</details>
+<details class="failure">
+<summary><code>torchcodec</code> fails to load / video encoding errors</summary>
+<p><strong>Cause:</strong> the <code>torchcodec</code> and PyTorch versions do not match, or PyAV is not <code>15.1.0</code>.</p>
+<p><strong>Fix:</strong> run <code>setup_env.sh --install</code> again to correct the versions automatically. A system FFmpeg with <code>libsvtav1</code> must be installed separately.</p>
+</details>
+<h2 id="hardware">Hardware faults<a class="headerlink" href="#hardware" title="锚点链接">¶</a></h2>
+<p>Record the serial number, connection method, error message and a photo of the setup. Take anti-static precautions when powering on and off.</p>
+<div class="admonition danger">
+<p class="admonition-title">Odd smell, smoke, noticeable heat, structural damage or a frayed cable</p>
+<p>Cut the power immediately and stop using the device.</p>
+</div>
+<details class="failure">
+<summary>The software does not detect the leader gripper / <code>lsusb</code> shows the wrong device count</summary>
+<p><strong>Cause:</strong> an unlocked cable, poor contact or a faulty cable. The leader gripper must be powered only through the supplied Type-C cable (DC 5V/500mA), never a 9V/12V fast charger.</p>
+<p><strong>Fix:</strong></p>
+<ul>
+<li><code>lsusb</code> should list 6 UVC devices on a bimanual setup (4 <code>Xense Robotics ... GSPS01…</code> tactile sensors + 2 <code>Sunplus ... XCA…</code> wrist cameras), and 3 on a single gripper. For left/right identification, see <a href="../../common/gripper/#sn">Serial numbers and side identification</a>.</li>
+<li>If the count is wrong, check cable locking and left/right wiring, restart the software, and try another port or cable. If the devices are listed but cannot be opened, see the next section.</li>
+</ul>
+</details>
+<details class="failure">
+<summary>Black image / no image</summary>
+<p><strong>Cause:</strong> the UVC device is not recognized, the sensor connection is faulty, or the wrong channel is selected.</p>
+<p><strong>Fix:</strong> confirm recognition with <code>lsusb</code>, restart the software, then power-cycle the device.</p>
+</details>
+<details class="failure">
+<summary>Spots on the image / blurry image</summary>
+<p><strong>Cause:</strong> dirt, foreign matter or damage on the sensor surface.</p>
+<p><strong>Fix:</strong> clean the surface with a lint-free cloth, see <a href="../../common/maintenance/">Maintenance</a>. A scratched or dented sensor must be replaced.</p>
+</details>
+<details class="failure">
+<summary>The follower gripper does not power on / communication errors</summary>
+<p><strong>Cause:</strong> no power means the 24V supply is not connected or the adapter is faulty; communication errors mean the Type-C cable is not connected, not recognized, or pulled by the robot's motion.</p>
+<p><strong>Fix:</strong></p>
+<ul>
+<li>check the 24V adapter, outlet, connector and rating;</li>
+<li>connect 24V first, then Type-C, and lock the cable (see <a href="../../common/gripper/#power">Power and connection requirements</a>);</li>
+<li>route the cable away from moving parts and test at low speed before the first run.</li>
+</ul>
+</details>
+<details class="failure">
+<summary>Binding the follower fails with <code>从爪固件版本过低,必须升级后才能使用本 SDK</code> / <code>Follower firmware too old</code></summary>
+<p><strong>Cause:</strong> the follower firmware is older than 1.2.5, which both <code>--robot.role=follower</code> and the SDK refuse (from 1.2.5 onward, the closed zero sits on the mechanical stop). Versions 1.2.5–1.2.10 connect but prompt for an upgrade.</p>
+<p><strong>Fix:</strong> flash the follower image bundled with the SDK, then <strong>unplug the 24V power cable, wait about 2 seconds and plug it back in</strong> (the USB cable can remain connected):</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>python<span class="w"> </span>third_party/taccap-gripper/python/examples/ota_update.py<span class="w"> </span>slave
+</span></code></pre></div>
+<p>This command applies only when a single follower is connected. With several connected, see the next entry or <a href="../versions/#ota">Firmware OTA upgrade</a>.</p>
+</details>
+<details class="failure">
+<summary>Flashing fails with <code>firmware file not found</code></summary>
+<p><strong>Cause:</strong> the first argument was interpreted as an image file name, and that file does not exist:</p>
+<ul>
+<li><code>slave left</code> / <code>master left</code> / <code>slave &lt;SN&gt;</code>: when a role is followed by another argument, the role is treated as a file name;</li>
+<li>the unversioned <code>tc-gu-01-master.bin</code> / <code>tc-gu-01-slave.bin</code> was used.</li>
+</ul>
+<p><strong>Fix:</strong></p>
+<ul>
+<li>normally use <code>ota_update.py --all</code>, which flashes each gripper by role;</li>
+<li>when only one gripper of that role is connected, use <code>ota_update.py master</code> / <code>ota_update.py slave</code>;</li>
+<li>to target one gripper, pass a file name listed under <code>shipped images</code> in the error plus a side or serial number, e.g. <code>ota_update.py tc-gu-01-slave-1.2.16.bin left</code> (use the actual file name in <code>firmware/</code>).</li>
+</ul>
+<p>See <a href="../versions/#ota">Firmware OTA upgrade</a>.</p>
+</details>
+<h2 id="serial-permissions-and-device-discovery">Serial permissions and device discovery<a class="headerlink" href="#serial-permissions-and-device-discovery" title="锚点链接">¶</a></h2>
+<details class="failure">
+<summary><code>connect()</code> reports <code>No leader gripper discovered for the &lt;side&gt; side.</code></summary>
+<p><strong>Cause (most common):</strong> the user is not in the <code>dialout</code> group and cannot open the serial port to read the SN, which results in <code>role=Unknown</code> / an empty <code>firmware_sn</code>. The underlying error is <code>IoError: SerialBus: open(...): Permission denied</code>.</p>
+<p><strong>Fix:</strong> run <code>sudo usermod -aG dialout "$USER"</code>, log out and back in (or run <code>newgrp dialout</code>), then re-plug the gripper. See <a href="../host-setup/#31">Serial permissions (dialout)</a>.</p>
+</details>
+<details class="failure">
+<summary><code>Device or resource busy</code> (when starting immediately after a hot-plug; <code>/dev/ttyACM*</code> reporting busy inside the container has the same cause)</summary>
+<p><strong>Cause:</strong></p>
+<ul>
+<li>On every hot-plug, ModemManager probes the CH343 serial port with AT commands for several seconds; <code>brltty</code> also claims the port. For containers, the rule must be installed on the host.</li>
+<li>Another program holds the gripper's serial port exclusively, e.g. a previous recording, calibration or example script that has not exited.</li>
+</ul>
+<p><strong>Fix:</strong> close the program holding the port first. <a href="../host-setup/#brltty">Remove</a> <code>brltty</code> with <code>sudo apt purge -y brltty</code>. For ModemManager, the temporary workaround is to wait about 3s after plugging in; the permanent fix is a udev rule that ignores <code>1a86</code> devices (<code>install_customer.sh</code> on the Docker path already installs it). The rule and its verification are in <a href="../host-setup/#32">Stop ModemManager grabbing the port (udev)</a>. Re-plug the gripper after installing the rule.</p>
+</details>
+<details class="failure">
+<summary><code>firmware_sn</code> is still empty after fixing permissions / <code>role=Unknown</code></summary>
+<p><strong>Cause:</strong> the SN was not written, the serial read still fails, or firmware communication or device configuration is faulty. An empty SN does not indicate the firmware version.</p>
+<p><strong>Fix:</strong> save the low-level error and retest with another cable and port. If the SN is still empty, contact the device or firmware team.</p>
+</details>
+<details class="failure">
+<summary>The error names a specific hub / serial number</summary>
+<p><strong>Cause:</strong> the assembly violates the "odd is left, even is right" rule: a non-conforming serial number, the wrong count on one side, both tactile sensors mapped to the same side, or a hub with no matching gripper.</p>
+<p><strong>Fix:</strong> check the assembly and cabling of the device or hub named in the error. The rules are in <a href="../host-setup/#33">Device auto-discovery and the odd-left/even-right rule</a>.</p>
+</details>
+<details class="failure">
+<summary>The wrist camera / visuotactile sensor cannot be opened, <code>video ... busy</code></summary>
+<p><strong>Cause:</strong> an external service holds the camera, or the user is not in the <code>video</code> group.</p>
+<p><strong>Fix:</strong> check the camera service status; run <code>sudo usermod -aG video "$USER"</code>, which takes effect after logging back in. If a different camera fails each time, see the USB bandwidth section below.</p>
+</details>
+<h3 id="usb-bandwidth">Not enough USB bandwidth<a class="headerlink" href="#usb-bandwidth" title="锚点链接">¶</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Measure this on the first day of setting up a bimanual setup; do not wait for a camera to fail</p>
+<p>This is the most common bimanual failure, and it depends on which physical ports the grippers use. The budget and how to read <code>lsusb -t</code> are in <a href="../host-setup/#usb-budget">USB bandwidth budget</a>.</p>
+</div>
+<details class="failure">
+<summary>One camera cannot be opened (<code>Cannot open camera N</code>), and a different camera fails each time</summary>
+<p><strong>Cause:</strong> not enough USB bandwidth. Every UVC camera reserves isochronous bandwidth when it opens. Once the bus budget (about 384 Mbit/s) is exceeded, the last camera to open fails, so the failing camera varies.</p>
+<p><strong>Confirm:</strong> use <code>lsusb -t</code> to count the cameras on each <code>480M</code> bus; six cameras on one bus will very likely exceed the budget. While starting, watch the kernel log in another terminal:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sudo<span class="w"> </span>dmesg<span class="w"> </span>-w<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>--line-buffered<span class="w"> </span>-iE<span class="w"> </span><span class="s2">"uvcvideo|bandwidth|disconnect"</span>
+</span></code></pre></div>
+<p><code>--line-buffered</code> is required; without it <code>grep</code> buffers its output and appears to hang. <code>Not enough bandwidth for altsetting N</code> confirms the diagnosis. Alternatively, run the two halves separately:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># tactile only (wrist cameras off)</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>lerobot-teleoperate<span class="w"> </span>--robot.type<span class="o">=</span>bi_taccap_gripper<span class="w"> </span>--robot.id<span class="o">=</span><span class="m">0</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span>--robot.left_enable_wrist_camera<span class="o">=</span><span class="nb">false</span><span class="w"> </span>--robot.right_enable_wrist_camera<span class="o">=</span><span class="nb">false</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">    </span>--robot.enable_tracker<span class="o">=</span><span class="nb">false</span><span class="w"> </span>--fps<span class="o">=</span><span class="m">30</span><span class="w"> </span>--display_data<span class="o">=</span><span class="nb">true</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="c1"># wrist cameras only (tactile off)</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>lerobot-teleoperate<span class="w"> </span>--robot.type<span class="o">=</span>bi_taccap_gripper<span class="w"> </span>--robot.id<span class="o">=</span><span class="m">0</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">    </span>--robot.enable_tactile<span class="o">=</span><span class="nb">false</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">    </span>--robot.enable_tracker<span class="o">=</span><span class="nb">false</span><span class="w"> </span>--fps<span class="o">=</span><span class="m">30</span><span class="w"> </span>--display_data<span class="o">=</span><span class="nb">true</span>
+</span></code></pre></div>
+<p>If each half works on its own but the combination fails, the cause is bandwidth. <code>enable_tactile=false</code> is for this diagnostic only; do not record data with it.</p>
+<p><strong>Fix:</strong></p>
+<ul>
+<li>confirm the wrist cameras were not switched from the bandwidth-saving default <code>MJPG</code> to <code>YUYV</code> (<code>--robot.wrist_camera_fourcc</code>);</li>
+<li>if the budget is still exceeded, add a USB host controller, not a hub (a Thunderbolt / USB4 dock includes its own xHCI controller). After moving one gripper to it, <code>lsusb -t</code> should show one more <code>480M</code> root_hub;</li>
+<li>until the new controller is in place, you can record without wrist cameras (no <code>{side}_wrist</code> key). Decide before recording; do not mix both configurations in one dataset.</li>
+</ul>
+</details>
+<details class="question">
+<summary>How far over budget is it?</summary>
+<p>Measured on a bimanual collection PC with a single <code>480M</code> bus:</p>
+<table>
+<thead>
+<tr>
+<th>Cameras enabled</th>
+<th>Reserved</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Four tactile only (<code>_enable_wrist_camera=false</code> on both sides)</td>
+<td>242 Mbit/s</td>
+<td>works</td>
+</tr>
+<tr>
+<td>Two wrist cameras only (<code>--robot.enable_tactile=false</code>)</td>
+<td>within budget</td>
+<td>works</td>
+</tr>
+<tr>
+<td>All six (default)</td>
+<td>6 × 60.4 = 362 Mbit/s</td>
+<td>fails</td>
+</tr>
+</tbody>
+</table>
+<p><code>altsetting 6</code> is 944 bytes per microframe, i.e. 60.4 Mbit/s per tactile sensor (320x240 YUYV@30 carries only about 37 Mbit/s of actual data); the wrist cameras request more. To read the values yourself:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># I:* is the active altsetting; the class name is lower-case (video) in this file</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>sudo<span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s2">"^(T:|I:\*.*video|E:.*Isoc)"</span><span class="w"> </span>/sys/kernel/debug/usb/devices
+</span></code></pre></div>
+<p>Each video interface's <code>Alt=</code> and the <code>MxPS=</code> on its <code>E:</code> line give the reservation (<code>MxPS × 8000 × 8</code> bit/s). Sum the reservations per bus and compare against about 384 Mbit/s. The request is set by the firmware's UVC descriptors; the collection program cannot change it.</p>
+</details>
+<details class="question">
+<summary>Does another USB port, a lower <code>tactile_fps</code>, or <code>uvcvideo quirks=128</code> help?</summary>
+<p>No:</p>
+<ul>
+<li>another physical USB port (including blue USB 3 ports): all ports on one controller share one USB 2.0 bus, so the camera must move to a different controller;</li>
+<li>lowering <code>--robot.tactile_fps</code>: this only throttles the Python-side read; the USB stream is unchanged;</li>
+<li><code>uvcvideo quirks=128</code> (<code>UVC_QUIRK_FIX_BANDWIDTH</code>): measured to have no effect. It recomputes bandwidth as <code>width × height × bpp</code>, which does not cover the MJPEG wrist cameras, the largest consumers.</li>
+</ul>
+</details>
+<h2 id="pico4u-tracker-and-pose">Pico4U tracker and pose<a class="headerlink" href="#pico4u-tracker-and-pose" title="锚点链接">¶</a></h2>
+<details class="failure">
+<summary>No pose / the tracker cannot connect / the pose is unstable</summary>
+<p><strong>Cause:</strong> most commonly, the collection PC's Wi-Fi conflicts with the Pico4 Ultra Enterprise wired network sharing. Other causes: the service or XTac UMI XR is not running, or the tracker is unpaired or its battery is depleted.</p>
+<p><strong>Fix:</strong> turn off the collection PC's Wi-Fi (see <a href="../../common/pico4/#pico-network">Network connection</a>); check each step in <a href="../quickstart/#power-on">Quickstart · Power on and connect</a>; start the service with <code>/opt/apps/roboticsservice/runService.sh</code>; if needed, run the self-check <code>python -m lerobot.robots.taccap_gripper.check_tracker</code>.</p>
+</details>
+<details class="failure">
+<summary>The pose reference frame drifts between episodes</summary>
+<p><strong>Cause:</strong> XTac UMI XR was restarted between episodes, which reset the world origin.</p>
+<p><strong>Fix:</strong> do not restart XTac UMI XR between episodes. Treat data recorded after a restart as a new dataset, see <a href="../../common/pico4/#pico-frame">Startup and frame alignment</a>.</p>
+</details>
+<details class="failure">
+<summary>The pose drops out between episodes / the headset turns off its screen automatically</summary>
+<p><strong>Cause:</strong> screen-off and sleep are still enabled on the headset; once it suspends, XTac UMI XR is paused or terminated.</p>
+<p><strong>Fix:</strong> in Enterprise settings → System settings → Power policy, set "System sleep" and then "Screen off" to "Never" (in the reverse order, screen-off is clamped back to a finite value), see <a href="../../common/pico4/#pico-system">System settings: developer mode and power policy</a>.</p>
+</details>
+<details class="failure">
+<summary>The tracker is not selectable in tracking mode / PC Service does not discover that SN / the pairing screen cannot find the tracker</summary>
+<p><strong>Cause:</strong> the tracker is not bound to this headset (a new unit, a replaced device, or after a factory reset). If the pairing screen cannot find it, the tracker is not in pairing mode (steady blue light).</p>
+<p><strong>Fix:</strong> bind both trackers in the "Motion Tracker" app. Before pairing, hold the tracker's power button for about 6 seconds until the light alternates blue and red, then tap "Start pairing". See <a href="../../common/pico4/#pico-tracker-bind">Binding the tracker to the headset</a>.</p>
+</details>
+<details class="failure">
+<summary>XTac UMI XR cannot connect (Not connected or Connection failed)</summary>
+<p><strong>Cause:</strong> usually the wired network is not connected properly, or the collection PC's Wi-Fi is still on.</p>
+<p><strong>Fix:</strong> for a wired connection, choose "USB Network"; over Wi-Fi, choose "WiFi Network" and enter the collection PC's IP in "PC IP"; then tap "Connect". If it still fails, redo the <a href="../../common/pico4/#pico-network">Network connection</a>; the screen is described in <a href="../../common/pico4/#pico-toolkit-ui">The app's screen</a>.</p>
+</details>
+<details class="failure">
+<summary>The headset shows \"Connected\" but the collection PC receives no pose</summary>
+<p><strong>Cause:</strong> "Connected" only means the app has reached the service. The service on the collection PC may not be running, or the tracker is powered off or unbound.</p>
+<p><strong>Fix:</strong> <a href="../host-setup/#35">Start the XenseVR PC Service</a>; run <code>ConsoleDemo</code> in <code>/opt/apps/roboticsservice/</code> or <code>python -m lerobot.robots.taccap_gripper.check_tracker</code> to check whether a pose with an <code>sn</code> is received. If not, return to <a href="../../common/pico4/#pico-tracker-bind">binding</a> and confirm both trackers are on and "connected".</p>
+</details>
+<details class="failure">
+<summary>The tracker is matched to the wrong side / PC Service enumeration is unstable</summary>
+<p><strong>Cause:</strong> a non-conforming serial number or unstable enumeration.</p>
+<p><strong>Fix:</strong> pin the tracker with <code>--robot.tracker_serial=&lt;SN&gt;</code> (no enumeration, no validation), or check that the digit before the trailing <code>G</code> in the serial follows the odd-left, even-right rule, see <a href="../../common/pico4/#pico-tracker-sn">Reading a tracker SN</a>.</p>
+</details>
+<h2 id="head-camera">Head camera<a class="headerlink" href="#head-camera" title="锚点链接">¶</a></h2>
+<details class="failure">
+<summary>Fails with <code>... always records the headset ...</code> or <code>... does not record the headset ...</code></summary>
+<p><strong>Cause:</strong> a bimanual command passes <code>--robot.enable_head_camera</code>, which conflicts with <code>--robot.type</code>. The type determines whether the headset is recorded.</p>
+<p><strong>Fix:</strong> remove <code>--robot.enable_head_camera</code>. To record the headset, use <code>--robot.type=xtac_umi_g1</code>; otherwise use <code>--robot.type=bi_taccap_gripper</code>. See <a href="../recording/#56">Optional: head camera</a>.</p>
+</details>
+<details class="failure">
+<summary>Recording the headset stops responding while waiting for the first frame</summary>
+<p><strong>Cause:</strong> head camera frames are relayed by PC Service. Either the service is older than v0.2.0 (v0.1.0 does not relay head camera frames), or the headset app is not streaming.</p>
+<p><strong>Fix:</strong> check in this order:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># 1) the service deb version: needs ≥ 0.2.0</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>dpkg<span class="w"> </span>-s<span class="w"> </span>xensevr-pc-service<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s1">'^(Version|Architecture):'</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="c1"># 2) does it expose the camera interface</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"import xensevr_pc_service_sdk as xrt; print(hasattr(xrt, 'has_pico_camera_frame'))"</span>
+</span></code></pre></div>
+<p>Then confirm the headset is connected to PC Service and the app is streaming (it shares one connection with the tracker). Prerequisites are in <a href="../recording/#56">Optional: head camera</a>.</p>
+</details>
+<details class="failure">
+<summary><code>AttributeError: module 'xensevr_pc_service_sdk' has no attribute 'has_pico_camera_frame'</code></summary>
+<p><strong>Cause:</strong> an older interface is loaded (the camera interface was added in v0.2.0). The module links the C SDK from the <code>.deb</code>, so check its version first: <code>dpkg -s xensevr-pc-service | grep -E '^(Status|Version):'</code>.</p>
+<p><strong>Fix:</strong></p>
+<ul>
+<li>update to the release tag (see <a href="../versions/#repo-update">Repo and submodule update</a>) and run <code>./setup_env.sh --install</code> again, which also upgrades the <code>.deb</code> to the baseline version;</li>
+<li>if the result is still <code>False</code>, run <code>python -c "import xensevr_pc_service_sdk as x; print(x.__file__)"</code> to see which copy is loaded;</li>
+<li>if <code>Status</code> is not <code>install ok installed</code> (e.g. the package was removed with <code>dpkg -r</code>, leaving <code>deinstall ok config-files</code>), reinstall in the same way.</li>
+</ul>
+</details>
+<details class="failure">
+<summary>Repeated left/right eye skew warnings in the log</summary>
+<p><strong>Cause:</strong> the timestamps of the two eyes' independent messages differ by more than <code>--robot.head_camera_pair_max_skew_ms</code> (20ms by default). This is common when the collection PC is heavily loaded or the link is unstable.</p>
+<p><strong>Fix:</strong> the warning does not interrupt recording, but the affected frames may be out of sync.</p>
+<ul>
+<li>reduce the load (fewer cameras, or <code>--robot.head_camera_eyes=left</code> to record one eye);</li>
+<li>for link problems, see <a href="../../common/pico4/#pico-network">Network connection</a>;</li>
+<li>relax the threshold only after confirming the cause is link jitter.</li>
+</ul>
+</details>
+<details class="failure">
+<summary><code>head_camera_width/_height</code> reports an unsupported size, or the size is valid but connect still reports a first-frame size mismatch</summary>
+<p><strong>Cause:</strong> only <code>640x480</code> (default), <code>1024x768</code> and <code>1280x960</code> (all 4:3) are accepted. If a valid size still mismatches, it differs from the headset's actual output.</p>
+<p><strong>Fix:</strong> the default is 640x480 per eye, so omit both flags. If the headset resolution was changed, confirm the value with <a href="../../common/reference/#support">technical support</a> and set both flags to the same value, see <a href="../recording/#56">Optional: head camera</a>. Episodes recorded before and after a size change cannot be mixed.</p>
+</details>
+<h2 id="collecting-and-recording">Collecting and recording<a class="headerlink" href="#collecting-and-recording" title="锚点链接">¶</a></h2>
+<details class="failure">
+<summary>The command exits immediately: <code>--robot.id is required</code></summary>
+<p><strong>Cause:</strong> <code>--robot.id</code> is the required station number.</p>
+<p><strong>Fix:</strong> add the station number (<code>0</code> / <code>1</code>…; the prefix from <code>--robot.type</code> produces <code>taccap_0</code> / <code>bi_taccap_0</code> / <code>xtac_umi_g1_0</code>), e.g. <code>lerobot-record --robot.type=bi_taccap_gripper --robot.id=0 ...</code>. It identifies the station, not the hardware, so replacing a gripper does not require changing it. Device identity is recorded in <code>meta/hardware.json</code>, see <a href="../recording/#robot-id"><code>--robot.id</code> and the hardware manifest</a>.</p>
+</details>
+<details class="failure">
+<summary>On resume, the hardware does not match the dataset record</summary>
+<p><strong>Cause:</strong> the gripper or tactile sensors were replaced before <code>--resume</code>. This is not an error: the manifest starts a new epoch at the current episode count and logs <code>... recorded as a new epoch in .../hardware.json</code>. Only a <code>--robot.type</code> mismatch keeps the original file and issues a warning.</p>
+<p><strong>Fix:</strong> if the replacement was intentional, continue recording. Otherwise (e.g. the wrong gripper is plugged in), stop and reconnect the original device.</p>
+</details>
+<details class="failure">
+<summary>Resume fails with <code>refusing to resume it</code></summary>
+<p><strong>Cause:</strong> <code>--robot.id</code> differs from the station number recorded in the dataset, so resume is refused before any device connects.</p>
+<p><strong>Fix:</strong> resume with the original <code>--robot.id</code>, or create a new dataset with a different <code>--dataset.repo_id</code>.</p>
+</details>
+<details class="failure">
+<summary>Recording terminates partway through with <code>ValueError: You must add one or several frames</code></summary>
+<p><strong>Cause:</strong> for about 2s between episodes, keyboard input is not read (saving plus encoder warm-up). A <strong>right arrow</strong> pressed during this gap remains pending, typically when the previous reset ends on timeout. The next episode exits with zero frames, saving raises this error, and the whole session is aborted. The error appears more than two minutes after the key press.</p>
+<p><strong>Fix:</strong> upgrade to <code>0.0.7</code> or later, which discards key presses during the gap. The keyboard listener is global, so a right arrow in <strong>any</strong> window (including Rerun) ends the episode. Use the key-press timestamps in the <a href="#logs">session log</a> to investigate.</p>
+</details>
+<details class="failure">
+<summary><code>[stale_frames]</code> is printed after each reset phase, or a camera capture stall warning appears</summary>
+<p><strong>Cause:</strong> a camera's background capture stalled. The collection loop is <strong>not blocked</strong> (it uses the cached previous frame), so the frame rate stays normal, but the recorded frames are <strong>repeats of the old image</strong>. After each reset phase, a line reports the duplicate count, number of runs and longest run; a re-recorded episode is marked <code>(discarded take)</code>:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>[stale_frames] episode 3 [left_tactile_left] 45/1800 frames served stale (2.5%): 25 gap(s), longest 21 frame(s)
+</span></code></pre></div>
+<p><strong>Fix:</strong></p>
+<ul>
+<li><strong>Single-frame</strong> duplicates are expected: capture and recording each run at the nominal rate, and phase drift occasionally samples one frame twice. No action is needed.</li>
+<li>A <strong>long contiguous run</strong> indicates a real stall, most often the GPU encoder starving the tactile threads for 0.3 to 0.9s while 8 cameras encode.</li>
+<li>Episodes with a low single-digit percentage in short runs are usable; discard episodes that contain a very long run.</li>
+<li>If the problem persists, work through <a href="#usb-bandwidth">Not enough USB bandwidth</a> or record fewer cameras.</li>
+</ul>
+<p><code>[loop_summary]</code> reports the actual frame rate, e.g. <code>= 29.0 fps (nominal 30; dataset timestamps assume nominal)</code>. Dataset timestamps are still written at the nominal rate.</p>
+</details>
+<details class="failure">
+<summary>The log shows <code>[slow_frame] ... overrun=</code></summary>
+<p><strong>Cause:</strong> a frame exceeded the frame budget (33.3ms at 30fps). The Rerun display runs on a separate thread and is <strong>not the cause</strong>.</p>
+<p><strong>Fix:</strong> read the following two parts:</p>
+<ul>
+<li><code>| phases obs=… build=… add=… display=…</code>: time spent in each phase;</li>
+<li><code>top_obs=</code> at the end of the line: the slowest sensors.</li>
+</ul>
+<p>The first 5 <code>[slow_frame]</code> lines per episode are shown on screen; the rest go to the <a href="#logs">session log</a>, and the screen shows one <code>[slow_frame_summary]</code> every 5s instead. Occasional occurrences do not affect the data; if they persistently point to the same camera, work through <a href="#usb-bandwidth">Not enough USB bandwidth</a>. For a host without an NVIDIA GPU, see <a href="../recording/#no-gpu">Recording on a collection PC with no NVIDIA GPU</a>.</p>
+</details>
+<details class="failure">
+<summary>Recording stops partway through with <code>Device lost mid-recording</code></summary>
+<p><strong>Cause:</strong> a camera or the gripper encoder disconnected, due to a loose cable, untightened screws, cable strain, a hub losing power, an unstable power supply or poor contact. The data recorded so far is saved.</p>
+<p><strong>Fix:</strong> the last second or two of that episode contain stale values, so discard the episode. Check the screws, cable routing and USB port (if the problem recurs and changing ports does not help, see <a href="#usb-bandwidth">Not enough USB bandwidth</a>), then continue into the same dataset with <code>--resume</code>, see <a href="../recording/#52">Recording</a>.</p>
+</details>
+<details class="failure">
+<summary>On a collection PC without a discrete GPU, recording fails at startup because the encoder cannot be opened</summary>
+<p><strong>Cause:</strong> there is no NVIDIA driver, but a GPU hardware encoder is selected.</p>
+<p><strong>Fix:</strong> switch to a CPU encoder and disable streaming encoding: <code>lerobot-record ... --dataset.vcodec=libsvtav1 --dataset.streaming_encoding=false</code>. The rationale is in <a href="../recording/#no-gpu">Recording on a collection PC with no NVIDIA GPU</a>.</p>
+</details>
+<details class="failure">
+<summary>The encoder cannot keep up and dropped-frame warnings appear in the log</summary>
+<p><strong>Cause:</strong> when the encoding queue is full, it waits up to 0.1s; if it is still full, the frame is dropped with the warning <code>Encoder queue full … dropped N frame(s)</code> (the collection loop is not blocked).</p>
+<p><strong>Fix:</strong> increase <code>--dataset.encoder_threads</code>, use <code>--dataset.vcodec=auto</code>, or adjust <code>--dataset.encoder_queue_maxsize</code>, see <a href="../recording/#54">Recording options: streaming encoding and encoder warm-up</a>.</p>
+</details>
+<details class="failure">
+<summary>The gripper opening is incorrect / it does not read 0 when closed</summary>
+<p><strong>Cause:</strong> the encoder zero has drifted or was never calibrated (an uncalibrated leader is refused, and the calibration command is printed).</p>
+<p><strong>Fix:</strong> run <code>python third_party/taccap-gripper/python/examples/calibrate.py left</code> (or <code>right</code>) to recalibrate the zero and travel limit and write them to MCU flash. Calibration is required only once per unit, see <a href="../calibration/#41">Gripper calibration (zero + travel)</a>.</p>
+</details>
+<details class="failure">
+<summary>Calibration reports <code>encoder-max calibration needs command set &gt;= V2.1</code></summary>
+<p><strong>Cause:</strong> the firmware command set is below V2.1 (i.e. leader &lt; 1.2.0) and does not support travel calibration; <code>calibrate.py</code> exits without making changes.</p>
+<p><strong>Fix:</strong> flash the firmware (upgrade the SDK first, select the image by role, and pass only the file name), see <a href="../versions/#ota">Firmware OTA upgrade</a>. Then run <code>calibrate.py</code> again.</p>
+</details>
+<h2 id="data-and-disk">Data and disk<a class="headerlink" href="#data-and-disk" title="锚点链接">¶</a></h2>
+<details class="failure">
+<summary>Collection slows down / the disk fills up</summary>
+<p><strong>Cause:</strong> a bimanual setup can produce around 280 MB/s of raw video. Insufficient disk space, slow sustained writes or encoding that cannot keep up all cause this problem.</p>
+<p><strong>Fix:</strong> first record a few episodes to measure the encoded size and dropped frames; check <code>df -h</code> and the dataset directory size regularly, see <a href="../dataset/#storage-planning">Planning and estimating disk usage</a>.</p>
+</details>
+<h2 id="docker">Docker image<a class="headerlink" href="#docker" title="锚点链接">¶</a></h2>
+<p>This section applies only to the <a href="../install/#docker">Docker image</a> path. For a busy serial port inside the container, see <code>Device or resource busy</code> above.</p>
+<details class="failure">
+<summary><code>could not select device driver ... gpu</code> / no GPU visible inside the container</summary>
+<p><strong>Cause:</strong> the NVIDIA Container Toolkit is not installed correctly, or the Docker daemon was not restarted after installation.</p>
+<p><strong>Fix:</strong> <code>install_customer.sh</code> installs it automatically. To check manually, run <code>docker run --rm --gpus all ubuntu:22.04 nvidia-smi</code>. If no GPU is shown, reinstall the Toolkit and run <code>sudo systemctl restart docker</code>. The host driver must be ≥ 570.144.</p>
+</details>
+<details class="failure">
+<summary><code>Unknown runtime specified nvidia</code>, <code>docker compose</code> does not start</summary>
+<p><strong>Cause:</strong> the NVIDIA runtime is not registered with Docker, while <code>compose.yaml</code> uses <code>runtime: nvidia</code> (see <a href="../install/#docker-gui">Graphics inside the container</a>).</p>
+<p><strong>Fix:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>sudo<span class="w"> </span>nvidia-ctk<span class="w"> </span>runtime<span class="w"> </span>configure<span class="w"> </span>--runtime<span class="o">=</span>docker
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>restart<span class="w"> </span>docker
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>docker<span class="w"> </span>info<span class="w"> </span>--format<span class="w"> </span><span class="s1">'{{json .Runtimes}}'</span><span class="w">     </span><span class="c1"># nvidia must appear in the output</span>
+</span></code></pre></div>
+</details>
+<details class="failure">
+<summary>Rerun does not start in the container: <code>Failed to create surface for any enabled backend</code> / Vulkan adapter errors, but <code>nvidia-smi</code> works</summary>
+<p><strong>Cause:</strong> X11 access is not authorized, or the container lacks NVIDIA's Vulkan ICD. Typically, <code>runtime: nvidia</code> in <code>compose.yaml</code> was changed to <code>gpus: all</code>, which requests only compute + utility. In that case <code>vulkaninfo</code> reports <code>INCOMPATIBLE_DRIVER</code> or lists no NVIDIA device.</p>
+<p><strong>Fix:</strong></p>
+<ul>
+<li>as the host desktop user, run <code>xhost +si:localuser:root</code>, and confirm that <code>echo "$DISPLAY"</code> is non-empty and <code>/tmp/.X11-unix</code> exists;</li>
+<li>if <code>docker info --format '{{json .Runtimes}}'</code> does not list nvidia, register it as in the previous entry; if it does, change <code>compose.yaml</code> back to <code>runtime: nvidia</code>;</li>
+<li>confirm that <code>vulkaninfo --summary</code> inside the container recognizes the GPU.</li>
+</ul>
+</details>
+<details class="failure">
+<summary><code>pull access denied ... 'docker login'</code>, or the old image is still pulled after changing <code>LEROBOT_IMAGE_TAG</code></summary>
+<p><strong>Cause:</strong> the image is public and requires no login. The image name was resolved incorrectly, <code>.env</code> was changed without pulling again, or the command was not run in the <code>docker compose</code> directory.</p>
+<p><strong>Fix:</strong> run <code>docker compose config --images</code> to see the image name, check <code>LEROBOT_IMAGE</code> in <code>.env</code> (the default is <code>ghcr.io/xenserobotics-ai/xense-taccap-lerobot</code>; normally <code>.env</code> needs only the tag line), then run <code>docker compose pull</code>. See <a href="../install/#docker-pin">Pin a version before you record</a>.</p>
+</details>
+<details class="failure">
+<summary>Entering the container prints <code>groups: cannot find name for group ID &lt;n&gt;</code></summary>
+<p>This message is harmless: the NVIDIA runtime injects the host's <code>render</code> group GID, and the container has no group with that name.</p>
+</details>
+<details class="failure">
+<summary>Images <code>0.0.5</code> and earlier: <code>mamba activate</code> reports <code>Shell not initialized</code>; recording terminates at startup with <code>FileNotFoundError: 'spd-say'</code>; every exported <code>.mp4</code> reports <code>Permission denied</code> while the metadata copies normally</summary>
+<p><strong>Cause:</strong> three known issues in old images, fixed from <code>0.0.6</code> onward:</p>
+<ul>
+<li>the environment is already active when you enter the container, so no activation is needed;</li>
+<li>the image lacks <code>spd-say</code> for voice announcements while <code>--play_sounds</code> defaults to <code>true</code>; the announcement raises an exception and the process exits with <code>terminate called without an active exception</code>;</li>
+<li>video files are <code>-rw------- root</code> while metadata is <code>0644</code>, so a non-root user cannot copy the videos; the files themselves are intact.</li>
+</ul>
+<p><strong>Fix:</strong> upgrade the image (see <a href="../install/#docker-pin">Pin a version before you record</a>). If you continue to use an old image:</p>
+<ul>
+<li>before switching environments manually, run <code>eval "$(mamba shell hook --shell bash)"</code>;</li>
+<li>add <code>--play_sounds=false</code> when recording; collection is not affected;</li>
+<li>videos recorded with an old image keep their permissions after upgrading, so copy them as root as described in <a href="../install/#docker-data">Where the data lives, and why removing the container does not lose it</a> and run <code>chown</code> afterwards. Do not use <code>--user</code>.</li>
+</ul>
+</details>
+<details class="failure">
+<summary>The host sees the tactile sensors, but the container does not</summary>
+<p><strong>Cause:</strong> the container was not started through Compose (<code>/dev</code> and <code>/run/udev</code> are not passed through), or the device nodes have not settled after re-enumeration.</p>
+<p><strong>Fix:</strong> enter the container with <code>docker compose run --rm xense-taccap</code> and check the nodes with <code>ls /dev/v4l/by-id/*GSPS*</code>. If the list is empty, re-plug the USB hub on the host and run <code>sudo udevadm settle --timeout=20</code>.</p>
+</details>
+<details class="failure">
+<summary>After a container restart, sensor configuration is re-read and startup is slow</summary>
+<p><strong>Cause:</strong> the <code>xensesdk-cache</code> volume was deleted. It caches sensor configuration by serial number so that each start avoids re-reading flash and re-enumerating USB.</p>
+<p><strong>Fix:</strong> keep the volume. The purpose of each volume is described in <a href="../install/#docker-data">Where the data lives, and why removing the container does not lose it</a>.</p>
+</details>
+<hr>
+<p>If the problem persists, report it through the channels in <a href="../../common/reference/#support">Support and feedback</a>, including the complete error, the self-check output (<code>scan_grippers</code>'s side / role / firmware_sn), version information and the command that reproduces it.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden="">
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer">
+        
+          
+          <a href="../../sdk/examples/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Examples">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Examples
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../follower/" class="md-footer__link md-footer__link--next" aria-label="Next: Overview">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Overview
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © 2026 XenseRobotics Co., Ltd. · Docs v0.1.1
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/XenseRobotics-AI/XTac-UMI-G1-Docs" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.tracking", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "navigation.footer", "toc.follow", "toc.integrate", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.tooltips"], "search": "../../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+        <script src="../../../assets/javascripts/arch.js"></script>
+      
+        <script src="../../../assets/javascripts/tabs-toc.js"></script>
+      
+    
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>
