@@ -2,15 +2,18 @@
 <title>页面不存在 · XTac-UMI 文档</title>
 <script>
 (function () {
-  var base = "/XTac-UMI-G1-Docs/", latest = "v0.4.3";
+  var base = "/XTac-UMI-G1-Docs/", latest = "v0.4.6";
   var p = location.pathname;
   if (p.indexOf(base) !== 0) return;
   var rest = p.slice(base.length);
+  // 预览站:dev/ 下不带版本前缀的旧地址转到 dev/latest/,由那里的跳转桩再转到最新预览版
+  var dev = /^dev(\/|$)/.test(rest);
+  if (dev) rest = rest.replace(/^dev\/?/, "");
   if (/^(v\d+\.\d+\.\d+|latest|dev)(\/|$)/.test(rest)) return;
-  location.replace(base + latest + "/" + rest + location.search + location.hash);
+  location.replace(base + (dev ? "dev/latest" : latest) + "/" + rest + location.search + location.hash);
 })();
 </script></head>
 <body style="font-family:sans-serif;padding:3rem">
 <p>页面不存在 / Page not found</p>
-<p><a href="/XTac-UMI-G1-Docs/v0.4.3/">返回文档首页 / Back to the docs</a></p>
+<p><a href="/XTac-UMI-G1-Docs/v0.4.6/">返回文档首页 / Back to the docs</a></p>
 </body></html>
