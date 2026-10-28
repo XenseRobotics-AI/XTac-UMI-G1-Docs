@@ -8,7 +8,8 @@ docs/common/reference.md 的「文档版本与配套软件」表。同一个 Col
 
 gh-pages 的布局:
   /vA.B.C/   每个 Collector 版本一份完整站点(A.B.C 为 Collector 版本)
-  /dev/      dev 分支预览(不进版本列表)
+  /dev/      dev 分支预览,内部布局与根目录相同(/dev/vA.B.C/、/dev/latest/、/dev/versions.json),
+             版本列表独立,不进正式站的下拉框
   /latest/   与根目录一样,只放跳转桩,指向最新版本的同名页面
   /versions.json  Material 版本下拉框读取的列表
 
@@ -17,6 +18,7 @@ gh-pages 的布局:
       从 mkdocs.yml 页脚读文档版本号,到参考资料页的版本表里找这一行,取配套的 Collector 版本,
       输出 GitHub Actions 的 key=value 行(version=Collector 版本目录 / title / docs=文档版本)。
   publish <pages_dir> <version> <title>
+      <pages_dir> 为 gh-pages 根目录或其中的 dev/;环境变量 SITE_PATH 是它对应的网址路径。
       把 <version> 写进 versions.json(按版本号从新到旧排序,最新版带 latest 别名),
       清掉根目录与 latest/ 下旧的跳转桩,再按最新版本重新生成。
       不碰任何 /vX.Y.Z/ 与 /dev/。
@@ -71,8 +73,11 @@ NOT_FOUND = '''<!doctype html><html lang="zh"><head><meta charset="utf-8">
   var p = location.pathname;
   if (p.indexOf(base) !== 0) return;
   var rest = p.slice(base.length);
+  // 预览站:dev/ 下不带版本前缀的旧地址转到 dev/latest/,由那里的跳转桩再转到最新预览版
+  var dev = /^dev(\\/|$)/.test(rest);
+  if (dev) rest = rest.replace(/^dev\\/?/, "");
   if (/^(v\\d+\\.\\d+\\.\\d+|latest|dev)(\\/|$)/.test(rest)) return;
-  location.replace(base + latest + "/" + rest + location.search + location.hash);
+  location.replace(base + (dev ? "dev/latest" : latest) + "/" + rest + location.search + location.hash);
 }})();
 </script></head>
 <body style="font-family:sans-serif;padding:3rem">
