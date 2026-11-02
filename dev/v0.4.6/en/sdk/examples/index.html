@@ -2287,18 +2287,19 @@ with a standalone install it is <code>TacCap-Gripper</code>.</p>
 </span></code></pre></div>
 <p>Each gripper carries two sensors, one in each finger. <code>left</code> / <code>right</code> refers to the <strong>gripper</strong>, taken from the gripper on the same USB hub,
 so the gripper must be plugged in; the finger comes from the last digit of the sensor serial number, odd for left and even for right.</p>
-<p>The window shows one column per sensor: rectified image, difference image, depth and force distribution. Orientation and colours match what data collection records.
+<p>The window shows one column per sensor: rectified image, marker flow, difference image and depth. Orientation and colours match what data collection records.
 <strong>Do not touch the gel at startup</strong>: the difference image and the force use the moment of startup as the no-contact reference. Press <code>c</code> to take a new reference (again with nothing touching).</p>
 <h2 id="full-chain">Full-chain check<a class="headerlink" href="#full-chain" title="锚点链接">¶</a></h2>
 <p>Included from SDK 0.4.4. It uses <a href="https://rerun.io">Rerun</a> to put all of one gripper's data on a single timeline:
-gripper state (opening, velocity, torque, temperature, status bits), the wrist camera, and both visuotactile sensors (image, force-distribution arrows on top, resultant-force plot).</p>
+gripper state (opening, velocity, torque, temperature, status bits), the wrist camera, and both visuotactile sensors (image, marker-flow arrows on top, resultant-force plot).</p>
+<p>The green arrows on the image are marker flow: from each marker's rest position to where it is now, drawn the same way as <code>xensesdk</code>'s own <code>drawMarkerMove</code>, <strong>at 1:1 with no gain</strong>, so an arrow's length is the real displacement in pixels. With nothing touching, only green dots remain.</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>python<span class="w"> </span>python/examples/rerun_viewer.py<span class="w"> </span>left<span class="w">                  </span><span class="c1"># view only, the motor does not move</span>
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>python<span class="w"> </span>python/examples/rerun_viewer.py<span class="w"> </span>left<span class="w"> </span>--save<span class="w"> </span>rig.rrd<span class="w"> </span>--duration<span class="w"> </span><span class="m">20</span><span class="w">   </span><span class="c1"># save to a file</span>
 </span></code></pre></div>
 <p>To watch while opening and closing a follower gripper, use the keyboard console's <code>--rerun</code>; see <a href="../../follower/control/#full-chain">Motion control → Full-chain check</a>.</p>
 <div class="admonition warning">
 <p class="admonition-title">The Developer Kit collection environment shows images only</p>
-<p>The collection environment has no visuotactile inference engine, so force distribution and depth fail with <code>No module named 'onnxruntime'</code>.
+<p>The collection environment has no visuotactile inference engine, so marker flow, resultant force and depth fail with <code>No module named 'onnxruntime'</code>.
 When running in the collection environment, add <code>--no-force</code> to <code>rerun_viewer.py</code> and <code>gripper_console.py --rerun</code>,
 and <code>--outputs rectify,difference</code> to <code>tactile_sensor.py</code>. The standalone <code>taccap</code> environment does not have this limit.</p>
 </div>

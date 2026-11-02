@@ -2287,18 +2287,19 @@
 </span></code></pre></div>
 <p>每只夹爪两个传感器，分别装在左右两根手指上。<code>left</code> / <code>right</code> 指的是<strong>夹爪</strong>，由同一 USB 集线器上的夹爪决定，
 所以查看时夹爪要插着；哪根手指看传感器序列号末位，奇数为左、偶数为右。</p>
-<p>窗口里每个传感器一列，依次是校正图像、差分图像、深度和力分布。画面方向和颜色与数采录下来的一致。
+<p>窗口里每个传感器一列，依次是校正图像、标记点位移（marker flow）、差分图像和深度。画面方向和颜色与数采录下来的一致。
 <strong>启动时不要碰凝胶</strong>：差分图像和力都以启动那一刻为无接触基准；按 <code>c</code> 可以重新取基准（同样先松开）。</p>
 <h2 id="full-chain">全链路检查<a class="headerlink" href="#full-chain" title="锚点链接">¶</a></h2>
 <p>SDK 0.4.4 起附带，用 <a href="https://rerun.io">Rerun</a> 把一只夹爪的全部数据放在同一条时间轴上：
-夹爪状态（开度、速度、力矩、温度、状态位）、腕部相机、两个视触觉传感器（图像、叠加的力分布箭头、合力曲线）。</p>
+夹爪状态（开度、速度、力矩、温度、状态位）、腕部相机、两个视触觉传感器（图像、叠加的标记点位移箭头、合力曲线）。</p>
+<p>图像上的绿色箭头是标记点位移：从每个标记点的初始位置指向当前位置，与 <code>xensesdk</code> 自带的 <code>drawMarkerMove</code> 画法一致，<strong>1:1 不放大</strong>，箭头长度就是实际位移的像素数。没有接触时只剩一个个绿点。</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>python<span class="w"> </span>python/examples/rerun_viewer.py<span class="w"> </span>left<span class="w">                  </span><span class="c1"># 只看，不动电机</span>
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>python<span class="w"> </span>python/examples/rerun_viewer.py<span class="w"> </span>left<span class="w"> </span>--save<span class="w"> </span>rig.rrd<span class="w"> </span>--duration<span class="w"> </span><span class="m">20</span><span class="w">   </span><span class="c1"># 存成文件</span>
 </span></code></pre></div>
 <p>从夹爪要一边开合一边看，用键盘控制台的 <code>--rerun</code>，见<a href="../../follower/control/#full-chain">运动控制 → 全链路检查</a>。</p>
 <div class="admonition warning">
 <p class="admonition-title">PC 版数采环境只能看图像</p>
-<p>数采环境不带视触觉推理引擎，力分布和深度会报 <code>No module named 'onnxruntime'</code>。
+<p>数采环境不带视触觉推理引擎，标记点位移、合力和深度会报 <code>No module named 'onnxruntime'</code>。
 在数采环境里运行时，<code>rerun_viewer.py</code> 和 <code>gripper_console.py --rerun</code> 加 <code>--no-force</code>，
 <code>tactile_sensor.py</code> 加 <code>--outputs rectify,difference</code>。单独安装的 <code>taccap</code> 环境没有这个限制。</p>
 </div>
