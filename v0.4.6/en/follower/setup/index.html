@@ -2256,7 +2256,7 @@ go to that directory inside the collection environment and start from <a href="#
 <p><code>v4l-utils</code> provides <code>v4l2-ctl</code>, used to inspect the wrist camera.</p>
 <h3 id="clone">Step 3: download the SDK<a class="headerlink" href="#clone" title="锚点链接">¶</a></h3>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nb">cd</span><span class="w"> </span>~
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>git<span class="w"> </span>clone<span class="w"> </span>--branch<span class="w"> </span>v0.4.3<span class="w"> </span>https://github.com/XenseRobotics-AI/TacCap-Gripper.git
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>git<span class="w"> </span>clone<span class="w"> </span>--branch<span class="w"> </span>v0.4.4<span class="w"> </span>https://github.com/XenseRobotics-AI/TacCap-Gripper.git
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="nb">cd</span><span class="w"> </span>TacCap-Gripper
 </span></code></pre></div>
 <p>The example scripts live in this directory; <strong>do not delete it</strong> after installing.</p>
@@ -2264,7 +2264,7 @@ go to that directory inside the collection environment and start from <a href="#
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>mamba<span class="w"> </span>env<span class="w"> </span>create<span class="w"> </span>-f<span class="w"> </span>environment.yml
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>mamba<span class="w"> </span>activate<span class="w"> </span>taccap
 </span></code></pre></div>
-<p>This creates an environment named <code>taccap</code> with the compiler, CMake, OpenCV and Python 3.12; it takes a few minutes.
+<p>This creates an environment named <code>taccap</code> with the compiler, CMake, OpenCV, Python 3.12, the visuotactile SDK <code>xensesdk</code> and the viewer <code>rerun-sdk</code>; it takes a few minutes.
 From then on, <strong>run <code>mamba activate taccap</code> first in every new terminal</strong>; it is active when the prompt starts with <code>(taccap)</code>.</p>
 <h3 id="build">Step 5: build and install the SDK<a class="headerlink" href="#build" title="锚点链接">¶</a></h3>
 <p>From the <code>TacCap-Gripper</code> directory, inside the <code>taccap</code> environment:</p>
@@ -2273,12 +2273,12 @@ From then on, <strong>run <code>mamba activate taccap</code> first in every new 
 <p>This takes a few minutes. Verify:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"import xense.taccap as t; print(t.hello())"</span>
 </span></code></pre></div>
-<p>It should print <code>taccap-gripper OK; version 0.4.3</code>.</p>
+<p>It should print <code>taccap-gripper OK; version 0.4.4</code>.</p>
 <div class="admonition warning">
 <p class="admonition-title">Build errors or the wrong version</p>
 <ul>
 <li>Run <code>mamba activate taccap</code> before installing, and keep <code>--no-build-isolation</code>.</li>
-<li>Version is not 0.4.3: this terminal is loading an SDK from somewhere else. Close it, open a new one, run only <code>mamba activate taccap</code> and try again.</li>
+<li>Version is not 0.4.4: this terminal is loading an SDK from somewhere else. Close it, open a new one, run only <code>mamba activate taccap</code> and try again.</li>
 </ul>
 </div>
 <h3 id="host">Step 6: host setup (miss one and the gripper will not connect)<a class="headerlink" href="#host" title="锚点链接">¶</a></h3>

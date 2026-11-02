@@ -2182,12 +2182,12 @@
 <p><strong>解决</strong>：按<a href="../firmware/#mcu-ota">升级夹爪固件</a>完成升级，然后断电重启。</p>
 </details>
 <details class="failure">
-<summary>打开时提示 <code>从爪固件 ... 低于 1.2.11</code>，或控制中夹爪突然不响应命令、夹持力下降</summary>
+<summary>打开时提示 <code>从爪固件 ... 低于 1.2.11</code> 或 <code>follower firmware ... is below 1.2.11</code>，或控制中夹爪突然不响应命令、夹持力下降</summary>
 <p><strong>原因</strong>：1.2.11 之前的夹爪固件在控制串口偶发溢出后，将持续无法接收命令，但数据仍正常上报。此时夹持力下降，手指松开。</p>
 <p><strong>解决</strong>：按<a href="../firmware/#mcu-ota">升级夹爪固件</a>升级到 SDK 附带的版本，然后断电重启。</p>
 </details>
 <details class="failure">
-<summary><code>hello()</code> 显示的版本不是 0.4.3，或 <code>import</code> 报错</summary>
+<summary><code>hello()</code> 显示的版本不对（单独安装应为 0.4.4，PC 版数采环境为 0.4.3），或 <code>import</code> 报错</summary>
 <p><strong>原因</strong>：没有激活正确的环境、SDK 未重新编译，或（PC 版数采环境）子模块未更新。</p>
 <p><strong>解决</strong>：</p>
 <ul>
