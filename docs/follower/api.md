@@ -73,7 +73,7 @@ g = t.FollowerGripper(ep.mcu_device)
 | 脚本 | 用途 | 影响 |
 |---|---|---|
 | `follower_status.py` | 自检 | 只读 |
-| `gripper_console.py` | 键盘控制 | **动电机** |
+| `gripper_console.py` | 键盘控制；`--rerun` 为[全链路检查](control.md#full-chain)（SDK 0.4.4 起） | **动电机** |
 | `impedance_control.py` | 阻抗测试；查看 / 写运动安全包络 | **动电机**；`--set-envelope` 改写夹爪 |
 | `force_position_control.py` | 力位夹持测试 | **动电机** |
 | `control_and_read.py` | 边控制边读状态 | **动电机** |

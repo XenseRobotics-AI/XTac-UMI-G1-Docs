@@ -3,9 +3,10 @@
 `xense.taccap` (repository [TacCap-Gripper](https://github.com/XenseRobotics-AI/TacCap-Gripper)) is the SDK for the XTac UMI G1
 grippers. It provides both Python and C++ interfaces, for writing your own programs that read the leader gripper and control the follower gripper.
 
-!!! note "This appendix is written for SDK 0.4.3"
+!!! note "This appendix is written for SDK 0.4.3; items marked “0.4.4 and later” need SDK 0.4.4"
     The data-collection repository `xense-taccap-lerobot` ships SDK 0.4.3 (submodule `third_party/taccap-gripper`).
     Once the collection environment is set up per [Installation](../pc/install.md) it is ready to use; see [Install and build](install.md).
+    0.4.4 keeps the same API and only adds the [visuotactile and full-chain check examples](examples.md#tactile); for now it needs a [standalone install](install.md#standalone).
 
 ## What it can do {#scope}
 
@@ -16,7 +17,8 @@ grippers. It provides both Python and C++ interfaces, for writing your own progr
 | Control | — | Impedance control (default), force-position control |
 | Shared | LED, wrist camera, fisheye intrinsics, firmware upgrade | Same as the leader gripper, plus motor firmware upgrade and version query |
 
-Visuotactile images are captured by `xensesdk` and are not part of this SDK. Teleoperation, grasping policies and data recording belong to higher-level applications.
+Visuotactile images are captured by `xensesdk` and are not part of this SDK; from SDK 0.4.4 it includes [examples](examples.md#tactile) that view visuotactile data through `xensesdk` and show all data in one view.
+Teleoperation, grasping policies and data recording belong to higher-level applications.
 
 ## Before you start {#notes}
 
@@ -28,5 +30,5 @@ Visuotactile images are captured by `xensesdk` and are not part of this SDK. Tel
 
 - [Install and build](install.md): installing for Python, and integrating into C++ / ROS 2 projects.
 - [API essentials](api.md): device discovery, reading the leader gripper, calibration and the wrist camera.
-- [Examples](examples.md): example scripts for the leader gripper and wrist camera, and migrating from older versions.
+- [Examples](examples.md): example scripts for the leader gripper, wrist camera, visuotactile sensors and full-chain check, and migrating from older versions.
 - The follower gripper's controllers, state reading and example scripts: [Follower gripper → API and examples](../follower/api.md).

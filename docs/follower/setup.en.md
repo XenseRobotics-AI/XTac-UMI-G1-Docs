@@ -42,7 +42,7 @@ sudo apt install -y git curl v4l-utils
 
 ```bash
 cd ~
-git clone --branch v0.4.3 https://github.com/XenseRobotics-AI/TacCap-Gripper.git
+git clone --branch v0.4.4 https://github.com/XenseRobotics-AI/TacCap-Gripper.git
 cd TacCap-Gripper
 ```
 
@@ -55,7 +55,7 @@ mamba env create -f environment.yml
 mamba activate taccap
 ```
 
-This creates an environment named `taccap` with the compiler, CMake, OpenCV and Python 3.12; it takes a few minutes.
+This creates an environment named `taccap` with the compiler, CMake, OpenCV, Python 3.12, the visuotactile SDK `xensesdk` and the viewer `rerun-sdk`; it takes a few minutes.
 From then on, **run `mamba activate taccap` first in every new terminal**; it is active when the prompt starts with `(taccap)`.
 
 ### Step 5: build and install the SDK {#build}
@@ -72,11 +72,11 @@ This takes a few minutes. Verify:
 python -c "import xense.taccap as t; print(t.hello())"
 ```
 
-It should print `taccap-gripper OK; version 0.4.3`.
+It should print `taccap-gripper OK; version 0.4.4`.
 
 !!! warning "Build errors or the wrong version"
     - Run `mamba activate taccap` before installing, and keep `--no-build-isolation`.
-    - Version is not 0.4.3: this terminal is loading an SDK from somewhere else. Close it, open a new one, run only `mamba activate taccap` and try again.
+    - Version is not 0.4.4: this terminal is loading an SDK from somewhere else. Close it, open a new one, run only `mamba activate taccap` and try again.
 
 ### Step 6: host setup (miss one and the gripper will not connect) {#host}
 

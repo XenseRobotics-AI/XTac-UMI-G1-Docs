@@ -24,6 +24,25 @@ python python/examples/gripper_console.py left
 
 默认是阻抗控制；要以指定的力夹东西，加 `--mode force-position --grasp-torque 0.6`（夹持力，单位 N·m，不超过 1.1）。
 
+### 全链路检查 {#full-chain}
+
+SDK 0.4.4 起，控制台加 `--rerun`，按键开合的同时在 [Rerun](https://rerun.io) 里实时显示这只从夹爪的全部数据：
+
+```bash
+python python/examples/gripper_console.py left --mode force-position --rerun
+```
+
+| 曲线 / 画面 | 看什么 |
+|---|---|
+| 开度与目标开度 | 空载时开度跟上目标；夹住物体时停在目标之前 |
+| 实测力矩与命令力矩 | 夹住时上升到设定的夹持力 |
+| 控制器状态 | 文本记录，夹住时为 `HOLDING_FORCE`，故障为 `FAULT` |
+| 腕部相机 | 帧率稳定在 30Hz |
+| 视触觉图像、力分布、合力 | 夹住物体时有响应，松开后回落 |
+
+投入使用或开始采集前，建议夹一个物体把这几项都看一遍。相机与查看器在电机使能前打开，**启动时不要碰凝胶**。
+其余参数（`--no-wrist`、`--save` 等）与 `rerun_viewer.py` 相同，见 [SDK 示例 → 全链路检查](../sdk/examples.md#full-chain)。
+
 ## 两种控制方式 {#choose}
 
 | | 阻抗控制（默认） | 力位控制 |

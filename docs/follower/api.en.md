@@ -73,7 +73,7 @@ Off by default; enable it the same way as on the leader gripper, see [Wrist came
 | Script | Purpose | Effect |
 |---|---|---|
 | `follower_status.py` | Self-check | Read-only |
-| `gripper_console.py` | Keyboard control | **Moves motor** |
+| `gripper_console.py` | Keyboard control; `--rerun` for the [full-chain check](control.md#full-chain) (SDK 0.4.4 and later) | **Moves motor** |
 | `impedance_control.py` | Impedance test; view / write the motion safety envelope | **Moves motor**; `--set-envelope` rewrites the gripper |
 | `force_position_control.py` | Force-position grasp test | **Moves motor** |
 | `control_and_read.py` | Read state while controlling | **Moves motor** |

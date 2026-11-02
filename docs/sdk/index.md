@@ -3,9 +3,10 @@
 `xense.taccap`（仓库 [TacCap-Gripper](https://github.com/XenseRobotics-AI/TacCap-Gripper)）是 XTac UMI G1
 夹爪的开发包，提供 Python 与 C++ 两种接口，用于自己编写程序读取主夹爪、控制从夹爪。
 
-!!! note "本附录按 SDK 0.4.3 编写"
+!!! note "本附录按 SDK 0.4.3 编写，标注「0.4.4 起」的内容需要 SDK 0.4.4"
     数采仓库 `xense-taccap-lerobot` 自带的就是 SDK 0.4.3（子模块 `third_party/taccap-gripper`），
     按 [安装](../pc/install.md) 装好数采环境即可直接使用，见 [安装与构建](install.md)。
+    0.4.4 接口不变，只新增[视触觉与全链路检查示例](examples.md#tactile)；目前需要[单独安装](install.md#standalone)。
 
 ## 能做什么 {#scope}
 
@@ -16,7 +17,8 @@
 | 控制 | — | 阻抗控制（默认）、力位控制 |
 | 共有 | LED、腕部相机、鱼眼内参、固件升级 | 同左；另有电机固件升级与版本查看 |
 
-视触觉图像由 `xensesdk` 采集，不在本 SDK 里。遥操作、抓取策略、数据录制属于上层应用。
+视触觉图像由 `xensesdk` 采集，不在本 SDK 里；SDK 0.4.4 起附带用 `xensesdk` 查看视触觉、把全部数据同屏显示的[示例](examples.md#tactile)。
+遥操作、抓取策略、数据录制属于上层应用。
 
 ## 使用须知 {#notes}
 
@@ -28,5 +30,5 @@
 
 - [安装与构建](install.md)：Python 安装，以及集成到 C++ / ROS 2 工程。
 - [API 要点](api.md)：设备发现、主夹爪读取、标定与腕部相机。
-- [示例](examples.md)：主夹爪与腕部相机的示例脚本，以及从旧版本迁移。
+- [示例](examples.md)：主夹爪、腕部相机、视触觉与全链路检查的示例脚本，以及从旧版本迁移。
 - 从夹爪的控制器、状态读取与示例脚本：[从夹爪 → API 与示例](../follower/api.md)。
