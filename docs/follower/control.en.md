@@ -38,7 +38,7 @@ python python/examples/gripper_console.py left --mode force-position --rerun
 | Measured and commanded torque | Rise to the set grip force when grasping |
 | Controller state | Text log: `HOLDING_FORCE` while grasping, `FAULT` on a fault |
 | Wrist camera | Steady at 30Hz |
-| Visuotactile image, force distribution, resultant force | Respond when grasping an object and fall back after release |
+| Visuotactile image, marker flow, resultant force | Respond when grasping an object and fall back after release |
 
 Before putting the gripper into service or starting collection, grasp an object and check each of these. The cameras and the viewer open before the motor is enabled; **do not touch the gel at startup**.
 The other options (`--no-wrist`, `--save` and so on) are the same as `rerun_viewer.py`; see [SDK examples → Full-chain check](../sdk/examples.md#full-chain).

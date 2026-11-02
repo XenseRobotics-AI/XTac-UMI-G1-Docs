@@ -56,13 +56,15 @@ python python/examples/tactile_sensor.py left --finger right --outputs rectify,d
 Each gripper carries two sensors, one in each finger. `left` / `right` refers to the **gripper**, taken from the gripper on the same USB hub,
 so the gripper must be plugged in; the finger comes from the last digit of the sensor serial number, odd for left and even for right.
 
-The window shows one column per sensor: rectified image, difference image, depth and force distribution. Orientation and colours match what data collection records.
+The window shows one column per sensor: rectified image, marker flow, difference image and depth. Orientation and colours match what data collection records.
 **Do not touch the gel at startup**: the difference image and the force use the moment of startup as the no-contact reference. Press `c` to take a new reference (again with nothing touching).
 
 ## Full-chain check {#full-chain}
 
 Included from SDK 0.4.4. It uses [Rerun](https://rerun.io) to put all of one gripper's data on a single timeline:
-gripper state (opening, velocity, torque, temperature, status bits), the wrist camera, and both visuotactile sensors (image, force-distribution arrows on top, resultant-force plot).
+gripper state (opening, velocity, torque, temperature, status bits), the wrist camera, and both visuotactile sensors (image, marker-flow arrows on top, resultant-force plot).
+
+The green arrows on the image are marker flow: from each marker's rest position to where it is now, drawn the same way as `xensesdk`'s own `drawMarkerMove`, **at 1:1 with no gain**, so an arrow's length is the real displacement in pixels. With nothing touching, only green dots remain.
 
 ```bash
 python python/examples/rerun_viewer.py left                  # view only, the motor does not move
@@ -72,7 +74,7 @@ python python/examples/rerun_viewer.py left --save rig.rrd --duration 20   # sav
 To watch while opening and closing a follower gripper, use the keyboard console's `--rerun`; see [Motion control → Full-chain check](../follower/control.md#full-chain).
 
 !!! warning "The Developer Kit collection environment shows images only"
-    The collection environment has no visuotactile inference engine, so force distribution and depth fail with `No module named 'onnxruntime'`.
+    The collection environment has no visuotactile inference engine, so marker flow, resultant force and depth fail with `No module named 'onnxruntime'`.
     When running in the collection environment, add `--no-force` to `rerun_viewer.py` and `gripper_console.py --rerun`,
     and `--outputs rectify,difference` to `tactile_sensor.py`. The standalone `taccap` environment does not have this limit.
 

@@ -38,7 +38,7 @@ python python/examples/gripper_console.py left --mode force-position --rerun
 | 实测力矩与命令力矩 | 夹住时上升到设定的夹持力 |
 | 控制器状态 | 文本记录，夹住时为 `HOLDING_FORCE`，故障为 `FAULT` |
 | 腕部相机 | 帧率稳定在 30Hz |
-| 视触觉图像、力分布、合力 | 夹住物体时有响应，松开后回落 |
+| 视触觉图像、标记点位移、合力 | 夹住物体时有响应，松开后回落 |
 
 投入使用或开始采集前，建议夹一个物体把这几项都看一遍。相机与查看器在电机使能前打开，**启动时不要碰凝胶**。
 其余参数（`--no-wrist`、`--save` 等）与 `rerun_viewer.py` 相同，见 [SDK 示例 → 全链路检查](../sdk/examples.md#full-chain)。
