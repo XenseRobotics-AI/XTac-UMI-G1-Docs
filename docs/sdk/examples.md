@@ -16,6 +16,8 @@ SDK 源码的 `python/examples/` 下有一组可以直接运行的脚本。先�
 | `fisheye_cal.py` | 查看 / 写入鱼眼内参 | `show` 只读，其余改写夹爪 |
 | `read_intrinsics.py` | 导出腕部相机内参 | 只读 |
 | `wrist_camera.py` | 腕部相机查看器 | 只读 |
+| `tactile_sensor.py` | 视触觉传感器查看器（SDK 0.4.4 起） | 只读 |
+| `rerun_viewer.py` | 夹爪状态、腕部相机、视触觉同屏查看（SDK 0.4.4 起） | 只读 |
 | `ota_update.py` | 夹爪固件升级 | **刷写固件** |
 | `motor_ota_update.py` | 电机固件升级 | **刷写固件** |
 
@@ -40,6 +42,43 @@ python python/examples/leader_normalized_position.py right
 python python/examples/wrist_camera.py --list                  # 列出相机及其序列号
 python python/examples/wrist_camera.py <相机序列号> --undistort   # 矫正后的画面
 ```
+
+## 视触觉传感器 {#tactile}
+
+SDK 0.4.4 起附带。视触觉图像由 `xensesdk` 读取，单独安装的 `taccap` 环境里已经带有它。
+
+```bash
+python python/examples/tactile_sensor.py --list     # 每个传感器装在哪只夹爪、哪一侧手指
+python python/examples/tactile_sensor.py left       # 左夹爪的两个传感器
+python python/examples/tactile_sensor.py left --finger right --outputs rectify,difference
+```
+
+每只夹爪两个传感器，分别装在左右两根手指上。`left` / `right` 指的是**夹爪**，由同一 USB 集线器上的夹爪决定，
+所以查看时夹爪要插着；哪根手指看传感器序列号末位，奇数为左、偶数为右。
+
+窗口里每个传感器一列，依次是校正图像、标记点位移（marker flow）、差分图像和深度。画面方向和颜色与数采录下来的一致。
+**启动时不要碰凝胶**：差分图像和力都以启动那一刻为无接触基准；按 `c` 可以重新取基准（同样先松开）。
+
+## 全链路检查 {#full-chain}
+
+SDK 0.4.4 起附带，用 [Rerun](https://rerun.io) 把一只夹爪的全部数据放在同一条时间轴上：
+夹爪状态（开度、速度、力矩、温度、状态位）、腕部相机、两个视触觉传感器（图像、叠加的标记点位移箭头、合力曲线）。
+
+图像上的绿色箭头是标记点位移：从每个标记点的初始位置指向当前位置，与 `xensesdk` 自带的 `drawMarkerMove` 画法一致，**1:1 不放大**，箭头长度就是实际位移的像素数。没有接触时只剩一个个绿点。
+
+```bash
+python python/examples/rerun_viewer.py left                  # 只看，不动电机
+python python/examples/rerun_viewer.py left --save rig.rrd --duration 20   # 存成文件
+```
+
+从夹爪要一边开合一边看，用键盘控制台的 `--rerun`，见[运动控制 → 全链路检查](../follower/control.md#full-chain)。
+
+!!! warning "PC 版数采环境只能看图像"
+    数采环境不带视触觉推理引擎，标记点位移、合力和深度会报 `No module named 'onnxruntime'`。
+    在数采环境里运行时，`rerun_viewer.py` 和 `gripper_console.py --rerun` 加 `--no-force`，
+    `tactile_sensor.py` 加 `--outputs rectify,difference`。单独安装的 `taccap` 环境没有这个限制。
+
+相机与视触觉同时开时，所有相机都要用 MJPEG，见[主机配置](../pc/host-setup.md)；腕部相机正被其他程序占用时加 `--no-wrist`。
 
 ## 固件 {#firmware}
 
@@ -70,4 +109,12 @@ python python/examples/wrist_camera.py <相机序列号> --undistort   # 矫正�
 - 目标仍在移动时被挡住，进入 `HOLDING_FORCE` 比以前晚约 150ms；依赖它判断夹住的程序请复核。
 - 附带的从夹爪固件升到 1.2.16，请[升级固件](../follower/firmware.md#mcu-ota)。
 
-完整变更见 SDK 的 [CHANGELOG](https://github.com/XenseRobotics-AI/TacCap-Gripper/blob/v0.4.3/CHANGELOG.md)。
+从 0.4.3 升级到 0.4.4 时（接口不变）：
+
+- 新增[视触觉](#tactile)与[全链路检查](#full-chain)示例。
+- `environment.yml` 新增 `xensesdk` 与 `rerun-sdk`，并把 NumPy 固定为 2.2.4（`xensesdk` 的要求）。
+  已有的 `taccap` 环境执行 `mamba env update -f environment.yml --prune`，再重新运行 `uv pip install -e . --no-build-isolation`。
+- 日志和报错信息改为英文。按中文报错文本做匹配的脚本需要更新，例如固件低于 1.2.11 的提示现在是 `is below 1.2.11`。
+- EL05 电机固件随 SDK 附带，`motor_ota_update.py` 不指定镜像时会按夹爪记录的电机型号自动选择。
+
+完整变更见 SDK 的 [CHANGELOG](https://github.com/XenseRobotics-AI/TacCap-Gripper/blob/v0.4.4/CHANGELOG.md)。

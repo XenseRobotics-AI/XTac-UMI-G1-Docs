@@ -6,7 +6,7 @@ This chapter shows how to control the follower gripper with the `xense.taccap` S
 ![XTac UMI G1 follower gripper](../assets/product/follower-scene-front.webp){ width="720" }
 
 !!! note "This chapter is written for SDK 0.4.3 and applies to both kits"
-    This chapter is written against [TacCap-Gripper](https://github.com/XenseRobotics-AI/TacCap-Gripper) **v0.4.3**.
+    This chapter is written against [TacCap-Gripper](https://github.com/XenseRobotics-AI/TacCap-Gripper) **v0.4.3**; 0.4.4 keeps the same API and applies equally, and features marked “0.4.4 and later” need 0.4.4.
     Whichever kit you have, the computer that runs the SDK must first install it and complete host setup per [Setup and self-check · Install the SDK and set up the host](setup.md#install).
 
 ## How it differs from the leader gripper {#vs-leader}

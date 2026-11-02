@@ -24,6 +24,25 @@ python python/examples/gripper_console.py left
 
 The default is impedance control. To grasp with a set force, add `--mode force-position --grasp-torque 0.6` (grip force in N·m, no more than 1.1).
 
+### Full-chain check {#full-chain}
+
+From SDK 0.4.4, add `--rerun` to the console to see all of this follower gripper's data live in [Rerun](https://rerun.io) while the keys open and close it:
+
+```bash
+python python/examples/gripper_console.py left --mode force-position --rerun
+```
+
+| Plot / view | What to look for |
+|---|---|
+| Opening and target opening | With no load the opening follows the target; when grasping an object it stops short of the target |
+| Measured and commanded torque | Rise to the set grip force when grasping |
+| Controller state | Text log: `HOLDING_FORCE` while grasping, `FAULT` on a fault |
+| Wrist camera | Steady at 30Hz |
+| Visuotactile image, marker flow, resultant force | Respond when grasping an object and fall back after release |
+
+Before putting the gripper into service or starting collection, grasp an object and check each of these. The cameras and the viewer open before the motor is enabled; **do not touch the gel at startup**.
+The other options (`--no-wrist`, `--save` and so on) are the same as `rerun_viewer.py`; see [SDK examples → Full-chain check](../sdk/examples.md#full-chain).
+
 ## Two control modes {#choose}
 
 | | Impedance control (default) | Force-position control |

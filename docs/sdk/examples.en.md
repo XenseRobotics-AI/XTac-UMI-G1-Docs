@@ -16,6 +16,8 @@ Every script selects a gripper with `left`, `right` or a full serial number, whi
 | `fisheye_cal.py` | View / write fisheye intrinsics | `show` is read-only, the rest rewrite the gripper |
 | `read_intrinsics.py` | Export the wrist camera intrinsics | Read-only |
 | `wrist_camera.py` | Wrist camera viewer | Read-only |
+| `tactile_sensor.py` | Visuotactile sensor viewer (SDK 0.4.4 and later) | Read-only |
+| `rerun_viewer.py` | Gripper state, wrist camera and visuotactile in one view (SDK 0.4.4 and later) | Read-only |
 | `ota_update.py` | Gripper firmware upgrade | **Flashes firmware** |
 | `motor_ota_update.py` | Motor firmware upgrade | **Flashes firmware** |
 
@@ -40,6 +42,43 @@ The calibration procedure is in [Calibration and self-check](../pc/calibration.m
 python python/examples/wrist_camera.py --list                  # list cameras and their serial numbers
 python python/examples/wrist_camera.py <camera serial> --undistort   # undistorted image
 ```
+
+## Visuotactile sensors {#tactile}
+
+Included from SDK 0.4.4. Visuotactile images are read by `xensesdk`, which the standalone `taccap` environment already contains.
+
+```bash
+python python/examples/tactile_sensor.py --list     # which gripper and which finger each sensor is on
+python python/examples/tactile_sensor.py left       # both sensors of the left gripper
+python python/examples/tactile_sensor.py left --finger right --outputs rectify,difference
+```
+
+Each gripper carries two sensors, one in each finger. `left` / `right` refers to the **gripper**, taken from the gripper on the same USB hub,
+so the gripper must be plugged in; the finger comes from the last digit of the sensor serial number, odd for left and even for right.
+
+The window shows one column per sensor: rectified image, marker flow, difference image and depth. Orientation and colours match what data collection records.
+**Do not touch the gel at startup**: the difference image and the force use the moment of startup as the no-contact reference. Press `c` to take a new reference (again with nothing touching).
+
+## Full-chain check {#full-chain}
+
+Included from SDK 0.4.4. It uses [Rerun](https://rerun.io) to put all of one gripper's data on a single timeline:
+gripper state (opening, velocity, torque, temperature, status bits), the wrist camera, and both visuotactile sensors (image, marker-flow arrows on top, resultant-force plot).
+
+The green arrows on the image are marker flow: from each marker's rest position to where it is now, drawn the same way as `xensesdk`'s own `drawMarkerMove`, **at 1:1 with no gain**, so an arrow's length is the real displacement in pixels. With nothing touching, only green dots remain.
+
+```bash
+python python/examples/rerun_viewer.py left                  # view only, the motor does not move
+python python/examples/rerun_viewer.py left --save rig.rrd --duration 20   # save to a file
+```
+
+To watch while opening and closing a follower gripper, use the keyboard console's `--rerun`; see [Motion control → Full-chain check](../follower/control.md#full-chain).
+
+!!! warning "The Developer Kit collection environment shows images only"
+    The collection environment has no visuotactile inference engine, so marker flow, resultant force and depth fail with `No module named 'onnxruntime'`.
+    When running in the collection environment, add `--no-force` to `rerun_viewer.py` and `gripper_console.py --rerun`,
+    and `--outputs rectify,difference` to `tactile_sensor.py`. The standalone `taccap` environment does not have this limit.
+
+With cameras and visuotactile sensors running together, every camera must use MJPEG; see [Host setup](../pc/host-setup.md). If another program holds the wrist camera, add `--no-wrist`.
 
 ## Firmware {#firmware}
 
@@ -70,4 +109,12 @@ Upgrading from 0.4.1 to 0.4.3 (no API changes):
 - A stall short of a target that is still moving enters `HOLDING_FORCE` about 150ms later than before; review programs that rely on it to detect a grasp.
 - The bundled follower firmware moves to 1.2.16; [upgrade the firmware](../follower/firmware.md#mcu-ota).
 
-The full list of changes is in the SDK's [CHANGELOG](https://github.com/XenseRobotics-AI/TacCap-Gripper/blob/v0.4.3/CHANGELOG.md).
+Upgrading from 0.4.3 to 0.4.4 (no API changes):
+
+- New [visuotactile](#tactile) and [full-chain check](#full-chain) examples.
+- `environment.yml` adds `xensesdk` and `rerun-sdk` and pins NumPy to 2.2.4 (required by `xensesdk`).
+  For an existing `taccap` environment, run `mamba env update -f environment.yml --prune`, then rerun `uv pip install -e . --no-build-isolation`.
+- Log and error messages are now in English. Scripts that match on the Chinese message text need updating; for example the firmware-below-1.2.11 warning now reads `is below 1.2.11`.
+- EL05 motor firmware ships with the SDK; without an image argument, `motor_ota_update.py` picks one from the motor model recorded on the gripper.
+
+The full list of changes is in the SDK's [CHANGELOG](https://github.com/XenseRobotics-AI/TacCap-Gripper/blob/v0.4.4/CHANGELOG.md).

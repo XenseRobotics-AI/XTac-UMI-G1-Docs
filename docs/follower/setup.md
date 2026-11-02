@@ -39,7 +39,7 @@ sudo apt install -y git curl v4l-utils
 
 ```bash
 cd ~
-git clone --branch v0.4.3 https://github.com/XenseRobotics-AI/TacCap-Gripper.git
+git clone --branch v0.4.4 https://github.com/XenseRobotics-AI/TacCap-Gripper.git
 cd TacCap-Gripper
 ```
 
@@ -52,7 +52,7 @@ mamba env create -f environment.yml
 mamba activate taccap
 ```
 
-会新建名为 `taccap` 的环境，自动装好编译器、CMake、OpenCV 与 Python 3.12，需要几分钟。之后**每次打开新终端都要先执行 `mamba activate taccap`**，命令行开头出现 `(taccap)` 才算激活。
+会新建名为 `taccap` 的环境，自动装好编译器、CMake、OpenCV、Python 3.12，以及视触觉 SDK `xensesdk` 和查看器 `rerun-sdk`，需要几分钟。之后**每次打开新终端都要先执行 `mamba activate taccap`**，命令行开头出现 `(taccap)` 才算激活。
 
 ### 第 5 步：编译安装 SDK {#build}
 
@@ -68,11 +68,11 @@ uv pip install -e . --no-build-isolation
 python -c "import xense.taccap as t; print(t.hello())"
 ```
 
-应输出 `taccap-gripper OK; version 0.4.3`。
+应输出 `taccap-gripper OK; version 0.4.4`。
 
 !!! warning "编译报错或版本不对"
     - 必须先 `mamba activate taccap` 再安装，`--no-build-isolation` 不能省。
-    - 版本不是 0.4.3：当前终端加载了别处的 SDK。关掉终端，开一个新的，只执行 `mamba activate taccap` 再试。
+    - 版本不是 0.4.4：当前终端加载了别处的 SDK。关掉终端，开一个新的，只执行 `mamba activate taccap` 再试。
 
 ### 第 6 步：主机配置（缺一项就连不上） {#host}
 
