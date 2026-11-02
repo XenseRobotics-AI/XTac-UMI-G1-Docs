@@ -2182,12 +2182,12 @@ On this page, <strong>power-cycle</strong> means unplugging the 24V power cable,
 <p><strong>Fix</strong>: upgrade as described in <a href="../firmware/#mcu-ota">Upgrade the gripper firmware</a>, then power-cycle.</p>
 </details>
 <details class="failure">
-<summary>On opening, the warning <code>从爪固件 ... 低于 1.2.11</code> (follower firmware below 1.2.11) appears, or during control the gripper suddenly stops responding to commands and the grip force drops</summary>
+<summary>On opening, the warning <code>从爪固件 ... 低于 1.2.11</code> or <code>follower firmware ... is below 1.2.11</code> appears, or during control the gripper suddenly stops responding to commands and the grip force drops</summary>
 <p><strong>Cause</strong>: in gripper firmware earlier than 1.2.11, an occasional overflow on the control serial port causes the gripper to stop receiving commands permanently while it continues to report data. The grip force then drops and the fingers loosen.</p>
 <p><strong>Fix</strong>: upgrade to the version bundled with the SDK as described in <a href="../firmware/#mcu-ota">Upgrade the gripper firmware</a>, then power-cycle.</p>
 </details>
 <details class="failure">
-<summary><code>hello()</code> shows a version other than 0.4.3, or <code>import</code> fails</summary>
+<summary><code>hello()</code> shows the wrong version (0.4.4 for a standalone install, 0.4.3 in the Developer Kit collection environment), or <code>import</code> fails</summary>
 <p><strong>Cause</strong>: the wrong environment is active, the SDK was not rebuilt, or (Developer Kit collection environment) the submodule was not updated.</p>
 <p><strong>Fix</strong>:</p>
 <ul>

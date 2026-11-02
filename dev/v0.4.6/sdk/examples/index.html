@@ -1653,6 +1653,28 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#tactile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        视触觉传感器
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#full-chain" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        全链路检查
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#firmware" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2224,6 +2246,16 @@
 <td>只读</td>
 </tr>
 <tr>
+<td><code>tactile_sensor.py</code></td>
+<td>视触觉传感器查看器（SDK 0.4.4 起）</td>
+<td>只读</td>
+</tr>
+<tr>
+<td><code>rerun_viewer.py</code></td>
+<td>夹爪状态、腕部相机、视触觉同屏查看（SDK 0.4.4 起）</td>
+<td>只读</td>
+</tr>
+<tr>
 <td><code>ota_update.py</code></td>
 <td>夹爪固件升级</td>
 <td><strong>刷写固件</strong></td>
@@ -2247,6 +2279,30 @@
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>python<span class="w"> </span>python/examples/wrist_camera.py<span class="w"> </span>--list<span class="w">                  </span><span class="c1"># 列出相机及其序列号</span>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>python<span class="w"> </span>python/examples/wrist_camera.py<span class="w"> </span>&lt;相机序列号&gt;<span class="w"> </span>--undistort<span class="w">   </span><span class="c1"># 矫正后的画面</span>
 </span></code></pre></div>
+<h2 id="tactile">视触觉传感器<a class="headerlink" href="#tactile" title="锚点链接">¶</a></h2>
+<p>SDK 0.4.4 起附带。视触觉图像由 <code>xensesdk</code> 读取，单独安装的 <code>taccap</code> 环境里已经带有它。</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>python<span class="w"> </span>python/examples/tactile_sensor.py<span class="w"> </span>--list<span class="w">     </span><span class="c1"># 每个传感器装在哪只夹爪、哪一侧手指</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>python<span class="w"> </span>python/examples/tactile_sensor.py<span class="w"> </span>left<span class="w">       </span><span class="c1"># 左夹爪的两个传感器</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>python<span class="w"> </span>python/examples/tactile_sensor.py<span class="w"> </span>left<span class="w"> </span>--finger<span class="w"> </span>right<span class="w"> </span>--outputs<span class="w"> </span>rectify,difference
+</span></code></pre></div>
+<p>每只夹爪两个传感器，分别装在左右两根手指上。<code>left</code> / <code>right</code> 指的是<strong>夹爪</strong>，由同一 USB 集线器上的夹爪决定，
+所以查看时夹爪要插着；哪根手指看传感器序列号末位，奇数为左、偶数为右。</p>
+<p>窗口里每个传感器一列，依次是校正图像、差分图像、深度和力分布。画面方向和颜色与数采录下来的一致。
+<strong>启动时不要碰凝胶</strong>：差分图像和力都以启动那一刻为无接触基准；按 <code>c</code> 可以重新取基准（同样先松开）。</p>
+<h2 id="full-chain">全链路检查<a class="headerlink" href="#full-chain" title="锚点链接">¶</a></h2>
+<p>SDK 0.4.4 起附带，用 <a href="https://rerun.io">Rerun</a> 把一只夹爪的全部数据放在同一条时间轴上：
+夹爪状态（开度、速度、力矩、温度、状态位）、腕部相机、两个视触觉传感器（图像、叠加的力分布箭头、合力曲线）。</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>python<span class="w"> </span>python/examples/rerun_viewer.py<span class="w"> </span>left<span class="w">                  </span><span class="c1"># 只看，不动电机</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>python<span class="w"> </span>python/examples/rerun_viewer.py<span class="w"> </span>left<span class="w"> </span>--save<span class="w"> </span>rig.rrd<span class="w"> </span>--duration<span class="w"> </span><span class="m">20</span><span class="w">   </span><span class="c1"># 存成文件</span>
+</span></code></pre></div>
+<p>从夹爪要一边开合一边看，用键盘控制台的 <code>--rerun</code>，见<a href="../../follower/control/#full-chain">运动控制 → 全链路检查</a>。</p>
+<div class="admonition warning">
+<p class="admonition-title">PC 版数采环境只能看图像</p>
+<p>数采环境不带视触觉推理引擎，力分布和深度会报 <code>No module named 'onnxruntime'</code>。
+在数采环境里运行时，<code>rerun_viewer.py</code> 和 <code>gripper_console.py --rerun</code> 加 <code>--no-force</code>，
+<code>tactile_sensor.py</code> 加 <code>--outputs rectify,difference</code>。单独安装的 <code>taccap</code> 环境没有这个限制。</p>
+</div>
+<p>相机与视触觉同时开时，所有相机都要用 MJPEG，见<a href="../../pc/host-setup/">主机配置</a>；腕部相机正被其他程序占用时加 <code>--no-wrist</code>。</p>
 <h2 id="firmware">固件<a class="headerlink" href="#firmware" title="锚点链接">¶</a></h2>
 <p>从夹爪的步骤见<a href="../../follower/firmware/">固件与电机升级</a>，主夹爪见<a href="../../pc/versions/#ota">固件 OTA 升级</a>。</p>
 <h2 id="migrate">从旧版本迁移<a class="headerlink" href="#migrate" title="锚点链接">¶</a></h2>
@@ -2273,7 +2329,15 @@
 <li>目标仍在移动时被挡住，进入 <code>HOLDING_FORCE</code> 比以前晚约 150ms；依赖它判断夹住的程序请复核。</li>
 <li>附带的从夹爪固件升到 1.2.16，请<a href="../../follower/firmware/#mcu-ota">升级固件</a>。</li>
 </ul>
-<p>完整变更见 SDK 的 <a href="https://github.com/XenseRobotics-AI/TacCap-Gripper/blob/v0.4.3/CHANGELOG.md">CHANGELOG</a>。</p>
+<p>从 0.4.3 升级到 0.4.4 时（接口不变）：</p>
+<ul>
+<li>新增<a href="#tactile">视触觉</a>与<a href="#full-chain">全链路检查</a>示例。</li>
+<li><code>environment.yml</code> 新增 <code>xensesdk</code> 与 <code>rerun-sdk</code>，并把 NumPy 固定为 2.2.4（<code>xensesdk</code> 的要求）。
+  已有的 <code>taccap</code> 环境执行 <code>mamba env update -f environment.yml --prune</code>，再重新运行 <code>uv pip install -e . --no-build-isolation</code>。</li>
+<li>日志和报错信息改为英文。按中文报错文本做匹配的脚本需要更新，例如固件低于 1.2.11 的提示现在是 <code>is below 1.2.11</code>。</li>
+<li>EL05 电机固件随 SDK 附带，<code>motor_ota_update.py</code> 不指定镜像时会按夹爪记录的电机型号自动选择。</li>
+</ul>
+<p>完整变更见 SDK 的 <a href="https://github.com/XenseRobotics-AI/TacCap-Gripper/blob/v0.4.4/CHANGELOG.md">CHANGELOG</a>。</p>
 
 
 

@@ -1653,6 +1653,28 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#tactile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Visuotactile sensors
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#full-chain" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Full-chain check
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#firmware" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2224,6 +2246,16 @@ with a standalone install it is <code>TacCap-Gripper</code>.</p>
 <td>Read-only</td>
 </tr>
 <tr>
+<td><code>tactile_sensor.py</code></td>
+<td>Visuotactile sensor viewer (SDK 0.4.4 and later)</td>
+<td>Read-only</td>
+</tr>
+<tr>
+<td><code>rerun_viewer.py</code></td>
+<td>Gripper state, wrist camera and visuotactile in one view (SDK 0.4.4 and later)</td>
+<td>Read-only</td>
+</tr>
+<tr>
 <td><code>ota_update.py</code></td>
 <td>Gripper firmware upgrade</td>
 <td><strong>Flashes firmware</strong></td>
@@ -2247,6 +2279,30 @@ with a standalone install it is <code>TacCap-Gripper</code>.</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>python<span class="w"> </span>python/examples/wrist_camera.py<span class="w"> </span>--list<span class="w">                  </span><span class="c1"># list cameras and their serial numbers</span>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>python<span class="w"> </span>python/examples/wrist_camera.py<span class="w"> </span>&lt;camera<span class="w"> </span>serial&gt;<span class="w"> </span>--undistort<span class="w">   </span><span class="c1"># undistorted image</span>
 </span></code></pre></div>
+<h2 id="tactile">Visuotactile sensors<a class="headerlink" href="#tactile" title="锚点链接">¶</a></h2>
+<p>Included from SDK 0.4.4. Visuotactile images are read by <code>xensesdk</code>, which the standalone <code>taccap</code> environment already contains.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>python<span class="w"> </span>python/examples/tactile_sensor.py<span class="w"> </span>--list<span class="w">     </span><span class="c1"># which gripper and which finger each sensor is on</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>python<span class="w"> </span>python/examples/tactile_sensor.py<span class="w"> </span>left<span class="w">       </span><span class="c1"># both sensors of the left gripper</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>python<span class="w"> </span>python/examples/tactile_sensor.py<span class="w"> </span>left<span class="w"> </span>--finger<span class="w"> </span>right<span class="w"> </span>--outputs<span class="w"> </span>rectify,difference
+</span></code></pre></div>
+<p>Each gripper carries two sensors, one in each finger. <code>left</code> / <code>right</code> refers to the <strong>gripper</strong>, taken from the gripper on the same USB hub,
+so the gripper must be plugged in; the finger comes from the last digit of the sensor serial number, odd for left and even for right.</p>
+<p>The window shows one column per sensor: rectified image, difference image, depth and force distribution. Orientation and colours match what data collection records.
+<strong>Do not touch the gel at startup</strong>: the difference image and the force use the moment of startup as the no-contact reference. Press <code>c</code> to take a new reference (again with nothing touching).</p>
+<h2 id="full-chain">Full-chain check<a class="headerlink" href="#full-chain" title="锚点链接">¶</a></h2>
+<p>Included from SDK 0.4.4. It uses <a href="https://rerun.io">Rerun</a> to put all of one gripper's data on a single timeline:
+gripper state (opening, velocity, torque, temperature, status bits), the wrist camera, and both visuotactile sensors (image, force-distribution arrows on top, resultant-force plot).</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>python<span class="w"> </span>python/examples/rerun_viewer.py<span class="w"> </span>left<span class="w">                  </span><span class="c1"># view only, the motor does not move</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>python<span class="w"> </span>python/examples/rerun_viewer.py<span class="w"> </span>left<span class="w"> </span>--save<span class="w"> </span>rig.rrd<span class="w"> </span>--duration<span class="w"> </span><span class="m">20</span><span class="w">   </span><span class="c1"># save to a file</span>
+</span></code></pre></div>
+<p>To watch while opening and closing a follower gripper, use the keyboard console's <code>--rerun</code>; see <a href="../../follower/control/#full-chain">Motion control → Full-chain check</a>.</p>
+<div class="admonition warning">
+<p class="admonition-title">The Developer Kit collection environment shows images only</p>
+<p>The collection environment has no visuotactile inference engine, so force distribution and depth fail with <code>No module named 'onnxruntime'</code>.
+When running in the collection environment, add <code>--no-force</code> to <code>rerun_viewer.py</code> and <code>gripper_console.py --rerun</code>,
+and <code>--outputs rectify,difference</code> to <code>tactile_sensor.py</code>. The standalone <code>taccap</code> environment does not have this limit.</p>
+</div>
+<p>With cameras and visuotactile sensors running together, every camera must use MJPEG; see <a href="../../pc/host-setup/">Host setup</a>. If another program holds the wrist camera, add <code>--no-wrist</code>.</p>
 <h2 id="firmware">Firmware<a class="headerlink" href="#firmware" title="锚点链接">¶</a></h2>
 <p>For a follower gripper see <a href="../../follower/firmware/">Firmware and motor upgrades</a>; for a leader gripper see <a href="../../pc/versions/#ota">Firmware OTA upgrade</a>.</p>
 <h2 id="migrate">Migrating from older versions<a class="headerlink" href="#migrate" title="锚点链接">¶</a></h2>
@@ -2273,7 +2329,15 @@ with a standalone install it is <code>TacCap-Gripper</code>.</p>
 <li>A stall short of a target that is still moving enters <code>HOLDING_FORCE</code> about 150ms later than before; review programs that rely on it to detect a grasp.</li>
 <li>The bundled follower firmware moves to 1.2.16; <a href="../../follower/firmware/#mcu-ota">upgrade the firmware</a>.</li>
 </ul>
-<p>The full list of changes is in the SDK's <a href="https://github.com/XenseRobotics-AI/TacCap-Gripper/blob/v0.4.3/CHANGELOG.md">CHANGELOG</a>.</p>
+<p>Upgrading from 0.4.3 to 0.4.4 (no API changes):</p>
+<ul>
+<li>New <a href="#tactile">visuotactile</a> and <a href="#full-chain">full-chain check</a> examples.</li>
+<li><code>environment.yml</code> adds <code>xensesdk</code> and <code>rerun-sdk</code> and pins NumPy to 2.2.4 (required by <code>xensesdk</code>).
+  For an existing <code>taccap</code> environment, run <code>mamba env update -f environment.yml --prune</code>, then rerun <code>uv pip install -e . --no-build-isolation</code>.</li>
+<li>Log and error messages are now in English. Scripts that match on the Chinese message text need updating; for example the firmware-below-1.2.11 warning now reads <code>is below 1.2.11</code>.</li>
+<li>EL05 motor firmware ships with the SDK; without an image argument, <code>motor_ota_update.py</code> picks one from the motor model recorded on the gripper.</li>
+</ul>
+<p>The full list of changes is in the SDK's <a href="https://github.com/XenseRobotics-AI/TacCap-Gripper/blob/v0.4.4/CHANGELOG.md">CHANGELOG</a>.</p>
 
 
 
