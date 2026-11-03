@@ -8,7 +8,7 @@ A lookup appendix shared by both editions: terms, feedback channels and related 
 |---|---|
 | **XTac UMI G1** | The wearable UMI data-collection gripper, the sensor carrier shared by both editions; see [XTac UMI G1](../product/g1.md) |
 | **Backpack** | The Backpack Kit's collection unit: an RK3588 compute node that the grippers and the headset plug into and that runs XTac UMI Collector; formally the XTac UMI Backpack, see [The XTac UMI Backpack](../product/backpack.md) |
-| **XTac UMI Collector** | The collection software on the backpack: it takes in the cameras, the gripper MCUs and the headset pose, and handles recording, replay, export and device management; version baseline 0.4.3, the device's System page is authoritative |
+| **XTac UMI Collector** | The collection software on the backpack: it takes in the cameras, the gripper MCUs and the headset pose, and handles recording, replay, export and device management; version baseline 0.4.6, the device's System page is authoritative |
 | **Console** | Collector's browser UI, opened from a tablet, phone or PC connected to the backpack; the live monitor, projects and system pages all live there |
 | **Project / task / episode** | How the Backpack Kit organizes data: tasks under a project, each task carrying a LeRobot language instruction, and each start-to-stop recording being one episode |
 | **MCAP** | The raw recording format of each Backpack Kit episode, storing cameras, encoders, IMU, poses and events by topic; the LeRobot export is converted from it |
@@ -65,11 +65,11 @@ If what is on your devices differs from this table, upgrade to match it, or use 
 
 | Docs version | xense-taccap-lerobot (Developer Kit collection) | XTac UMI XR (headset app) | XTac UMI Collector (Backpack Kit collection unit) | TacCap-Gripper SDK (gripper SDK) |
 |---|---|---|---|---|
-| v0.1.2 | v0.1.1 | 0.3.6 | 0.4.6 | 0.4.3 |
+| v0.1.2 | v0.1.3 | 0.3.6 | 0.4.6 | 0.4.4 |
 | v0.1.1 | v0.1.1 | 0.3.3 | 0.4.3 | 0.4.3 |
 | v0.1.0 | v0.1.0 | 0.3.2 | 0.4.3 | 0.4.1 |
 
-The gripper firmware ships with the SDK (SDK 0.4.3 ships leader 1.2.6 and follower 1.2.16) and is not listed separately. How to upgrade each component is in [Developer Kit · Versions and upgrades](../pc/versions.md) and [Backpack Kit · Versions](../backpack/versions.md).
+The gripper firmware ships with the SDK (SDK 0.4.4 ships leader 1.2.6 and follower 1.2.16) and is not listed separately. How to upgrade each component is in [Developer Kit · Versions and upgrades](../pc/versions.md) and [Backpack Kit · Versions](../backpack/versions.md).
 
 ## What this manual covers
 

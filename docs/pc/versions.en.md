@@ -6,14 +6,14 @@ Serial and version numbers here are examples; go by what you read on your own de
 
 !!! warning "Bring every item up to the versions in the table below before collecting; this is not optional"
     - The firmware needs [command set V2.1](#v21) for travel calibration.
-    - The images bundled with SDK 0.4.3 fix the [known defects](#ota-when).
+    - The images bundled with SDK 0.4.4 fix the [known defects](#ota-when).
     - `gripper.pos` normalization only holds once all three are in place.
     - An uncalibrated leader, or one on too-old firmware, cannot connect; other mismatches still write to disk "normally", but the data will not line up.
 
 | Component | Minimum | How to check |
 |---|---|---|
-| `xense-taccap-lerobot` | `0.5.1+xtac.0.1.1` | `pip show lerobot`, or look at `pyproject.toml` |
-| `xense.taccap` SDK | **0.4.3** | `python -c "import xense.taccap as t; print(t.__version__)"` |
+| `xense-taccap-lerobot` | `0.5.1+xtac.0.1.3` | `pip show lerobot`, or look at `pyproject.toml` |
+| `xense.taccap` SDK | **0.4.4** | `python -c "import xense.taccap as t; print(t.__version__)"` |
 | Gripper firmware | **command set V2.1**, i.e. leader ≥ 1.2.0 / follower ≥ 1.1.0; with a follower gripper (`--robot.role=follower`) the follower needs ≥ 1.2.5 (below 1.2.11 it warns to upgrade) | Run [`calibrate.py`](calibration.md#41) or [read it directly](#check-versions) |
 | Encoder calibration on every leader | Zero + travel limit written to flash | [Gripper calibration (zero + travel)](calibration.md#41) |
 | XenseVR PC Service | ≥ v0.2.0; install v0.2.1 on a new machine | `Version` from `dpkg -s xensevr-pc-service` |
@@ -45,8 +45,8 @@ Commands and fields should be taken from your local checkout and from the device
 | `rerun-sdk` | `>=0.24.0,<0.27.0` | 0.26.2 |
 | `opencv-python` | `==4.12.0.88` | 4.12.0.88 |
 | NumPy | `>=1.26.4` | 2.2.6 |
-| `xense-taccap-lerobot` | Based on lerobot 0.5.1, version `0.5.1+xtac.0.1.1` | `v0.1.1` |
-| `xense.taccap` SDK | Matched to the main repo's submodule `third_party/taccap-gripper` | 0.4.3 (tag `v0.4.3`), bundling firmware leader 1.2.6 / follower 1.2.16 |
+| `xense-taccap-lerobot` | Based on lerobot 0.5.1, version `0.5.1+xtac.0.1.3` | `v0.1.3` |
+| `xense.taccap` SDK | Matched to the main repo's submodule `third_party/taccap-gripper` | 0.4.4 (tag `v0.4.4`), bundling firmware leader 1.2.6 / follower 1.2.16 |
 | Gripper firmware | Command set V2.1 (wire framing V1.8), leader ≥ 1.2.0 / follower ≥ 1.1.0 | leader 1.2.6 / follower 1.2.16, follows the SDK, with `firmware/manifest.json` as the authority, see [Firmware OTA upgrade](#ota) |
 | `xensesdk` | Provided by the install script | 2.1.2 |
 | XenseVR PC Service (`.deb`) | ≥ v0.2.0 | v0.2.1 |
@@ -72,7 +72,7 @@ The firmware version is not in the SN; read it with `GetVersion`. This also prin
 python - <<'EOF'
 import xense.taccap as t
 from xense.taccap import scan_grippers, LeaderGripper, Cmd
-print("xense.taccap", t.__version__, "(needs >= 0.4.3)")
+print("xense.taccap", t.__version__, "(needs >= 0.4.4)")
 for ep in scan_grippers():
     g = LeaderGripper(mcu_device=ep.mcu_device)   # read-only version query, works for both roles
     ack = g.transport.send_cmd(Cmd.GetVersion, b"", 500)
@@ -83,7 +83,7 @@ EOF
 Output before flashing (two leaders on the old `fw` 1.2.5; after flashing it should read 1.2.6):
 
 ```text
-xense.taccap 0.4.3 (needs >= 0.4.3)
+xense.taccap 0.4.4 (needs >= 0.4.4)
   TCGU01A28Z0023m  Left   fw=1.2.5
   TCGU01A28Z0024m  Right  fw=1.2.5
 ```
@@ -113,6 +113,18 @@ python -c "import xensevr_pc_service_sdk as xrt; print('pico camera API:', hasat
 
 ## What's new {#whats-new}
 
+### 0.1.3 {#whats-new-013}
+
+!!! warning "Headset dataset fields are renamed and incompatible with older data"
+    The headset camera keys `left_head` / `right_head` become `head_left` / `head_right` (the directories under `videos/` are renamed with them),
+    and the head pose dimensions `head_camera.*` become `head.*`, with the same values and meaning, matching the Backpack Kit export.
+    Datasets recorded with 0.1.3 cannot be merged with older ones as they are: rename the old data first with Engine's `scripts/rename_head_cameras.py`,
+    and update any downstream code that reads the datasets to the new names. The `--robot.head_camera_*` config options do not go into the dataset and keep their names.
+
+- The gripper SDK moves to 0.4.4; the bundled firmware is unchanged (leader 1.2.6 / follower 1.2.16). New visuotactile and full-chain check examples, see [SDK examples](../sdk/examples.md#tactile).
+- The Docker image includes third-party license notices (since 0.1.2).
+- After moving to v0.1.3 you **must re-run `./setup_env.sh --install`**.
+
 ### 0.1.1 {#whats-new-011}
 
 - The gripper SDK moves to 0.4.3, bundling firmware leader 1.2.6 (unchanged) / follower 1.2.16, see [Firmware OTA upgrade](#ota).
@@ -135,10 +147,10 @@ Update by release tag, not `main` (it may carry unreleased changes):
 
 ```bash
 git fetch --tags
-git checkout v0.1.1
+git checkout v0.1.3
 git submodule update --init --recursive --progress
 ./setup_env.sh --install     # realign the dependencies and rebuild xense.taccap
-git submodule status         # the submodule should match v0.4.3
+git submodule status         # the submodule should match v0.4.4
 ```
 
 !!! warning "`xense.taccap` must be rebuilt after pulling the submodule"

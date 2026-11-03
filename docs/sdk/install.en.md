@@ -2,7 +2,7 @@
 
 ## Python install {#python}
 
-**We recommend using the collection environment directly**: once it is set up per [Installation](../pc/install.md) it already includes SDK 0.4.3
+**We recommend using the collection environment directly**: once it is set up per [Installation](../pc/install.md) it already includes SDK 0.4.4
 (submodule `third_party/taccap-gripper`), and the source and example scripts are all in that directory. To verify:
 
 ```bash
@@ -10,7 +10,7 @@ cd third_party/taccap-gripper
 python -c "import xense.taccap as t; print(t.hello())"
 ```
 
-It should print `taccap-gripper OK; version 0.4.3`. If the version is wrong, pull the submodules and rerun `./setup_env.sh --install`,
+It should print `taccap-gripper OK; version 0.4.4`. If the version is wrong, pull the submodules and rerun `./setup_env.sh --install`,
 see [Clone the repo and its submodules](../pc/install.md#22).
 
 ### Standalone install (Backpack Kit, or without the data-collection repository) {#standalone}

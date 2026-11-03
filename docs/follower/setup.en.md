@@ -9,7 +9,7 @@ Whether you have the Backpack Kit or the Developer Kit, any computer that runs t
 It requires Ubuntu 22.04 or 24.04 (x86_64). Copy and run the steps in order.
 
 !!! tip "Computers that already have the Developer Kit collection environment"
-    The collection environment already includes SDK 0.4.3 (`third_party/taccap-gripper` in the data-collection repository). Skip steps 1–5,
+    The collection environment (v0.1.3) already includes SDK 0.4.4 (`third_party/taccap-gripper` in the data-collection repository). Skip steps 1–5,
     go to that directory inside the collection environment and start from [step 6](#host).
 
 ### Step 1: install Miniforge (mamba) {#miniforge}

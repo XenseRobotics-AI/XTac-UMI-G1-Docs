@@ -104,7 +104,7 @@ lerobot-edit-dataset \
     --operation.type convert_8_to_6_cameras
 ```
 
-It drops the two headset eye image keys and the `head_camera.*` dimensions from `action` / `observation.state`; **the source dataset is left untouched** and the result goes to `--new_repo_id`. A source that is already 6-camera, or whose camera keys are unexpected, is refused with an error.
+It drops the two headset eye image keys and the `head.*` dimensions from `action` / `observation.state`; **the source dataset is left untouched** and the result goes to `--new_repo_id`. A source that is already 6-camera, or whose camera keys are unexpected, is refused with an error.
 
 !!! warning "Double-check `--repo_id`"
     If the dataset is not found locally this conversion fetches it from the Hugging Face Hub, and `--local_files_only` has no effect on it. Make sure `--repo_id` is spelled correctly, or point `--root` straight at the local dataset folder.

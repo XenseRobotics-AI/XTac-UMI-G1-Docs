@@ -209,14 +209,14 @@ Identity is recorded in the hardware manifest: `lerobot-record` writes `meta/har
 | `gripper.pos` | Gripper encoder | `--robot.enable_gripper` (default `true`) | float ∈ [0, 1] |
 | `tactile_left` / `tactile_right` | Left and right visuotactile sensors | recorded by default; `--robot.enable_tactile=false` is diagnostic only, see the warning below | uint8, about `(400, 700, 3)`; size is derived automatically, do not hard-code it |
 | `wrist_cam` | Wrist camera | `--robot.enable_wrist_camera` (default `true`) | uint8 `(H, W, 3)` |
-| `left_head` / `right_head` | Headset stereo, one key per eye | `--robot.type=xtac_umi_g1` (single gripper: `--robot.enable_head_camera=true`) | uint8, `(480, 640, 3)` by default |
-| `head_camera.x/y/z` | Headset position (same world frame as `tcp.*`), also an action | as above | float (m) |
-| `head_camera.r1..r6` | Headset orientation as a 6-D rotation, also an action | as above | float |
+| `head_left` / `head_right` | Headset stereo, one key per eye | `--robot.type=xtac_umi_g1` (single gripper: `--robot.enable_head_camera=true`) | uint8, `(480, 640, 3)` by default |
+| `head.x/y/z` | Headset position (same world frame as `tcp.*`), also an action | as above | float (m) |
+| `head.r1..r6` | Headset orientation as a 6-D rotation, also an action | as above | float |
 | `imu.accel.{x,y,z}` | Gripper IMU acceleration | `--robot.enable_imu` (default `false`, reserved, not recorded) | float (m/s²) |
 | `imu.gyro.{x,y,z}` | Gripper IMU angular rate | as above | float (rad/s) |
 | `imu.mag.{x,y,z}` | Gripper IMU magnetometer | as above | float (µT) |
 
-The 6-D rotation stores the first two columns (by column, not by row) of the rotation matrix R (world ← body), the same for `tcp.*` and `head_camera.*`:
+The 6-D rotation stores the first two columns (by column, not by row) of the rotation matrix R (world ← body), the same for `tcp.*` and `head.*`:
 
 ```text
 R = ⎡ r1  r4  · ⎤     column 1 (r1,r2,r3) = direction of the body X axis in the world frame
@@ -365,7 +365,7 @@ Record 5–10 episodes first, verify with [`lerobot-check-dataset`](dataset.md#6
 
 ## Optional: head camera {#56}
 
-Records the Pico4 Ultra Enterprise headset's stereo frames and pose (the operator's first-person view and where they were looking) as `left_head` / `right_head` and `head_camera.*` (see [what each frame records](#53)); the latter also goes into the action. Bimanual uses `--robot.type=xtac_umi_g1`, the single-gripper `taccap_gripper` adds `--robot.enable_head_camera=true`; the parameters below apply to both.
+Records the Pico4 Ultra Enterprise headset's stereo frames and pose (the operator's first-person view and where they were looking) as `head_left` / `head_right` and `head.*` (see [what each frame records](#53)); the latter also goes into the action. Bimanual uses `--robot.type=xtac_umi_g1`, the single-gripper `taccap_gripper` adds `--robot.enable_head_camera=true`; the parameters below apply to both.
 
 ```bash
 lerobot-record \
@@ -392,7 +392,7 @@ lerobot-record \
 - Changing the resolution or eye selection changes the data; episodes recorded before and after the change cannot be mixed.
 - The eyes are two independent messages and a mismatch leaves no trace, so each frame compares both eyes' newest frames: identical sequence numbers mean the same exposure, otherwise timestamps must agree within `--robot.head_camera_pair_max_skew_ms` (default 20ms, against about 33ms per frame at 30fps); exceeding it only logs a rate-limited warning with the measured skew; recording continues.
 
-`head_camera.*` is mapped into the `tcp.*` world frame with the tracker's Pico→world transform. Enabling it adds 9 dimensions to `observation.state`: 10 → 19 single, 20 → 29 bimanual, and `--robot.enable_imu=true` adds on top. If it will not connect, see [Troubleshooting · Head camera](troubleshooting.md#head-camera).
+`head.*` is mapped into the `tcp.*` world frame with the tracker's Pico→world transform. Enabling it adds 9 dimensions to `observation.state`: 10 → 19 single, 20 → 29 bimanual, and `--robot.enable_imu=true` adds on top. If it will not connect, see [Troubleshooting · Head camera](troubleshooting.md#head-camera).
 
 ## Optional: wrist camera fisheye undistortion {#57}
 
