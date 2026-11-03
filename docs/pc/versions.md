@@ -118,8 +118,7 @@ python -c "import xensevr_pc_service_sdk as xrt; print('pico camera API:', hasat
 !!! warning "头显的数据集字段改名，与旧数据不兼容"
     头显相机键 `left_head` / `right_head` 改为 `head_left` / `head_right`（`videos/` 下的目录随之改名），
     头部位姿维度 `head_camera.*` 改为 `head.*`，数值与含义不变，与背包版导出一致。
-    0.1.3 录的数据集不能直接和旧数据合并：旧数据先用 Engine 的 `scripts/rename_head_cameras.py` 改名，
-    读数据集的下游代码也要同步改用新名字。`--robot.head_camera_*` 配置参数不进数据集，名字不变。
+    读数据集的下游代码要同步改用新名字。`--robot.head_camera_*` 配置参数不进数据集，名字不变。
 
 - 夹爪 SDK 升到 0.4.4，附带固件不变（主夹爪 1.2.6 / 从夹爪 1.2.16）。新增视触觉与全链路检查示例，见 [SDK 示例](../sdk/examples.md#tactile)。
 - Docker 镜像内附第三方许可证声明（0.1.2 起）。
