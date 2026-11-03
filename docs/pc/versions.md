@@ -6,14 +6,14 @@
 
 !!! warning "采集前先把各项都升到下表版本，这不是可选项"
     - 固件带[命令集 V2.1](#v21) 才支持行程标定。
-    - SDK 0.4.3 附带的镜像修掉了[已知缺陷](#ota-when)。
+    - SDK 0.4.4 附带的镜像修掉了[已知缺陷](#ota-when)。
     - 三者齐了 `gripper.pos` 归一化才成立。
     - 主夹爪缺标定或固件过低会被拒绝连接；其它不配套组合照常落盘，但数据对不上。
 
 | 组件 | 最低要求 | 怎么查 |
 |---|---|---|
-| `xense-taccap-lerobot` | `0.5.1+xtac.0.1.1` | `pip show lerobot` 或看 `pyproject.toml` |
-| `xense.taccap` SDK | **0.4.3** | `python -c "import xense.taccap as t; print(t.__version__)"` |
+| `xense-taccap-lerobot` | `0.5.1+xtac.0.1.3` | `pip show lerobot` 或看 `pyproject.toml` |
+| `xense.taccap` SDK | **0.4.4** | `python -c "import xense.taccap as t; print(t.__version__)"` |
 | 夹爪固件 | **命令集 V2.1**，即 leader ≥ 1.2.0 / follower ≥ 1.1.0；用从夹爪（`--robot.role=follower`）时 follower 须 ≥ 1.2.5（低于 1.2.11 提示升级） | 跑 [`calibrate.py`](calibration.md#41) 或[直接读](#check-versions) |
 | 每台 leader 的编码器标定 | 零点 + 行程上限已写入 flash | [夹爪标定](calibration.md#41) |
 | XenseVR PC Service | ≥ v0.2.0，装机直接用 v0.2.1 | `dpkg -s xensevr-pc-service` 的 `Version` |
@@ -45,8 +45,8 @@ flowchart LR
 | `rerun-sdk` | `>=0.24.0,<0.27.0` | 0.26.2 |
 | `opencv-python` | `==4.12.0.88` | 4.12.0.88 |
 | NumPy | `>=1.26.4` | 2.2.6 |
-| `xense-taccap-lerobot` | 基于 lerobot 0.5.1，版本号 `0.5.1+xtac.0.1.1` | `v0.1.1` |
-| `xense.taccap` SDK | 与主仓库子模块 `third_party/taccap-gripper` 配套 | 0.4.3（tag `v0.4.3`），附带固件 leader 1.2.6 / follower 1.2.16 |
+| `xense-taccap-lerobot` | 基于 lerobot 0.5.1，版本号 `0.5.1+xtac.0.1.3` | `v0.1.3` |
+| `xense.taccap` SDK | 与主仓库子模块 `third_party/taccap-gripper` 配套 | 0.4.4（tag `v0.4.4`），附带固件 leader 1.2.6 / follower 1.2.16 |
 | 夹爪固件 | 命令集 V2.1（帧格式 V1.8），leader ≥ 1.2.0 / follower ≥ 1.1.0 | leader 1.2.6 / follower 1.2.16，随 SDK 走，以 `firmware/manifest.json` 为准，见 [OTA](#ota) |
 | `xensesdk` | 由安装脚本提供 | 2.1.2 |
 | XenseVR PC Service(`.deb`) | ≥ v0.2.0 | v0.2.1 |
@@ -72,7 +72,7 @@ flowchart LR
 python - <<'EOF'
 import xense.taccap as t
 from xense.taccap import scan_grippers, LeaderGripper, Cmd
-print("xense.taccap", t.__version__, "(需要 >= 0.4.3)")
+print("xense.taccap", t.__version__, "(需要 >= 0.4.4)")
 for ep in scan_grippers():
     g = LeaderGripper(mcu_device=ep.mcu_device)   # 只读版本,主从夹爪通用
     ack = g.transport.send_cmd(Cmd.GetVersion, b"", 500)
@@ -83,7 +83,7 @@ EOF
 刷固件前的输出（两只主夹爪，旧版 `fw` 1.2.5，刷完应为 1.2.6）：
 
 ```text
-xense.taccap 0.4.3 (需要 >= 0.4.3)
+xense.taccap 0.4.4 (需要 >= 0.4.4)
   TCGU01A28Z0023m  Left   fw=1.2.5
   TCGU01A28Z0024m  Right  fw=1.2.5
 ```
@@ -113,6 +113,18 @@ python -c "import xensevr_pc_service_sdk as xrt; print('pico camera API:', hasat
 
 ## 更新要点 {#whats-new}
 
+### 0.1.3 {#whats-new-013}
+
+!!! warning "头显的数据集字段改名，与旧数据不兼容"
+    头显相机键 `left_head` / `right_head` 改为 `head_left` / `head_right`（`videos/` 下的目录随之改名），
+    头部位姿维度 `head_camera.*` 改为 `head.*`，数值与含义不变，与背包版导出一致。
+    0.1.3 录的数据集不能直接和旧数据合并：旧数据先用 Engine 的 `scripts/rename_head_cameras.py` 改名，
+    读数据集的下游代码也要同步改用新名字。`--robot.head_camera_*` 配置参数不进数据集，名字不变。
+
+- 夹爪 SDK 升到 0.4.4，附带固件不变（主夹爪 1.2.6 / 从夹爪 1.2.16）。新增视触觉与全链路检查示例，见 [SDK 示例](../sdk/examples.md#tactile)。
+- Docker 镜像内附第三方许可证声明（0.1.2 起）。
+- 拉到 v0.1.3 后**必须重跑 `./setup_env.sh --install`**。
+
 ### 0.1.1 {#whats-new-011}
 
 - 夹爪 SDK 升到 0.4.3，附带固件主夹爪 1.2.6（不变）/ 从夹爪 1.2.16，见[固件 OTA](#ota)。
@@ -135,10 +147,10 @@ python -c "import xensevr_pc_service_sdk as xrt; print('pico camera API:', hasat
 
 ```bash
 git fetch --tags
-git checkout v0.1.1
+git checkout v0.1.3
 git submodule update --init --recursive --progress
 ./setup_env.sh --install     # 对齐依赖并重编 xense.taccap
-git submodule status         # 子模块应对应 v0.4.3
+git submodule status         # 子模块应对应 v0.4.4
 ```
 
 !!! warning "拉完子模块必须重新编译 `xense.taccap`"

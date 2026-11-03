@@ -104,7 +104,7 @@ lerobot-edit-dataset \
     --operation.type convert_8_to_6_cameras
 ```
 
-丢掉头显两只眼的图像键，以及 `action` / `observation.state` 里的 `head_camera.*` 维度；**原数据集不动**，结果写到 `--new_repo_id`。源数据集已是 6 相机或相机键不符预期时直接报错。
+丢掉头显两只眼的图像键，以及 `action` / `observation.state` 里的 `head.*` 维度；**原数据集不动**，结果写到 `--new_repo_id`。源数据集已是 6 相机或相机键不符预期时直接报错。
 
 !!! warning "先确认 `--repo_id` 拼对了"
     这项转换在本地找不到数据集时会去 Hugging Face Hub 取，`--local_files_only` 对它不起作用。务必确认 `--repo_id` 拼写正确，或者用 `--root` 直接指向本地数据集目录。

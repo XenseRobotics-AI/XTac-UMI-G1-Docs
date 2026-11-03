@@ -209,14 +209,14 @@ ValueError: --robot.id is required: the station label for this rig, e.g. --robot
 | `gripper.pos` | 夹爪编码器 | `--robot.enable_gripper`（默认 `true`） | float ∈ [0, 1] |
 | `tactile_left` / `tactile_right` | 左右视触觉传感器 | 默认采集；`--robot.enable_tactile=false` 仅排查用，见下方警告 | uint8，约 `(400, 700, 3)`，宽高自动推导勿写死 |
 | `wrist_cam` | 腕部相机 | `--robot.enable_wrist_camera`（默认 `true`） | uint8 `(H, W, 3)` |
-| `left_head` / `right_head` | 头显双目，一只眼一个键 | `--robot.type=xtac_umi_g1`（单夹爪为 `--robot.enable_head_camera=true`） | uint8，默认 `(480, 640, 3)` |
-| `head_camera.x/y/z` | 头显位置（同 `tcp.*` 世界系），也是动作 | 同上 | float(m) |
-| `head_camera.r1..r6` | 头显姿态 6-D 旋转，也是动作 | 同上 | float |
+| `head_left` / `head_right` | 头显双目，一只眼一个键 | `--robot.type=xtac_umi_g1`（单夹爪为 `--robot.enable_head_camera=true`） | uint8，默认 `(480, 640, 3)` |
+| `head.x/y/z` | 头显位置（同 `tcp.*` 世界系），也是动作 | 同上 | float(m) |
+| `head.r1..r6` | 头显姿态 6-D 旋转，也是动作 | 同上 | float |
 | `imu.accel.{x,y,z}` | 夹爪 IMU 加速度 | `--robot.enable_imu`（默认 `false`，预留不录） | float(m/s²) |
 | `imu.gyro.{x,y,z}` | 夹爪 IMU 角速度 | 同上 | float(rad/s) |
 | `imu.mag.{x,y,z}` | 夹爪 IMU 磁力 | 同上 | float(µT) |
 
-6-D 旋转按列（不是按行）取旋转矩阵 R（「世界 ← 本体」）的前两列，`tcp.*` 与 `head_camera.*` 相同：
+6-D 旋转按列（不是按行）取旋转矩阵 R（「世界 ← 本体」）的前两列，`tcp.*` 与 `head.*` 相同：
 
 ```text
 R = ⎡ r1  r4  · ⎤     第一列 (r1,r2,r3) = 本体 X 轴在世界系下的方向
@@ -365,7 +365,7 @@ lerobot-record \
 
 ## 可选：头显相机 {#56}
 
-录 Pico4 Ultra 企业版头显的双目画面与位姿（操作员第一视角和"人在往哪看"），产出 `left_head` / `right_head` 与 `head_camera.*`（见[每帧记录内容](#53)），后者同时进 action。双夹爪用 `--robot.type=xtac_umi_g1`，单夹爪 `taccap_gripper` 加 `--robot.enable_head_camera=true`，下列参数两者通用。
+录 Pico4 Ultra 企业版头显的双目画面与位姿（操作员第一视角和"人在往哪看"），产出 `head_left` / `head_right` 与 `head.*`（见[每帧记录内容](#53)），后者同时进 action。双夹爪用 `--robot.type=xtac_umi_g1`，单夹爪 `taccap_gripper` 加 `--robot.enable_head_camera=true`，下列参数两者通用。
 
 ```bash
 lerobot-record \
@@ -392,7 +392,7 @@ lerobot-record \
 - 改分辨率或录制的眼睛等于换一组数据，前后 episode 不能混用。
 - 左右眼是两条独立消息，配错在数据里看不出，所以每帧比对两眼最新帧：帧序号相同即同一曝光，否则时间戳差须不超过 `--robot.head_camera_pair_max_skew_ms`（默认 20ms，30fps 帧周期约 33ms）；超出只限流告警（含实测偏差），录制继续。
 
-`head_camera.*` 用追踪器的 Pico→world 变换映射到 `tcp.*` 的世界系。开启后 `observation.state` 增 9 维：单夹爪 10 → 19，双夹爪 20 → 29，再开 `--robot.enable_imu=true` 继续累加。连不上见[故障排查](troubleshooting.md#head-camera)。
+`head.*` 用追踪器的 Pico→world 变换映射到 `tcp.*` 的世界系。开启后 `observation.state` 增 9 维：单夹爪 10 → 19，双夹爪 20 → 29，再开 `--robot.enable_imu=true` 继续累加。连不上见[故障排查](troubleshooting.md#head-camera)。
 
 ## 可选：腕相机鱼眼矫正 {#57}
 
