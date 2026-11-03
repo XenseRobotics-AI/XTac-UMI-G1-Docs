@@ -2168,12 +2168,12 @@
 
 <h1 id="安装与构建">安装与构建<a class="headerlink" href="#安装与构建" title="锚点链接">¶</a></h1>
 <h2 id="python">Python 安装<a class="headerlink" href="#python" title="锚点链接">¶</a></h2>
-<p><strong>推荐直接用数采环境</strong>：按 <a href="../../pc/install/">安装</a> 装好之后就已经带有 SDK 0.4.3
+<p><strong>推荐直接用数采环境</strong>：按 <a href="../../pc/install/">安装</a> 装好之后就已经带有 SDK 0.4.4
 （子模块 <code>third_party/taccap-gripper</code>），源码和示例脚本都在这个目录下。验证：</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nb">cd</span><span class="w"> </span>third_party/taccap-gripper
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"import xense.taccap as t; print(t.hello())"</span>
 </span></code></pre></div>
-<p>应输出 <code>taccap-gripper OK; version 0.4.3</code>。版本不对时，拉子模块并重跑 <code>./setup_env.sh --install</code>，
+<p>应输出 <code>taccap-gripper OK; version 0.4.4</code>。版本不对时，拉子模块并重跑 <code>./setup_env.sh --install</code>，
 见 <a href="../../pc/install/#22">克隆仓库与子模块</a>。</p>
 <h3 id="standalone">单独安装（背包版或不用数采仓库）<a class="headerlink" href="#standalone" title="锚点链接">¶</a></h3>
 <p>背包版客户，或不使用数采仓库的电脑，按<a href="../../follower/setup/#install">从夹爪 · 准备与自检 · 安装 SDK 与主机配置</a>从零安装：Miniforge → <code>v4l-utils</code> → 下载 SDK → 创建 mamba 环境 → 编译安装 → 主机配置。主夹爪与从夹爪用的是同一套步骤。</p>

@@ -1475,6 +1475,17 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#whats-new-013" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.1.3
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#whats-new-011" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2256,7 +2267,7 @@
 <p class="admonition-title">Bring every item up to the versions in the table below before collecting; this is not optional</p>
 <ul>
 <li>The firmware needs <a href="#v21">command set V2.1</a> for travel calibration.</li>
-<li>The images bundled with SDK 0.4.3 fix the <a href="#ota-when">known defects</a>.</li>
+<li>The images bundled with SDK 0.4.4 fix the <a href="#ota-when">known defects</a>.</li>
 <li><code>gripper.pos</code> normalization only holds once all three are in place.</li>
 <li>An uncalibrated leader, or one on too-old firmware, cannot connect; other mismatches still write to disk "normally", but the data will not line up.</li>
 </ul>
@@ -2272,12 +2283,12 @@
 <tbody>
 <tr>
 <td><code>xense-taccap-lerobot</code></td>
-<td><code>0.5.1+xtac.0.1.1</code></td>
+<td><code>0.5.1+xtac.0.1.3</code></td>
 <td><code>pip show lerobot</code>, or look at <code>pyproject.toml</code></td>
 </tr>
 <tr>
 <td><code>xense.taccap</code> SDK</td>
-<td><strong>0.4.3</strong></td>
+<td><strong>0.4.4</strong></td>
 <td><code>python -c "import xense.taccap as t; print(t.__version__)"</code></td>
 </tr>
 <tr>
@@ -2372,13 +2383,13 @@
 </tr>
 <tr>
 <td><code>xense-taccap-lerobot</code></td>
-<td>Based on lerobot 0.5.1, version <code>0.5.1+xtac.0.1.1</code></td>
-<td><code>v0.1.1</code></td>
+<td>Based on lerobot 0.5.1, version <code>0.5.1+xtac.0.1.3</code></td>
+<td><code>v0.1.3</code></td>
 </tr>
 <tr>
 <td><code>xense.taccap</code> SDK</td>
 <td>Matched to the main repo's submodule <code>third_party/taccap-gripper</code></td>
-<td>0.4.3 (tag <code>v0.4.3</code>), bundling firmware leader 1.2.6 / follower 1.2.16</td>
+<td>0.4.4 (tag <code>v0.4.4</code>), bundling firmware leader 1.2.6 / follower 1.2.16</td>
 </tr>
 <tr>
 <td>Gripper firmware</td>
@@ -2436,7 +2447,7 @@
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>python<span class="w"> </span>-<span class="w"> </span><span class="s">&lt;&lt;'EOF'</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="s">import xense.taccap as t</span>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="s">from xense.taccap import scan_grippers, LeaderGripper, Cmd</span>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="s">print("xense.taccap", t.__version__, "(needs &gt;= 0.4.3)")</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="s">print("xense.taccap", t.__version__, "(needs &gt;= 0.4.4)")</span>
 </span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="s">for ep in scan_grippers():</span>
 </span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="s">    g = LeaderGripper(mcu_device=ep.mcu_device)   # read-only version query, works for both roles</span>
 </span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="s">    ack = g.transport.send_cmd(Cmd.GetVersion, b"", 500)</span>
@@ -2444,7 +2455,7 @@
 </span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="s">EOF</span>
 </span></code></pre></div>
 <p>Output before flashing (two leaders on the old <code>fw</code> 1.2.5; after flashing it should read 1.2.6):</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>xense.taccap 0.4.3 (needs &gt;= 0.4.3)
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>xense.taccap 0.4.4 (needs &gt;= 0.4.4)
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>  TCGU01A28Z0023m  Left   fw=1.2.5
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>  TCGU01A28Z0024m  Right  fw=1.2.5
 </span></code></pre></div>
@@ -2469,6 +2480,19 @@
 </span></code></pre></div>
 <p><code>pip show xensevr-pc-service-sdk</code> shows the <code>.deb</code> version read from <code>dpkg</code> at build time; for the head camera interface check <code>has_pico_camera_frame</code>; for gripper SNs and roles see <a href="../quickstart/#self-check">Quickstart · Self-check</a>.</p>
 <h2 id="whats-new">What's new<a class="headerlink" href="#whats-new" title="锚点链接">¶</a></h2>
+<h3 id="whats-new-013">0.1.3<a class="headerlink" href="#whats-new-013" title="锚点链接">¶</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Headset dataset fields are renamed and incompatible with older data</p>
+<p>The headset camera keys <code>left_head</code> / <code>right_head</code> become <code>head_left</code> / <code>head_right</code> (the directories under <code>videos/</code> are renamed with them),
+and the head pose dimensions <code>head_camera.*</code> become <code>head.*</code>, with the same values and meaning, matching the Backpack Kit export.
+Datasets recorded with 0.1.3 cannot be merged with older ones as they are: rename the old data first with Engine's <code>scripts/rename_head_cameras.py</code>,
+and update any downstream code that reads the datasets to the new names. The <code>--robot.head_camera_*</code> config options do not go into the dataset and keep their names.</p>
+</div>
+<ul>
+<li>The gripper SDK moves to 0.4.4; the bundled firmware is unchanged (leader 1.2.6 / follower 1.2.16). New visuotactile and full-chain check examples, see <a href="../../sdk/examples/#tactile">SDK examples</a>.</li>
+<li>The Docker image includes third-party license notices (since 0.1.2).</li>
+<li>After moving to v0.1.3 you <strong>must re-run <code>./setup_env.sh --install</code></strong>.</li>
+</ul>
 <h3 id="whats-new-011">0.1.1<a class="headerlink" href="#whats-new-011" title="锚点链接">¶</a></h3>
 <ul>
 <li>The gripper SDK moves to 0.4.3, bundling firmware leader 1.2.6 (unchanged) / follower 1.2.16, see <a href="#ota">Firmware OTA upgrade</a>.</li>
@@ -2488,10 +2512,10 @@
 <h2 id="repo-update">Repo and submodule update<a class="headerlink" href="#repo-update" title="锚点链接">¶</a></h2>
 <p>Update by release tag, not <code>main</code> (it may carry unreleased changes):</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>git<span class="w"> </span>fetch<span class="w"> </span>--tags
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>git<span class="w"> </span>checkout<span class="w"> </span>v0.1.1
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>git<span class="w"> </span>checkout<span class="w"> </span>v0.1.3
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>git<span class="w"> </span>submodule<span class="w"> </span>update<span class="w"> </span>--init<span class="w"> </span>--recursive<span class="w"> </span>--progress
 </span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>./setup_env.sh<span class="w"> </span>--install<span class="w">     </span><span class="c1"># realign the dependencies and rebuild xense.taccap</span>
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>git<span class="w"> </span>submodule<span class="w"> </span>status<span class="w">         </span><span class="c1"># the submodule should match v0.4.3</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>git<span class="w"> </span>submodule<span class="w"> </span>status<span class="w">         </span><span class="c1"># the submodule should match v0.4.4</span>
 </span></code></pre></div>
 <div class="admonition warning">
 <p class="admonition-title"><code>xense.taccap</code> must be rebuilt after pulling the submodule</p>

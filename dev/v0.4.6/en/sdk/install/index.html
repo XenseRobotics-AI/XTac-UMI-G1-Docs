@@ -2168,12 +2168,12 @@
 
 <h1 id="install-and-build">Install and build<a class="headerlink" href="#install-and-build" title="锚点链接">¶</a></h1>
 <h2 id="python">Python install<a class="headerlink" href="#python" title="锚点链接">¶</a></h2>
-<p><strong>We recommend using the collection environment directly</strong>: once it is set up per <a href="../../pc/install/">Installation</a> it already includes SDK 0.4.3
+<p><strong>We recommend using the collection environment directly</strong>: once it is set up per <a href="../../pc/install/">Installation</a> it already includes SDK 0.4.4
 (submodule <code>third_party/taccap-gripper</code>), and the source and example scripts are all in that directory. To verify:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nb">cd</span><span class="w"> </span>third_party/taccap-gripper
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"import xense.taccap as t; print(t.hello())"</span>
 </span></code></pre></div>
-<p>It should print <code>taccap-gripper OK; version 0.4.3</code>. If the version is wrong, pull the submodules and rerun <code>./setup_env.sh --install</code>,
+<p>It should print <code>taccap-gripper OK; version 0.4.4</code>. If the version is wrong, pull the submodules and rerun <code>./setup_env.sh --install</code>,
 see <a href="../../pc/install/#22">Clone the repo and its submodules</a>.</p>
 <h3 id="standalone">Standalone install (Backpack Kit, or without the data-collection repository)<a class="headerlink" href="#standalone" title="锚点链接">¶</a></h3>
 <p>Backpack Kit customers, and computers that do not use the data-collection repository, install from scratch per <a href="../../follower/setup/#install">Follower · Setup and self-check · Install the SDK and set up the host</a>: Miniforge → <code>v4l-utils</code> → download the SDK → create the mamba environment → build and install → host setup. Leader and follower grippers use the same steps.</p>

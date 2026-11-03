@@ -2187,7 +2187,7 @@ On this page, <strong>power-cycle</strong> means unplugging the 24V power cable,
 <p><strong>Fix</strong>: upgrade to the version bundled with the SDK as described in <a href="../firmware/#mcu-ota">Upgrade the gripper firmware</a>, then power-cycle.</p>
 </details>
 <details class="failure">
-<summary><code>hello()</code> shows the wrong version (0.4.4 for a standalone install, 0.4.3 in the Developer Kit collection environment), or <code>import</code> fails</summary>
+<summary><code>hello()</code> shows a version other than 0.4.4, or <code>import</code> fails</summary>
 <p><strong>Cause</strong>: the wrong environment is active, the SDK was not rebuilt, or (Developer Kit collection environment) the submodule was not updated.</p>
 <p><strong>Fix</strong>:</p>
 <ul>
