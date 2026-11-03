@@ -2290,7 +2290,7 @@ Hover over (or tap) any block to see where its data comes from and where it goes
     "ltrk": {"title": "Left tracker", "sub": "Via headset + PC Service", "desc": "Its pose is transformed to the left gripper tip as left_tcp.*, stored once in the observation and once in the action. Not recorded in tier ①."},
     "rgrip": {"title": "Right gripper", "sub": "Tactile · wrist · encoder", "desc": "Provides two visuotactile images, the wrist camera view and the opening."},
     "rtrk": {"title": "Right tracker", "sub": "Via headset + PC Service", "desc": "Its pose is transformed to the right gripper tip as right_tcp.*, stored once in the observation and once in the action. Not recorded in tier ①."},
-    "head": {"title": "Headset", "sub": "Stereo camera · head pose", "desc": "Provides the left and right eye images and the head pose head_camera.*, which is stored in both the observation and the action. Recorded in tier ③ only."},
+    "head": {"title": "Headset", "sub": "Stereo camera · head pose", "desc": "Provides the left and right eye images and the head pose head.*, which is stored in both the observation and the action. Recorded in tier ③ only."},
     "mp4": {"title": "MP4 video", "sub": "videos/ · one key each", "desc": "Each image stream is one video key, observation.images.<key>, encoded to MP4 while recording and stored under videos/."},
     "pq": {"title": "Parquet table", "sub": ["data/ · one row per frame", "state + action + index"], "desc": "One row per frame: the observation.state and action vectors, plus index columns such as timestamp, frame index and episode index, stored under data/."}
   }
@@ -2299,7 +2299,7 @@ Hover over (or tap) any block to see where its data comes from and where it goes
 
 <ul>
 <li>The observation comes from frame t-1 and the action from frame t, so the action leads by one step; the first frame of each episode has nothing to pair with, so each episode is one frame shorter.</li>
-<li>The poses <code>*_tcp.*</code> and <code>head_camera.*</code> are 9-D each: position x, y, z plus a 6-D rotation, in a world frame of X forward / Y left / Z up.</li>
+<li>The poses <code>*_tcp.*</code> and <code>head.*</code> are 9-D each: position x, y, z plus a 6-D rotation, in a world frame of X forward / Y left / Z up.</li>
 <li>Dimensions per tier: ① state and action 2-D each, 6 image streams; ② 20-D each, 6 streams; ③ 29-D each, 8 streams.</li>
 <li>With a single gripper (<code>--robot.type=taccap_gripper</code>) the keys have no <code>left_</code> / <code>right_</code> prefix and the wrist camera is <code>wrist_cam</code>.</li>
 </ul>

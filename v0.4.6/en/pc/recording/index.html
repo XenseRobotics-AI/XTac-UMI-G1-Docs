@@ -2825,19 +2825,19 @@
 <td>uint8 <code>(H, W, 3)</code></td>
 </tr>
 <tr>
-<td><code>left_head</code> / <code>right_head</code></td>
+<td><code>head_left</code> / <code>head_right</code></td>
 <td>Headset stereo, one key per eye</td>
 <td><code>--robot.type=xtac_umi_g1</code> (single gripper: <code>--robot.enable_head_camera=true</code>)</td>
 <td>uint8, <code>(480, 640, 3)</code> by default</td>
 </tr>
 <tr>
-<td><code>head_camera.x/y/z</code></td>
+<td><code>head.x/y/z</code></td>
 <td>Headset position (same world frame as <code>tcp.*</code>), also an action</td>
 <td>as above</td>
 <td>float (m)</td>
 </tr>
 <tr>
-<td><code>head_camera.r1..r6</code></td>
+<td><code>head.r1..r6</code></td>
 <td>Headset orientation as a 6-D rotation, also an action</td>
 <td>as above</td>
 <td>float</td>
@@ -2862,7 +2862,7 @@
 </tr>
 </tbody>
 </table>
-<p>The 6-D rotation stores the first two columns (by column, not by row) of the rotation matrix R (world ← body), the same for <code>tcp.*</code> and <code>head_camera.*</code>:</p>
+<p>The 6-D rotation stores the first two columns (by column, not by row) of the rotation matrix R (world ← body), the same for <code>tcp.*</code> and <code>head.*</code>:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>R = ⎡ r1  r4  · ⎤     column 1 (r1,r2,r3) = direction of the body X axis in the world frame
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>    ⎢ r2  r5  · ⎥     column 2 (r4,r5,r6) = direction of the body Y axis in the world frame
 </span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>    ⎣ r3  r6  · ⎦     column 3 = cross product of the first two; recompute it yourself
@@ -3075,7 +3075,7 @@
 <li>[ ] Enough free disk space</li>
 </ul>
 <h2 id="56">Optional: head camera<a class="headerlink" href="#56" title="锚点链接">¶</a></h2>
-<p>Records the Pico4 Ultra Enterprise headset's stereo frames and pose (the operator's first-person view and where they were looking) as <code>left_head</code> / <code>right_head</code> and <code>head_camera.*</code> (see <a href="#53">what each frame records</a>); the latter also goes into the action. Bimanual uses <code>--robot.type=xtac_umi_g1</code>, the single-gripper <code>taccap_gripper</code> adds <code>--robot.enable_head_camera=true</code>; the parameters below apply to both.</p>
+<p>Records the Pico4 Ultra Enterprise headset's stereo frames and pose (the operator's first-person view and where they were looking) as <code>head_left</code> / <code>head_right</code> and <code>head.*</code> (see <a href="#53">what each frame records</a>); the latter also goes into the action. Bimanual uses <code>--robot.type=xtac_umi_g1</code>, the single-gripper <code>taccap_gripper</code> adds <code>--robot.enable_head_camera=true</code>; the parameters below apply to both.</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>lerobot-record<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">    </span>--robot.type<span class="o">=</span>xtac_umi_g1<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">    </span>--robot.id<span class="o">=</span><span class="m">0</span><span class="w"> </span><span class="se">\</span>
@@ -3103,7 +3103,7 @@
 <li>Changing the resolution or eye selection changes the data; episodes recorded before and after the change cannot be mixed.</li>
 <li>The eyes are two independent messages and a mismatch leaves no trace, so each frame compares both eyes' newest frames: identical sequence numbers mean the same exposure, otherwise timestamps must agree within <code>--robot.head_camera_pair_max_skew_ms</code> (default 20ms, against about 33ms per frame at 30fps); exceeding it only logs a rate-limited warning with the measured skew; recording continues.</li>
 </ul>
-<p><code>head_camera.*</code> is mapped into the <code>tcp.*</code> world frame with the tracker's Pico→world transform. Enabling it adds 9 dimensions to <code>observation.state</code>: 10 → 19 single, 20 → 29 bimanual, and <code>--robot.enable_imu=true</code> adds on top. If it will not connect, see <a href="../troubleshooting/#head-camera">Troubleshooting · Head camera</a>.</p>
+<p><code>head.*</code> is mapped into the <code>tcp.*</code> world frame with the tracker's Pico→world transform. Enabling it adds 9 dimensions to <code>observation.state</code>: 10 → 19 single, 20 → 29 bimanual, and <code>--robot.enable_imu=true</code> adds on top. If it will not connect, see <a href="../troubleshooting/#head-camera">Troubleshooting · Head camera</a>.</p>
 <h2 id="57">Optional: wrist camera fisheye undistortion<a class="headerlink" href="#57" title="锚点链接">¶</a></h2>
 <p>The wrist camera is a 190° fisheye, recorded raw by default. <code>--robot.wrist_undistort=true</code> rectifies it to a rectilinear projection before writing, using the intrinsics in this gripper's flash; <code>--robot.wrist_undistort_balance</code> sets the field of view. Only 640×480 is supported (the firmware fisheye record holds only 8 floats, no image size), so a different <code>--robot.wrist_camera_width/_height</code> exits at command-line parse time.</p>
 <div class="admonition warning">

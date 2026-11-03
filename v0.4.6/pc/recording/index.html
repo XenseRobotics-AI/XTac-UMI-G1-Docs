@@ -2825,19 +2825,19 @@
 <td>uint8 <code>(H, W, 3)</code></td>
 </tr>
 <tr>
-<td><code>left_head</code> / <code>right_head</code></td>
+<td><code>head_left</code> / <code>head_right</code></td>
 <td>头显双目，一只眼一个键</td>
 <td><code>--robot.type=xtac_umi_g1</code>（单夹爪为 <code>--robot.enable_head_camera=true</code>）</td>
 <td>uint8，默认 <code>(480, 640, 3)</code></td>
 </tr>
 <tr>
-<td><code>head_camera.x/y/z</code></td>
+<td><code>head.x/y/z</code></td>
 <td>头显位置（同 <code>tcp.*</code> 世界系），也是动作</td>
 <td>同上</td>
 <td>float(m)</td>
 </tr>
 <tr>
-<td><code>head_camera.r1..r6</code></td>
+<td><code>head.r1..r6</code></td>
 <td>头显姿态 6-D 旋转，也是动作</td>
 <td>同上</td>
 <td>float</td>
@@ -2862,7 +2862,7 @@
 </tr>
 </tbody>
 </table>
-<p>6-D 旋转按列（不是按行）取旋转矩阵 R（「世界 ← 本体」）的前两列，<code>tcp.*</code> 与 <code>head_camera.*</code> 相同：</p>
+<p>6-D 旋转按列（不是按行）取旋转矩阵 R（「世界 ← 本体」）的前两列，<code>tcp.*</code> 与 <code>head.*</code> 相同：</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>R = ⎡ r1  r4  · ⎤     第一列 (r1,r2,r3) = 本体 X 轴在世界系下的方向
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>    ⎢ r2  r5  · ⎥     第二列 (r4,r5,r6) = 本体 Y 轴在世界系下的方向
 </span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>    ⎣ r3  r6  · ⎦     第三列 = 前两列的叉积,可自行算回
@@ -3075,7 +3075,7 @@
 <li>[ ] 磁盘空间充足</li>
 </ul>
 <h2 id="56">可选：头显相机<a class="headerlink" href="#56" title="锚点链接">¶</a></h2>
-<p>录 Pico4 Ultra 企业版头显的双目画面与位姿（操作员第一视角和"人在往哪看"），产出 <code>left_head</code> / <code>right_head</code> 与 <code>head_camera.*</code>（见<a href="#53">每帧记录内容</a>），后者同时进 action。双夹爪用 <code>--robot.type=xtac_umi_g1</code>，单夹爪 <code>taccap_gripper</code> 加 <code>--robot.enable_head_camera=true</code>，下列参数两者通用。</p>
+<p>录 Pico4 Ultra 企业版头显的双目画面与位姿（操作员第一视角和"人在往哪看"），产出 <code>head_left</code> / <code>head_right</code> 与 <code>head.*</code>（见<a href="#53">每帧记录内容</a>），后者同时进 action。双夹爪用 <code>--robot.type=xtac_umi_g1</code>，单夹爪 <code>taccap_gripper</code> 加 <code>--robot.enable_head_camera=true</code>，下列参数两者通用。</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>lerobot-record<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">    </span>--robot.type<span class="o">=</span>xtac_umi_g1<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">    </span>--robot.id<span class="o">=</span><span class="m">0</span><span class="w"> </span><span class="se">\</span>
@@ -3103,7 +3103,7 @@
 <li>改分辨率或录制的眼睛等于换一组数据，前后 episode 不能混用。</li>
 <li>左右眼是两条独立消息，配错在数据里看不出，所以每帧比对两眼最新帧：帧序号相同即同一曝光，否则时间戳差须不超过 <code>--robot.head_camera_pair_max_skew_ms</code>（默认 20ms，30fps 帧周期约 33ms）；超出只限流告警（含实测偏差），录制继续。</li>
 </ul>
-<p><code>head_camera.*</code> 用追踪器的 Pico→world 变换映射到 <code>tcp.*</code> 的世界系。开启后 <code>observation.state</code> 增 9 维：单夹爪 10 → 19，双夹爪 20 → 29，再开 <code>--robot.enable_imu=true</code> 继续累加。连不上见<a href="../troubleshooting/#head-camera">故障排查</a>。</p>
+<p><code>head.*</code> 用追踪器的 Pico→world 变换映射到 <code>tcp.*</code> 的世界系。开启后 <code>observation.state</code> 增 9 维：单夹爪 10 → 19，双夹爪 20 → 29，再开 <code>--robot.enable_imu=true</code> 继续累加。连不上见<a href="../troubleshooting/#head-camera">故障排查</a>。</p>
 <h2 id="57">可选：腕相机鱼眼矫正<a class="headerlink" href="#57" title="锚点链接">¶</a></h2>
 <p>腕相机是 190° 鱼眼，默认落盘原始帧。<code>--robot.wrist_undistort=true</code> 用本夹爪 flash 里的内参在写入前矫正成直线投影，<code>--robot.wrist_undistort_balance</code> 调视野。只支持 640×480（固件鱼眼记录只有 8 个浮点数、不含图像尺寸），配别的 <code>--robot.wrist_camera_width/_height</code> 会在解析命令行时退出。</p>
 <div class="admonition warning">

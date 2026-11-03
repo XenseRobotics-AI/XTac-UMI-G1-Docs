@@ -2334,7 +2334,7 @@
 </span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span>--new_repo_id<span class="w"> </span>&lt;your_org&gt;/&lt;dataset_6cam&gt;<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">    </span>--operation.type<span class="w"> </span>convert_8_to_6_cameras
 </span></code></pre></div>
-<p>丢掉头显两只眼的图像键，以及 <code>action</code> / <code>observation.state</code> 里的 <code>head_camera.*</code> 维度；<strong>原数据集不动</strong>，结果写到 <code>--new_repo_id</code>。源数据集已是 6 相机或相机键不符预期时直接报错。</p>
+<p>丢掉头显两只眼的图像键，以及 <code>action</code> / <code>observation.state</code> 里的 <code>head.*</code> 维度；<strong>原数据集不动</strong>，结果写到 <code>--new_repo_id</code>。源数据集已是 6 相机或相机键不符预期时直接报错。</p>
 <div class="admonition warning">
 <p class="admonition-title">先确认 <code>--repo_id</code> 拼对了</p>
 <p>这项转换在本地找不到数据集时会去 Hugging Face Hub 取，<code>--local_files_only</code> 对它不起作用。务必确认 <code>--repo_id</code> 拼写正确，或者用 <code>--root</code> 直接指向本地数据集目录。</p>
