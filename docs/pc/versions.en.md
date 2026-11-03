@@ -118,8 +118,7 @@ python -c "import xensevr_pc_service_sdk as xrt; print('pico camera API:', hasat
 !!! warning "Headset dataset fields are renamed and incompatible with older data"
     The headset camera keys `left_head` / `right_head` become `head_left` / `head_right` (the directories under `videos/` are renamed with them),
     and the head pose dimensions `head_camera.*` become `head.*`, with the same values and meaning, matching the Backpack Kit export.
-    Datasets recorded with 0.1.3 cannot be merged with older ones as they are: rename the old data first with Engine's `scripts/rename_head_cameras.py`,
-    and update any downstream code that reads the datasets to the new names. The `--robot.head_camera_*` config options do not go into the dataset and keep their names.
+    Update any downstream code that reads the datasets to the new names. The `--robot.head_camera_*` config options do not go into the dataset and keep their names.
 
 - The gripper SDK moves to 0.4.4; the bundled firmware is unchanged (leader 1.2.6 / follower 1.2.16). New visuotactile and full-chain check examples, see [SDK examples](../sdk/examples.md#tactile).
 - The Docker image includes third-party license notices (since 0.1.2).
