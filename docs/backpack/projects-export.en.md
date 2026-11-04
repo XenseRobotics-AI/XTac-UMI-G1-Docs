@@ -77,6 +77,7 @@ A standard LeRobotDataset v3 at 30fps, with `meta/`, `data/` and `videos/`. The 
 It also includes `meta/taccap_extrinsics.json` (tracker extrinsics) and `meta/xumi_collection_devices.json` (which devices recorded each episode and which version exported it).
 
 - **Pose origin**: the headset and left / right TCP poses in state and action are relative to the headset at the start of each episode, see [Coordinate frames · Origin of exported data](../common/coordinates.md#episode-origin).
+- **6-D rotation `r1..r6`**: same convention as the PC Edition — the **first two columns** of the rotation matrix R (world ← body), taken by column: `r1..r3` is the body X axis, `r4..r6` the body Y axis, and the third column is their cross product, see [What each frame records](../pc/recording.md#53). Here "world" is the episode-start headset frame from the bullet above (the recording-time world frame in Dual gripper mode). Under `mirrored-v1` the left-hand TCP is turned 180° about its own X axis, so compared with the same-axes convention `r4..r6` flip sign and `r1..r3` stay the same.
 - **Dataset-level declarations**: `meta/info.json` states `tcp_frame_convention` (currently `mirrored-v1`: the left-hand TCP is the right-hand convention rotated 180° about its own X axis) and `headset_mount` (`head` / `neck`). A dataset can only have one mount; exporting a mix is an error.
 - **Do not mix with exports from 0.4.3 or earlier**: the pose origin and the left-hand TCP convention both changed, so tell old and new data apart by the two fields above before merging.
 
