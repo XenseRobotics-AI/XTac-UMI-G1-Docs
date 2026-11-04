@@ -2367,6 +2367,7 @@
 <p>另附 <code>meta/taccap_extrinsics.json</code>（追踪器外参）与 <code>meta/xumi_collection_devices.json</code>（每条数据由哪套设备采集、由哪个版本导出）。</p>
 <ul>
 <li><strong>位姿原点</strong>：状态与动作里的头显、左右 TCP 位姿以每条开录时的头显为原点，见<a href="../../common/coordinates/#episode-origin">坐标系 · 导出数据的原点</a>。</li>
+<li><strong>6-D 旋转 <code>r1..r6</code></strong>：与 PC 版同一取法，按列取旋转矩阵 R（世界 ← 本体）的前两列，<code>r1..r3</code> 为本体 X 轴、<code>r4..r6</code> 为本体 Y 轴，第三列为二者叉积，见<a href="../../pc/recording/#53">每帧记录内容</a>。这里的「世界」是上一条说的开录头显原点系（「双爪」模式为录制时的世界系）。左手 TCP 在 <code>mirrored-v1</code> 下绕自身 X 轴转了 180°，相比同轴约定 <code>r4..r6</code> 整体反号、<code>r1..r3</code> 不变。</li>
 <li><strong>数据集级声明</strong>：<code>meta/info.json</code> 写明 <code>tcp_frame_convention</code>（当前为 <code>mirrored-v1</code>，左手 TCP 是右手约定绕自身 X 轴转 180°）和 <code>headset_mount</code>（<code>head</code> / <code>neck</code>）。一个数据集只能有一种佩戴方式，混在一起导出会报错。</li>
 <li><strong>和 0.4.3 及更早的导出不能混用</strong>：位姿原点、左手 TCP 约定都变了，合并新旧数据前按上面两个字段区分。</li>
 </ul>
