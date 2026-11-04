@@ -295,7 +295,7 @@ In an exported LeRobot dataset, each row is the **observation** from frame t-1 p
 </script></div>
 
 - The observation comes from frame t-1 and the action from frame t, so the action leads by one step; the first frame of each episode has nothing to pair with, so each episode is one frame shorter.
-- The poses `*_tcp.*` and `head.*` are 9-D each: position x, y, z plus a 6-D rotation, in a world frame of X forward / Y left / Z up.
+- The poses `*_tcp.*` and `head.*` are 9-D each: position x, y, z plus a 6-D rotation (the first two columns of the rotation matrix; for the left-hand convention and the origin see [Export formats](projects-export.md#lerobot)), in a world frame of X forward / Y left / Z up.
 - Dimensions per mode: Dual gripper, state and action 20-D each, 6 image streams; Dual gripper + stereo headset, 29-D each, 8 streams; Dual gripper + headset right eye, 29-D each, 7 streams (`head_right` only).
 
 Export formats and the extra files are in [LeRobot dataset](projects-export.md#lerobot).
