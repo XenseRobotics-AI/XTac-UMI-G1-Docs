@@ -2357,7 +2357,7 @@
 
 <ul>
 <li>观测取第 t-1 帧、动作取第 t 帧，动作领先观测一步；每集第一帧没有上一帧可配对，因此少 1 帧。</li>
-<li>位姿 <code>*_tcp.*</code> 与 <code>head.*</code> 都是 9 维：位置 x、y、z 加 6-D 旋转，世界系为 X 前 / Y 左 / Z 上。</li>
+<li>位姿 <code>*_tcp.*</code> 与 <code>head.*</code> 都是 9 维：位置 x、y、z 加 6-D 旋转（旋转矩阵前两列，左手约定与原点见<a href="projects-export/#lerobot">导出格式</a>），世界系为 X 前 / Y 左 / Z 上。</li>
 <li>三种模式的维数：「双爪」观测状态与动作各 20 维、6 路画面；「双爪 + 头显双目」各 29 维、8 路画面；「双爪 + 头显右单目」各 29 维、7 路画面（只有 <code>head_right</code>）。</li>
 </ul>
 <p>导出格式与附带文件见 <a href="projects-export/#lerobot">LeRobot 数据集</a>。</p>
