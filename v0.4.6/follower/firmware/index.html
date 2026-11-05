@@ -2188,8 +2188,12 @@
 </thead>
 <tbody>
 <tr>
+<td>1.2.17</td>
+<td>随 SDK 0.4.5 附带，推荐；设备时间戳改为 1 MHz 时基，主机须为 SDK 0.4.5 及以上</td>
+</tr>
+<tr>
 <td>1.2.16</td>
-<td>随 SDK 0.4.3 / 0.4.4 附带，推荐</td>
+<td>随 SDK 0.4.3 / 0.4.4 附带，可以使用</td>
 </tr>
 <tr>
 <td>1.2.11 – 1.2.15</td>
@@ -2226,7 +2230,7 @@
 </span></code></pre></div>
 <ul>
 <li>接着多只从夹爪、只刷其中一只时，写镜像文件名加左右或序列号：
-  <code>python python/examples/ota_update.py tc-gu-01-slave-1.2.16.bin left</code>。
+  <code>python python/examples/ota_update.py tc-gu-01-slave-1.2.17.bin left</code>。
   不要写成 <code>slave left</code>，那样会报 <code>firmware file not found</code>。</li>
 <li>刷写约 1 秒，之后夹爪自动重启。</li>
 <li>脚本发现固件与夹爪角色不符时会拒绝刷写，<strong>不要加 <code>--force</code> 强制</strong>。</li>
