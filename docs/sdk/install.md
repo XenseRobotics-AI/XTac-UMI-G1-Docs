@@ -2,7 +2,7 @@
 
 ## Python 安装 {#python}
 
-**推荐直接用数采环境**：按 [安装](../pc/install.md) 装好之后就已经带有 SDK 0.4.4
+**推荐直接用数采环境**：按 [安装](../pc/install.md) 装好之后就已经带有 SDK 0.4.5
 （子模块 `third_party/taccap-gripper`），源码和示例脚本都在这个目录下。验证：
 
 ```bash
@@ -10,7 +10,7 @@ cd third_party/taccap-gripper
 python -c "import xense.taccap as t; print(t.hello())"
 ```
 
-应输出 `taccap-gripper OK; version 0.4.4`。版本不对时，拉子模块并重跑 `./setup_env.sh --install`，
+应输出 `taccap-gripper OK; version 0.4.5`。版本不对时，拉子模块并重跑 `./setup_env.sh --install`，
 见 [克隆仓库与子模块](../pc/install.md#22)。
 
 ### 单独安装（背包版或不用数采仓库） {#standalone}

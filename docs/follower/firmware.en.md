@@ -9,7 +9,8 @@ Run the [self-check](setup.md#self-check); the `[fw]` line is the gripper firmwa
 
 | Gripper firmware version | Notes |
 |---|---|
-| 1.2.16 | Bundled with SDK 0.4.3 / 0.4.4, recommended |
+| 1.2.17 | Bundled with SDK 0.4.5, recommended; device timestamps move to a 1 MHz timebase, so the host needs SDK 0.4.5 or newer |
+| 1.2.16 | Bundled with SDK 0.4.3 / 0.4.4, fine to use |
 | 1.2.11 – 1.2.15 | Usable, upgrade recommended |
 | 1.2.5 – 1.2.10 | Opens, but the SDK prompts you to upgrade: after an occasional overflow on the control serial port, the gripper stops receiving commands and the grip force drops. **Upgrade required** |
 | Below 1.2.5 | The SDK refuses to open it; upgrade first |
@@ -37,7 +38,7 @@ python python/examples/follower_status.py left
 ```
 
 - With several follower grippers connected, to flash just one of them, give the image file name plus the side or serial number:
-  `python python/examples/ota_update.py tc-gu-01-slave-1.2.16.bin left`.
+  `python python/examples/ota_update.py tc-gu-01-slave-1.2.17.bin left`.
   Do not write `slave left`; that reports `firmware file not found`.
 - Flashing takes about 1 second, after which the gripper restarts automatically.
 - If the script finds that the firmware does not match the gripper's role it refuses to flash. **Do not force it with `--force`.**

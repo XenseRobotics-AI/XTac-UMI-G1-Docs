@@ -117,4 +117,11 @@ python python/examples/rerun_viewer.py left --save rig.rrd --duration 20   # 存
 - 日志和报错信息改为英文。按中文报错文本做匹配的脚本需要更新，例如固件低于 1.2.11 的提示现在是 `is below 1.2.11`。
 - EL05 电机固件随 SDK 附带，`motor_ota_update.py` 不指定镜像时会按夹爪记录的电机型号自动选择。
 
-完整变更见 SDK 的 [CHANGELOG](https://github.com/XenseRobotics-AI/TacCap-Gripper/blob/v0.4.4/CHANGELOG.md)。
+从 0.4.4 升级到 0.4.5 时（原有接口不变）：
+
+- 附带固件升到主夹爪 1.2.7 / 从夹爪 1.2.17，请[升级固件](../follower/firmware.md#mcu-ota)。新固件的 IMU / 编码器设备时间戳改为 1 MHz 时基，SDK 0.4.5 已处理；自己解析设备时间戳的程序要同步改。
+- 新增主从夹爪分时交换 `start_exchange()`：主机与夹爪轮流收发，避免收发重叠丢帧；需要 1.2.7 / 1.2.17 固件，主夹爪在旧固件上会回退到普通推送。
+- 从夹爪可以输出 IMU。
+- 设备扫描期间释放 GIL，不再卡住同一进程里的其他线程。
+
+完整变更见 SDK 的 [CHANGELOG](https://github.com/XenseRobotics-AI/TacCap-Gripper/blob/v0.4.5/CHANGELOG.md)。
