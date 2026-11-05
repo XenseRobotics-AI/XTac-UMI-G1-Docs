@@ -7,7 +7,7 @@
 无论用背包版还是 PC 版，只要用 SDK 控制夹爪，都要在运行 SDK 的电脑上做完下面的配置（每台电脑做一次）。系统要求 Ubuntu 22.04 或 24.04（x86_64）。按顺序复制执行即可。
 
 !!! tip "已装好 PC 版数采环境的电脑"
-    数采环境（v0.1.3）里已经带有 SDK 0.4.4（数采仓库的 `third_party/taccap-gripper`），跳过第 1–5 步，在数采环境里进入该目录，从[第 6 步](#host)做起。
+    数采环境（v0.1.4）里已经带有 SDK 0.4.5（数采仓库的 `third_party/taccap-gripper`），跳过第 1–5 步，在数采环境里进入该目录，从[第 6 步](#host)做起。
 
 ### 第 1 步：安装 Miniforge（mamba） {#miniforge}
 
@@ -39,7 +39,7 @@ sudo apt install -y git curl v4l-utils
 
 ```bash
 cd ~
-git clone --branch v0.4.4 https://github.com/XenseRobotics-AI/TacCap-Gripper.git
+git clone --branch v0.4.5 https://github.com/XenseRobotics-AI/TacCap-Gripper.git
 cd TacCap-Gripper
 ```
 
@@ -68,11 +68,11 @@ uv pip install -e . --no-build-isolation
 python -c "import xense.taccap as t; print(t.hello())"
 ```
 
-应输出 `taccap-gripper OK; version 0.4.4`。
+应输出 `taccap-gripper OK; version 0.4.5`。
 
 !!! warning "编译报错或版本不对"
     - 必须先 `mamba activate taccap` 再安装，`--no-build-isolation` 不能省。
-    - 版本不是 0.4.4：当前终端加载了别处的 SDK。关掉终端，开一个新的，只执行 `mamba activate taccap` 再试。
+    - 版本不是 0.4.5：当前终端加载了别处的 SDK。关掉终端，开一个新的，只执行 `mamba activate taccap` 再试。
 
 ### 第 6 步：主机配置（缺一项就连不上） {#host}
 
@@ -134,7 +134,7 @@ python python/examples/follower_status.py left
 这个脚本只读，不会让电机动。正常输出中要看的几行（中间省略）：
 
 ```text
-[fw] FirmwareVersion(1.2.16.0)
+[fw] FirmwareVersion(1.2.17.0)
 ...
 [归一化] g.position() = 0.9183
 ...
@@ -146,7 +146,7 @@ python python/examples/follower_status.py left
 
 | 看哪里 | 正常 | 不正常时 |
 |---|---|---|
-| `[fw]` | 1.2.16 | 低于 1.2.11 会打印升级提示，低于 1.2.5 会报错退出，都先[升级固件](firmware.md#mcu-ota) |
+| `[fw]` | 1.2.17 | 低于 1.2.11 会打印升级提示，低于 1.2.5 会报错退出，都先[升级固件](firmware.md#mcu-ota) |
 | `[归一化]` | 0 到 1 之间 | 报 `not calibrated`：清空爪子周围，断电重启 |
 | `[故障]` | 全 0 | 见[故障排查](troubleshooting.md#fault) |
 | `[开流读]` | 约 100Hz，显示 `OK` | 断电重启后再试，仍不正常见[故障排查](troubleshooting.md#self-check) |
