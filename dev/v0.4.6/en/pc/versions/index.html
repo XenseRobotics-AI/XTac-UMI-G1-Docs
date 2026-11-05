@@ -1475,6 +1475,17 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#whats-new-014" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.1.4
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#whats-new-013" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2267,7 +2278,7 @@
 <p class="admonition-title">Bring every item up to the versions in the table below before collecting; this is not optional</p>
 <ul>
 <li>The firmware needs <a href="#v21">command set V2.1</a> for travel calibration.</li>
-<li>The images bundled with SDK 0.4.4 fix the <a href="#ota-when">known defects</a>.</li>
+<li>The images bundled with SDK 0.4.5 fix the <a href="#ota-when">known defects</a>.</li>
 <li><code>gripper.pos</code> normalization only holds once all three are in place.</li>
 <li>An uncalibrated leader, or one on too-old firmware, cannot connect; other mismatches still write to disk "normally", but the data will not line up.</li>
 </ul>
@@ -2283,12 +2294,12 @@
 <tbody>
 <tr>
 <td><code>xense-taccap-lerobot</code></td>
-<td><code>0.5.1+xtac.0.1.3</code></td>
+<td><code>0.5.1+xtac.0.1.4</code></td>
 <td><code>pip show lerobot</code>, or look at <code>pyproject.toml</code></td>
 </tr>
 <tr>
 <td><code>xense.taccap</code> SDK</td>
-<td><strong>0.4.4</strong></td>
+<td><strong>0.4.5</strong></td>
 <td><code>python -c "import xense.taccap as t; print(t.__version__)"</code></td>
 </tr>
 <tr>
@@ -2383,18 +2394,18 @@
 </tr>
 <tr>
 <td><code>xense-taccap-lerobot</code></td>
-<td>Based on lerobot 0.5.1, version <code>0.5.1+xtac.0.1.3</code></td>
-<td><code>v0.1.3</code></td>
+<td>Based on lerobot 0.5.1, version <code>0.5.1+xtac.0.1.4</code></td>
+<td><code>v0.1.4</code></td>
 </tr>
 <tr>
 <td><code>xense.taccap</code> SDK</td>
 <td>Matched to the main repo's submodule <code>third_party/taccap-gripper</code></td>
-<td>0.4.4 (tag <code>v0.4.4</code>), bundling firmware leader 1.2.6 / follower 1.2.16</td>
+<td>0.4.5 (tag <code>v0.4.5</code>), bundling firmware leader 1.2.7 / follower 1.2.17</td>
 </tr>
 <tr>
 <td>Gripper firmware</td>
 <td>Command set V2.1 (wire framing V1.8), leader ≥ 1.2.0 / follower ≥ 1.1.0</td>
-<td>leader 1.2.6 / follower 1.2.16, follows the SDK, with <code>firmware/manifest.json</code> as the authority, see <a href="#ota">Firmware OTA upgrade</a></td>
+<td>leader 1.2.7 / follower 1.2.17, follows the SDK, with <code>firmware/manifest.json</code> as the authority, see <a href="#ota">Firmware OTA upgrade</a></td>
 </tr>
 <tr>
 <td><code>xensesdk</code></td>
@@ -2447,15 +2458,15 @@
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>python<span class="w"> </span>-<span class="w"> </span><span class="s">&lt;&lt;'EOF'</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="s">import xense.taccap as t</span>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="s">from xense.taccap import scan_grippers, LeaderGripper, Cmd</span>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="s">print("xense.taccap", t.__version__, "(needs &gt;= 0.4.4)")</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="s">print("xense.taccap", t.__version__, "(needs &gt;= 0.4.5)")</span>
 </span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="s">for ep in scan_grippers():</span>
 </span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="s">    g = LeaderGripper(mcu_device=ep.mcu_device)   # read-only version query, works for both roles</span>
 </span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="s">    ack = g.transport.send_cmd(Cmd.GetVersion, b"", 500)</span>
 </span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="s">    print(f"  {ep.firmware_sn}  {ep.side.name:5}  fw={ack.data[0]}.{ack.data[1]}.{ack.data[2]}")</span>
 </span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="s">EOF</span>
 </span></code></pre></div>
-<p>Output before flashing (two leaders on the old <code>fw</code> 1.2.5; after flashing it should read 1.2.6):</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>xense.taccap 0.4.4 (needs &gt;= 0.4.4)
+<p>Output before flashing (two leaders on the old <code>fw</code> 1.2.5; after flashing it should read 1.2.7):</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>xense.taccap 0.4.5 (needs &gt;= 0.4.5)
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>  TCGU01A28Z0023m  Left   fw=1.2.5
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>  TCGU01A28Z0024m  Right  fw=1.2.5
 </span></code></pre></div>
@@ -2480,6 +2491,12 @@
 </span></code></pre></div>
 <p><code>pip show xensevr-pc-service-sdk</code> shows the <code>.deb</code> version read from <code>dpkg</code> at build time; for the head camera interface check <code>has_pico_camera_frame</code>; for gripper SNs and roles see <a href="../quickstart/#self-check">Quickstart · Self-check</a>.</p>
 <h2 id="whats-new">What's new<a class="headerlink" href="#whats-new" title="锚点链接">¶</a></h2>
+<h3 id="whats-new-014">0.1.4<a class="headerlink" href="#whats-new-014" title="锚点链接">¶</a></h3>
+<ul>
+<li>The gripper SDK moves to 0.4.5 and the bundled firmware to leader <strong>1.2.7</strong> / follower <strong>1.2.17</strong>; <a href="#ota">flash it</a>, then replug the leader's USB and unplug the follower's 24 V for about 2 s.</li>
+<li>The new firmware moves the IMU / encoder device timestamps to a 1 MHz timebase that older host software does not understand. Upgrade to collection 0.1.4 (SDK 0.4.5) before flashing; recording uses host time only, so the data format is unchanged.</li>
+<li>After moving to v0.1.4 you <strong>must re-run <code>./setup_env.sh --install</code></strong>.</li>
+</ul>
 <h3 id="whats-new-013">0.1.3<a class="headerlink" href="#whats-new-013" title="锚点链接">¶</a></h3>
 <div class="admonition warning">
 <p class="admonition-title">Headset dataset fields are renamed and incompatible with older data</p>
@@ -2511,10 +2528,10 @@ Update any downstream code that reads the datasets to the new names. The <code>-
 <h2 id="repo-update">Repo and submodule update<a class="headerlink" href="#repo-update" title="锚点链接">¶</a></h2>
 <p>Update by release tag, not <code>main</code> (it may carry unreleased changes):</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>git<span class="w"> </span>fetch<span class="w"> </span>--tags
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>git<span class="w"> </span>checkout<span class="w"> </span>v0.1.3
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>git<span class="w"> </span>checkout<span class="w"> </span>v0.1.4
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>git<span class="w"> </span>submodule<span class="w"> </span>update<span class="w"> </span>--init<span class="w"> </span>--recursive<span class="w"> </span>--progress
 </span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>./setup_env.sh<span class="w"> </span>--install<span class="w">     </span><span class="c1"># realign the dependencies and rebuild xense.taccap</span>
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>git<span class="w"> </span>submodule<span class="w"> </span>status<span class="w">         </span><span class="c1"># the submodule should match v0.4.4</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>git<span class="w"> </span>submodule<span class="w"> </span>status<span class="w">         </span><span class="c1"># the submodule should match v0.4.5</span>
 </span></code></pre></div>
 <div class="admonition warning">
 <p class="admonition-title"><code>xense.taccap</code> must be rebuilt after pulling the submodule</p>
@@ -2536,12 +2553,12 @@ Update any downstream code that reads the datasets to the new names. The <code>-
 <li>the leader will not connect and the error says to do an OTA first;</li>
 <li>the firmware is below command set V2.1.</li>
 </ul>
-<p>V2.1 is only the floor and older firmware has known defects: flash the leader 1.2.6 / follower 1.2.16 bundled with SDK 0.4.3 (see the <a href="../../follower/firmware/#check-version">follower firmware version table</a>). Unless the board is replaced or the firmware erased, once is enough.</p>
+<p>V2.1 is only the floor and older firmware has known defects: flash the leader 1.2.7 / follower 1.2.17 bundled with SDK 0.4.5 (see the <a href="../../follower/firmware/#check-version">follower firmware version table</a>). Unless the board is replaced or the firmware erased, once is enough.</p>
 <h3 id="how-to-flash">How to flash<a class="headerlink" href="#how-to-flash" title="锚点链接">¶</a></h3>
 <div class="admonition warning">
 <p class="admonition-title">Upgrade the SDK first, then flash the firmware</p>
 <ul>
-<li>Images follow the SDK: bring the submodule to SDK 0.4.3 and flash and verify with it to reach 1.2.6 / 1.2.16; never flash with an SDK older than 0.1.7.</li>
+<li>Images follow the SDK: bring the submodule to SDK 0.4.5 and flash and verify with it to reach 1.2.7 / 1.2.17; never flash with an SDK older than 0.1.7.</li>
 <li>A new SDK talks to old firmware unchanged, so upgrading the SDK first is always safe.</li>
 <li>The <code>version</code> field in <code>firmware/manifest.json</code> is the authority on the image version; do not infer it from the SDK version.</li>
 </ul>
@@ -2558,11 +2575,11 @@ Update any downstream code that reads the datasets to the new names. The <code>-
 </thead>
 <tbody>
 <tr>
-<td><code>tc-gu-01-master-1.2.6.bin</code></td>
+<td><code>tc-gu-01-master-1.2.7.bin</code></td>
 <td>Leader gripper (SN ending in <code>m</code>)</td>
 </tr>
 <tr>
-<td><code>tc-gu-01-slave-1.2.16.bin</code></td>
+<td><code>tc-gu-01-slave-1.2.17.bin</code></td>
 <td>Follower gripper (SN ending in <code>s</code>)</td>
 </tr>
 </tbody>
@@ -2588,12 +2605,12 @@ Update any downstream code that reads the datasets to the new names. The <code>-
 <li>The image name is resolved against the path you gave, the SDK root and the SDK's <code>firmware/</code>, in that order, so the script can be run from any directory; it is checked before connecting.</li>
 <li><code>--target-version</code> is normally unnecessary: it only tags the verification log and partition metadata; the script looks the version up in <code>manifest.json</code> by CRC32, so you need it only for an image <code>manifest.json</code> does not know.</li>
 <li>The write takes about 1 second and the reboot about 1–3 seconds; the new firmware goes to the spare partition and replaces the running one only after it verifies, so a failed transfer cannot brick the gripper.</li>
-<li>Step 3 must read back at least leader 1.2.0 / follower 1.1.0; the images bundled now read back 1.2.6 / 1.2.16.</li>
+<li>Step 3 must read back at least leader 1.2.0 / follower 1.1.0; the images bundled now read back 1.2.7 / 1.2.17.</li>
 </ul>
 <p>Other forms:</p>
 <ul>
 <li>With one leader (or follower) plugged in, the role alone is enough: <code>ota_update.py master</code> / <code>ota_update.py slave</code>.</li>
-<li>For one of several of the same role, pass the image file name plus a side or SN: <code>ota_update.py tc-gu-01-master-1.2.6.bin left</code> (use the actual name in <code>firmware/</code>).</li>
+<li>For one of several of the same role, pass the image file name plus a side or SN: <code>ota_update.py tc-gu-01-master-1.2.7.bin left</code> (use the actual name in <code>firmware/</code>).</li>
 <li>Not <code>slave left</code> / <code>master left</code>: the first argument is taken as a file name and fails with <code>firmware file not found</code>.</li>
 </ul>
 <div class="admonition danger">

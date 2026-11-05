@@ -2237,7 +2237,7 @@ the follower gripper needs <strong>both USB Type-C and 24V connected</strong>.</
 It requires Ubuntu 22.04 or 24.04 (x86_64). Copy and run the steps in order.</p>
 <div class="admonition tip">
 <p class="admonition-title">Computers that already have the Developer Kit collection environment</p>
-<p>The collection environment (v0.1.3) already includes SDK 0.4.4 (<code>third_party/taccap-gripper</code> in the data-collection repository). Skip steps 1–5,
+<p>The collection environment (v0.1.4) already includes SDK 0.4.5 (<code>third_party/taccap-gripper</code> in the data-collection repository). Skip steps 1–5,
 go to that directory inside the collection environment and start from <a href="#host">step 6</a>.</p>
 </div>
 <h3 id="miniforge">Step 1: install Miniforge (mamba)<a class="headerlink" href="#miniforge" title="锚点链接">¶</a></h3>
@@ -2256,7 +2256,7 @@ go to that directory inside the collection environment and start from <a href="#
 <p><code>v4l-utils</code> provides <code>v4l2-ctl</code>, used to inspect the wrist camera.</p>
 <h3 id="clone">Step 3: download the SDK<a class="headerlink" href="#clone" title="锚点链接">¶</a></h3>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nb">cd</span><span class="w"> </span>~
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>git<span class="w"> </span>clone<span class="w"> </span>--branch<span class="w"> </span>v0.4.4<span class="w"> </span>https://github.com/XenseRobotics-AI/TacCap-Gripper.git
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>git<span class="w"> </span>clone<span class="w"> </span>--branch<span class="w"> </span>v0.4.5<span class="w"> </span>https://github.com/XenseRobotics-AI/TacCap-Gripper.git
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="nb">cd</span><span class="w"> </span>TacCap-Gripper
 </span></code></pre></div>
 <p>The example scripts live in this directory; <strong>do not delete it</strong> after installing.</p>
@@ -2273,12 +2273,12 @@ From then on, <strong>run <code>mamba activate taccap</code> first in every new 
 <p>This takes a few minutes. Verify:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"import xense.taccap as t; print(t.hello())"</span>
 </span></code></pre></div>
-<p>It should print <code>taccap-gripper OK; version 0.4.4</code>.</p>
+<p>It should print <code>taccap-gripper OK; version 0.4.5</code>.</p>
 <div class="admonition warning">
 <p class="admonition-title">Build errors or the wrong version</p>
 <ul>
 <li>Run <code>mamba activate taccap</code> before installing, and keep <code>--no-build-isolation</code>.</li>
-<li>Version is not 0.4.4: this terminal is loading an SDK from somewhere else. Close it, open a new one, run only <code>mamba activate taccap</code> and try again.</li>
+<li>Version is not 0.4.5: this terminal is loading an SDK from somewhere else. Close it, open a new one, run only <code>mamba activate taccap</code> and try again.</li>
 </ul>
 </div>
 <h3 id="host">Step 6: host setup (miss one and the gripper will not connect)<a class="headerlink" href="#host" title="锚点链接">¶</a></h3>
@@ -2323,7 +2323,7 @@ if only the leader gripper is connected, the control scripts will open it as if 
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>python<span class="w"> </span>python/examples/follower_status.py<span class="w"> </span>left
 </span></code></pre></div>
 <p>This script is read-only and does not move the motor. The lines to look at in normal output (with parts omitted):</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>[fw] FirmwareVersion(1.2.16.0)
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>[fw] FirmwareVersion(1.2.17.0)
 </span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>...
 </span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>[归一化] g.position() = 0.9183
 </span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>...
@@ -2343,7 +2343,7 @@ if only the leader gripper is connected, the control scripts will open it as if 
 <tbody>
 <tr>
 <td><code>[fw]</code></td>
-<td>1.2.16</td>
+<td>1.2.17</td>
 <td>Below 1.2.11 prints an upgrade prompt; below 1.2.5 exits with an error. In either case <a href="../firmware/#mcu-ota">upgrade the firmware</a> first</td>
 </tr>
 <tr>

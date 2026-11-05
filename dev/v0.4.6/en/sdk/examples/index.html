@@ -2338,7 +2338,14 @@ and <code>--outputs rectify,difference</code> to <code>tactile_sensor.py</code>.
 <li>Log and error messages are now in English. Scripts that match on the Chinese message text need updating; for example the firmware-below-1.2.11 warning now reads <code>is below 1.2.11</code>.</li>
 <li>EL05 motor firmware ships with the SDK; without an image argument, <code>motor_ota_update.py</code> picks one from the motor model recorded on the gripper.</li>
 </ul>
-<p>The full list of changes is in the SDK's <a href="https://github.com/XenseRobotics-AI/TacCap-Gripper/blob/v0.4.4/CHANGELOG.md">CHANGELOG</a>.</p>
+<p>Upgrading from 0.4.4 to 0.4.5 (existing APIs unchanged):</p>
+<ul>
+<li>The bundled firmware moves to leader 1.2.7 / follower 1.2.17; <a href="../../follower/firmware/#mcu-ota">upgrade the firmware</a>. The new firmware moves the IMU / encoder device timestamps to a 1 MHz timebase, which SDK 0.4.5 handles; programs that parse device timestamps themselves need updating.</li>
+<li>New leader / follower time-shared exchange <code>start_exchange()</code>: host and gripper take turns on the link, so overlapping transmissions no longer drop frames. It needs firmware 1.2.7 / 1.2.17; on older leader firmware it falls back to ordinary streaming.</li>
+<li>The follower gripper can stream IMU.</li>
+<li>Device scanning releases the GIL and no longer stalls other threads in the same process.</li>
+</ul>
+<p>The full list of changes is in the SDK's <a href="https://github.com/XenseRobotics-AI/TacCap-Gripper/blob/v0.4.5/CHANGELOG.md">CHANGELOG</a>.</p>
 
 
 
