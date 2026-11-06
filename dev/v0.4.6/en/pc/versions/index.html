@@ -1475,6 +1475,17 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#whats-new-015" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.1.5
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#whats-new-014" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2294,7 +2305,7 @@
 <tbody>
 <tr>
 <td><code>xense-taccap-lerobot</code></td>
-<td><code>0.5.1+xtac.0.1.4</code></td>
+<td><code>0.5.1+xtac.0.1.5</code></td>
 <td><code>pip show lerobot</code>, or look at <code>pyproject.toml</code></td>
 </tr>
 <tr>
@@ -2394,8 +2405,8 @@
 </tr>
 <tr>
 <td><code>xense-taccap-lerobot</code></td>
-<td>Based on lerobot 0.5.1, version <code>0.5.1+xtac.0.1.4</code></td>
-<td><code>v0.1.4</code></td>
+<td>Based on lerobot 0.5.1, version <code>0.5.1+xtac.0.1.5</code></td>
+<td><code>v0.1.5</code></td>
 </tr>
 <tr>
 <td><code>xense.taccap</code> SDK</td>
@@ -2491,6 +2502,10 @@
 </span></code></pre></div>
 <p><code>pip show xensevr-pc-service-sdk</code> shows the <code>.deb</code> version read from <code>dpkg</code> at build time; for the head camera interface check <code>has_pico_camera_frame</code>; for gripper SNs and roles see <a href="../quickstart/#self-check">Quickstart · Self-check</a>.</p>
 <h2 id="whats-new">What's new<a class="headerlink" href="#whats-new" title="锚点链接">¶</a></h2>
+<h3 id="whats-new-015">0.1.5<a class="headerlink" href="#whats-new-015" title="锚点链接">¶</a></h3>
+<ul>
+<li>Merging datasets (<code>lerobot-edit-dataset</code> merge / <code>aggregate_datasets</code>) no longer turns the fixed-length columns (<code>action</code>, <code>observation.state</code>) of video-only datasets into variable-length ones. The merged result used to disagree with its own <code>info.json</code> without any error; re-merge datasets merged before to restore them. Recording is unaffected.</li>
+</ul>
 <h3 id="whats-new-014">0.1.4<a class="headerlink" href="#whats-new-014" title="锚点链接">¶</a></h3>
 <ul>
 <li>The gripper SDK moves to 0.4.5 and the bundled firmware to leader <strong>1.2.7</strong> / follower <strong>1.2.17</strong>; <a href="#ota">flash it</a>, then replug the leader's USB and unplug the follower's 24 V for about 2 s.</li>
@@ -2528,7 +2543,7 @@ Update any downstream code that reads the datasets to the new names. The <code>-
 <h2 id="repo-update">Repo and submodule update<a class="headerlink" href="#repo-update" title="锚点链接">¶</a></h2>
 <p>Update by release tag, not <code>main</code> (it may carry unreleased changes):</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>git<span class="w"> </span>fetch<span class="w"> </span>--tags
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>git<span class="w"> </span>checkout<span class="w"> </span>v0.1.4
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>git<span class="w"> </span>checkout<span class="w"> </span>v0.1.5
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>git<span class="w"> </span>submodule<span class="w"> </span>update<span class="w"> </span>--init<span class="w"> </span>--recursive<span class="w"> </span>--progress
 </span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>./setup_env.sh<span class="w"> </span>--install<span class="w">     </span><span class="c1"># realign the dependencies and rebuild xense.taccap</span>
 </span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>git<span class="w"> </span>submodule<span class="w"> </span>status<span class="w">         </span><span class="c1"># the submodule should match v0.4.5</span>
