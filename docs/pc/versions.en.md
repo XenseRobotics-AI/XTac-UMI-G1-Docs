@@ -12,7 +12,7 @@ Serial and version numbers here are examples; go by what you read on your own de
 
 | Component | Minimum | How to check |
 |---|---|---|
-| `xense-taccap-lerobot` | `0.5.1+xtac.0.1.4` | `pip show lerobot`, or look at `pyproject.toml` |
+| `xense-taccap-lerobot` | `0.5.1+xtac.0.1.5` | `pip show lerobot`, or look at `pyproject.toml` |
 | `xense.taccap` SDK | **0.4.5** | `python -c "import xense.taccap as t; print(t.__version__)"` |
 | Gripper firmware | **command set V2.1**, i.e. leader ≥ 1.2.0 / follower ≥ 1.1.0; with a follower gripper (`--robot.role=follower`) the follower needs ≥ 1.2.5 (below 1.2.11 it warns to upgrade) | Run [`calibrate.py`](calibration.md#41) or [read it directly](#check-versions) |
 | Encoder calibration on every leader | Zero + travel limit written to flash | [Gripper calibration (zero + travel)](calibration.md#41) |
@@ -45,7 +45,7 @@ Commands and fields should be taken from your local checkout and from the device
 | `rerun-sdk` | `>=0.24.0,<0.27.0` | 0.26.2 |
 | `opencv-python` | `==4.12.0.88` | 4.12.0.88 |
 | NumPy | `>=1.26.4` | 2.2.6 |
-| `xense-taccap-lerobot` | Based on lerobot 0.5.1, version `0.5.1+xtac.0.1.4` | `v0.1.4` |
+| `xense-taccap-lerobot` | Based on lerobot 0.5.1, version `0.5.1+xtac.0.1.5` | `v0.1.5` |
 | `xense.taccap` SDK | Matched to the main repo's submodule `third_party/taccap-gripper` | 0.4.5 (tag `v0.4.5`), bundling firmware leader 1.2.7 / follower 1.2.17 |
 | Gripper firmware | Command set V2.1 (wire framing V1.8), leader ≥ 1.2.0 / follower ≥ 1.1.0 | leader 1.2.7 / follower 1.2.17, follows the SDK, with `firmware/manifest.json` as the authority, see [Firmware OTA upgrade](#ota) |
 | `xensesdk` | Provided by the install script | 2.1.2 |
@@ -113,6 +113,10 @@ python -c "import xensevr_pc_service_sdk as xrt; print('pico camera API:', hasat
 
 ## What's new {#whats-new}
 
+### 0.1.5 {#whats-new-015}
+
+- Merging datasets (`lerobot-edit-dataset` merge / `aggregate_datasets`) no longer turns the fixed-length columns (`action`, `observation.state`) of video-only datasets into variable-length ones. The merged result used to disagree with its own `info.json` without any error; re-merge datasets merged before to restore them. Recording is unaffected.
+
 ### 0.1.4 {#whats-new-014}
 
 - The gripper SDK moves to 0.4.5 and the bundled firmware to leader **1.2.7** / follower **1.2.17**; [flash it](#ota), then replug the leader's USB and unplug the follower's 24 V for about 2 s.
@@ -152,7 +156,7 @@ Update by release tag, not `main` (it may carry unreleased changes):
 
 ```bash
 git fetch --tags
-git checkout v0.1.4
+git checkout v0.1.5
 git submodule update --init --recursive --progress
 ./setup_env.sh --install     # realign the dependencies and rebuild xense.taccap
 git submodule status         # the submodule should match v0.4.5

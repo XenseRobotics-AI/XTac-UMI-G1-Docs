@@ -12,7 +12,7 @@
 
 | 组件 | 最低要求 | 怎么查 |
 |---|---|---|
-| `xense-taccap-lerobot` | `0.5.1+xtac.0.1.4` | `pip show lerobot` 或看 `pyproject.toml` |
+| `xense-taccap-lerobot` | `0.5.1+xtac.0.1.5` | `pip show lerobot` 或看 `pyproject.toml` |
 | `xense.taccap` SDK | **0.4.5** | `python -c "import xense.taccap as t; print(t.__version__)"` |
 | 夹爪固件 | **命令集 V2.1**，即 leader ≥ 1.2.0 / follower ≥ 1.1.0；用从夹爪（`--robot.role=follower`）时 follower 须 ≥ 1.2.5（低于 1.2.11 提示升级） | 跑 [`calibrate.py`](calibration.md#41) 或[直接读](#check-versions) |
 | 每台 leader 的编码器标定 | 零点 + 行程上限已写入 flash | [夹爪标定](calibration.md#41) |
@@ -45,7 +45,7 @@ flowchart LR
 | `rerun-sdk` | `>=0.24.0,<0.27.0` | 0.26.2 |
 | `opencv-python` | `==4.12.0.88` | 4.12.0.88 |
 | NumPy | `>=1.26.4` | 2.2.6 |
-| `xense-taccap-lerobot` | 基于 lerobot 0.5.1，版本号 `0.5.1+xtac.0.1.4` | `v0.1.4` |
+| `xense-taccap-lerobot` | 基于 lerobot 0.5.1，版本号 `0.5.1+xtac.0.1.5` | `v0.1.5` |
 | `xense.taccap` SDK | 与主仓库子模块 `third_party/taccap-gripper` 配套 | 0.4.5（tag `v0.4.5`），附带固件 leader 1.2.7 / follower 1.2.17 |
 | 夹爪固件 | 命令集 V2.1（帧格式 V1.8），leader ≥ 1.2.0 / follower ≥ 1.1.0 | leader 1.2.7 / follower 1.2.17，随 SDK 走，以 `firmware/manifest.json` 为准，见 [OTA](#ota) |
 | `xensesdk` | 由安装脚本提供 | 2.1.2 |
@@ -113,6 +113,10 @@ python -c "import xensevr_pc_service_sdk as xrt; print('pico camera API:', hasat
 
 ## 更新要点 {#whats-new}
 
+### 0.1.5 {#whats-new-015}
+
+- 合并数据集（`lerobot-edit-dataset` 的 merge / `aggregate_datasets`）不再把纯视频数据集的定长列（`action`、`observation.state`）写成变长列。此前合并结果与自己的 `info.json` 不一致，且不报错；之前合并过的数据集重新合并即可恢复。录制不受影响。
+
 ### 0.1.4 {#whats-new-014}
 
 - 夹爪 SDK 升到 0.4.5，附带固件升到主夹爪 **1.2.7** / 从夹爪 **1.2.17**，请[刷固件](#ota)；刷完主夹爪拔插 USB，从夹爪断开 24V 约 2 秒再接上。
@@ -152,7 +156,7 @@ python -c "import xensevr_pc_service_sdk as xrt; print('pico camera API:', hasat
 
 ```bash
 git fetch --tags
-git checkout v0.1.4
+git checkout v0.1.5
 git submodule update --init --recursive --progress
 ./setup_env.sh --install     # 对齐依赖并重编 xense.taccap
 git submodule status         # 子模块应对应 v0.4.5
