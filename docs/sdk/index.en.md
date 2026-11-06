@@ -4,7 +4,7 @@
 grippers. It provides both Python and C++ interfaces, for writing your own programs that read the leader gripper and control the follower gripper.
 
 !!! note "This appendix is written for SDK 0.4.5"
-    The data-collection repository `xense-taccap-lerobot` v0.1.4 ships SDK 0.4.5 (submodule `third_party/taccap-gripper`).
+    The data-collection repository `xense-taccap-lerobot` v0.1.5 ships SDK 0.4.5 (submodule `third_party/taccap-gripper`).
     Once the collection environment is set up per [Installation](../pc/install.md) it is ready to use; see [Install and build](install.md).
 
 ## What it can do {#scope}
