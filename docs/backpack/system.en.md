@@ -33,9 +33,15 @@ When to look here:
 - Repairs, identifying a unit: note the device SN and headset serial number, not the IP (it changes).
 - After an upgrade: check that the version and build time changed.
 - Wrong camera count on the monitor page: see which feed is "(Offline)".
-- Before calibrating: confirm the leader gripper firmware is ≥ 1.2.0.
+- Before upgrading the Collector: confirm both leader grippers meet the firmware requirement in the [version baseline](versions.md#baseline) (≥ 1.2.7 for 0.4.7).
 
 **Export diagnostics**: "Export diagnostics" on this page downloads an encrypted ZIP with application logs, the kernel log (dmesg) and version information. Hand it to technical support together with the device SN when reporting a fault; if the download fails, retry.
+
+**Clean up leftover data**: click "Scan data" to list leftover files and empty folders that belong to no valid recording, grouped as "Recording files", "H264 archives" and "Export files". Tick what to remove and click "Delete selected"; the result shows how many were deleted, skipped and failed.
+
+- Deletion cannot be undone.
+- Cleanup is refused while recording or processing data.
+- Scan results expire after a while; when told the list has expired, scan again.
 
 ## Gripper configuration {#gripper}
 
@@ -100,13 +106,15 @@ On site, recording with the [gripper buttons](gripper.md#buttons) is preferred, 
 
 ### Voice prompts {#voice}
 
-Prompts play from the headset, or from the backpack's speaker when the headset is not connected. What is announced and when is in [Voice prompts](gripper.md#voice-cues).
-
-Three things can be adjusted here:
+What is announced and when is in [Voice prompts](gripper.md#voice-cues). Four things can be adjusted here:
 
 - **Switch**: mute with one click.
 - **Volume**: 0–100.
 - **Language**: Chinese or English, following the interface language by default.
+- **Audio output**:
+    - **Pico** (default): plays through the headset first; when the headset is not connected, unsupported or playback fails, the backpack's speaker plays it instead.
+    - **Backpack**: every prompt and tone plays straight from the backpack's speaker, taking effect from the next prompt after saving.
+    - The "Pico connection failed" prompt always plays from the backpack, whichever is chosen.
 
 Each line has a "Preview" button that tells you where the sound came out.
 

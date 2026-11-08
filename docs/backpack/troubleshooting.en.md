@@ -139,6 +139,11 @@ This page lists the cause and fix for each symptom. The most common issues are b
     - **"Tracker not ready"**: move the grippers back into the headset's field of view and move them slightly.
     - **Target reached / disk full**: see the next two entries.
 
+??? failure "Recording refused: “… gripper firmware version … is too old; this Collector version requires 1.2.7 or later”"
+    **Cause:** from 0.4.7 the leader gripper firmware must be ≥ 1.2.7; the message names the side and its current version.
+
+    **Fix:** flash leader gripper firmware 1.2.7 or later at System → Gripper configuration, power-cycle the backpack, check the version in [Device information](system.md#device-info), then record; see [Gripper firmware](update.md#gripper-firmware). For future upgrades, flash firmware first and import the bundle second, see [Upgrade order](update.md#order).
+
 ??? failure "Recording refused: “Task '…' has reached its cumulative collection target (N/M)”"
     **Cause:** the target counts **cumulatively**; both "ready" and "uploaded" episodes count. Archiving deletes only local files and does not change the state, so **neither uploading nor archiving frees capacity**.
 
@@ -198,6 +203,21 @@ This page lists the cause and fix for each symptom. The most common issues are b
 
     - Check the cable from the headset to the backpack's `PICO` port, the headset battery, and that XTac UMI XR is running. For a tracker dropout, check the tracker.
     - Recording **does not resume automatically**. Start a new recording once ready; see [Headset disconnects while recording](monitor-record.md#pico-disconnect).
+
+??? failure "While recording: “… disconnected, recording terminated”, and the episode is marked failed"
+    **Cause:** a gripper, or a wrist fisheye or tactile camera used by this episode, dropped off USB; the device stopped the whole recording and marked it failed. See [USB device disconnects while recording](monitor-record.md#usb-disconnect).
+
+    **Fix:** check the Type-C cable and port of the device named in the message, wait for it to come back (its view returns on the monitor page or the gripper LED returns to standby), then start a new recording. If it keeps happening, work through [loose contacts](#power).
+
+??? failure "The recording card shows “Low FPS”, or the episode is marked suspect after stopping"
+    **Cause:** a camera's good-frame rate stayed below 90% of nominal, usually a USB cable, port or bandwidth issue; the camera itself reports no error.
+
+    **Fix:** after stopping, check that camera's cable and port, replug it and confirm on the monitor page that the frame rate is back, then delete the suspect episode and record again.
+
+??? failure "About 5 seconds of lost data right after a leader gripper is powered up again"
+    **Cause:** known issue. About 0.5 seconds after a leader gripper is powered up again and first starts streaming, it occasionally stops answering; the Collector reconnects automatically and it recovers in about 5 seconds.
+
+    **Fix:** nothing to do; wait for the gripper to recover before recording, and do not start recording the instant a gripper powers up.
 
 ??? failure "A recording shows as failed, with power loss or a system restart as the reason"
     **Cause:** the backpack lost power, or the system or capture service restarted, during recording, so the episode was not finalized. After power is restored, the reason distinguishes power loss / system restart from a capture-service restart, and the data size reflects the files actually retained.
@@ -294,7 +314,7 @@ This page lists the cause and fix for each symptom. The most common issues are b
     **Fix:** plan transfer and storage capacity at this scale. For a new project where size matters, choose "Compact" export quality when creating it; an existing project's export quality cannot be changed.
 
 ??? failure "After upgrading, exported or uploaded datasets show as needing re-export"
-    **Cause:** this is expected. From 0.4.6, exported poses are relative to the headset at the start of each episode and the left-hand TCP uses the mirrored convention, so pose values change throughout and old exports are marked stale. Raw recordings are unaffected.
+    **Cause:** this is expected. When the export rules change, old exports are marked stale: from 0.4.6, exported poses are relative to the headset at the start of each episode and the left-hand TCP uses the mirrored convention; from 0.4.7, each camera takes its own nearest frame and pose and gripper opening are interpolated at the frame time, so both frame selection and values change. Raw recordings are unaffected.
 
     **Fix:** re-export recordings whose raw files are still on the device. Archived recordings cannot be re-exported; keep their old exports. Do not merge old and new exports into one dataset; tell them apart by `tcp_frame_convention` in `meta/info.json`, see [Export formats](projects-export.md#lerobot).
 

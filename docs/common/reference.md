@@ -8,11 +8,11 @@
 |---|---|
 | **XTac UMI G1** | 穿戴式 UMI 数采夹爪，两种形态共用的传感器载体；见[认识 XTac UMI G1](../product/g1.md) |
 | **数采背包** | 背包版的采集单元：RK3588 计算节点，夹爪与头显都接到它上面，XTac UMI Collector 在它上面运行；正式名 XTac UMI 数采背包，见[认识数采背包](../product/backpack.md) |
-| **XTac UMI Collector** | 数采背包上的采集软件，接入相机、夹爪 MCU 与头显位姿，负责录制、回放、导出与设备管理；版本基线 0.4.6，以系统页为准 |
+| **XTac UMI Collector** | 数采背包上的采集软件，接入相机、夹爪 MCU 与头显位姿，负责录制、回放、导出与设备管理；版本基线 0.4.7，以系统页为准 |
 | **控制台** | Collector 的浏览器界面，平板、手机、电脑连上背包后打开；实时监控、项目、系统等页面都在里面 |
 | **项目 / 任务 / episode** | 背包版的数据组织层级：项目下建任务，任务带 LeRobot 语言指令，每次开录到停录是一条 episode |
 | **MCAP** | 背包版每条 episode 的原始记录格式，按 topic 存相机、编码器、IMU、位姿与事件；导出 LeRobot 时从它转换 |
-| **OTA bundle** | 背包版 Collector 的升级包（`.tar.zst`），在控制台 系统 → 系统更新 页上传、校验、应用并重启，可回滚到上一版本；PC 版夹爪固件的 OTA 见[固件升级](../pc/versions.md#ota) |
+| **OTA bundle** | 背包版 Collector 的升级包（`.tar.zst`），在控制台 系统 → 系统更新 页上传、校验、应用并重启，升级失败时自动回退上一版本；PC 版夹爪固件的 OTA 见[固件升级](../pc/versions.md#ota) |
 | **SoftAP** | 数采背包自建的常驻 WiFi 热点，SSID `xense-<序列号后 6 位>`，只有 5GHz，网关固定 `192.168.44.1`；不依赖现场网络的兜底入口 |
 | **TacCap** | 包名 `xense.taccap`、设备类型 `taccap_gripper` 与背包机身标签里的名字（Tactile Capture）；产品名为 XTac UMI G1 |
 | **UMI** | Universal Manipulation Interface，手持式主夹爪数采范式 |
@@ -65,6 +65,7 @@
 
 | 文档版本 | xense-taccap-lerobot（PC 版数采） | XTac UMI XR（头显应用） | XTac UMI Collector（背包版采集单元） | TacCap-Gripper SDK（夹爪 SDK） |
 |---|---|---|---|---|
+| v0.1.3 | v0.1.5 | 0.3.9 | 0.4.7 | 0.4.5 |
 | v0.1.2 | v0.1.5 | 0.3.6 | 0.4.6 | 0.4.5 |
 | v0.1.1 | v0.1.1 | 0.3.3 | 0.4.3 | 0.4.3 |
 | v0.1.0 | v0.1.0 | 0.3.2 | 0.4.3 | 0.4.1 |

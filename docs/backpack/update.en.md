@@ -7,6 +7,16 @@ This page covers upgrading the console program and the gripper firmware:
 
 ![System update page](../assets/backpack/update-en.webp)
 
+## Upgrade order {#order}
+
+A new Collector version may require newer gripper firmware. **Flash the gripper firmware first, then import the upgrade bundle**:
+
+1. Look up the leader gripper firmware requirement in the [version baseline](versions.md#baseline) and check both grippers' firmware in [Device information](system.md#device-info).
+2. If either is below it, flash it from the current console as in [Gripper firmware](#gripper-firmware); after both are done and the backpack has been power-cycled, check again.
+3. Then [import the upgrade bundle](#bundle) as below.
+
+For example, before moving to 0.4.7 both leader grippers must be on 1.2.7 or above. Flashing after upgrading the Collector also works, but recording is refused until the firmware is updated.
+
 ## Importing an upgrade bundle {#bundle}
 
 An upgrade bundle is a `.tar.zst` file provided by technical support, with the version in its file name, such as `taccap-collector-v0.4.3-….tar.zst`. It updates only the console program; it contains no gripper firmware or camera profiles and does not affect collected data.
@@ -26,10 +36,7 @@ If verification fails, the device rejects the bundle, gives the reason under "La
 
 The device keeps the previous version when upgrading. If the new version fails to start, the file is corrupt or power is lost during the upgrade, the device automatically reverts to the previous version and remains bootable.
 
-**Manual rollback**: when the "Rollback" card shows "Available", click "Roll back to previous version" and confirm.
-
-- Only one version can be rolled back.
-- A device that has not been upgraded since leaving the factory has no version to roll back to.
+From 0.4.7 the upgrade bundle no longer offers manual rollback and the System update page has no "Rollback" card; to go back to an older version, contact [technical support](../common/reference.md#support). On 0.4.6 and earlier, the "Rollback" card can go back one version only, and a device never upgraded since leaving the factory has nothing to roll back to.
 
 Upgrades and rollbacks do not affect recorded data, projects, upload configurations or network settings.
 
@@ -45,4 +52,4 @@ Gripper firmware is not updated through upgrade bundles; flash it from "Gripper 
 You can click "Abort" during flashing; if flashing fails, simply flash again. The gripper will not be damaged.
 
 !!! danger "Select firmware by role, and do not cut power while flashing"
-    The leader gripper (SN ending in `m`) uses `tc-gu-01-master.bin` and the follower (SN ending in `s`) uses `tc-gu-01-slave.bin`; the choice depends on role, not on left or right. Flashing the wrong firmware leaves the gripper unable to start and requires a factory repair; cutting power or unplugging during writing also corrupts the firmware.
+    The leader gripper (SN ending in `m`) uses `tc-gu-01-master-<version>.bin` (such as `tc-gu-01-master-1.2.7.bin`) and the follower (SN ending in `s`) uses `tc-gu-01-slave-<version>.bin`; the choice depends on role, not on left or right. Flashing the wrong firmware leaves the gripper unable to start and requires a factory repair; cutting power or unplugging during writing also corrupts the firmware.

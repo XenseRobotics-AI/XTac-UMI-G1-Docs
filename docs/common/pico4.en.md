@@ -48,7 +48,7 @@ Otherwise, screen-off or sleep between episodes (also triggered by taking the he
 
 ## Installing XTac UMI XR {#pico-app}
 
-The APK is named `XTac-UMI-XR-<version>.apk`; the current version is 0.3.6. Install it from the headset's file manager:
+The APK is named `XTac-UMI-XR-<version>.apk`; the current version is 0.3.9. Install it from the headset's file manager:
 
 1. Connect the headset to the collection PC over USB and copy the APK into the headset's `Download/` directory.
 
