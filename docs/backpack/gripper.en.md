@@ -39,18 +39,21 @@ Recording is breathing green; red only ever means a fault. Rapid flashing and pu
 
 ## Voice prompts {#voice-cues}
 
-While collecting, both hands are on the grippers and your eyes on the scene, so the device **announces key moments through the Pico headset**, which you hear while wearing it, complementing the LEDs; no tablet is needed nearby and the browser plays no part. When the headset is not connected (for example the "Pico disconnected" announcement), the backpack's speaker plays it instead.
+While collecting, both hands are on the grippers and your eyes on the scene, so the device announces key moments, complementing the LEDs; no tablet is needed nearby and the browser plays no part. By default it **announces through the Pico headset**, which you hear while wearing it; when the headset is not connected, unsupported or playback fails (for example the "Pico connection failed" announcement), the backpack's speaker plays it instead. Settings can also send everything to the backpack.
 
 | When | What it says |
 |---|---|
 | Recording starts | "Recording started." |
 | An episode finishes | "Recording complete. Please reset the scene." Reset the scene and get ready for the next one |
 | A fatal problem while recording | "Recording failed." That episode is unusable |
-| A gripper drops off while recording | "Gripper connection failed." |
+| A gripper drops off while recording | "Left gripper disconnected" or "Right gripper disconnected"; "Gripper connection failed." when the side is unknown |
+| Recording refused: left and right trackers are opposite to their gripper bindings | "Grippers swapped left and right" |
+| Recording refused: hands outside the starting range | "Gripper start position outside the valid range" |
 | The headset drops off while recording | "Pico connection failed." |
 | A tracker drops off while recording | "Tracker connection failed." The headset may still be connected, so check the tracker on your hand first |
 | Right gripper single press to mark a subtask | Subtask marker tone (no speech) |
 
 - **Language**: Chinese or English, following the console's interface language by default.
-- **Settings**: on/off, language, volume and per-phrase preview are in System → [Capture settings](system.md#voice).
+- **Settings**: on/off, language, volume, audio output and per-phrase preview are in System → [Capture settings](system.md#voice).
+- If the headset app has no audio for one of the four prompts added in 0.4.7 (left / right gripper disconnected, grippers swapped, start position out of range), it plays from the backpack's speaker instead.
 - The phrases and when they play are fixed and cannot be changed on site.

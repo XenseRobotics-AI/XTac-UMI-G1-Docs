@@ -10,14 +10,14 @@ The hierarchy is **project → task → recording**. Each recording shows frames
 
 | Where | Actions |
 |---|---|
-| Page header | New project, search, filter by status |
+| Page header | New project, search by project / task name (case-insensitive, matches highlighted), filter by status |
 | Project row | Capture configuration, New task, Edit (rename / upload backend / delete permanently) |
 | Task row | Set as target (recordings go into this task), Export, Edit (edit task / delete task permanently) |
 | Recording | Playback, Delete |
 
 ### New projects and tasks {#new}
 
-- **New project**: enter a name and pick a capture mode (one of three); modes with the headset also pick headset resolution, image type and [headset mount](monitor-record.md#project-task) (On head / Around neck); optionally set export quality (High quality / Standard / Compact), tactile export orientation, wrist fisheye correction, upload backend and default export format. **It cannot be changed afterwards**; if it is wrong, delete the empty project and create it again.
+- **New project**: enter a name and pick a capture mode (one of three); modes with the headset also pick headset resolution, image type and [headset mount](monitor-record.md#project-task) (On head / Around neck); optionally set export quality (High quality / Standard / Compact), tactile export orientation, wrist fisheye correction, upload backend and default export format. **It cannot be changed afterwards**; if it is wrong, delete the empty project and create it again. A project name cannot duplicate another unarchived project, and task names within a project cannot repeat.
 - **New task**: task name (lowercase letters, digits and hyphens, e.g. `pick-cube`) and task instruction (required; it is the LeRobot language instruction); target count and target duration are optional.
 
 ## Export {#export}

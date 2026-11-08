@@ -20,7 +20,7 @@ Check each item before recording, and do not start if any is wrong:
 | What to look at | What you want | When it is wrong |
 |---|---|---|
 | Every view | The top bar's "Cameras" count matches the capture mode (6 / 6 for "Dual gripper", 8 / 8 for "Dual gripper + stereo headset", 7 / 7 for "Dual gripper + headset right eye") and every tile has an image; fisheye views are sharp; the visuotactile feed is the geometrically rectified image with no difference overlay, and the contact area changes as you press | A blurred fisheye usually means the focus ring was knocked; turn it back to sharp before recording. If the count is wrong, check [System → Capture settings](system.md#capture-mode); only if one feed stays black for long, click "Refresh devices" |
-| Headset pose and tracker state | Move a gripper and the headset and the 3D model follows; the indicator at the top right of the pose card is green | "Pose online" but the model does not move: the tracker app in the Pico usually never really started; hold the tracker's power button to reactivate it and restart the app on the Pico. Light turns yellow with a prompt: a tracker has left the headset's view (orientation only, no position); bring it back into view. Check left / right by serial number, odd left and even right, see [Reading a tracker SN](../common/pico4.md#pico-tracker-sn) |
+| Headset pose and tracker state | Move a gripper and the headset and the 3D model follows; the indicator at the top right of the pose card is green; the pose view shows enough battery on both trackers | "Pose online" but the model does not move: the tracker app in the Pico usually never really started; hold the tracker's power button to reactivate it and restart the app on the Pico. Light turns yellow with a prompt: a tracker has left the headset's view (orientation only, no position); bring it back into view. Check left / right by serial number, odd left and even right, see [Reading a tracker SN](../common/pico4.md#pico-tracker-sn) |
 | Both grippers' opening | The two cards below the pose view show radians, degrees and a normalized percentage: about 100% fully open, about 0% closed (about 0.02rad; a little more force reaches 0) | If fully open will not reach 100% or closing will not return to 0, recalibrate at [System → Gripper configuration](system.md#gripper) |
 | Free disk space | The top bar's "Disk" usage is below 80% (recording disk, measured on the device); hovering shows the mount point, used, total and available space | At 80% recording is refused; [export and archive](projects-export.md#archive) the data you have, or delete recordings you do not need |
 | Recording state | The status line at the top right of the project / task card reads "Standby", followed by the capture-mode badge (for example "Dual gripper + stereo headset"); "Start recording" is clickable | When the badge says "Pico not ready" and the button is gray, the reason is below the status line: "Pico not ready" and "Tracker not ready" are separate and can appear together, each followed by the specific cause (for example disconnected or timed out, pose data missing or timed out, left-eye / right-eye video missing or timed out, clock synchronization missing or timed out, or the tracker out of view or stationary for over 5 seconds); a missing project / task is stated too. Deal with the reason first |
@@ -79,11 +79,11 @@ With both hands on the grippers and eyes on the scene, you rely on two complemen
 
 - **LEDs**: the gripper indicator distinguishes states by steady / breathing / blinking / pulse / rapid flashing, and needs a glance up; meanings are in [LEDs](gripper.md#leds).
 - **Voice announcements**: the sentences are in [Voice prompts](gripper.md#voice-cues).
-    - Plays through the headset by default, falling back to the backpack's speaker when the headset is disconnected or unsupported; no tablet needed, independent of the browser.
-    - Six prompts: recording starts, an episode finishes (prompting you to reset the scene and prepare the next one), a serious problem during recording, and a gripper / the headset / a tracker dropping out (three prompts, each needing a different check).
+    - Plays through the headset by default, falling back to the backpack's speaker when the headset is disconnected, unsupported or playback fails; it can also be set to play everything from the backpack. No tablet needed, independent of the browser.
+    - The prompts cover: recording starts, an episode finishes (prompting you to reset the scene and prepare the next one), a serious problem during recording, the left / right gripper, the headset or a tracker dropping out (each needing a different check), and, when recording is refused, grippers swapped left and right or the start position out of range.
     - Plus a subtask marker tone.
 
-- **Fixed and adjustable**: wording and timing are fixed and cannot be changed on site, keeping a batch of devices identical; you can adjust the switch, the volume (a 0–100 slider) and the audio language (Chinese / English), with a per-line preview next to the switch that shows where the sound played and why. See System → [Capture settings](system.md#voice).
+- **Fixed and adjustable**: wording and timing are fixed and cannot be changed on site, keeping a batch of devices identical; you can adjust the switch, the volume (a 0–100 slider), the audio language (Chinese / English) and the audio output (Pico / backpack), with a per-line preview next to the switch that shows where the sound played and why. See System → [Capture settings](system.md#voice).
 - **Audio language**: follows the [interface language](index.md#faq) when the page loads or the interface language changes; a language chosen separately applies until the page is reloaded or the interface language changes.
 
 ### Recording gates {#record-gates}
@@ -122,9 +122,11 @@ The current reference ranges on the device are below. They start from measured s
 
 With the head range, the hands sit roughly 10–50 cm in front of the headset, 5–40 cm either side of the body's midline and 30–70 cm below the headset: arms hanging naturally, forearms forward, hands apart. The neck range is looser up and down; it mainly catches hands hanging too low or raised to the face.
 
+**Seeing the range in the pose view**: the pose view's "Start box" toggle shows or hides the range the hands must be in: green is inside, orange is out of range, gray means that hand has no pose. Move both hands into the green before starting.
+
 The two refusal messages:
 
-- **Out of range**: "Your hands are outside the starting pose range, so recording was blocked: left hand 5 cm too high, right hand 2 cm too far left. Adjust as indicated, hold still, and retry." After the colon, each item names a hand, the direction it is off (too high / too low / too far left / right / forward / back) and by how many centimetres; move that far the opposite way to be back in range.
+- **Out of range**: "Your hands are outside the starting pose range, so recording was blocked: left hand 5 cm too high, right hand 2 cm too far left. Adjust as indicated, hold still, and retry." After the colon, each item names a hand, the direction it is off (too high / too low / too far left / right / forward / back) and by how many centimetres; move that far the opposite way to be back in range. The device also announces "Gripper start position outside the valid range".
 - **No pose**: "Could not get valid headset and tracker poses at the same time, so the starting hand pose cannot be confirmed. Recording was blocked." Check that the headset and trackers are tracking first.
 
 !!! note "Only the moment recording starts is checked"
@@ -134,7 +136,17 @@ The two refusal messages:
 
 - **Status line**: changes to "Recording" with a running timer, and the capture-mode badge stays; the top bar's "Rec. time" runs in step.
 - **Red counters**: the recording card accumulates "Bad frames N" (delivered but incomplete), "Disconnects N" (a device-level disconnection; frames never arrived) and "Tracker out of view X s" (with ×N when more than once). With every camera green, out-of-view is the only clue; when you see it, consider stopping and re-recording.
+- **Low FPS**: when a camera's good-frame rate stays below 90% of nominal over 3 seconds, the recording card shows "Low FPS" with the camera's name. The camera reports no error and bad frames may be 0, so this is the only clue; if it persists, stop, check that camera's cable and record again.
+- With the live preview off, each camera card shows its frame rate as a large number in the middle.
 - You cannot delete episodes or change the task while recording; the capture mode can never be switched.
+
+### USB device disconnects while recording {#usb-disconnect}
+
+- **Trigger**: a gripper, or a wrist fisheye or tactile camera used by this episode, drops off USB while recording.
+- **What the device does**: stops the whole recording at once, finalizes safely, marks it failed and shows "… disconnected, recording terminated".
+- **Voice and LED**: a gripper dropping out plays "Left gripper disconnected" or "Right gripper disconnected"; a camera dropping out plays "Recording failed."; the gripper LED turns yellow as for a failed recording.
+- **The failed recording**: not counted towards the cumulative count, and left out of normal export and upload.
+- **No resume after recovery**: even a quick reconnect does not continue the recording; the device reconnects in the background, then start a new recording yourself.
 
 ### Headset disconnects while recording {#pico-disconnect}
 
@@ -154,7 +166,8 @@ On stopping, an automatic quality check marks the episode "data suspect" if any 
 - The recording is shorter than 1s (almost always a misfire);
 - Any camera channel recorded not one frame, or the whole episode received no video frames at all;
 - Tracking was lost for more than 20% of the episode's duration (suspected to have left the field of view);
-- The tactile rectification recipe is missing (this episode's LeRobot export is certain to fail).
+- The tactile rectification recipe is missing (this episode's LeRobot export is certain to fail);
+- Any camera ran at low FPS for more than 5% of the episode's duration in total.
 
 For a questionable episode, [delete it](#record-delete) on the spot and record it again.
 
