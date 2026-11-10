@@ -35,7 +35,7 @@ When to look here:
 - Wrong camera count on the monitor page: see which feed is "(Offline)".
 - Before upgrading the Collector: confirm both leader grippers meet the firmware requirement in the [version baseline](versions.md#baseline) (≥ 1.2.7 for 0.4.7).
 
-**Export diagnostics**: "Export diagnostics" on this page downloads an encrypted ZIP with application logs, the kernel log (dmesg) and version information. Hand it to technical support together with the device SN when reporting a fault; if the download fails, retry.
+**Export diagnostics**: click "Export diagnostics" on this page, wait for packaging, then confirm that the encrypted ZIP has finished downloading in your browser's download list. The package contains application logs, the kernel log (dmesg) and version information; send it to technical support without extracting it yourself. If the download fails, follow the message on the page and retry. See [Support and feedback](../common/reference.md#support) for the other information to include.
 
 **Clean up leftover data**: click "Scan data" to list leftover files and empty folders that belong to no valid recording, grouped as "Recording files", "H264 archives" and "Export files". Tick what to remove and click "Delete selected"; the result shows how many were deleted, skipped and failed.
 

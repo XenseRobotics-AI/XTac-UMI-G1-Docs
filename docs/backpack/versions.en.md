@@ -9,13 +9,13 @@ Matched to XTac UMI Collector 0.4.7. The software and hardware versions across t
 | Component | Baseline | Where to check / how to upgrade |
 |---|---|---|
 | Tablet OS (REDMI Pad 2 SE) | 3.0.303 or above recommended | Tablet Settings → My device; follows the system update |
-| Backpack OS firmware | V1.2.0 | Pre-installed at the factory, upgraded by technical support |
+| Backpack OS firmware | V1.2.3 (paired with this release) | Pre-installed at the factory; contact technical support to confirm or upgrade it, see [System image](update.md#system-image) |
 | XTac UMI Collector (collection unit) | 0.4.7 | The console's System → [Device information](system.md#device-info), "Collector version"; upgrading is in [Upgrades and OTA](update.md) |
 | Pico OS | 5.15.5.U or above recommended | Headset Settings → General → About; upgrading is in [Pico4 headset and tracker setup](../common/pico4.md#pico-system) |
 | XTac UMI XR (headset app) | 0.3.9 | The headset's app library; installing and upgrading are in [Pico4 headset and tracker setup](../common/pico4.md#pico-app) |
 | Leader gripper firmware | ≥ 1.2.7 (recording is refused below this) | The console's System → [Device information](system.md#device-info), "Gripper MCU"; upgrading is at System → [Gripper configuration](system.md#gripper) |
 
-Upgrading the Backpack Kit's collection unit is done entirely in the console, with no PC needed. The Developer Kit has its own baseline, see [Developer Kit · Versions and upgrades](../pc/versions.md#required).
+Collector application upgrades on the Backpack Kit are performed in the console, with no PC needed; backpack system image upgrades require guidance from technical support. Collector showing 0.4.7 does not mean the backpack OS is on V1.2.3; confirm the two versions separately. The Developer Kit has its own baseline, see [Developer Kit · Versions and upgrades](../pc/versions.md#required).
 
 ## Version highlights {#history}
 
@@ -36,6 +36,7 @@ Changes since 0.4.6:
 9. **Export time alignment**: training data exports pick each camera's nearest frame independently and interpolate pose and gripper opening at the frame time. **After upgrading, existing exports show as needing re-export**; the raw recording format is unchanged.
 10. **Manual rollback removed**: the upgrade bundle no longer offers "Roll back to previous version"; automatic fallback to the previous version when an upgrade fails is kept. See [Rollback](update.md#rollback).
 11. **Matching headset app**: XTac UMI XR moves to 0.3.9 (tracker battery is reported by the headset app).
+12. **Raw MCAP download**: engineering mode provides a per-recording download of the raw MCAP retained on the device for technical support and data analysis, on both desktop and mobile. See [Downloading raw recordings](projects-export.md#raw-mcap).
 
 ### 0.4.6 (2026-10-27) {#v046}
 

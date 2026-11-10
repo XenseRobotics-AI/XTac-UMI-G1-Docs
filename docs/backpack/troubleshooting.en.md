@@ -321,7 +321,7 @@ This page lists the cause and fix for each symptom. The most common issues are b
 ## Upgrades {#update}
 
 ??? failure "Power was lost during an upgrade / the console cannot connect after applying an update"
-    **Cause:** the collection software restarts when an update is applied, and the page waits up to 90 seconds. The previous version is retained, so a failed start or power loss reverts to it automatically and does not leave the device unable to boot.
+    **Cause:** the collection software restarts when an update is applied, and the page waits up to 90 seconds. Collector application updates retain the previous version and provide automatic fallback if the new version fails to start. This does not apply to system image flashing; see [Rollback scope](update.md#rollback).
 
     **Fix:**
 
@@ -341,13 +341,8 @@ This page lists the cause and fix for each symptom. The most common issues are b
 
 ---
 
-If the problem persists, click the block of readings at the top right of the top bar to open the "System logs" (a red badge with the error count appears when there are errors). The panel cannot export files, so **a screenshot is sufficient; there is no need to retrieve logs from the device**.
+If the problem persists, open System → [Device information](system.md#device-info), click "Export diagnostics" and send the completed encrypted ZIP download to technical support.
 
-When reporting through the channels in [Support and feedback](../common/reference.md#support), include:
+The block of readings at the top right opens "System logs", with a red badge and error count when errors occur. Use that panel for viewing and screenshots; download the diagnostics file from Device information. If the console is unreachable or the diagnostics download fails, send any available error screenshots first and explain why the package could not be downloaded.
 
-- A system-log screenshot and the time the error occurred;
-- The complete error text;
-- The device SN and console version (System → [Device information](system.md#device-info));
-- The operation in progress when the problem occurred;
-- The project / task / episode number, if a recording was involved;
-- The gripper LED state and a Live monitoring screenshot, if a gripper or the views are involved.
+For contact channels and the information to include, see [Support and feedback](../common/reference.md#support).

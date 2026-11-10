@@ -405,7 +405,7 @@ After uploading, **local files are kept by default**. To free space:
 - **Archive on upload**: tick "Automatically archive after upload (delete local source files; keep metadata only)" before uploading.
 - **Archive any time**: [archive](projects-export.md#archive) manually later.
 
-Archiving keeps only the record and clears the raw files; clean-up protects formats that have not been exported yet.
+Archiving keeps only the record and clears the raw files. Export every required format first; if you also need the [raw MCAP](projects-export.md#raw-mcap), download it and verify the copy before archiving.
 
 ## Common questions {#faq}
 
