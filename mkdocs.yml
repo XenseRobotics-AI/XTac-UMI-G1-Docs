@@ -98,7 +98,7 @@ plugins:
           build: true
           site_name: "XTac UMI Docs"
           site_author: XenseRobotics
-          copyright: Copyright &copy; 2026 XenseRobotics Co., Ltd. · Docs v0.1.2
+          copyright: Copyright &copy; 2026 XenseRobotics Co., Ltd. · Docs v0.1.3
           nav_translations:
             产品: Product
             首页: Home
