@@ -2216,8 +2216,8 @@
 </tr>
 <tr>
 <td>Backpack OS firmware</td>
-<td>V1.2.0</td>
-<td>Pre-installed at the factory, upgraded by technical support</td>
+<td>V1.2.3 (paired with this release)</td>
+<td>Pre-installed at the factory; contact technical support to confirm or upgrade it, see <a href="../update/#system-image">System image</a></td>
 </tr>
 <tr>
 <td>XTac UMI Collector (collection unit)</td>
@@ -2241,7 +2241,7 @@
 </tr>
 </tbody>
 </table>
-<p>Upgrading the Backpack Kit's collection unit is done entirely in the console, with no PC needed. The Developer Kit has its own baseline, see <a href="../../pc/versions/#required">Developer Kit · Versions and upgrades</a>.</p>
+<p>Collector application upgrades on the Backpack Kit are performed in the console, with no PC needed; backpack system image upgrades require guidance from technical support. Collector showing 0.4.7 does not mean the backpack OS is on V1.2.3; confirm the two versions separately. The Developer Kit has its own baseline, see <a href="../../pc/versions/#required">Developer Kit · Versions and upgrades</a>.</p>
 <h2 id="history">Version highlights<a class="headerlink" href="#history" title="锚点链接">¶</a></h2>
 <p>Only recent versions are listed here. For earlier versions, the device shows each version's changes the first time you enter the console after upgrading.</p>
 <h3 id="v047">0.4.7 (2026-11-05)<a class="headerlink" href="#v047" title="锚点链接">¶</a></h3>
@@ -2258,6 +2258,7 @@
 <li><strong>Export time alignment</strong>: training data exports pick each camera's nearest frame independently and interpolate pose and gripper opening at the frame time. <strong>After upgrading, existing exports show as needing re-export</strong>; the raw recording format is unchanged.</li>
 <li><strong>Manual rollback removed</strong>: the upgrade bundle no longer offers "Roll back to previous version"; automatic fallback to the previous version when an upgrade fails is kept. See <a href="../update/#rollback">Rollback</a>.</li>
 <li><strong>Matching headset app</strong>: XTac UMI XR moves to 0.3.9 (tracker battery is reported by the headset app).</li>
+<li><strong>Raw MCAP download</strong>: engineering mode provides a per-recording download of the raw MCAP retained on the device for technical support and data analysis, on both desktop and mobile. See <a href="../projects-export/#raw-mcap">Downloading raw recordings</a>.</li>
 </ol>
 <h3 id="v046">0.4.6 (2026-10-27)<a class="headerlink" href="#v046" title="锚点链接">¶</a></h3>
 <p>Changes since 0.4.3:</p>

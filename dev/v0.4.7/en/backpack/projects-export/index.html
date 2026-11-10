@@ -1093,6 +1093,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#raw-mcap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Downloading raw recordings (support and data analysis)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#archive" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2385,7 +2396,7 @@
 <tbody>
 <tr>
 <td>Where</td>
-<td>On the backpack's data drive, for replay and export</td>
+<td>On the backpack's data drive; <a href="#raw-mcap">download individual recordings</a> in engineering mode</td>
 <td>Downloaded or uploaded to a remote backend</td>
 </tr>
 <tr>
@@ -2400,8 +2411,17 @@
 </tr>
 </tbody>
 </table>
+<h2 id="raw-mcap">Downloading raw recordings (support and data analysis)<a class="headerlink" href="#raw-mcap" title="锚点链接">¶</a></h2>
+<p>Version 0.4.7 supports downloading the raw MCAP of an individual recording for troubleshooting with technical support or further analysis. For routine training data, use the <a href="#export">export workflow</a> above.</p>
+<ol>
+<li>Enable engineering mode with guidance from technical support; the entry point is hidden in normal mode.</li>
+<li>On the Project page, expand the project and task, find the recording and click "Export raw MCAP". The entry point is available in desktop and mobile browsers.</li>
+<li>Find the recording's <code>.mcap</code> file in your browser's download list. There is no need to export the entire task first.</li>
+</ol>
+<p>The recording must be ready, or uploaded with its local source file retained. Archived recordings, recordings that are not ready, and those being deleted cannot be downloaded. If the download reports that the local raw file is missing, contact technical support; this entry point cannot recover deleted files. A quality-check warning does not necessarily mean the source is unreadable; refer to the button's availability and any download message.</p>
+<p>The download serves the file stored on the device, preserving its recorded content and timestamps, without transcoding, image rectification or 30Hz resampling during download. It differs from the task's exported <code>.train.mcap</code> and cannot be used directly as that training export format. If you need the raw file for later analysis, download it and verify the copy before <a href="#archive">archiving</a>.</p>
 <h2 id="archive">Archive<a class="headerlink" href="#archive" title="锚点链接">¶</a></h2>
-<p>Archiving <strong>deletes the raw files on the device and keeps only the record</strong>, to free space; archived recordings can no longer be replayed or exported.</p>
+<p>Archiving <strong>deletes the raw files on the device and keeps only the record</strong>, to free space; archived recordings can no longer be replayed, re-exported or downloaded as raw MCAP.</p>
 <p>Tick recordings in the export dialog and click Archive, or tick "Automatically archive after upload (delete local source files; keep metadata only)" when uploading. The confirmation separates recordings by whether they were uploaded or downloaded, and recordings never uploaded or downloaded need a final extra confirmation.</p>
 <h2 id="delete">Delete<a class="headerlink" href="#delete" title="锚点链接">¶</a></h2>
 <ul>

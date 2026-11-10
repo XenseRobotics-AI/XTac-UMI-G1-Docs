@@ -2216,8 +2216,8 @@
 </tr>
 <tr>
 <td>数采背包 OS 固件</td>
-<td>V1.2.0</td>
-<td>出厂预装，由技术支持升级</td>
+<td>V1.2.3（本次发布配套）</td>
+<td>出厂预装；版本确认与升级联系技术支持，见<a href="../update/#system-image">系统镜像</a></td>
 </tr>
 <tr>
 <td>XTac UMI Collector（采集单元）</td>
@@ -2241,7 +2241,7 @@
 </tr>
 </tbody>
 </table>
-<p>背包版的采集单元升级全部在控制台里完成，不需要 PC。PC 版的版本基线是另一套，见 <a href="../../pc/versions/#required">PC 版 · 版本与升级</a>。</p>
+<p>背包版的 Collector 应用升级在控制台里完成，不需要 PC；背包系统镜像升级由技术支持指导处理。Collector 显示 0.4.7 不代表背包 OS 已升到 V1.2.3，两者需分别确认。PC 版的版本基线是另一套，见 <a href="../../pc/versions/#required">PC 版 · 版本与升级</a>。</p>
 <h2 id="history">各版本要点<a class="headerlink" href="#history" title="锚点链接">¶</a></h2>
 <p>这里只列近期版本。更早版本的更新内容，升级后首次进入控制台时会在设备上展示。</p>
 <h3 id="v047">0.4.7（2026-11-05）<a class="headerlink" href="#v047" title="锚点链接">¶</a></h3>
@@ -2258,6 +2258,7 @@
 <li><strong>导出时间对齐</strong>：训练数据导出时各路相机分别取最近帧，位姿与开合度按帧时刻插值。<strong>升级后已有导出会显示需要重新导出</strong>；原始录制格式不变。</li>
 <li><strong>不再提供手动回滚</strong>：升级包默认不带「回滚到上一版本」入口；升级失败时自动回退上一版本的保护保留，见<a href="../update/#rollback">回滚</a>。</li>
 <li><strong>配套头显应用</strong>：XTac UMI XR 升到 0.3.9（Tracker 电量由头显应用上报）。</li>
+<li><strong>原始 MCAP 下载</strong>：工程模式下可按单条录制下载保留在设备上的原始 MCAP，用于技术支持与数据分析；电脑、手机端均有入口，见<a href="../projects-export/#raw-mcap">下载原始录制</a>。</li>
 </ol>
 <h3 id="v046">0.4.6（2026-10-27）<a class="headerlink" href="#v046" title="锚点链接">¶</a></h3>
 <p>相对 0.4.3 的变化：</p>

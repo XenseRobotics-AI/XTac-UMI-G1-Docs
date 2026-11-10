@@ -2507,7 +2507,7 @@
 <h2 id="update">Upgrades<a class="headerlink" href="#update" title="锚点链接">¶</a></h2>
 <details class="failure">
 <summary>Power was lost during an upgrade / the console cannot connect after applying an update</summary>
-<p><strong>Cause:</strong> the collection software restarts when an update is applied, and the page waits up to 90 seconds. The previous version is retained, so a failed start or power loss reverts to it automatically and does not leave the device unable to boot.</p>
+<p><strong>Cause:</strong> the collection software restarts when an update is applied, and the page waits up to 90 seconds. Collector application updates retain the previous version and provide automatic fallback if the new version fails to start. This does not apply to system image flashing; see <a href="../update/#rollback">Rollback scope</a>.</p>
 <p><strong>Fix:</strong></p>
 <ol>
 <li>Refresh the page.</li>
@@ -2526,16 +2526,9 @@
 <p><strong>Fix:</strong> power-cycle the backpack (or reconnect that gripper's Type-C cable), then check the firmware version in Device information; see <a href="../update/#gripper-firmware">Gripper firmware</a>.</p>
 </details>
 <hr>
-<p>If the problem persists, click the block of readings at the top right of the top bar to open the "System logs" (a red badge with the error count appears when there are errors). The panel cannot export files, so <strong>a screenshot is sufficient; there is no need to retrieve logs from the device</strong>.</p>
-<p>When reporting through the channels in <a href="../../common/reference/#support">Support and feedback</a>, include:</p>
-<ul>
-<li>A system-log screenshot and the time the error occurred;</li>
-<li>The complete error text;</li>
-<li>The device SN and console version (System → <a href="../system/#device-info">Device information</a>);</li>
-<li>The operation in progress when the problem occurred;</li>
-<li>The project / task / episode number, if a recording was involved;</li>
-<li>The gripper LED state and a Live monitoring screenshot, if a gripper or the views are involved.</li>
-</ul>
+<p>If the problem persists, open System → <a href="../system/#device-info">Device information</a>, click "Export diagnostics" and send the completed encrypted ZIP download to technical support.</p>
+<p>The block of readings at the top right opens "System logs", with a red badge and error count when errors occur. Use that panel for viewing and screenshots; download the diagnostics file from Device information. If the console is unreachable or the diagnostics download fails, send any available error screenshots first and explain why the package could not be downloaded.</p>
+<p>For contact channels and the information to include, see <a href="../../common/reference/#support">Support and feedback</a>.</p>
 
 
 

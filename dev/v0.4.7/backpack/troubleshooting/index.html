@@ -2507,7 +2507,7 @@
 <h2 id="update">升级<a class="headerlink" href="#update" title="锚点链接">¶</a></h2>
 <details class="failure">
 <summary>升级过程中断电 / 应用更新后控制台持续无法连接</summary>
-<p><strong>原因</strong>：应用更新时采集软件会重启，页面最多等待 90 秒。升级时设备保留上一版本，新版本启动失败或中途断电时将自动回退，不会导致设备无法启动。</p>
+<p><strong>原因</strong>：应用更新时采集软件会重启，页面最多等待 90 秒。Collector 应用更新保留上一版本，并提供新版本启动失败时自动回退的保护；此机制不适用于系统镜像刷写，见<a href="../update/#rollback">回滚范围</a>。</p>
 <p><strong>解决</strong>：</p>
 <ol>
 <li>刷新页面。</li>
@@ -2526,16 +2526,9 @@
 <p><strong>解决</strong>：将背包断电后重新上电（或重新插拔该夹爪的 Type-C 线），然后在设备信息核对固件版本，见<a href="../update/#gripper-firmware">夹爪固件</a>。</p>
 </details>
 <hr>
-<p>如问题仍未解决，点击顶栏右上角的田字读数，打开「系统日志」（有错误时显示红色角标和错误条数）。该面板不支持导出文件，<strong>截图即可，无需在设备上查找日志</strong>。</p>
-<p>按<a href="../../common/reference/#support">支持与反馈</a>中的渠道反馈时，请提供：</p>
-<ul>
-<li>系统日志截图与报错时间；</li>
-<li>完整报错原文；</li>
-<li>设备 SN 与控制台版本（系统 → <a href="../system/#device-info">设备信息</a>）；</li>
-<li>出现问题时正在执行的操作；</li>
-<li>涉及录制时，附项目 / 任务 / episode 编号；</li>
-<li>涉及夹爪或画面时，附夹爪灯态与监控页截图。</li>
-</ul>
+<p>如问题仍未解决，请到 系统 → <a href="../system/#device-info">设备信息</a> 点击「导出诊断」，将下载完成的加密 ZIP 交给技术支持。</p>
+<p>顶栏右上角的田字读数可打开「系统日志」，有错误时显示红色角标和错误条数；该面板用于查看和截图，诊断文件从设备信息页下载。若控制台无法访问或诊断包下载失败，先提供可获取的报错截图，并说明无法下载的情况。</p>
+<p>反馈渠道与材料清单见<a href="../../common/reference/#support">支持与反馈</a>。</p>
 
 
 

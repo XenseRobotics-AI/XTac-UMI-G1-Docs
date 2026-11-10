@@ -1093,6 +1093,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#system-image" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Backpack system image
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#rollback" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2158,11 +2169,33 @@
 
 
 <h1 id="upgrades-and-ota">Upgrades and OTA<a class="headerlink" href="#upgrades-and-ota" title="锚点链接">¶</a></h1>
-<p>This page covers upgrading the console program and the gripper firmware:</p>
-<ul>
-<li><strong>Console program</strong>: import an upgrade bundle on System → System update.</li>
-<li><strong>Gripper firmware</strong>: flash it on System → Gripper configuration; see <a href="#gripper-firmware">Gripper firmware</a>.</li>
-</ul>
+<p>Before upgrading, identify the component to update. These three file types are not interchangeable:</p>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>File</th>
+<th>Where to update</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Collector application (collection software and console)</td>
+<td><code>.tar.zst</code> upgrade bundle</td>
+<td>System → System update; see <a href="#bundle">Importing an upgrade bundle</a></td>
+</tr>
+<tr>
+<td>Backpack system</td>
+<td><code>.img</code> system image</td>
+<td>Contact technical support for guided flashing; see <a href="#system-image">System image</a></td>
+</tr>
+<tr>
+<td>Gripper firmware</td>
+<td><code>.bin</code> firmware</td>
+<td>System → Gripper configuration; see <a href="#gripper-firmware">Gripper firmware</a></td>
+</tr>
+</tbody>
+</table>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/backpack/update-en.webp" data-desc-position="bottom"><img alt="System update page" src="../../../assets/backpack/update-en.webp"></a></p>
 <h2 id="order">Upgrade order<a class="headerlink" href="#order" title="锚点链接">¶</a></h2>
 <p>A new Collector version may require newer gripper firmware. <strong>Flash the gripper firmware first, then import the upgrade bundle</strong>:</p>
@@ -2173,7 +2206,7 @@
 </ol>
 <p>For example, before moving to 0.4.7 both leader grippers must be on 1.2.7 or above. Flashing after upgrading the Collector also works, but recording is refused until the firmware is updated.</p>
 <h2 id="bundle">Importing an upgrade bundle<a class="headerlink" href="#bundle" title="锚点链接">¶</a></h2>
-<p>An upgrade bundle is a <code>.tar.zst</code> file provided by technical support, with the version in its file name, such as <code>taccap-collector-v0.4.3-….tar.zst</code>. It updates only the console program; it contains no gripper firmware or camera profiles and does not affect collected data.</p>
+<p>An upgrade bundle is a <code>.tar.zst</code> file provided by technical support, with the version in its file name, such as <code>taccap-collector-v0.4.3-….tar.zst</code>. It updates the Collector application; it does not flash the backpack system image or contain gripper firmware or camera profiles. Application upgrades do not affect collected data.</p>
 <ol>
 <li>Stop recording.</li>
 <li>Click "Upload firmware package", select the <code>.tar.zst</code> file and click "Upload and verify".</li>
@@ -2182,14 +2215,14 @@
 <li>On <a href="../system/#device-info">Device information</a>, confirm that the version number and build time have been updated.</li>
 </ol>
 <p>If verification fails, the device rejects the bundle, gives the reason under "Last error" and keeps running the current version. Common causes: a corrupt or incompletely transferred file, a version gap that is too large, or a version older than the current one.</p>
-<div class="admonition note">
-<p class="admonition-title">Some fixes must be applied by technical support</p>
-<p>A few fixes involve the device's system components, are not included in upgrade bundles and cannot be applied on site. Whether a device needs such a fix is determined by technical support. "Upload firmware package" accepts only <code>.tar.zst</code> upgrade bundles; do not upload any other file.</p>
-</div>
+<h2 id="system-image">Backpack system image<a class="headerlink" href="#system-image" title="锚点链接">¶</a></h2>
+<p>The backpack system version paired with this release is <strong>V1.2.3</strong>, and its image includes <strong>Collector 0.4.7</strong>. The image is for full-device flashing of the XENSE-3588Q collection unit and includes boot and system partitions. When these system components need updating, importing a Collector upgrade bundle does not replace flashing the system image.</p>
+<p>The system image is an <code>.img</code> file. Contact technical support for an image suitable for your device and flashing instructions. The console's "Upload firmware package" accepts only <code>.tar.zst</code>; <strong>do not upload an <code>.img</code> there</strong>. Collector and backpack system versions are managed separately; the Collector version alone does not confirm that the system has been updated.</p>
+<p>Before flashing, download or upload the recordings and exported data you need to a location outside the device and verify those copies. Then confirm configuration backup and recovery arrangements with technical support. The application data-retention and automatic-fallback descriptions below do not apply to system image flashing.</p>
 <h2 id="rollback">Rollback<a class="headerlink" href="#rollback" title="锚点链接">¶</a></h2>
-<p>The device keeps the previous version when upgrading. If the new version fails to start, the file is corrupt or power is lost during the upgrade, the device automatically reverts to the previous version and remains bootable.</p>
+<p>Collector application upgrades retain the previous version and provide automatic fallback if the new version fails to start. This applies to application updates, not recovery of the backpack system image. If the console remains unreachable after an upgrade, follow <a href="../troubleshooting/#update">Upgrade troubleshooting</a>.</p>
 <p>From 0.4.7 the upgrade bundle no longer offers manual rollback and the System update page has no "Rollback" card; to go back to an older version, contact <a href="../../common/reference/#support">technical support</a>. On 0.4.6 and earlier, the "Rollback" card can go back one version only, and a device never upgraded since leaving the factory has nothing to roll back to.</p>
-<p>Upgrades and rollbacks do not affect recorded data, projects, upload configurations or network settings.</p>
+<p>Collector application upgrades and application rollbacks do not affect recorded data, projects, upload configurations or network settings.</p>
 <h2 id="gripper-firmware">Gripper firmware<a class="headerlink" href="#gripper-firmware" title="锚点链接">¶</a></h2>
 <p>Gripper firmware is not updated through upgrade bundles; flash it from "Gripper firmware update" at the bottom of System → <a href="../system/#gripper">Gripper configuration</a>, with no computer required. The firmware files and whether an upgrade is needed are covered in the Developer Kit's <a href="../../pc/versions/#ota">firmware OTA upgrade</a>.</p>
 <ol>

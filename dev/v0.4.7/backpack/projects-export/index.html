@@ -1093,6 +1093,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#raw-mcap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        下载原始录制（技术支持与数据分析）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#archive" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2385,7 +2396,7 @@
 <tbody>
 <tr>
 <td>在哪</td>
-<td>背包数据盘，用于回放和导出</td>
+<td>背包数据盘；可在工程模式下<a href="#raw-mcap">按单条下载</a></td>
 <td>下载或上传到远端</td>
 </tr>
 <tr>
@@ -2400,8 +2411,17 @@
 </tr>
 </tbody>
 </table>
+<h2 id="raw-mcap">下载原始录制（技术支持与数据分析）<a class="headerlink" href="#raw-mcap" title="锚点链接">¶</a></h2>
+<p>0.4.7 支持直接下载单条录制的原始 MCAP，供技术支持排查或进一步分析。日常获取训练数据仍按上文<a href="#export">导出</a>操作。</p>
+<ol>
+<li>在技术支持指导下开启工程模式；普通模式不显示此入口。</li>
+<li>在「项目」页展开项目与任务，找到目标录制，点击「导出原始 MCAP」。电脑和手机浏览器均支持此入口。</li>
+<li>在浏览器下载列表中查看该条录制的 <code>.mcap</code> 文件，无需先导出整个任务。</li>
+</ol>
+<p>下载要求该录制已就绪，或已上传且仍保留本地源文件；已归档、尚未就绪或正在删除的条目不能下载。若提示本地原始文件不存在，请联系技术支持确认，不能通过此入口恢复已删除的文件。质量检查显示异常不一定代表源文件不可读，以按钮是否可用和下载时的提示为准。</p>
+<p>此操作直接下载设备上保存的文件，保留录制内容与时间戳，下载时不做转码、图像矫正或 30Hz 重采样。它与任务导出的 <code>.train.mcap</code> 不同，不能直接按训练导出格式使用。若需要保留原始文件用于后续分析，请在<a href="#archive">归档</a>前下载并确认副本可用。</p>
 <h2 id="archive">归档<a class="headerlink" href="#archive" title="锚点链接">¶</a></h2>
-<p>归档会<strong>删掉设备上的原始文件，只保留记录</strong>，用来腾出空间；归档后不能再回放或导出。</p>
+<p>归档会<strong>删掉设备上的原始文件，只保留记录</strong>，用来腾出空间；归档后不能再回放、重新导出或下载原始 MCAP。</p>
 <p>在导出对话框勾选录制后点「归档」，或上传时勾选「上传完成后自动归档」。确认时会按录制是否已上传、是否已下载分开提示，从未上传或下载过的录制需要最后再确认一次。</p>
 <h2 id="delete">删除<a class="headerlink" href="#delete" title="锚点链接">¶</a></h2>
 <ul>

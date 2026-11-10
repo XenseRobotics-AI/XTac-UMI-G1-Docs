@@ -1093,6 +1093,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#system-image" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        背包系统镜像
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#rollback" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2158,11 +2169,33 @@
 
 
 <h1 id="升级与-ota">升级与 OTA<a class="headerlink" href="#升级与-ota" title="锚点链接">¶</a></h1>
-<p>本页说明控制台程序与夹爪固件的升级方法：</p>
-<ul>
-<li><strong>控制台程序</strong>：在 系统 → 系统更新 页导入升级包。</li>
-<li><strong>夹爪固件</strong>：在 系统 → 夹爪配置 页刷写，见<a href="#gripper-firmware">夹爪固件</a>。</li>
-</ul>
+<p>升级前先确认要更新的组件，三类文件不能混用：</p>
+<table>
+<thead>
+<tr>
+<th>更新对象</th>
+<th>文件</th>
+<th>操作入口</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Collector 应用（采集软件与控制台）</td>
+<td><code>.tar.zst</code> 升级包</td>
+<td>系统 → 系统更新，见<a href="#bundle">导入升级包</a></td>
+</tr>
+<tr>
+<td>数采背包系统</td>
+<td><code>.img</code> 系统镜像</td>
+<td>联系技术支持，在指导下刷写，见<a href="#system-image">系统镜像</a></td>
+</tr>
+<tr>
+<td>夹爪固件</td>
+<td><code>.bin</code> 固件</td>
+<td>系统 → 夹爪配置，见<a href="#gripper-firmware">夹爪固件</a></td>
+</tr>
+</tbody>
+</table>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/backpack/update.webp" data-desc-position="bottom"><img alt="系统更新页" src="../../assets/backpack/update.webp"></a></p>
 <h2 id="order">升级顺序<a class="headerlink" href="#order" title="锚点链接">¶</a></h2>
 <p>新版本 Collector 可能要求更高的夹爪固件。<strong>先刷夹爪固件，再导入升级包</strong>：</p>
@@ -2173,7 +2206,7 @@
 </ol>
 <p>例如升到 0.4.7 前，两只主夹爪须为 1.2.7 及以上；先升 Collector、后刷固件也能刷，但刷好之前开录会被拒绝。</p>
 <h2 id="bundle">导入升级包<a class="headerlink" href="#bundle" title="锚点链接">¶</a></h2>
-<p>升级包为技术支持提供的 <code>.tar.zst</code> 文件，文件名含版本号，如 <code>taccap-collector-v0.4.3-….tar.zst</code>。升级包仅更新控制台程序，不包含夹爪固件与相机参数包，不影响已采集的数据。</p>
+<p>升级包为技术支持提供的 <code>.tar.zst</code> 文件，文件名含版本号，如 <code>taccap-collector-v0.4.3-….tar.zst</code>。升级包更新 Collector 应用，不用于刷写背包系统镜像，也不包含夹爪固件与相机参数包；应用升级不影响已采集的数据。</p>
 <ol>
 <li>停止录制。</li>
 <li>点击「上传固件包」，选择 <code>.tar.zst</code> 文件，点击「上传并校验」。</li>
@@ -2182,14 +2215,14 @@
 <li>在<a href="../system/#device-info">设备信息</a>确认版本号与构建时间已更新。</li>
 </ol>
 <p>校验未通过时，设备拒绝该升级包并在「上次错误」中给出原因，当前版本继续运行。常见原因包括：文件损坏或传输不完整、版本跨度过大、版本低于当前版本。</p>
-<div class="admonition note">
-<p class="admonition-title">部分修复需由技术支持处理</p>
-<p>少数修复涉及设备系统组件，不包含在升级包内，无法在现场完成。设备是否需要此类修复，以技术支持的通知为准。「上传固件包」仅接受 <code>.tar.zst</code> 升级包，请勿上传其他文件。</p>
-</div>
+<h2 id="system-image">背包系统镜像<a class="headerlink" href="#system-image" title="锚点链接">¶</a></h2>
+<p>本次发布配套的背包系统版本为 <strong>V1.2.3</strong>，系统镜像内置 <strong>Collector 0.4.7</strong>。镜像适用于 XENSE-3588Q 采集单元的整机刷写，包含启动与系统分区；需要更新这类系统组件时，仅导入 Collector 升级包不能替代系统镜像刷写。</p>
+<p>系统镜像是 <code>.img</code> 文件，请向技术支持获取适用于该设备的镜像与刷写指导。控制台「上传固件包」仅接受 <code>.tar.zst</code>，<strong>不要在该入口上传 <code>.img</code></strong>。Collector 版本与背包系统版本分别管理，不能仅凭「采集端版本」判断系统是否已更新。</p>
+<p>刷写前，先将需要保留的录制及导出数据下载或上传到设备以外的位置，确认副本可用，再与技术支持确认配置备份和恢复安排。系统镜像刷写不适用下文应用升级的数据保留与自动回退说明。</p>
 <h2 id="rollback">回滚<a class="headerlink" href="#rollback" title="锚点链接">¶</a></h2>
-<p>升级时设备会保留上一版本。新版本启动失败、文件损坏或升级过程中断电时，设备自动回退到上一版本，不会导致设备无法启动。</p>
+<p>Collector 应用升级会保留上一版本，并提供新版本启动失败时自动回退的保护。此机制只针对应用更新，不用于恢复背包系统镜像；升级后持续无法连接时，按<a href="../troubleshooting/#update">升级故障排查</a>处理。</p>
 <p>0.4.7 起升级包不再提供手动回滚，系统更新页不显示「回滚」卡；需要退回旧版本时联系<a href="../../common/reference/#support">技术支持</a>。0.4.6 及更早版本的「回滚」卡只能回退一个版本，出厂后未升级过的设备没有可回退的版本。</p>
-<p>升级与回滚均不影响录制数据、项目、上传配置和网络配置。</p>
+<p>Collector 应用升级与应用回滚均不影响录制数据、项目、上传配置和网络配置。</p>
 <h2 id="gripper-firmware">夹爪固件<a class="headerlink" href="#gripper-firmware" title="锚点链接">¶</a></h2>
 <p>夹爪固件不通过升级包更新，而是在 系统 → <a href="../system/#gripper">夹爪配置</a> 页下方的「夹爪固件升级」中刷写，无需电脑。固件文件及是否需要升级，见 PC 版<a href="../../pc/versions/#ota">固件 OTA 升级</a>。</p>
 <ol>

@@ -2274,11 +2274,13 @@
 <ul>
 <li>The complete error text, plus the matching log:<ul>
 <li>Developer Kit: attach the complete log file for that run, <code>~/xenselogs/session_&lt;timestamp&gt;.log</code> (the whole file, not just the last few lines on screen); see <a href="../../pc/troubleshooting/#logs">Troubleshooting</a>.</li>
-<li>Backpack Kit: attach a screenshot of the console's system-log panel and note roughly when the error appeared; the panel does not export a log file, so there is none to look for on the device.</li>
+<li>Backpack Kit: open System → <a href="../../backpack/system/#device-info">Device information</a>, click "Export diagnostics" and attach the completed encrypted ZIP download, along with the approximate time of the error. If the console is unreachable or the download fails, send error screenshots first and explain the situation. Screenshots of the top-bar "System logs" panel can supplement the package.</li>
 </ul>
 </li>
 <li>Device identity: on the Backpack Kit, copy the device SN, the Collector version and each gripper's SN / firmware version from the console's System → Device info page; on the Developer Kit, the side / role / firmware_sn output from <code>scan_grippers</code> and the output of the command in <a href="../../pc/versions/#check-versions">How to check versions</a>.</li>
+<li>For backpack system upgrade or startup issues, include the backpack OS version or the name of the last image flashed, if known. State if it is unknown; the Collector version does not identify the OS version.</li>
 <li>Steps to reproduce, the full command or console actions, single or bimanual, and whether the tracker was enabled.</li>
+<li>For recording issues, include the project / task / episode number. If technical support requests the raw data, provide the corresponding file using <a href="../../backpack/projects-export/#raw-mcap">Downloading raw recordings</a>.</li>
 <li>For anything involving cameras or hardware assembly, photos of the device connections and of what looks wrong.</li>
 </ul>
 <h2 id="references">References<a class="headerlink" href="#references" title="锚点链接">¶</a></h2>
