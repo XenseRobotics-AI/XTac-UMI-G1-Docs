@@ -8,11 +8,11 @@ A lookup appendix shared by both editions: terms, feedback channels and related 
 |---|---|
 | **XTac UMI G1** | The wearable UMI data-collection gripper, the sensor carrier shared by both editions; see [XTac UMI G1](../product/g1.md) |
 | **Backpack** | The Backpack Kit's collection unit: an RK3588 compute node that the grippers and the headset plug into and that runs XTac UMI Collector; formally the XTac UMI Backpack, see [The XTac UMI Backpack](../product/backpack.md) |
-| **XTac UMI Collector** | The collection software on the backpack: it takes in the cameras, the gripper MCUs and the headset pose, and handles recording, replay, export and device management; version baseline 0.4.6, the device's System page is authoritative |
+| **XTac UMI Collector** | The collection software on the backpack: it takes in the cameras, the gripper MCUs and the headset pose, and handles recording, replay, export and device management; version baseline 0.4.7, the device's System page is authoritative |
 | **Console** | Collector's browser UI, opened from a tablet, phone or PC connected to the backpack; the live monitor, projects and system pages all live there |
 | **Project / task / episode** | How the Backpack Kit organizes data: tasks under a project, each task carrying a LeRobot language instruction, and each start-to-stop recording being one episode |
 | **MCAP** | The raw recording format of each Backpack Kit episode, storing cameras, encoders, IMU, poses and events by topic; the LeRobot export is converted from it |
-| **OTA bundle** | The Backpack Kit's Collector upgrade package (`.tar.zst`), uploaded, verified, applied and rebooted into on the console's System → System update page, with rollback to the previous version. Gripper firmware OTA on the Developer Kit is in [Firmware OTA upgrade](../pc/versions.md#ota) |
+| **OTA bundle** | The Backpack Kit's Collector upgrade package (`.tar.zst`), uploaded, verified, applied and rebooted into on the console's System → System update page, falling back to the previous version automatically if the upgrade fails. Gripper firmware OTA on the Developer Kit is in [Firmware OTA upgrade](../pc/versions.md#ota) |
 | **SoftAP** | The backpack's own always-on Wi-Fi hotspot, SSID `xense-<last 6 of the serial>`, 5GHz only, gateway fixed at `192.168.44.1`; the fallback entry point that does not depend on any site network |
 | **TacCap** | The name inside the package `xense.taccap`, the robot type `taccap_gripper` and the backpack's body label (Tactile Capture); the product name is XTac UMI G1 |
 | **UMI** | Universal Manipulation Interface, the handheld leader-gripper data-collection paradigm |
@@ -40,9 +40,11 @@ Please include:
 
 - The complete error text, plus the matching log:
     - Developer Kit: attach the complete log file for that run, `~/xenselogs/session_<timestamp>.log` (the whole file, not just the last few lines on screen); see [Troubleshooting](../pc/troubleshooting.md#logs).
-    - Backpack Kit: attach a screenshot of the console's system-log panel and note roughly when the error appeared; the panel does not export a log file, so there is none to look for on the device.
+    - Backpack Kit: open System → [Device information](../backpack/system.md#device-info), click "Export diagnostics" and attach the completed encrypted ZIP download, along with the approximate time of the error. If the console is unreachable or the download fails, send error screenshots first and explain the situation. Screenshots of the top-bar "System logs" panel can supplement the package.
 - Device identity: on the Backpack Kit, copy the device SN, the Collector version and each gripper's SN / firmware version from the console's System → Device info page; on the Developer Kit, the side / role / firmware_sn output from `scan_grippers` and the output of the command in [How to check versions](../pc/versions.md#check-versions).
+- For backpack system upgrade or startup issues, include the backpack OS version or the name of the last image flashed, if known. State if it is unknown; the Collector version does not identify the OS version.
 - Steps to reproduce, the full command or console actions, single or bimanual, and whether the tracker was enabled.
+- For recording issues, include the project / task / episode number. If technical support requests the raw data, provide the corresponding file using [Downloading raw recordings](../backpack/projects-export.md#raw-mcap).
 - For anything involving cameras or hardware assembly, photos of the device connections and of what looks wrong.
 
 ## References {#references}
@@ -65,6 +67,7 @@ If what is on your devices differs from this table, upgrade to match it, or use 
 
 | Docs version | xense-taccap-lerobot (Developer Kit collection) | XTac UMI XR (headset app) | XTac UMI Collector (Backpack Kit collection unit) | TacCap-Gripper SDK (gripper SDK) |
 |---|---|---|---|---|
+| v0.1.3 | v0.1.5 | 0.3.9 | 0.4.7 | 0.4.5 |
 | v0.1.2 | v0.1.5 | 0.3.6 | 0.4.6 | 0.4.5 |
 | v0.1.1 | v0.1.1 | 0.3.3 | 0.4.3 | 0.4.3 |
 | v0.1.0 | v0.1.0 | 0.3.2 | 0.4.3 | 0.4.1 |

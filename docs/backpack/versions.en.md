@@ -4,22 +4,39 @@ This page gives the version baseline for the Backpack Kit's components, and the 
 
 ## Version baseline {#baseline}
 
-Matched to XTac UMI Collector 0.4.6. The software and hardware versions across the set have to match each other, so come back to this table after upgrading any one of them.
+Matched to XTac UMI Collector 0.4.7. The software and hardware versions across the set have to match each other, so come back to this table after upgrading any one of them.
 
 | Component | Baseline | Where to check / how to upgrade |
 |---|---|---|
 | Tablet OS (REDMI Pad 2 SE) | 3.0.303 or above recommended | Tablet Settings → My device; follows the system update |
-| Backpack OS firmware | V1.2.0 | Pre-installed at the factory, upgraded by technical support |
-| XTac UMI Collector (collection unit) | 0.4.3 | The console's System → [Device information](system.md#device-info), "Collector version"; upgrading is in [Upgrades and OTA](update.md) |
+| Backpack OS firmware | V1.2.3 (paired with this release) | Pre-installed at the factory; contact technical support to confirm or upgrade it, see [System image](update.md#system-image) |
+| XTac UMI Collector (collection unit) | 0.4.7 | The console's System → [Device information](system.md#device-info), "Collector version"; upgrading is in [Upgrades and OTA](update.md) |
 | Pico OS | 5.15.5.U or above recommended | Headset Settings → General → About; upgrading is in [Pico4 headset and tracker setup](../common/pico4.md#pico-system) |
-| XTac UMI XR (headset app) | 0.3.6 | The headset's app library; installing and upgrading are in [Pico4 headset and tracker setup](../common/pico4.md#pico-app) |
-| Leader gripper firmware | ≥ 1.2.5 | The console's System → [Device information](system.md#device-info), "Gripper MCU"; upgrading is at System → [Gripper configuration](system.md#gripper) |
+| XTac UMI XR (headset app) | 0.3.9 | The headset's app library; installing and upgrading are in [Pico4 headset and tracker setup](../common/pico4.md#pico-app) |
+| Leader gripper firmware | ≥ 1.2.7 (recording is refused below this) | The console's System → [Device information](system.md#device-info), "Gripper MCU"; upgrading is at System → [Gripper configuration](system.md#gripper) |
 
-Upgrading the Backpack Kit's collection unit is done entirely in the console, with no PC needed. The Developer Kit has its own baseline, see [Developer Kit · Versions and upgrades](../pc/versions.md#required).
+Collector application upgrades on the Backpack Kit are performed in the console, with no PC needed; backpack system image upgrades require guidance from technical support. Collector showing 0.4.7 does not mean the backpack OS is on V1.2.3; confirm the two versions separately. The Developer Kit has its own baseline, see [Developer Kit · Versions and upgrades](../pc/versions.md#required).
 
 ## Version highlights {#history}
 
 Only recent versions are listed here. For earlier versions, the device shows each version's changes the first time you enter the console after upgrading.
+
+### 0.4.7 (2026-11-05) {#v047}
+
+Changes since 0.4.6:
+
+1. **Upgrade the gripper firmware to 1.2.7 first**: 0.4.7 requires leader gripper firmware ≥ 1.2.7 and refuses to record below it. The upgrade bundle contains no gripper firmware, so **flash the firmware while still on 0.4.6, then import the 0.4.7 bundle**; see [Upgrade order](update.md#order).
+2. **A USB device dropping out stops the recording**: if a gripper, or a wrist fisheye or tactile camera used by the episode, disconnects, recording stops and is marked failed; start a new recording once the device is back. See [USB device disconnects while recording](monitor-record.md#usb-disconnect).
+3. **Low camera frame rate warning**: the recording card shows "Low FPS" live; on stopping, an episode where any camera ran low for more than 5% of its duration is marked "data suspect". See [After stopping](monitor-record.md#record-stop).
+4. **Voice prompts**: choose where they play (Pico / backpack); four new prompts: "Grippers swapped left and right", "Left gripper disconnected", "Right gripper disconnected" and "Gripper start position outside the valid range". See [Voice prompts](gripper.md#voice-cues).
+5. **Starting position**: the pose view can show the range the hands must be in (the start box); out-of-range messages say which hand is off, in which direction and by how many centimetres. See [Starting pose check](monitor-record.md#initial-pose).
+6. **Tracker battery**: the pose view shows the left and right tracker battery levels.
+7. **Leftover data cleanup**: System → Device information can scan for and clean up leftover files on the device; see [Device information](system.md#device-info).
+8. **Projects and tasks**: search by project or task name with highlighted matches; a project, or a task within a project, can no longer be created with a duplicate name. With the live preview off, camera cards show the frame rate as a large number.
+9. **Export time alignment**: training data exports pick each camera's nearest frame independently and interpolate pose and gripper opening at the frame time. **After upgrading, existing exports show as needing re-export**; the raw recording format is unchanged.
+10. **Manual rollback removed**: the upgrade bundle no longer offers "Roll back to previous version"; automatic fallback to the previous version when an upgrade fails is kept. See [Rollback](update.md#rollback).
+11. **Matching headset app**: XTac UMI XR moves to 0.3.9 (tracker battery is reported by the headset app).
+12. **Raw MCAP download**: engineering mode provides a per-recording download of the raw MCAP retained on the device for technical support and data analysis, on both desktop and mobile. See [Downloading raw recordings](projects-export.md#raw-mcap).
 
 ### 0.4.6 (2026-10-27) {#v046}
 

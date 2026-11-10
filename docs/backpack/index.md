@@ -405,7 +405,7 @@
 - **上传时归档**：上传前勾选「上传完成后自动归档」。
 - **随时归档**：之后任意时间手动[归档](projects-export.md#archive)。
 
-归档只保留记录，清掉原始文件；清理时会保护还没有导出过的格式。
+归档只保留记录，清掉原始文件；归档前请完成所需格式的导出，如需保留[原始 MCAP](projects-export.md#raw-mcap)，也应先下载并确认副本可用。
 
 ## 常见问题 {#faq}
 
@@ -418,4 +418,4 @@
 
 ## 版本 {#version}
 
-本页按 XTac UMI Collector 0.4.6 编写，各组件的[版本基线](versions.md#baseline)以控制台系统页显示为准，升级见[升级与 OTA](update.md)；文中的序列号只是示例。
+本页按 XTac UMI Collector 0.4.7 编写，各组件的[版本基线](versions.md#baseline)以控制台系统页显示为准，升级见[升级与 OTA](update.md)；文中的序列号只是示例。
