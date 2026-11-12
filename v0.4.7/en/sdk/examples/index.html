@@ -2345,7 +2345,11 @@ and <code>--outputs rectify,difference</code> to <code>tactile_sensor.py</code>.
 <li>The follower gripper can stream IMU.</li>
 <li>Device scanning releases the GIL and no longer stalls other threads in the same process.</li>
 </ul>
-<p>The full list of changes is in the SDK's <a href="https://github.com/XenseRobotics-AI/TacCap-Gripper/blob/v0.4.5/CHANGELOG.md">CHANGELOG</a>.</p>
+<p>Upgrading from 0.4.5 to 0.4.6 (no API changes):</p>
+<ul>
+<li>The byte-identical data frame that follower firmware 1.2.17 resends when transmissions overlap is now dropped, so it no longer steps the controller twice or reports a key press twice. The count is in <code>g.transport.stats.duplicate_data_dropped</code>; exchange mode is unaffected.</li>
+</ul>
+<p>The full list of changes is in the SDK's <a href="https://github.com/XenseRobotics-AI/TacCap-Gripper/blob/v0.4.6/CHANGELOG.md">CHANGELOG</a>.</p>
 
 
 

@@ -2345,7 +2345,11 @@
 <li>从夹爪可以输出 IMU。</li>
 <li>设备扫描期间释放 GIL，不再卡住同一进程里的其他线程。</li>
 </ul>
-<p>完整变更见 SDK 的 <a href="https://github.com/XenseRobotics-AI/TacCap-Gripper/blob/v0.4.5/CHANGELOG.md">CHANGELOG</a>。</p>
+<p>从 0.4.5 升级到 0.4.6 时（接口不变）：</p>
+<ul>
+<li>从夹爪固件 1.2.17 在收发重叠时重发的那份完全相同的数据帧被丢弃，不再让控制器多走一步、按键多报一次。丢弃次数可从 <code>g.transport.stats.duplicate_data_dropped</code> 读到；分时交换模式不受影响。</li>
+</ul>
+<p>完整变更见 SDK 的 <a href="https://github.com/XenseRobotics-AI/TacCap-Gripper/blob/v0.4.6/CHANGELOG.md">CHANGELOG</a>。</p>
 
 
 
