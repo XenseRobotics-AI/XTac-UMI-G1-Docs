@@ -2,616 +2,616 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/backpack/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/backpack/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/backpack/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/backpack/gripper/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/backpack/gripper/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/backpack/gripper/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/backpack/monitor-record/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/backpack/monitor-record/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/backpack/monitor-record/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/backpack/network/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/backpack/network/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/backpack/network/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/backpack/playback/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/backpack/playback/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/backpack/playback/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/backpack/projects-export/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/backpack/projects-export/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/backpack/projects-export/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/backpack/quickstart/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/backpack/quickstart/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/backpack/quickstart/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/backpack/system/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/backpack/system/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/backpack/system/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/backpack/troubleshooting/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/backpack/troubleshooting/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/backpack/troubleshooting/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/backpack/unbox-connect/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/backpack/unbox-connect/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/backpack/unbox-connect/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/backpack/update/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/backpack/update/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/backpack/update/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/backpack/versions/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/backpack/versions/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/backpack/versions/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/common/coordinates/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/common/coordinates/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/common/coordinates/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/common/gripper/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/common/gripper/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/common/gripper/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/common/maintenance/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/common/maintenance/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/common/maintenance/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/common/pico4/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/common/pico4/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/common/pico4/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/common/reference/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/common/reference/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/common/reference/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/follower/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/follower/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/follower/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/follower/api/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/follower/api/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/follower/api/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/follower/control/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/follower/control/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/follower/control/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/follower/firmware/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/follower/firmware/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/follower/firmware/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/follower/setup/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/follower/setup/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/follower/setup/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/follower/troubleshooting/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/follower/troubleshooting/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/follower/troubleshooting/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/pc/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/pc/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/pc/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/pc/calibration/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/pc/calibration/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/pc/calibration/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/pc/dataset/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/pc/dataset/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/pc/dataset/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/pc/host-setup/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/pc/host-setup/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/pc/host-setup/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/pc/install/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/pc/install/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/pc/install/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/pc/quickstart/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/pc/quickstart/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/pc/quickstart/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/pc/recording/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/pc/recording/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/pc/recording/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/pc/reference/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/pc/reference/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/pc/reference/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/pc/troubleshooting/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/pc/troubleshooting/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/pc/troubleshooting/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/pc/versions/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/pc/versions/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/pc/versions/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/product/backpack/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/product/backpack/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/product/backpack/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/product/editions/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/product/editions/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/product/editions/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/product/g1/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/product/g1/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/product/g1/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/product/highlights/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/product/highlights/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/product/highlights/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/product/safety/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/product/safety/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/product/safety/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/product/specs/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/product/specs/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/product/specs/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/sdk/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/sdk/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/sdk/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/sdk/api/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/sdk/api/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/sdk/api/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/sdk/examples/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/sdk/examples/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/sdk/examples/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/sdk/install/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/sdk/install/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/sdk/install/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/"/>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/backpack/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/backpack/"/>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/backpack/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/backpack/gripper/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/backpack/gripper/"/>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/backpack/gripper/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/backpack/monitor-record/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/backpack/monitor-record/"/>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/backpack/monitor-record/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/backpack/network/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/backpack/network/"/>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/backpack/network/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/backpack/playback/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/backpack/playback/"/>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/backpack/playback/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/backpack/projects-export/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/backpack/projects-export/"/>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/backpack/projects-export/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/backpack/quickstart/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/backpack/quickstart/"/>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/backpack/quickstart/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/backpack/system/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/backpack/system/"/>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/backpack/system/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/backpack/troubleshooting/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/backpack/troubleshooting/"/>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/backpack/troubleshooting/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/backpack/unbox-connect/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/backpack/unbox-connect/"/>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/backpack/unbox-connect/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/backpack/update/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/backpack/update/"/>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/backpack/update/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/backpack/versions/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/backpack/versions/"/>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/backpack/versions/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/common/coordinates/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/common/coordinates/"/>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/common/coordinates/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/common/gripper/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/common/gripper/"/>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/common/gripper/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/common/maintenance/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/common/maintenance/"/>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/common/maintenance/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/common/pico4/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/common/pico4/"/>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/common/pico4/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/common/reference/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/common/reference/"/>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/common/reference/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/follower/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/follower/"/>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/follower/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/follower/api/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/follower/api/"/>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/follower/api/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/follower/control/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/follower/control/"/>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/follower/control/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/follower/firmware/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/follower/firmware/"/>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/follower/firmware/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/follower/setup/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/follower/setup/"/>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/follower/setup/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/follower/troubleshooting/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/follower/troubleshooting/"/>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/follower/troubleshooting/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/pc/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/pc/"/>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/pc/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/pc/calibration/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/pc/calibration/"/>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/pc/calibration/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/pc/dataset/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/pc/dataset/"/>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/pc/dataset/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/pc/host-setup/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/pc/host-setup/"/>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/pc/host-setup/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/pc/install/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/pc/install/"/>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/pc/install/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/pc/quickstart/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/pc/quickstart/"/>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/pc/quickstart/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/pc/recording/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/pc/recording/"/>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/pc/recording/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/pc/reference/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/pc/reference/"/>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/pc/reference/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/pc/troubleshooting/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/pc/troubleshooting/"/>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/pc/troubleshooting/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/pc/versions/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/pc/versions/"/>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/pc/versions/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/product/backpack/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/product/backpack/"/>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/product/backpack/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/product/editions/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/product/editions/"/>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/product/editions/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/product/g1/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/product/g1/"/>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/product/g1/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/product/highlights/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/product/highlights/"/>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/product/highlights/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/product/safety/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/product/safety/"/>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/product/safety/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/product/specs/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/product/specs/"/>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/product/specs/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/sdk/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/sdk/"/>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/sdk/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/sdk/api/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/sdk/api/"/>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/sdk/api/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/sdk/examples/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/sdk/examples/"/>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/sdk/examples/"/>
     </url>
     <url>
         <loc>https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/sdk/install/</loc>
-        <lastmod>2026-11-10</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/en/sdk/install/"/>
         <xhtml:link rel="alternate" hreflang="zh" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.4.7/sdk/install/"/>
