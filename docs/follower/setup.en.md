@@ -9,7 +9,7 @@ Whether you have the Backpack Kit or the Developer Kit, any computer that runs t
 It requires Ubuntu 22.04 or 24.04 (x86_64). Copy and run the steps in order.
 
 !!! tip "Computers that already have the Developer Kit collection environment"
-    The collection environment (v0.1.5) already includes SDK 0.4.5 (`third_party/taccap-gripper` in the data-collection repository). Skip steps 1–5,
+    The collection environment (v0.1.6) already includes SDK 0.4.6 (`third_party/taccap-gripper` in the data-collection repository). Skip steps 1–5,
     go to that directory inside the collection environment and start from [step 6](#host).
 
 ### Step 1: install Miniforge (mamba) {#miniforge}
@@ -42,7 +42,7 @@ sudo apt install -y git curl v4l-utils
 
 ```bash
 cd ~
-git clone --branch v0.4.5 https://github.com/XenseRobotics-AI/TacCap-Gripper.git
+git clone --branch v0.4.6 https://github.com/XenseRobotics-AI/TacCap-Gripper.git
 cd TacCap-Gripper
 ```
 
@@ -72,11 +72,11 @@ This takes a few minutes. Verify:
 python -c "import xense.taccap as t; print(t.hello())"
 ```
 
-It should print `taccap-gripper OK; version 0.4.5`.
+It should print `taccap-gripper OK; version 0.4.6`.
 
 !!! warning "Build errors or the wrong version"
     - Run `mamba activate taccap` before installing, and keep `--no-build-isolation`.
-    - Version is not 0.4.5: this terminal is loading an SDK from somewhere else. Close it, open a new one, run only `mamba activate taccap` and try again.
+    - Version is not 0.4.6: this terminal is loading an SDK from somewhere else. Close it, open a new one, run only `mamba activate taccap` and try again.
 
 ### Step 6: host setup (miss one and the gripper will not connect) {#host}
 

@@ -124,4 +124,8 @@ Upgrading from 0.4.4 to 0.4.5 (existing APIs unchanged):
 - The follower gripper can stream IMU.
 - Device scanning releases the GIL and no longer stalls other threads in the same process.
 
-The full list of changes is in the SDK's [CHANGELOG](https://github.com/XenseRobotics-AI/TacCap-Gripper/blob/v0.4.5/CHANGELOG.md).
+Upgrading from 0.4.5 to 0.4.6 (no API changes):
+
+- The byte-identical data frame that follower firmware 1.2.17 resends when transmissions overlap is now dropped, so it no longer steps the controller twice or reports a key press twice. The count is in `g.transport.stats.duplicate_data_dropped`; exchange mode is unaffected.
+
+The full list of changes is in the SDK's [CHANGELOG](https://github.com/XenseRobotics-AI/TacCap-Gripper/blob/v0.4.6/CHANGELOG.md).
