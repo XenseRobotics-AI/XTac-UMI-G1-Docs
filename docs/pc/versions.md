@@ -6,14 +6,14 @@
 
 !!! warning "采集前先把各项都升到下表版本，这不是可选项"
     - 固件带[命令集 V2.1](#v21) 才支持行程标定。
-    - SDK 0.4.5 附带的镜像修掉了[已知缺陷](#ota-when)。
+    - SDK 0.4.6 附带的镜像修掉了[已知缺陷](#ota-when)。
     - 三者齐了 `gripper.pos` 归一化才成立。
     - 主夹爪缺标定或固件过低会被拒绝连接；其它不配套组合照常落盘，但数据对不上。
 
 | 组件 | 最低要求 | 怎么查 |
 |---|---|---|
-| `xense-taccap-lerobot` | `0.5.1+xtac.0.1.5` | `pip show lerobot` 或看 `pyproject.toml` |
-| `xense.taccap` SDK | **0.4.5** | `python -c "import xense.taccap as t; print(t.__version__)"` |
+| `xense-taccap-lerobot` | `0.5.1+xtac.0.1.6` | `pip show lerobot` 或看 `pyproject.toml` |
+| `xense.taccap` SDK | **0.4.6** | `python -c "import xense.taccap as t; print(t.__version__)"` |
 | 夹爪固件 | **命令集 V2.1**，即 leader ≥ 1.2.0 / follower ≥ 1.1.0；用从夹爪（`--robot.role=follower`）时 follower 须 ≥ 1.2.5（低于 1.2.11 提示升级） | 跑 [`calibrate.py`](calibration.md#41) 或[直接读](#check-versions) |
 | 每台 leader 的编码器标定 | 零点 + 行程上限已写入 flash | [夹爪标定](calibration.md#41) |
 | XenseVR PC Service | ≥ v0.2.0，装机直接用 v0.2.1 | `dpkg -s xensevr-pc-service` 的 `Version` |
@@ -45,8 +45,8 @@ flowchart LR
 | `rerun-sdk` | `>=0.24.0,<0.27.0` | 0.26.2 |
 | `opencv-python` | `==4.12.0.88` | 4.12.0.88 |
 | NumPy | `>=1.26.4` | 2.2.6 |
-| `xense-taccap-lerobot` | 基于 lerobot 0.5.1，版本号 `0.5.1+xtac.0.1.5` | `v0.1.5` |
-| `xense.taccap` SDK | 与主仓库子模块 `third_party/taccap-gripper` 配套 | 0.4.5（tag `v0.4.5`），附带固件 leader 1.2.7 / follower 1.2.17 |
+| `xense-taccap-lerobot` | 基于 lerobot 0.5.1，版本号 `0.5.1+xtac.0.1.6` | `v0.1.6` |
+| `xense.taccap` SDK | 与主仓库子模块 `third_party/taccap-gripper` 配套 | 0.4.6（tag `v0.4.6`），附带固件 leader 1.2.7 / follower 1.2.17 |
 | 夹爪固件 | 命令集 V2.1（帧格式 V1.8），leader ≥ 1.2.0 / follower ≥ 1.1.0 | leader 1.2.7 / follower 1.2.17，随 SDK 走，以 `firmware/manifest.json` 为准，见 [OTA](#ota) |
 | `xensesdk` | 由安装脚本提供 | 2.1.2 |
 | XenseVR PC Service(`.deb`) | ≥ v0.2.0 | v0.2.1 |
@@ -72,7 +72,7 @@ flowchart LR
 python - <<'EOF'
 import xense.taccap as t
 from xense.taccap import scan_grippers, LeaderGripper, Cmd
-print("xense.taccap", t.__version__, "(需要 >= 0.4.5)")
+print("xense.taccap", t.__version__, "(需要 >= 0.4.6)")
 for ep in scan_grippers():
     g = LeaderGripper(mcu_device=ep.mcu_device)   # 只读版本,主从夹爪通用
     ack = g.transport.send_cmd(Cmd.GetVersion, b"", 500)
@@ -83,7 +83,7 @@ EOF
 刷固件前的输出（两只主夹爪，旧版 `fw` 1.2.5，刷完应为 1.2.7）：
 
 ```text
-xense.taccap 0.4.5 (需要 >= 0.4.5)
+xense.taccap 0.4.6 (需要 >= 0.4.6)
   TCGU01A28Z0023m  Left   fw=1.2.5
   TCGU01A28Z0024m  Right  fw=1.2.5
 ```
@@ -112,6 +112,11 @@ python -c "import xensevr_pc_service_sdk as xrt; print('pico camera API:', hasat
 `pip show xensevr-pc-service-sdk` 显示构建时从 `dpkg` 读到的 `.deb` 版本；头显相机接口看 `has_pico_camera_frame`；夹爪 SN 与角色见[快速开始](quickstart.md#self-check)。
 
 ## 更新要点 {#whats-new}
+
+### 0.1.6 {#whats-new-016}
+
+- 夹爪 SDK 升到 0.4.6，附带固件不变（主夹爪 1.2.7 / 从夹爪 1.2.17）。从夹爪固件 1.2.17 在收发重叠时会把上行帧重发一次；在已改进控制串口硬件的从夹爪上两份都完整到达，旧 SDK 两份都收下，控制器会被多推一步。0.4.6 丢弃这份重复帧，推送模式下状态帧回到 100 Hz。
+- 拉到 v0.1.6 后**必须重跑 `./setup_env.sh --install`**。
 
 ### 0.1.5 {#whats-new-015}
 
@@ -156,10 +161,10 @@ python -c "import xensevr_pc_service_sdk as xrt; print('pico camera API:', hasat
 
 ```bash
 git fetch --tags
-git checkout v0.1.5
+git checkout v0.1.6
 git submodule update --init --recursive --progress
 ./setup_env.sh --install     # 对齐依赖并重编 xense.taccap
-git submodule status         # 子模块应对应 v0.4.5
+git submodule status         # 子模块应对应 v0.4.6
 ```
 
 !!! warning "拉完子模块必须重新编译 `xense.taccap`"
@@ -186,12 +191,12 @@ git submodule status         # 子模块应对应 v0.4.5
 - 主夹爪连不上，报错提示先做 OTA；
 - 固件低于命令集 V2.1。
 
-V2.1 只是底线，旧固件有已知缺陷，请刷到 SDK 0.4.5 附带的 leader 1.2.7 / follower 1.2.17（见[从夹爪固件版本表](../follower/firmware.md#check-version)）。不换主板、不擦固件，刷一次即可。
+V2.1 只是底线，旧固件有已知缺陷，请刷到 SDK 0.4.6 附带的 leader 1.2.7 / follower 1.2.17（见[从夹爪固件版本表](../follower/firmware.md#check-version)）。不换主板、不擦固件，刷一次即可。
 
 ### 怎么刷
 
 !!! warning "先升级 SDK，再刷固件"
-    - 镜像随 SDK 走：先把子模块升到 SDK 0.4.5，用它刷写与校验，才能刷到 1.2.7 / 1.2.17；绝不要用低于 0.1.7 的 SDK 刷。
+    - 镜像随 SDK 走：先把子模块升到 SDK 0.4.6，用它刷写与校验，才能刷到 1.2.7 / 1.2.17；绝不要用低于 0.1.7 的 SDK 刷。
     - 新 SDK 与旧固件通信不变，先升 SDK 总是安全的。
     - 镜像版本以 `firmware/manifest.json` 里的 `version` 为准，不要从 SDK 版本号推。
 

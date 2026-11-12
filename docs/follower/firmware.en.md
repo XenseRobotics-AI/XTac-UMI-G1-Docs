@@ -9,7 +9,7 @@ Run the [self-check](setup.md#self-check); the `[fw]` line is the gripper firmwa
 
 | Gripper firmware version | Notes |
 |---|---|
-| 1.2.17 | Bundled with SDK 0.4.5, recommended; device timestamps move to a 1 MHz timebase, so the host needs SDK 0.4.5 or newer |
+| 1.2.17 | Bundled with SDK 0.4.5 / 0.4.6, recommended; device timestamps move to a 1 MHz timebase, so the host needs SDK 0.4.5 or newer |
 | 1.2.16 | Bundled with SDK 0.4.3 / 0.4.4, fine to use |
 | 1.2.11 – 1.2.15 | Usable, upgrade recommended |
 | 1.2.5 – 1.2.10 | Opens, but the SDK prompts you to upgrade: after an occasional overflow on the control serial port, the gripper stops receiving commands and the grip force drops. **Upgrade required** |
