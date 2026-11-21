@@ -1,8 +1,6 @@
 # XTac UMI G1 Developer Kit
 
-The Developer Kit (PC edition) runs collection on your own x86 collection PC: the grippers and headset connect to it directly by cable, recording runs on open-source LeRobot and produces a LeRobotDataset v3 you can push to the Hugging Face Hub. The collection software and gripper SDK are open source, built for research and algorithm teams who want to customize freely.
-
-If you would rather work without a computer and operate from a tablet in the field, choose the [Backpack Kit](../backpack/index.md); the two are compared in [Product line and configuration comparison](../product/editions.md).
+The Developer Kit (PC edition) runs collection on your own x86 collection PC: the grippers and headset connect to it directly by cable, recording runs on open-source LeRobot and produces a LeRobotDataset v3 you can push to the Hugging Face Hub. The collection software and gripper SDK are open source, built for research and algorithm teams who want to customize freely. To operate from a tablet in the field instead, choose the [Backpack Kit](../backpack/index.md); the two are compared in [Product line and configuration comparison](../product/editions.md).
 
 ## The collection workflow {#workflow}
 
@@ -65,8 +63,7 @@ If you would rather work without a computer and operate from a tablet in the fie
 
 ## System components {#system}
 
-Collection runs inside one `lerobot-record` process on the collection PC: each device is read independently, every frame takes the latest value from each stream, and the paired frames are written to the dataset.
-Hover over (or tap) any block to see where its data comes from and where it goes; the buttons above switch between the three tiers.
+Collection runs inside one `lerobot-record` process on the collection PC. Hover over (or tap) any block to see where its data comes from and where it goes; the buttons above switch between the three tiers.
 
 <div class="tc-arch"><script type="application/json">
 {
@@ -176,23 +173,11 @@ Hover over (or tap) any block to see where its data comes from and where it goes
 }
 </script></div>
 
-- The **leader grippers** connect over USB: the opening is read by `xense.taccap` (100Hz push), the visuotactile images by `xensesdk`, and each wrist camera is matched to its gripper by serial number.
-- The **trackers** sit on top of the grippers and are tracked by the **headset**, which hands the poses to the **XenseVR PC Service** over a cable (recommended) or Wi-Fi; the collection program then transforms them to the gripper tip (TCP). Tier ③ also brings the headset stereo images and head pose.
-- **`lerobot-record`** takes the latest value of every stream each frame, pairs the previous frame's observation with this frame's pose and opening, and writes a **LeRobotDataset v3**; camera streams are encoded while recording, with hardware encoding on an NVIDIA GPU.
-
-Collection comes in three tiers depending on the connected devices, chosen with `--robot.type`:
-
-| Tier | Devices needed | Data recorded |
-|---|---|---|
-| ① Grippers only | Leader grippers | Tactile, wrist cameras, opening |
-| ② With wrist pose | Grippers + trackers + headset | Adds the gripper pose |
-| ③ Full setup | Same as ② | Adds headset stereo images and head pose |
-
-Commands are in [Data collection](recording.md).
+The tier is chosen with `--robot.type`; the switches, required devices and commands for each tier are in [Preview before recording](recording.md#preview).
 
 ## What each frame records {#frame}
 
-Taking a bimanual setup as the example, each dataset row is the **observation** from frame t-1 plus the **action** from frame t. Hover over (or tap) any data item, source or storage block to see where it comes from and where it is stored; the buttons switch between the three tiers.
+Taking a bimanual setup as the example, each dataset row is the **observation** from frame t-1 plus the **action** from frame t. Hover over or tap any item to see where it comes from and where it is stored.
 
 <div class="tc-arch" data-diagram="frame"><script type="application/json">
 {
@@ -227,8 +212,6 @@ Taking a bimanual setup as the example, each dataset row is the **observation** 
 }
 </script></div>
 
-- The observation comes from frame t-1 and the action from frame t, so the action leads by one step; the first frame of each episode has nothing to pair with, so each episode is one frame shorter.
-- The poses `*_tcp.*` and `head.*` are 9-D each: position x, y, z plus a 6-D rotation, in a world frame of X forward / Y left / Z up.
 - Dimensions per tier: ① state and action 2-D each, 6 image streams; ② 20-D each, 6 streams; ③ 29-D each, 8 streams.
 - With a single gripper (`--robot.type=taccap_gripper`) the keys have no `left_` / `right_` prefix and the wrist camera is `wrist_cam`.
 
@@ -236,7 +219,7 @@ Field details are in [What each frame records](recording.md#53), the dataset for
 
 ## Developer Kit open-source repositories {#repos}
 
-Everything the Developer Kit runs on is open source except `xensesdk`, whose license is not stated; the table lists each repository and what it is for. The Backpack Kit's collection software is not open source and is not listed here.
+Everything is open source except `xensesdk`, whose license is not stated. The Backpack Kit's collection software is not open source and is not listed here.
 
 | Repo / package | License | Notes |
 |---|---|---|

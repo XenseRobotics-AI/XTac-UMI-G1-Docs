@@ -1,12 +1,12 @@
 # Gripper buttons, LEDs and voice {#buttons-leds}
 
-On the Backpack Kit the gripper's two side buttons start, stop and delete recordings, the LED reports the current state, and the device gives voice announcements. The buttons and LED patterns are handled by XTac UMI Collector on the backpack, so no browser needs to be online. How to connect the grippers and tell left from right by serial number is in [Gripper connection and serial numbers](../common/gripper.md).
+The gripper's two side buttons start, stop and delete recordings, and the LED and voice prompts report the state; all of it is handled by the backpack, so no browser needs to be online. Wiring and telling left from right are in [Gripper connection and serial numbers](../common/gripper.md).
 
 ![Leader gripper controls (port / buttons / LED)](../assets/hardware/master-controls.webp){ width="480" }
 
 ## Buttons {#buttons}
 
-The button state machine runs on the backpack and **does not need the browser to be open**. While recording, a double-click or a long-press of the right gripper is silently ignored (against accidental presses); with nothing to delete, a double-click is refused (rapid yellow flashing).
+While recording, a double-click or a long-press of the right gripper is silently ignored (against accidental presses); with nothing to delete, a double-click is refused (rapid yellow flashing).
 
 | Gesture | Action |
 |---|---|
@@ -18,7 +18,7 @@ The button state machine runs on the backpack and **does not need the browser to
 | **Long-press the right gripper** while confirming | Abandon the delete and start a new recording right away (the previous episode is kept) |
 | **Right gripper single press** while recording | Place a subtask marker (a sub-step boundary) in this recording, with a tone |
 
-Which gripper does what (right starts / left stops), the press timings and the LED patterns are fixed fleet-wide and cannot be changed on site, and the console offers no way to change them; the values in effect are shown on the console's System → Capture settings page (see [System settings](system.md)).
+Which gripper does what (right starts / left stops), the timings and the LED patterns are fixed and cannot be changed; the values in effect are shown on the System → [Capture settings](system.md#capture-settings) page.
 
 ## LEDs {#leds}
 
@@ -35,11 +35,11 @@ Which gripper does what (right starts / left stops), the press timings and the L
 | <span class="tc-lamp red solid"></span> | Red · Steady | System problem (e.g. a gripper dropped out, lit by the backpack) |
 | <span class="tc-lamp red burst"></span> | Red · Burst flashing | Gripper-side problem (lit by the gripper itself, not via the backpack) |
 
-Recording is breathing green; red only ever means a fault. Rapid flashing and pulse are both yellow and differ only in rhythm: rapid flashing is dense, the pulse sparse. The console's System → Capture settings page renders this table as an animated legend that plays each shape and rhythm, so the two are easy to tell apart (see [System settings](system.md)).
+Red only ever means a fault. Rapid flashing and pulse are both yellow: rapid flashing is dense, the pulse sparse; the System → [Capture settings](system.md#capture-settings) page has a legend that plays each pattern at its real rhythm.
 
 ## Voice prompts {#voice-cues}
 
-While collecting, both hands are on the grippers and your eyes on the scene, so the device announces key moments, complementing the LEDs; no tablet is needed nearby and the browser plays no part. By default it **announces through the Pico headset**, which you hear while wearing it; when the headset is not connected, unsupported or playback fails (for example the "Pico connection failed" announcement), the backpack's speaker plays it instead. Settings can also send everything to the backpack.
+The device announces key moments, complementing the LEDs. By default it **announces through the Pico headset**; when the headset is not connected, unsupported or playback fails (for example the "Pico connection failed" announcement), the backpack's speaker plays it instead. It can also be set to send everything to the backpack.
 
 | When | What it says |
 |---|---|
@@ -53,7 +53,6 @@ While collecting, both hands are on the grippers and your eyes on the scene, so 
 | A tracker drops off while recording | "Tracker connection failed." The headset may still be connected, so check the tracker on your hand first |
 | Right gripper single press to mark a subtask | Subtask marker tone (no speech) |
 
-- **Language**: Chinese or English, following the console's interface language by default.
-- **Settings**: on/off, language, volume, audio output and per-phrase preview are in System → [Capture settings](system.md#voice).
+- **Settings**: on/off, language (Chinese / English, following the interface language by default), volume, audio output and per-phrase preview are in System → [Capture settings](system.md#voice).
 - If the headset app has no audio for one of the four prompts added in 0.4.7 (left / right gripper disconnected, grippers swapped, start position out of range), it plays from the backpack's speaker instead.
 - The phrases and when they play are fixed and cannot be changed on site.

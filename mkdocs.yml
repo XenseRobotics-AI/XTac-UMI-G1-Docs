@@ -102,10 +102,8 @@ plugins:
           nav_translations:
             产品: Product
             首页: Home
-            产品亮点: Highlights
             产品线与配置对比: Editions
             认识 XTac UMI G1: XTac UMI G1
-            认识数采背包: The XTac UMI Backpack
             技术参数: Specifications
             安全与合规: Safety and compliance
             背包版: Backpack Kit
@@ -114,11 +112,8 @@ plugins:
             开箱、接线与供电: Unboxing, cabling and power
             网络与控制台入口: Network and console access
             实时监控与录制: Live monitor and recording
-            项目、导出与上传: Projects, export and upload
-            回放: Playback
+            项目、回放与导出: Projects, playback and export
             系统设置: System settings
-            升级与 OTA: Upgrades and OTA
-            版本: Versions
             安装: Installation
             主机配置: Host setup
             标定与自检: Calibration and self-check
@@ -126,22 +121,15 @@ plugins:
             数据集: Dataset
             故障排查: Troubleshooting
             版本与升级: Versions and upgrades
-            RobotConfig 配置项: RobotConfig options
             Pico4 头显与追踪器: Pico4 headset and tracker setup
             夹爪连接与序列号: Gripper connection and serial numbers
             夹爪按键、指示灯与语音: Gripper buttons, LEDs and voice
             一页速通: Quickstart
             从夹爪: Follower gripper
-            从夹爪概览: Overview
-            准备与自检: Setup and self-check
-            运动控制: Motion control
-            API 与示例: API and examples
+            概览、安装与自检: Overview, install and self-check
+            运动控制与 API: Motion control and API
             固件与电机升级: Firmware and motor upgrades
             SDK 与二次开发: SDK and development
-            SDK 概览: SDK overview
-            安装与构建: Install and build
-            API 要点: API essentials
-            示例: Examples
             坐标系: Coordinate frames
             维护保养: Maintenance
             术语表与支持: Glossary and support
@@ -151,7 +139,7 @@ plugins:
         # 第一轮重构前的旧文件名(2026-09 之前)
         01-overview.md: product/g1.md
         hardware.md: common/gripper.md
-        highlights.md: product/highlights.md
+        highlights.md: product/g1.md
         02-environment.md: pc/install.md
         03-host-hardware.md: pc/host-setup.md
         04-calibration.md: pc/calibration.md
@@ -161,12 +149,12 @@ plugins:
         data-management.md: pc/dataset.md
         07-faq-reference.md: common/reference.md
         sdk-overview.md: sdk/index.md
-        sdk-install.md: sdk/install.md
-        sdk-api.md: sdk/api.md
-        sdk-examples.md: sdk/examples.md
+        sdk-install.md: sdk/index.md
+        sdk-api.md: sdk/index.md
+        sdk-examples.md: sdk/index.md
         follower-overview.md: follower/index.md
-        follower-setup.md: follower/setup.md
-        follower-control.md: follower/control.md
+        follower-setup.md: follower/index.md
+        follower-control.md: follower/api.md
         follower-firmware.md: follower/firmware.md
         follower-troubleshooting.md: follower/troubleshooting.md
         # 第一轮重构的扁平文件名 → 产品线目录(PC 版 / 通用)
@@ -178,15 +166,26 @@ plugins:
         dataset.md: pc/dataset.md
         troubleshooting.md: pc/troubleshooting.md
         versions.md: pc/versions.md
-        reference.md: pc/reference.md
+        reference.md: pc/recording.md
         device.md: product/g1.md
         maintenance.md: common/maintenance.md
+        # 2026-11 精简:合并掉的页面
+        product/highlights.md: product/g1.md
+        product/backpack.md: backpack/index.md
+        backpack/playback.md: backpack/projects-export.md
+        backpack/update.md: backpack/versions.md
+        follower/setup.md: follower/index.md
+        follower/control.md: follower/api.md
+        pc/reference.md: pc/recording.md
+        sdk/install.md: sdk/index.md
+        sdk/api.md: sdk/index.md
+        sdk/examples.md: sdk/index.md
         # 英文站的旧地址。redirects 插件只在默认语言(中文)构建里运行,所以键写成
         # en/<旧名>.md 让跳转页落到 /en/<旧名>/,目标必须是完整 URL(相对 .md 目标会被
         # 当成中文页校验)。
         en/01-overview.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/product/g1/
         en/hardware.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/common/gripper/
-        en/highlights.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/product/highlights/
+        en/highlights.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/product/g1/
         en/02-environment.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/pc/install/
         en/03-host-hardware.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/pc/host-setup/
         en/04-calibration.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/pc/calibration/
@@ -196,8 +195,8 @@ plugins:
         en/data-management.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/pc/dataset/
         en/07-faq-reference.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/common/reference/
         en/sdk-overview.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/sdk/
-        en/sdk-install.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/sdk/install/
-        en/sdk-examples.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/sdk/examples/
+        en/sdk-install.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/sdk/
+        en/sdk-examples.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/sdk/
         en/quickstart.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/pc/quickstart/
         en/install.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/pc/install/
         en/host-setup.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/pc/host-setup/
@@ -206,9 +205,19 @@ plugins:
         en/dataset.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/pc/dataset/
         en/troubleshooting.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/pc/troubleshooting/
         en/versions.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/pc/versions/
-        en/reference.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/pc/reference/
+        en/reference.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/pc/recording/
         en/device.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/product/g1/
         en/maintenance.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/common/maintenance/
+        en/product/highlights.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/product/g1/
+        en/product/backpack.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/backpack/
+        en/backpack/playback.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/backpack/projects-export/
+        en/backpack/update.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/backpack/versions/
+        en/follower/setup.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/follower/
+        en/follower/control.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/follower/api/
+        en/pc/reference.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/pc/recording/
+        en/sdk/install.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/sdk/
+        en/sdk/api.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/sdk/
+        en/sdk/examples.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/sdk/
 
 markdown_extensions:
   - abbr
@@ -269,9 +278,7 @@ nav:
   - 产品:
       - 首页: index.md
       - 认识 XTac UMI G1: product/g1.md
-      - 产品亮点: product/highlights.md
       - 产品线与配置对比: product/editions.md
-      - 认识数采背包: product/backpack.md
       - 技术参数: product/specs.md
       - 安全与合规: product/safety.md
   - 背包版:
@@ -281,11 +288,9 @@ nav:
       - 网络与控制台入口: backpack/network.md
       - 实时监控与录制: backpack/monitor-record.md
       - 夹爪按键、指示灯与语音: backpack/gripper.md
-      - 项目、导出与上传: backpack/projects-export.md
-      - 回放: backpack/playback.md
+      - 项目、回放与导出: backpack/projects-export.md
       - 系统设置: backpack/system.md
-      - 升级与 OTA: backpack/update.md
-      - 版本: backpack/versions.md
+      - 版本与升级: backpack/versions.md
       - 故障排查: backpack/troubleshooting.md
   - PC 版:
       - pc/index.md
@@ -296,18 +301,11 @@ nav:
       - 数据采集: pc/recording.md
       - 数据集: pc/dataset.md
       - 版本与升级: pc/versions.md
-      - RobotConfig 配置项: pc/reference.md
-      - SDK 与二次开发:
-          - SDK 概览: sdk/index.md
-          - 安装与构建: sdk/install.md
-          - API 要点: sdk/api.md
-          - 示例: sdk/examples.md
+      - SDK 与二次开发: sdk/index.md
       - 故障排查: pc/troubleshooting.md
   - 从夹爪:
-      - 从夹爪概览: follower/index.md
-      - 准备与自检: follower/setup.md
-      - 运动控制: follower/control.md
-      - API 与示例: follower/api.md
+      - 概览、安装与自检: follower/index.md
+      - 运动控制与 API: follower/api.md
       - 固件与电机升级: follower/firmware.md
       - 故障排查: follower/troubleshooting.md
   - 通用:

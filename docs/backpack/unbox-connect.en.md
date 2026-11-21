@@ -1,8 +1,6 @@
 # Unboxing, cabling and power
 
-This page walks you through turning the parts in the box into a system that powers up and runs: connect the grippers, the headset and the backpack in turn, then connect power (the power adapter or the power bank).
-
-**Expected result**: the backpack is powered up and the leader grippers' LEDs are solid green. Then go to [Network and console access](network.md) to open the console.
+Connect the grippers, the headset and the backpack in turn, then connect power. Once connected, the backpack is powered up and the leader grippers' LEDs are solid green; then go to [Network and console access](network.md) to open the console.
 
 ## Unboxing checks {#unbox}
 
@@ -16,28 +14,38 @@ The box contents and quantities are in [Product line and configuration compariso
 3. **Headset setup**
     - Done as described in [Pico4 headset and tracker setup](../common/pico4.md): developer mode on, screen timeout and sleep set to "Never", both trackers paired, XTac UMI XR installed.
 
-!!! note
-    Cabling does not depend on this software setup, but without it the headset cannot connect.
-
 ## The backpack's ports {#ports}
 
-| Port | Location | What goes in it |
-|---|---|---|
-| UMI-L / UMI-R | Both sides | Left / right gripper, Type-C locking cable |
-| PICO | Front panel | The headset, wired over Type-C |
-| HOST1 / HOST2 | Front panel | USB host ports, for a tablet or other devices |
-| DC IN | Rear panel | 12V power input, from the adapter or the power bank |
-| Ethernet | Rear panel | RJ45, to a router's LAN port |
-| TF, HDMI, headphone | Rear panel | Not used in day-to-day collection |
+![Backpack connector locations](../assets/product/backpack-ports-drawing.webp){ width="900" }
 
-The connector drawing is in [The XTac UMI Backpack](../product/backpack.md#ports).
+| No. | Connector | Location | What it is for |
+|---|---|---|---|
+| ① | `DC IN` | Rear panel | 12V power input: the supplied 12V 3A adapter, or the power bank through its power cable |
+| ② | Ethernet | Rear panel | Wired networking, DHCP from the factory, static IP settable on the System page |
+| ③ | TF | Rear panel | TF card slot, not used for day-to-day collection |
+| ④ | `HDMI` | Rear panel | Video out, not used for day-to-day collection |
+| ⑤ | Headphone | Rear panel | 3.5mm headphone jack |
+| ⑥ | `UMI-L` | Left side | Left leader gripper, Type-C locking cable, which also powers the gripper |
+| ⑦ | `UMI-R` | Right side | Right leader gripper, Type-C locking cable, which also powers the gripper |
+| ⑧ | `PICO` | Front panel | Pico4 Ultra Enterprise headset, Type-C. In XR choose "XTac" as the connection, then tap "Connect" |
+| ⑨ ⑩ | `HOST1` / `HOST2` | Front panel | USB host ports, for a tablet or other devices |
+
+### Waist belt {#belt}
+
+The waist belt holds the backpack and the power bank and keeps the cables out of the operator's way.
+
+![Waist belt structure](../assets/product/backpack-belt-drawing.webp){ width="720" }
+
+- Before putting it on, check that the backpack, the power bank and the belt are secure.
+- Leave slack in the cables so turning, bending or raising an arm does not pull on a connector.
+- Do not cover the vents of the backpack or the power bank.
 
 ## Connection and disconnection order {#order}
 
 The order is fixed: grippers → headset → power up the backpack.
 
 1. Connect the grippers: the end of the Type-C locking cable with the screws goes into the gripper body, and you tighten the locking screws; the other end goes into the side of the backpack, the left gripper to UMI-L and the right to UMI-R. The gripper is bus-powered over this cable and needs no separate supply.
-2. Connect the headset: the headset cable (Pico → Pack) goes from the headset to the backpack's PICO port; this is the same for [Adapter power](#adapter) and [Power-bank power](#powerbank).
+2. Connect the headset: the headset cable (Pico → Pack) goes from the headset to the backpack's PICO port.
 3. Power up the backpack: the DC port takes the adapter or a power bank. After boot, a solid green gripper LED means standby; then plug the tablet into the backpack's `HOST` port to open the console, see [Recommended: the tablet over USB](network.md#tablet) (the LED patterns are in [Gripper buttons, LEDs and voice](gripper.md#buttons-leds)).
 
 Disconnection is the reverse: stop recording first, then unplug the backpack end, and finally loosen the locking screws and unplug the gripper end. Take anti-static precautions when powering up or down and when plugging or unplugging cables.
@@ -47,7 +55,7 @@ Disconnection is the reverse: stop recording first, then unplug the backpack end
 
 ## Choosing the power source {#power}
 
-The grippers and headset are wired the same way either way; only the backpack's power source differs:
+The grippers and headset are wired the same way; only the backpack's power source differs:
 
 | | Adapter power | Power-bank power |
 |---|---|---|
@@ -62,23 +70,13 @@ The grippers and headset are wired the same way either way; only the backpack's 
 
 ![Adapter wiring: left and right grippers to the sides of the backpack, the headset's Type-C to the PICO port, the adapter to the DC port](../assets/product/backpack-wiring-adapter-en.webp)
 
-1. Connect the left and right leader grippers to the backpack's `UMI-L` and `UMI-R` ports.
-2. Connect the headset to the backpack's `PICO` port with the headset cable (Pico → Pack).
-3. Plug the 12V 3A adapter into the backpack's `DC` port, then into the mains.
+Plug the 12V 3A adapter into the backpack's `DC` port, then into the mains.
 
 ### Power-bank power {#powerbank}
 
 ![Power-bank wiring: left and right grippers to the sides of the backpack, the headset to the PICO port, the power bank to the DC port over the 0.3m 12V PD power cable](../assets/product/backpack-wiring-powerbank-en.webp)
 
-1. Take out the power bank in the box (20000mAh, 45W).
-2. Connect the grippers and headset as for [adapter power](#adapter).
-3. Connect the power bank to the backpack's `DC` port with the 0.3m 12V PD power cable.
-
-| Cable | How it connects |
-|---|---|
-| Gripper cable (1.5m C-to-C) ×2 | Left / right gripper ↔ the backpack's UMI-L / UMI-R |
-| Headset cable (Pico → Pack, 1.5m C-to-C) | The headset's Type-C port ↔ the backpack's PICO port |
-| 12V PD power cable (0.3m) | Power bank ↔ the backpack's DC port |
+Connect the power bank in the box to the backpack's `DC` port with the 0.3m 12V PD power cable.
 
 The backpack draws about 20W and runs about 3.5–4 hours on the power bank; see [Technical specifications](../product/specs.md#backpack).
 
@@ -87,12 +85,9 @@ The backpack draws about 20W and runs about 3.5–4 hours on the power bank; see
 
 ## Connecting the headset to the backpack {#pico-link}
 
-1. **Start and connect**: the headset and the backpack connect by cable only, so make sure the headset's Type-C port is wired to the backpack's `PICO` port as above. Put on the headset, open XTac UMI XR, choose "XTac" as the connection (selected by default on first launch; it connects to `192.168.100.1`), then tap "Connect".
+1. **Start and connect**: the headset and the backpack connect by cable only. Put on the headset, open XTac UMI XR, choose "XTac" as the connection (selected by default on first launch; it connects to `192.168.100.1`), then tap "Connect".
 2. **Status icons**: the fold button is at the top right of XR. When tracking accuracy degrades or the link to the backpack drops, both XR and the console's Live monitoring page show an icon; the interface is described in [The app's screen](../common/pico4.md#pico-toolkit-ui).
 3. **Get in position**: stand at the work position facing the working direction before you open XR; where XR first starts becomes the [world-frame origin](../common/pico4.md#pico-frame). **Do not restart XR during collection.**
-
-!!! warning "The headset's screen timeout and sleep must be set to \"Never\""
-    Once the headset's screen turns off it stops working, and the pose data stops with it. In the headset's Developer → "Business Settings" → "System" → "Power Management", set both "System Goes to Sleep After" and "Turn Off Screen After" to "Never"; the steps are in [Pico4 headset and tracker setup](../common/pico4.md#pico-system).
 
 !!! danger "Leave the headset cable alone while recording"
     Pulling it or letting it work loose makes the device stop and fail the current recording at once; see [Headset disconnects while recording](monitor-record.md#pico-disconnect).
@@ -105,4 +100,4 @@ Once the console is open, check these three; if any is wrong, go back and check 
 2. **Gripper LEDs**: normally solid green. A rapid red flash means the gripper's own self-check found a problem; solid red means the backpack detected that the gripper dropped out.
 3. **Capture mode**: the current project's [capture mode](system.md#capture-mode) matches how the system is wired ("Dual gripper", "Dual gripper + stereo headset" or "Dual gripper + headset right eye"; the System page shows it). Once the headset is connected, the pose view on the Live monitoring page should follow your hand; see [Camera and pose checks](monitor-record.md#checks).
 
-**If something is wrong**: if nothing happens at power-up or the headset keeps dropping in and out, try a different cable and port first. Poor contact in the `DC`, `PICO` or `USB` port itself is a hardware fault: note the serial number on the body, contact technical support, and do not force or lever the connector; see [Troubleshooting](troubleshooting.md).
+If nothing happens at power-up or the headset keeps dropping in and out, try a different cable and port first; if that does not help, see [Troubleshooting](troubleshooting.md#power).

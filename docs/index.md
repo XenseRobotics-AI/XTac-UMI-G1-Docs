@@ -72,7 +72,7 @@ hide:
 - **精确同步**：多设备时间同步 5ms，空间定位 < 3mm
 - **开放格式**：输出 LeRobot / MCAP 格式，兼容主流数据生态
 
-[了解产品亮点](product/highlights.md){ .md-button .md-button--primary }
+[了解产品亮点](product/g1.md#highlights){ .md-button .md-button--primary }
 
 </div>
 
@@ -80,7 +80,7 @@ hide:
 
 ## 两种配置，按场景选择
 
-两种配置使用同一套夹爪与头显，录出的数据定义一致。背包版是整机交付、开箱即用，采集软件不开源；PC 版的采集软件与夹爪 SDK 开源，可以自由二次开发。
+两种配置使用同一套夹爪与头显，录出的数据定义一致。背包版整机交付、采集软件不开源；PC 版的采集软件与夹爪 SDK 以 Apache-2.0 开源，仓库清单见 [PC 版开源仓库](pc/index.md#repos)。
 
 <div class="grid cards xu-cards" markdown>
 
@@ -101,7 +101,7 @@ hide:
     { .xu-card__fit }
 
     [快速开始](backpack/quickstart.md){ .md-button .md-button--primary }
-    [了解背包](product/backpack.md){ .md-button }
+    [了解背包](backpack/index.md){ .md-button }
     { .xu-card__actions }
 
 -   ![XTac UMI G1 视触觉夹爪](assets/product/g1-card.webp){ .xu-card__img }
@@ -167,7 +167,3 @@ hide:
 </div>
 
 </div>
-
-## PC 版开源仓库
-
-PC 版的数采主仓库、夹爪 SDK、追踪器服务与可视化工具均以 Apache-2.0 许可开源，清单见 [PC 版开源仓库](pc/index.md#repos)；背包版采集软件不开源。

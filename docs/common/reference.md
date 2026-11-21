@@ -1,15 +1,15 @@
 # 术语表与支持
 
-查表用的附录：两种形态共用的术语、反馈渠道与相关仓库。PC 版的 `RobotConfig` 配置项与 SDK 入口在 [RobotConfig 与 SDK](../pc/reference.md)；报错见 PC 版的[故障排查](../pc/troubleshooting.md)或[背包版的故障排查](../backpack/troubleshooting.md)。
+两种形态共用的术语、反馈渠道、相关仓库与版本配套表。PC 版的 `RobotConfig` 配置项见 [RobotConfig 配置项](../pc/recording.md#robotconfig)。
 
 ## 术语表 {#glossary}
 
 | 术语 | 含义 |
 |---|---|
 | **XTac UMI G1** | 穿戴式 UMI 数采夹爪，两种形态共用的传感器载体；见[认识 XTac UMI G1](../product/g1.md) |
-| **数采背包** | 背包版的采集单元：RK3588 计算节点，夹爪与头显都接到它上面，XTac UMI Collector 在它上面运行；正式名 XTac UMI 数采背包，见[认识数采背包](../product/backpack.md) |
+| **数采背包** | 背包版的采集单元（正式名 XTac UMI 数采背包）：RK3588 计算节点，接夹爪与头显，运行 XTac UMI Collector；见[认识数采背包](../backpack/index.md) |
 | **XTac UMI Collector** | 数采背包上的采集软件，接入相机、夹爪 MCU 与头显位姿，负责录制、回放、导出与设备管理；版本基线 0.4.7，以系统页为准 |
-| **控制台** | Collector 的浏览器界面，平板、手机、电脑连上背包后打开；实时监控、项目、系统等页面都在里面 |
+| **控制台** | Collector 的浏览器界面（实时监控、项目、系统等页面），平板、手机、电脑连上背包后打开 |
 | **项目 / 任务 / episode** | 背包版的数据组织层级：项目下建任务，任务带 LeRobot 语言指令，每次开录到停录是一条 episode |
 | **MCAP** | 背包版每条 episode 的原始记录格式，按 topic 存相机、编码器、IMU、位姿与事件；导出 LeRobot 时从它转换 |
 | **OTA bundle** | 背包版 Collector 的升级包（`.tar.zst`），在控制台 系统 → 系统更新 页上传、校验、应用并重启，升级失败时自动回退上一版本；PC 版夹爪固件的 OTA 见[固件升级](../pc/versions.md#ota) |
@@ -22,7 +22,7 @@
 | **GSPS** | 视触觉传感器（左右指各一），序列号 `GSPS01...` |
 | **XC** | 腕部 UVC 相机，序列号 `XC...` |
 | **XTac UMI XR** | 装在 Pico4 头显上的 VR 客户端 APP（原名 XenseVR-Toolkit），把头显与追踪器位姿送到采集单元，启动瞬间建立世界坐标系；见 [Pico4 头显与追踪器配置](pico4.md) |
-| **XenseVR PC Service / 运行时** | 接收头显位姿的服务，是 XTac UMI XR 在采集单元这一端的对端（服务名没跟着 APP 一起改）：PC 版是数采主机上的守护进程，要手动启动；背包版内置在 Collector 里 |
+| **XenseVR PC Service / 运行时** | 采集单元上接收头显位姿的服务，XTac UMI XR 的对端（服务名没跟着 APP 改）：PC 版是数采主机上要手动启动的守护进程，背包版内置在 Collector 里 |
 | **tcp** | Tool Center Point，末端执行器位姿（`tcp.x/y/z` + 6D 旋转 `r1..r6`），坐标系见[坐标系](coordinates.md) |
 | **6D rotation** | 旋转矩阵 R（世界 ← 本体）的**前两列**：`r1..r3` = 第一列 = 本体 X 轴在世界系下的方向，`r4..r6` = 第二列 = Y 轴；第三列为叉积，可算回 → [约定详解](../pc/recording.md#53) |
 | **shifted-frame** | 移位帧配对：t-1 观测配 t 动作 |
@@ -30,11 +30,9 @@
 
 ## 支持与反馈 {#support}
 
-遇到问题：
-
-1. 先查故障排查：PC 版见[故障排查](../pc/troubleshooting.md)（含常见问题），背包版见[背包版故障排查](../backpack/troubleshooting.md)。
-2. 文档内容、链接或示例问题提交到[文档仓库 Issues](https://github.com/XenseRobotics-AI/XTac-UMI-G1-Docs/issues)。
-3. 硬件、固件、缺件或返修问题请联系售后团队，并提供设备 SN。
+- 先查故障排查：[PC 版](../pc/troubleshooting.md)（含常见问题）、[背包版](../backpack/troubleshooting.md)。
+- 文档内容、链接或示例问题：提交到[文档仓库 Issues](https://github.com/XenseRobotics-AI/XTac-UMI-G1-Docs/issues)。
+- 硬件、固件、缺件或返修：联系售后团队，并提供设备 SN。
 
 反馈时请附带：
 
@@ -62,7 +60,7 @@
 
 ## 文档版本与配套软件 {#doc-version}
 
-本手册的版本号独立于各软件，页脚标注的就是当前文档版本。每个文档正式版对应下面四个软件的一组版本，**四者一起定版、一起更新**；
+文档版本号独立于各软件，标在页脚。每个文档正式版对应下面四个软件的一组版本，**四者一起定版、一起更新**；
 设备上的版本与这张表不一致时，以这张表为准升级，或使用与设备版本对应的文档版本。
 
 | 文档版本 | xense-taccap-lerobot（PC 版数采） | XTac UMI XR（头显应用） | XTac UMI Collector（背包版采集单元） | TacCap-Gripper SDK（夹爪 SDK） |
@@ -74,6 +72,6 @@
 
 夹爪固件随 SDK 附带（0.4.6 含主夹爪 1.2.7、从夹爪 1.2.17），不单列。各组件升级见 [PC 版 · 版本与升级](../pc/versions.md) 与 [背包版 · 版本](../backpack/versions.md)。
 
-## 本手册范围
+## 本手册范围 {#scope}
 
 本手册覆盖从数采夹爪硬件到数据落盘的链路：背包版到 MCAP 记录与 LeRobot 导出，PC 版到 `LeRobotDataset`；模型训练、推理、部署不在范围内，见对应工程的独立文档。

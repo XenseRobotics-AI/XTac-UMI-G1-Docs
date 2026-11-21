@@ -1,12 +1,15 @@
 # 标定与自检
 
-本页做两件一次性的事：标定主夹爪零点和行程，确认 Pico4 Ultra 追踪器链路通。开录前用[预览](recording.md#preview)确认整条链路。
+两件一次性的事：标定主夹爪零点和行程，确认 Pico4 Ultra 追踪器链路通。
 
 ## 夹爪标定（零点 + 行程） {#41}
 
-### 什么时候需要标
+`gripper.pos` 是归一化开度：`0.0` 完全闭合（标定第 1 步锁存的编码器零点），`1.0` 完全张开（第 2 步写入的行程上限）。两个值存在 MCU flash，断电、换主机都不用重标。
 
-`gripper.pos` 是归一化开度：`0.0` 完全闭合，取自标定第 1 步锁存的编码器零点；`1.0` 完全张开，取自第 2 步写入的行程上限（命令集 ≥ V2.1）。两个值存在 MCU flash，断电、换主机都不用重标。两种情况要标：
+- **仅主夹爪**：从夹爪不接受该命令，自 V1.9 起上电自动标定（闭合到堵转取零点、张开到堵转取行程上限），`gripper.pos` 按 `gripper_open_rad` 归一化。
+- **固件**：命令集 ≥ V2.1（leader ≥ 1.2.0 / follower ≥ 1.1.0，[区别](versions.md#v21)）。
+
+### 什么时候需要标
 
 | 情况 | 表现 | 谁发现 |
 |---|---|---|
@@ -36,18 +39,15 @@ python third_party/taccap-gripper/python/examples/calibrate.py left
 python third_party/taccap-gripper/python/examples/calibrate.py right
 ```
 
-- **侧别**：由固件 SN 判定（`Cmd::GetSn` 读回，不是 CH343 芯片序列号），与采集时规则相同，`calibrate.py left` 标的一定是 `left` 那台。
-- **核对**：脚本打印解析出的固件 SN 和扫到的全部夹爪；同一侧扫到两台会报错并列出两个 SN。
+- **侧别**：由固件 SN 判定（`Cmd::GetSn` 读回，不是 CH343 芯片序列号），与采集时规则相同。脚本打印解析出的固件 SN 和扫到的全部夹爪；同一侧扫到两台会报错并列出两个 SN。
 - **指定某台**：直接传固件 SN（`calibrate.py TCGU01A28Z0024m`，SN 为示例）。
 
-固件版本不够时脚本退出，不做任何修改：
+固件版本不够时脚本退出，不做任何修改；先按[固件 OTA 升级](versions.md#ota)刷固件：
 
 ```text
 ✗ encoder-max calibration needs command set >= V2.1 (leader >= 1.2.0); this gripper reports 1.1.0.
   Nothing was changed. Flash it first: ...
 ```
-
-先按[固件 OTA 升级](versions.md#ota)刷固件：镜像按角色选，先升 SDK 再刷固件。
 
 版本通过后，脚本打印当前读数（raw 与钳位），按提示走两步：
 
@@ -57,7 +57,7 @@ python third_party/taccap-gripper/python/examples/calibrate.py right
 !!! warning "先夹到位，再按 Enter"
     固件在收到命令瞬间锁存原始计数，之后再动就白标了。
 
-输出形如：
+输出形如（标过的抬头多一行 `existing span: … — will be overwritten`）：
 
 ```text
 ================================================================
@@ -81,35 +81,21 @@ Step 2/2: open the gripper to its MECHANICAL LIMIT.
   ✓ stored: max_rad = 1.1486 rad (65.81°)
 ```
 
-标过的抬头多一行 `existing span: … — will be overwritten`。
-
 - **闭合恒为 0**：没有 `gripper_closed_rad` 配置；负漂移钳到 0（原始值在 `raw_position_rad`），超过 -0.1rad 限频告警。
 - **字段**：`position_rad` 仍是原始弧度，归一化只新增 `position` 字段。
 
 ### 确认标定生效 {#413}
 
-一看启动日志，每侧连接时打印：
+1. 启动日志里每侧连接时打印：
 
-```text
-[left]  Jaw normalised by the firmware's encoder-max calibration
-```
+    ```text
+    [left]  Jaw normalised by the firmware's encoder-max calibration
+    ```
 
-没这一行就不用往下看：未标定的主夹爪连不上，程序会带着标定命令报错退出。
-
-二看 Rerun 曲线。开 `--display_data=true`，在标量面板找 `gripper.pos`：
-
-| 动作 | 期望 |
-| --- | --- |
-| 完全张开 | 顶到 **1.0** |
-| 完全闭合 | 落到 **0.0** |
+2. [预览](recording.md#preview)时开 `--display_data=true`，在 Rerun 标量面板看 `gripper.pos`：完全张开顶到 **1.0**，完全闭合落到 **0.0**。
 
 !!! warning "张到底明显够不到 1.0 → 重新标定这一台"
     完全张开只到 `0.8` 上下，说明 flash 里的行程上限已和实际行程对不上，程序不报错。用同一条命令重标即可。
-
-### 适用范围
-
-- **仅主夹爪**：主夹爪没有自动标定，不能省。从夹爪不接受该命令，自 V1.9 起上电自动标定（闭合到堵转取零点、张开到堵转取行程上限），`gripper.pos` 按 `gripper_open_rad` 归一化。
-- **固件**：命令集 ≥ V2.1（leader ≥ 1.2.0 / follower ≥ 1.1.0，[区别](versions.md#v21)）；版本过低则主夹爪报错退出并提示 OTA，见[固件 OTA 升级](versions.md#ota)。
 
 ## Pico4 Ultra 追踪器自检
 
@@ -127,6 +113,3 @@ python -m lerobot.robots.taccap_gripper.check_tracker --side right
 
 - **安装变换**：追踪器到夹爪末端的变换已内置，左右各一套，无需设置；`--side` 选用哪一侧，不带时 `ee` 与 `raw` 相同。
 - **支点检查**：两指中点抵住一个固定点，转动握柄；`ee xyz` 应基本不动，`raw xyz` 大幅变化。
-- **Rerun**：[开录前预览](recording.md#preview)时加 `--display_data=true`，同时看夹爪数据和追踪器位姿。
-
-下一步 → [数据采集](recording.md)。

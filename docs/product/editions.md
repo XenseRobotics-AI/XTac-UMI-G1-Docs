@@ -5,36 +5,6 @@ XTac UMI 提供两种配置，使用同一套 XTac UMI G1 夹爪与 Pico4 Ultra 
 - **背包版**：数采背包完成全部采集，平板浏览器即控制台，开箱即用，适合规模化现场采集；采集软件不开源。
 - **PC 版（开源）**：夹爪与头显直连您的工作站，基于开源 LeRobot 录制，适合科研与算法团队自由二次开发。
 
-本页对比两者的差别，并列出各自的箱内清单与接线方式。
-
-<div class="grid cards xu-cards" markdown>
-
--   ![XTac UMI 数采背包](../assets/product/backpack-card.webp){ .xu-card__img }
-
-    <span class="xu-tag xu-tag--backpack">背包版</span>
-
-    **XTac UMI 数采背包**{ .xu-card__title }
-
-    ---
-
-    背包即主机、平板即控制台，夹爪按键录制，数据一键上传到 ModelScope。
-
-    [快速开始](../backpack/quickstart.md){ .md-button .md-button--primary }
-
--   ![XTac UMI G1 视触觉夹爪](../assets/product/g1-card.webp){ .xu-card__img }
-
-    <span class="xu-tag xu-tag--pc">PC 版</span>
-
-    **XTac UMI G1 开发套件（开源）**{ .xu-card__title }
-
-    ---
-
-    直连您的工作站，基于开源 LeRobot 录制，采集软件与夹爪 SDK 均开源。
-
-    [快速开始](../pc/quickstart.md){ .md-button .md-button--primary }
-
-</div>
-
 ## 两种配置的差别
 
 | | 背包版 · XTac UMI 数采背包 | PC 版 · XTac UMI G1 开发套件 |
@@ -46,7 +16,7 @@ XTac UMI 提供两种配置，使用同一套 XTac UMI G1 夹爪与 Pico4 Ultra 
 | 采集模式 | 双爪，可加头显双目或右单目画面 | 单爪 / 双爪，可加头显画面 |
 | 落盘格式 | 每条人类示范一个 MCAP 原始记录 | 直接写 LeRobotDataset v3 |
 | 导出与上传 | 按任务导出 LeRobot v3 / MCAP，下载或上传到 ModelScope、S3、FTP、NFS 等 | 推送到 Hugging Face Hub |
-| 升级 | 控制台导入升级包，可回滚 | 更新仓库或镜像 |
+| 升级 | 控制台导入升级包 | 更新仓库或镜像 |
 | 二次开发 | 不开源；基于导出数据定制 | 开源（Apache-2.0），可改代码、接自定义机器人 |
 | 适合谁 | 规模化数采工厂与现场采集团队 | 科研与算法团队、自建训练流程 |
 
@@ -132,8 +102,7 @@ XTac UMI 提供两种配置，使用同一套 XTac UMI G1 夹爪与 Pico4 Ultra 
 
     采集不需要，背包自带热点。只有上传到远端时才要联网：传 ModelScope、S3 要能上外网，传局域网里的 FTP / NFS 连上同一局域网即可。
 
-## 开始使用与售后
+## 售后
 
-- **开始使用**：背包版见[一页速通](../backpack/quickstart.md)，PC 版见[一页速通](../pc/quickstart.md)。
 - **开箱缺件或配件损坏**：请联系售后团队补发，不要用其他线缆或电源替代。
 - **使用中遇到问题**：先查对应版本的故障排查，仍未解决请联系售后团队，并按[支持与反馈](../common/reference.md#support)附上设备序列号与日志。

@@ -1,15 +1,15 @@
 # Glossary and support
 
-A lookup appendix shared by both editions: terms, feedback channels and related repositories. The Developer Kit's `RobotConfig` options and SDK entry point are in [RobotConfig options](../pc/reference.md); for errors see the Developer Kit's [Troubleshooting](../pc/troubleshooting.md) or the Backpack Kit's [Troubleshooting](../backpack/troubleshooting.md).
+Terms, feedback channels, related repositories and the version matching table shared by both editions. The Developer Kit's `RobotConfig` options are in [RobotConfig options](../pc/recording.md#robotconfig).
 
 ## Glossary {#glossary}
 
 | Term | Meaning |
 |---|---|
 | **XTac UMI G1** | The wearable UMI data-collection gripper, the sensor carrier shared by both editions; see [XTac UMI G1](../product/g1.md) |
-| **Backpack** | The Backpack Kit's collection unit: an RK3588 compute node that the grippers and the headset plug into and that runs XTac UMI Collector; formally the XTac UMI Backpack, see [The XTac UMI Backpack](../product/backpack.md) |
+| **Backpack** | The Backpack Kit's collection unit (formally the XTac UMI Backpack): an RK3588 compute node that the grippers and the headset plug into and that runs XTac UMI Collector; see [The XTac UMI Backpack](../backpack/index.md) |
 | **XTac UMI Collector** | The collection software on the backpack: it takes in the cameras, the gripper MCUs and the headset pose, and handles recording, replay, export and device management; version baseline 0.4.7, the device's System page is authoritative |
-| **Console** | Collector's browser UI, opened from a tablet, phone or PC connected to the backpack; the live monitor, projects and system pages all live there |
+| **Console** | Collector's browser UI (live monitor, projects, system pages), opened from a tablet, phone or PC connected to the backpack |
 | **Project / task / episode** | How the Backpack Kit organizes data: tasks under a project, each task carrying a LeRobot language instruction, and each start-to-stop recording being one episode |
 | **MCAP** | The raw recording format of each Backpack Kit episode, storing cameras, encoders, IMU, poses and events by topic; the LeRobot export is converted from it |
 | **OTA bundle** | The Backpack Kit's Collector upgrade package (`.tar.zst`), uploaded, verified, applied and rebooted into on the console's System → System update page, falling back to the previous version automatically if the upgrade fails. Gripper firmware OTA on the Developer Kit is in [Firmware OTA upgrade](../pc/versions.md#ota) |
@@ -22,7 +22,7 @@ A lookup appendix shared by both editions: terms, feedback channels and related 
 | **GSPS** | Visuotactile sensor (one on each finger), serial number `GSPS01...` |
 | **XC** | The wrist UVC camera, serial number `XC...` |
 | **XTac UMI XR** | The VR client app on the Pico4U headset (formerly XenseVR-Toolkit); it sends the headset and tracker poses to the collection unit and establishes the world frame at launch; see [Pico4 headset and tracker setup](pico4.md) |
-| **XenseVR PC Service / runtime** | The service that receives the headset pose, XTac UMI XR's counterpart on the collection unit (the service name did not change with the app): on the Developer Kit a daemon on the collection PC that you start by hand; on the Backpack Kit built into Collector |
+| **XenseVR PC Service / runtime** | The service on the collection unit that receives the headset pose, XTac UMI XR's counterpart (the service name did not change with the app): on the Developer Kit a daemon on the collection PC that you start by hand; on the Backpack Kit built into Collector |
 | **tcp** | Tool Center Point, the end-effector pose (`tcp.x/y/z` + the 6D rotation `r1..r6`); the frame is in [Coordinate frames](coordinates.md) |
 | **6D rotation** | The **first two columns** of the rotation matrix R (world ← body): `r1..r3` = first column = the body X axis expressed in the world frame, `r4..r6` = second column = the Y axis. The third column is their cross product and can be recovered → [the convention in detail](../pc/recording.md#53) |
 | **shifted-frame** | Shifted-frame pairing: the observation at t-1 goes with the action at t |
@@ -30,11 +30,9 @@ A lookup appendix shared by both editions: terms, feedback channels and related 
 
 ## Support and feedback {#support}
 
-If you hit a problem:
-
-1. Check troubleshooting first: the Developer Kit's [Troubleshooting](../pc/troubleshooting.md) (it includes the FAQ), or the Backpack Kit's [Troubleshooting](../backpack/troubleshooting.md).
-2. Problems with the documentation's content, links or examples go to the [docs repository Issues](https://github.com/XenseRobotics-AI/XTac-UMI-G1-Docs/issues).
-3. For hardware, firmware, missing items or repairs, contact our after-sales team with the device SN.
+- Check troubleshooting first: [Developer Kit](../pc/troubleshooting.md) (it includes the FAQ), [Backpack Kit](../backpack/troubleshooting.md).
+- Problems with the documentation's content, links or examples: file them in the [docs repository Issues](https://github.com/XenseRobotics-AI/XTac-UMI-G1-Docs/issues).
+- Hardware, firmware, missing items or repairs: contact our after-sales team with the device SN.
 
 Please include:
 
@@ -62,7 +60,7 @@ The repositories below belong to the Developer Kit (apart from the gripper model
 
 ## Documentation version and matching software {#doc-version}
 
-This manual is versioned on its own; the version in the page footer is the current documentation version. Each documentation release matches one set of versions of the four pieces of software below, and **all four are pinned and updated together**.
+The documentation is versioned on its own, shown in the page footer. Each documentation release matches one set of versions of the four pieces of software below, and **all four are pinned and updated together**.
 If what is on your devices differs from this table, upgrade to match it, or use the documentation version that matches your devices.
 
 | Docs version | xense-taccap-lerobot (Developer Kit collection) | XTac UMI XR (headset app) | XTac UMI Collector (Backpack Kit collection unit) | TacCap-Gripper SDK (gripper SDK) |
@@ -74,6 +72,6 @@ If what is on your devices differs from this table, upgrade to match it, or use 
 
 The gripper firmware ships with the SDK (SDK 0.4.6 ships leader 1.2.7 and follower 1.2.17) and is not listed separately. How to upgrade each component is in [Developer Kit · Versions and upgrades](../pc/versions.md) and [Backpack Kit · Versions](../backpack/versions.md).
 
-## What this manual covers
+## What this manual covers {#scope}
 
 This manual covers the path from the data-collection gripper hardware to data on disk: MCAP recordings and the LeRobot export on the Backpack Kit, a `LeRobotDataset` on the Developer Kit. Model training, inference and deployment are out of scope; see the separate documentation of those projects.

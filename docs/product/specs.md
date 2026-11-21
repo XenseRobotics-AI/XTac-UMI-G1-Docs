@@ -1,6 +1,6 @@
 # 技术参数
 
-XTac UMI G1 夹爪、定位系统与数采背包的规格。接线见[夹爪连接与序列号](../common/gripper.md)，两种配置的取舍见[产品线与配置对比](editions.md)。
+接线见[夹爪连接与序列号](../common/gripper.md)，两种配置的取舍见[产品线与配置对比](editions.md)。
 
 ## 主夹爪 {#specs}
 
@@ -11,7 +11,7 @@ XTac UMI G1 夹爪、定位系统与数采背包的规格。接线见[夹爪连�
 | 重量 | 约 370g |
 | 负载 | 最大 2.5kg |
 | 开合行程 | 0–150mm（每台以标定结果为准） |
-| 视触觉传感器 | 2 个（左右指各一），参数见下方[视触觉传感器](#sensor) |
+| 视触觉传感器 | 2 个（左右指各一），见[视触觉传感器](#sensor) |
 | 腕部鱼眼相机 | 视场角 190°，640 × 480 @ 30fps |
 | IMU | 9 轴，100Hz |
 | 开合编码器 | 100Hz |
@@ -34,7 +34,7 @@ XTac UMI G1 夹爪、定位系统与数采背包的规格。接线见[夹爪连�
 | 变形场精度 | 0.1mm |
 | 感知模态 | 三维形貌、六维合力、三维分布力、滑移检测 |
 
-采集时的实际帧率可以按需设置（如 PC 版触觉默认以 30fps 录制），不改变传感器本身的规格。
+采集帧率可以按需设置（如 PC 版触觉默认以 30fps 录制）。
 
 ## 从夹爪 {#follower}
 
@@ -51,9 +51,9 @@ XTac UMI G1 夹爪、定位系统与数采背包的规格。接线见[夹爪连�
 
 ![从夹爪外形尺寸（mm）](../assets/product/follower-dimensions.webp){ width="760" }
 
-使用方法见[从夹爪](../follower/index.md)；法兰接口、坐标系与三维模型见 [XTac-UMI-Description](https://github.com/XenseRobotics-AI/XTac-UMI-Description)。
+使用见[从夹爪](../follower/index.md)；法兰接口、坐标系与三维模型见 [XTac-UMI-Description](https://github.com/XenseRobotics-AI/XTac-UMI-Description)。
 
-## 定位与同步
+## 定位与同步 {#tracking}
 
 | 参数 | 规格 |
 |---|---|
@@ -65,7 +65,7 @@ XTac UMI G1 夹爪、定位系统与数采背包的规格。接线见[夹爪连�
 
 ## 数采背包 {#backpack}
 
-背包版的采集单元，夹爪与头显都接到它上面，控制台用浏览器打开。介绍见[认识数采背包](backpack.md)。
+背包版的采集单元，介绍见[认识数采背包](../backpack/index.md)。
 
 | 参数 | 规格 |
 |---|---|
@@ -77,7 +77,7 @@ XTac UMI G1 夹爪、定位系统与数采背包的规格。接线见[夹爪连�
 | 功耗 | 约 20W |
 | 充电宝续航 | 约 3.5–4 小时 |
 | 网络 | 有线网口；WiFi（5GHz）；自带 5GHz 热点 |
-| 接口 | `UMI-L` / `UMI-R` 接主夹爪，`PICO` 接头显，`DC IN` 供电，`HOST1` / `HOST2` USB 主机口，另有网口、TF 卡槽、`HDMI`、耳机口，见[接口说明](backpack.md#ports) |
+| 接口 | `UMI-L` / `UMI-R` 接主夹爪，`PICO` 接头显，`DC IN` 供电，`HOST1` / `HOST2` USB 主机口，另有网口、TF 卡槽、`HDMI`、耳机口，见[接口说明](../backpack/unbox-connect.md#ports) |
 | 工作温度 | 0–40°C |
 | 使用环境 | 室内使用；无防水设计，避免淋雨、溅水与多尘环境 |
 

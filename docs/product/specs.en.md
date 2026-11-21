@@ -1,6 +1,6 @@
 # Technical specifications
 
-Specifications for the XTac UMI G1 grippers, the tracking system and the backpack. Wiring is in [Gripper connection and serial numbers](../common/gripper.md); choosing between the editions is in [Product line and configuration comparison](editions.md).
+Wiring is in [Gripper connection and serial numbers](../common/gripper.md); choosing between the editions is in [Product line and configuration comparison](editions.md).
 
 ## Leader gripper {#specs}
 
@@ -11,7 +11,7 @@ Specifications for the XTac UMI G1 grippers, the tracking system and the backpac
 | Weight | About 370g |
 | Payload | 2.5kg maximum |
 | Opening travel | 0–150mm (each unit's calibrated value applies) |
-| Visuotactile sensors | 2 (one per finger), see [Visuotactile sensor](#sensor) below |
+| Visuotactile sensors | 2 (one per finger), see [Visuotactile sensor](#sensor) |
 | Wrist fisheye camera | 190° field of view, 640 × 480 @ 30fps |
 | IMU | 9-axis, 100Hz |
 | Opening encoder | 100Hz |
@@ -34,7 +34,7 @@ The fingertip sensor is Xense's GS-PS visuotactile sensor; see the [product page
 | Deformation accuracy | 0.1mm |
 | Modalities | 3D shape, 6-axis force, 3D force distribution, slip detection |
 
-The frame rate used during collection can be set as needed (the Developer Kit records tactile at 30fps by default) without changing the sensors' own specification.
+The frame rate used during collection can be set as needed (the Developer Kit records tactile at 30fps by default).
 
 ## Follower gripper {#follower}
 
@@ -51,9 +51,9 @@ The frame rate used during collection can be set as needed (the Developer Kit re
 
 ![Follower gripper dimensions (mm)](../assets/product/follower-dimensions.webp){ width="760" }
 
-How to use it is in [Follower gripper overview](../follower/index.md); the flange interface, frames and 3D models are in [XTac-UMI-Description](https://github.com/XenseRobotics-AI/XTac-UMI-Description).
+How to use it is in [Follower gripper](../follower/index.md); the flange interface, frames and 3D models are in [XTac-UMI-Description](https://github.com/XenseRobotics-AI/XTac-UMI-Description).
 
-## Tracking and synchronization
+## Tracking and synchronization {#tracking}
 
 | Parameter | Specification |
 |---|---|
@@ -65,7 +65,7 @@ How to use it is in [Follower gripper overview](../follower/index.md); the flang
 
 ## The backpack {#backpack}
 
-The Backpack Kit's collection unit: the grippers and headset plug into it and the console opens in a browser. See [The XTac UMI Backpack](backpack.md).
+The Backpack Kit's collection unit; see [The XTac UMI Backpack](../backpack/index.md).
 
 | Parameter | Specification |
 |---|---|
@@ -77,7 +77,7 @@ The Backpack Kit's collection unit: the grippers and headset plug into it and th
 | Power draw | About 20W |
 | Power-bank runtime | About 3.5–4 hours |
 | Network | Ethernet; Wi-Fi (5GHz); built-in 5GHz hotspot |
-| Ports | `UMI-L` / `UMI-R` for the leader grippers, `PICO` for the headset, `DC IN` for power, `HOST1` / `HOST2` USB host ports, plus Ethernet, TF slot, `HDMI` and headphone jack, see [Connectors](backpack.md#ports) |
+| Ports | `UMI-L` / `UMI-R` for the leader grippers, `PICO` for the headset, `DC IN` for power, `HOST1` / `HOST2` USB host ports, plus Ethernet, TF slot, `HDMI` and headphone jack, see [Connectors](../backpack/unbox-connect.md#ports) |
 | Operating temperature | 0–40°C |
 | Environment | Indoor use; not waterproof, keep away from rain, splashes and heavy dust |
 

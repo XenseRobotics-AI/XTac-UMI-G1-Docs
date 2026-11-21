@@ -1,10 +1,10 @@
-# Projects, export and upload
+# Projects, playback and export
 
-Manage recorded data on the console's Project page: export a task as a LeRobot dataset or MCAP, download it or upload it to a remote backend (for example ModelScope), then free up space with Archive.
+Manage recorded data on the console's Project page: replay recordings one by one to check them, export a task as a LeRobot dataset or MCAP, download it or upload it to a remote backend, then free up space with Archive.
 
 ## The Project page {#projects}
 
-The hierarchy is **project → task → recording**. Each recording shows frames, data size and [quality](playback.md#quality), with Playback and Delete at the end of the row.
+The hierarchy is **project → task → recording**. Each recording shows frames, data size and [quality](#quality), with Playback and Delete at the end of the row.
 
 ![The Project page](../assets/backpack/project-list-live-en.webp)
 
@@ -15,10 +15,35 @@ The hierarchy is **project → task → recording**. Each recording shows frames
 | Task row | Set as target (recordings go into this task), Export, Edit (edit task / delete task permanently) |
 | Recording | Playback, Delete |
 
-### New projects and tasks {#new}
+The fields for new projects and tasks are in [Picking a project and task](monitor-record.md#project-task).
 
-- **New project**: enter a name and pick a capture mode (one of three); modes with the headset also pick headset resolution, image type and [headset mount](monitor-record.md#project-task) (On head / Around neck); optionally set export quality (High quality / Standard / Compact), tactile export orientation, wrist fisheye correction, upload backend and default export format. **It cannot be changed afterwards**; if it is wrong, delete the empty project and create it again. A project name cannot duplicate another unarchived project, and task names within a project cannot repeat.
-- **New task**: task name (lowercase letters, digits and hyphens, e.g. `pick-cube`) and task instruction (required; it is the LeRobot language instruction); target count and target duration are optional.
+## Playback {#playback}
+
+Click Playback at the end of a recording's row to review it online without downloading it. The phone layout has no playback page; use a tablet or computer.
+
+![The playback page](../assets/backpack/playback-live-en.webp)
+
+- Click "Stream playback": views, poses and opening play in sync; drag the progress bar to seek.
+- "Recording information" shows the recording's duration, channels and other details.
+- "Back to projects" returns to the Project page.
+
+!!! warning "Playback and live preview cannot run at the same time"
+    While any device is watching the live preview or an export is transcoding, playback is refused with the reason. Click "Stop streaming" on the Live monitoring page first, then come back.
+
+Archived recordings have had their raw files cleared and cannot be replayed; fetch that data from where it was uploaded.
+
+### Quality flags {#quality}
+
+Each recording on the Project page has a Quality column:
+
+| Shows | Meaning |
+|---|---|
+| No issues detected | The episode is clean |
+| Lag N / Drop N / Bad N | Dropped frames, device dropouts or bad frames |
+| Collecting statistics | Still recording |
+| Incomplete statistics / No statistics | A failed or older recording without complete statistics |
+
+Replay flagged episodes first and delete the ones you cannot use on the Project page; recordings with missing streams or zero frames are also blocked at export.
 
 ## Export {#export}
 
@@ -37,7 +62,7 @@ Click Export on a task row to open "Export task data":
 3. **Pick where it goes**: "Download to device" or "Upload to remote".
 4. **Pick the format**: follow the project setting, LeRobot dataset or MCAP.
 5. **Start**: click "Download …" or "Upload …". Progress runs precheck → transcode → build → pack / upload → done; closing the dialog leaves it running in the background.
-6. **Export notice**: if some episodes started with a hand outside the [starting range](monitor-record.md#initial-pose), the result says "N recordings start with a hand outside the configured range" and lists them; the export still completes, and whether to drop those episodes is up to you.
+6. **Export notice**: if some episodes started with a hand outside the [starting range](monitor-record.md#initial-pose), the result says "N recordings start with a hand outside the configured range" and lists them; the export still completes.
 
 ### Download to device {#download}
 
@@ -93,17 +118,15 @@ It is not the same file as the raw recording on the backpack:
 | Rate | Each stream at its device's native rate: visuotactile 120fps, wrist fisheye 30fps, gripper opening and IMU 100Hz | All aligned to 30Hz |
 | Images | Raw frames, not rectified | Rectified according to the project settings |
 
-## Downloading raw recordings (support and data analysis) {#raw-mcap}
+## Downloading raw recordings {#raw-mcap}
 
-Version 0.4.7 supports downloading the raw MCAP of an individual recording for troubleshooting with technical support or further analysis. For routine training data, use the [export workflow](#export) above.
+For troubleshooting with technical support or data analysis; for routine training data, use the [export workflow](#export).
 
 1. Enable engineering mode with guidance from technical support; the entry point is hidden in normal mode.
-2. On the Project page, expand the project and task, find the recording and click "Export raw MCAP". The entry point is available in desktop and mobile browsers.
-3. Find the recording's `.mcap` file in your browser's download list. There is no need to export the entire task first.
+2. On the Project page, find the recording and click "Export raw MCAP"; the browser downloads that recording's `.mcap` file directly (desktop and mobile both work).
 
-The recording must be ready, or uploaded with its local source file retained. Archived recordings, recordings that are not ready, and those being deleted cannot be downloaded. If the download reports that the local raw file is missing, contact technical support; this entry point cannot recover deleted files. A quality-check warning does not necessarily mean the source is unreadable; refer to the button's availability and any download message.
-
-The download serves the file stored on the device, preserving its recorded content and timestamps, without transcoding, image rectification or 30Hz resampling during download. It differs from the task's exported `.train.mcap` and cannot be used directly as that training export format. If you need the raw file for later analysis, download it and verify the copy before [archiving](#archive).
+- Only recordings that are ready, or uploaded with their local source file retained, can be downloaded; archived ones cannot, so download before [archiving](#archive) if you need to keep the raw file.
+- The download is the original file on the device, with no transcoding, rectification or 30Hz resampling; it differs from the task's exported `.train.mcap`.
 
 ## Archive {#archive}
 

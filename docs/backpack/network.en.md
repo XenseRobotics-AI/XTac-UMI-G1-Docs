@@ -25,14 +25,6 @@ Cable the tablet to the backpack's front `HOST1` or `HOST2` port and unlock the 
 
 Pick the site's 5GHz Wi-Fi on this page and enter its password: the backpack and the tablet **join that network together**. Once the backpack is confirmed on the same network, the tablet switches to the backpack's Wi-Fi address automatically and you can unplug the USB cable.
 
-## The backpack's network interfaces {#interfaces}
-
-| Interface | What it is | Use |
-|---|---|---|
-| Wired | Ethernet to a router, IP by DHCP, static possible | Labs and fixed workstations; the steadiest bandwidth |
-| Wireless | The backpack joins the site's 5GHz Wi-Fi | Several people on the same network |
-| Hotspot | The backpack's own 5GHz hotspot, fixed address `192.168.44.1` | The way in with no tablet and no site network |
-
 ## The backpack hotspot {#softap}
 
 Without a tablet, reach the backpack over its hotspot:
@@ -76,8 +68,7 @@ Set a static IP only when there is no DHCP (backpack cabled straight to a comput
 The IP drop-down at the left of the top bar gathers every way into this unit. After a network change, when you are unsure which address to use, look here first.
 
 - **Contents**: the wired IP, the wireless IP and the hotspot it is joined to, its own hotspot's SSID / password / gateway, and the mDNS device name.
-- **Collapsed**: shows only "the one address you should use to reach it right now", the first available of wired > wireless > hotspot.
-- **Expanded**: click to see all network details.
+- **Collapsed**: shows only the address you should use right now, the first available of wired > wireless > hotspot; click to see them all.
 
 ![The top-bar network drop-down](../assets/backpack/network-dropdown-live-en.webp){ width="320" }
 
@@ -90,17 +81,10 @@ The IP drop-down at the left of the top bar gathers every way into this unit. Af
 | Customer site, uncontrolled network | [Tablet over USB](#tablet), or turn on the [hotspot](#softap) |
 | Site has 5GHz Wi-Fi and several people need access | Use the tablet to [put the backpack on the site Wi-Fi](#site-wifi); PCs on that network reach it directly |
 | Backpack wired directly to a laptop, no router | A [static IP](#wired) on the same subnet at each end |
-| Nothing works at all | Plug the tablet into USB to check the network; if that fails, see [Troubleshooting](troubleshooting.md) |
 
-## Advanced diagnosis: handled by technical support {#ssh}
+## Still cannot connect {#ssh}
 
-!!! warning "The device back end is for technical support diagnosis only"
-    **Do not log in to the back end or change the system configuration yourself**: the console cannot show those changes, and a bad configuration can lock you out of the device, even through the hotspot.
+!!! warning "Do not log in to the device back end or change the system configuration yourself"
+    The console cannot show those changes, and a bad configuration can lock you out of the device, even through the hotspot.
 
-Day-to-day work happens in the console: addresses in the [network drop-down](#status); the wired address, gateway, states such as "Cable disconnected", joining the site Wi-Fi and changing the wired IP are all in System → [Network / Setup](system.md#wifi).
-
-If you have worked through this page and [Troubleshooting](troubleshooting.md) and still cannot connect, collect the following for technical support:
-
-1. The body-label SN, and which way in you used (hotspot / device name / wired IP).
-2. The addresses in the [network drop-down](#status), and the wired state and current internet connection on the System → [Network / Setup](system.md#wifi) page.
-3. A screenshot of the exact error text on screen.
+If you have worked through this page and [Troubleshooting](troubleshooting.md#connect) and still cannot connect, give [technical support](../common/reference.md#support) the body-label SN, which way in you used (hotspot / device name / wired IP), the addresses in the [network drop-down](#status) and a screenshot of the error.

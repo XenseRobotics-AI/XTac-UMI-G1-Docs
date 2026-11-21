@@ -73,7 +73,7 @@ hide:
 - **Precise sync**: 5ms multi-device time sync, < 3mm positioning
 - **Open formats**: LeRobot / MCAP output, compatible with mainstream data ecosystems
 
-[More highlights](product/highlights.md){ .md-button .md-button--primary }
+[More highlights](product/g1.md#highlights){ .md-button .md-button--primary }
 
 </div>
 
@@ -81,7 +81,7 @@ hide:
 
 ## Two editions for different settings
 
-Both editions use the same grippers and headset and produce the same data. The Backpack Kit is a turnkey unit whose collection software is not open source; the Developer Kit's collection software and gripper SDK are open source and free to customize.
+Both editions use the same grippers and headset and produce the same data. The Backpack Kit is a turnkey unit whose collection software is not open source; the Developer Kit's collection software and gripper SDK are open source under Apache-2.0, with the repositories listed in [Developer Kit open-source repositories](pc/index.md#repos).
 
 <div class="grid cards xu-cards" markdown>
 
@@ -102,7 +102,7 @@ Both editions use the same grippers and headset and produce the same data. The B
     { .xu-card__fit }
 
     [Quickstart](backpack/quickstart.md){ .md-button .md-button--primary }
-    [About the backpack](product/backpack.md){ .md-button }
+    [About the backpack](backpack/index.md){ .md-button }
     { .xu-card__actions }
 
 -   ![XTac UMI G1 visuotactile gripper](assets/product/g1-card.webp){ .xu-card__img }
@@ -168,7 +168,3 @@ Visuotactile manipulation data collected with XTac UMI G1 grippers, released as 
 </div>
 
 </div>
-
-## Developer Kit open-source repositories
-
-The Developer Kit's collection repo, gripper SDK, tracker service and viewer are open source under Apache-2.0, see [the list](pc/index.md#repos); the Backpack Kit's software is closed.

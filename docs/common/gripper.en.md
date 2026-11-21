@@ -1,9 +1,6 @@
 # Gripper connection and serial numbers
 
-The gripper is the same on both editions; only where the cable goes and how detection is checked are split into "Backpack Kit / Developer Kit" tabs.
-
-- Backpack Kit buttons, LEDs and voice: [Gripper buttons, LEDs and voice](../backpack/gripper.md).
-- Product positioning and components: [XTac UMI G1](../product/g1.md); specs: [Technical specifications](../product/specs.md#specs).
+The gripper is the same on both editions; only where the cable goes and how detection is checked are split into "Backpack Kit / Developer Kit" tabs. Specs: [Technical specifications](../product/specs.md#specs); safety requirements: [Safety and compliance](../product/safety.md#gripper); sensor cleaning and removal: [Maintenance](maintenance.md); Backpack Kit buttons: [Gripper buttons, LEDs and voice](../backpack/gripper.md).
 
 ## Leader gripper connection and use {#install}
 
@@ -28,9 +25,8 @@ The leader gripper takes power and communication over USB Type-C.
 
 ![Leader gripper connection diagram](../assets/hardware/master-connection.webp){ width="560" }
 
-1. Take out the USB Type-C communication cable.
-2. Plug it into the leader gripper body's Type-C port and **tighten the locking screws**.
-3. Plug the other end into the collection unit: Backpack Kit left gripper to `UMI-L`, right to `UMI-R`; Developer Kit to a Type-C or Type-A port on the collection PC.
+1. Plug the USB Type-C communication cable into the leader gripper body's Type-C port and **tighten the locking screws**.
+2. Plug the other end into the collection unit: Backpack Kit left gripper to `UMI-L`, right to `UMI-R`; Developer Kit to a Type-C or Type-A port on the collection PC.
 
 ![Leader gripper connected](../assets/hardware/master-connect.webp){ width="480" }
 
@@ -80,7 +76,7 @@ The follower gripper mounts on the robot's end effector and is not side-specific
 - The robot is stopped and in a safe pose.
 - Flange size, screw spec, mounting orientation and end-effector payload meet the project requirements.
 - 24V adapter, Type-C communication cable and locking parts intact.
-- Cables routed clear of joints, the gripper's range of motion and obstacles.
+- Cables routed clear of joints, the gripper's range of motion and obstacles, with enough slack that they cannot be pulled, bent or tangled during motion.
 
 ### Flange mounting
 
@@ -98,27 +94,21 @@ Adapter hole pattern, mounting frame and gripper models (URDF / MJCF / USD) are 
 
 ![Follower gripper connection diagram](../assets/hardware/follower-connection.webp){ width="560" }
 
-1. Take out the USB Type-C communication cable and the 24V power adapter.
-2. Connect the 24V power adapter to the gripper body.
-3. Plug the screw end of the Type-C locking cable into the body and **tighten the locking screws**.
-4. Plug the other end into the collection unit and confirm communication in the software.
+1. Connect the 24V power adapter to the gripper body.
+2. Plug the screw end of the Type-C locking cable into the body and **tighten the locking screws**.
+3. Plug the other end into the collection unit and confirm communication in the software.
+4. Before letting it move, run [Follower gripper → install and self-check](../follower/index.md#install); do the first run at low speed to confirm nothing interferes.
 
 ![Follower gripper connected](../assets/hardware/follower-connect.webp){ width="480" }
-
-!!! warning "Cable and mounting check"
-    - Gripper firmly fixed, 24V secure, Type-C locked with enough slack.
-    - Cables cannot be pulled, bent or tangled during motion.
-    - First run at low speed to confirm nothing interferes.
 
 ## Power and connection requirements {#power}
 
 | Item | Leader gripper | Follower gripper |
 |---|---|---|
-| Power | USB Type-C bus power, DC 5V/500mA, no separate supply needed | 24V power adapter (do not use a supply with the wrong rating or a faulty one); Type-C is communication only |
+| Power | USB Type-C bus power, DC 5V/500mA, no separate supply needed | 24V power adapter; Type-C is communication only |
 | Cables | Supplied locking cable: Type-C on the gripper end, Type-C or Type-A on the other | Type-C communication cable + 24V power cable |
 | Connect and lock order | Connect the gripper end and tighten the locking screws first, then the collection unit | Connect 24V power first, then Type-C, and tighten the locking screws |
 | Disconnect order | Unplug the collection unit end first, then loosen the screws and unplug the gripper end | Unplug the collection unit end first, then cut 24V, and finally loosen the screws and unplug the gripper-end Type-C |
-| Static | Anti-static precautions when powering on/off and removing or fitting sensors | Same as leader |
 
 - Before unplugging, stop collection, recording, robot motion and replay.
 - Whole-system power order: Backpack Kit [Connection and disconnection order](../backpack/unbox-connect.md#order), Developer Kit [Power-on and power-off order](../pc/quickstart.md#power-on).
@@ -131,11 +121,3 @@ Last digit of the serial's running number: **odd = left, even = right**.
 - Applies to grippers, visuotactile sensors, wrist cameras and Pico trackers.
 - **Developer Kit**: the collection software assigns sides automatically (see [Device auto-discovery and the odd-left/even-right rule](../pc/host-setup.md#33)); to check by hand, run `lsusb` and read the last digit.
 - **Backpack Kit**: the console's System → Device info page shows each gripper's left / right badge and SN.
-
-## Safety notes {#safety}
-
-Power, the ban on direct fast charging, plugging, static and sensor-surface requirements: [Safety and compliance](../product/safety.md).
-
-- Sensor cleaning, storage and removal/refitting: [Maintenance](maintenance.md).
-- Run the follower's [self-check](../follower/setup.md) before letting it move.
-- Once detected, run a first collection with the [Backpack Kit quickstart](../backpack/index.md) or the [Developer Kit quickstart](../pc/quickstart.md).

@@ -1,10 +1,9 @@
 # Installation
 
-This page installs `xense-taccap-lerobot` and the three hardware SDKs on an **Ubuntu 22.04 / 24.04 LTS (amd64)** collection PC and verifies them up to `lerobot-info`. Serial permissions and device discovery are in [Host setup](host-setup.md).
+This page installs `xense-taccap-lerobot` and the three hardware SDKs on the collection PC and verifies them up to `lerobot-info`. Afterwards, do the [Host setup](host-setup.md); otherwise grippers get listed but cannot be opened.
 
-- **Verified**: Ubuntu 22.04.5 / 24.04.4 LTS, kernel 6.8 / 6.14 / 7.0 series, `x86_64`, Python `3.12.13` (≥ 3.12 required), mamba environment name `xense-taccap`.
+- **Verified**: Ubuntu 22.04.5 / 24.04.4 LTS (amd64), kernel 6.8 / 6.14 / 7.0 series, Python `3.12.13` (≥ 3.12 required), mamba environment name `xense-taccap`. On other distributions or architectures, verify driver, UVC, serial-permission and `.deb` support yourself.
 - The repo commit and per-package versions are those in [Versions and upgrades](versions.md).
-- **Other distributions or architectures**: verify driver, UVC, serial-permission and `.deb` support yourself.
 
 ## Collection PC requirements {#host-spec}
 
@@ -20,27 +19,24 @@ On a bimanual setup six cameras are streamed and encoded at once, with only 33.3
 | USB | **One gripper** (3 cameras) can share a single USB 2.0 bus | **Bimanual** (6 cameras) split across **two USB 2.0 buses** (two independent host controllers) |
 | OS | Ubuntu 22.04 / 24.04 LTS, **amd64** | Ubuntu 24.04 LTS |
 
-- **CPU**: the main loop, tactile decoding and feeding the encoder all run on the CPU, and a bimanual frame is six to eight images; a 12th-gen i7 is the lowest CPU verified to sustain 30fps.
-- **GPU**: `--dataset.vcodec=auto` encodes H.264 on the card. Without an NVIDIA card the CPU encodes, so saving is slower and `[slow_frame]` is likelier, see [Recording on a collection PC with no NVIDIA GPU](recording.md#no-gpu). Check the driver: `nvidia-smi --query-gpu=driver_version,name --format=csv,noheader`.
+- **CPU**: the main loop, tactile decoding and feeding the encoder all run on the CPU; a 12th-gen i7 is the lowest CPU verified to sustain 30fps.
+- **GPU**: `--dataset.vcodec=auto` encodes H.264 on the card; without an NVIDIA card, see [Recording on a collection PC with no NVIDIA GPU](recording.md#no-gpu). Check the driver: `nvidia-smi --query-gpu=driver_version,name --format=csv,noheader`.
 - **Memory**: use 32GB when you watch Rerun with `--display_data` or process data while collecting.
-- **Disk**: bimanual raw video is about 280 MB/s; for the actual on-disk size, see [Planning and estimating disk usage](dataset.md#storage-planning). Do not record straight onto a spinning disk or a USB external drive.
-- **USB**: a bimanual setup's 6 cameras are split across two 480M buses, see [USB bandwidth budget](host-setup.md#usb-budget).
+- **Disk**: do not record straight onto a spinning disk or a USB external drive; for capacity, see [Planning and estimating disk usage](dataset.md#storage-planning).
+- **USB**: see [USB bandwidth budget](host-setup.md#usb-budget).
 
 ## Choosing an install path {#choose}
 
-Both paths produce the same collection environment; pick one.
+Both paths produce the same collection environment, and both need internet access. The commands on the following pages are written for Mamba.
 
-| | **Mamba (from source)** | **Docker image** |
+| | **Mamba (from source)** (default) | **Docker image** |
 |---|---|---|
 | What you get | The source repo; you build the environment | A prebuilt image to pull and one script to run |
 | Time | Longer; the gripper SDK and the Pico4 bindings are compiled on the spot | Minutes to tens of minutes, depending on how fast you can pull the image (about 21GB) |
 | NVIDIA GPU | Not required; without one you are on the [degraded recording path](recording.md#no-gpu) | **Required**, driver ≥ 570.144 |
 | Isolation | A Mamba environment on the host | In a container; the host stays clean |
 | Editing the code | Easy | Awkward |
-
-- **Default to Mamba**: the commands on the following pages are written for it. Choose Docker when you have the NVIDIA driver and would rather not build an environment.
-- **Internet**: both paths need it; an offline machine can only use Docker's `.tar` delivery bundle.
-- **Proxy**: the Docker script accepts `XENSE_PROXY_URL`.
+| Offline / proxy | — | Offline via the `.tar` delivery bundle; proxy via `XENSE_PROXY_URL` |
 
 === "Mamba (from source)"
 
@@ -54,22 +50,18 @@ Both paths produce the same collection environment; pick one.
     sudo apt install -y v4l-utils     # not needed to record, but this is how you debug a camera
     ```
 
-    - `setup_env.sh` checks these commands first and stops with the matching apt line if any are missing; a missing `v4l-utils` only warns.
+    - `setup_env.sh` checks these commands first and stops with the matching apt line if any are missing; a missing `libusb-dev` or `v4l-utils` only warns.
     - `v4l2-ctl --list-formats-ext` is for debugging [a camera that will not open](troubleshooting.md#usb-bandwidth).
-    - No system `ffmpeg` needed (`torchcodec` uses the FFmpeg shared libraries in the conda environment), nor `libudev-dev` (the bundled `libudev1` is used at runtime).
+    - No system `ffmpeg` needed (`torchcodec` uses the FFmpeg shared libraries in the conda environment), nor `libudev-dev`.
 
     !!! warning "Install `libusb-dev`, and keep it current with the kernel"
-        With a stale or missing libusb the cameras will not connect, and the error does not mention libusb. `sudo apt install -y libusb-dev` also brings the `libusb-0.1-4` runtime (`libusb-0.1.so.4`) the camera stack loads. After a kernel upgrade, upgrade it again and reboot:
+        With a stale or missing libusb the cameras will not connect; the failure only comes at `connect()` and the error does not mention libusb. `libusb-dev` also brings the `libusb-0.1-4` runtime (`libusb-0.1.so.4`) the camera stack loads. After a kernel upgrade, upgrade it again and reboot:
 
         ```bash
         sudo apt update && sudo apt install -y --only-upgrade libusb-dev libusb-1.0-0
         ```
 
-        `setup_env.sh` only warns about it; when missing, the failure only comes at `connect()`.
-
     ### Install Miniforge
-
-    Mamba solves dependencies about 10× faster than conda:
 
     ```bash
     curl -L -O "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh"
@@ -78,14 +70,14 @@ Both paths produce the same collection environment; pick one.
 
     ### Clone the repo and its submodules {#22}
 
-    The hardware SDKs are `third_party/` submodules; clone recursively at the tag:
-
     !!! warning "On a machine without a GitHub SSH key, run this once before cloning"
-        The submodule is addressed as `git@github.com:`, and without an SSH key fetching it fails. Switch to HTTPS, see [The submodule URL is SSH](versions.md#submodule-ssh):
+        The submodule is addressed as `git@github.com:`, and without an SSH key fetching it fails. The submodule repository is public, so switch to HTTPS:
 
         ```bash
         git config --global url."https://github.com/".insteadOf "git@github.com:"
         ```
+
+    The hardware SDKs are `third_party/` submodules; clone recursively at the tag:
 
     ```bash
     git clone \
@@ -95,27 +87,13 @@ Both paths produce the same collection environment; pick one.
     cd xense-taccap-lerobot
     ```
 
-    Already cloned without the submodules:
-
-    ```bash
-    git submodule update --init --recursive --progress
-    ```
+    Already cloned without the submodules: `git submodule update --init --recursive --progress`. After every later submodule update, rebuild `xense.taccap`, see [Updating the repo and submodules](versions.md#repo-update).
 
     | Package | Source |
     |---|---|
     | `xense.taccap` (tactile gripper SDK) | The only submodule, [`third_party/taccap-gripper`](https://github.com/XenseRobotics-AI/TacCap-Gripper) |
     | `xensesdk` (visuotactile sensor SDK) | Installed automatically by `setup_env.sh --install` |
     | `xensevr_pc_service_sdk` (Pico4U) | Python bindings in the main repo; the C SDK (`PXREARobotSDK.h` + `libPXREARobotSDK.so`) comes from the [XenseVR PC Service `.deb`](#24) and is updated by a new `.deb`, not by re-running `--install` |
-
-    !!! warning "Rebuild `xense.taccap` after updating the submodule"
-        `git submodule update` does not rebuild, after which `import xense.taccap` fails with an error like `AttributeError: module 'xense.taccap._taccap_native' has no attribute 'GripperAutoCalConfig'`. This can happen without a version bump, so rebuild after every submodule pull (no sudo needed), or run `bash setup_env.sh --install`:
-
-        ```bash
-        cd ~/xense-taccap-lerobot
-        LIBRARY_PATH="${CONDA_PREFIX}/lib" \
-          uv pip install -e third_party/taccap-gripper --no-deps --no-build-isolation
-        python -c "import xense.taccap as t; print(t.__version__)"
-        ```
 
     ### Create and activate the environment
 
@@ -132,11 +110,10 @@ Both paths produce the same collection environment; pick one.
     ./setup_env.sh --install
     ```
 
-    It updates the environment from `conda_environment.yaml`, installs the main package from `pyproject.toml`, installs `xensesdk` and the XenseVR PC Service daemon, then builds `xensevr_pc_service_sdk` and `xense.taccap`.
+    It updates the environment from `conda_environment.yaml`, installs the main package from `pyproject.toml`, installs `xensesdk` and the XenseVR PC Service daemon, then builds `xensevr_pc_service_sdk` and `xense.taccap`. About the PC Service `.deb`:
 
-    - **Download**: the `.deb` for the current architecture (about 110MB) comes from the [v0.2.1 release](https://github.com/XenseRobotics-AI/XenseVR-PC-Service/releases/tag/v0.2.1); `$XENSEVR_DEB_URL` overrides the URL.
+    - **Download**: the package for the current architecture (about 110MB) comes from the [v0.2.1 release](https://github.com/XenseRobotics-AI/XenseVR-PC-Service/releases/tag/v0.2.1); `$XENSEVR_DEB_URL` overrides the URL. If the download fails, `--install` stops; for an offline or patched package, point `$XENSEVR_DEB` at a local file.
     - **Install**: `sudo dpkg -i` into `/opt/apps/roboticsservice`; skipped if the same version is installed, and a partial download is reused.
-    - **Failed download**: `--install` stops; for an offline or patched package, point `$XENSEVR_DEB` at a local file.
     - **Version**: v0.2.1 rebuilt the C SDK, while v0.2.0 would build the Pico4 bindings against the old SDK. The [headset stereo view and head pose](recording.md#56) need PC Service ≥ v0.2.0; the tracker is unaffected.
 
     ### Verify the install {#25}
@@ -174,9 +151,8 @@ Both paths produce the same collection environment; pick one.
     ### Image contents and host requirements {#docker}
 
     - **Contents**: the full `xense-taccap` environment, the CUDA user-space libraries, the collection program and the three hardware SDKs (XenseSDK, TacCap-Gripper, the Pico4 bindings). XenseVR PC Service starts on launch.
-    - To hot-plug tactile sensors, wrist cameras, the gripper serial port and the Pico4U, the container runs in **privileged mode** and shares the host's network and IPC. Use it only on a host you trust.
-    - **Host**: Ubuntu 22.04 / 24.04 **amd64**, **NVIDIA driver ≥ 570.144** (check with `nvidia-smi --query-gpu=driver_version --format=csv,noheader`).
-    - **Driver**: the script neither installs nor upgrades the GPU driver (that depends on the card, Secure Boot and a reboot) and stops if it falls short.
+    - **Privileges**: to hot-plug devices, the container runs in **privileged mode** and shares the host's network and IPC. Use it only on a host you trust.
+    - **Host**: Ubuntu 22.04 / 24.04 **amd64**, **NVIDIA driver ≥ 570.144** (check with `nvidia-smi --query-gpu=driver_version --format=csv,noheader`). The script neither installs nor upgrades the GPU driver and stops if it falls short.
 
     ### One-shot image install {#ghcr}
 
@@ -186,7 +162,7 @@ Both paths produce the same collection environment; pick one.
     ghcr.io/xenserobotics-ai/xense-taccap-lerobot
     ```
 
-    Run as a normal user (not root):
+    Run as a normal user (not root); cloning the repo is only how you get `compose.yaml` and the script:
 
     ```bash
     git clone --branch v0.1.6 https://github.com/XenseRobotics-AI/xense-taccap-lerobot.git
@@ -194,17 +170,14 @@ Both paths produce the same collection environment; pick one.
     ./docker/install_customer.sh
     ```
 
-    The script, in order: checks the system and GPU driver → installs Docker and the NVIDIA Container Toolkit as needed (and registers the NVIDIA runtime) → installs the ModemManager blocking rule from [Stop ModemManager grabbing the port (udev)](host-setup.md#32) → pulls the image → runs a CUDA and graphics smoke test. Cloning the repo is only how you get `compose.yaml` and the script. The script **does not remove `brltty`**; run `sudo apt purge -y brltty` yourself, see [Remove brltty](host-setup.md#brltty).
-
-    Behind a proxy:
+    The script, in order: checks the system and GPU driver → installs Docker and the NVIDIA Container Toolkit as needed (and registers the NVIDIA runtime) → installs the [ModemManager blocking rule](host-setup.md#32) → pulls the image → runs a CUDA and graphics smoke test. The script **does not remove `brltty`**; you still have to [remove it](host-setup.md#brltty) yourself.
 
     ```bash
+    # Behind a proxy
     XENSE_PROXY_URL=http://127.0.0.1:7897 ./docker/install_customer.sh
-    ```
 
-    Offline, ask your Xense contact or distributor for the image `.tar` bundle, drop it in the repo root or pass it as the first argument; the script then verifies and imports it:
-
-    ```bash
+    # Offline: ask your Xense contact or distributor for the image .tar bundle, drop it in the repo root
+    # or pass it as the first argument; the script then verifies and imports it
     ./docker/install_customer.sh xense-taccap-lerobot-0.1.6-linux-amd64.tar
     ```
 
@@ -225,21 +198,19 @@ Both paths produce the same collection environment; pick one.
     docker compose pull
     ```
 
-    Pinned at `0.0.5` or earlier (fixed from `0.0.6`): record with `--play_sounds=false` (the image has no `spd-say`, see [Troubleshooting · Docker image](troubleshooting.md#docker)), and export by copying as root and then `chown`, see [Where the data lives, and why removing the container does not lose it](#docker-data).
+    For the limitations of an image pinned at `0.0.5` or earlier, see [Troubleshooting · Docker image](troubleshooting.md#docker).
 
     ### Host setup after installing {#docker-host}
 
-    The script added you to the `docker` group, not yet active in this terminal. On the host:
+    The script added you to the `docker` group, not yet active in this terminal. On the host, **type these one at a time** (`newgrp` opens a subshell that swallows any commands pasted after it):
 
     ```bash
     newgrp docker                    # make docker group membership active in this terminal
     xhost +si:localuser:root         # needed to show Rerun and other windows from the container
     ```
 
-    !!! warning "Type them one at a time, do not paste the block"
-        `newgrp` opens a subshell that swallows the pasted commands after it. Entering the container without `newgrp docker` gives `permission denied`. Logging out and back in is cleaner: it avoids newly created files belonging to the `docker` group.
-
-    `docker` group membership is close to root; add only users who collect. Revoke the grant when done: `xhost -si:localuser:root`.
+    - Entering the container without `newgrp docker` gives `permission denied`. Logging out and back in is cleaner: it avoids newly created files belonging to the `docker` group.
+    - `docker` group membership is close to root; add only users who collect. Revoke the grant when done: `xhost -si:localuser:root`.
 
     ### Enter the container and verify
 
@@ -271,17 +242,11 @@ Both paths produce the same collection environment; pick one.
     !!! warning "These two lines must match; if they do not, do not record with this image"
         A mismatch means an incomplete image build, and the tracker data may be wrong. Switch to another tag and `docker compose pull` again, or contact Xense or your distributor.
 
-    Confirm the devices are discovered:
+    Confirm the devices are discovered (or without an interactive shell: `docker compose run --rm xense-taccap lerobot-info`):
 
     ```bash
     lerobot-find-cameras
     lerobot-info
-    ```
-
-    Or run a command without an interactive shell:
-
-    ```bash
-    docker compose run --rm xense-taccap lerobot-info
     ```
 
     ### Where the data lives, and why removing the container does not lose it {#docker-data}
@@ -333,7 +298,7 @@ Both paths produce the same collection environment; pick one.
 
     ### Writing data straight to a host directory {#docker-data-dir}
 
-    If you often look at or delete data, or have a large disk mounted elsewhere, set it in `.env`; editing `compose.yaml` conflicts on `git pull`, and `.env` is never committed:
+    If you often look at or delete data, or have a large disk mounted elsewhere, set it in `.env` (never committed, whereas editing `compose.yaml` conflicts on `git pull`):
 
     ```dotenv
     LEROBOT_DATA_DIR=/home/<user>/.cache/huggingface/docker_data
@@ -360,20 +325,13 @@ Both paths produce the same collection environment; pick one.
 
     ### Graphics inside the container {#docker-gui}
 
-    The image ships the XKB / Vulkan / XDG runtime libraries Rerun needs and defaults to `WGPU_BACKEND=vulkan`; Compose passes `DISPLAY` and the X11 socket through. If no window appears, do the [`xhost` authorization](#docker-host) first, then confirm the GPU is visible in the container:
-
-    ```bash
-    vulkaninfo --summary
-    ```
+    The image ships the XKB / Vulkan / XDG runtime libraries Rerun needs and defaults to `WGPU_BACKEND=vulkan`; Compose passes `DISPLAY` and the X11 socket through. If no window appears, do the [`xhost` authorization](#docker-host) first, then confirm the GPU is visible in the container with `vulkaninfo --summary`.
 
     !!! warning "Do not change `runtime: nvidia` in `compose.yaml` to `gpus: all`"
-        - `gpus: all` only requests compute + utility: CUDA and `nvidia-smi` work, but the Vulkan ICD is not injected and Rerun fails with `WGPU error: Failed to create surface for any enabled backend`.
-        - `runtime: nvidia` needs the NVIDIA runtime registered (`install_customer.sh` does this), otherwise Compose fails with `Unknown runtime specified nvidia`, see [Troubleshooting · Docker image](troubleshooting.md#docker).
+        `gpus: all` only requests compute + utility: CUDA and `nvidia-smi` work, but the Vulkan ICD is not injected and Rerun fails with `WGPU error: Failed to create surface for any enabled backend`. `runtime: nvidia` needs the NVIDIA runtime registered (`install_customer.sh` does this); otherwise see [Troubleshooting · Docker image](troubleshooting.md#docker).
 
     Without a Pico4U you can skip starting XenseVR PC Service (its log is at `/tmp/xensevr-service.log` in the container):
 
     ```bash
     START_XENSEVR_SERVICE=0 docker compose run --rm xense-taccap
     ```
-
-Next, do the [Host setup](host-setup.md); otherwise grippers get listed but cannot be opened.

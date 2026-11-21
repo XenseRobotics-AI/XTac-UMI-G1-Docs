@@ -5,36 +5,6 @@ XTac UMI comes in two configurations that share the same XTac UMI G1 grippers an
 - **Backpack Kit**: the backpack runs all collection and a tablet browser is the console; turnkey and built for large-scale field collection. The collection software is not open source.
 - **Developer Kit (open source)**: the grippers and headset connect straight to your collection PC and record with open-source LeRobot; built for research and algorithm teams who want to customize freely.
 
-This page compares the two and lists each edition's box contents and wiring.
-
-<div class="grid cards xu-cards" markdown>
-
--   ![The XTac UMI data collection backpack](../assets/product/backpack-card.webp){ .xu-card__img }
-
-    <span class="xu-tag xu-tag--backpack">Backpack Kit</span>
-
-    **XTac UMI Backpack**{ .xu-card__title }
-
-    ---
-
-    The backpack is the host and a tablet the console; record with the gripper buttons and upload to ModelScope in one click.
-
-    [Quickstart](../backpack/quickstart.md){ .md-button .md-button--primary }
-
--   ![XTac UMI G1 visuotactile gripper](../assets/product/g1-card.webp){ .xu-card__img }
-
-    <span class="xu-tag xu-tag--pc">Developer Kit</span>
-
-    **XTac UMI G1 Developer Kit (open source)**{ .xu-card__title }
-
-    ---
-
-    Plugs into your collection PC and records a LeRobotDataset; the collection software and SDK are open source.
-
-    [Quickstart](../pc/quickstart.md){ .md-button .md-button--primary }
-
-</div>
-
 ## How the two differ
 
 | | Backpack Kit · XTac UMI Backpack | Developer Kit · XTac UMI G1 Developer Kit |
@@ -46,7 +16,7 @@ This page compares the two and lists each edition's box contents and wiring.
 | Capture modes | Bimanual, optionally with headset stereo or right-eye images | Single gripper or bimanual, optionally with headset images |
 | On disk | One MCAP raw recording per episode | LeRobotDataset v3 directly |
 | Export and upload | Export per task as LeRobotDataset v3 / MCAP; download, or upload to ModelScope, S3, FTP, NFS and more | Push to the Hugging Face Hub |
-| Upgrades | Import an update package in the console; can roll back | Update the repo or image |
+| Upgrades | Import an update package in the console | Update the repo or image |
 | Customization | Not open source; build on the exported data | Open source (Apache-2.0); change the code, hook up your own robot |
 | For | Large-scale data factories and field collection teams | Research and algorithm teams with their own training pipelines |
 
@@ -132,8 +102,7 @@ This page compares the two and lists each edition's box contents and wiring.
 
     Not for collection; the backpack has its own hotspot. You only need a network to upload: ModelScope and S3 need internet access, while FTP / NFS on your LAN only need the same LAN.
 
-## Getting started and after-sales support
+## After-sales support
 
-- **Getting started**: see the [Backpack Kit quickstart](../backpack/quickstart.md) or the [Developer Kit quickstart](../pc/quickstart.md).
 - **Missing or damaged items in the box**: contact our after-sales team for a replacement; do not substitute other cables or power supplies.
 - **Problems in use**: check the troubleshooting page for your edition first; if that does not solve it, contact our after-sales team with the device serial numbers and logs described in [Support and feedback](../common/reference.md#support).

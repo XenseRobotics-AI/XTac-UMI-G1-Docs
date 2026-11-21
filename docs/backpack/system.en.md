@@ -10,9 +10,9 @@ Open "System" from the console's top bar; the items are listed down the left. A 
 | [Upload configurations](#upload) | Remote upload accounts | Before uploading data |
 | [Network / Setup](#wifi) | Hotspot switch, site Wi-Fi, wired IP | Changing venue, giving several people access |
 | [Camera parameter packages](#camera-profiles) | Import or restore camera parameters | Technical support has sent a new pack |
-| [System update](#update) | Upgrade and rollback | When there is a new version |
+| [System update](#update) | Upgrade | When there is a new version |
 
-The interface language is also switched here; by default it follows the browser.
+**Interface language**{#language}: the console shows Chinese or English according to the browser language (any other language falls back to English). You can switch it temporarily in the System page sidebar or in the mobile settings; reloading the page returns it to "Follow browser". The voice prompt language follows the interface language by default.
 
 !!! warning "Stop recording first"
     While recording, switching project, gripper calibration, gripper firmware upgrades, camera parameter package imports and system updates are all refused with "Recording in progress". Stop the recording on the Live monitoring page first.
@@ -28,14 +28,9 @@ A read-only page; "Refresh" at the top right reloads it.
 - **Grippers**: SN and firmware version of each gripper.
 - **Cameras**: the camera list, with offline ones marked "(Offline)".
 
-When to look here:
+When reporting a fault, note the device SN and headset serial number, not the IP (it changes).
 
-- Repairs, identifying a unit: note the device SN and headset serial number, not the IP (it changes).
-- After an upgrade: check that the version and build time changed.
-- Wrong camera count on the monitor page: see which feed is "(Offline)".
-- Before upgrading the Collector: confirm both leader grippers meet the firmware requirement in the [version baseline](versions.md#baseline) (≥ 1.2.7 for 0.4.7).
-
-**Export diagnostics**: click "Export diagnostics" on this page, wait for packaging, then confirm that the encrypted ZIP has finished downloading in your browser's download list. The package contains application logs, the kernel log (dmesg) and version information; send it to technical support without extracting it yourself. If the download fails, follow the message on the page and retry. See [Support and feedback](../common/reference.md#support) for the other information to include.
+**Export diagnostics**: click "Export diagnostics" to download an encrypted ZIP (application logs, the kernel log dmesg and version information) and send it to technical support as is; the other information to include is in [Support and feedback](../common/reference.md#support).
 
 **Clean up leftover data**: click "Scan data" to list leftover files and empty folders that belong to no valid recording, grouped as "Recording files", "H264 archives" and "Export files". Tick what to remove and click "Delete selected"; the result shows how many were deleted, skipped and failed.
 
@@ -59,7 +54,7 @@ One gripper at a time, without skipping steps:
 !!! danger "Writing overwrites, and both grippers must be finished"
     Written values cannot be undone. A zero without a travel leaves the opening unusable; calibrating only one gripper puts left and right on different scales, with nothing in the data to show it.
 
-"Gripper firmware update" is further down the same page; see [Gripper firmware](update.md#gripper-firmware).
+"Gripper firmware update" is further down the same page; see [Gripper firmware](versions.md#gripper-firmware).
 
 ## Capture settings {#capture-settings}
 
@@ -75,19 +70,9 @@ Shows the current project's capture config, read-only. These are chosen when you
 | Dual gripper + stereo headset | 2 grippers | PICO stereo pair | 8 |
 | Dual gripper + headset right eye | 2 grippers | PICO right eye | 7 |
 
-The other six:
-
-- **PICO resolution**: `640x480` or `1024x768` per eye, headset modes only.
-- **PICO image source**: raw fisheye or undistorted.
-- **Headset mount**: On head or Around neck, headset modes only; it decides which range the [starting-pose check](monitor-record.md#initial-pose) uses. Projects created before 0.4.6 show "On head (not specified, legacy project)".
-- **Export quality**: High quality, Standard or Compact.
-- **Wrist fisheye rectification**: see [below](#undistort).
-- **Tactile rectified-image export orientation**: "Current orientation · 700 × 400 (landscape)" or "Additional 90° counterclockwise · 400 × 700 (aligned with SDK)".
+What the other items mean (PICO resolution and image source, headset mount, export quality, wrist fisheye rectification, tactile rectified-image export orientation) is in [Picking a project and task](monitor-record.md#project-task). For projects created before 0.4.6, the headset mount shows "On head (not specified, legacy project)".
 
 When a project is selected, the headset syncs to its settings automatically.
-
-!!! warning "Picked wrong? Create a new project"
-    The config freezes at creation. An empty project with nothing recorded can simply be deleted and recreated.
 
 ### Wrist fisheye rectification {#undistort}
 
@@ -201,4 +186,4 @@ If an import fails, the device keeps its previous parameters.
 
 ## System update {#update}
 
-Upgrade and rollback are covered in [Upgrades and OTA](update.md).
+See [Versions and upgrades](versions.md#upgrade).

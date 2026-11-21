@@ -1,6 +1,6 @@
 # 一页速通
 
-从上电到录出第一条数据，照着做即可。开始前确认这五项都已完成：
+从上电到录出第一条数据。开始前确认五项都已完成：
 
 - 硬件已接好 → [夹爪连接](../common/gripper.md#install)
 - 环境已安装，已进入采集环境（`mamba activate xense-taccap` 或 Docker 容器） → [安装](install.md)
@@ -48,6 +48,8 @@ for g in scan_grippers(): print(g.side.name, g.role.name, repr(g.firmware_sn))"
 
 ## 3. 预览检查
 
+启动前把追踪器放在头显视野内，被遮挡会丢跟踪。
+
 === "② 带腕部位姿"
 
     ```bash
@@ -74,78 +76,45 @@ for g in scan_grippers(): print(g.side.name, g.role.name, repr(g.firmware_sn))"
 
 移动、开合夹爪，确认各路画面、触觉和位姿都在更新，然后按 Ctrl+C 退出。
 
-三档用 `--robot.type` 区分，**预览用哪一档，录制就用哪一档**：
+- ① 只有夹爪（不需要 PC Service）：在 ② 的命令里加 `--robot.enable_tracker=false`。
+- 单夹爪：`--robot.type=taccap_gripper`，两只夹爪都接着时再加 `--robot.side=left` 或 `right`。
+- `--robot.id` 必填，直接填工位号数字（`0`、`1`…），一套设备一个。
 
-<div class="tc-tiers" markdown>
-
-| 档位 | 写法 | 包含的数据 |
-|---|---|---|
-| ① 只有夹爪 | `--robot.type=bi_taccap_gripper`<br>`--robot.enable_tracker=false` | 触觉、腕部相机、开合度；不需要 PC Service |
-| ② 带腕部位姿 | `--robot.type=bi_taccap_gripper` | 再加夹爪位姿 `tcp.*` |
-| ③ 完全体 | `--robot.type=xtac_umi_g1` | 再加头显双目画面与头部位姿 |
-
-</div>
-
-启动前把追踪器放在头显视野内，被遮挡会丢跟踪。
+各档包含的数据与逐项检查表见[开录前预览](recording.md#preview)。
 
 ## 4. 正式录制
 
-=== "② 带腕部位姿"
+`--robot.type`（以及是否加 `--robot.enable_tracker=false`）**与预览时保持一致**；③ 完全体把下面的类型换成 `xtac_umi_g1`。
 
-    ```bash
-    lerobot-record \
-        --robot.type=bi_taccap_gripper \
-        --robot.id=0 \
-        --dataset.repo_id=<你的org>/<数据集名> \
-        --dataset.single_task='Pick up the object' \
-        --dataset.num_episodes=1 \
-        --dataset.fps=30 \
-        --dataset.episode_time_s=120 \
-        --dataset.reset_time_s=60 \
-        --dataset.push_to_hub=false
-    ```
+```bash
+lerobot-record \
+    --robot.type=bi_taccap_gripper \
+    --robot.id=0 \
+    --dataset.repo_id=<你的org>/<数据集名> \
+    --dataset.single_task='Pick up the object' \
+    --dataset.num_episodes=1 \
+    --dataset.fps=30 \
+    --dataset.episode_time_s=120 \
+    --dataset.reset_time_s=60 \
+    --dataset.push_to_hub=false
+```
 
-    每帧记录 6 路画面：四路视触觉与左右腕部相机，以及开合度和夹爪位姿。
+② 每帧记录 6 路画面（四路视触觉与左右腕部相机）以及开合度和夹爪位姿；③ 再加头显双目与头部位姿，共 8 路：
 
-=== "③ 完全体"
-
-    ```bash
-    lerobot-record \
-        --robot.type=xtac_umi_g1 \
-        --robot.id=0 \
-        --dataset.repo_id=<你的org>/<数据集名> \
-        --dataset.single_task='Pick up the object' \
-        --dataset.num_episodes=1 \
-        --dataset.fps=30 \
-        --dataset.episode_time_s=120 \
-        --dataset.reset_time_s=60 \
-        --dataset.push_to_hub=false
-    ```
-
-    每帧记录 8 路画面，在上一档基础上多了头显双目，以及头部位姿：
-
-    <figure class="tc-shot tc-shot--narrow" markdown>
-    ![八路画面与数据键的对应](../assets/dataset/sensor-key-map.webp)
-    <figcaption>八路画面及其在数据集里的键名</figcaption>
-    </figure>
-
-- `--robot.id` 必填，直接填工位号数字（`0`、`1`…），一套设备一个。
-- `--robot.type`（以及是否加 `--robot.enable_tracker=false`）与预览时保持一致；只有夹爪时在 ② 的命令里加上这个开关。
-- 单夹爪：`--robot.type=taccap_gripper`，两只夹爪都接着时再加 `--robot.side=left` 或 `right`。
+<figure class="tc-shot tc-shot--narrow" markdown>
+![八路画面与数据键的对应](../assets/dataset/sensor-key-map.webp)
+<figcaption>八路画面及其在数据集里的键名</figcaption>
+</figure>
 
 全部参数见 [录制参数](recording.md#params)。
 
 ## 5. 检查与上传
 
-检查数据集完整性：
-
 ```bash
+# 检查数据集完整性
 lerobot-check-dataset --repo-id <你的org>/<数据集名>
-```
 
-需要时上传到 Hugging Face Hub：
-
-```bash
+# 需要时上传到 Hugging Face Hub
 lerobot-push-dataset-to-hub \
     --repo-id <你的org>/<数据集名> \
     --dataset-path ~/.cache/huggingface/lerobot/<你的org>/<数据集名> \

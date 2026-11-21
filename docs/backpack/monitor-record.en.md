@@ -4,8 +4,7 @@ description: Before recording, confirm the views, poses, gripper opening and dis
 
 # Live monitoring and recording
 
-
-This page covers the "Live monitoring" page of the XTac UMI Collector console (below, "the console"). Gripper button gestures, LED patterns and voice announcement wording are in [Gripper buttons, LEDs and voice](gripper.md#buttons-leds); this page only links to them.
+This page covers the console's "Live monitoring" page. Button gestures, LED patterns and voice prompts are in [Gripper buttons, LEDs and voice](gripper.md).
 
 ![The Live monitoring page](../assets/backpack/monitor-live-en.webp)
 
@@ -32,7 +31,7 @@ Check each item before recording, and do not start if any is wrong:
 
 Recordings sit under a "project → task" hierarchy. The two drop-downs at the bottom of the Live monitoring page pick the project and task; their last entries, "New project…" and "New task…", create one on the spot. You can also create them on the [Project page](projects-export.md) and set a task as the current target there.
 
-A new project fixes its **capture config** at creation. **Once created it is frozen**; for different settings, create a new project. The System page only displays it; what each item means is in [Current project capture configuration](system.md#capture-mode).
+A new project fixes its **capture config** at creation. **Once created it is frozen**; for different settings, create a new project (an empty project can be deleted and recreated). The System page shows it [read-only](system.md#capture-mode). A project name cannot duplicate that of an unarchived project, and task names within a project must be unique too.
 
 - **Capture mode**: one of "Dual gripper", "Dual gripper + stereo headset", "Dual gripper + headset right eye".
 - **PICO resolution per eye**: 640 × 480 or 1024 × 768, only for modes that record headset video.
@@ -40,8 +39,8 @@ A new project fixes its **capture config** at creation. **Once created it is fro
 - **Headset mount**: On head / Around neck, only for modes that record headset video; On head by default. Around the neck the headset tracks the chest, and the [starting-pose check](#initial-pose) uses the neck range. A dataset can only have one mount.
 - **Export quality**: High quality / Standard / Compact, for all video exports in the project; High quality produces larger files, Compact smaller ones.
 - **Tactile rectified image export orientation**: 700 × 400 landscape by default, or a further 90° counterclockwise for 400 × 700.
-- **Wrist fisheye**: whether to rectify its distortion on export.
-- **Upload backend**: you can bind one configured at [System → Upload configurations](system.md#upload) as the project's default for uploads; without a binding you pick one at upload time.
+- **Wrist fisheye**: whether to rectify its distortion on export, see [Wrist fisheye rectification](system.md#undistort).
+- **Upload backend and default export format**: you can bind one configured at [System → Upload configurations](system.md#upload) as the project's default; without a binding you pick one at upload time.
 
 ![Creating a project](../assets/backpack/new-project-en.webp){ width="360" }
 
@@ -70,21 +69,9 @@ Camera parameters and rectification:
 
 ## Recording {#record}
 
-- **Gripper buttons (day to day)**: long-press the right gripper to start and the left to stop, handled by a state machine on the device with no browser needed; which gripper does what and the timings are fixed fleet-wide and cannot be changed on site. Gestures, LEDs and how to confirm a deletion are in [Buttons](gripper.md#buttons).
-- **Console buttons**: "Start recording / Stop recording" do the same, for someone not holding a gripper; to bind browser shortcuts see System → [Capture settings › Recording shortcut](system.md#keybinding).
-
-### On-site feedback: LEDs and voice {#feedback}
-
-With both hands on the grippers and eyes on the scene, you rely on two complementary forms of feedback:
-
-- **LEDs**: the gripper indicator distinguishes states by steady / breathing / blinking / pulse / rapid flashing, and needs a glance up; meanings are in [LEDs](gripper.md#leds).
-- **Voice announcements**: the sentences are in [Voice prompts](gripper.md#voice-cues).
-    - Plays through the headset by default, falling back to the backpack's speaker when the headset is disconnected, unsupported or playback fails; it can also be set to play everything from the backpack. No tablet needed, independent of the browser.
-    - The prompts cover: recording starts, an episode finishes (prompting you to reset the scene and prepare the next one), a serious problem during recording, the left / right gripper, the headset or a tracker dropping out (each needing a different check), and, when recording is refused, grippers swapped left and right or the start position out of range.
-    - Plus a subtask marker tone.
-
-- **Fixed and adjustable**: wording and timing are fixed and cannot be changed on site, keeping a batch of devices identical; you can adjust the switch, the volume (a 0–100 slider), the audio language (Chinese / English) and the audio output (Pico / backpack), with a per-line preview next to the switch that shows where the sound played and why. See System → [Capture settings](system.md#voice).
-- **Audio language**: follows the [interface language](index.md#faq) when the page loads or the interface language changes; a language chosen separately applies until the page is reloaded or the interface language changes.
+- **Gripper buttons (day to day)**: long-press the right gripper to start and the left to stop, with no browser needed, see [Buttons](gripper.md#buttons).
+- **Console buttons**: "Start recording / Stop recording" do the same, for someone not holding a gripper; you can also bind a [recording shortcut](system.md#keybinding).
+- **On-site feedback**: away from the tablet, watch the [LEDs](gripper.md#leds) and listen for the [voice prompts](gripper.md#voice-cues).
 
 ### Recording gates {#record-gates}
 
@@ -106,37 +93,37 @@ Whether started from a gripper button or the console, the device checks these in
 
 ### Starting-pose check {#initial-pose}
 
-Every episode in a dataset should start from the same posture, which makes it easier to learn from. In modes that record headset video ("Dual gripper + headset stereo", "Dual gripper + headset right eye"), the device checks before recording that both hands are **in the starting range in front of and below the body**, and refuses to record otherwise. The console button, gripper buttons and "Delete last and re-record" all go through this check.
+In modes that record headset video ("Dual gripper + stereo headset", "Dual gripper + headset right eye"), the device checks before recording that both hands are **in the starting range in front of and below the body**, and refuses to record otherwise, so every episode in a dataset starts from the same posture. The console button, gripper buttons and "Delete last and re-record" all go through this check.
 
-- **Reference frame**: the headset at the moment recording starts is the origin, X points forward (the headset's heading, horizontal only), Y left, Z up, in metres. It is the same frame the exported data uses, see [Origin of exported data](../common/coordinates.md#episode-origin).
-- **What is checked**: the TCP position of each gripper against its own box (a lower and upper limit on each axis); the right hand's box is the left hand's mirrored left-to-right.
-- **How it decides**: it waits up to 1.5 seconds and needs several consecutive samples inside the box (spanning about 3 frames, 100 ms), so a single noisy sample neither passes nor fails a start.
-- **Range by mount**: an "On head" project uses the head range, "Around neck" the neck range. Around the neck the origin is at the chest, so the hands sit higher relative to it (by about 5–20 cm, depending on the operator); the neck range is therefore wider up and down.
+- **Reference frame**: the headset at the moment recording starts is the origin, X points forward (the headset's heading, horizontal only), Y left, Z up, in metres; the same as the [origin of exported data](../common/coordinates.md#episode-origin).
+- **What is checked**: the TCP position of each gripper against its own box; the right hand's box is the left hand's mirrored left-to-right.
+- **How it decides**: it waits up to 1.5 seconds and needs several consecutive samples inside the box (about 3 frames, 100 ms).
+- **Range by mount**: around the neck the origin is at the chest, so the hands sit about 5–20 cm higher relative to it; the neck range is therefore wider up and down.
 
-The current reference ranges on the device are below. They start from measured starting postures, with each edge pushed outward to a whole 10 cm to fit operators of different heights and habits; only the inner left-right edge stays at 5 cm, so the hands are always at least 10 cm apart. **Later versions may fine-tune them, so go by what the device reports**.
+The current reference ranges are below (in metres); later versions may fine-tune them, so go by what the device reports.
 
 | Mount | Forward (X) | Left hand leftward (Y), negated for the right hand | Up (Z) |
 |---|---|---|---|
 | On head | 0.10 to 0.50 | 0.05 to 0.40 | −0.70 to −0.30 |
 | Around neck | 0.10 to 0.50 | 0.05 to 0.50 | −0.70 to −0.10 |
 
-With the head range, the hands sit roughly 10–50 cm in front of the headset, 5–40 cm either side of the body's midline and 30–70 cm below the headset: arms hanging naturally, forearms forward, hands apart. The neck range is looser up and down; it mainly catches hands hanging too low or raised to the face.
+With the head range, the hands sit roughly 10–50 cm in front of the headset, 5–40 cm either side of the body's midline and 30–70 cm below the headset: arms hanging naturally, forearms forward, hands apart.
 
-**Seeing the range in the pose view**: the pose view's "Start box" toggle shows or hides the range the hands must be in: green is inside, orange is out of range, gray means that hand has no pose. Move both hands into the green before starting.
+The pose view's "Start box" toggle can show this range: green is inside, orange is out of range, gray means that hand has no pose.
 
 The two refusal messages:
 
-- **Out of range**: "Your hands are outside the starting pose range, so recording was blocked: left hand 5 cm too high, right hand 2 cm too far left. Adjust as indicated, hold still, and retry." After the colon, each item names a hand, the direction it is off (too high / too low / too far left / right / forward / back) and by how many centimetres; move that far the opposite way to be back in range. The device also announces "Gripper start position outside the valid range".
+- **Out of range**: "Your hands are outside the starting pose range, so recording was blocked: left hand 5 cm too high, right hand 2 cm too far left. Adjust as indicated, hold still, and retry." Move the stated distance the opposite way. The device also announces "Gripper start position outside the valid range".
 - **No pose**: "Could not get valid headset and tracker poses at the same time, so the starting hand pose cannot be confirmed. Recording was blocked." Check that the headset and trackers are tracking first.
 
 !!! note "Only the moment recording starts is checked"
-    Recording begins only after the check passes; how you move afterwards is not limited. Exports re-run the check on each episode's first 3 frames: moving sharply right after the start can put a few episodes out of range, and the export still completes, just with a notice listing those episodes.
+    How you move after recording starts is not limited. Exports re-run the check on each episode's first 3 frames; out-of-range episodes are only listed by number in the export result, and the export still completes.
 
 ### While recording {#record-live}
 
 - **Status line**: changes to "Recording" with a running timer, and the capture-mode badge stays; the top bar's "Rec. time" runs in step.
 - **Red counters**: the recording card accumulates "Bad frames N" (delivered but incomplete), "Disconnects N" (a device-level disconnection; frames never arrived) and "Tracker out of view X s" (with ×N when more than once). With every camera green, out-of-view is the only clue; when you see it, consider stopping and re-recording.
-- **Low FPS**: when a camera's good-frame rate stays below 90% of nominal over 3 seconds, the recording card shows "Low FPS" with the camera's name. The camera reports no error and bad frames may be 0, so this is the only clue; if it persists, stop, check that camera's cable and record again.
+- **Low FPS**: when a camera's good-frame rate stays below 90% of nominal over 3 seconds, the recording card shows "Low FPS" with the camera's name; if it persists, stop, check that camera's cable and record again.
 - With the live preview off, each camera card shows its frame rate as a large number in the middle.
 - You cannot delete episodes or change the task while recording; the capture mode can never be switched.
 
@@ -187,7 +174,7 @@ Project page rows and mobile cards show four states:
 
 ### Deleting the previous episode {#record-delete}
 
-- **Buttons**: double-click the left gripper to enter delete confirmation (purple blinking, 5-second timeout), then double-click again to delete; gestures are in [Buttons](gripper.md#buttons).
+- **Buttons**: double-click the left gripper to enter delete confirmation, then double-click again to delete, see [Buttons](gripper.md#buttons).
 - **Console**: "Delete last episode and record again" deletes the current task's most recent episode and immediately starts recording, with no second confirmation; unavailable while recording.
 - **Earlier episodes**: click "Delete" on its row in the [Project page](projects-export.md). The confirmation lists the number, duration and size, and deletes its MCAP and H264 export files with it. This cannot be undone.
 

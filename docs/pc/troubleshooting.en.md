@@ -1,28 +1,25 @@
 # Troubleshooting
 
-Most connection problems come from `brltty` still being installed, missing serial permissions or ModemManager claiming the serial port, so first confirm [Host setup · Required on first use](host-setup.md#first-use) is done. Before troubleshooting, run the [Quickstart · Self-check](quickstart.md#self-check).
+Most connection problems come from `brltty` still being installed, missing serial permissions or ModemManager claiming the serial port, so first confirm [Host setup · Required on first use](host-setup.md#first-use) is done and run the [self-check](quickstart.md#self-check).
 
 ## Attach the full log when reporting a problem {#logs}
 
-The full log is at `~/xenselogs/session_<timestamp>.log`; each run creates one file. Attach the entire file when reporting a problem.
+The full log is at `~/xenselogs/session_<timestamp>.log`, one file per run. Attach the entire file when reporting a problem.
 
-- The log contains the collection program, `xensesdk` and encoding library logs, plus key-press timestamps; the `[session]` line records the collection PC, encoding and camera configuration.
-- Only the latest 15 files are kept. Change the log directory with `XENSE_LOG_DIR` and the on-screen log level with `XENSE_LOG_LEVEL`.
+- It contains the collection program, `xensesdk` and encoding library logs, plus key-press timestamps; the `[session]` line records the collection PC, encoding and camera configuration.
+- Only the latest 15 files are kept. Change the directory with `XENSE_LOG_DIR` and the on-screen log level with `XENSE_LOG_LEVEL`.
 
 ## Environment and installation
 
 ??? failure "`setup_env.sh --install` fails at startup with `needs system packages that are not installed`"
-    **Cause:** the hardware SDKs are compiled locally, and some of `build-essential` / `cmake` / `pkg-config` / `git` / `curl` are missing.
+    **Cause:** some of `build-essential` / `cmake` / `pkg-config` / `git` / `curl` are missing.
 
-    **Fix:** install the packages named in the printed command; the full list is in [System packages](install.md#apt). The following two items only produce warnings, but must also be installed:
-
-    - `libusb-0.1.so.4` (provided by `libusb-dev`): a camera runtime dependency; if it is missing, the failure only appears at `connect()`;
-    - `v4l-utils`: provides `v4l2-ctl` for camera troubleshooting.
+    **Fix:** install the packages named in the printed command; the list is in [System packages](install.md#apt). A missing `libusb-0.1.so.4` (provided by `libusb-dev`) or `v4l-utils` only warns, but install them too.
 
 ??? failure "`import xensesdk` / `import xensevr_pc_service_sdk` / `import xense.taccap` fails"
     **Cause:** the environment is incompletely installed or not activated.
 
-    **Fix:** run `mamba activate xense-taccap`, then run `./setup_env.sh --install` again. To verify each module, see [Verify the install](install.md#25).
+    **Fix:** run `mamba activate xense-taccap`, then `./setup_env.sh --install` again. To verify each module, see [Verify the install](install.md#25).
 
 ??? failure "`torchcodec` fails to load / video encoding errors"
     **Cause:** the `torchcodec` and PyTorch versions do not match, or PyAV is not `15.1.0`.
@@ -39,10 +36,7 @@ Record the serial number, connection method, error message and a photo of the se
 ??? failure "The software does not detect the leader gripper / `lsusb` shows the wrong device count"
     **Cause:** an unlocked cable, poor contact or a faulty cable. The leader gripper must be powered only through the supplied Type-C cable (DC 5V/500mA), never a 9V/12V fast charger.
 
-    **Fix:**
-
-    - `lsusb` should list 6 UVC devices on a bimanual setup (4 `Xense Robotics ... GSPS01…` tactile sensors + 2 `Sunplus ... XCA…` wrist cameras), and 3 on a single gripper. For left/right identification, see [Serial numbers and side identification](../common/gripper.md#sn).
-    - If the count is wrong, check cable locking and left/right wiring, restart the software, and try another port or cable. If the devices are listed but cannot be opened, see the next section.
+    **Fix:** `lsusb` should list 6 UVC devices on a bimanual setup (4 `Xense Robotics ... GSPS01…` tactile sensors + 2 `Sunplus ... XCA…` wrist cameras), and 3 on a single gripper; for left/right identification, see [Serial numbers and side identification](../common/gripper.md#sn). If the count is wrong, check cable locking and left/right wiring, restart the software, and try another port or cable; if the devices are listed but cannot be opened, see the next section.
 
 ??? failure "Black image / no image"
     **Cause:** the UVC device is not recognized, the sensor connection is faulty, or the wrong channel is selected.
@@ -57,36 +51,21 @@ Record the serial number, connection method, error message and a photo of the se
 ??? failure "The follower gripper does not power on / communication errors"
     **Cause:** no power means the 24V supply is not connected or the adapter is faulty; communication errors mean the Type-C cable is not connected, not recognized, or pulled by the robot's motion.
 
-    **Fix:**
-
-    - check the 24V adapter, outlet, connector and rating;
-    - connect 24V first, then Type-C, and lock the cable (see [Power and connection requirements](../common/gripper.md#power));
-    - route the cable away from moving parts and test at low speed before the first run.
+    **Fix:** check the 24V adapter, outlet, connector and rating; connect 24V first, then Type-C, and lock the cable (see [Power and connection requirements](../common/gripper.md#power)); route the cable away from moving parts and test at low speed before the first run.
 
 ??? failure "Binding the follower fails with `从爪固件版本过低,必须升级后才能使用本 SDK` / `Follower firmware too old`"
     **Cause:** the follower firmware is older than 1.2.5, which both `--robot.role=follower` and the SDK refuse (from 1.2.5 onward, the closed zero sits on the mechanical stop). Versions 1.2.5–1.2.10 connect but prompt for an upgrade.
 
-    **Fix:** flash the follower image bundled with the SDK, then **unplug the 24V power cable, wait about 2 seconds and plug it back in** (the USB cable can remain connected):
+    **Fix:** flash the follower image bundled with the SDK, then **unplug the 24V power cable, wait about 2 seconds and plug it back in** (the USB cable can remain connected). The command below applies only when a single follower is connected; with several, see the next entry or [Firmware OTA upgrade](versions.md#ota):
 
     ```bash
     python third_party/taccap-gripper/python/examples/ota_update.py slave
     ```
 
-    This command applies only when a single follower is connected. With several connected, see the next entry or [Firmware OTA upgrade](versions.md#ota).
-
 ??? failure "Flashing fails with `firmware file not found`"
-    **Cause:** the first argument was interpreted as an image file name, and that file does not exist:
+    **Cause:** the first argument was interpreted as an image file name that does not exist: either `slave left` / `master left` / `slave <SN>` (a role followed by another argument), or the unversioned `tc-gu-01-master.bin` / `tc-gu-01-slave.bin`.
 
-    - `slave left` / `master left` / `slave <SN>`: when a role is followed by another argument, the role is treated as a file name;
-    - the unversioned `tc-gu-01-master.bin` / `tc-gu-01-slave.bin` was used.
-
-    **Fix:**
-
-    - normally use `ota_update.py --all`, which flashes each gripper by role;
-    - when only one gripper of that role is connected, use `ota_update.py master` / `ota_update.py slave`;
-    - to target one gripper, pass a file name listed under `shipped images` in the error plus a side or serial number, e.g. `ota_update.py tc-gu-01-slave-1.2.17.bin left` (use the actual file name in `firmware/`).
-
-    See [Firmware OTA upgrade](versions.md#ota).
+    **Fix:** normally use `ota_update.py --all`; when only one gripper of that role is connected, use `ota_update.py master` / `ota_update.py slave`; to target one gripper, pass a file name listed under `shipped images` in the error plus a side or serial number, e.g. `ota_update.py tc-gu-01-slave-1.2.17.bin left`. See [Firmware OTA upgrade](versions.md#ota).
 
 ## Serial permissions and device discovery
 
@@ -96,12 +75,9 @@ Record the serial number, connection method, error message and a photo of the se
     **Fix:** run `sudo usermod -aG dialout "$USER"`, log out and back in (or run `newgrp dialout`), then re-plug the gripper. See [Serial permissions (dialout)](host-setup.md#31).
 
 ??? failure "`Device or resource busy` (when starting immediately after a hot-plug; `/dev/ttyACM*` reporting busy inside the container has the same cause)"
-    **Cause:**
+    **Cause:** ModemManager probes the CH343 serial port for several seconds on every hot-plug, or `brltty` claims the port (for containers, the rule must be installed on the host); or a previous recording, calibration or example script has not exited and still holds the port.
 
-    - On every hot-plug, ModemManager probes the CH343 serial port with AT commands for several seconds; `brltty` also claims the port. For containers, the rule must be installed on the host.
-    - Another program holds the gripper's serial port exclusively, e.g. a previous recording, calibration or example script that has not exited.
-
-    **Fix:** close the program holding the port first. [Remove](host-setup.md#brltty) `brltty` with `sudo apt purge -y brltty`. For ModemManager, the temporary workaround is to wait about 3s after plugging in; the permanent fix is a udev rule that ignores `1a86` devices (`install_customer.sh` on the Docker path already installs it). The rule and its verification are in [Stop ModemManager grabbing the port (udev)](host-setup.md#32). Re-plug the gripper after installing the rule.
+    **Fix:** close the program holding the port first; [remove brltty](host-setup.md#brltty); for ModemManager, wait about 3s before launching as a stopgap, and install the udev rule as the permanent fix, see [Stop ModemManager grabbing the port (udev)](host-setup.md#32). Re-plug the gripper afterwards.
 
 ??? failure "`firmware_sn` is still empty after fixing permissions / `role=Unknown`"
     **Cause:** the SN was not written, the serial read still fails, or firmware communication or device configuration is faulty. An empty SN does not indicate the firmware version.
@@ -116,7 +92,7 @@ Record the serial number, connection method, error message and a photo of the se
 ??? failure "The wrist camera / visuotactile sensor cannot be opened, `video ... busy`"
     **Cause:** an external service holds the camera, or the user is not in the `video` group.
 
-    **Fix:** check the camera service status; run `sudo usermod -aG video "$USER"`, which takes effect after logging back in. If a different camera fails each time, see the USB bandwidth section below.
+    **Fix:** check the camera service status; run `sudo usermod -aG video "$USER"` and log back in. If a different camera fails each time, see the USB bandwidth section below.
 
 ### Not enough USB bandwidth {#usb-bandwidth}
 
@@ -124,15 +100,15 @@ Record the serial number, connection method, error message and a photo of the se
     This is the most common bimanual failure, and it depends on which physical ports the grippers use. The budget and how to read `lsusb -t` are in [USB bandwidth budget](host-setup.md#usb-budget).
 
 ??? failure "One camera cannot be opened (`Cannot open camera N`), and a different camera fails each time"
-    **Cause:** not enough USB bandwidth. Every UVC camera reserves isochronous bandwidth when it opens. Once the bus budget (about 384 Mbit/s) is exceeded, the last camera to open fails, so the failing camera varies.
+    **Cause:** not enough USB bandwidth. Once the bus budget (about 384 Mbit/s) is exceeded, the last camera to open fails, so the failing camera varies.
 
-    **Confirm:** use `lsusb -t` to count the cameras on each `480M` bus; six cameras on one bus will very likely exceed the budget. While starting, watch the kernel log in another terminal:
+    **Confirm:** use `lsusb -t` to count the cameras on each `480M` bus; six on one bus will very likely exceed the budget. While starting, watch the kernel log in another terminal (`--line-buffered` is required, or `grep` buffers its output); `Not enough bandwidth for altsetting N` confirms the diagnosis:
 
     ```bash
     sudo dmesg -w | grep --line-buffered -iE "uvcvideo|bandwidth|disconnect"
     ```
 
-    `--line-buffered` is required; without it `grep` buffers its output and appears to hang. `Not enough bandwidth for altsetting N` confirms the diagnosis. Alternatively, run the two halves separately:
+    Alternatively, run the two halves separately; if each works on its own but the combination fails, the cause is bandwidth (`enable_tactile=false` is for this diagnostic only, do not record with it):
 
     ```bash
     # tactile only (wrist cameras off)
@@ -146,11 +122,9 @@ Record the serial number, connection method, error message and a photo of the se
         --robot.enable_tracker=false --fps=30 --display_data=true
     ```
 
-    If each half works on its own but the combination fails, the cause is bandwidth. `enable_tactile=false` is for this diagnostic only; do not record data with it.
-
     **Fix:**
 
-    - confirm the wrist cameras were not switched from the bandwidth-saving default `MJPG` to `YUYV` (`--robot.wrist_camera_fourcc`);
+    - confirm the wrist cameras were not switched from the default `MJPG` to `YUYV` (`--robot.wrist_camera_fourcc`);
     - if the budget is still exceeded, add a USB host controller, not a hub (a Thunderbolt / USB4 dock includes its own xHCI controller). After moving one gripper to it, `lsusb -t` should show one more `480M` root_hub;
     - until the new controller is in place, you can record without wrist cameras (no `{side}_wrist` key). Decide before recording; do not mix both configurations in one dataset.
 
@@ -170,26 +144,26 @@ Record the serial number, connection method, error message and a photo of the se
     sudo grep -E "^(T:|I:\*.*video|E:.*Isoc)" /sys/kernel/debug/usb/devices
     ```
 
-    Each video interface's `Alt=` and the `MxPS=` on its `E:` line give the reservation (`MxPS × 8000 × 8` bit/s). Sum the reservations per bus and compare against about 384 Mbit/s. The request is set by the firmware's UVC descriptors; the collection program cannot change it.
+    Each video interface's `Alt=` and the `MxPS=` on its `E:` line give the reservation (`MxPS × 8000 × 8` bit/s); sum per bus and compare against about 384 Mbit/s. The request is set by the firmware's UVC descriptors; the collection program cannot change it.
 
 ??? question "Does another USB port, a lower `tactile_fps`, or `uvcvideo quirks=128` help?"
     No:
 
     - another physical USB port (including blue USB 3 ports): all ports on one controller share one USB 2.0 bus, so the camera must move to a different controller;
     - lowering `--robot.tactile_fps`: this only throttles the Python-side read; the USB stream is unchanged;
-    - `uvcvideo quirks=128` (`UVC_QUIRK_FIX_BANDWIDTH`): measured to have no effect. It recomputes bandwidth as `width × height × bpp`, which does not cover the MJPEG wrist cameras, the largest consumers.
+    - `uvcvideo quirks=128` (`UVC_QUIRK_FIX_BANDWIDTH`): it recomputes bandwidth as `width × height × bpp`, which does not cover the MJPEG wrist cameras, the largest consumers; measured to have no effect.
 
 ## Pico4U tracker and pose
 
 ??? failure "No pose / the tracker cannot connect / the pose is unstable"
     **Cause:** most commonly, the collection PC's Wi-Fi conflicts with the Pico4 Ultra Enterprise wired network sharing. Other causes: the service or XTac UMI XR is not running, or the tracker is unpaired or its battery is depleted.
 
-    **Fix:** turn off the collection PC's Wi-Fi (see [Network connection](../common/pico4.md#pico-network)); check each step in [Quickstart · Power on and connect](quickstart.md#power-on); start the service with `/opt/apps/roboticsservice/runService.sh`; if needed, run the self-check `python -m lerobot.robots.taccap_gripper.check_tracker`.
+    **Fix:** turn off the collection PC's Wi-Fi (see [Network connection](../common/pico4.md#pico-network)); check each step in [Quickstart · Power on and connect](quickstart.md#power-on); if needed, run the self-check `python -m lerobot.robots.taccap_gripper.check_tracker`.
 
 ??? failure "The pose reference frame drifts between episodes"
     **Cause:** XTac UMI XR was restarted between episodes, which reset the world origin.
 
-    **Fix:** do not restart XTac UMI XR between episodes. Treat data recorded after a restart as a new dataset, see [Startup and frame alignment](../common/pico4.md#pico-frame).
+    **Fix:** do not restart XTac UMI XR between episodes; treat data recorded after a restart as a new dataset, see [Startup and frame alignment](../common/pico4.md#pico-frame).
 
 ??? failure "The pose drops out between episodes / the headset turns off its screen automatically"
     **Cause:** screen-off and sleep are still enabled on the headset; once it suspends, XTac UMI XR is paused or terminated.
@@ -219,14 +193,14 @@ Record the serial number, connection method, error message and a photo of the se
 ## Head camera {#head-camera}
 
 ??? failure "Fails with `... always records the headset ...` or `... does not record the headset ...`"
-    **Cause:** a bimanual command passes `--robot.enable_head_camera`, which conflicts with `--robot.type`. The type determines whether the headset is recorded.
+    **Cause:** a bimanual command passes `--robot.enable_head_camera`, which conflicts with `--robot.type`.
 
-    **Fix:** remove `--robot.enable_head_camera`. To record the headset, use `--robot.type=xtac_umi_g1`; otherwise use `--robot.type=bi_taccap_gripper`. See [Optional: head camera](recording.md#56).
+    **Fix:** remove that flag. To record the headset, use `--robot.type=xtac_umi_g1`; otherwise use `--robot.type=bi_taccap_gripper`. See [Optional: head camera](recording.md#56).
 
 ??? failure "Recording the headset stops responding while waiting for the first frame"
     **Cause:** head camera frames are relayed by PC Service. Either the service is older than v0.2.0 (v0.1.0 does not relay head camera frames), or the headset app is not streaming.
 
-    **Fix:** check in this order:
+    **Fix:** check in this order, then confirm the headset is connected to PC Service and the app is streaming (it shares one connection with the tracker):
 
     ```bash
     # 1) the service deb version: needs ≥ 0.2.0
@@ -234,8 +208,6 @@ Record the serial number, connection method, error message and a photo of the se
     # 2) does it expose the camera interface
     python -c "import xensevr_pc_service_sdk as xrt; print(hasattr(xrt, 'has_pico_camera_frame'))"
     ```
-
-    Then confirm the headset is connected to PC Service and the app is streaming (it shares one connection with the tracker). Prerequisites are in [Optional: head camera](recording.md#56).
 
 ??? failure "`AttributeError: module 'xensevr_pc_service_sdk' has no attribute 'has_pico_camera_frame'`"
     **Cause:** an older interface is loaded (the camera interface was added in v0.2.0). The module links the C SDK from the `.deb`, so check its version first: `dpkg -s xensevr-pc-service | grep -E '^(Status|Version):'`.
@@ -247,16 +219,12 @@ Record the serial number, connection method, error message and a photo of the se
     - if `Status` is not `install ok installed` (e.g. the package was removed with `dpkg -r`, leaving `deinstall ok config-files`), reinstall in the same way.
 
 ??? failure "Repeated left/right eye skew warnings in the log"
-    **Cause:** the timestamps of the two eyes' independent messages differ by more than `--robot.head_camera_pair_max_skew_ms` (20ms by default). This is common when the collection PC is heavily loaded or the link is unstable.
+    **Cause:** the two eyes' timestamps differ by more than `--robot.head_camera_pair_max_skew_ms` (20ms by default), common when the collection PC is heavily loaded or the link is unstable.
 
-    **Fix:** the warning does not interrupt recording, but the affected frames may be out of sync.
-
-    - reduce the load (fewer cameras, or `--robot.head_camera_eyes=left` to record one eye);
-    - for link problems, see [Network connection](../common/pico4.md#pico-network);
-    - relax the threshold only after confirming the cause is link jitter.
+    **Fix:** the warning does not interrupt recording, but the affected frames may be out of sync. Reduce the load (fewer cameras, or `--robot.head_camera_eyes=left` to record one eye); for link problems, see [Network connection](../common/pico4.md#pico-network); relax the threshold only after confirming the cause is link jitter.
 
 ??? failure "`head_camera_width/_height` reports an unsupported size, or the size is valid but connect still reports a first-frame size mismatch"
-    **Cause:** only `640x480` (default), `1024x768` and `1280x960` (all 4:3) are accepted. If a valid size still mismatches, it differs from the headset's actual output.
+    **Cause:** only `640x480` (default), `1024x768` and `1280x960` are accepted. If a valid size still mismatches, it differs from the headset's actual output.
 
     **Fix:** the default is 640x480 per eye, so omit both flags. If the headset resolution was changed, confirm the value with [technical support](../common/reference.md#support) and set both flags to the same value, see [Optional: head camera](recording.md#56). Episodes recorded before and after a size change cannot be mixed.
 
@@ -265,7 +233,7 @@ Record the serial number, connection method, error message and a photo of the se
 ??? failure "The command exits immediately: `--robot.id is required`"
     **Cause:** `--robot.id` is the required station number.
 
-    **Fix:** add the station number (`0` / `1`…; the prefix from `--robot.type` produces `taccap_0` / `bi_taccap_0` / `xtac_umi_g1_0`), e.g. `lerobot-record --robot.type=bi_taccap_gripper --robot.id=0 ...`. It identifies the station, not the hardware, so replacing a gripper does not require changing it. Device identity is recorded in `meta/hardware.json`, see [`--robot.id` and the hardware manifest](recording.md#robot-id).
+    **Fix:** add the station number as a plain number, e.g. `lerobot-record --robot.type=bi_taccap_gripper --robot.id=0 ...`, see [`--robot.id` and the hardware manifest](recording.md#robot-id).
 
 ??? failure "On resume, the hardware does not match the dataset record"
     **Cause:** the gripper or tactile sensors were replaced before `--resume`. This is not an error: the manifest starts a new epoch at the current episode count and logs `... recorded as a new epoch in .../hardware.json`. Only a `--robot.type` mismatch keeps the original file and issues a warning.
@@ -280,7 +248,7 @@ Record the serial number, connection method, error message and a photo of the se
 ??? failure "Recording terminates partway through with `ValueError: You must add one or several frames`"
     **Cause:** for about 2s between episodes, keyboard input is not read (saving plus encoder warm-up). A **right arrow** pressed during this gap remains pending, typically when the previous reset ends on timeout. The next episode exits with zero frames, saving raises this error, and the whole session is aborted. The error appears more than two minutes after the key press.
 
-    **Fix:** upgrade to `0.0.7` or later, which discards key presses during the gap. The keyboard listener is global, so a right arrow in **any** window (including Rerun) ends the episode. Use the key-press timestamps in the [session log](#logs) to investigate.
+    **Fix:** upgrade to `0.0.7` or later, which discards key presses during the gap. The keyboard listener is global, so a right arrow in **any** window (including Rerun) ends the episode; use the key-press timestamps in the [session log](#logs) to investigate.
 
 ??? failure "`[stale_frames]` is printed after each reset phase, or a camera capture stall warning appears"
     **Cause:** a camera's background capture stalled. The collection loop is **not blocked** (it uses the cached previous frame), so the frame rate stays normal, but the recorded frames are **repeats of the old image**. After each reset phase, a line reports the duplicate count, number of runs and longest run; a re-recorded episode is marked ` (discarded take)`:
@@ -301,44 +269,39 @@ Record the serial number, connection method, error message and a photo of the se
 ??? failure "The log shows `[slow_frame] ... overrun=`"
     **Cause:** a frame exceeded the frame budget (33.3ms at 30fps). The Rerun display runs on a separate thread and is **not the cause**.
 
-    **Fix:** read the following two parts:
-
-    - ` | phases obs=… build=… add=… display=…`: time spent in each phase;
-    - `top_obs=` at the end of the line: the slowest sensors.
-
-    The first 5 `[slow_frame]` lines per episode are shown on screen; the rest go to the [session log](#logs), and the screen shows one `[slow_frame_summary]` every 5s instead. Occasional occurrences do not affect the data; if they persistently point to the same camera, work through [Not enough USB bandwidth](#usb-bandwidth). For a host without an NVIDIA GPU, see [Recording on a collection PC with no NVIDIA GPU](recording.md#no-gpu).
+    **Fix:** read ` | phases obs=… build=… add=… display=…` (time spent in each phase) and `top_obs=` at the end of the line (the slowest sensors). The first 5 `[slow_frame]` lines per episode are shown on screen; the rest go to the [session log](#logs), and the screen shows one `[slow_frame_summary]` every 5s instead. Occasional occurrences do not affect the data; if they persistently point to the same camera, work through [Not enough USB bandwidth](#usb-bandwidth); without an NVIDIA GPU, see [Recording on a collection PC with no NVIDIA GPU](recording.md#no-gpu).
 
 ??? failure "Recording stops partway through with `Device lost mid-recording`"
-    **Cause:** a camera or the gripper encoder disconnected, due to a loose cable, untightened screws, cable strain, a hub losing power, an unstable power supply or poor contact. The data recorded so far is saved.
+    **Cause:** a camera or the gripper encoder disconnected: a loose or strained cable, untightened screws, a hub losing power, an unstable power supply or poor contact. The data recorded so far is saved.
 
-    **Fix:** the last second or two of that episode contain stale values, so discard the episode. Check the screws, cable routing and USB port (if the problem recurs and changing ports does not help, see [Not enough USB bandwidth](#usb-bandwidth)), then continue into the same dataset with `--resume`, see [Recording](recording.md#52).
+    **Fix:** the last second or two of that episode contain stale values, so discard the episode. Check the screws, cable routing and USB port (if it recurs and changing ports does not help, see [Not enough USB bandwidth](#usb-bandwidth)), then continue with `--resume`, see [Recording](recording.md#52).
 
 ??? failure "On a collection PC without a discrete GPU, recording fails at startup because the encoder cannot be opened"
     **Cause:** there is no NVIDIA driver, but a GPU hardware encoder is selected.
 
-    **Fix:** switch to a CPU encoder and disable streaming encoding: `lerobot-record ... --dataset.vcodec=libsvtav1 --dataset.streaming_encoding=false`. The rationale is in [Recording on a collection PC with no NVIDIA GPU](recording.md#no-gpu).
+    **Fix:** `lerobot-record ... --dataset.vcodec=libsvtav1 --dataset.streaming_encoding=false`, see [Recording on a collection PC with no NVIDIA GPU](recording.md#no-gpu).
 
 ??? failure "The encoder cannot keep up and dropped-frame warnings appear in the log"
     **Cause:** when the encoding queue is full, it waits up to 0.1s; if it is still full, the frame is dropped with the warning `Encoder queue full … dropped N frame(s)` (the collection loop is not blocked).
 
-    **Fix:** increase `--dataset.encoder_threads`, use `--dataset.vcodec=auto`, or adjust `--dataset.encoder_queue_maxsize`, see [Recording options: streaming encoding and encoder warm-up](recording.md#54).
+    **Fix:** increase `--dataset.encoder_threads`, use `--dataset.vcodec=auto`, or adjust `--dataset.encoder_queue_maxsize`, see [Streaming encoding](recording.md#54).
 
 ??? failure "The gripper opening is incorrect / it does not read 0 when closed"
     **Cause:** the encoder zero has drifted or was never calibrated (an uncalibrated leader is refused, and the calibration command is printed).
 
-    **Fix:** run `python third_party/taccap-gripper/python/examples/calibrate.py left` (or `right`) to recalibrate the zero and travel limit and write them to MCU flash. Calibration is required only once per unit, see [Gripper calibration (zero + travel)](calibration.md#41).
+    **Fix:** run `python third_party/taccap-gripper/python/examples/calibrate.py left` (or `right`) to recalibrate; once per unit is enough, see [Gripper calibration (zero + travel)](calibration.md#41).
 
 ??? failure "Calibration reports `encoder-max calibration needs command set >= V2.1`"
     **Cause:** the firmware command set is below V2.1 (i.e. leader < 1.2.0) and does not support travel calibration; `calibrate.py` exits without making changes.
 
-    **Fix:** flash the firmware (upgrade the SDK first, select the image by role, and pass only the file name), see [Firmware OTA upgrade](versions.md#ota). Then run `calibrate.py` again.
+    **Fix:** flash the firmware per [Firmware OTA upgrade](versions.md#ota) (upgrade the SDK first), then run `calibrate.py` again.
 
 ## Data and disk
 
 ??? failure "Collection slows down / the disk fills up"
-    **Cause:** a bimanual setup can produce around 280 MB/s of raw video. Insufficient disk space, slow sustained writes or encoding that cannot keep up all cause this problem.
+    **Cause:** insufficient disk space, slow sustained writes or encoding that cannot keep up (a bimanual setup can produce around 280 MB/s of raw video).
 
-    **Fix:** first record a few episodes to measure the encoded size and dropped frames; check `df -h` and the dataset directory size regularly, see [Planning and estimating disk usage](dataset.md#storage-planning).
+    **Fix:** first record a few episodes to measure the encoded size and dropped frames; check `df -h` regularly, see [Planning and estimating disk usage](dataset.md#storage-planning).
 
 ## Docker image {#docker}
 
@@ -347,7 +310,7 @@ This section applies only to the [Docker image](install.md#docker) path. For a b
 ??? failure "`could not select device driver ... gpu` / no GPU visible inside the container"
     **Cause:** the NVIDIA Container Toolkit is not installed correctly, or the Docker daemon was not restarted after installation.
 
-    **Fix:** `install_customer.sh` installs it automatically. To check manually, run `docker run --rm --gpus all ubuntu:22.04 nvidia-smi`. If no GPU is shown, reinstall the Toolkit and run `sudo systemctl restart docker`. The host driver must be ≥ 570.144.
+    **Fix:** `install_customer.sh` installs it automatically. To check manually, run `docker run --rm --gpus all ubuntu:22.04 nvidia-smi`; if no GPU is shown, reinstall the Toolkit and run `sudo systemctl restart docker`. The host driver must be ≥ 570.144.
 
 ??? failure "`Unknown runtime specified nvidia`, `docker compose` does not start"
     **Cause:** the NVIDIA runtime is not registered with Docker, while `compose.yaml` uses `runtime: nvidia` (see [Graphics inside the container](install.md#docker-gui)).
@@ -361,7 +324,7 @@ This section applies only to the [Docker image](install.md#docker) path. For a b
     ```
 
 ??? failure "Rerun does not start in the container: `Failed to create surface for any enabled backend` / Vulkan adapter errors, but `nvidia-smi` works"
-    **Cause:** X11 access is not authorized, or the container lacks NVIDIA's Vulkan ICD. Typically, `runtime: nvidia` in `compose.yaml` was changed to `gpus: all`, which requests only compute + utility. In that case `vulkaninfo` reports `INCOMPATIBLE_DRIVER` or lists no NVIDIA device.
+    **Cause:** X11 access is not authorized, or the container lacks NVIDIA's Vulkan ICD, typically because `runtime: nvidia` in `compose.yaml` was changed to `gpus: all`; `vulkaninfo` then reports `INCOMPATIBLE_DRIVER` or lists no NVIDIA device.
 
     **Fix:**
 
@@ -381,14 +344,14 @@ This section applies only to the [Docker image](install.md#docker) path. For a b
     **Cause:** three known issues in old images, fixed from `0.0.6` onward:
 
     - the environment is already active when you enter the container, so no activation is needed;
-    - the image lacks `spd-say` for voice announcements while `--play_sounds` defaults to `true`; the announcement raises an exception and the process exits with `terminate called without an active exception`;
-    - video files are `-rw------- root` while metadata is `0644`, so a non-root user cannot copy the videos; the files themselves are intact.
+    - the image lacks `spd-say` for voice announcements while `--play_sounds` defaults to `true`, and the process exits with `terminate called without an active exception`;
+    - video files are `-rw------- root` (metadata is `0644`), so a non-root user cannot copy them; the files themselves are intact.
 
     **Fix:** upgrade the image (see [Pin a version before you record](install.md#docker-pin)). If you continue to use an old image:
 
     - before switching environments manually, run `eval "$(mamba shell hook --shell bash)"`;
     - add `--play_sounds=false` when recording; collection is not affected;
-    - videos recorded with an old image keep their permissions after upgrading, so copy them as root as described in [Where the data lives, and why removing the container does not lose it](install.md#docker-data) and run `chown` afterwards. Do not use `--user`.
+    - videos recorded with an old image keep their permissions after upgrading, so copy them as root and `chown` as described in [Where the data lives](install.md#docker-data). Do not use `--user`.
 
 ??? failure "The host sees the tactile sensors, but the container does not"
     **Cause:** the container was not started through Compose (`/dev` and `/run/udev` are not passed through), or the device nodes have not settled after re-enumeration.
@@ -398,7 +361,7 @@ This section applies only to the [Docker image](install.md#docker) path. For a b
 ??? failure "After a container restart, sensor configuration is re-read and startup is slow"
     **Cause:** the `xensesdk-cache` volume was deleted. It caches sensor configuration by serial number so that each start avoids re-reading flash and re-enumerating USB.
 
-    **Fix:** keep the volume. The purpose of each volume is described in [Where the data lives, and why removing the container does not lose it](install.md#docker-data).
+    **Fix:** keep the volume, see [Where the data lives](install.md#docker-data).
 
 ---
 

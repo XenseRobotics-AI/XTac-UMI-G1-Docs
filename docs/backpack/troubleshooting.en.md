@@ -1,6 +1,6 @@
 # Troubleshooting
 
-This page lists the cause and fix for each symptom. The most common issues are being unable to reach the XTac UMI Collector console (below, "the console"), recording being refused, and the export pre-check failing. Before troubleshooting, listen for the voice announcement and check the gripper LEDs and the Live monitoring page's status dots; LED meanings are in [Gripper buttons, LEDs and voice](gripper.md#buttons-leds).
+Find the cause and fix by symptom. Before troubleshooting, listen for the voice announcement and check the [gripper LEDs](gripper.md#leds) and the Live monitoring page's status dots.
 
 !!! danger "Odor, smoke, obvious overheating, structural damage or damaged cable insulation"
     Cut the power and stop using the device immediately. Note the serial number on the body and contact technical support.
@@ -20,14 +20,14 @@ This page lists the cause and fix for each symptom. The most common issues are b
 ??? failure "A gripper's LED is dark, or the system log repeatedly shows `mcu ... disconnected / reconnected`"
     **Cause:** the gripper cable has poor contact or is not connected to UMI-L / UMI-R. When one gripper drops out, the other shows solid red (a system problem).
 
-    **Fix:** seat both ends of the Type-C cable firmly and tighten the locking screws. If disconnections continue, report the SN and the time period to technical support. LED patterns are described in [LEDs](gripper.md#buttons-leds).
+    **Fix:** seat both ends of the Type-C cable firmly and tighten the locking screws. If disconnections continue, report the SN and the time period to technical support.
 
 ## Headset and trackers {#tracker}
 
 ??? failure "The status dot on the Live monitoring page's pose card is yellow, with “Tracker out of view” or “Pose stale” beside it"
     **Cause:**
 
-    - **Yellow dot**: the headset is connected, but the tracker pose is invalid (out of view, tracking fault, or not powered on / not paired). Poses recorded while tracking was lost are unreliable and must not be used.
+    - **Yellow dot**: the headset is connected, but the tracker pose is invalid (out of view, tracking fault, or not powered on / not paired); poses during that time are unreliable.
     - **"Pico offline"**: the headset is not connected to the backpack.
 
     **Fix:**
@@ -37,9 +37,9 @@ This page lists the cause and fix for each symptom. The most common issues are b
     - For "Pico offline", check that XTac UMI XR is connected; see [The app's screen](../common/pico4.md#pico-toolkit-ui).
 
 ??? failure "The pose is shown as online, but the 3D model does not move"
-    **Cause:** the tracker app in the headset has not fully started (for example, on first use of the day without pressing the tracker button). The badge may still show online.
+    **Cause:** the tracker app in the headset has not fully started (for example, on first use of the day without pressing the tracker button).
 
-    **Fix:** before collecting, move a gripper and the headset and confirm that the 3D model follows. If it does not, hold the tracker's power button to reactivate it and restart the app in the headset.
+    **Fix:** hold the tracker's power button to reactivate it and restart the app in the headset; before recording, move a gripper and confirm that the 3D model follows.
 
 ??? failure "The left and right gripper poses are swapped"
     **Cause:** the trackers were fitted or paired on the wrong sides. The SN rule is odd for left, even for right.
@@ -123,29 +123,23 @@ This page lists the cause and fix for each symptom. The most common issues are b
 ## Collection and recording {#record}
 
 ??? failure "The record button is grayed out, or the gripper button fails to start recording (solid yellow LED)"
-    **Cause:** a recording gate did not pass. A dialog states which one (check order in [Recording gates](monitor-record.md#record-gates)):
-
-    - no project / task selected;
-    - "Pico not ready" or "Tracker not ready", with the specific reason (such as a connection timeout, missing pose or video from one eye, missing clock sync, a headset configuration change awaiting confirmation, or a Tracker out of view or still for more than 5 seconds without active tracking);
-    - no gripper MCU online;
-    - the task has reached its cumulative collection target;
-    - the recording disk is 80% used;
-    - resetting the headset's coordinates before recording failed, the trackers are swapped, or the hands are outside the starting range (see the entries below).
+    **Cause:** a [recording gate](monitor-record.md#record-gates) did not pass; a dialog states which one.
 
     **Fix:**
 
     - **No project / task**: select a [project and task](monitor-record.md#project-task) at the bottom of the Live monitoring page.
     - **"Pico not ready"**: wait for the headset to connect and the pose dot to turn green.
     - **"Tracker not ready"**: move the grippers back into the headset's field of view and move them slightly.
-    - **Target reached / disk full**: see the next two entries.
+    - **No gripper MCU online**: check the gripper cables, see [Power and connectors](#power).
+    - **Other messages** (firmware too old, target reached, disk full, coordinate reset failed, trackers swapped, starting pose out of range): see the entries below.
 
 ??? failure "Recording refused: “… gripper firmware version … is too old; this Collector version requires 1.2.7 or later”"
     **Cause:** from 0.4.7 the leader gripper firmware must be ≥ 1.2.7; the message names the side and its current version.
 
-    **Fix:** flash leader gripper firmware 1.2.7 or later at System → Gripper configuration, power-cycle the backpack, check the version in [Device information](system.md#device-info), then record; see [Gripper firmware](update.md#gripper-firmware). For future upgrades, flash firmware first and import the bundle second, see [Upgrade order](update.md#order).
+    **Fix:** flash leader gripper firmware 1.2.7 or later as in [Gripper firmware](versions.md#gripper-firmware), power-cycle the backpack, then record. For future upgrades, flash the firmware first as in [Upgrade order](versions.md#order).
 
 ??? failure "Recording refused: “Task '…' has reached its cumulative collection target (N/M)”"
-    **Cause:** the target counts **cumulatively**; both "ready" and "uploaded" episodes count. Archiving deletes only local files and does not change the state, so **neither uploading nor archiving frees capacity**.
+    **Cause:** the target counts **cumulatively**, and **neither uploading nor archiving frees capacity**; the counting rules are in [Picking a project and task](monitor-record.md#project-task).
 
     **Fix:**
 
@@ -153,14 +147,12 @@ This page lists the cause and fix for each symptom. The most common issues are b
     - or delete episodes that should not count on the Project page (such as accidental short episodes or episodes judged suspect);
     - or create a new task to count from zero.
 
-    The counting rules are in [Picking a project and task](monitor-record.md#project-task).
-
 ??? failure "Recording refused: “Your hands are outside the starting pose range, so recording was blocked”"
-    **Cause:** in modes that record headset video, both hands must be in the starting range in front of and below the body before recording. After the colon the message names each hand, the direction it is off and by how many centimetres (such as "left hand 5 cm too high"); how it works is in [Starting-pose check](monitor-record.md#initial-pose).
+    **Cause:** modes that record headset video require both hands to be in the [starting range](monitor-record.md#initial-pose) in front of and below the body when recording starts; the message names each hand, the direction it is off and by how many centimetres.
 
     **Fix:**
 
-    - Look forward, bring both hands back in front of and below your body, apart, not crossed and not raised too high, hold still for a moment and start again.
+    - Look forward, bring both hands back in front of and below your body, naturally apart, hold still and start again.
     - The Z axis is always out of range (too high or too low): check that the project's "Headset mount" matches how the headset is actually worn; worn around the neck but set to On head, the hands look too high. The mount is fixed once the project is created, so a wrong one means creating a new project.
     - A crooked headset, or looking down or turning sideways at the start, also shifts the whole range.
 
@@ -170,17 +162,17 @@ This page lists the cause and fix for each symptom. The most common issues are b
     **Fix:** work through [Headset and trackers](#tracker): the trackers are in the headset's view with a blue LED, and the pose card on the monitor page shows a green dot; move the grippers slightly to wake the trackers, then retry.
 
 ??? failure "Recording refused: “The tracker positions are opposite to their left/right gripper bindings” or “Unable to confirm the left/right gripper positions”"
-    **Cause:** before recording, the device checks where the left and right trackers actually are. Swapped grippers, wrongly fitted trackers or swapped bindings are refused; so is a start where left and right cannot be told apart because the hands are crossed, too close together or tracking is unstable.
+    **Cause:** swapped grippers, wrongly fitted trackers or swapped bindings; a start is also refused when left and right cannot be told apart because the hands are crossed, too close together or tracking is unstable.
 
     **Fix:** look forward, hold your hands apart without crossing them, move slightly to wake the trackers and retry. If it still says they are opposite, check the grippers are in the correct hands, and check tracker fitting and binding as in [The left and right gripper poses are swapped](#tracker).
 
 ??? failure "Recording refused: “Failed to reset Pico coordinates before recording”"
-    **Cause:** before every recording the device has the headset reset its world frame and waits for it to finish. It fails if the headset is disconnected, XTac UMI XR is not running in the foreground, or the XR version does not support the reset; the reason follows the colon.
+    **Cause:** the headset is disconnected, XTac UMI XR is not running in the foreground, or the XR version does not support the reset; the reason follows the colon.
 
     **Fix:** make sure the headset is connected, XTac UMI XR is running in the foreground and shows "Connected", and its version matches the [version baseline](versions.md#baseline), then retry.
 
 ??? failure "Recording refused: “Recording disk is N% used, at the 80% limit”"
-    **Cause:** recording is refused at 80% usage. The remaining 20% is reserved for transcode intermediates and exports, preventing truncated MCAP files on a full disk.
+    **Cause:** 20% is reserved for transcode intermediates and exports, so the disk never fills up.
 
     **Fix:**
 
@@ -191,18 +183,12 @@ This page lists the cause and fix for each symptom. The most common issues are b
 ??? failure "The gripper LED turns solid yellow during recording"
     **Cause:** a fatal problem occurred in this episode (for example, a camera or required channel dropped), so the episode is invalid. The LED stays yellow until recording ends.
 
-    **Fix:** stop recording, delete the episode and record again (the Project page shows a quality annotation). On the Live monitoring page, check the cable of the feed that dropped. LED meanings are in [LEDs](gripper.md#buttons-leds).
+    **Fix:** stop recording, delete the episode and record again; on the Live monitoring page, check the cable of the feed that dropped.
 
 ??? failure "The headset disconnected during recording, and the episode was interrupted and marked failed"
-    **Cause:**
+    **Cause:** the headset's USB link drops, its connection breaks, or its pose / images stop updating for about 3 seconds; the device stops recording at once and marks the episode failed, see [Headset disconnects while recording](monitor-record.md#pico-disconnect).
 
-    - **Trigger**: the headset's USB link drops, its connection breaks, or its pose / images stop updating for about 3 seconds.
-    - **Device response**: the device immediately marks the episode failed and stops recording, announces "Pico connection failed" ("Tracker connection failed" for a tracker), and shows "Pico issue: recording interrupted" (once per incident). The data is kept for diagnosis; it is not counted and is excluded from normal export and upload.
-
-    **Fix:**
-
-    - Check the cable from the headset to the backpack's `PICO` port, the headset battery, and that XTac UMI XR is running. For a tracker dropout, check the tracker.
-    - Recording **does not resume automatically**. Start a new recording once ready; see [Headset disconnects while recording](monitor-record.md#pico-disconnect).
+    **Fix:** check the cable from the headset to the backpack's `PICO` port, the headset battery, and that XTac UMI XR is running; when the announcement is "Tracker connection failed", check the tracker. Recording **does not resume automatically**; start a new recording once ready.
 
 ??? failure "While recording: “… disconnected, recording terminated”, and the episode is marked failed"
     **Cause:** a gripper, or a wrist fisheye or tactile camera used by this episode, dropped off USB; the device stopped the whole recording and marked it failed. See [USB device disconnects while recording](monitor-record.md#usb-disconnect).
@@ -220,12 +206,12 @@ This page lists the cause and fix for each symptom. The most common issues are b
     **Fix:** nothing to do; wait for the gripper to recover before recording, and do not start recording the instant a gripper powers up.
 
 ??? failure "A recording shows as failed, with power loss or a system restart as the reason"
-    **Cause:** the backpack lost power, or the system or capture service restarted, during recording, so the episode was not finalized. After power is restored, the reason distinguishes power loss / system restart from a capture-service restart, and the data size reflects the files actually retained.
+    **Cause:** the backpack lost power, or the system or capture service restarted, during recording, so the episode was not finalized.
 
     **Fix:** the files may be incomplete; verify, then delete and record again. If power losses recur, check the power supply and cabling; see [Power and ports](#power).
 
 ??? failure "The gripper LED is solid red"
-    **Cause:** the backpack reports a system problem (a gripper or camera dropped out, or a required channel is missing). The LED stays red until the problem clears. Red indicates a fault only, never recording.
+    **Cause:** the backpack reports a system problem (a gripper or camera dropped out, or a required channel is missing). The LED stays red until the problem clears.
 
     **Fix:**
 
@@ -248,14 +234,9 @@ This page lists the cause and fix for each symptom. The most common issues are b
     **Fix:** refer to the gesture table in [Buttons](gripper.md#buttons). Current bindings are at System → [Capture settings](system.md#capture-settings).
 
 ??? failure "The device is silent: no voice announcement when recording starts or stops"
-    **Cause:** announcements play through the headset by default, and through the backpack's onboard speaker only when the headset is unavailable. If both are silent, the announcements are usually muted or the volume is 0.
+    **Cause:** usually the announcements are muted or the volume is 0.
 
-    **Fix:**
-
-    - At System → [Capture settings › Voice prompts](system.md#voice), check whether the switch shows "Muted" and whether the volume is 0.
-    - Click "Preview" next to each line to test it; the page shows which device played the sound and why.
-    - If English is selected and the headset app lacks English assets, that line plays through the onboard speaker.
-    - Wording and timing are fixed; only the switch, volume and announcement language can be adjusted.
+    **Fix:** at System → [Capture settings › Voice prompts](system.md#voice), check the switch and the volume, and click "Preview" next to each line to test it; the page shows which device played the sound and why. If the headset app lacks the audio for a line, that line plays through the backpack's speaker.
 
 ??? failure "The fisheye view is blurred"
     **Cause:** the focus ring is easily knocked out of focus.
@@ -270,37 +251,24 @@ This page lists the cause and fix for each symptom. The most common issues are b
 ## Replay, export and data {#export}
 
 ??? failure "“Playback” is refused, stating that the camera preview is using it"
-    **Cause:**
+    **Cause:** replay and live preview share the backpack's hardware encoder. Replay is refused while Live monitoring is open in another tab or on another device; a camera is still treated as using the encoder for up to 15 seconds after it disconnects.
 
-    - Replay requires exclusive use of the backpack's hardware encoder (shared with live preview). It is refused while Live monitoring is open in another tab or on another device. A camera is still treated as using the encoder for up to 15 seconds after it disconnects.
-    - The reverse does not apply: if replay starts first, opening the monitor page shows the preview normally without interrupting replay.
-
-    **Fix:** close the monitor page in other tabs and on other devices, wait a few seconds and click Playback again. See [Playback](playback.md).
+    **Fix:** close the monitor page in other tabs and on other devices, wait a few seconds and click Playback again.
 
 ??? failure "After archiving, those recordings cannot be replayed or exported in the other format"
-    **Cause:** this is expected behavior.
+    **Cause:** expected behavior. [Archiving](projects-export.md#archive) deletes the raw files that replay and export both read, keeping only the record; "Playback" for those episodes is grayed out with "Archived; local source files deleted".
 
-    - Archiving deletes the raw files that replay and export both read, keeping only the catalog record. On the Project page, "Playback" for those episodes is grayed out with "Archived; local source files deleted".
-    - If an episode was uploaded in only one format, the other format can no longer be exported. The archive confirmation lists these episodes first.
-
-    **Fix:**
-
-    - Export every required format before archiving. The remote repository copy is authoritative.
-    - Recordings that were never uploaded can also be archived, but the data will then have no copy; the confirmation shows a prominent warning.
-    - For the entry point and criteria, see [Archive](projects-export.md#archive); for state definitions, see [Episode states](monitor-record.md#episode-state).
+    **Fix:** export every required format before archiving. Recordings that were never uploaded have no copy once archived; the confirmation warns you.
 
 ??? failure "The upload finished, but no space was freed on the recording disk"
-    **Cause:** this is expected behavior; uploads **keep local files by default**.
+    **Cause:** expected behavior; uploads **keep local files by default**.
 
-    **Fix:**
-
-    - **To free space**: before uploading, select "Automatically archive after upload (delete local source files; keep metadata only)", or click "Archive" in the task's export dialog afterwards.
-    - **Archive scope**: every recording uploaded in any format is archived. If only one format was uploaded and both are needed, export or upload the other format first.
+    **Fix:** before uploading, select "Automatically archive after upload (delete local source files; keep metadata only)", or click "Archive" in the task's export dialog afterwards. If both formats are needed, export both before archiving.
 
 ??? failure "An NFS / FTP upload fails, or “Test read/write” does not pass"
-    **Cause:** usually the target does not meet one of the requirements below, or the path / port is incorrect. Refer to the check's messages.
+    **Cause:** the target does not meet the requirements, or the path / port is incorrect; go by the check's messages.
 
-    **Fix:** open the corresponding entry at console → System → [Upload configurations](system.md#upload) and check each item according to the messages:
+    **Fix:** at System → [Upload configurations](system.md#upload), check each item according to the messages:
 
     - **Target directory**: must already exist (likewise the NFS target subdirectory); the device does not create it.
     - **Permissions**: the NAS or FTP / FTPS service must allow the account to write, read back, rename and delete.
@@ -309,9 +277,9 @@ This page lists the cause and fix for each symptom. The most common issues are b
     - Save the changes and click "Test read/write" again. If it still fails, contact technical support with the exact check message, device SN, console version and backend type.
 
 ??? failure "The LeRobot dataset is larger than expected"
-    **Cause:** multiple video feeds are recorded simultaneously; about 0.5GB per hour of exported LeRobot dataset is normal. The size is mostly set by the project's "Export quality".
+    **Cause:** about 0.5GB per hour of exported LeRobot dataset is normal; the size is mostly set by the project's "Export quality".
 
-    **Fix:** plan transfer and storage capacity at this scale. For a new project where size matters, choose "Compact" export quality when creating it; an existing project's export quality cannot be changed.
+    **Fix:** plan capacity at this scale. For a new project where size matters, choose "Compact" export quality when creating it; an existing project cannot be changed.
 
 ??? failure "After upgrading, exported or uploaded datasets show as needing re-export"
     **Cause:** this is expected. When the export rules change, old exports are marked stale: from 0.4.6, exported poses are relative to the headset at the start of each episode and the left-hand TCP uses the mirrored convention; from 0.4.7, each camera takes its own nearest frame and pose and gripper opening are interpolated at the frame time, so both frame selection and values change. Raw recordings are unaffected.
@@ -321,13 +289,13 @@ This page lists the cause and fix for each symptom. The most common issues are b
 ## Upgrades {#update}
 
 ??? failure "Power was lost during an upgrade / the console cannot connect after applying an update"
-    **Cause:** the collection software restarts when an update is applied, and the page waits up to 90 seconds. Collector application updates retain the previous version and provide automatic fallback if the new version fails to start. This does not apply to system image flashing; see [Rollback scope](update.md#rollback).
+    **Cause:** the collection software restarts when an update is applied, and the page waits up to 90 seconds; if the new version fails to start, the device falls back to the previous version automatically, see [Rollback](versions.md#rollback).
 
     **Fix:**
 
     1. Refresh the page.
     2. If the console still cannot connect, power-cycle the backpack.
-    3. On the System update page, check the current version and "Last operation / Last error". If the device rolled back, import the bundle again; see [Rollback](update.md#rollback).
+    3. On the System update page, check the current version and "Last operation / Last error"; if the device fell back, import the bundle again.
 
 ??? failure "The upgrade bundle fails verification on upload"
     **Cause:** the file is corrupt or incompletely uploaded, the version gap is too large, or the version is older than the current one.
@@ -337,12 +305,8 @@ This page lists the cause and fix for each symptom. The most common issues are b
 ??? failure "After flashing the gripper firmware, the gripper works intermittently and frames are silently dropped"
     **Cause:** flashing ends with a soft reset only, so the gripper's USB-to-serial chip is not power-cycled and remains in a degraded state.
 
-    **Fix:** power-cycle the backpack (or reconnect that gripper's Type-C cable), then check the firmware version in Device information; see [Gripper firmware](update.md#gripper-firmware).
+    **Fix:** power-cycle the backpack (or reconnect that gripper's Type-C cable), then check the firmware version in Device information; see [Gripper firmware](versions.md#gripper-firmware).
 
 ---
 
-If the problem persists, open System → [Device information](system.md#device-info), click "Export diagnostics" and send the completed encrypted ZIP download to technical support.
-
-The block of readings at the top right opens "System logs", with a red badge and error count when errors occur. Use that panel for viewing and screenshots; download the diagnostics file from Device information. If the console is unreachable or the diagnostics download fails, send any available error screenshots first and explain why the package could not be downloaded.
-
-For contact channels and the information to include, see [Support and feedback](../common/reference.md#support).
+If the problem persists, open System → [Device information](system.md#device-info), click "Export diagnostics" and send the encrypted ZIP to technical support; if the console is unreachable or the download fails, send error screenshots first. The block of readings at the top right opens "System logs" for viewing errors. For contact channels and the information to include, see [Support and feedback](../common/reference.md#support).

@@ -1,8 +1,8 @@
 # Coordinate frames
 
-This page defines the frame the pose data lives in: where the world frame is, which way it points, and how to tell during collection whether the poses are right. Both configurations take their poses from the same Pico4U headset and trackers, so the frame definition is identical; only the interface for looking at poses differs, and that part is split into "Backpack Kit" / "Developer Kit" tabs.
+Both configurations take their poses from the same Pico4U headset and trackers, so the frame definition is identical; only the interface for looking at poses is split into "Backpack Kit" / "Developer Kit" tabs.
 
-## The world frame
+## The world frame {#world}
 
 The world frame is established and frozen by XTac UMI XR on the headset at the moment it starts. It is right-handed and gravity-aligned:
 
@@ -10,14 +10,13 @@ The world frame is established and frozen by XTac UMI XR on the headset at the m
 |---|---|
 | Origin | Where the headset was at the moment XTac UMI XR first started |
 | X axis (red) | The device's forward direction, along the normal of the headset's front camera mounting face |
-| Y axis (green) | The device's left, orthogonal to X, fixed by the right-handed convention |
-| Z axis (blue) | The device's up, orthogonal to both X and Y, determined uniquely by the right-hand rule |
+| Y axis (green) | The device's left |
+| Z axis (blue) | The device's up |
 
 ![The world frame frozen at start-up](../assets/pico4/world-frame-origin.webp){ width="420" }
 
-The frame follows the headset only at the instant it starts; once frozen it is fixed in space, and turning your head or walking around does not carry it along. Restarting XTac UMI XR establishes a new frame, changing both the origin and the orientation. So face the same direction as the robot (towards its front) when you start it, so that the X axis lines up with the robot's forward direction, and do not restart it while collecting one dataset; the steps are in [Startup and frame alignment](pico4.md#pico-frame).
-
-Every pose in a dataset is referenced to this world frame: the Developer Kit writes the end-effector TCP pose `tcp.x/y/z` plus the 6-D rotation `r1..r6` (the first two columns of the rotation matrix, with the convention in [What each frame records](../pc/recording.md#53)); the Backpack Kit records the headset's and the trackers' poses in the MCAP. The Backpack Kit's exported data has its own origin, described in the next section.
+- Once frozen the frame is fixed in space, and turning your head or walking around does not carry it along. Restarting XTac UMI XR establishes a new frame, changing both the origin and the orientation. So face the robot's front when you start it and do not restart it while collecting one dataset; see [Startup and frame alignment](pico4.md#pico-frame).
+- Every pose in a dataset is referenced to it: the Developer Kit writes the end-effector TCP pose `tcp.x/y/z` plus the 6-D rotation `r1..r6` (the first two columns of the rotation matrix, with the convention in [What each frame records](../pc/recording.md#53)); the Backpack Kit records the headset's and the trackers' poses in the MCAP, and its exported data has its own origin, described in the next section.
 
 ## Origin of exported data (Backpack Kit) {#episode-origin}
 
@@ -30,12 +29,11 @@ From XTac UMI Collector 0.4.6, the poses in state and action in the Backpack Kit
 | Y axis | Left, orthogonal to X |
 | Z axis | Vertically up |
 
-- **Why**: before every recording the device has the headset reset its world frame, but Pico only zeroes the heading and height; the horizontal position can still be off by a few centimetres to tens of centimetres. Anchoring each episode to the headset at its start gives every episode in a dataset the same starting point, independent of that residual and of restarts of XTac UMI XR.
-- **The transform**: translate to the frame-0 headset position, then rotate about the vertical axis to the headset's horizontal heading at that moment. Only translation and yaw are removed; the headset's pitch and roll are kept. It is a rigid transform, so the distance and relative orientation between the hands are unchanged. At frame 0 the headset position is 0 and its yaw is 0.
-- **Face forward when you start**: an episode's X axis is the headset's horizontal heading at the moment recording starts, so face straight towards the work area when you start. The [starting-pose check](../backpack/monitor-record.md#initial-pose) uses the same frame.
-- **Scope**: only exported state and action. Raw recordings on the backpack, playback and the live view still use the world frame from recording time; `meta/xumi_collection_devices.json` stores each episode's anchor (its position, yaw and time in the recording frame), so you can convert back if needed.
-- **"Dual gripper" mode**: it records no headset pose, so exports skip this transform.
-- **Developer Kit**: unaffected; it still uses the world frame above.
+- **Why**: when the headset resets its world frame before every recording, Pico only zeroes the heading and height; the horizontal position can still be off by a few centimetres to tens of centimetres. This gives every episode in a dataset the same starting point, independent of that residual and of restarts of XTac UMI XR.
+- **The transform**: translate to the frame-0 headset position, then rotate about the vertical axis to the headset's horizontal heading at that moment. Only translation and yaw are removed; the headset's pitch and roll are kept. It is a rigid transform, so the distance and relative orientation between the hands are unchanged.
+- **Face straight towards the work area when you start**: the headset's horizontal heading at that moment is the episode's X axis. The [starting-pose check](../backpack/monitor-record.md#initial-pose) uses the same frame.
+- **Scope**: only exported state and action. Raw recordings on the backpack, playback and the live view still use the world frame from recording time; `meta/xumi_collection_devices.json` stores each episode's anchor (its position, yaw and time in the recording frame), so you can convert back.
+- **Not applied**: "Dual gripper" mode records no headset pose, so exports skip this transform; the Developer Kit is unaffected and still uses the world frame above.
 
 ## The pose view during collection {#world-view}
 
@@ -54,8 +52,8 @@ From XTac UMI Collector 0.4.6, the poses in state and action in the Backpack Kit
     - With the gripper lying flat, the EE marker should sit at the midpoint between the fingers with the triad reading X forward / Y left / Z up; if not, the tracker is mounted incorrectly.
     - The `tracker pose` in the scalar panel is the tracker's raw pose, for inspection only; what is written to disk is `tcp.*`.
 
-## Local frames
+## Local frames {#local}
 
 The three axes of the headset's own body frame follow the same convention as the world frame: X forward (along the normal of the front camera mounting face), Y left, Z up, right-handed. <!-- TBD: origin definition -->
 
-The gripper's local frames, end-effector (EEF) definition, tracker mounting position and follower flange interface are defined in [XTac-UMI-Description](https://github.com/XenseRobotics-AI/XTac-UMI-Description) (URDF / MJCF / USD and a frame specification). The `tcp.*` the Developer Kit writes is the gripper tip under that definition; to customize it, see [RobotConfig options](../pc/reference.md#robotconfig).
+The gripper's local frames, end-effector (EEF) definition, tracker mounting position and follower flange interface are defined in [XTac-UMI-Description](https://github.com/XenseRobotics-AI/XTac-UMI-Description) (URDF / MJCF / USD and a frame specification). The `tcp.*` the Developer Kit writes is the gripper tip under that definition; to customize it, see [RobotConfig options](../pc/recording.md#robotconfig).
