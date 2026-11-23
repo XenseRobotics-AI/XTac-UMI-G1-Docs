@@ -90,7 +90,7 @@ It drops the two headset eye image keys and the `head.*` dimensions from `action
 !!! warning "Double-check `--repo_id`"
     If the dataset is not found locally this conversion fetches it from the Hugging Face Hub, and `--local_files_only` has no effect on it. Check the spelling, or point `--root` straight at the local dataset folder.
 
-## Replay and visualization
+## Replay and visualization {#replay}
 
 - Online: once on the Hub, browse each episode's video and data with the [LeRobot Dataset Visualizer](https://huggingface.co/spaces/lerobot/visualize_dataset).
 - 3D trajectory: add `--display_data=true` during the [pre-recording preview](recording.md#preview) to see the gripper pose and trajectory in Rerun.

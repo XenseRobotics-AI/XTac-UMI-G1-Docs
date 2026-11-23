@@ -106,6 +106,7 @@ plugins:
             认识 XTac UMI G1: XTac UMI G1
             技术参数: Specifications
             安全与合规: Safety and compliance
+            常见问题: FAQ
             背包版: Backpack Kit
             PC 版: Developer Kit
             通用: Common
@@ -281,6 +282,7 @@ nav:
       - 产品线与配置对比: product/editions.md
       - 技术参数: product/specs.md
       - 安全与合规: product/safety.md
+      - 常见问题: product/faq.md
   - 背包版:
       - backpack/index.md
       - 一页速通: backpack/quickstart.md

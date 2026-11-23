@@ -90,7 +90,7 @@ lerobot-edit-dataset \
 !!! warning "先确认 `--repo_id` 拼对了"
     这项转换在本地找不到数据集时会去 Hugging Face Hub 取，`--local_files_only` 对它不起作用。确认拼写，或用 `--root` 直接指向本地数据集目录。
 
-## 回放与可视化
+## 回放与可视化 {#replay}
 
 - 在线浏览：上传 Hub 后用 [LeRobot Dataset Visualizer](https://huggingface.co/spaces/lerobot/visualize_dataset) 逐集查看视频与数据。
 - 3D 轨迹：[开录前预览](recording.md#preview)时加 `--display_data=true`，在 Rerun 里看夹爪位姿与轨迹。
