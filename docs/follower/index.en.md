@@ -11,7 +11,8 @@ The follower gripper mounts on the robot's end effector, opens and closes under 
 | Purpose | Handheld capture | Mounted on the robot's end effector to open, close and grasp |
 | Motor | None | RobStride EL05 |
 | Power | USB Type-C | USB Type-C + **24V** |
-| IMU / encoder / buttons | Yes | No |
+| IMU | Yes | Yes (firmware 1.2.17 / SDK 0.4.5 and later) |
+| Encoder / buttons | Yes | No |
 | Travel calibration | Manual | Automatic at power-on |
 | Last letter of the serial number | `m` | `s` |
 | Firmware bundled with SDK 0.5.0 | 1.3.1 | 1.3.1 |

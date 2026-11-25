@@ -65,7 +65,7 @@ If what is on your devices differs from this table, upgrade to match it, or use 
 
 | Docs version | xense-taccap-lerobot (Developer Kit collection) | XTac UMI XR (headset app) | XTac UMI Collector (Backpack Kit collection unit) | TacCap-Gripper SDK (gripper SDK) |
 |---|---|---|---|---|
-| v0.1.4 | v0.1.6 | 0.3.9 | 0.4.7 | 0.5.0 |
+| v0.1.4 | v0.1.6 | 0.3.9 | 0.5.0 | 0.5.0 |
 | v0.1.3 | v0.1.6 | 0.3.9 | 0.4.7 | 0.4.6 |
 | v0.1.2 | v0.1.5 | 0.3.6 | 0.4.6 | 0.4.5 |
 | v0.1.1 | v0.1.1 | 0.3.3 | 0.4.3 | 0.4.3 |
