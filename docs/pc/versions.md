@@ -5,12 +5,12 @@
 ## 必须升级到最新版本 {#required}
 
 !!! warning "采集前先把各项都升到下表版本，这不是可选项"
-    固件带[命令集 V2.1](#v21) 才支持行程标定，SDK 0.4.6 附带的镜像修掉了[已知缺陷](#ota-when)，三者齐了 `gripper.pos` 归一化才成立。主夹爪缺标定或固件过低会被拒绝连接；其它不配套组合照常落盘，但数据对不上。
+    固件带[命令集 V2.1](#v21) 才支持行程标定，SDK 0.5.0 附带的镜像修掉了[已知缺陷](#ota-when)，三者齐了 `gripper.pos` 归一化才成立。主夹爪缺标定或固件过低会被拒绝连接；其它不配套组合照常落盘，但数据对不上。
 
 | 组件 | 最低要求 | 怎么查 |
 |---|---|---|
 | `xense-taccap-lerobot` | `0.5.1+xtac.0.1.6` | `pip show lerobot` 或看 `pyproject.toml` |
-| `xense.taccap` SDK | **0.4.6** | `python -c "import xense.taccap as t; print(t.__version__)"` |
+| `xense.taccap` SDK | **0.5.0** | `python -c "import xense.taccap as t; print(t.__version__)"` |
 | 夹爪固件 | **命令集 V2.1**，即 leader ≥ 1.2.0 / follower ≥ 1.1.0；用从夹爪（`--robot.role=follower`）时 follower 须 ≥ 1.2.5（低于 1.2.11 提示升级） | 跑 [`calibrate.py`](calibration.md#41) 或[直接读](#check-versions) |
 | 每台 leader 的编码器标定 | 零点 + 行程上限已写入 flash | [夹爪标定](calibration.md#41) |
 | XenseVR PC Service | ≥ v0.2.0，装机直接用 v0.2.1 | `dpkg -s xensevr-pc-service` 的 `Version` |
@@ -44,8 +44,8 @@ flowchart LR
 | `opencv-python` | `==4.12.0.88` | 4.12.0.88 |
 | NumPy | `>=1.26.4` | 2.2.6 |
 | `xense-taccap-lerobot` | 基于 lerobot 0.5.1，版本号 `0.5.1+xtac.0.1.6` | `v0.1.6` |
-| `xense.taccap` SDK | 与主仓库子模块 `third_party/taccap-gripper` 配套 | 0.4.6（tag `v0.4.6`） |
-| 夹爪固件 | 命令集 V2.1（帧格式 V1.8），leader ≥ 1.2.0 / follower ≥ 1.1.0 | leader 1.2.7 / follower 1.2.17，随 SDK 走，以 `firmware/manifest.json` 为准 |
+| `xense.taccap` SDK | 与主仓库子模块 `third_party/taccap-gripper` 配套 | 0.5.0（tag `v0.5.0`） |
+| 夹爪固件 | 命令集 V2.1（帧格式 V1.8），leader ≥ 1.2.0 / follower ≥ 1.1.0 | leader 1.3.1 / follower 1.3.1，随 SDK 走，以 `firmware/manifest.json` 为准 |
 | `xensesdk` | 由安装脚本提供 | 2.1.2 |
 | XenseVR PC Service(`.deb`) | ≥ v0.2.0（v0.2.0 起转发[头显相机](recording.md#56)帧） | v0.2.1 |
 | `xensevr_pc_service_sdk` | 在主仓库内，链接 `.deb` 的 C SDK | 0.2.1，版本号取自 `.deb` |
@@ -70,7 +70,7 @@ flowchart LR
 python - <<'EOF'
 import xense.taccap as t
 from xense.taccap import scan_grippers, LeaderGripper, Cmd
-print("xense.taccap", t.__version__, "(需要 >= 0.4.6)")
+print("xense.taccap", t.__version__, "(需要 >= 0.5.0)")
 for ep in scan_grippers():
     g = LeaderGripper(mcu_device=ep.mcu_device)   # 只读版本,主从夹爪通用
     ack = g.transport.send_cmd(Cmd.GetVersion, b"", 500)
@@ -78,10 +78,10 @@ for ep in scan_grippers():
 EOF
 ```
 
-刷固件前的输出（两只主夹爪，旧版 `fw` 1.2.5，刷完应为 1.2.7）：
+刷固件前的输出（两只主夹爪，旧版 `fw` 1.2.5，刷完应为 1.3.1）：
 
 ```text
-xense.taccap 0.4.6 (需要 >= 0.4.6)
+xense.taccap 0.5.0 (需要 >= 0.5.0)
   TCGU01A28Z0023m  Left   fw=1.2.5
   TCGU01A28Z0024m  Right  fw=1.2.5
 ```
@@ -115,7 +115,11 @@ python -c "import xensevr_pc_service_sdk as xrt; print('pico camera API:', hasat
 
 ### 0.1.6 {#whats-new-016}
 
-- 夹爪 SDK 升到 0.4.6，附带固件不变（主夹爪 1.2.7 / 从夹爪 1.2.17）。从夹爪固件 1.2.17 在收发重叠时会把上行帧重发一次；在已改进控制串口硬件的从夹爪上两份都完整到达，旧 SDK 两份都收下，控制器会被多推一步。0.4.6 丢弃这份重复帧，推送模式下状态帧回到 100 Hz。
+- 夹爪 SDK 升到 **0.5.0**，附带固件升到主夹爪 / 从夹爪 **1.3.1**，请[刷固件](#ota)。1.3.1 为腕部相机的 640×480 与 1920×1080 各存一份鱼眼内参；SDK 按固件能力自动适配，在 1.2.7 / 1.2.17 上照常运行。SDK 自身的变化见 [SDK · 从旧版本迁移](../sdk/index.md#migrate)。
+- 从夹爪（`--robot.role=follower`）可以录制：开口度改为读电机状态并按设备自己的行程标定换算，与 SDK 的 `g.position()` 一致；只读，不使能电机。
+- 1920×1080 腕部相机可以打开：先请求 MJPEG 再设分辨率与帧率，`--robot.wrist_camera_width=1920 --robot.wrist_camera_height=1080` 不再报 `failed to set fps=30`。
+- 新型号视触觉模组（序列号带角色后缀，如 `GSPS01A29Z0023m`）和序列号末位为大写 `S` 的腕部相机能被识别。
+- 从夹爪固件 1.2.17 在收发重叠时会把上行帧重发一次；在已改进控制串口硬件的从夹爪上两份都完整到达，旧 SDK 两份都收下，控制器会被多推一步。0.4.6 丢弃这份重复帧，推送模式下状态帧回到 100 Hz。
 
 ### 0.1.5 {#whats-new-015}
 
@@ -157,7 +161,7 @@ git fetch --tags
 git checkout v0.1.6
 git submodule update --init --recursive --progress
 ./setup_env.sh --install     # 对齐依赖并重编 xense.taccap
-git submodule status         # 子模块应对应 v0.4.6
+git submodule status         # 子模块应对应 v0.5.0
 ```
 
 !!! warning "拉完子模块必须重新编译 `xense.taccap`"
@@ -183,14 +187,14 @@ git submodule status         # 子模块应对应 v0.4.6
 
 - [`calibrate.py`](calibration.md#41) 报 `needs command set >= V2.1` 退出；
 - 主夹爪连不上，报错提示先做 OTA；
-- 固件低于 SDK 0.4.6 附带的 leader 1.2.7 / follower 1.2.17（见[从夹爪固件版本表](../follower/firmware.md#check-version)）：V2.1 只是底线，旧固件有已知缺陷。
+- 固件低于 SDK 0.5.0 附带的 leader 1.3.1 / follower 1.3.1（见[从夹爪固件版本表](../follower/firmware.md#check-version)）：V2.1 只是底线，旧固件有已知缺陷。
 
 不换主板、不擦固件，刷一次即可。
 
 ### 怎么刷
 
 !!! warning "先升级 SDK，再刷固件"
-    - 镜像随 SDK 走：先把子模块升到 SDK 0.4.6，用它刷写与校验，才能刷到 1.2.7 / 1.2.17；绝不要用低于 0.1.7 的 SDK 刷。
+    - 镜像随 SDK 走：先把子模块升到 SDK 0.5.0，用它刷写与校验，才能刷到 1.3.1；绝不要用低于 0.1.7 的 SDK 刷。
     - 新 SDK 与旧固件通信不变，先升 SDK 总是安全的。
     - 镜像版本以 `firmware/manifest.json` 里的 `version` 为准，不要从 SDK 版本号推。
 
@@ -202,8 +206,8 @@ python -c "import json;m=json.load(open('third_party/taccap-gripper/firmware/man
 
 | 镜像 | 适用角色 |
 |---|---|
-| `tc-gu-01-master-1.2.7.bin` | 主夹爪（SN 末位 `m`） |
-| `tc-gu-01-slave-1.2.17.bin` | 从夹爪（SN 末位 `s`） |
+| `tc-gu-01-master-1.3.1.bin` | 主夹爪（SN 末位 `m`） |
+| `tc-gu-01-slave-1.3.1.bin` | 从夹爪（SN 末位 `s`） |
 
 按角色选，不按左右手：`TCGU01A28Z0023m` 末位 `m`，用主夹爪镜像；一套设备两只常都是主夹爪。
 
@@ -218,7 +222,7 @@ python third_party/taccap-gripper/python/examples/ota_update.py --all
 # 3. 断电重插后,按"如何查版本"的脚本读回实际刷上的版本
 ```
 
-第 3 步用[如何查版本](#check-versions)的脚本，读回须不低于 leader 1.2.0 / follower 1.1.0，刷当前附带镜像应为 1.2.7 / 1.2.17。之后回[夹爪标定](calibration.md#41)标零点和行程上限。
+第 3 步用[如何查版本](#check-versions)的脚本，读回须不低于 leader 1.2.0 / follower 1.1.0，刷当前附带镜像应为 1.3.1。之后回[夹爪标定](calibration.md#41)标零点和行程上限。
 
 - 镜像名按给的路径、SDK 根目录、SDK `firmware/` 依次解析，任意目录可运行，连设备前就检查。
 - `--target-version` 通常不用写：只给校验日志和分区元数据打标记，脚本按 CRC32 在 `manifest.json` 里查出版本号，它不认识的镜像才需指定。
@@ -227,8 +231,7 @@ python third_party/taccap-gripper/python/examples/ota_update.py --all
 其它写法：
 
 - 只插一只主夹爪（或从夹爪）时只写角色：`ota_update.py master` / `ota_update.py slave`。
-- 同角色多只里刷一只，写镜像文件名 + 左右或 SN：`ota_update.py tc-gu-01-master-1.2.7.bin left`（以 `firmware/` 里实际文件名为准）。
-- 不要写 `slave left` / `master left`：第一个参数会被当成文件名，报 `firmware file not found`。
+- 同角色多只里刷一只，在角色后加左右：`ota_update.py master left` / `ota_update.py slave right`（SDK 0.5.0 起）；也可以写镜像文件名加左右或 SN：`ota_update.py tc-gu-01-master-1.3.1.bin left`。
 
 !!! danger "刷错角色会导致夹爪无法启动，需返厂恢复"
     `ota_update.py` 按 CRC32 比对 `manifest.json` 识别镜像，角色不符直接拒绝，`--force` 才能强制；手工编译的镜像带提示放行。升级期间不要断电或拔线。

@@ -25,7 +25,7 @@ Run the [self-check](index.md#self-check) first; most problems can be identified
 
     **Fix**: [upgrade the gripper firmware](firmware.md#mcu-ota) to the version bundled with the SDK, then power-cycle.
 
-??? failure "`hello()` shows a version other than 0.4.6, or `import` fails"
+??? failure "`hello()` shows a version other than 0.5.0, or `import` fails"
     **Cause**: the wrong environment is active, the SDK was not rebuilt, or (Developer Kit collection environment) the submodule was not updated.
 
     **Fix**:

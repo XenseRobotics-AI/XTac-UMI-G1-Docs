@@ -374,7 +374,7 @@ lerobot-record \
 - 固件回了全零记录（1.1.1 与 1.2.2 都会）：须用 `is_usable_fisheye_cal()` 判断而非 `is None`，否则 `fx = fy = 0` 的重映射表输出纯黑图且不报错。
 - 固件早于命令集 V2.0。
 
-代码里优先用 `Calibration::resolve_fisheye()`（返回 `(calibration, is_reference, reason)`）而不是 `read_fisheye()`。
+代码里优先用 `Calibration::resolve_fisheye_for(宽, 高)`（返回 `(calibration, is_reference, reason)`）而不是 `read_fisheye()`。SDK 0.5.0 + 固件 1.3.1 起，640×480 与 1920×1080 的内参各存一份、按相机分辨率选用；夹爪只有另一种分辨率的标定时报错，不回退到参考内参，见 [SDK · 腕部相机与鱼眼矫正](../sdk/index.md#camera)。
 
-- **参考值只够看画面**：主点逐台漂移（实测一台差 37.7 像素）。要在矫正图上按像素测量（视觉伺服、手眼标定、尺寸估计），先存本机标定：`python third_party/taccap-gripper/python/examples/fisheye_cal.py set-fisheye right`（接两只时用 `left` / `right` 或完整 SN 指定，只接一只可省略）。
+- **参考值只够看画面**：主点逐台漂移（实测一台差 37.7 像素）。要在矫正图上按像素测量（视觉伺服、手眼标定、尺寸估计），先存本机标定：`python third_party/taccap-gripper/python/examples/fisheye_cal.py set-fisheye right --width 640 --height 480`（按相机实际分辨率填写；接两只时用 `left` / `right` 或完整 SN 指定，只接一只可省略）。
 - **矫正后画面偏心、略倾斜不代表标定错**：去畸变绕主点而非画幅中心，传感器未必在光心上（实测一台 `cx = 359.1`，爪尖中点 x = 360.1，差约 1 像素）。别改 `cx`，改回 320 更偏且引入倾斜。

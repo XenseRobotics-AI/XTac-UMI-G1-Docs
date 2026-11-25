@@ -8,7 +8,8 @@ The `[fw]` line of the [self-check](index.md#self-check) output is the gripper f
 
 | Gripper firmware version | Notes |
 |---|---|
-| 1.2.17 | Bundled with SDK 0.4.5 / 0.4.6, recommended; device timestamps move to a 1 MHz timebase, so the host needs SDK 0.4.5 or newer |
+| 1.3.1 | Bundled with SDK 0.5.0, recommended; stores wrist-camera fisheye intrinsics separately for 640×480 and 1920×1080, and refreshes motor status at the requested rate |
+| 1.2.17 | Bundled with SDK 0.4.5 / 0.4.6, usable; device timestamps use a 1 MHz timebase, so the host needs SDK 0.4.5 or newer |
 | 1.2.16 | Bundled with SDK 0.4.3 / 0.4.4, fine to use |
 | 1.2.11 – 1.2.15 | Usable, upgrade recommended |
 | 1.2.5 – 1.2.10 | Opens, but the SDK prompts you to upgrade: after an occasional overflow on the control serial port, the gripper stops receiving commands and the grip force drops. **Upgrade required** |
@@ -34,9 +35,7 @@ python python/examples/ota_update.py slave
 python python/examples/follower_status.py left
 ```
 
-- With several follower grippers connected, to flash just one of them, give the image file name plus the side or serial number:
-  `python python/examples/ota_update.py tc-gu-01-slave-1.2.17.bin left`.
-  Do not write `slave left`; that reports `firmware file not found`.
+- With several follower grippers connected, to flash just one of them, add the side after the role: `python python/examples/ota_update.py slave left` (SDK 0.5.0 and later).
 - Flashing takes about 1 second, after which the gripper restarts automatically.
 - If the script finds that the firmware does not match the gripper's role it refuses to flash. **Do not force it with `--force`.**
 - An interrupted flash does not damage the gripper; the original firmware keeps running, and you can simply flash again.

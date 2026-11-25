@@ -1,6 +1,6 @@
 # SDK & development
 
-`xense.taccap` (repository [TacCap-Gripper](https://github.com/XenseRobotics-AI/TacCap-Gripper)) is the SDK for the XTac UMI G1 grippers. It provides both Python and C++ interfaces, for writing your own programs that read the leader gripper and control the follower gripper. This page is written for SDK 0.4.6.
+`xense.taccap` (repository [TacCap-Gripper](https://github.com/XenseRobotics-AI/TacCap-Gripper)) is the SDK for the XTac UMI G1 grippers. It provides both Python and C++ interfaces, for writing your own programs that read the leader gripper and control the follower gripper. This page is written for SDK 0.5.0.
 
 ## What it can do {#scope}
 
@@ -24,14 +24,14 @@ Visuotactile images are captured by `xensesdk` and are not part of this SDK; fro
 
 ## Install {#python}
 
-**We recommend using the collection environment directly**: once the data-collection repository `xense-taccap-lerobot` v0.1.6 is set up per [Installation](../pc/install.md) it already includes SDK 0.4.6 (submodule `third_party/taccap-gripper`), and the source and example scripts are all in that directory. To verify:
+**We recommend using the collection environment directly**: once the data-collection repository `xense-taccap-lerobot` v0.1.6 is set up per [Installation](../pc/install.md) it already includes SDK 0.5.0 (submodule `third_party/taccap-gripper`), and the source and example scripts are all in that directory. To verify:
 
 ```bash
 cd third_party/taccap-gripper
 python -c "import xense.taccap as t; print(t.hello())"
 ```
 
-It should print `taccap-gripper OK; version 0.4.6`. If the version is wrong, pull the submodules and rerun `./setup_env.sh --install`, see [Repo and submodule update](../pc/versions.md#repo-update).
+It should print `taccap-gripper OK; version 0.5.0`. If the version is wrong, pull the submodules and rerun `./setup_env.sh --install`, see [Repo and submodule update](../pc/versions.md#repo-update).
 
 ### Standalone install (Backpack Kit, or without the data-collection repository) {#standalone}
 
@@ -110,20 +110,23 @@ Gripper objects do not open the wrist camera by default. When you need it:
 
 ```python
 g = t.FollowerGripper(ep.mcu_device, wrist_video="/dev/v4l/by-id/<camera>-video-index0",
-                      open_cameras=True, undistort_wrist=True)
+                      open_cameras=True, undistort_wrist=True,
+                      wrist_width=1920, wrist_height=1080)   # default 640×480 at 30fps
 g.wrist_camera.start(lambda f: print(f.frame_index))
 ```
 
-Frames are RGB by default. To just view the image, use the example `wrist_camera.py`.
+Frames are RGB by default. To just view the image, use the example `wrist_camera.py`. `close()` releases the camera, so you can reopen it right away at another resolution (0.5.0 and later).
 
 <span id="fisheye-fallback"></span>
 Fisheye intrinsics are stored in each gripper. For a gripper that has never been calibrated, the SDK automatically falls back to a set of built-in reference intrinsics and prints a warning; undistortion does not fail. To read the intrinsics, use:
 
 ```python
-cal, is_reference, reason = g.calibration.resolve_fisheye()
+cal, is_reference, reason = g.calibration.resolve_fisheye_for(1920, 1080)   # by camera resolution
 ```
 
-If `is_reference` is True, the reference intrinsics are in use; they are only good for viewing. When you need pixel measurements on the undistorted image, write this gripper's own calibration to it: `python python/examples/fisheye_cal.py set-fisheye right --from-npz cam.npz` (add `--follower` for a follower gripper). An off-center image after undistortion is normal; do not change `cx` in the intrinsics. Details are in [What happens when the fisheye calibration cannot be read](../pc/recording.md#fisheye-fallback).
+- **Stored per resolution**: 640×480 and 1920×1080 are different sensor crops, so intrinsics cannot be converted between them. Firmware 1.3.1 stores one set for each resolution, and `undistort_wrist=True` picks the one matching the camera; older firmware stores a single set.
+- **Calibrated only at the other resolution**: opening raises an error asking you to calibrate this resolution or run the camera at the calibrated one; it does not silently switch to the reference intrinsics.
+- **Reference intrinsics**: if `is_reference` is True, this gripper has no calibration at that resolution and the reference intrinsics are in use; they are only good for viewing. When you need pixel measurements on the undistorted image, write its own calibration: `python python/examples/fisheye_cal.py set-fisheye right --from-npz cam.npz --width 1920 --height 1080` (add `--follower` for a follower gripper; `--width` / `--height` are required). `fisheye_cal.py show` lists the intrinsics for both resolutions. An off-center image after undistortion is normal; do not change `cx` in the intrinsics. Details are in [What happens when the fisheye calibration cannot be read](../pc/recording.md#fisheye-fallback).
 
 ## Example scripts {#scripts}
 
@@ -187,7 +190,7 @@ python python/examples/rerun_viewer.py left --save rig.rrd --duration 20   # sav
 
 ## Migrating from older versions {#migrate}
 
-The full list of changes is in the SDK's [CHANGELOG](https://github.com/XenseRobotics-AI/TacCap-Gripper/blob/v0.4.6/CHANGELOG.md).
+The full list of changes is in the SDK's [CHANGELOG](https://github.com/XenseRobotics-AI/TacCap-Gripper/blob/v0.5.0/CHANGELOG.md).
 
 **0.1.x / 0.2.x → 0.4.x**
 
@@ -227,3 +230,14 @@ The full list of changes is in the SDK's [CHANGELOG](https://github.com/XenseRob
 **0.4.5 → 0.4.6** (no API changes)
 
 - The byte-identical data frame that follower firmware 1.2.17 resends when transmissions overlap is now dropped, so it no longer steps the controller twice or reports a key press twice. The count is in `g.transport.stats.duplicate_data_dropped`; exchange mode is unaffected.
+
+**0.4.6 → 0.5.0** (existing APIs unchanged)
+
+- The bundled firmware moves to leader / follower **1.3.1**; [upgrade the firmware](../follower/firmware.md#mcu-ota). The SDK adapts to the firmware's capabilities and still runs on 1.2.7 / 1.2.17.
+- Wrist cameras can open at 1920×1080: `LeaderGripper` / `FollowerGripper` take `wrist_width`, `wrist_height` and `wrist_fps`; the default stays 640×480 at 30fps.
+- Fisheye intrinsics are stored and selected per resolution, see [Wrist camera and fisheye undistortion](#camera). A gripper calibrated only at the other resolution raises on open; `fisheye_cal.py set-fisheye` requires `--width` / `--height`.
+- `ForcePositionController.set_target(opening, grip=True)` marks the target as where contact is expected; a jaw stopped near the target is pressed with the grasp force. Without it, behavior is unchanged.
+- When force-position control closes to 0, the final state comes about 0.45–0.6s after the target reaches 0 (varies by gripper); use a position tolerance to judge sooner.
+- IMU goes up to 1125Hz with firmware 1.3.1, using the exchange mode `start_exchange()`.
+- `close()` releases the wrist camera, so the same camera can be reopened right after.
+- Firmware can be flashed with `ota_update.py slave left`, selecting a gripper by role plus side.

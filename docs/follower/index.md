@@ -1,6 +1,6 @@
 # 从夹爪：概览、安装与自检
 
-从夹爪（Follower）装在机器人末端，由电机驱动开合，执行主夹爪采集到的动作。本章讲怎样用 `xense.taccap` SDK 控制它，按 [TacCap-Gripper](https://github.com/XenseRobotics-AI/TacCap-Gripper) **v0.4.6** 编写，背包版与 PC 版都适用；标注「0.4.4 起」的功能需要 0.4.4 及以上。
+从夹爪（Follower）装在机器人末端，由电机驱动开合，执行主夹爪采集到的动作。本章讲怎样用 `xense.taccap` SDK 控制它，按 [TacCap-Gripper](https://github.com/XenseRobotics-AI/TacCap-Gripper) **v0.5.0** 编写，背包版与 PC 版都适用；标注「0.4.4 起」的功能需要 0.4.4 及以上。
 
 ![XTac UMI G1 从夹爪](../assets/product/follower-scene-front.webp){ width="720" }
 
@@ -14,9 +14,9 @@
 | IMU / 编码器 / 按键 | 有 | 无 |
 | 行程标定 | 手动标定 | 上电自动标定 |
 | 序列号末位字母 | `m` | `s` |
-| 随 SDK 0.4.6 附带的固件 | 1.2.7 | 1.2.17 |
+| 随 SDK 0.5.0 附带的固件 | 1.3.1 | 1.3.1 |
 
-- 主从固件各自编号，版本号不同是正常的。
+- 主从固件各自编号，目前恰好都是 1.3.1；两边版本号不同也是正常的。
 - 电机：持续堵转额定 **1.1N·m**（爪子顶住物体时可以一直保持的力矩，也是默认的夹持力和上限），速度量程 50rad/s。
 - 加进机器人模型：[XTac-UMI-Description](https://github.com/XenseRobotics-AI/XTac-UMI-Description)（URDF、Xacro、MJCF、USD，支持 ROS 2）。
 
@@ -42,7 +42,7 @@
 运行 SDK 的电脑每台做一次，背包版与 PC 版相同。系统要求 Ubuntu 22.04 或 24.04（x86_64）。
 
 !!! tip "已装好 PC 版数采环境的电脑"
-    数采环境（v0.1.6）里已经带有 SDK 0.4.6（数采仓库的 `third_party/taccap-gripper`），跳过第 1–5 步，在数采环境里进入该目录，从[第 6 步](#host)做起。
+    数采环境（v0.1.6）里已经带有 SDK 0.5.0（数采仓库的 `third_party/taccap-gripper`），跳过第 1–5 步，在数采环境里进入该目录，从[第 6 步](#host)做起。
 
 ### 第 1 步：安装 Miniforge（mamba） {#miniforge}
 
@@ -68,7 +68,7 @@ sudo apt install -y git curl v4l-utils
 
 ```bash
 cd ~
-git clone --branch v0.4.6 https://github.com/XenseRobotics-AI/TacCap-Gripper.git
+git clone --branch v0.5.0 https://github.com/XenseRobotics-AI/TacCap-Gripper.git
 cd TacCap-Gripper
 ```
 
@@ -92,11 +92,11 @@ uv pip install -e . --no-build-isolation
 python -c "import xense.taccap as t; print(t.hello())"
 ```
 
-应输出 `taccap-gripper OK; version 0.4.6`。
+应输出 `taccap-gripper OK; version 0.5.0`。
 
 !!! warning "编译报错或版本不对"
     - 必须先 `mamba activate taccap` 再安装，`--no-build-isolation` 不能省。
-    - 版本不是 0.4.6：当前终端加载了别处的 SDK。关掉终端，开一个新的，只执行 `mamba activate taccap` 再试。
+    - 版本不是 0.5.0：当前终端加载了别处的 SDK。关掉终端，开一个新的，只执行 `mamba activate taccap` 再试。
 
 ### 第 6 步：主机配置（缺一项就连不上） {#host}
 
@@ -143,7 +143,7 @@ python python/examples/follower_status.py left
 脚本只读，不会让电机动。正常输出中要看的几行（中间省略）：
 
 ```text
-[fw] FirmwareVersion(1.2.17.0)
+[fw] FirmwareVersion(1.3.1.0)
 ...
 [归一化] g.position() = 0.9183
 ...
@@ -155,7 +155,7 @@ python python/examples/follower_status.py left
 
 | 看哪里 | 正常 | 不正常时 |
 |---|---|---|
-| `[fw]` | 1.2.17 | 低于 1.2.11 会打印升级提示，低于 1.2.5 会报错退出，都先[升级固件](firmware.md#mcu-ota) |
+| `[fw]` | 1.3.1 | 低于 1.2.11 会打印升级提示，低于 1.2.5 会报错退出，都先[升级固件](firmware.md#mcu-ota) |
 | `[归一化]` | 0 到 1 之间 | 报 `not calibrated`：清空爪子周围，断电重启 |
 | `[故障]` | 全 0 | 见[故障排查](troubleshooting.md#fault) |
 | `[开流读]` | 约 100Hz，显示 `OK` | 断电重启后再试，仍不正常见[故障排查](troubleshooting.md#self-check) |

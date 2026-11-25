@@ -63,9 +63,9 @@
     ```
 
 ??? failure "刷写固件时报 `firmware file not found`"
-    **原因**：第一个参数被当作镜像文件名但找不到：写了 `slave left` / `master left` / `slave <SN>`（角色后带其他参数），或用了不带版本号的 `tc-gu-01-master.bin` / `tc-gu-01-slave.bin`。
+    **原因**：第一个参数被当作镜像文件名但找不到：用了不带版本号的 `tc-gu-01-master.bin` / `tc-gu-01-slave.bin`，或用 SDK 0.4.6 及更早版本写了 `slave left` / `master left`（角色后带左右，0.5.0 起才支持）。
 
-    **解决**：通常用 `ota_update.py --all`；该角色只接一只时用 `ota_update.py master` / `ota_update.py slave`；指定某一只时用报错中 `shipped images` 列出的文件名加左右或序列号，如 `ota_update.py tc-gu-01-slave-1.2.17.bin left`。见[固件 OTA 升级](versions.md#ota)。
+    **解决**：通常用 `ota_update.py --all`；该角色只接一只时用 `ota_update.py master` / `ota_update.py slave`；指定某一只时用 `ota_update.py slave left`，或用报错中 `shipped images` 列出的文件名加左右或序列号，如 `ota_update.py tc-gu-01-slave-1.3.1.bin left`。见[固件 OTA 升级](versions.md#ota)。
 
 ## 串口权限与设备发现
 

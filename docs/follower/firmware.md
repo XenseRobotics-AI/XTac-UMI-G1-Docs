@@ -8,7 +8,8 @@
 
 | 夹爪固件版本 | 说明 |
 |---|---|
-| 1.2.17 | 随 SDK 0.4.5 / 0.4.6 附带，推荐；设备时间戳改为 1 MHz 时基，主机须为 SDK 0.4.5 及以上 |
+| 1.3.1 | 随 SDK 0.5.0 附带，推荐；腕部相机鱼眼内参按 640×480 与 1920×1080 各存一份，电机状态按请求的频率刷新 |
+| 1.2.17 | 随 SDK 0.4.5 / 0.4.6 附带，可以使用；设备时间戳为 1 MHz 时基，主机须为 SDK 0.4.5 及以上 |
 | 1.2.16 | 随 SDK 0.4.3 / 0.4.4 附带，可以使用 |
 | 1.2.11 – 1.2.15 | 可以使用，建议升级 |
 | 1.2.5 – 1.2.10 | 能打开，但 SDK 会提示升级：控制串口偶发溢出后，夹爪会收不到命令、夹持力下降，**必须升级** |
@@ -34,9 +35,7 @@ python python/examples/ota_update.py slave
 python python/examples/follower_status.py left
 ```
 
-- 接着多只从夹爪、只刷其中一只时，写镜像文件名加左右或序列号：
-  `python python/examples/ota_update.py tc-gu-01-slave-1.2.17.bin left`。
-  不要写成 `slave left`，那样会报 `firmware file not found`。
+- 接着多只从夹爪、只刷其中一只时，在角色后加左右：`python python/examples/ota_update.py slave left`（SDK 0.5.0 起）。
 - 刷写约 1 秒，之后夹爪自动重启。
 - 脚本发现固件与夹爪角色不符时会拒绝刷写，**不要加 `--force` 强制**。
 - 刷写中断不会损坏夹爪，原固件继续运行，重新刷一次即可。

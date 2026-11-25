@@ -1,6 +1,6 @@
 # Follower gripper: overview, install and self-check
 
-The follower gripper mounts on the robot's end effector, opens and closes under motor drive, and performs the motion captured with the leader gripper. This chapter shows how to control it with the `xense.taccap` SDK. It is written against [TacCap-Gripper](https://github.com/XenseRobotics-AI/TacCap-Gripper) **v0.4.6** and applies to both the Backpack Kit and the Developer Kit; features marked “0.4.4 and later” need 0.4.4 or newer.
+The follower gripper mounts on the robot's end effector, opens and closes under motor drive, and performs the motion captured with the leader gripper. This chapter shows how to control it with the `xense.taccap` SDK. It is written against [TacCap-Gripper](https://github.com/XenseRobotics-AI/TacCap-Gripper) **v0.5.0** and applies to both the Backpack Kit and the Developer Kit; features marked “0.4.4 and later” need 0.4.4 or newer.
 
 ![XTac UMI G1 follower gripper](../assets/product/follower-scene-front.webp){ width="720" }
 
@@ -14,9 +14,9 @@ The follower gripper mounts on the robot's end effector, opens and closes under 
 | IMU / encoder / buttons | Yes | No |
 | Travel calibration | Manual | Automatic at power-on |
 | Last letter of the serial number | `m` | `s` |
-| Firmware bundled with SDK 0.4.6 | 1.2.7 | 1.2.17 |
+| Firmware bundled with SDK 0.5.0 | 1.3.1 | 1.3.1 |
 
-- Leader and follower firmware are numbered separately, so it is normal for their version numbers to differ.
+- Leader and follower firmware are numbered separately; both happen to be 1.3.1 now, and different numbers on the two are also normal.
 - Motor: continuous stall rating **1.1N·m** (the torque the fingers can hold indefinitely while pressing against an object; also the default grip force and its upper limit), max. speed 50rad/s.
 - Add it to your robot model: [XTac-UMI-Description](https://github.com/XenseRobotics-AI/XTac-UMI-Description) (URDF, Xacro, MJCF, USD; ROS 2 supported).
 
@@ -42,7 +42,7 @@ Complete the four steps below in order before putting the gripper to work. Mount
 Do this once on every computer that runs the SDK; it is the same for the Backpack Kit and the Developer Kit. It requires Ubuntu 22.04 or 24.04 (x86_64).
 
 !!! tip "Computers that already have the Developer Kit collection environment"
-    The collection environment (v0.1.6) already includes SDK 0.4.6 (`third_party/taccap-gripper` in the data-collection repository). Skip steps 1–5,
+    The collection environment (v0.1.6) already includes SDK 0.5.0 (`third_party/taccap-gripper` in the data-collection repository). Skip steps 1–5,
     go to that directory inside the collection environment and start from [step 6](#host).
 
 ### Step 1: install Miniforge (mamba) {#miniforge}
@@ -69,7 +69,7 @@ sudo apt install -y git curl v4l-utils
 
 ```bash
 cd ~
-git clone --branch v0.4.6 https://github.com/XenseRobotics-AI/TacCap-Gripper.git
+git clone --branch v0.5.0 https://github.com/XenseRobotics-AI/TacCap-Gripper.git
 cd TacCap-Gripper
 ```
 
@@ -94,11 +94,11 @@ uv pip install -e . --no-build-isolation
 python -c "import xense.taccap as t; print(t.hello())"
 ```
 
-It should print `taccap-gripper OK; version 0.4.6`.
+It should print `taccap-gripper OK; version 0.5.0`.
 
 !!! warning "Build errors or the wrong version"
     - Run `mamba activate taccap` before installing, and keep `--no-build-isolation`.
-    - Version is not 0.4.6: this terminal is loading an SDK from somewhere else. Close it, open a new one, run only `mamba activate taccap` and try again.
+    - Version is not 0.5.0: this terminal is loading an SDK from somewhere else. Close it, open a new one, run only `mamba activate taccap` and try again.
 
 ### Step 6: host setup (miss one and the gripper will not connect) {#host}
 
@@ -145,7 +145,7 @@ python python/examples/follower_status.py left
 The script is read-only and does not move the motor. The lines to look at in normal output (with parts omitted):
 
 ```text
-[fw] FirmwareVersion(1.2.17.0)
+[fw] FirmwareVersion(1.3.1.0)
 ...
 [归一化] g.position() = 0.9183
 ...
@@ -157,7 +157,7 @@ The script is read-only and does not move the motor. The lines to look at in nor
 
 | Where to look | Normal | If not normal |
 |---|---|---|
-| `[fw]` | 1.2.17 | Below 1.2.11 prints an upgrade prompt; below 1.2.5 exits with an error. In either case [upgrade the firmware](firmware.md#mcu-ota) first |
+| `[fw]` | 1.3.1 | Below 1.2.11 prints an upgrade prompt; below 1.2.5 exits with an error. In either case [upgrade the firmware](firmware.md#mcu-ota) first |
 | `[归一化]` (normalized) | Between 0 and 1 | Reports `not calibrated`: clear the area around the fingers and power-cycle |
 | `[故障]` (fault) | All 0 | See [Troubleshooting](troubleshooting.md#fault) |
 | `[开流读]` (stream read) | About 100Hz, shows `OK` | Power-cycle and try again; if still not normal, see [Troubleshooting](troubleshooting.md#self-check) |

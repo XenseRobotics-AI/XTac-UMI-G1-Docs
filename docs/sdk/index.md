@@ -1,6 +1,6 @@
 # SDK 与二次开发
 
-`xense.taccap`（仓库 [TacCap-Gripper](https://github.com/XenseRobotics-AI/TacCap-Gripper)）是 XTac UMI G1 夹爪的开发包，提供 Python 与 C++ 两种接口，用于自己编写程序读取主夹爪、控制从夹爪。本页按 SDK 0.4.6 编写。
+`xense.taccap`（仓库 [TacCap-Gripper](https://github.com/XenseRobotics-AI/TacCap-Gripper)）是 XTac UMI G1 夹爪的开发包，提供 Python 与 C++ 两种接口，用于自己编写程序读取主夹爪、控制从夹爪。本页按 SDK 0.5.0 编写。
 
 ## 能做什么 {#scope}
 
@@ -24,14 +24,14 @@
 
 ## 安装 {#python}
 
-**推荐直接用数采环境**：按[安装](../pc/install.md)装好数采仓库 `xense-taccap-lerobot` v0.1.6 后就已经带有 SDK 0.4.6（子模块 `third_party/taccap-gripper`），源码和示例脚本都在这个目录下。验证：
+**推荐直接用数采环境**：按[安装](../pc/install.md)装好数采仓库 `xense-taccap-lerobot` v0.1.6 后就已经带有 SDK 0.5.0（子模块 `third_party/taccap-gripper`），源码和示例脚本都在这个目录下。验证：
 
 ```bash
 cd third_party/taccap-gripper
 python -c "import xense.taccap as t; print(t.hello())"
 ```
 
-应输出 `taccap-gripper OK; version 0.4.6`。版本不对时拉子模块并重跑 `./setup_env.sh --install`，见[仓库与子模块更新](../pc/versions.md#repo-update)。
+应输出 `taccap-gripper OK; version 0.5.0`。版本不对时拉子模块并重跑 `./setup_env.sh --install`，见[仓库与子模块更新](../pc/versions.md#repo-update)。
 
 ### 单独安装（背包版或不用数采仓库） {#standalone}
 
@@ -110,20 +110,23 @@ g.stop_streaming()
 
 ```python
 g = t.FollowerGripper(ep.mcu_device, wrist_video="/dev/v4l/by-id/<相机>-video-index0",
-                      open_cameras=True, undistort_wrist=True)
+                      open_cameras=True, undistort_wrist=True,
+                      wrist_width=1920, wrist_height=1080)   # 不写时为 640×480、30fps
 g.wrist_camera.start(lambda f: print(f.frame_index))
 ```
 
-画面默认是 RGB。只想看画面可以直接用示例 `wrist_camera.py`。
+画面默认是 RGB。只想看画面可以直接用示例 `wrist_camera.py`。`close()` 会释放相机，之后可以马上用别的分辨率重新打开（0.5.0 起）。
 
 <span id="fisheye-fallback"></span>
 鱼眼内参存在每只夹爪里。没有标定过的夹爪，SDK 自动改用一组内置的参考内参并打印告警，矫正不会失败。读取内参时用：
 
 ```python
-cal, is_reference, reason = g.calibration.resolve_fisheye()
+cal, is_reference, reason = g.calibration.resolve_fisheye_for(1920, 1080)   # 按相机分辨率
 ```
 
-`is_reference` 为真表示用的是参考内参，只适合看画面。需要在矫正图上按像素测量时，给这台夹爪写入它自己的标定：`python python/examples/fisheye_cal.py set-fisheye right --from-npz cam.npz`（从夹爪加 `--follower`）。矫正后画面偏心是正常的，不要去改内参里的 `cx`。详见[鱼眼标定读不到时会怎样](../pc/recording.md#fisheye-fallback)。
+- **按分辨率存放**：640×480 与 1920×1080 是不同的成像区域，内参不能互相换算。固件 1.3.1 为两种分辨率各存一份，`undistort_wrist=True` 按相机分辨率选用；更早的固件只存一份。
+- **只有另一种分辨率的标定**：打开时报错，提示给这个分辨率标定，或改用已标定的分辨率，不会悄悄改用参考内参。
+- **参考内参**：`is_reference` 为真表示这台夹爪在该分辨率下没有标定、用的是参考内参，只适合看画面。需要在矫正图上按像素测量时，写入它自己的标定：`python python/examples/fisheye_cal.py set-fisheye right --from-npz cam.npz --width 1920 --height 1080`（从夹爪加 `--follower`；`--width` / `--height` 必填）。`fisheye_cal.py show` 可查看两种分辨率各自的内参。矫正后画面偏心是正常的，不要去改内参里的 `cx`。详见[鱼眼标定读不到时会怎样](../pc/recording.md#fisheye-fallback)。
 
 ## 示例脚本 {#scripts}
 
@@ -187,7 +190,7 @@ python python/examples/rerun_viewer.py left --save rig.rrd --duration 20   # 存
 
 ## 从旧版本迁移 {#migrate}
 
-完整变更见 SDK 的 [CHANGELOG](https://github.com/XenseRobotics-AI/TacCap-Gripper/blob/v0.4.6/CHANGELOG.md)。
+完整变更见 SDK 的 [CHANGELOG](https://github.com/XenseRobotics-AI/TacCap-Gripper/blob/v0.5.0/CHANGELOG.md)。
 
 **0.1.x / 0.2.x → 0.4.x**
 
@@ -227,3 +230,14 @@ python python/examples/rerun_viewer.py left --save rig.rrd --duration 20   # 存
 **0.4.5 → 0.4.6**（接口不变）
 
 - 从夹爪固件 1.2.17 在收发重叠时重发的那份完全相同的数据帧被丢弃，不再让控制器多走一步、按键多报一次。丢弃次数可从 `g.transport.stats.duplicate_data_dropped` 读到；分时交换模式不受影响。
+
+**0.4.6 → 0.5.0**（原有接口不变）
+
+- 附带固件升到主夹爪 / 从夹爪 **1.3.1**，请[升级固件](../follower/firmware.md#mcu-ota)。SDK 按固件能力自动适配，在 1.2.7 / 1.2.17 上照常运行。
+- 腕部相机可以按 1920×1080 打开：`LeaderGripper` / `FollowerGripper` 新增 `wrist_width`、`wrist_height`、`wrist_fps`，默认仍为 640×480、30fps。
+- 鱼眼内参按分辨率存放和选用，见[腕部相机与鱼眼矫正](#camera)。夹爪只有另一种分辨率的标定时，打开会报错；`fisheye_cal.py set-fisheye` 必须带 `--width` / `--height`。
+- `ForcePositionController.set_target(开度, grip=True)`：把目标标记为预期接触的位置，夹爪停在目标附近时按夹持力夹紧；不传时行为不变。
+- 力位控制闭合到 0 时，最终状态在目标到 0 之后约 0.45–0.6s 给出（因夹爪而异），更早判断请用位置容差。
+- IMU 最高可到 1125Hz，需固件 1.3.1，并用分时交换 `start_exchange()`。
+- `close()` 会释放腕部相机，同一相机关闭后可以立即重新打开。
+- 刷固件可以写 `ota_update.py slave left`，按角色加左右选择夹爪。

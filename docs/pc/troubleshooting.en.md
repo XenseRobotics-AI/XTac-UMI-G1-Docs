@@ -63,9 +63,9 @@ Record the serial number, connection method, error message and a photo of the se
     ```
 
 ??? failure "Flashing fails with `firmware file not found`"
-    **Cause:** the first argument was interpreted as an image file name that does not exist: either `slave left` / `master left` / `slave <SN>` (a role followed by another argument), or the unversioned `tc-gu-01-master.bin` / `tc-gu-01-slave.bin`.
+    **Cause:** the first argument was interpreted as an image file name that does not exist: either the unversioned `tc-gu-01-master.bin` / `tc-gu-01-slave.bin`, or `slave left` / `master left` with SDK 0.4.6 or older (a role followed by a side is supported from 0.5.0).
 
-    **Fix:** normally use `ota_update.py --all`; when only one gripper of that role is connected, use `ota_update.py master` / `ota_update.py slave`; to target one gripper, pass a file name listed under `shipped images` in the error plus a side or serial number, e.g. `ota_update.py tc-gu-01-slave-1.2.17.bin left`. See [Firmware OTA upgrade](versions.md#ota).
+    **Fix:** normally use `ota_update.py --all`; when only one gripper of that role is connected, use `ota_update.py master` / `ota_update.py slave`; to target one gripper, use `ota_update.py slave left`, or pass a file name listed under `shipped images` in the error plus a side or serial number, e.g. `ota_update.py tc-gu-01-slave-1.3.1.bin left`. See [Firmware OTA upgrade](versions.md#ota).
 
 ## Serial permissions and device discovery
 
