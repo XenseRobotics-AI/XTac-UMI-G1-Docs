@@ -12,7 +12,7 @@
 | 数采背包 OS 固件 | RK3588 V1.2.3 | 出厂预装，见[系统镜像](#system-image) |
 | XTac UMI Collector（采集单元） | 0.5.0 | 控制台 系统 → [设备信息](system.md#device-info)；升级见[导入升级包](#bundle) |
 | Pico OS | 建议 5.15.5.U 及以上 | 头显 设置 → 通用 → 关于；见 [Pico4 头显与追踪器](../common/pico4.md#pico-system) |
-| XTac UMI XR（头显应用） | 最新发布版 0.4.4。新增头显功能需要配套新版应用，具体最低版本待确认 | 头显应用库；见[安装 XTac UMI XR](../common/pico4.md#pico-app) |
+| XTac UMI XR（头显应用） | 最新发布版 0.4.6。新增头显功能需要配套新版应用，具体最低版本待确认 | 在头显应用库查看。见[安装或升级 XTac UMI XR](../common/pico4.md#pico-app) |
 | 主夹爪固件 | 最低 1.2.7，最新 1.3.1 | 控制台 系统 → [设备信息](system.md#device-info)；见[夹爪固件](#gripper-firmware) |
 | 从夹爪固件 | 最低 1.2.17，最新 1.3.1 | 见[从夹爪固件](../follower/firmware.md#check-version) |
 

@@ -12,7 +12,7 @@ The following baseline applies to XTac UMI Collector 0.5.0. Check it after upgra
 | Backpack system firmware | RK3588 V1.2.3 | Factory-installed. See [System image](#system-image) |
 | XTac UMI Collector (collection unit) | 0.5.0 | Console System → [Device information](system.md#device-info). See [Importing an upgrade bundle](#bundle) |
 | Pico OS | 5.15.5.U or later recommended | Headset Settings → General → About. See [Pico4 headset and tracker setup](../common/pico4.md#pico-system) |
-| XTac UMI XR (headset app) | Latest release: 0.4.4. New headset features require a compatible newer app. The minimum version is pending confirmation | Headset app library. See [Installing XTac UMI XR](../common/pico4.md#pico-app) |
+| XTac UMI XR (headset app) | Latest release 0.4.6. New headset features require a compatible newer app. The minimum version is pending confirmation | Headset app library. See [Installing or upgrading XTac UMI XR](../common/pico4.md#pico-app) |
 | Leader gripper firmware | Minimum 1.2.7, latest 1.3.1 | Console System → [Device information](system.md#device-info). See [Gripper firmware](#gripper-firmware) |
 | Follower gripper firmware | Minimum 1.2.17, latest 1.3.1 | See [Follower firmware](../follower/firmware.md#check-version) |
 

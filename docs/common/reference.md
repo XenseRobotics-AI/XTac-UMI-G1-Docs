@@ -11,7 +11,7 @@
 | **XTac UMI Collector** | 数采背包上的采集软件，接入相机、夹爪 MCU 与头显位姿，负责录制、回放、导出与设备管理；当前发布版 0.5.0，以系统页为准 |
 | **控制台** | Collector 的浏览器界面（实时监控、项目、系统等页面），平板、手机、电脑连上背包后打开 |
 | **项目 / 任务 / episode** | 背包版的数据组织层级：项目下建任务，任务带 LeRobot 语言指令，每次开录到停录是一条 episode |
-| **MCAP** | 背包版每条 episode 的原始记录格式，按 topic 存相机、编码器、IMU、位姿与事件；导出 LeRobot 时从它转换 |
+| **MCAP** | 背包版每条 episode 的原始记录格式，按 topic 存相机、编码器、夹爪 IMU、位姿与事件。导出 LeRobot 时从它转换 |
 | **OTA bundle** | 背包版 Collector 的升级包（`.tar.zst`），在控制台 系统 → 系统更新 页上传、校验、应用并重启，升级失败时自动回退上一版本；PC 版夹爪固件的 OTA 见[固件升级](../pc/versions.md#ota) |
 | **SoftAP** | 数采背包自建的常驻 WiFi 热点，SSID `xense-<序列号后 6 位>`，只有 5GHz，网关固定 `192.168.44.1`；不依赖现场网络的兜底入口 |
 | **TacCap** | 包名 `xense.taccap`、设备类型 `taccap_gripper` 与背包机身标签里的名字（Tactile Capture）；产品名为 XTac UMI G1 |
@@ -60,7 +60,7 @@
 
 ## 文档版本与配套软件 {#doc-version}
 
-文档版本号独立于软件与固件，标在页脚。下表记录各文档发布时的配套版本。本轮最新发布版为 Collector 0.5.0、XTac UMI XR 0.4.4、TacCap SDK 0.5.0、主从夹爪固件 1.3.1、`xense-taccap-lerobot` 0.1.6 与 `lerobot-xense` 0.5.1。升级前请核对[背包版兼容要求](../backpack/versions.md#baseline)或 [PC 版兼容要求](../pc/versions.md#required)。
+文档版本号独立于软件与固件，标在页脚。下表记录各文档发布时的配套版本。本轮最新发布版为 Collector 0.5.0、XTac UMI XR 0.4.6、TacCap SDK 0.5.0、主从夹爪固件 1.3.1、`xense-taccap-lerobot` 0.1.6 与 `lerobot-xense` 0.5.1。升级前请核对[背包版兼容要求](../backpack/versions.md#baseline)或 [PC 版兼容要求](../pc/versions.md#required)。
 
 | 文档版本 | xense-taccap-lerobot（PC 版数采） | XTac UMI XR（头显应用） | XTac UMI Collector（背包版采集单元） | TacCap-Gripper SDK（夹爪 SDK） |
 |---|---|---|---|---|

@@ -87,7 +87,7 @@ Both configurations ([Backpack Kit](../backpack/index.md) / [Developer Kit](../p
     | Positioning | < 3mm |
     | Multi-device time sync | 5ms |
     | Visuotactile force accuracy / deformation accuracy | 0.2N / 0.1mm |
-    | Headset pose and IMU reporting | Approximately 60 Hz with XTac UMI XR 0.4.4 |
+    | Headset pose streaming | [XTac UMI XR](../common/pico4.md#pico-app) sends the headset pose to the collection unit |
     | Tactile video and gripper IMU | XHE tactile video: 60 fps. Gripper firmware 1.3.1 IMU reporting limit: 1125 Hz |
 
     Source: [Technical specifications](specs.md#tracking). These are system specifications, not a per-unit factory report; real accuracy depends on tracker field of view, mounting and site lighting. The checks below are ones you can run yourself.

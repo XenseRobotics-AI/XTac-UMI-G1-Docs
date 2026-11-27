@@ -11,7 +11,7 @@ Terms, feedback channels, related repositories and the version matching table sh
 | **XTac UMI Collector** | The collection software on the backpack: it takes in the cameras, the gripper MCUs and the headset pose, and handles recording, replay, export and device management; current release 0.5.0, the device's System page is authoritative |
 | **Console** | Collector's browser UI (live monitor, projects, system pages), opened from a tablet, phone or PC connected to the backpack |
 | **Project / task / episode** | How the Backpack Kit organizes data: tasks under a project, each task carrying a LeRobot language instruction, and each start-to-stop recording being one episode |
-| **MCAP** | The raw recording format of each Backpack Kit episode, storing cameras, encoders, IMU, poses and events by topic; the LeRobot export is converted from it |
+| **MCAP** | The raw recording format for each Backpack Kit episode. It stores camera data, encoder data, gripper IMU readings, poses, and events by topic. LeRobot exports are converted from it |
 | **OTA bundle** | The Backpack Kit's Collector upgrade package (`.tar.zst`), uploaded, verified, applied and rebooted into on the console's System → System update page, falling back to the previous version automatically if the upgrade fails. Gripper firmware OTA on the Developer Kit is in [Firmware OTA upgrade](../pc/versions.md#ota) |
 | **SoftAP** | The backpack's own always-on Wi-Fi hotspot, SSID `xense-<last 6 of the serial>`, 5GHz only, gateway fixed at `192.168.44.1`; the fallback entry point that does not depend on any site network |
 | **TacCap** | The name inside the package `xense.taccap`, the robot type `taccap_gripper` and the backpack's body label (Tactile Capture); the product name is XTac UMI G1 |
@@ -60,7 +60,7 @@ The repositories below belong to the Developer Kit (apart from the gripper model
 
 ## Documentation version and matching software {#doc-version}
 
-The page footer shows the documentation version, which is independent of software and firmware versions. The table records the component versions at each documentation release. This update covers Collector 0.5.0, XTac UMI XR 0.4.4, TacCap SDK 0.5.0, leader and follower firmware 1.3.1, `xense-taccap-lerobot` 0.1.6, and `lerobot-xense` 0.5.1. Before upgrading, check the [Backpack Kit compatibility requirements](../backpack/versions.md#baseline) or [Developer Kit requirements](../pc/versions.md#required).
+The page footer shows the documentation version, which is independent of software and firmware versions. The table records the component versions at each documentation release. This update covers Collector 0.5.0, XTac UMI XR 0.4.6, TacCap SDK 0.5.0, leader and follower firmware 1.3.1, `xense-taccap-lerobot` 0.1.6, and `lerobot-xense` 0.5.1. Before upgrading, check the [Backpack Kit compatibility requirements](../backpack/versions.md#baseline) or [Developer Kit requirements](../pc/versions.md#required).
 
 | Docs version | xense-taccap-lerobot (Developer Kit collection) | XTac UMI XR (headset app) | XTac UMI Collector (Backpack Kit collection unit) | TacCap-Gripper SDK (gripper SDK) |
 |---|---|---|---|---|

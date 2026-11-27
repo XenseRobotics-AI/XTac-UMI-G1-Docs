@@ -93,7 +93,7 @@ Pick an [upload backend](system.md#upload) (or create one on the spot); optional
 
 ## Export formats {#formats}
 
-V1 projects can export LeRobot or Training MCAP separately. XHE projects write `.xhe.mcap` directly and do not generate `.train.mcap` by default. XHE preserves native camera and sensor rates and all sensor readings (60 fps for tactile video). It stores USB camera capture timestamps, device and version information, and camera intrinsics for undistortion. Open it directly in Foxglove.
+V1 projects can export LeRobot or Training MCAP separately. XHE projects write `.xhe.mcap` directly and do not generate `.train.mcap` by default. XHE preserves native camera and sensor rates and all sensor readings (60 fps for tactile video). IMU readings come from the grippers. It stores USB camera capture timestamps, device and version information, and camera intrinsics for undistortion. Open it directly in Foxglove.
 
 ### LeRobot dataset {#lerobot}
 

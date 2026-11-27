@@ -41,13 +41,13 @@ Otherwise, screen-off or sleep between episodes (also triggered by taking the he
 
 ## Installing XTac UMI XR {#pico-app}
 
-XTac UMI XR **0.4.4** was released on 2026-11-26. Obtain `XTac-UMI-XR-0.4.4.apk` (124.3 MB) from [technical support](reference.md#support) and install it in the headset's file manager. Update the headset app separately.
+XTac UMI XR **0.4.6** is the latest release. Obtain the 0.4.6 APK from [technical support](reference.md#support) and use the headset's file manager to install or upgrade it. Update the headset app separately.
 
-Version 0.4.4 improves headset pose and IMU capture and time synchronization between trackers and the headset. IMU and pose data are reported at approximately **60 Hz**. The new Collector 0.5.0 headset video modes run at **30 fps**. See [project settings](../backpack/monitor-record.md#project-task). The new headset features require a compatible newer app. The minimum compatible version is pending confirmation.
+The new Collector 0.5.0 headset video modes run at **30 fps**. See [project settings](../backpack/monitor-record.md#project-task). The new headset features require a compatible newer app. The minimum compatible version is pending confirmation.
 
-To install:
+To install or upgrade:
 
-1. Connect the headset to the collection PC over USB and copy the APK into the headset's `Download/` directory.
+1. Connect the headset to the computer over USB and copy the 0.4.6 APK from technical support into the headset's `Download/` directory. The screenshot shows an earlier APK filename as an example.
 
     ![Copy the apk into the Pico's Download folder](../assets/pico4/install-step1-copy.webp){ width="480" }
 
@@ -59,6 +59,10 @@ To install:
 
     ![Confirming the install](../assets/pico4/install-step3-confirm-en.webp){ width="480" }
 
+**Headset app release history**
+
+- **0.4.6**. Improved the stability of headset pose data streaming.
+- **0.4.4 (2026-11-26)**. Improved headset pose and IMU capture and time synchronization between trackers and the headset. This release reported IMU and pose data at approximately 60 Hz.
 
 ## Network connection {#pico-network}
 

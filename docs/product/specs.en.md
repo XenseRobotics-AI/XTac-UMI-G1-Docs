@@ -58,7 +58,7 @@ How to use it is in [Follower gripper](../follower/index.md); the flange interfa
 | Parameter | Specification |
 |---|---|
 | Pose source | Pico4 Ultra Enterprise headset + trackers, 6-DoF |
-| Pose refresh rate | XTac UMI XR 0.4.4 reports headset pose and IMU at approximately 60 Hz. See the [headset app](../common/pico4.md#pico-app) |
+| Pose streaming | [XTac UMI XR 0.4.6](../common/pico4.md#pico-app) sends headset and tracker poses to the collection unit |
 | Collector 0.5.0 headset video specifications | Stereo (per eye): 1280×960 or 1600×1200, both at 30 fps<br>Right eye only: 1920×1440 @ 30 fps |
 | Positioning accuracy | < 3mm |
 | Multi-device time sync | 5ms |

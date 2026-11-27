@@ -93,7 +93,7 @@ Collector 0.5.0 的 XHE 项目在停录时逐路检查相机。跳帧超限时�
 
 ## 导出格式 {#formats}
 
-V1 项目可分别导出 LeRobot 或 Training MCAP。XHE 项目直接生成 `.xhe.mcap`，默认不生成 `.train.mcap`。XHE 保留各路相机及传感器的原生帧率和全部传感器读数（触觉 60 fps），记录 USB 相机采集时间、设备和版本信息，并提供用于去畸变的相机内参。可用 Foxglove 直接打开。
+V1 项目可分别导出 LeRobot 或 Training MCAP。XHE 项目直接生成 `.xhe.mcap`，默认不生成 `.train.mcap`。XHE 保留各路相机及传感器的原生帧率和全部传感器读数（触觉 60 fps）。其中 IMU 读数来自夹爪。文件记录 USB 相机采集时间、设备和版本信息，并提供用于去畸变的相机内参。可用 Foxglove 直接打开。
 
 ### LeRobot 数据集 {#lerobot}
 
