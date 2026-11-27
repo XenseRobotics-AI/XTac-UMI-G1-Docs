@@ -155,13 +155,15 @@ hide:
 
 <div class="tc-feature__text" markdown>
 
-用 XTac UMI G1 双夹爪采集的视触觉操作数据，以 LeRobotDataset v3 格式按 CC BY-SA 4.0 协议开放，可直接下载训练。
+用 XTac UMI G1 双夹爪采集的视触觉操作数据，以 LeRobotDataset v3 格式按 CC BY-SA 4.0 协议开放，分批持续发布，可直接下载训练。
 
-- **122 个任务**：覆盖办公、家庭、工作台三类场景
-- **17,690 条人类示范**：共 370 小时、约 4,000 万帧
-- **双手视触觉**：每帧四路触觉、两路腕部画面与夹爪位姿
+- **150+ 个任务**：办公、家庭、工作台三类场景，共 20 个任务族
+- **75,000+ 条人类示范**：共 1,400+ 小时、1.5 亿+ 帧
+- **双手视触觉**：每帧四路触觉、两路腕部画面与夹爪位姿；部分任务另含头显画面与头部位姿
 
-[Hugging Face](https://huggingface.co/TacVerse){ .md-button .md-button--primary }
+下载前在 Hugging Face 提交一次访问申请，自动通过；另有 10 个免申请的[样例](https://huggingface.co/collections/TacVerse/tacverse-samples-6a97cf6d157fe67e799a1bc7)可先预览。
+
+[Hugging Face](https://huggingface.co/datasets/TacVerse/TacVerse){ .md-button .md-button--primary }
 [ModelScope](https://modelscope.cn/datasets/XenseRobotics/TacVerse-Opendata){ .md-button }
 
 </div>
