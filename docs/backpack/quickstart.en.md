@@ -39,7 +39,7 @@ If the console does not open, see [Troubleshooting](troubleshooting.md#tablet-ad
 
 1. **Pick or create**: at the bottom of the console's Live monitoring page, pick a project and a task; if there are none yet, choose "New project…" or "New task…".
 2. **Fill in the settings**:
-    - **Capture mode**: chosen when creating the project, for example "Dual gripper + stereo headset"; see [capture mode](monitor-record.md#project-task).
+    - **Capture mode**: New projects default to dual grippers with stereo headset fisheye and XHE recording. Choose V1 to retain Training MCAP or LeRobot. See [project and task settings](monitor-record.md#project-task).
     - **Task instruction**: give the new task a clear natural-language instruction.
 
 ## 5. Check before recording {#checks}
@@ -72,6 +72,6 @@ On the console's Project page, select a task and click Export:
 2. **Destination**:
     - Download an archive to save locally.
     - Upload to a backend configured beforehand (ModelScope, S3, FTP, NFS).
-3. **Format**: choose LeRobotDataset v3 or MCAP to suit your training pipeline.
+3. **Format**: For XHE projects, download or upload the original `.xhe.mcap` files by task. For V1 projects, choose LeRobotDataset v3 or Training MCAP.
 
 Details are in [Projects, export and upload](projects-export.md).

@@ -39,7 +39,7 @@
 
 1. **选择或新建**：在控制台「实时监控」页底部选择项目和任务；还没有的话，选「新建项目…」或「新建任务…」。
 2. **填写参数**：
-    - **采集模式**：新建项目时选定，例如「双爪 + 头显双目」，见[采集模式](monitor-record.md#project-task)。
+    - **采集模式**：新建项目默认双夹爪与头显双目鱼眼，录制格式默认 XHE。继续使用 Training MCAP 或 LeRobot 的项目请选择 V1，见[项目与任务设置](monitor-record.md#project-task)。
     - **任务指令**：新建任务时填写清晰的自然语言指令。
 
 ## 5. 开录前检查 {#checks}
@@ -72,6 +72,6 @@
 2. **选择去向**：
     - 下载压缩包，保存到本地。
     - 上传到事先配置好的后端（ModelScope、S3、FTP、NFS）。
-3. **选择格式**：按下游训练管线选择 LeRobotDataset v3 或 MCAP。
+3. **选择格式**：XHE 项目按任务下载或上传原始 `.xhe.mcap`。V1 项目选择 LeRobotDataset v3 或 Training MCAP。
 
 详见[项目、导出与上传](projects-export.md)。

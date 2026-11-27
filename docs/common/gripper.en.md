@@ -97,7 +97,7 @@ Adapter hole pattern, mounting frame and gripper models (URDF / MJCF / USD) are 
 1. Connect the 24V power adapter to the gripper body.
 2. Plug the screw end of the Type-C locking cable into the body and **tighten the locking screws**.
 3. Plug the other end into the collection unit and confirm communication in the software.
-4. Before letting it move, run [Follower gripper → install and self-check](../follower/index.md#install); do the first run at low speed to confirm nothing interferes.
+4. Before letting it move, run [Follower gripper → install and self-check](../follower/setup.md#install); do the first run at low speed to confirm nothing interferes.
 
 ![Follower gripper connected](../assets/hardware/follower-connect.webp){ width="480" }
 

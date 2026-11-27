@@ -8,7 +8,7 @@
 |---|---|
 | **XTac UMI G1** | 穿戴式 UMI 数采夹爪，两种形态共用的传感器载体；见[认识 XTac UMI G1](../product/g1.md) |
 | **数采背包** | 背包版的采集单元（正式名 XTac UMI 数采背包）：RK3588 计算节点，接夹爪与头显，运行 XTac UMI Collector；见[认识数采背包](../backpack/index.md) |
-| **XTac UMI Collector** | 数采背包上的采集软件，接入相机、夹爪 MCU 与头显位姿，负责录制、回放、导出与设备管理；版本基线 0.4.7，以系统页为准 |
+| **XTac UMI Collector** | 数采背包上的采集软件，接入相机、夹爪 MCU 与头显位姿，负责录制、回放、导出与设备管理；当前发布版 0.5.0，以系统页为准 |
 | **控制台** | Collector 的浏览器界面（实时监控、项目、系统等页面），平板、手机、电脑连上背包后打开 |
 | **项目 / 任务 / episode** | 背包版的数据组织层级：项目下建任务，任务带 LeRobot 语言指令，每次开录到停录是一条 episode |
 | **MCAP** | 背包版每条 episode 的原始记录格式，按 topic 存相机、编码器、IMU、位姿与事件；导出 LeRobot 时从它转换 |
@@ -60,8 +60,7 @@
 
 ## 文档版本与配套软件 {#doc-version}
 
-文档版本号独立于各软件，标在页脚。每个文档正式版对应下面四个软件的一组版本，**四者一起定版、一起更新**；
-设备上的版本与这张表不一致时，以这张表为准升级，或使用与设备版本对应的文档版本。
+文档版本号独立于软件与固件，标在页脚。下表记录各文档发布时的配套版本。本轮最新发布版为 Collector 0.5.0、XTac UMI XR 0.4.4、TacCap SDK 0.5.0、主从夹爪固件 1.3.1、`xense-taccap-lerobot` 0.1.6 与 `lerobot-xense` 0.5.1。升级前请核对[背包版兼容要求](../backpack/versions.md#baseline)或 [PC 版兼容要求](../pc/versions.md#required)。
 
 | 文档版本 | xense-taccap-lerobot（PC 版数采） | XTac UMI XR（头显应用） | XTac UMI Collector（背包版采集单元） | TacCap-Gripper SDK（夹爪 SDK） |
 |---|---|---|---|---|
@@ -75,4 +74,4 @@
 
 ## 本手册范围 {#scope}
 
-本手册覆盖从数采夹爪硬件到数据落盘的链路：背包版到 MCAP 记录与 LeRobot 导出，PC 版到 `LeRobotDataset`；模型训练、推理、部署不在范围内，见对应工程的独立文档。
+本手册覆盖从数采夹爪硬件到数据落盘的链路：背包版覆盖 XHE MCAP 录制及 V1 的 Training MCAP、LeRobot 导出，PC 版到 `LeRobotDataset`；模型训练、推理、部署不在范围内，见对应工程的独立文档。

@@ -35,7 +35,7 @@ It should print `taccap-gripper OK; version 0.5.0`. If the version is wrong, pul
 
 ### Standalone install (Backpack Kit, or without the data-collection repository) {#standalone}
 
-Backpack Kit customers, and computers that do not use the data-collection repository, install from scratch per [Follower gripper · Install the SDK and set up the host](../follower/index.md#install): Miniforge → `v4l-utils` → download the SDK → create the mamba environment → build and install → host setup. Leader and follower grippers use the same steps.
+Backpack Kit customers, and computers that do not use the data-collection repository, install from scratch per [Follower gripper · Install the SDK and set up the host](../follower/setup.md#install): Miniforge → `v4l-utils` → download the SDK → create the mamba environment → build and install → host setup. Leader and follower grippers use the same steps.
 
 ### Hardware self-check {#self-check}
 
@@ -44,7 +44,7 @@ python -c "from xense.taccap import scan_grippers
 for g in scan_grippers(): print(g.side, g.role, g.firmware_sn)"
 ```
 
-One line per gripper: a leader gripper shows `Role.Leader` (serial number ending in `m`), a follower gripper `Role.Follower` (ending in `s`). For the follower gripper, continue with its [self-check](../follower/index.md#self-check); serial permissions and similar issues are covered in [Host setup](../pc/host-setup.md#first-use).
+One line per gripper: a leader gripper shows `Role.Leader` (serial number ending in `m`), a follower gripper `Role.Follower` (ending in `s`). For the follower gripper, continue with its [self-check](../follower/setup.md#self-check); serial permissions and similar issues are covered in [Host setup](../pc/host-setup.md#first-use).
 
 ### Integrating into C++ / ROS 2 projects {#cpp}
 
@@ -118,13 +118,13 @@ g.wrist_camera.start(lambda f: print(f.frame_index))
 Frames are RGB by default. To just view the image, use the example `wrist_camera.py`. `close()` releases the camera, so you can reopen it right away at another resolution (0.5.0 and later).
 
 <span id="fisheye-fallback"></span>
-Fisheye intrinsics are stored in each gripper. For a gripper that has never been calibrated, the SDK automatically falls back to a set of built-in reference intrinsics and prints a warning; undistortion does not fail. To read the intrinsics, use:
+Fisheye intrinsics are stored in each gripper. If calibration is missing for the current resolution, the SDK reports an error or explicitly warns that reference values are in use, depending on the calibration state. Reference intrinsics are for viewing only. Use device-specific calibration for capture. To read the intrinsics:
 
 ```python
 cal, is_reference, reason = g.calibration.resolve_fisheye_for(1920, 1080)   # by camera resolution
 ```
 
-- **Stored per resolution**: 640×480 and 1920×1080 are different sensor crops, so intrinsics cannot be converted between them. Firmware 1.3.1 stores one set for each resolution, and `undistort_wrist=True` picks the one matching the camera; older firmware stores a single set.
+- **Stored per resolution**: Firmware 1.3.1 reads and writes independent calibration for 640×480 and 1920×1080. Neither replaces the other. `undistort_wrist=True` selects parameters for the active camera resolution. Upgraded devices retain existing 640×480 calibration, with the 1920×1080 slot empty. Calibrate that resolution before using 1080p.
 - **Calibrated only at the other resolution**: opening raises an error asking you to calibrate this resolution or run the camera at the calibrated one; it does not silently switch to the reference intrinsics.
 - **Reference intrinsics**: if `is_reference` is True, this gripper has no calibration at that resolution and the reference intrinsics are in use; they are only good for viewing. When you need pixel measurements on the undistorted image, write its own calibration: `python python/examples/fisheye_cal.py set-fisheye right --from-npz cam.npz --width 1920 --height 1080` (add `--follower` for a follower gripper; `--width` / `--height` are required). `fisheye_cal.py show` lists the intrinsics for both resolutions. An off-center image after undistortion is normal; do not change `cx` in the intrinsics. Details are in [What happens when the fisheye calibration cannot be read](../pc/recording.md#fisheye-fallback).
 
@@ -182,7 +182,7 @@ python python/examples/rerun_viewer.py left --save rig.rrd --duration 20   # sav
 ```
 
 - The green arrows on the image are marker flow: from each marker's rest position to where it is now, drawn the same way as `xensesdk`'s own `drawMarkerMove`, **at 1:1 with no gain**, so an arrow's length is the real displacement in pixels. With nothing touching, only green dots remain.
-- To watch while opening and closing a follower gripper, use the keyboard console's `--rerun`; see [Follower gripper → Full-chain check](../follower/api.md#full-chain).
+- To watch while opening and closing a follower gripper, use the keyboard console's `--rerun`; see [Follower gripper → Full-chain check](../follower/control.md#full-chain).
 - With cameras and visuotactile sensors running together, every camera must use MJPEG; see [USB bandwidth budget](../pc/host-setup.md#usb-budget). If another program holds the wrist camera, add `--no-wrist`.
 
 !!! warning "The Developer Kit collection environment shows images only"
@@ -231,13 +231,14 @@ The full list of changes is in the SDK's [CHANGELOG](https://github.com/XenseRob
 
 - The byte-identical data frame that follower firmware 1.2.17 resends when transmissions overlap is now dropped, so it no longer steps the controller twice or reports a key press twice. The count is in `g.transport.stats.duplicate_data_dropped`; exchange mode is unaffected.
 
-**0.4.6 → 0.5.0** (existing APIs unchanged)
+**0.4.6 → 0.5.0** (2026-11-23, existing APIs unchanged)
 
 - The bundled firmware moves to leader / follower **1.3.1**; [upgrade the firmware](../follower/firmware.md#mcu-ota). The SDK adapts to the firmware's capabilities and still runs on 1.2.7 / 1.2.17.
 - Wrist cameras can open at 1920×1080: `LeaderGripper` / `FollowerGripper` take `wrist_width`, `wrist_height` and `wrist_fps`; the default stays 640×480 at 30fps.
 - Fisheye intrinsics are stored and selected per resolution, see [Wrist camera and fisheye undistortion](#camera). A gripper calibrated only at the other resolution raises on open; `fisheye_cal.py set-fisheye` requires `--width` / `--height`.
 - `ForcePositionController.set_target(opening, grip=True)` marks the target as where contact is expected; a jaw stopped near the target is pressed with the grasp force. Without it, behavior is unchanged.
-- When force-position control closes to 0, the final state comes about 0.45–0.6s after the target reaches 0 (varies by gripper); use a position tolerance to judge sooner.
-- IMU goes up to 1125Hz with firmware 1.3.1, using the exchange mode `start_exchange()`.
+- Motion control supports configurable acceleration at startup and braking for smoother travel near endpoints. Use `grip=True` for thin-object grasping.
+- Starting with leader firmware 1.2.7, IMU and encoder timestamps use a 1 MHz clock and wrap after about 71 minutes. The field format stays the same, but its semantics change. Use compatible SDK and host software.
+- Firmware 1.3.1 raises the maximum IMU reporting rate from 100 Hz to 1125 Hz. The SDK can use high-rate IMU through timed exchange with `start_exchange()`. This is the firmware reporting limit. Recording and delivery rates depend on the collection workflow. RS00 motor status reporting was improved, and timed exchange can receive motor status and IMU while sending targets. Followers add accelerometer and gyroscope calibration and magnetometer capture, with improved initialization and homing.
 - `close()` releases the wrist camera, so the same camera can be reopened right after.
 - Firmware can be flashed with `ota_update.py slave left`, selecting a gripper by role plus side.

@@ -87,8 +87,8 @@
     | 空间定位 | < 3mm |
     | 多设备时间同步 | 5ms |
     | 视触觉合力精度 / 变形场精度 | 0.2N / 0.1mm |
-    | 位姿刷新 | PC 版约 90Hz；背包版按头显上报逐条记录 |
-    | 触觉 / 腕部鱼眼 / IMU 与编码器 | 0–120Hz / 30fps / 100Hz |
+    | 头显位姿与 IMU 上报 | XTac UMI XR 0.4.4 约 60 Hz |
+    | 触觉与夹爪 IMU | XHE 触觉图像 60 fps；夹爪固件 1.3.1 的 IMU 上报上限为 1125 Hz |
 
     出处：[技术参数](specs.md#tracking)。这些是系统规格，不是逐台出厂报告；实际精度受追踪器视野、安装和现场光照影响，下面几条是能自己跑的验证。
 
@@ -115,7 +115,7 @@
 ## 导出与上传 {#export}
 
 ??? question "背包版能导出什么格式？"
-    按任务导出，两种平级、可以都导：**LeRobotDataset v3.0**（`meta/` + `data/` + `videos/`，30fps）或 **训练 MCAP**（`.train.mcap`，按 30Hz 对齐）。导出前自动预检。见[导出格式](../backpack/projects-export.md#formats)。
+    XHE 项目可按任务下载 ZIP 或上传原始 `.xhe.mcap`。V1 项目可导出 **LeRobotDataset v3.0**（`meta/` + `data/` + `videos/`，30 fps）和 **Training MCAP**（`.train.mcap`，按 30 Hz 对齐）。新建项目默认 XHE。下游需要 Training MCAP 或 LeRobot 时，创建项目请选择 V1。见[导出格式](../backpack/projects-export.md#formats)。
 
 ??? question "能传到哪些地方？"
     下载压缩包到平板 / 电脑，或上传到：ModelScope、S3、腾讯云 COS、FTP / FTPS、NFS；STS 仅支持 MCAP。上传前列出文件清单，确认后才开始。见[上传到远端](../backpack/projects-export.md#upload)。
@@ -124,7 +124,7 @@
     默认保留本地文件。要释放空间得另外**归档**（上传时勾「上传完成后自动归档」，或事后手动归档）。归档会删掉原始文件，之后不能回放、不能重新导出、不能下载原始 MCAP。见[归档](../backpack/projects-export.md#archive)。
 
 ??? question "升级后为什么提示重新导出？"
-    导出规则变了，旧导出自动标为过期：0.4.6 改了位姿原点与左手约定，0.4.7 改成各路相机各取最近帧、位姿与开合度按帧时刻插值。原始录制不受影响，对仍有原始文件的录制重新导出即可；新旧导出不要合进同一数据集。见[导出版本说明](../backpack/troubleshooting.md#export)。
+    Collector 0.5.0 升级后，首次导出会重建旧导出缓存。历史版本中，0.4.6 改了位姿原点与左手约定，0.4.7 改成各路相机分别取最近帧并按帧时刻插值位姿及开合度。对仍保留原始文件的录制，可按[导出版本说明](../backpack/troubleshooting.md#export)重新导出。
 
 ??? question "背包版和 PC 版的数据能合并训练吗？"
     可以，两边都是 LeRobotDataset v3，同一套工具都能读。但相机键名与字段布局不同，合并前对照各自的 `meta/info.json`；背包版还要用 `tcp_frame_convention`（当前 `mirrored-v1`）区分左右手约定。见[两种配置的差别](editions.md)。
@@ -144,12 +144,12 @@
     可选 `--private`、`--upload-large-folder`、`--no-videos`；上传前先 `hf auth login`，并跑一遍 `lerobot-check-dataset`。见[上传与备份](../pc/dataset.md#64)。
 
 ??? question "原始录制和导出的 MCAP 有什么区别？"
-    原始记录是各路按设备原生频率存的（触觉 120fps、腕部 30fps、开合与 IMU 100Hz），图像未矫正；导出的 `.train.mcap` 统一对齐到 30Hz，图像按项目设置矫正。原始文件只能在工程模式下按单条下载，供排查和分析，不能直接当训练数据。见[MCAP](../backpack/projects-export.md#mcap)。
+    XHE 直接写入 `.xhe.mcap`，保留原生采集频率与传感器读数，可用 Foxglove 打开。V1 导出的 `.train.mcap` 按 30 Hz 对齐，图像按项目设置矫正。旧版 V1 的工程模式还支持下载单条原始录制用于分析。见[MCAP](../backpack/projects-export.md#mcap)。
 
 ## 回放 {#replay}
 
 ??? question "录完不下载，能直接在控制台看吗？"
-    能。背包版项目页条目行点「回放」，画面、位姿与开合度同步播放，进度条可拖动。回放和实时预览共用硬件编码器，**不能同时进行**（有其他标签页或设备开着监控页时会被拒绝）；已归档的条目不能回放。见[回放](../backpack/projects-export.md#playback)。
+    能。Collector 0.5.0 的 XHE 录制封存后，在背包控制台「项目」页点击对应条目的「回放」。已归档的条目无法在控制台回放。Collector 0.4.7 的播放操作和预览占用限制见[回放](../backpack/projects-export.md#playback)。
 
 ??? question "PC 版录的时候怎么看？录完怎么回看？"
     - **录的时候**：`--display_data=true` 开 Rerun，实时看各路画面、标量面板和 `/world` 3D 视图（夹爪轨迹拖尾约 3 秒）。

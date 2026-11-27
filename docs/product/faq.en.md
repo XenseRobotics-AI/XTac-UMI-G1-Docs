@@ -87,8 +87,8 @@ Both configurations ([Backpack Kit](../backpack/index.md) / [Developer Kit](../p
     | Positioning | < 3mm |
     | Multi-device time sync | 5ms |
     | Visuotactile force accuracy / deformation accuracy | 0.2N / 0.1mm |
-    | Pose refresh | About 90Hz on the Developer Kit; the Backpack Kit records every pose the headset reports |
-    | Tactile / wrist fisheye / IMU and encoder | 0–120Hz / 30fps / 100Hz |
+    | Headset pose and IMU reporting | Approximately 60 Hz with XTac UMI XR 0.4.4 |
+    | Tactile video and gripper IMU | XHE tactile video: 60 fps. Gripper firmware 1.3.1 IMU reporting limit: 1125 Hz |
 
     Source: [Technical specifications](specs.md#tracking). These are system specifications, not a per-unit factory report; real accuracy depends on tracker field of view, mounting and site lighting. The checks below are ones you can run yourself.
 
@@ -115,7 +115,7 @@ Both configurations ([Backpack Kit](../backpack/index.md) / [Developer Kit](../p
 ## Export and upload {#export}
 
 ??? question "What formats can the Backpack Kit export?"
-    Export is per task, in two formats of equal standing that can both be exported: **LeRobotDataset v3.0** (`meta/` + `data/` + `videos/`, 30fps) or a **training MCAP** (`.train.mcap`, aligned to 30Hz). A precheck runs automatically before export. See [Export formats](../backpack/projects-export.md#formats).
+    XHE projects can download a ZIP or upload original `.xhe.mcap` files by task. V1 projects can export **LeRobotDataset v3.0** (`meta/` + `data/` + `videos/`, 30 fps) and **Training MCAP** (`.train.mcap`, aligned to 30 Hz). New projects default to XHE. Choose V1 when creating a project that feeds a Training MCAP or LeRobot workflow. See [Export formats](../backpack/projects-export.md#formats).
 
 ??? question "Where can data be uploaded to?"
     Download an archive to a tablet / computer, or upload to ModelScope, S3, Tencent Cloud COS, FTP / FTPS or NFS; STS supports MCAP only. Before uploading, the file list is shown, and the transfer starts only after you confirm. See [Upload to remote](../backpack/projects-export.md#upload).
@@ -124,7 +124,7 @@ Both configurations ([Backpack Kit](../backpack/index.md) / [Developer Kit](../p
     Local files are kept by default. To free space you have to **archive** separately (tick "Automatically archive after upload" when uploading, or archive by hand later). Archiving deletes the raw files, after which the recording cannot be replayed, re-exported or downloaded as raw MCAP. See [Archive](../backpack/projects-export.md#archive).
 
 ??? question "Why does it ask for a re-export after an upgrade?"
-    The export rules changed, so old exports are marked stale automatically: 0.4.6 changed the pose origin and the left-hand convention, and 0.4.7 changed to each camera taking its own nearest frame, with pose and gripper opening interpolated at the frame time. Raw recordings are unaffected; just re-export the recordings whose raw files are still on the device. Do not merge old and new exports into one dataset. See [Export version notes](../backpack/troubleshooting.md#export).
+    The first export after upgrading to Collector 0.5.0 rebuilds the old export cache. In earlier releases, 0.4.6 changed the pose origin and left-hand convention, and 0.4.7 changed to selecting each camera's nearest frame independently and interpolating pose and opening at the frame time. Re-export recordings whose source files are still available. See [Export version notes](../backpack/troubleshooting.md#export).
 
 ??? question "Can Backpack Kit and Developer Kit data be merged for training?"
     Yes. Both are LeRobotDataset v3, and the same tools read either. But camera key names and field layout differ, so compare each side's `meta/info.json` before merging; for the Backpack Kit also use `tcp_frame_convention` (currently `mirrored-v1`) to tell the left- and right-hand conventions apart. See [How the two differ](editions.md).
@@ -144,12 +144,12 @@ Both configurations ([Backpack Kit](../backpack/index.md) / [Developer Kit](../p
     Optional `--private`, `--upload-large-folder` and `--no-videos`; run `hf auth login` before uploading, and run `lerobot-check-dataset` once. See [Pushing to the Hugging Face Hub and backup](../pc/dataset.md#64).
 
 ??? question "How does a raw recording differ from an exported MCAP?"
-    A raw recording stores each stream at its device's native rate (tactile 120fps, wrist 30fps, opening and IMU 100Hz), with images unrectified; the exported `.train.mcap` is aligned to 30Hz throughout, with images rectified according to the project settings. Raw files can only be downloaded one recording at a time in engineering mode, for troubleshooting and analysis, and are not training data. See [MCAP](../backpack/projects-export.md#mcap).
+    XHE writes `.xhe.mcap` directly, retains native stream rates and sensor readings, and opens in Foxglove. V1 exports `.train.mcap` aligned to 30 Hz, with images corrected according to project settings. Legacy V1 engineering mode also supports downloading individual source recordings for analysis. See [MCAP](../backpack/projects-export.md#mcap).
 
 ## Replay {#replay}
 
 ??? question "Can I watch a recording on the console without downloading it?"
-    Yes. On the Backpack Kit, click "Playback" at the end of a recording's row on the Project page: views, poses and opening play in sync, and the progress bar can be dragged. Playback and live preview share the hardware encoder and **cannot run at the same time** (it is refused while another tab or device has the monitor page open); archived recordings cannot be played back. See [Playback](../backpack/projects-export.md#playback).
+    Yes. In Collector 0.5.0, once an XHE recording is finalized, click Playback on its row on the backpack console's Project page. Archived recordings cannot be played in the console. For Collector 0.4.7 playback controls and live preview restrictions, see [Playback](../backpack/projects-export.md#playback).
 
 ??? question "On the Developer Kit, how do I watch while recording, and review afterwards?"
     - **While recording**: `--display_data=true` opens Rerun for the live views, the scalar panel and the `/world` 3D view (the gripper's trail covers about 3 seconds).

@@ -12,8 +12,8 @@ Wiring is in [Gripper connection and serial numbers](../common/gripper.md); choo
 | Payload | 2.5kg maximum |
 | Opening travel | 0–150mm (each unit's calibrated value applies) |
 | Visuotactile sensors | 2 (one per finger), see [Visuotactile sensor](#sensor) |
-| Wrist fisheye camera | 190° field of view, 640 × 480 @ 30fps |
-| IMU | 9-axis, 100Hz |
+| Wrist fisheye camera | 190° field of view, 640×480 and 1920×1080, both at 30 fps |
+| IMU | 9-axis. Firmware 1.3.1 supports reporting at up to 1125 Hz. See the [SDK](../sdk/index.md#migrate) |
 | Opening encoder | 100Hz |
 | Connector and power | USB Type-C (locking), DC 5V / 500mA bus power, no internal battery |
 | Operating temperature | 0–50°C |
@@ -58,7 +58,8 @@ How to use it is in [Follower gripper](../follower/index.md); the flange interfa
 | Parameter | Specification |
 |---|---|
 | Pose source | Pico4 Ultra Enterprise headset + trackers, 6-DoF |
-| Pose rate | About 90Hz on the Developer Kit; every pose the headset reports is recorded on the Backpack Kit |
+| Pose refresh rate | XTac UMI XR 0.4.4 reports headset pose and IMU at approximately 60 Hz. See the [headset app](../common/pico4.md#pico-app) |
+| Collector 0.5.0 headset video specifications | Stereo (per eye): 1280×960 or 1600×1200, both at 30 fps<br>Right eye only: 1920×1440 @ 30 fps |
 | Positioning accuracy | < 3mm |
 | Multi-device time sync | 5ms |
 | Coordinate frame | X forward, Y left, Z up, see [Coordinate frames](../common/coordinates.md) |
@@ -71,7 +72,7 @@ The Backpack Kit's collection unit; see [The XTac UMI Backpack](../backpack/inde
 |---|---|
 | Processor | RK3588 |
 | Storage | eMMC system disk + 1TB NVMe data disk; recordings and exports live on the data disk |
-| Disk-full rule | The data disk counts as full at 80% and recording stops |
+| Disk-full rule | Collector 0.5.0 blocks new recordings when the recording disk reaches 70% usage |
 | Exported data size | About 0.5GB per hour of exported LeRobot dataset |
 | Power | 12V 3A power adapter, or a 20000mAh power bank through a 12V PD power cable |
 | Power draw | About 20W |

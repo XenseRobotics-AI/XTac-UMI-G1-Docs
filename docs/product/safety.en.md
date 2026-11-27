@@ -39,7 +39,7 @@ Before fitting the follower gripper, stop the robot in a safe pose, and run the 
 !!! danger "Gripper firmware: the wrong role means a factory return, and you must power-cycle after flashing"
     - Leader and follower images are not interchangeable: flash the wrong role and the gripper will not start. Do not cut power or unplug while flashing.
     - Without a power-cycle after flashing, the gripper sits in a degraded state that reports the right version while silently dropping frames.
-    - Developer Kit: flash with the SDK script, see [Firmware OTA upgrade](../pc/versions.md#ota). Backpack Kit: flash from System → Gripper configuration, wait for the gripper to restart, then power the backpack off and on, see [Gripper firmware](../backpack/versions.md#gripper-firmware).
+    - Wait for the gripper to restart. Reconnect USB for the leader. Reconnect 24V power for the follower, leaving USB connected. See [Developer Kit firmware OTA](../pc/versions.md#ota) and [Backpack Kit firmware upgrades](../backpack/versions.md#gripper-firmware).
 
 ## The backpack and its power {#backpack-power}
 
@@ -48,7 +48,7 @@ Before fitting the follower gripper, stop the robot in a safe pose, and run the 
 - An underpowered headset shuts down and collection stops with it; do not add devices to the power bank mid-run.
 - On individual units the `DC`, `PICO` or `USB` port may make poor contact, a hardware fault; do not force the connector; note the serial number on the body and send it in for repair.
 - Do not block the fan outlet. After long use, overheating can drop the Wi-Fi, which a restart recovers; check the fan is turning, and report it if it keeps happening.
-- Applying a system update restarts the service; confirm no collection is in progress first.
+- Before applying the Collector OTA, stop recording and upload or export all recordings off the device. See [upgrade compatibility and backup requirements](../backpack/versions.md#bundle).
 - The device back end is for technical support only; do not log in or change the configuration yourself, and contact technical support when diagnosis is needed, see [Advanced diagnosis: handled by technical support](../backpack/network.md#ssh).
 - Power draw and power-bank runtime: [Technical specifications](specs.md).
 

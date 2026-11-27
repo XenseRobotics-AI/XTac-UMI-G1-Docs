@@ -4,11 +4,11 @@ The follower gripper has two pieces of firmware: the **gripper firmware** (bundl
 
 ## Check the version {#check-version}
 
-The `[fw]` line of the [self-check](index.md#self-check) output is the gripper firmware version; for the motor firmware see [Motor firmware version](#motor-version).
+The `[fw]` line of the [self-check](setup.md#self-check) output is the gripper firmware version; for the motor firmware see [Motor firmware version](#motor-version).
 
 | Gripper firmware version | Notes |
 |---|---|
-| 1.3.1 | Bundled with SDK 0.5.0, recommended; stores wrist-camera fisheye intrinsics separately for 640×480 and 1920×1080, and refreshes motor status at the requested rate |
+| 1.3.1 | Bundled with SDK 0.5.0 and uses command set V2.11. Stores separate fisheye calibration for 640×480 and 1920×1080.<br>Adds IMU calibration and magnetometer capture, and improves initialization and homing. |
 | 1.2.17 | Bundled with SDK 0.4.5 / 0.4.6, usable; device timestamps use a 1 MHz timebase, so the host needs SDK 0.4.5 or newer |
 | 1.2.16 | Bundled with SDK 0.4.3 / 0.4.4, fine to use |
 | 1.2.11 – 1.2.15 | Usable, upgrade recommended |
@@ -36,7 +36,7 @@ python python/examples/follower_status.py left
 ```
 
 - With several follower grippers connected, to flash just one of them, add the side after the role: `python python/examples/ota_update.py slave left` (SDK 0.5.0 and later).
-- Flashing takes about 1 second, after which the gripper restarts automatically.
+- Flashing takes about one second, then the gripper restarts automatically. Upgrading to 1.3.1 preserves motor parameters, CAN ID, motor model, gripper settings, and existing 640×480 calibration. Upgraded devices have an empty 1920×1080 calibration slot. Calibrate that resolution before use.
 - If the script finds that the firmware does not match the gripper's role it refuses to flash. **Do not force it with `--force`.**
 - An interrupted flash does not damage the gripper; the original firmware keeps running, and you can simply flash again.
 
@@ -82,7 +82,7 @@ This requires gripper firmware 1.2.8 or later. The motor does not need to be rem
 
 ## Motor firmware version {#motor-version}
 
-The motor firmware must be **1.0.5.0.4 or later**. Below that, the velocity feedback is wrong and motion judders; contact [technical support](../common/reference.md#support) for the upgrade file.
+SDK 0.5.0 ships EL05 motor firmware **1.0.5.0.4**. EL05 requires 1.0.5.0.4 or later. Older versions may cause irregular speed feedback or motion jitter. Contact [technical support](../common/reference.md#support) for the required file and upgrade guidance.
 
 Check the version (do not run this while control is running; the read may stop the motor; requires gripper firmware 1.2.14 or later):
 

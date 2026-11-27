@@ -6,7 +6,7 @@ description: Before recording, confirm the views, poses, gripper opening and dis
 
 This page covers the console's "Live monitoring" page. Button gestures, LED patterns and voice prompts are in [Gripper buttons, LEDs and voice](gripper.md).
 
-![The Live monitoring page](../assets/backpack/monitor-live-en.webp)
+![Earlier Live monitoring screen. Collector 0.5.0 distinguishes the left and right grippers](../assets/backpack/monitor-live-en.webp)
 
 - **Top bar**: device status (bandwidth, CPU, memory, disk, cameras, live time, recording time, system).
 - **Middle**: the side columns each hold one gripper's fisheye view plus its left-finger / right-finger visuotactile feeds; the center column holds the headset's stereo pair, the "Arm / headset pose" 3D view (with a trail of about 1.5 seconds behind each end effector) and, below it, the left and right gripper opening-angle cards.
@@ -21,10 +21,10 @@ Check each item before recording, and do not start if any is wrong:
 | Every view | The top bar's "Cameras" count matches the capture mode (6 / 6 for "Dual gripper", 8 / 8 for "Dual gripper + stereo headset", 7 / 7 for "Dual gripper + headset right eye") and every tile has an image; fisheye views are sharp; the visuotactile feed is the geometrically rectified image with no difference overlay, and the contact area changes as you press | A blurred fisheye usually means the focus ring was knocked; turn it back to sharp before recording. If the count is wrong, check [System → Capture settings](system.md#capture-mode); only if one feed stays black for long, click "Refresh devices" |
 | Headset pose and tracker state | Move a gripper and the headset and the 3D model follows; the indicator at the top right of the pose card is green; the pose view shows enough battery on both trackers | "Pose online" but the model does not move: the tracker app in the Pico usually never really started; hold the tracker's power button to reactivate it and restart the app on the Pico. Light turns yellow with a prompt: a tracker has left the headset's view (orientation only, no position); bring it back into view. Check left / right by serial number, odd left and even right, see [Reading a tracker SN](../common/pico4.md#pico-tracker-sn) |
 | Both grippers' opening | The two cards below the pose view show radians, degrees and a normalized percentage: about 100% fully open, about 0% closed (about 0.02rad; a little more force reaches 0) | If fully open will not reach 100% or closing will not return to 0, recalibrate at [System → Gripper configuration](system.md#gripper) |
-| Free disk space | The top bar's "Disk" usage is below 80% (recording disk, measured on the device); hovering shows the mount point, used, total and available space | At 80% recording is refused; [export and archive](projects-export.md#archive) the data you have, or delete recordings you do not need |
+| Free disk space | The top bar's "Disk" usage is below 70% (recording disk, measured on the device); hovering shows the mount point, used, total and available space | At 70% recording is refused; [export and archive](projects-export.md#archive) the data you have, or delete recordings you do not need |
 | Recording state | The status line at the top right of the project / task card reads "Standby", followed by the capture-mode badge (for example "Dual gripper + stereo headset"); "Start recording" is clickable | When the badge says "Pico not ready" and the button is gray, the reason is below the status line: "Pico not ready" and "Tracker not ready" are separate and can appear together, each followed by the specific cause (for example disconnected or timed out, pose data missing or timed out, left-eye / right-eye video missing or timed out, clock synchronization missing or timed out, or the tracker out of view or stationary for over 5 seconds); a missing project / task is stated too. Deal with the reason first |
 
-- The preview is encoded once by the backpack's hardware encoder and sent to every device with the console open; headset and visuotactile previews are half resolution, so looking coarser than the recording is normal. Recording bypasses the preview path: the MCAP holds the cameras' raw MJPEG frames at full resolution.
+- Preview and recording use separate paths. XHE always uses H.264 during recording. V1 projects can enable streaming encoding in advanced settings.
 - On a weak tablet network, only the dropped feed shows "Network unstable; waiting to recover" and reconnects automatically; the others are unaffected and there is no need to refresh.
 
 ## Picking a project and task {#project-task}
@@ -33,13 +33,14 @@ Recordings sit under a "project → task" hierarchy. The two drop-downs at the b
 
 A new project fixes its **capture config** at creation. **Once created it is frozen**; for different settings, create a new project (an empty project can be deleted and recreated). The System page shows it [read-only](system.md#capture-mode). A project name cannot duplicate that of an unarchived project, and task names within a project must be unique too.
 
-- **Capture mode**: one of "Dual gripper", "Dual gripper + stereo headset", "Dual gripper + headset right eye".
-- **PICO resolution per eye**: 640 × 480 or 1024 × 768, only for modes that record headset video.
+- **Recording format and streaming encoding**: New projects default to XHE. XHE encodes video as H.264 during recording, writes it to `.xhe.mcap`, and exports only the original XHE MCAP. Only V1 projects can export LeRobot or Training MCAP. The streaming encoding setting applies only to V1. It is off by default and can be enabled in advanced settings. Existing projects retain their settings.
+- **Capture mode**: Choose Dual gripper, Dual gripper + stereo headset, or Dual gripper + headset right eye. New projects default to dual grippers with stereo headset fisheye.
+- **PICO resolution**: When you create a project in the console, the capture mode sets the resolution automatically. Stereo uses 1280×960 per eye, and right-eye-only capture uses 1920×1440, both at 30 fps. Existing projects keep their resolution. These features require a [compatible newer headset app](../common/pico4.md#pico-app).
 - **PICO image source**: fisheye or undistorted images.
-- **Headset mount**: On head / Around neck, only for modes that record headset video; On head by default. Around the neck the headset tracks the chest, and the [starting-pose check](#initial-pose) uses the neck range. A dataset can only have one mount.
-- **Export quality**: High quality / Standard / Compact, for all video exports in the project; High quality produces larger files, Compact smaller ones.
+- **Headset mount**: In both Dual gripper + stereo headset and Dual gripper + headset right eye modes, choose On head or Around neck. The default is On head. Around neck records the pose at chest level, and the [starting-pose check](#initial-pose) uses the neck range. Use one mount per dataset.
+- **Export quality and video encoding**: New projects default to High. Standard and Compact are also available. H.265 and MJPEG apply only to V1 exports. XHE exports the original MCAP with H.264 video and ignores the video codec setting.
 - **Tactile rectified image export orientation**: 700 × 400 landscape by default, or a further 90° counterclockwise for 400 × 700.
-- **Wrist fisheye**: whether to rectify its distortion on export, see [Wrist fisheye rectification](system.md#undistort).
+- **Wrist fisheye**: V1 projects can choose whether to rectify distortion on export. See [Wrist fisheye rectification](system.md#undistort).
 - **Upload backend and default export format**: you can bind one configured at [System → Upload configurations](system.md#upload) as the project's default; without a binding you pick one at upload time.
 
 ![Creating a project](../assets/backpack/new-project-en.webp){ width="360" }
@@ -63,9 +64,9 @@ The fields for a new task:
 
 Camera parameters and rectification:
 
-- **Wrist cameras and tactile sensors**: fixed at 640×480 @ 30fps and 640×480 @ 120fps respectively, not adjustable.
-- **All rectification happens at export**: tactile is rectified geometrically in the chosen orientation; wrist fisheye rectification, if on, uses the calibration parameters frozen into the recording when it started.
-- **LeRobot export**: fixed at 30fps.
+- **Wrist cameras and tactile sensors**: Choose 640×480 or 1920×1080 wrist capture when creating a project. 1080p requires gripper firmware 1.3.1 and matching fisheye calibration. XHE records tactile video at 60 fps.
+- **V1 export rectification**: Tactile images are geometrically rectified in the chosen orientation. If wrist fisheye rectification is enabled, export uses the calibration parameters saved at the start of recording.
+- **V1 LeRobot export**: Fixed at 30 fps. When streaming encoding is enabled for V1, video is encoded at its native frame rate and written to disk during recording, at the same quality as High exports. Export can reuse the encoded video to reduce transcoding.
 
 ## Recording {#record}
 
@@ -77,10 +78,10 @@ Camera parameters and rectification:
 
 Whether started from a gripper button or the console, the device checks these in order and stops at the first failure:
 
-1. Disk usage below 80%;
+1. Disk usage below 70%;
 2. A project and task are selected, and the task's cumulative count has not reached its target;
-3. The gripper MCUs are online;
-4. Pico ready: the headset is connected with pose and clock sync working; in modes that record headset video, the selected eye's video must be working too;
+3. Gripper MCU online. Collector 0.5.0 requires leader firmware 1.2.7 or later and follower firmware 1.2.17 or later. A 1080p wrist project requires 1.3.1 and matching fisheye calibration;
+4. Pico ready: the headset is connected with pose and clock sync working. In modes that record headset video, the selected eye's video must be working. The device blocks recording if the headset capture rate is below **28 fps**;
 5. Tracker ready: the trackers are connected and "tracking normally within the field of view"; recording is refused if a tracker has been still for more than 5 seconds or has left the field of view (brief stillness mid-recording does not interrupt and is not counted against quality; the position stays accurate while still);
 6. The headset's video parameters match the project: after you select a project or the headset reconnects, the device re-reads mono / stereo, resolution and image source automatically, then checks again just before recording. **If no confirmation arrives, the check times out, or the headset disconnected or its parameters changed meanwhile, recording is refused**, and the message says which;
 7. The headset's video clock is sane: if one eye's video time runs more than 1 second ahead of the time it was received, you get "headset … eye video time sync abnormal" and recording is refused. The problem is the headset app's camera clock versus its sync clock, not the backpack.
@@ -148,12 +149,16 @@ The two refusal messages:
 
 Long-press the left gripper or click "Stop recording": the episode is saved into the current task, and the LED flashes white once and returns to standby. Numbering is in the [Project page](projects-export.md#projects).
 
-On stopping, an automatic quality check marks the episode "data suspect" if any of these hits (the gripper pulses yellow and the "Quality" column on the Project page carries a mark; the episode is saved either way):
+**XHE finalization check (Collector 0.5.0)**: When you stop recording, the system checks each camera separately. The recording passes this check if no camera skipped more than **2%** of the frames it captured. If any camera exceeds the limit, the system identifies that camera and reports the counts of captured, written, and skipped frames.
+
+After an XHE recording is finalized, you can [play it back](projects-export.md#playback) from the Project page.
+
+Earlier console versions marked an episode as "data suspect" when any of these conditions applied:
 
 - The recording is shorter than 1s (almost always a misfire);
 - Any camera channel recorded not one frame, or the whole episode received no video frames at all;
 - Tracking was lost for more than 20% of the episode's duration (suspected to have left the field of view);
-- The tactile rectification recipe is missing (this episode's LeRobot export is certain to fail);
+- A missing tactile rectification recipe prevents LeRobot export (V1 projects only);
 - Any camera ran at low FPS for more than 5% of the episode's duration in total.
 
 For a questionable episode, [delete it](#record-delete) on the spot and record it again.
@@ -164,8 +169,8 @@ Project page rows and mobile cards show four states:
 
 | State | What it means | What you can still do |
 |---|---|---|
-| Ready | Just recorded; the raw file is on the device and has never been uploaded | Playback, export (either format), upload, archive, delete |
-| Uploaded | Uploaded in at least one format, with the raw file still on the device | The same; plus exporting in the other format |
+| Ready | Just recorded; the raw file is on the device and has never been uploaded | Play back, export or upload in a format the project supports, archive, delete |
+| Uploaded | Uploaded in at least one format, with the raw file still on the device | The same actions. V1 projects can also export in the other format |
 | Archived | Only the catalog record is left; the raw file was cleared at archive time | Only the record and deletion; the replay entry point is grayed out and no format can be exported |
 | Discarded | The recording failed part-way (for example a [headset disconnect](#pico-disconnect), a gripper dropout, or a power loss / system restart during recording); the episode row states the failure reason; the data size reflects the files actually left, kept for diagnosis | Delete |
 

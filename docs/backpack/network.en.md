@@ -32,7 +32,7 @@ Without a tablet, reach the backpack over its hotspot:
 1. Join the backpack hotspot from a phone, tablet or computer (name and password on the body label).
 2. Open `http://192.168.44.1` in a browser.
 
-!!! note "On a new unit the hotspot is off at first boot"
+!!! note "Collector 0.5.0 enables the hotspot during initial network setup"
     Use "Turn on hotspot" in System → [Network / Setup](system.md#wifi); the device remembers it. You can reach the console with the [tablet over USB](#tablet) first to turn it on. The hotspot is 5GHz only; 2.4GHz-only devices will not see it.
 
 - **iOS / Safari**: type the full `http://` prefix in the address bar.

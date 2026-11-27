@@ -35,7 +35,7 @@ python -c "import xense.taccap as t; print(t.hello())"
 
 ### 单独安装（背包版或不用数采仓库） {#standalone}
 
-背包版客户，或不使用数采仓库的电脑，按[从夹爪 · 安装 SDK 与主机配置](../follower/index.md#install)从零安装：Miniforge → `v4l-utils` → 下载 SDK → 创建 mamba 环境 → 编译安装 → 主机配置。主夹爪与从夹爪用的是同一套步骤。
+背包版客户，或不使用数采仓库的电脑，按[从夹爪 · 安装 SDK 与主机配置](../follower/setup.md#install)从零安装：Miniforge → `v4l-utils` → 下载 SDK → 创建 mamba 环境 → 编译安装 → 主机配置。主夹爪与从夹爪用的是同一套步骤。
 
 ### 硬件自检 {#self-check}
 
@@ -44,7 +44,7 @@ python -c "from xense.taccap import scan_grippers
 for g in scan_grippers(): print(g.side, g.role, g.firmware_sn)"
 ```
 
-每只夹爪一行，主夹爪为 `Role.Leader`（序列号以 `m` 结尾），从夹爪为 `Role.Follower`（以 `s` 结尾）。从夹爪接着看[准备与自检](../follower/index.md#self-check)；串口权限等问题见[主机配置](../pc/host-setup.md#first-use)。
+每只夹爪一行，主夹爪为 `Role.Leader`（序列号以 `m` 结尾），从夹爪为 `Role.Follower`（以 `s` 结尾）。从夹爪接着看[准备与自检](../follower/setup.md#self-check)；串口权限等问题见[主机配置](../pc/host-setup.md#first-use)。
 
 ### 集成到 C++ / ROS 2 工程 {#cpp}
 
@@ -118,13 +118,13 @@ g.wrist_camera.start(lambda f: print(f.frame_index))
 画面默认是 RGB。只想看画面可以直接用示例 `wrist_camera.py`。`close()` 会释放相机，之后可以马上用别的分辨率重新打开（0.5.0 起）。
 
 <span id="fisheye-fallback"></span>
-鱼眼内参存在每只夹爪里。没有标定过的夹爪，SDK 自动改用一组内置的参考内参并打印告警，矫正不会失败。读取内参时用：
+鱼眼内参存在每只夹爪里。缺少对应分辨率的标定时，SDK 会根据设备标定状态报错或明确提示使用参考值。参考内参仅用于查看，不能替代设备实际标定。读取内参时用：
 
 ```python
 cal, is_reference, reason = g.calibration.resolve_fisheye_for(1920, 1080)   # 按相机分辨率
 ```
 
-- **按分辨率存放**：640×480 与 1920×1080 是不同的成像区域，内参不能互相换算。固件 1.3.1 为两种分辨率各存一份，`undistort_wrist=True` 按相机分辨率选用；更早的固件只存一份。
+- **按分辨率存放**：固件 1.3.1 为 640×480 与 1920×1080 分别读写独立标定，互不覆盖。`undistort_wrist=True` 根据实际相机分辨率选用参数。旧设备升级后保留原有 640×480 标定，1920×1080 槽为空，首次使用 1080p 前须完成该分辨率的标定。
 - **只有另一种分辨率的标定**：打开时报错，提示给这个分辨率标定，或改用已标定的分辨率，不会悄悄改用参考内参。
 - **参考内参**：`is_reference` 为真表示这台夹爪在该分辨率下没有标定、用的是参考内参，只适合看画面。需要在矫正图上按像素测量时，写入它自己的标定：`python python/examples/fisheye_cal.py set-fisheye right --from-npz cam.npz --width 1920 --height 1080`（从夹爪加 `--follower`；`--width` / `--height` 必填）。`fisheye_cal.py show` 可查看两种分辨率各自的内参。矫正后画面偏心是正常的，不要去改内参里的 `cx`。详见[鱼眼标定读不到时会怎样](../pc/recording.md#fisheye-fallback)。
 
@@ -182,7 +182,7 @@ python python/examples/rerun_viewer.py left --save rig.rrd --duration 20   # 存
 ```
 
 - 图像上的绿色箭头是标记点位移：从每个标记点的初始位置指向当前位置，与 `xensesdk` 自带的 `drawMarkerMove` 画法一致，**1:1 不放大**，箭头长度就是实际位移的像素数。没有接触时只剩一个个绿点。
-- 从夹爪要一边开合一边看，用键盘控制台的 `--rerun`，见[从夹爪 → 全链路检查](../follower/api.md#full-chain)。
+- 从夹爪要一边开合一边看，用键盘控制台的 `--rerun`，见[从夹爪 → 全链路检查](../follower/control.md#full-chain)。
 - 相机与视触觉同时开时，所有相机都要用 MJPEG，见 [USB 带宽预算](../pc/host-setup.md#usb-budget)；腕部相机正被其他程序占用时加 `--no-wrist`。
 
 !!! warning "PC 版数采环境只能看图像"
@@ -231,13 +231,14 @@ python python/examples/rerun_viewer.py left --save rig.rrd --duration 20   # 存
 
 - 从夹爪固件 1.2.17 在收发重叠时重发的那份完全相同的数据帧被丢弃，不再让控制器多走一步、按键多报一次。丢弃次数可从 `g.transport.stats.duplicate_data_dropped` 读到；分时交换模式不受影响。
 
-**0.4.6 → 0.5.0**（原有接口不变）
+**0.4.6 → 0.5.0**（2026-11-23，原有接口不变）
 
 - 附带固件升到主夹爪 / 从夹爪 **1.3.1**，请[升级固件](../follower/firmware.md#mcu-ota)。SDK 按固件能力自动适配，在 1.2.7 / 1.2.17 上照常运行。
 - 腕部相机可以按 1920×1080 打开：`LeaderGripper` / `FollowerGripper` 新增 `wrist_width`、`wrist_height`、`wrist_fps`，默认仍为 640×480、30fps。
 - 鱼眼内参按分辨率存放和选用，见[腕部相机与鱼眼矫正](#camera)。夹爪只有另一种分辨率的标定时，打开会报错；`fisheye_cal.py set-fisheye` 必须带 `--width` / `--height`。
 - `ForcePositionController.set_target(开度, grip=True)`：把目标标记为预期接触的位置，夹爪停在目标附近时按夹持力夹紧；不传时行为不变。
-- 力位控制闭合到 0 时，最终状态在目标到 0 之后约 0.45–0.6s 给出（因夹爪而异），更早判断请用位置容差。
-- IMU 最高可到 1125Hz，需固件 1.3.1，并用分时交换 `start_exchange()`。
+- 运动控制支持配置起步和制动加速度，改善端点运动平顺性。`grip=True` 可用于薄物体夹持。
+- 主夹爪固件 1.2.7 起，IMU 和编码器的设备时间戳采用 1 MHz 时基，约 71 分钟回绕。字段格式不变，语义有变化，需要使用配套 SDK 及软件。
+- 固件 1.3.1 将 IMU 最高上报频率从 100 Hz 提升至 1125 Hz，SDK 可通过分时交换 `start_exchange()` 使用高频 IMU。1125 Hz 是固件上报上限，应用录制与交付数据的采样率取决于所用采集流程。RS00 电机状态数据上报经过优化，支持下发目标时同时获取电机状态与 IMU。从夹爪新增加速度计和陀螺仪校准、磁力计数据采集，并优化初始化及回零。
 - `close()` 会释放腕部相机，同一相机关闭后可以立即重新打开。
 - 刷固件可以写 `ota_update.py slave left`，按角色加左右选择夹爪。

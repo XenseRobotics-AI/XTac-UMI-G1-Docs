@@ -1,6 +1,6 @@
 # Projects, playback and export
 
-Manage recorded data on the console's Project page: replay recordings one by one to check them, export a task as a LeRobot dataset or MCAP, download it or upload it to a remote backend, then free up space with Archive.
+Manage recordings on the console's Project page. XHE projects support [playback](#playback) after finalization and batch export or upload of original XHE MCAP files by task. V1 projects retain the LeRobot and Training MCAP export workflows.
 
 ## The Project page {#projects}
 
@@ -19,22 +19,28 @@ The fields for new projects and tasks are in [Picking a project and task](monito
 
 ## Playback {#playback}
 
-Click Playback at the end of a recording's row to review it online without downloading it. The phone layout has no playback page; use a tablet or computer.
+Open the backpack console on a tablet or computer. Go to Project, find the recording under its task, and click Playback at the end of the row. The console plays the source file from the backpack without a download. Archived recordings cannot be played in the console. To review one, use a copy you saved elsewhere.
 
-![The playback page](../assets/backpack/playback-live-en.webp)
+**XHE projects in Collector 0.5.0**. After stopping the recording, wait for it to pass the [finalization checks](monitor-record.md#record-stop). Then open playback from the Project page. Playback requires no Training MCAP or LeRobot export.
 
-- Click "Stream playback": views, poses and opening play in sync; drag the progress bar to seek.
-- "Recording information" shows the recording's duration, channels and other details.
-- "Back to projects" returns to the Project page.
+**Playback controls in Collector 0.4.7**
 
-!!! warning "Playback and live preview cannot run at the same time"
-    While any device is watching the live preview or an export is transcoding, playback is refused with the reason. Click "Stop streaming" on the Live monitoring page first, then come back.
+Use a tablet or computer. The phone layout has no playback entry.
 
-Archived recordings have had their raw files cleared and cannot be replayed; fetch that data from where it was uploaded.
+1. Click "Stream playback". The camera views, poses, and gripper opening play in sync. Drag the progress bar to seek.
+2. Click "Recording information" to view the duration and channel details.
+3. Click "Back to projects" to return to the Project page.
+
+![Earlier console playback screen with the progress bar and recording information control at the bottom](../assets/backpack/playback-live-en.webp)
+
+!!! warning "Playback restrictions in Collector 0.4.7"
+    Playback is blocked while a device is using live preview or an export is transcoding. Click "Stop streaming" on the Live monitoring page or wait for transcoding to finish, then try again.
 
 ### Quality flags {#quality}
 
-Each recording on the Project page has a Quality column:
+In Collector 0.5.0, XHE projects check each camera after recording. If a camera exceeds the skipped-frame limit, the console identifies it and reports its frame counts. See [finalization checks after recording](monitor-record.md#record-stop).
+
+The Project page in Collector 0.4.7 shows these flags in the Quality column:
 
 | Shows | Meaning |
 |---|---|
@@ -60,20 +66,20 @@ Click Export on a task row to open "Export task data":
 1. **Precheck**: the task's recordings are checked automatically; on success it says the export can go ahead, otherwise it lists the blockers to fix before clicking "Export again".
 2. **Pick recordings**: tick the recordings to process; the header checkbox selects all. With nothing ticked, download, upload, archive and delete are unavailable.
 3. **Pick where it goes**: "Download to device" or "Upload to remote".
-4. **Pick the format**: follow the project setting, LeRobot dataset or MCAP.
+4. **Pick the format**: Choose original XHE for XHE projects. If downstream systems require LeRobot or Training MCAP, select V1 when creating the project. MCAP upload filenames follow the format.
 5. **Start**: click "Download …" or "Upload …". Progress runs precheck → transcode → build → pack / upload → done; closing the dialog leaves it running in the background.
 6. **Export notice**: if some episodes started with a hand outside the [starting range](monitor-record.md#initial-pose), the result says "N recordings start with a hand outside the configured range" and lists them; the export still completes.
 
 ### Download to device {#download}
 
-When it is done, click "Download dataset" or "Download mcap" and the browser saves an archive.
+Download the archive in the browser when it is ready. For XHE, select recordings by task to download a ZIP containing the original `.xhe.mcap` files. Multiple XHE recordings can also be selected from earlier projects.
 
 ### Upload to remote {#upload}
 
 Pick an [upload backend](system.md#upload) (or create one on the spot); optionally tick "Automatically archive after upload (delete local source files; keep metadata only)".
 
 - **Confirm the file list**: once packing finishes, "Confirm files to upload" lists the number of files, total size and each file; transfer starts only after you click "Confirm upload". If you close the dialog while it waits, reopening it lets you confirm.
-- **Progress**: shows the current group, file number, bytes sent, upload speed and the estimated time left in the current group; that estimate covers this group only, not later groups or remote confirmation. During a network retry it shows "Retrying".
+- **Progress**: Shows the file number, bytes sent, upload speed, and the current group's estimated time remaining. Collector 0.5.0 can export and upload multiple recordings concurrently, retry failed uploads, and resume S3 transfers. See [Upload configurations](system.md#upload).
 
 | Backend | Formats |
 |---|---|
@@ -87,7 +93,7 @@ Pick an [upload backend](system.md#upload) (or create one on the spot); optional
 
 ## Export formats {#formats}
 
-You can export both formats; they do not affect each other.
+V1 projects can export LeRobot or Training MCAP separately. XHE projects write `.xhe.mcap` directly and do not generate `.train.mcap` by default. XHE preserves native camera and sensor rates and all sensor readings (60 fps for tactile video). It stores USB camera capture timestamps, device and version information, and camera intrinsics for undistortion. Open it directly in Foxglove.
 
 ### LeRobot dataset {#lerobot}
 
@@ -110,7 +116,7 @@ It also includes `meta/taccap_extrinsics.json` (tracker extrinsics) and `meta/xu
 
 The export is a training MCAP: one `.train.mcap` file per recording, built from the same data as the LeRobot dataset in a different container. It holds the state and action aligned to 30Hz, every video stream and the sensor data, and opens directly in Foxglove and similar tools.
 
-It is not the same file as the raw recording on the backpack:
+This table compares legacy V1 source recordings with Training MCAP. In Collector 0.5.0, Training MCAP images retain their original frame numbers, with improvements to data organization and storage efficiency:
 
 | | Raw recording | Exported `.train.mcap` |
 |---|---|---|
@@ -120,7 +126,7 @@ It is not the same file as the raw recording on the backpack:
 
 ## Downloading raw recordings {#raw-mcap}
 
-For troubleshooting with technical support or data analysis; for routine training data, use the [export workflow](#export).
+For XHE projects, use [task export](#export) to download a ZIP or upload the original `.xhe.mcap` files. The engineering-mode procedure below applies to individual legacy V1 source recordings for technical support or data analysis.
 
 1. Enable engineering mode with guidance from technical support; the entry point is hidden in normal mode.
 2. On the Project page, find the recording and click "Export raw MCAP"; the browser downloads that recording's `.mcap` file directly (desktop and mobile both work).

@@ -356,7 +356,7 @@ If it will not connect, see [Troubleshooting · Head camera](troubleshooting.md#
 
 ## Optional: wrist camera fisheye undistortion {#57}
 
-The wrist camera is a 190° fisheye, recorded raw by default. `--robot.wrist_undistort=true` rectifies it to a rectilinear projection before writing, using the intrinsics in this gripper's flash; `--robot.wrist_undistort_balance` sets the field of view. Only 640×480 is supported (the firmware fisheye record holds only 8 floats, no image size), so a different `--robot.wrist_camera_width/_height` exits at command-line parse time.
+The wrist camera is a 190° fisheye and records raw frames by default. `--robot.wrist_undistort=true` rectifies frames using the gripper's intrinsics, and `--robot.wrist_undistort_balance` adjusts the field of view. Earlier versions support 640×480 only. SDK 0.5.0 and gripper firmware 1.3.1 support separate calibration for 640×480 and 1920×1080. Calibrate 1080p before its first use.
 
 !!! warning "On and off produce two kinds of data, and you cannot tell them apart"
     Rectified and raw `wrist_cam` have identical shape and dtype and mix silently, so recording writes which was used into every unit of [`meta/hardware.json`](#robot-id) (`{"applied": false}` if not undistorted):
@@ -377,5 +377,5 @@ In these cases undistortion does not fail but falls back to the SDK's built-in r
 
 In code, prefer `Calibration::resolve_fisheye_for(width, height)` (returns `(calibration, is_reference, reason)`) over `read_fisheye()`. From SDK 0.5.0 with firmware 1.3.1, intrinsics are stored separately for 640×480 and 1920×1080 and picked by the camera resolution; a gripper calibrated only at the other resolution raises instead of falling back to the reference, see [SDK · Wrist camera and fisheye undistortion](../sdk/index.md#camera).
 
-- **The reference values are only good enough for viewing**: the principal point drifts per unit (37.7px off on one unit). To measure in pixels on the rectified image (visual servoing, hand-eye calibration, size estimation), store this unit's own calibration first: `python third_party/taccap-gripper/python/examples/fisheye_cal.py set-fisheye right --width 640 --height 480` (use the camera's actual resolution; with two connected, pick `left` / `right` or a full SN; omit with one).
+- **Reference values are for viewing only**. Use device-specific intrinsics at the current resolution for measurement or visual calibration. See the [SDK fisheye calibration instructions](../sdk/index.md#camera) to write and verify calibration for that resolution.
 - **An off-center or slightly tilted rectified frame does not mean bad calibration**: undistortion centers on the principal point, not the frame center, and the sensor need not sit on the optical center (one unit: `cx = 359.1`, fingertip midpoint x = 360.1, about 1px apart). Do not change `cx`; forcing 320 makes it worse and adds tilt.

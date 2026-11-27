@@ -41,7 +41,11 @@ Pico4 Ultra 企业版配套的独立运动追踪器装在夹爪顶部提供 6-Do
 
 ## 安装 XTac UMI XR {#pico-app}
 
-APK 文件名形如 `XTac-UMI-XR-<版本>.apk`，当前版本 0.3.9，用头显文件管理安装：
+XTac UMI XR **0.4.4** 于 2026-11-26 发布。通过[技术支持](reference.md#support)获取 `XTac-UMI-XR-0.4.4.apk`（124.3 MB），在头显文件管理中安装。头显应用单独更新。
+
+0.4.4 优化了头显位姿和 IMU 数据采集，以及追踪器与头显的数据时间同步。IMU 和位姿数据上报频率约为 **60 Hz**；Collector 0.5.0 新增的头显图像规格为 **30 fps**，见[项目设置](../backpack/monitor-record.md#project-task)。新增头显功能需要配套新版应用，具体最低兼容版本待确认。
+
+安装步骤：
 
 1. USB 线连头显与电脑，把 APK 拷到头显的 `Download/` 目录。
 

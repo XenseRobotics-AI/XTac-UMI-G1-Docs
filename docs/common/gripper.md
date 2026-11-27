@@ -97,7 +97,7 @@
 1. 接本体端 24V 电源适配器。
 2. Type-C 锁紧线带螺钉端接本体，**旋紧锁紧螺钉**。
 3. 另一端接数采终端，在软件里确认通信正常。
-4. 运动前先按[从夹爪 → 安装与自检](../follower/index.md#install)自检；首次运行先低速测试，确认无干涉。
+4. 运动前先按[从夹爪 → 安装与自检](../follower/setup.md#install)自检；首次运行先低速测试，确认无干涉。
 
 ![从夹爪连接](../assets/hardware/follower-connect.webp){ width="480" }
 

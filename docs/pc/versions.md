@@ -45,7 +45,7 @@ flowchart LR
 | NumPy | `>=1.26.4` | 2.2.6 |
 | `xense-taccap-lerobot` | 基于 lerobot 0.5.1，版本号 `0.5.1+xtac.0.1.6` | `v0.1.6` |
 | `xense.taccap` SDK | 与主仓库子模块 `third_party/taccap-gripper` 配套 | 0.5.0（tag `v0.5.0`） |
-| 夹爪固件 | 命令集 V2.1（帧格式 V1.8），leader ≥ 1.2.0 / follower ≥ 1.1.0 | leader 1.3.1 / follower 1.3.1，随 SDK 走，以 `firmware/manifest.json` 为准 |
+| 夹爪固件 | 命令集 V2.1（帧格式 V1.8），leader ≥ 1.2.0 / follower ≥ 1.1.0 | 主、从夹爪均为 1.3.1，命令集 V2.11，随 SDK 0.5.0 提供，以 `firmware/manifest.json` 为准 |
 | `xensesdk` | 由安装脚本提供 | 2.1.2 |
 | XenseVR PC Service(`.deb`) | ≥ v0.2.0（v0.2.0 起转发[头显相机](recording.md#56)帧） | v0.2.1 |
 | `xensevr_pc_service_sdk` | 在主仓库内，链接 `.deb` 的 C SDK | 0.2.1，版本号取自 `.deb` |
@@ -57,7 +57,7 @@ flowchart LR
 | 编号 | 当前值 | 是什么 |
 |---|---|---|
 | 帧格式 | `V1.8` | 字节怎么打包成帧，极少变动 |
-| **命令集** | **`V2.1`** | 固件实现的命令。行程标定的 `EncoderMaxCal` 由 V2.1 引入（V2.0 鱼眼标定，V1.9 LED 与私有电机参数） |
+| **命令集** | **`V2.11`**（固件 1.3.1）；行程标定最低要求为 `V2.1` | 固件实现的命令。行程标定的 `EncoderMaxCal` 由 V2.1 引入（V2.0 鱼眼标定，V1.9 LED 与私有电机参数） |
 | 固件构建号 | leader ≥ 1.2.0 / follower ≥ 1.1.0 | 具体镜像，是门槛不是等号：更高的号（如 leader 1.2.2）同样支持 V2.1 |
 
 够用不等于没缺陷，见[我需要刷吗](#ota-when)。
@@ -115,6 +115,8 @@ python -c "import xensevr_pc_service_sdk as xrt; print('pico camera API:', hasat
 
 ### 0.1.6 {#whats-new-016}
 
+2026-11-23 发布。配套的 `lerobot-xense` 版本为 0.5.1，两个数采仓库均更新 SDK 子模块至 0.5.0。
+
 - 夹爪 SDK 升到 **0.5.0**，附带固件升到主夹爪 / 从夹爪 **1.3.1**，请[刷固件](#ota)。1.3.1 为腕部相机的 640×480 与 1920×1080 各存一份鱼眼内参；SDK 按固件能力自动适配，在 1.2.7 / 1.2.17 上照常运行。SDK 自身的变化见 [SDK · 从旧版本迁移](../sdk/index.md#migrate)。
 - 从夹爪（`--robot.role=follower`）可以录制：开口度改为读电机状态并按设备自己的行程标定换算，与 SDK 的 `g.position()` 一致；只读，不使能电机。
 - 1920×1080 腕部相机可以打开：先请求 MJPEG 再设分辨率与帧率，`--robot.wrist_camera_width=1920 --robot.wrist_camera_height=1080` 不再报 `failed to set fps=30`。
@@ -154,10 +156,10 @@ python -c "import xensevr_pc_service_sdk as xrt; print('pico camera API:', hasat
 
 ## 仓库与子模块更新 {#repo-update}
 
-按发布 tag 更新，不要直接拉 `main`（可能含未发布改动）：
+客户数采仓库 `xense-taccap-lerobot` 0.1.6 和 `lerobot-xense` 0.5.1 均使用 SDK 子模块 0.5.0。更新任一数采仓库后，在该仓库运行 `git fetch --tags --force` 和 `git submodule update`，随后在对应数采环境重新安装 SDK。以下是 `xense-taccap-lerobot` 的升级命令：
 
 ```bash
-git fetch --tags
+git fetch --tags --force
 git checkout v0.1.6
 git submodule update --init --recursive --progress
 ./setup_env.sh --install     # 对齐依赖并重编 xense.taccap
@@ -195,7 +197,7 @@ git submodule status         # 子模块应对应 v0.5.0
 
 !!! warning "先升级 SDK，再刷固件"
     - 镜像随 SDK 走：先把子模块升到 SDK 0.5.0，用它刷写与校验，才能刷到 1.3.1；绝不要用低于 0.1.7 的 SDK 刷。
-    - 新 SDK 与旧固件通信不变，先升 SDK 总是安全的。
+    - 先安装配套 SDK 再更新固件。主夹爪固件 1.2.7 起，IMU 与编码器设备时间戳改用 1 MHz 时基，约 71 分钟回绕。字段格式不变，但语义改变。自行解析设备时间戳的程序也要更新。
     - 镜像版本以 `firmware/manifest.json` 里的 `version` 为准，不要从 SDK 版本号推。
 
 镜像在 `third_party/taccap-gripper/firmware/`，只留当前发布版，文件名带版本号，各镜像与版本见同目录 `manifest.json`：
@@ -222,7 +224,7 @@ python third_party/taccap-gripper/python/examples/ota_update.py --all
 # 3. 断电重插后,按"如何查版本"的脚本读回实际刷上的版本
 ```
 
-第 3 步用[如何查版本](#check-versions)的脚本，读回须不低于 leader 1.2.0 / follower 1.1.0，刷当前附带镜像应为 1.3.1。之后回[夹爪标定](calibration.md#41)标零点和行程上限。
+第 3 步用[如何查版本](#check-versions)的脚本确认此次升级后的固件为 1.3.1。升级保留电机参数、CAN ID、电机型号和夹爪配置。旧设备保留原有 640×480 标定，使用 1920×1080 前须完成对应鱼眼标定。[检查开合标定](calibration.md#41)，如缺失则完成标定。
 
 - 镜像名按给的路径、SDK 根目录、SDK `firmware/` 依次解析，任意目录可运行，连设备前就检查。
 - `--target-version` 通常不用写：只给校验日志和分区元数据打标记，脚本按 CRC32 在 `manifest.json` 里查出版本号，它不认识的镜像才需指定。
@@ -239,5 +241,5 @@ python third_party/taccap-gripper/python/examples/ota_update.py --all
 !!! danger "刷完必须断电重插一次"
     这是升级流程的一步，不是排障手段。
 
-    - OTA 后是软复位，USB 转串口芯片没断电，设备停在降级状态：版本正确、数据流正常、错误计数为 0，却悄悄丢状态帧。实测 60 秒一轮，只做 OTA 丢 35~39 帧，断电重插后为 0。断电前的数据不可信。
+    - OTA 完成后的软复位无法让 USB 转串口芯片断电。完成下列断电重启前，即使设备显示正常也可能丢失状态帧。
     - 等夹爪重启完成再断电重插：主夹爪拔插 USB 线；从夹爪拔下 24V 电源线，等约 2 秒插回，USB 线不用拔（主控板和电机都由 24V 供电）。

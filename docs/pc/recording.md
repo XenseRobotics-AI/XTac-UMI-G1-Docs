@@ -355,7 +355,7 @@ lerobot-record \
 
 ## 可选：腕相机鱼眼矫正 {#57}
 
-腕相机是 190° 鱼眼，默认落盘原始帧。`--robot.wrist_undistort=true` 用本夹爪 flash 里的内参在写入前矫正成直线投影，`--robot.wrist_undistort_balance` 调视野。只支持 640×480（固件鱼眼记录只有 8 个浮点数、不含图像尺寸），配别的 `--robot.wrist_camera_width/_height` 会在解析命令行时退出。
+腕相机是 190° 鱼眼，默认记录原始帧。`--robot.wrist_undistort=true` 在写入前使用本夹爪内参矫正，`--robot.wrist_undistort_balance` 调整视野。旧版仅支持 640×480。SDK 0.5.0 与夹爪固件 1.3.1 支持 640×480 和 1920×1080 的独立标定，首次使用 1080p 前须完成对应分辨率的标定。
 
 !!! warning "开与不开，录出来的是两种数据，而且看不出来"
     矫正与原始的 `wrist_cam` 形状、dtype 相同，混用无提示，所以录制时记入 [`meta/hardware.json`](#robot-id) 的每个 unit（没矫正记 `{"applied": false}`）：
@@ -376,5 +376,5 @@ lerobot-record \
 
 代码里优先用 `Calibration::resolve_fisheye_for(宽, 高)`（返回 `(calibration, is_reference, reason)`）而不是 `read_fisheye()`。SDK 0.5.0 + 固件 1.3.1 起，640×480 与 1920×1080 的内参各存一份、按相机分辨率选用；夹爪只有另一种分辨率的标定时报错，不回退到参考内参，见 [SDK · 腕部相机与鱼眼矫正](../sdk/index.md#camera)。
 
-- **参考值只够看画面**：主点逐台漂移（实测一台差 37.7 像素）。要在矫正图上按像素测量（视觉伺服、手眼标定、尺寸估计），先存本机标定：`python third_party/taccap-gripper/python/examples/fisheye_cal.py set-fisheye right --width 640 --height 480`（按相机实际分辨率填写；接两只时用 `left` / `right` 或完整 SN 指定，只接一只可省略）。
+- **参考值只用于预览**：不能替代设备实际标定。要在矫正图上做测量或视觉标定，请使用设备在当前分辨率下的实际内参。按 [SDK 鱼眼标定说明](../sdk/index.md#camera)写入并核对对应分辨率的标定。
 - **矫正后画面偏心、略倾斜不代表标定错**：去畸变绕主点而非画幅中心，传感器未必在光心上（实测一台 `cx = 359.1`，爪尖中点 x = 360.1，差约 1 像素）。别改 `cx`，改回 320 更偏且引入倾斜。

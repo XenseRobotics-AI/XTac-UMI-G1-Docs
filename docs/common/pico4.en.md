@@ -41,7 +41,11 @@ Otherwise, screen-off or sleep between episodes (also triggered by taking the he
 
 ## Installing XTac UMI XR {#pico-app}
 
-The APK is named `XTac-UMI-XR-<version>.apk`; the current version is 0.3.9. Install it from the headset's file manager:
+XTac UMI XR **0.4.4** was released on 2026-11-26. Obtain `XTac-UMI-XR-0.4.4.apk` (124.3 MB) from [technical support](reference.md#support) and install it in the headset's file manager. Update the headset app separately.
+
+Version 0.4.4 improves headset pose and IMU capture and time synchronization between trackers and the headset. IMU and pose data are reported at approximately **60 Hz**. The new Collector 0.5.0 headset video modes run at **30 fps**. See [project settings](../backpack/monitor-record.md#project-task). The new headset features require a compatible newer app. The minimum compatible version is pending confirmation.
+
+To install:
 
 1. Connect the headset to the collection PC over USB and copy the APK into the headset's `Download/` directory.
 

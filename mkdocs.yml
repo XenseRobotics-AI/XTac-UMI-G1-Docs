@@ -127,8 +127,10 @@ plugins:
             夹爪按键、指示灯与语音: Gripper buttons, LEDs and voice
             一页速通: Quickstart
             从夹爪: Follower gripper
-            概览、安装与自检: Overview, install and self-check
-            运动控制与 API: Motion control and API
+            从夹爪概览: Overview
+            准备与自检: Setup and self-check
+            运动控制: Motion control
+            API 与示例: API and examples
             固件与电机升级: Firmware and motor upgrades
             SDK 与二次开发: SDK and development
             坐标系: Coordinate frames
@@ -154,8 +156,8 @@ plugins:
         sdk-api.md: sdk/index.md
         sdk-examples.md: sdk/index.md
         follower-overview.md: follower/index.md
-        follower-setup.md: follower/index.md
-        follower-control.md: follower/api.md
+        follower-setup.md: follower/setup.md
+        follower-control.md: follower/control.md
         follower-firmware.md: follower/firmware.md
         follower-troubleshooting.md: follower/troubleshooting.md
         # 第一轮重构的扁平文件名 → 产品线目录(PC 版 / 通用)
@@ -175,8 +177,6 @@ plugins:
         product/backpack.md: backpack/index.md
         backpack/playback.md: backpack/projects-export.md
         backpack/update.md: backpack/versions.md
-        follower/setup.md: follower/index.md
-        follower/control.md: follower/api.md
         pc/reference.md: pc/recording.md
         sdk/install.md: sdk/index.md
         sdk/api.md: sdk/index.md
@@ -213,8 +213,6 @@ plugins:
         en/product/backpack.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/backpack/
         en/backpack/playback.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/backpack/projects-export/
         en/backpack/update.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/backpack/versions/
-        en/follower/setup.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/follower/
-        en/follower/control.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/follower/api/
         en/pc/reference.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/pc/recording/
         en/sdk/install.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/sdk/
         en/sdk/api.md: https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/en/sdk/
@@ -306,8 +304,10 @@ nav:
       - SDK 与二次开发: sdk/index.md
       - 故障排查: pc/troubleshooting.md
   - 从夹爪:
-      - 概览、安装与自检: follower/index.md
-      - 运动控制与 API: follower/api.md
+      - 从夹爪概览: follower/index.md
+      - 准备与自检: follower/setup.md
+      - 运动控制: follower/control.md
+      - API 与示例: follower/api.md
       - 固件与电机升级: follower/firmware.md
       - 故障排查: follower/troubleshooting.md
   - 通用:

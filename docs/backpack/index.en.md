@@ -33,7 +33,7 @@ Open the backpack's address in a browser to reach the console; the top bar has f
 |---|---|---|
 | Live monitoring | Every view, pose and opening on one screen; pick a project and task, start / stop recording | [Live monitoring and recording](monitor-record.md) |
 | Project | Manage recordings: playback, delete, export, upload, archive | [Projects, playback and export](projects-export.md) |
-| Playback | Replay any recording online | [Playback](projects-export.md#playback) |
+| Playback | Review recordings whose source files are still on the backpack | [Playback](projects-export.md#playback) |
 | System | Device information, gripper calibration and firmware, capture settings, uploads, network, updates, interface language | [System settings](system.md) |
 
 Recording is mainly driven by the gripper buttons: long-press right to start, long-press left to stop, with no browser needed; see [Gripper buttons, LEDs and voice](gripper.md).
@@ -77,17 +77,17 @@ Every device plugs into the backpack, which stores the raw recordings; datasets 
     "grip": {
       "title": "MCU · encoder",
       "sub": "Opening · IMU · buttons",
-      "desc": "The leader gripper's MCU reports the finger angle and IMU (100Hz each) and button gestures to the backpack over USB."
+      "desc": "The leader gripper's MCU reports the finger angle, IMU and button gestures to the backpack over USB."
     },
     "tact": {
       "title": "Visuotactile ×2",
       "sub": "One per finger",
-      "desc": "One visuotactile sensor per finger, captured at 640 × 480, 120fps."
+      "desc": "One visuotactile sensor per finger. Collector 0.5.0 XHE recordings store 640×480 tactile images at 60 fps."
     },
     "wrist": {
       "title": "Wrist camera",
       "sub": "Wrist-view fisheye",
-      "desc": "The wrist-view fisheye image, 640 × 480 at 30fps."
+      "desc": "Choose 640×480 or 1920×1080 wrist capture in the project. 1080p requires firmware 1.3.1 and matching calibration."
     },
     "tracker": {
       "title": "Tracker ×2",
@@ -97,7 +97,7 @@ Every device plugs into the backpack, which stores the raw recordings; datasets 
     "headset": {
       "title": "Headset",
       "sub": "Pico4 Ultra Enterprise",
-      "desc": "Runs XTac UMI XR and sends poses to the backpack over a Type-C cable (wired only); in modes that record the headset it also sends stereo or right-eye images (640 × 480 or 1024 × 768 per eye)."
+      "desc": "Runs XTac UMI XR and sends poses to the backpack over a Type-C cable (wired only); in modes that record the headset it also sends stereo or right-eye images at the project resolution."
     },
     "mcu": {
       "title": "Gripper data",
@@ -106,7 +106,7 @@ Every device plugs into the backpack, which stores the raw recordings; datasets 
     },
     "tcam": {
       "title": "Tactile capture",
-      "sub": "Raw frames · 120fps",
+      "sub": "XHE · 60 fps",
       "desc": "Captured and saved as raw frames; rectified at export with the sensor's own calibration, in the orientation chosen for the project (700 × 400 by default)."
     },
     "fcam": {
@@ -122,7 +122,7 @@ Every device plugs into the backpack, which stores the raw recordings; datasets 
     "enc": {
       "title": "Hardware encoding",
       "sub": "H.264 · preview only",
-      "desc": "The backpack hardware-encodes each view once and pushes it to every device with the console open for live preview; recordings keep the raw frames and skip this step."
+      "desc": "The backpack hardware-encodes each view once and pushes it to every device with the console open for live preview; recordings use a separate path, with streaming encoding enabled by default for XHE."
     },
     "rec": {
       "title": "Recording",
@@ -142,10 +142,10 @@ Every device plugs into the backpack, which stores the raw recordings; datasets 
     "export": {
       "title": "Export per task",
       "sub": [
-        "LeRobotDataset v3 / MCAP",
+        "XHE MCAP / V1",
         "Pre-checked first"
       ],
-      "desc": "Export a task as LeRobotDataset v3 or MCAP; recordings are checked for completeness first, then you download them or upload to a remote backend."
+      "desc": "Process recordings by task. Download or upload original XHE MCAP files, or export LeRobotDataset v3 or Training MCAP from V1 projects."
     },
     "dl": {
       "title": "Download",
@@ -259,8 +259,8 @@ In an exported LeRobot dataset, each row is the **observation** from frame t-1 p
   "actNote": " The action holds the value from frame t, one step ahead of the observation.",
   "keys": {
     "tactile": "The visuotactile image from one finger of this gripper, rectified at export: 700 × 400 landscape by default (400 × 700 can be chosen per project), 30fps.",
-    "wrist": "This gripper's wrist fisheye view, 640 × 480; exported rectified when the project turns on wrist fisheye rectification.",
-    "headimg": "One eye of the headset camera, 640 × 480 or 1024 × 768 per eye (set per project). Stereo mode records both eyes; right-eye mode records the right eye only.",
+    "wrist": "This gripper's wrist fisheye view at the project resolution; exported rectified when the project turns on wrist fisheye rectification.",
+    "headimg": "One eye of the headset camera at the project resolution. Stereo mode records both eyes; right-eye mode records the right eye only.",
     "tcp": "The pose of this gripper's tip (midpoint between the fingers) in the world frame: position x, y, z (meters) plus the 6-D rotation r1–r6, derived from the tracker pose. Recorded in all three modes.",
     "grip": "This gripper's opening, closed = 0, open = 1.",
     "headpose": "The headset pose in the world frame, same format as tcp.*; written only in the modes that record headset images."
@@ -315,7 +315,7 @@ In an exported LeRobot dataset, each row is the **observation** from frame t-1 p
 ## Known limitations {#faq}
 
 - Do not restart XTac UMI XR during collection: a restart resets the world origin, see [Startup and frame alignment](../common/pico4.md#pico-frame).
-- Playback and live preview cannot run at the same time, see [Playback](projects-export.md#playback).
+- In Collector 0.4.7, playback and live preview cannot run at the same time. See [Playback](projects-export.md#playback).
 - The backpack only joins 5GHz Wi-Fi; with 2.4GHz only on site, use a cable or the backpack hotspot.
 - Some phones and Windows cannot open the `.local` device name; use the IP address instead.
 - While a recording is in progress, switching project / task, gripper calibration, firmware upgrades and system updates are all refused; stop recording first.

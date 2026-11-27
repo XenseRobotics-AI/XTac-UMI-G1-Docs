@@ -1,12 +1,12 @@
 # Follower gripper troubleshooting
 
-Run the [self-check](index.md#self-check) first; most problems can be identified from its output. On this page, **power-cycle** means unplugging the 24V power cable, waiting about 2 seconds and plugging it back in; the USB cable can remain connected.
+Run the [self-check](setup.md#self-check) first; most problems can be identified from its output. On this page, **power-cycle** means unplugging the 24V power cable, waiting about 2 seconds and plugging it back in; the USB cable can remain connected.
 
 ## Device cannot be found or opened {#connect}
 
 ??? failure "A scan does not find the follower gripper"
     - Both the USB cable and the 24V supply are connected; `lsusb` should list `1a86:55d2`. If it does not, try another cable or USB port.
-    - [Host setup](index.md#host) is done (`brltty` removed, user in the `dialout` group and logged in again, the udev rule that keeps ModemManager off installed).
+    - [Host setup](setup.md#host) is done (`brltty` removed, user in the `dialout` group and logged in again, the udev rule that keeps ModemManager off installed).
     - Close the collection program and any other program using the gripper, then scan again.
     - If it still shows `Role.Unknown` or an empty serial number, contact [technical support](../common/reference.md#support).
 
@@ -30,7 +30,7 @@ Run the [self-check](index.md#self-check) first; most problems can be identified
 
     **Fix**:
 
-    - Standalone SDK: open a new terminal, run `mamba activate taccap` and redo the [build and install](index.md#build) in the `TacCap-Gripper` directory.
+    - Standalone SDK: open a new terminal, run `mamba activate taccap` and redo the [build and install](setup.md#build) in the `TacCap-Gripper` directory.
     - Developer Kit collection environment: from the data-collection repository root, update the submodules and rerun the install script; see [Clone the repo and its submodules](../pc/install.md#22):
 
     ```bash
@@ -77,12 +77,12 @@ Run the [self-check](index.md#self-check) first; most problems can be identified
 ??? failure "While gripping a hard object, the gripper suddenly releases and USB disconnects"
     **Cause**: the firmware is outdated, so the motion safety envelope is not in effect, and excessive torque pulled the 24V supply voltage down.
 
-    **Fix**: power-cycle, [upgrade the firmware](firmware.md#mcu-ota), then confirm `ENFORCED` in the [motion check](index.md#motion-check). Also confirm that the 24V power adapter meets the specification.
+    **Fix**: power-cycle, [upgrade the firmware](firmware.md#mcu-ota), then confirm `ENFORCED` in the [motion check](setup.md#motion-check). Also confirm that the 24V power adapter meets the specification.
 
 ??? failure "The grip force drops after gripping for a long time"
     **Cause**: as the motor heats up, the firmware automatically reduces output. This is a protection mechanism, not a fault.
 
-    **Fix**: reduce the grip force or shorten the gripping time; figures are in [Motion control](api.md#force-position).
+    **Fix**: reduce the grip force or shorten the gripping time; figures are in [Motion control](control.md#force-position).
 
 ??? failure "Starting another script causes the gripper under control to release"
     **Cause**: the script scans for devices at startup, which interrupts the running control program.

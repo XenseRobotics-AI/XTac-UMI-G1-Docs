@@ -72,13 +72,13 @@ Shows the current project's capture config, read-only. These are chosen when you
 
 What the other items mean (PICO resolution and image source, headset mount, export quality, wrist fisheye rectification, tactile rectified-image export orientation) is in [Picking a project and task](monitor-record.md#project-task). For projects created before 0.4.6, the headset mount shows "On head (not specified, legacy project)".
 
-When a project is selected, the headset syncs to its settings automatically.
+After you select a project, the headset automatically syncs to its settings. The new headset modes and status checks in Collector 0.5.0 require a compatible newer [headset app](../common/pico4.md#pico-app).
 
 ### Wrist fisheye rectification {#undistort}
 
 With it on, the wrist view in the exported dataset is rectified to a straight-line perspective. Recordings always keep the raw fisheye image; rectification happens only at export.
 
-Each gripper shows its rectification status. "Not calibrated · rectified with default intrinsics" means the lens model's generic parameters are used: capture and export work normally, slightly less precisely than per-unit calibration.
+1080p projects require gripper firmware 1.3.1 and device-specific 1920×1080 fisheye calibration. The default-intrinsics message below describes legacy settings. Complete the 1080p calibration before use. Each gripper shows its rectification status. "Not calibrated · rectified with default intrinsics" means the lens model's generic parameters are used: capture and export work normally, slightly less precisely than per-unit calibration.
 
 ### Recording shortcut {#keybinding}
 
@@ -132,6 +132,8 @@ To set one up:
 2. Click "Validate" or "Test read/write" to confirm the account and directory work.
 3. Select it under "Upload backend" when creating a project; for an existing project, bind it on the project's row.
 
+Collector 0.5.0 supports automatic upload settings at both device and project levels. When connected over Ethernet, the device can upload while idle. Failed uploads retry automatically, and S3 transfers can resume.
+
 Credentials are not shown again after saving; leaving a field blank when editing keeps the stored value. Uploading is covered in [Export](projects-export.md#export).
 
 !!! warning "Binding the wrong account cannot be undone"
@@ -157,7 +159,7 @@ Set this up when the site has 5GHz Wi-Fi and several computers or tablets need t
 
 1. Open the console from the tablet (USB) or the [backpack hotspot](network.md#softap) and go to System → Network / Setup.
 2. "Scan again", click the target network, enter the password and connect.
-3. The backpack remembers the network and reconnects after a reboot.
+3. The backpack saves the network and reconnects after a restart. Collector 0.5.0 also attempts to restore a dropped Wi-Fi connection automatically and improves hotspot channel management.
 
 Only 5GHz networks are listed (2.4GHz would disrupt the backpack hotspot). If the site has only 2.4GHz, use wired or the hotspot.
 

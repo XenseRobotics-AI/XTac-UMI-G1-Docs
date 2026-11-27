@@ -1,12 +1,12 @@
 # 从夹爪故障排查
 
-先运行[自检](index.md#self-check)，多数问题可从其输出判断。本页的**断电重启**指拔下 24V 电源线，等约 2 秒再插回，USB 线不用拔。
+先运行[自检](setup.md#self-check)，多数问题可从其输出判断。本页的**断电重启**指拔下 24V 电源线，等约 2 秒再插回，USB 线不用拔。
 
 ## 无法找到或打开设备 {#connect}
 
 ??? failure "无法扫描到从夹爪"
     - USB 线与 24V 电源都接好，`lsusb` 中应有 `1a86:55d2`；没有就换线缆或 USB 口。
-    - 做完[主机配置](index.md#host)（卸载 `brltty`、加入 `dialout` 组并重新登录、屏蔽 ModemManager 的 udev 规则）。
+    - 做完[主机配置](setup.md#host)（卸载 `brltty`、加入 `dialout` 组并重新登录、屏蔽 ModemManager 的 udev 规则）。
     - 关闭数采程序及其他占用夹爪的程序后重新扫描。
     - 仍显示 `Role.Unknown` 或序列号为空时，联系[技术支持](../common/reference.md#support)。
 
@@ -30,7 +30,7 @@
 
     **解决**：
 
-    - 单独安装的 SDK：开一个新终端，`mamba activate taccap`，在 `TacCap-Gripper` 目录重新[编译安装](index.md#build)。
+    - 单独安装的 SDK：开一个新终端，`mamba activate taccap`，在 `TacCap-Gripper` 目录重新[编译安装](setup.md#build)。
     - PC 版数采环境：在数采仓库根目录更新子模块并重跑安装脚本，见[克隆仓库与子模块](../pc/install.md#22)：
 
     ```bash
@@ -77,12 +77,12 @@
 ??? failure "夹持硬物时夹爪突然松开，USB 断开"
     **原因**：固件过旧，运动安全包络未生效，力矩过大拉低 24V 电压。
 
-    **解决**：断电重启，[升级固件](firmware.md#mcu-ota)，再按[运动自检](index.md#motion-check)确认显示 `ENFORCED`。同时确认 24V 电源适配器符合规格。
+    **解决**：断电重启，[升级固件](firmware.md#mcu-ota)，再按[运动自检](setup.md#motion-check)确认显示 `ENFORCED`。同时确认 24V 电源适配器符合规格。
 
 ??? failure "长时间夹持后夹持力下降"
     **原因**：电机发热后固件自动降低输出，是保护机制，不是故障。
 
-    **解决**：降低夹持力或缩短夹持时间，数据见[运动控制](api.md#force-position)。
+    **解决**：降低夹持力或缩短夹持时间，数据见[运动控制](control.md#force-position)。
 
 ??? failure "启动其他脚本后，正在控制的夹爪松开"
     **原因**：脚本启动时会扫描设备，中断正在运行的控制程序。

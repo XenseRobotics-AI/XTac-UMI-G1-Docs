@@ -134,9 +134,9 @@ Find the cause and fix by symptom. Before troubleshooting, listen for the voice 
     - **Other messages** (firmware too old, target reached, disk full, coordinate reset failed, trackers swapped, starting pose out of range): see the entries below.
 
 ??? failure "Recording refused: “… gripper firmware version … is too old; this Collector version requires 1.2.7 or later”"
-    **Cause:** from 0.4.7 the leader gripper firmware must be ≥ 1.2.7; the message names the side and its current version.
+    **Cause:** Collector 0.5.0 requires leader gripper firmware 1.2.7 or later and follower firmware 1.2.17 or later. 1080p wrist projects require firmware 1.3.1 and matching fisheye calibration.
 
-    **Fix:** flash leader gripper firmware 1.2.7 or later as in [Gripper firmware](versions.md#gripper-firmware), power-cycle the backpack, then record. For future upgrades, flash the firmware first as in [Upgrade order](versions.md#order).
+    **Fix:** Follow the [gripper firmware instructions](versions.md#gripper-firmware). Reconnect USB for a leader. Reconnect 24V power for a follower, leaving USB connected. Verify the version in Device information before recording.
 
 ??? failure "Recording refused: “Task '…' has reached its cumulative collection target (N/M)”"
     **Cause:** the target counts **cumulatively**, and **neither uploading nor archiving frees capacity**; the counting rules are in [Picking a project and task](monitor-record.md#project-task).
@@ -171,8 +171,8 @@ Find the cause and fix by symptom. Before troubleshooting, listen for the voice 
 
     **Fix:** make sure the headset is connected, XTac UMI XR is running in the foreground and shows "Connected", and its version matches the [version baseline](versions.md#baseline), then retry.
 
-??? failure "Recording refused: “Recording disk is N% used, at the 80% limit”"
-    **Cause:** 20% is reserved for transcode intermediates and exports, so the disk never fills up.
+??? failure "Recording refused: “Recording disk is N% used, at the 70% limit”"
+    **Cause:** Collector 0.5.0 blocks new recordings at 70% recording-disk usage to leave space for exports.
 
     **Fix:**
 
@@ -250,12 +250,12 @@ Find the cause and fix by symptom. Before troubleshooting, listen for the voice 
 
 ## Replay, export and data {#export}
 
-??? failure "“Playback” is refused, stating that the camera preview is using it"
+??? failure "Collector 0.4.7 blocks playback because live preview is active"
     **Cause:** replay and live preview share the backpack's hardware encoder. Replay is refused while Live monitoring is open in another tab or on another device; a camera is still treated as using the encoder for up to 15 seconds after it disconnects.
 
     **Fix:** close the monitor page in other tabs and on other devices, wait a few seconds and click Playback again.
 
-??? failure "After archiving, those recordings cannot be replayed or exported in the other format"
+??? failure "Archived recordings cannot be played back or exported again"
     **Cause:** expected behavior. [Archiving](projects-export.md#archive) deletes the raw files that replay and export both read, keeping only the record; "Playback" for those episodes is grayed out with "Archived; local source files deleted".
 
     **Fix:** export every required format before archiving. Recordings that were never uploaded have no copy once archived; the confirmation warns you.
@@ -305,7 +305,7 @@ Find the cause and fix by symptom. Before troubleshooting, listen for the voice 
 ??? failure "After flashing the gripper firmware, the gripper works intermittently and frames are silently dropped"
     **Cause:** flashing ends with a soft reset only, so the gripper's USB-to-serial chip is not power-cycled and remains in a degraded state.
 
-    **Fix:** power-cycle the backpack (or reconnect that gripper's Type-C cable), then check the firmware version in Device information; see [Gripper firmware](versions.md#gripper-firmware).
+    **Fix:** Wait for the gripper to finish restarting. Reconnect USB for a leader. Reconnect 24V power for a follower, leaving USB connected. Then check the firmware version. See [Gripper firmware](versions.md#gripper-firmware).
 
 ---
 
