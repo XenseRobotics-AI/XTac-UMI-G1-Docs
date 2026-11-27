@@ -1365,6 +1365,10 @@
       
         
       
+        
+      
+        
+      
     
     
     
@@ -1428,6 +1432,62 @@
   
   
     <li class="md-nav__item">
+      <a href="../../follower/setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Setup and self-check
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../follower/control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Motion control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../follower/api/" class="md-nav__link">
         
   
@@ -1435,7 +1495,7 @@
   <span class="md-ellipsis">
     
   
-    Motion control and API
+    API and examples
   
 
     
@@ -1868,7 +1928,7 @@
 </tr>
 <tr>
 <td><strong>XTac UMI Collector</strong></td>
-<td>The collection software on the backpack: it takes in the cameras, the gripper MCUs and the headset pose, and handles recording, replay, export and device management; version baseline 0.4.7, the device's System page is authoritative</td>
+<td>The collection software on the backpack: it takes in the cameras, the gripper MCUs and the headset pose, and handles recording, replay, export and device management; current release 0.5.0, the device's System page is authoritative</td>
 </tr>
 <tr>
 <td><strong>Console</strong></td>
@@ -2007,8 +2067,7 @@
 </tbody>
 </table>
 <h2 id="doc-version">Documentation version and matching software<a class="headerlink" href="#doc-version" title="锚点链接">¶</a></h2>
-<p>The documentation is versioned on its own, shown in the page footer. Each documentation release matches one set of versions of the four pieces of software below, and <strong>all four are pinned and updated together</strong>.
-If what is on your devices differs from this table, upgrade to match it, or use the documentation version that matches your devices.</p>
+<p>The page footer shows the documentation version, which is independent of software and firmware versions. The table records the component versions at each documentation release. This update covers Collector 0.5.0, XTac UMI XR 0.4.4, TacCap SDK 0.5.0, leader and follower firmware 1.3.1, <code>xense-taccap-lerobot</code> 0.1.6, and <code>lerobot-xense</code> 0.5.1. Before upgrading, check the <a href="../../backpack/versions/#baseline">Backpack Kit compatibility requirements</a> or <a href="../../pc/versions/#required">Developer Kit requirements</a>.</p>
 <table>
 <thead>
 <tr>
@@ -2059,7 +2118,7 @@ If what is on your devices differs from this table, upgrade to match it, or use 
 </table>
 <p>The gripper firmware ships with the SDK (SDK 0.5.0 ships leader and follower 1.3.1) and is not listed separately. How to upgrade each component is in <a href="../../pc/versions/">Developer Kit · Versions and upgrades</a> and <a href="../../backpack/versions/">Backpack Kit · Versions</a>.</p>
 <h2 id="scope">What this manual covers<a class="headerlink" href="#scope" title="锚点链接">¶</a></h2>
-<p>This manual covers the path from the data-collection gripper hardware to data on disk: MCAP recordings and the LeRobot export on the Backpack Kit, a <code>LeRobotDataset</code> on the Developer Kit. Model training, inference and deployment are out of scope; see the separate documentation of those projects.</p>
+<p>This manual covers the path from the data-collection gripper hardware to data on disk: XHE MCAP recordings and V1 Training MCAP or LeRobot exports on the Backpack Kit, a <code>LeRobotDataset</code> on the Developer Kit. Model training, inference and deployment are out of scope; see the separate documentation of those projects.</p>
 
 
 

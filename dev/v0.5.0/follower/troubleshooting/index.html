@@ -1369,6 +1369,10 @@
       
         
       
+        
+      
+        
+      
     
     
     
@@ -1433,6 +1437,62 @@
   
   
     <li class="md-nav__item">
+      <a href="../setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    准备与自检
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    运动控制
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../api/" class="md-nav__link">
         
   
@@ -1440,7 +1500,7 @@
   <span class="md-ellipsis">
     
   
-    运动控制与 API
+    API 与示例
   
 
     
@@ -1839,13 +1899,13 @@
 
 
 <h1 id="从夹爪故障排查">从夹爪故障排查<a class="headerlink" href="#从夹爪故障排查" title="锚点链接">¶</a></h1>
-<p>先运行<a href="../#self-check">自检</a>，多数问题可从其输出判断。本页的<strong>断电重启</strong>指拔下 24V 电源线，等约 2 秒再插回，USB 线不用拔。</p>
+<p>先运行<a href="../setup/#self-check">自检</a>，多数问题可从其输出判断。本页的<strong>断电重启</strong>指拔下 24V 电源线，等约 2 秒再插回，USB 线不用拔。</p>
 <h2 id="connect">无法找到或打开设备<a class="headerlink" href="#connect" title="锚点链接">¶</a></h2>
 <details class="failure">
 <summary>无法扫描到从夹爪</summary>
 <ul>
 <li>USB 线与 24V 电源都接好，<code>lsusb</code> 中应有 <code>1a86:55d2</code>；没有就换线缆或 USB 口。</li>
-<li>做完<a href="../#host">主机配置</a>（卸载 <code>brltty</code>、加入 <code>dialout</code> 组并重新登录、屏蔽 ModemManager 的 udev 规则）。</li>
+<li>做完<a href="../setup/#host">主机配置</a>（卸载 <code>brltty</code>、加入 <code>dialout</code> 组并重新登录、屏蔽 ModemManager 的 udev 规则）。</li>
 <li>关闭数采程序及其他占用夹爪的程序后重新扫描。</li>
 <li>仍显示 <code>Role.Unknown</code> 或序列号为空时，联系<a href="../../common/reference/#support">技术支持</a>。</li>
 </ul>
@@ -1870,7 +1930,7 @@
 <p><strong>原因</strong>：没有激活正确的环境、SDK 未重新编译，或（PC 版数采环境）子模块未更新。</p>
 <p><strong>解决</strong>：</p>
 <ul>
-<li>单独安装的 SDK：开一个新终端，<code>mamba activate taccap</code>，在 <code>TacCap-Gripper</code> 目录重新<a href="../#build">编译安装</a>。</li>
+<li>单独安装的 SDK：开一个新终端，<code>mamba activate taccap</code>，在 <code>TacCap-Gripper</code> 目录重新<a href="../setup/#build">编译安装</a>。</li>
 <li>PC 版数采环境：在数采仓库根目录更新子模块并重跑安装脚本，见<a href="../../pc/install/#22">克隆仓库与子模块</a>：</li>
 </ul>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>git<span class="w"> </span>submodule<span class="w"> </span>update<span class="w"> </span>--init<span class="w"> </span>--recursive
@@ -1916,12 +1976,12 @@
 <details class="failure">
 <summary>夹持硬物时夹爪突然松开，USB 断开</summary>
 <p><strong>原因</strong>：固件过旧，运动安全包络未生效，力矩过大拉低 24V 电压。</p>
-<p><strong>解决</strong>：断电重启，<a href="../firmware/#mcu-ota">升级固件</a>，再按<a href="../#motion-check">运动自检</a>确认显示 <code>ENFORCED</code>。同时确认 24V 电源适配器符合规格。</p>
+<p><strong>解决</strong>：断电重启，<a href="../firmware/#mcu-ota">升级固件</a>，再按<a href="../setup/#motion-check">运动自检</a>确认显示 <code>ENFORCED</code>。同时确认 24V 电源适配器符合规格。</p>
 </details>
 <details class="failure">
 <summary>长时间夹持后夹持力下降</summary>
 <p><strong>原因</strong>：电机发热后固件自动降低输出，是保护机制，不是故障。</p>
-<p><strong>解决</strong>：降低夹持力或缩短夹持时间，数据见<a href="../api/#force-position">运动控制</a>。</p>
+<p><strong>解决</strong>：降低夹持力或缩短夹持时间，数据见<a href="../control/#force-position">运动控制</a>。</p>
 </details>
 <details class="failure">
 <summary>启动其他脚本后，正在控制的夹爪松开</summary>

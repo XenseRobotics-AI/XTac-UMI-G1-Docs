@@ -1478,6 +1478,10 @@
       
         
       
+        
+      
+        
+      
     
     
     
@@ -1541,6 +1545,62 @@
   
   
     <li class="md-nav__item">
+      <a href="../../follower/setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Setup and self-check
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../follower/control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Motion control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../follower/api/" class="md-nav__link">
         
   
@@ -1548,7 +1608,7 @@
   <span class="md-ellipsis">
     
   
-    Motion control and API
+    API and examples
   
 
     
@@ -1892,11 +1952,11 @@
 </tr>
 <tr>
 <td>Wrist fisheye camera</td>
-<td>190° field of view, 640 × 480 @ 30fps</td>
+<td>190° field of view, 640×480 and 1920×1080, both at 30 fps</td>
 </tr>
 <tr>
 <td>IMU</td>
-<td>9-axis, 100Hz</td>
+<td>9-axis. Firmware 1.3.1 supports reporting at up to 1125 Hz. See the <a href="../../sdk/#migrate">SDK</a></td>
 </tr>
 <tr>
 <td>Opening encoder</td>
@@ -2020,8 +2080,12 @@
 <td>Pico4 Ultra Enterprise headset + trackers, 6-DoF</td>
 </tr>
 <tr>
-<td>Pose rate</td>
-<td>About 90Hz on the Developer Kit; every pose the headset reports is recorded on the Backpack Kit</td>
+<td>Pose refresh rate</td>
+<td>XTac UMI XR 0.4.4 reports headset pose and IMU at approximately 60 Hz. See the <a href="../../common/pico4/#pico-app">headset app</a></td>
+</tr>
+<tr>
+<td>Collector 0.5.0 headset video specifications</td>
+<td>Stereo (per eye): 1280×960 or 1600×1200, both at 30 fps<br>Right eye only: 1920×1440 @ 30 fps</td>
 </tr>
 <tr>
 <td>Positioning accuracy</td>
@@ -2057,7 +2121,7 @@
 </tr>
 <tr>
 <td>Disk-full rule</td>
-<td>The data disk counts as full at 80% and recording stops</td>
+<td>Collector 0.5.0 blocks new recordings when the recording disk reaches 70% usage</td>
 </tr>
 <tr>
 <td>Exported data size</td>

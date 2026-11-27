@@ -1367,6 +1367,10 @@
       
         
       
+        
+      
+        
+      
     
     
     
@@ -1430,6 +1434,62 @@
   
   
     <li class="md-nav__item">
+      <a href="../../follower/setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    准备与自检
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../follower/control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    运动控制
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../follower/api/" class="md-nav__link">
         
   
@@ -1437,7 +1497,7 @@
   <span class="md-ellipsis">
     
   
-    运动控制与 API
+    API 与示例
   
 
     
@@ -1941,7 +2001,9 @@
 </div>
 <p>不关的话，采集间隙灭屏/休眠（摘下头显放置也会触发）会挂起或杀掉 XTac UMI XR，而重启它会重设世界系（见<a href="#pico-frame">坐标系对齐</a>）。</p>
 <h2 id="pico-app">安装 XTac UMI XR<a class="headerlink" href="#pico-app" title="锚点链接">¶</a></h2>
-<p>APK 文件名形如 <code>XTac-UMI-XR-&lt;版本&gt;.apk</code>，当前版本 0.3.9，用头显文件管理安装：</p>
+<p>XTac UMI XR <strong>0.4.4</strong> 于 2026-11-26 发布。通过<a href="../reference/#support">技术支持</a>获取 <code>XTac-UMI-XR-0.4.4.apk</code>（124.3 MB），在头显文件管理中安装。头显应用单独更新。</p>
+<p>0.4.4 优化了头显位姿和 IMU 数据采集，以及追踪器与头显的数据时间同步。IMU 和位姿数据上报频率约为 <strong>60 Hz</strong>；Collector 0.5.0 新增的头显图像规格为 <strong>30 fps</strong>，见<a href="../../backpack/monitor-record/#project-task">项目设置</a>。新增头显功能需要配套新版应用，具体最低兼容版本待确认。</p>
+<p>安装步骤：</p>
 <ol>
 <li>
 <p>USB 线连头显与电脑，把 APK 拷到头显的 <code>Download/</code> 目录。</p>

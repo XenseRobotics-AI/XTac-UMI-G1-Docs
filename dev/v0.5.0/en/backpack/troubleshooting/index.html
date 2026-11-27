@@ -1483,6 +1483,10 @@
       
         
       
+        
+      
+        
+      
     
     
     
@@ -1546,6 +1550,62 @@
   
   
     <li class="md-nav__item">
+      <a href="../../follower/setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Setup and self-check
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../follower/control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Motion control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../follower/api/" class="md-nav__link">
         
   
@@ -1553,7 +1613,7 @@
   <span class="md-ellipsis">
     
   
-    Motion control and API
+    API and examples
   
 
     
@@ -1990,8 +2050,8 @@
 </details>
 <details class="failure">
 <summary>Recording refused: “… gripper firmware version … is too old; this Collector version requires 1.2.7 or later”</summary>
-<p><strong>Cause:</strong> from 0.4.7 the leader gripper firmware must be ≥ 1.2.7; the message names the side and its current version.</p>
-<p><strong>Fix:</strong> flash leader gripper firmware 1.2.7 or later as in <a href="../versions/#gripper-firmware">Gripper firmware</a>, power-cycle the backpack, then record. For future upgrades, flash the firmware first as in <a href="../versions/#order">Upgrade order</a>.</p>
+<p><strong>Cause:</strong> Collector 0.5.0 requires leader gripper firmware 1.2.7 or later and follower firmware 1.2.17 or later. 1080p wrist projects require firmware 1.3.1 and matching fisheye calibration.</p>
+<p><strong>Fix:</strong> Follow the <a href="../versions/#gripper-firmware">gripper firmware instructions</a>. Reconnect USB for a leader. Reconnect 24V power for a follower, leaving USB connected. Verify the version in Device information before recording.</p>
 </details>
 <details class="failure">
 <summary>Recording refused: “Task '…' has reached its cumulative collection target (N/M)”</summary>
@@ -2029,8 +2089,8 @@
 <p><strong>Fix:</strong> make sure the headset is connected, XTac UMI XR is running in the foreground and shows "Connected", and its version matches the <a href="../versions/#baseline">version baseline</a>, then retry.</p>
 </details>
 <details class="failure">
-<summary>Recording refused: “Recording disk is N% used, at the 80% limit”</summary>
-<p><strong>Cause:</strong> 20% is reserved for transcode intermediates and exports, so the disk never fills up.</p>
+<summary>Recording refused: “Recording disk is N% used, at the 70% limit”</summary>
+<p><strong>Cause:</strong> Collector 0.5.0 blocks new recordings at 70% recording-disk usage to leave space for exports.</p>
 <p><strong>Fix:</strong></p>
 <ul>
 <li><strong>Archive</strong>: after exporting the data (download or upload), <a href="../projects-export/#archive">archive</a> it.</li>
@@ -2110,12 +2170,12 @@
 </details>
 <h2 id="export">Replay, export and data<a class="headerlink" href="#export" title="锚点链接">¶</a></h2>
 <details class="failure">
-<summary>“Playback” is refused, stating that the camera preview is using it</summary>
+<summary>Collector 0.4.7 blocks playback because live preview is active</summary>
 <p><strong>Cause:</strong> replay and live preview share the backpack's hardware encoder. Replay is refused while Live monitoring is open in another tab or on another device; a camera is still treated as using the encoder for up to 15 seconds after it disconnects.</p>
 <p><strong>Fix:</strong> close the monitor page in other tabs and on other devices, wait a few seconds and click Playback again.</p>
 </details>
 <details class="failure">
-<summary>After archiving, those recordings cannot be replayed or exported in the other format</summary>
+<summary>Archived recordings cannot be played back or exported again</summary>
 <p><strong>Cause:</strong> expected behavior. <a href="../projects-export/#archive">Archiving</a> deletes the raw files that replay and export both read, keeping only the record; "Playback" for those episodes is grayed out with "Archived; local source files deleted".</p>
 <p><strong>Fix:</strong> export every required format before archiving. Recordings that were never uploaded have no copy once archived; the confirmation warns you.</p>
 </details>
@@ -2165,7 +2225,7 @@
 <details class="failure">
 <summary>After flashing the gripper firmware, the gripper works intermittently and frames are silently dropped</summary>
 <p><strong>Cause:</strong> flashing ends with a soft reset only, so the gripper's USB-to-serial chip is not power-cycled and remains in a degraded state.</p>
-<p><strong>Fix:</strong> power-cycle the backpack (or reconnect that gripper's Type-C cable), then check the firmware version in Device information; see <a href="../versions/#gripper-firmware">Gripper firmware</a>.</p>
+<p><strong>Fix:</strong> Wait for the gripper to finish restarting. Reconnect USB for a leader. Reconnect 24V power for a follower, leaving USB connected. Then check the firmware version. See <a href="../versions/#gripper-firmware">Gripper firmware</a>.</p>
 </details>
 <hr>
 <p>If the problem persists, open System → <a href="../system/#device-info">Device information</a>, click "Export diagnostics" and send the encrypted ZIP to technical support; if the console is unreachable or the download fails, send error screenshots first. The block of readings at the top right opens "System logs" for viewing errors. For contact channels and the information to include, see <a href="../../common/reference/#support">Support and feedback</a>.</p>

@@ -1594,6 +1594,10 @@
       
         
       
+        
+      
+        
+      
     
     
     
@@ -1657,6 +1661,62 @@
   
   
     <li class="md-nav__item">
+      <a href="../../follower/setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    准备与自检
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../follower/control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    运动控制
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../follower/api/" class="md-nav__link">
         
   
@@ -1664,7 +1724,7 @@
   <span class="md-ellipsis">
     
   
-    运动控制与 API
+    API 与示例
   
 
     
@@ -2096,7 +2156,7 @@
 <tr>
 <td>夹爪固件</td>
 <td>命令集 V2.1（帧格式 V1.8），leader ≥ 1.2.0 / follower ≥ 1.1.0</td>
-<td>leader 1.3.1 / follower 1.3.1，随 SDK 走，以 <code>firmware/manifest.json</code> 为准</td>
+<td>主、从夹爪均为 1.3.1，命令集 V2.11，随 SDK 0.5.0 提供，以 <code>firmware/manifest.json</code> 为准</td>
 </tr>
 <tr>
 <td><code>xensesdk</code></td>
@@ -2133,7 +2193,7 @@
 </tr>
 <tr>
 <td><strong>命令集</strong></td>
-<td><strong><code>V2.1</code></strong></td>
+<td><strong><code>V2.11</code></strong>（固件 1.3.1）；行程标定最低要求为 <code>V2.1</code></td>
 <td>固件实现的命令。行程标定的 <code>EncoderMaxCal</code> 由 V2.1 引入（V2.0 鱼眼标定，V1.9 LED 与私有电机参数）</td>
 </tr>
 <tr>
@@ -2184,6 +2244,7 @@
 <h2 id="whats-new">更新要点<a class="headerlink" href="#whats-new" title="锚点链接">¶</a></h2>
 <p>拉到任一新版本后都<strong>必须重跑 <code>./setup_env.sh --install</code></strong>，见<a href="#repo-update">仓库与子模块更新</a>。</p>
 <h3 id="whats-new-016">0.1.6<a class="headerlink" href="#whats-new-016" title="锚点链接">¶</a></h3>
+<p>2026-11-23 发布。配套的 <code>lerobot-xense</code> 版本为 0.5.1，两个数采仓库均更新 SDK 子模块至 0.5.0。</p>
 <ul>
 <li>夹爪 SDK 升到 <strong>0.5.0</strong>，附带固件升到主夹爪 / 从夹爪 <strong>1.3.1</strong>，请<a href="#ota">刷固件</a>。1.3.1 为腕部相机的 640×480 与 1920×1080 各存一份鱼眼内参；SDK 按固件能力自动适配，在 1.2.7 / 1.2.17 上照常运行。SDK 自身的变化见 <a href="../../sdk/#migrate">SDK · 从旧版本迁移</a>。</li>
 <li>从夹爪（<code>--robot.role=follower</code>）可以录制：开口度改为读电机状态并按设备自己的行程标定换算，与 SDK 的 <code>g.position()</code> 一致；只读，不使能电机。</li>
@@ -2224,8 +2285,8 @@
 <li>仓库、子模块与镜像地址迁到 <code>XenseRobotics-AI</code> 组织。</li>
 </ul>
 <h2 id="repo-update">仓库与子模块更新<a class="headerlink" href="#repo-update" title="锚点链接">¶</a></h2>
-<p>按发布 tag 更新，不要直接拉 <code>main</code>（可能含未发布改动）：</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>git<span class="w"> </span>fetch<span class="w"> </span>--tags
+<p>客户数采仓库 <code>xense-taccap-lerobot</code> 0.1.6 和 <code>lerobot-xense</code> 0.5.1 均使用 SDK 子模块 0.5.0。更新任一数采仓库后，在该仓库运行 <code>git fetch --tags --force</code> 和 <code>git submodule update</code>，随后在对应数采环境重新安装 SDK。以下是 <code>xense-taccap-lerobot</code> 的升级命令：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>git<span class="w"> </span>fetch<span class="w"> </span>--tags<span class="w"> </span>--force
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>git<span class="w"> </span>checkout<span class="w"> </span>v0.1.6
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>git<span class="w"> </span>submodule<span class="w"> </span>update<span class="w"> </span>--init<span class="w"> </span>--recursive<span class="w"> </span>--progress
 </span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>./setup_env.sh<span class="w"> </span>--install<span class="w">     </span><span class="c1"># 对齐依赖并重编 xense.taccap</span>
@@ -2259,7 +2320,7 @@
 <p class="admonition-title">先升级 SDK，再刷固件</p>
 <ul>
 <li>镜像随 SDK 走：先把子模块升到 SDK 0.5.0，用它刷写与校验，才能刷到 1.3.1；绝不要用低于 0.1.7 的 SDK 刷。</li>
-<li>新 SDK 与旧固件通信不变，先升 SDK 总是安全的。</li>
+<li>先安装配套 SDK 再更新固件。主夹爪固件 1.2.7 起，IMU 与编码器设备时间戳改用 1 MHz 时基，约 71 分钟回绕。字段格式不变，但语义改变。自行解析设备时间戳的程序也要更新。</li>
 <li>镜像版本以 <code>firmware/manifest.json</code> 里的 <code>version</code> 为准，不要从 SDK 版本号推。</li>
 </ul>
 </div>
@@ -2294,7 +2355,7 @@
 </span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>
 </span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="c1"># 3. 断电重插后,按"如何查版本"的脚本读回实际刷上的版本</span>
 </span></code></pre></div>
-<p>第 3 步用<a href="#check-versions">如何查版本</a>的脚本，读回须不低于 leader 1.2.0 / follower 1.1.0，刷当前附带镜像应为 1.3.1。之后回<a href="../calibration/#41">夹爪标定</a>标零点和行程上限。</p>
+<p>第 3 步用<a href="#check-versions">如何查版本</a>的脚本确认此次升级后的固件为 1.3.1。升级保留电机参数、CAN ID、电机型号和夹爪配置。旧设备保留原有 640×480 标定，使用 1920×1080 前须完成对应鱼眼标定。<a href="../calibration/#41">检查开合标定</a>，如缺失则完成标定。</p>
 <ul>
 <li>镜像名按给的路径、SDK 根目录、SDK <code>firmware/</code> 依次解析，任意目录可运行，连设备前就检查。</li>
 <li><code>--target-version</code> 通常不用写：只给校验日志和分区元数据打标记，脚本按 CRC32 在 <code>manifest.json</code> 里查出版本号，它不认识的镜像才需指定。</li>
@@ -2313,7 +2374,7 @@
 <p class="admonition-title">刷完必须断电重插一次</p>
 <p>这是升级流程的一步，不是排障手段。</p>
 <ul>
-<li>OTA 后是软复位，USB 转串口芯片没断电，设备停在降级状态：版本正确、数据流正常、错误计数为 0，却悄悄丢状态帧。实测 60 秒一轮，只做 OTA 丢 35~39 帧，断电重插后为 0。断电前的数据不可信。</li>
+<li>OTA 完成后的软复位无法让 USB 转串口芯片断电。完成下列断电重启前，即使设备显示正常也可能丢失状态帧。</li>
 <li>等夹爪重启完成再断电重插：主夹爪拔插 USB 线；从夹爪拔下 24V 电源线，等约 2 秒插回，USB 线不用拔（主控板和电机都由 24V 供电）。</li>
 </ul>
 </div>

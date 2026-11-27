@@ -1472,6 +1472,10 @@
       
         
       
+        
+      
+        
+      
     
     
     
@@ -1535,6 +1539,62 @@
   
   
     <li class="md-nav__item">
+      <a href="../../follower/setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Setup and self-check
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../follower/control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Motion control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../follower/api/" class="md-nav__link">
         
   
@@ -1542,7 +1602,7 @@
   <span class="md-ellipsis">
     
   
-    Motion control and API
+    API and examples
   
 
     
@@ -1976,12 +2036,12 @@
 <td>0.2N / 0.1mm</td>
 </tr>
 <tr>
-<td>Pose refresh</td>
-<td>About 90Hz on the Developer Kit; the Backpack Kit records every pose the headset reports</td>
+<td>Headset pose and IMU reporting</td>
+<td>Approximately 60 Hz with XTac UMI XR 0.4.4</td>
 </tr>
 <tr>
-<td>Tactile / wrist fisheye / IMU and encoder</td>
-<td>0–120Hz / 30fps / 100Hz</td>
+<td>Tactile video and gripper IMU</td>
+<td>XHE tactile video: 60 fps. Gripper firmware 1.3.1 IMU reporting limit: 1125 Hz</td>
 </tr>
 </tbody>
 </table>
@@ -2016,7 +2076,7 @@
 <h2 id="export">Export and upload<a class="headerlink" href="#export" title="锚点链接">¶</a></h2>
 <details class="question">
 <summary>What formats can the Backpack Kit export?</summary>
-<p>Export is per task, in two formats of equal standing that can both be exported: <strong>LeRobotDataset v3.0</strong> (<code>meta/</code> + <code>data/</code> + <code>videos/</code>, 30fps) or a <strong>training MCAP</strong> (<code>.train.mcap</code>, aligned to 30Hz). A precheck runs automatically before export. See <a href="../../backpack/projects-export/#formats">Export formats</a>.</p>
+<p>XHE projects can download a ZIP or upload original <code>.xhe.mcap</code> files by task. V1 projects can export <strong>LeRobotDataset v3.0</strong> (<code>meta/</code> + <code>data/</code> + <code>videos/</code>, 30 fps) and <strong>Training MCAP</strong> (<code>.train.mcap</code>, aligned to 30 Hz). New projects default to XHE. Choose V1 when creating a project that feeds a Training MCAP or LeRobot workflow. See <a href="../../backpack/projects-export/#formats">Export formats</a>.</p>
 </details>
 <details class="question">
 <summary>Where can data be uploaded to?</summary>
@@ -2028,7 +2088,7 @@
 </details>
 <details class="question">
 <summary>Why does it ask for a re-export after an upgrade?</summary>
-<p>The export rules changed, so old exports are marked stale automatically: 0.4.6 changed the pose origin and the left-hand convention, and 0.4.7 changed to each camera taking its own nearest frame, with pose and gripper opening interpolated at the frame time. Raw recordings are unaffected; just re-export the recordings whose raw files are still on the device. Do not merge old and new exports into one dataset. See <a href="../../backpack/troubleshooting/#export">Export version notes</a>.</p>
+<p>The first export after upgrading to Collector 0.5.0 rebuilds the old export cache. In earlier releases, 0.4.6 changed the pose origin and left-hand convention, and 0.4.7 changed to selecting each camera's nearest frame independently and interpolating pose and opening at the frame time. Re-export recordings whose source files are still available. See <a href="../../backpack/troubleshooting/#export">Export version notes</a>.</p>
 </details>
 <details class="question">
 <summary>Can Backpack Kit and Developer Kit data be merged for training?</summary>
@@ -2049,12 +2109,12 @@
 </details>
 <details class="question">
 <summary>How does a raw recording differ from an exported MCAP?</summary>
-<p>A raw recording stores each stream at its device's native rate (tactile 120fps, wrist 30fps, opening and IMU 100Hz), with images unrectified; the exported <code>.train.mcap</code> is aligned to 30Hz throughout, with images rectified according to the project settings. Raw files can only be downloaded one recording at a time in engineering mode, for troubleshooting and analysis, and are not training data. See <a href="../../backpack/projects-export/#mcap">MCAP</a>.</p>
+<p>XHE writes <code>.xhe.mcap</code> directly, retains native stream rates and sensor readings, and opens in Foxglove. V1 exports <code>.train.mcap</code> aligned to 30 Hz, with images corrected according to project settings. Legacy V1 engineering mode also supports downloading individual source recordings for analysis. See <a href="../../backpack/projects-export/#mcap">MCAP</a>.</p>
 </details>
 <h2 id="replay">Replay<a class="headerlink" href="#replay" title="锚点链接">¶</a></h2>
 <details class="question">
 <summary>Can I watch a recording on the console without downloading it?</summary>
-<p>Yes. On the Backpack Kit, click "Playback" at the end of a recording's row on the Project page: views, poses and opening play in sync, and the progress bar can be dragged. Playback and live preview share the hardware encoder and <strong>cannot run at the same time</strong> (it is refused while another tab or device has the monitor page open); archived recordings cannot be played back. See <a href="../../backpack/projects-export/#playback">Playback</a>.</p>
+<p>Yes. In Collector 0.5.0, once an XHE recording is finalized, click Playback on its row on the backpack console's Project page. Archived recordings cannot be played in the console. For Collector 0.4.7 playback controls and live preview restrictions, see <a href="../../backpack/projects-export/#playback">Playback</a>.</p>
 </details>
 <details class="question">
 <summary>On the Developer Kit, how do I watch while recording, and review afterwards?</summary>

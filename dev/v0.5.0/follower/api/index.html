@@ -12,7 +12,7 @@
         <link rel="canonical" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.5.0/follower/api/">
       
       
-        <link rel="prev" href="../">
+        <link rel="prev" href="../control/">
       
       
         <link rel="next" href="../firmware/">
@@ -30,7 +30,7 @@
     
     
       
-        <title>运动控制与 API - XTac UMI 文档 (预览)</title>
+        <title>API 与示例 - XTac UMI 文档 (预览)</title>
       
     
     
@@ -93,7 +93,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#运动控制与-api" class="md-skip">
+        <a href="#api-与示例" class="md-skip">
           跳转至
         </a>
       
@@ -133,7 +133,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              运动控制与 API
+              API 与示例
             
           </span>
         </div>
@@ -1369,6 +1369,10 @@
       
         
       
+        
+      
+        
+      
     
     
     
@@ -1430,6 +1434,62 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    准备与自检
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    运动控制
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -1449,7 +1509,7 @@
   <span class="md-ellipsis">
     
   
-    运动控制与 API
+    API 与示例
   
 
     
@@ -1467,7 +1527,7 @@
   <span class="md-ellipsis">
     
   
-    运动控制与 API
+    API 与示例
   
 
     
@@ -1493,57 +1553,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
       
         <li class="md-nav__item">
-  <a href="#first-motion" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        用键盘控制
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="用键盘控制">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#full-chain" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        全链路检查
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#controllers" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        两种控制器
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#basic" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        在程序里控制
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="在程序里控制">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
   <a href="#open" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1553,31 +1562,15 @@
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#impedance" class="md-nav__link">
+      
+        <li class="md-nav__item">
+  <a href="#controllers" class="md-nav__link">
     <span class="md-ellipsis">
       
-        阻抗控制
+        控制器
       
     </span>
   </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#force-position" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        力位控制
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -1586,17 +1579,6 @@
     <span class="md-ellipsis">
       
         读取状态
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#fault" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        故障与恢复
       
     </span>
   </a>
@@ -1938,87 +1920,20 @@
 
 
 
-<h1 id="运动控制与-api">运动控制与 API<a class="headerlink" href="#运动控制与-api" title="锚点链接">¶</a></h1>
-<p>开始前先做完<a href="../#install">安装与自检</a>，<strong>尤其是<a href="../#motion-check">运动自检</a></strong>。示例为 Python，C++ 接口同名，详见 <code>help(t.FollowerGripper)</code>。</p>
-<div class="admonition danger">
-<p class="admonition-title">会驱动真实电机</p>
-<p>运行前清空爪子的运动范围，手指远离夹爪，确认可以随时断开 24V。机器人上的从夹爪先在机器人静止时测试。</p>
-</div>
-<h2 id="first-motion">用键盘控制<a class="headerlink" href="#first-motion" title="锚点链接">¶</a></h2>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>python<span class="w"> </span>python/examples/gripper_console.py<span class="w"> </span>left
+<h1 id="api-与示例">API 与示例<a class="headerlink" href="#api-与示例" title="锚点链接">¶</a></h1>
+<p><span id="first-motion"></span><span id="full-chain"></span><span id="basic"></span><span id="impedance"></span><span id="force-position"></span><span id="fault"></span></p>
+<p>安装见<a href="../setup/#install">准备与自检</a>，键盘与程序控制见<a href="../control/">运动控制</a>。示例使用 Python，C++ 接口同名，详见 <code>help(t.FollowerGripper)</code>。</p>
+<h2 id="open">打开从夹爪<a class="headerlink" href="#open" title="锚点链接">¶</a></h2>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">xense.taccap</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">t</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">g</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">FollowerGripper</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">find_follower</span><span class="p">()</span><span class="o">.</span><span class="n">mcu_device</span><span class="p">)</span>        <span class="c1"># 只接一只</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="n">ep</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">e</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">t</span><span class="o">.</span><span class="n">scan_grippers</span><span class="p">()</span>                     <span class="c1"># 多只按左右与主从挑</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>          <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">side</span> <span class="o">==</span> <span class="n">t</span><span class="o">.</span><span class="n">Side</span><span class="o">.</span><span class="n">Left</span> <span class="ow">and</span> <span class="n">e</span><span class="o">.</span><span class="n">role</span> <span class="o">==</span> <span class="n">t</span><span class="o">.</span><span class="n">Role</span><span class="o">.</span><span class="n">Follower</span><span class="p">)</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="n">g</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">FollowerGripper</span><span class="p">(</span><span class="n">ep</span><span class="o">.</span><span class="n">mcu_device</span><span class="p">)</span>
 </span></code></pre></div>
-<table>
-<thead>
-<tr>
-<th>按键</th>
-<th>作用</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>j</code> / <code>k</code></td>
-<td>张开 / 闭合一步</td>
-</tr>
-<tr>
-<td><code>o</code> / <code>c</code></td>
-<td>全开 / 全合</td>
-</tr>
-<tr>
-<td><code>h</code></td>
-<td>停在当前位置</td>
-</tr>
-<tr>
-<td><code>d</code> / <code>e</code></td>
-<td>松开电机 / 恢复控制</td>
-</tr>
-<tr>
-<td><code>f</code></td>
-<td>清除故障</td>
-</tr>
-<tr>
-<td><code>q</code> 或 <code>Esc</code></td>
-<td>退出</td>
-</tr>
-</tbody>
-</table>
-<p>默认是阻抗控制；要以指定的力夹东西，加 <code>--mode force-position --grasp-torque 0.6</code>（夹持力，单位 N·m，不超过 1.1）。</p>
-<h3 id="full-chain">全链路检查<a class="headerlink" href="#full-chain" title="锚点链接">¶</a></h3>
-<p>SDK 0.4.4 起，控制台加 <code>--rerun</code>，按键开合的同时在 <a href="https://rerun.io">Rerun</a> 里实时显示这只从夹爪的全部数据：</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>python<span class="w"> </span>python/examples/gripper_console.py<span class="w"> </span>left<span class="w"> </span>--mode<span class="w"> </span>force-position<span class="w"> </span>--rerun
-</span></code></pre></div>
-<table>
-<thead>
-<tr>
-<th>曲线 / 画面</th>
-<th>看什么</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>开度与目标开度</td>
-<td>空载时开度跟上目标；夹住物体时停在目标之前</td>
-</tr>
-<tr>
-<td>实测力矩与命令力矩</td>
-<td>夹住时上升到设定的夹持力</td>
-</tr>
-<tr>
-<td>控制器状态</td>
-<td>文本记录，夹住时为 <code>HOLDING_FORCE</code>，故障为 <code>FAULT</code></td>
-</tr>
-<tr>
-<td>腕部相机</td>
-<td>帧率稳定在 30Hz</td>
-</tr>
-<tr>
-<td>视触觉图像、标记点位移、合力</td>
-<td>夹住物体时有响应，松开后回落</td>
-</tr>
-</tbody>
-</table>
-<p>投入使用或开始采集前，建议夹一个物体把这几项都看一遍。相机与查看器在电机使能前打开，<strong>启动时不要碰凝胶</strong>。
-其余参数（<code>--no-wrist</code>、<code>--save</code> 等）与 <code>rerun_viewer.py</code> 相同，见 <a href="../../sdk/#full-chain">SDK 示例 → 全链路检查</a>。</p>
-<h2 id="controllers">两种控制器<a class="headerlink" href="#controllers" title="锚点链接">¶</a></h2>
+<p>从夹爪序列号以 <code>s</code> 结尾，见<a href="../#sn">序列号</a>。扫描会中断其他程序（见<a href="../setup/#discover">找到设备</a>），只在启动时扫一次。</p>
+<h2 id="controllers">控制器<a class="headerlink" href="#controllers" title="锚点链接">¶</a></h2>
 <table>
 <thead>
 <tr>
@@ -2028,16 +1943,6 @@
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>适合</td>
-<td>跟随一个开度：遥操作、跟随主夹爪、执行策略</td>
-<td>以设定的力夹住物体</td>
-</tr>
-<tr>
-<td>被物体挡住时</td>
-<td>以 1.1N·m 顶住</td>
-<td>以设定的夹持力顶住，并报告已夹住</td>
-</tr>
 <tr>
 <td>控制器</td>
 <td><code>ImpedanceController</code></td>
@@ -2067,59 +1972,7 @@
 <li>配置一律用 <code>for_spec(g.motor.get_spec())</code> 生成，只按需要改夹持力。</li>
 <li>一只夹爪同时只运行一个控制器。</li>
 </ul>
-<h2 id="basic">在程序里控制<a class="headerlink" href="#basic" title="锚点链接">¶</a></h2>
-<h3 id="open">打开从夹爪<a class="headerlink" href="#open" title="锚点链接">¶</a></h3>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">xense.taccap</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">t</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">g</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">FollowerGripper</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">find_follower</span><span class="p">()</span><span class="o">.</span><span class="n">mcu_device</span><span class="p">)</span>        <span class="c1"># 只接一只</span>
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="n">ep</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">e</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">t</span><span class="o">.</span><span class="n">scan_grippers</span><span class="p">()</span>                     <span class="c1"># 多只按左右与主从挑</span>
-</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>          <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">side</span> <span class="o">==</span> <span class="n">t</span><span class="o">.</span><span class="n">Side</span><span class="o">.</span><span class="n">Left</span> <span class="ow">and</span> <span class="n">e</span><span class="o">.</span><span class="n">role</span> <span class="o">==</span> <span class="n">t</span><span class="o">.</span><span class="n">Role</span><span class="o">.</span><span class="n">Follower</span><span class="p">)</span>
-</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="n">g</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">FollowerGripper</span><span class="p">(</span><span class="n">ep</span><span class="o">.</span><span class="n">mcu_device</span><span class="p">)</span>
-</span></code></pre></div>
-<p>从夹爪序列号以 <code>s</code> 结尾，见<a href="../#sn">序列号</a>。扫描会中断其他程序（见<a href="../#discover">找到设备</a>），只在启动时扫一次。</p>
-<h3 id="impedance">阻抗控制<a class="headerlink" href="#impedance" title="锚点链接">¶</a></h3>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">xense.taccap</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">t</span>
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="n">g</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">FollowerGripper</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">find_follower</span><span class="p">()</span><span class="o">.</span><span class="n">mcu_device</span><span class="p">)</span>
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="n">cfg</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">ImpedanceConfig</span><span class="o">.</span><span class="n">for_spec</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">motor</span><span class="o">.</span><span class="n">get_spec</span><span class="p">())</span>
-</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>
-</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="n">g</span><span class="o">.</span><span class="n">motor</span><span class="o">.</span><span class="n">clear_fault</span><span class="p">()</span>
-</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="k">with</span> <span class="n">t</span><span class="o">.</span><span class="n">ImpedanceController</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">cfg</span><span class="p">)</span> <span class="k">as</span> <span class="n">c</span><span class="p">:</span>   <span class="c1"># 退出 with 时自动停止并松开电机</span>
-</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>    <span class="n">g</span><span class="o">.</span><span class="n">motor</span><span class="o">.</span><span class="n">enable</span><span class="p">()</span>
-</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>    <span class="n">c</span><span class="o">.</span><span class="n">set_target</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>                       <span class="c1"># 闭合</span>
-</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">"开度"</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">snapshot</span><span class="p">()</span><span class="o">.</span><span class="n">observation</span><span class="o">.</span><span class="n">position</span><span class="p">)</span>
-</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>    <span class="n">c</span><span class="o">.</span><span class="n">set_target</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>                       <span class="c1"># 张开</span>
-</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</span></code></pre></div>
-<p>遥操作或执行策略时，在控制循环里每个周期调用一次 <code>c.set_target(开度)</code> 即可，不需要等待。</p>
-<h3 id="force-position">力位控制<a class="headerlink" href="#force-position" title="锚点链接">¶</a></h3>
-<p>换一个配置和控制器，其余相同：</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">cfg</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">ForcePositionConfig</span><span class="o">.</span><span class="n">for_spec</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">motor</span><span class="o">.</span><span class="n">get_spec</span><span class="p">())</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="n">cfg</span><span class="o">.</span><span class="n">grasp_torque_nm</span> <span class="o">=</span> <span class="mf">0.6</span>                   <span class="c1"># 夹持力,不超过 1.1 N·m</span>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="n">g</span><span class="o">.</span><span class="n">motor</span><span class="o">.</span><span class="n">clear_fault</span><span class="p">()</span>
-</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="k">with</span> <span class="n">t</span><span class="o">.</span><span class="n">ForcePositionController</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">cfg</span><span class="p">)</span> <span class="k">as</span> <span class="n">c</span><span class="p">:</span>
-</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>    <span class="n">g</span><span class="o">.</span><span class="n">motor</span><span class="o">.</span><span class="n">enable</span><span class="p">()</span>
-</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>    <span class="n">c</span><span class="o">.</span><span class="n">set_target</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>                       <span class="c1"># 闭合夹取</span>
-</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">"夹住了"</span> <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">snapshot</span><span class="p">()</span><span class="o">.</span><span class="n">holding</span> <span class="k">else</span> <span class="s2">"没有夹到东西"</span><span class="p">)</span>
-</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>    <span class="n">c</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>                             <span class="c1"># 松开</span>
-</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</span></code></pre></div>
-<p>跟随连续目标时，力位控制比目标晚约一个发送周期（50Hz 下约 20ms），换来平顺的运动。</p>
-<div class="admonition danger">
-<p class="admonition-title">停止控制或断链时夹爪会松开</p>
-<p>控制器停止（退出 <code>with</code>、程序结束）、控制台按 <code>d</code> / <code>q</code>，或 USB 断开，夹爪会松开，<strong>夹持物会掉落</strong>。
-机器人夹持物体时，先将物体放到安全位置再停止控制。</p>
-</div>
-<div class="admonition warning">
-<p class="admonition-title">长时间夹持会降低夹持力</p>
-<p>电机发热后固件自动降低输出。实测 1.1N·m 持续夹 10 分钟，电机升到约 70°C；0.6N·m 稳定在约 49°C。
-需持续夹持数十分钟时，将夹持力降至约 0.6N·m。</p>
-</div>
+<p>完整的控制示例见<a href="../control/#basic">在程序里控制</a>。</p>
 <h2 id="state">读取状态<a class="headerlink" href="#state" title="锚点链接">¶</a></h2>
 <table>
 <thead>
@@ -2153,10 +2006,6 @@
 </tbody>
 </table>
 <p>控制中只用 <code>snapshot()</code> 读，另读电机会抢通信。</p>
-<h2 id="fault">故障与恢复<a class="headerlink" href="#fault" title="锚点链接">¶</a></h2>
-<p>控制器检测到异常会停下并卸力，<code>c.snapshot().state</code> 变为 <code>FAULT</code>，原因在 <code>c.snapshot().fault_reason</code>。
-排除原因后依次调用 <code>g.motor.clear_fault()</code> 和 <code>c.reset()</code> 即可继续；不能恢复时断电重启夹爪。
-常见原因见<a href="../troubleshooting/#fault">故障排查</a>。</p>
 <h2 id="motor-primitives">电机底层接口<a class="headerlink" href="#motor-primitives" title="锚点链接">¶</a></h2>
 <p><code>g.motor.submit_*</code> 等底层接口绕过控制器保护，<strong>请用控制器</strong>。</p>
 <p>下列接口改写夹爪或电机配置，<strong>须技术支持指导</strong>：
@@ -2165,7 +2014,11 @@
 <h2 id="camera">腕部相机<a class="headerlink" href="#camera" title="锚点链接">¶</a></h2>
 <p>默认关，开法同主夹爪，见<a href="../../sdk/#camera">腕部相机与鱼眼矫正</a>。</p>
 <h2 id="examples">示例脚本<a class="headerlink" href="#examples" title="锚点链接">¶</a></h2>
-<p>脚本在 <code>python/examples/</code>，从 SDK 源码目录运行（数采仓库 <code>third_party/taccap-gripper</code> 或单独安装的 <code>TacCap-Gripper</code>）；夹爪用 <code>left</code>、<code>right</code> 或完整序列号指定，只接一只可省；参数见 <code>--help</code>。脚本启动时会扫描设备，控制或数采运行时不要运行。</p>
+<p>脚本在 <code>python/examples/</code>，从 SDK 源码目录运行（数采仓库 <code>third_party/taccap-gripper</code> 或单独安装的 <code>TacCap-Gripper</code>）；夹爪用 <code>left</code>、<code>right</code> 或完整序列号指定，只接一只可省；参数见 <code>--help</code>。</p>
+<div class="admonition warning">
+<p class="admonition-title">运行示例前</p>
+<p>首次使用请完成<a href="../setup/">准备与自检</a>，并查看<a href="../control/">运动控制</a>的安全要求。脚本启动时会扫描设备。请先停止运行中的控制或数采程序。</p>
+</div>
 <table>
 <thead>
 <tr>
@@ -2177,12 +2030,12 @@
 <tbody>
 <tr>
 <td><code>follower_status.py</code></td>
-<td><a href="../#self-check">自检</a></td>
+<td><a href="../setup/#self-check">自检</a></td>
 <td>只读</td>
 </tr>
 <tr>
 <td><code>gripper_console.py</code></td>
-<td>键盘控制；<code>--rerun</code> 为<a href="#full-chain">全链路检查</a>（SDK 0.4.4 起）</td>
+<td>键盘控制；<code>--rerun</code> 为<a href="../control/#full-chain">全链路检查</a>（SDK 0.4.4 起）</td>
 <td><strong>动电机</strong></td>
 </tr>
 <tr>
@@ -2217,9 +2070,9 @@
 </tr>
 </tbody>
 </table>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>python<span class="w"> </span>python/examples/impedance_control.py<span class="w"> </span>left
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>python<span class="w"> </span>python/examples/force_position_control.py<span class="w"> </span>left<span class="w"> </span>--grasp-torque<span class="w"> </span><span class="m">0</span>.6
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>python<span class="w"> </span>python/examples/control_and_read.py<span class="w"> </span>left
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>python<span class="w"> </span>python/examples/impedance_control.py<span class="w"> </span>left
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>python<span class="w"> </span>python/examples/force_position_control.py<span class="w"> </span>left<span class="w"> </span>--grasp-torque<span class="w"> </span><span class="m">0</span>.6
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>python<span class="w"> </span>python/examples/control_and_read.py<span class="w"> </span>left
 </span></code></pre></div>
 
 
@@ -2258,7 +2111,7 @@
       <nav class="md-footer__inner md-grid" aria-label="页脚">
         
           
-          <a href="../" class="md-footer__link md-footer__link--prev" aria-label="上一页: 概览、安装与自检">
+          <a href="../control/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 运动控制">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
@@ -2268,7 +2121,7 @@
                 上一页
               </span>
               <div class="md-ellipsis">
-                概览、安装与自检
+                运动控制
               </div>
             </div>
           </a>

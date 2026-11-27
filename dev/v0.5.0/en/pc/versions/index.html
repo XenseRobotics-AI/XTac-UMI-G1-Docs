@@ -1594,6 +1594,10 @@
       
         
       
+        
+      
+        
+      
     
     
     
@@ -1657,6 +1661,62 @@
   
   
     <li class="md-nav__item">
+      <a href="../../follower/setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Setup and self-check
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../follower/control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Motion control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../follower/api/" class="md-nav__link">
         
   
@@ -1664,7 +1724,7 @@
   <span class="md-ellipsis">
     
   
-    Motion control and API
+    API and examples
   
 
     
@@ -2096,7 +2156,7 @@
 <tr>
 <td>Gripper firmware</td>
 <td>Command set V2.1 (wire framing V1.8), leader ≥ 1.2.0 / follower ≥ 1.1.0</td>
-<td>leader 1.3.1 / follower 1.3.1, follows the SDK, with <code>firmware/manifest.json</code> as the authority</td>
+<td>Leader and follower 1.3.1, command set V2.11, bundled with SDK 0.5.0, with <code>firmware/manifest.json</code> as the authority</td>
 </tr>
 <tr>
 <td><code>xensesdk</code></td>
@@ -2133,7 +2193,7 @@
 </tr>
 <tr>
 <td><strong>Command set</strong></td>
-<td><strong><code>V2.1</code></strong></td>
+<td><strong><code>V2.11</code></strong> in firmware 1.3.1. Travel calibration requires <code>V2.1</code> or later</td>
 <td>The commands the firmware implements. <code>EncoderMaxCal</code>, used by travel calibration, came with V2.1 (V2.0 fisheye calibration, V1.9 the LED and the private motor parameters)</td>
 </tr>
 <tr>
@@ -2184,6 +2244,7 @@
 <h2 id="whats-new">What's new<a class="headerlink" href="#whats-new" title="锚点链接">¶</a></h2>
 <p>After moving to any new version you <strong>must re-run <code>./setup_env.sh --install</code></strong>, see <a href="#repo-update">Repo and submodule update</a>.</p>
 <h3 id="whats-new-016">0.1.6<a class="headerlink" href="#whats-new-016" title="锚点链接">¶</a></h3>
+<p>Released 2026-11-23. The corresponding <code>lerobot-xense</code> version is 0.5.1. Both collection repositories update the SDK submodule to 0.5.0.</p>
 <ul>
 <li>The gripper SDK moves to <strong>0.5.0</strong> and the bundled firmware to leader / follower <strong>1.3.1</strong>; <a href="#ota">flash it</a>. 1.3.1 stores a separate fisheye calibration for 640×480 and 1920×1080 wrist cameras; the SDK adapts to the firmware's capabilities and still runs on 1.2.7 / 1.2.17. Changes in the SDK itself are in <a href="../../sdk/#migrate">SDK · Migrating from older versions</a>.</li>
 <li>Follower grippers (<code>--robot.role=follower</code>) can be recorded: the opening is now read from motor status and converted with the device's own travel calibration, matching the SDK's <code>g.position()</code>; read-only, the motor is never enabled.</li>
@@ -2224,8 +2285,8 @@
 <li>The repo, submodule and image paths moved to the <code>XenseRobotics-AI</code> organization.</li>
 </ul>
 <h2 id="repo-update">Repo and submodule update<a class="headerlink" href="#repo-update" title="锚点链接">¶</a></h2>
-<p>Update by release tag, not <code>main</code> (it may carry unreleased changes):</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>git<span class="w"> </span>fetch<span class="w"> </span>--tags
+<p>Both collection repositories, <code>xense-taccap-lerobot</code> 0.1.6 and <code>lerobot-xense</code> 0.5.1, use SDK submodule 0.5.0. After updating either collection repository, run <code>git fetch --tags --force</code> and <code>git submodule update</code> there. Then reinstall the SDK in its collection environment. The commands below apply to <code>xense-taccap-lerobot</code>:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>git<span class="w"> </span>fetch<span class="w"> </span>--tags<span class="w"> </span>--force
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>git<span class="w"> </span>checkout<span class="w"> </span>v0.1.6
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>git<span class="w"> </span>submodule<span class="w"> </span>update<span class="w"> </span>--init<span class="w"> </span>--recursive<span class="w"> </span>--progress
 </span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>./setup_env.sh<span class="w"> </span>--install<span class="w">     </span><span class="c1"># realign the dependencies and rebuild xense.taccap</span>
@@ -2259,7 +2320,7 @@
 <p class="admonition-title">Upgrade the SDK first, then flash the firmware</p>
 <ul>
 <li>Images follow the SDK: bring the submodule to SDK 0.5.0 and flash and verify with it to reach 1.3.1; never flash with an SDK older than 0.1.7.</li>
-<li>A new SDK talks to old firmware unchanged, so upgrading the SDK first is always safe.</li>
+<li>Install the matching SDK before updating the firmware. Starting with leader firmware 1.2.7, IMU and encoder device timestamps use a 1 MHz timer and wrap after about 71 minutes. The field format is unchanged, but its semantics have changed. Update any application that parses device timestamps.</li>
 <li>The <code>version</code> field in <code>firmware/manifest.json</code> is the authority on the image version; do not infer it from the SDK version.</li>
 </ul>
 </div>
@@ -2294,7 +2355,7 @@
 </span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>
 </span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="c1"># 3. After unplug and replug, read back the flashed version with the script in "How to check versions"</span>
 </span></code></pre></div>
-<p>For step 3 use the script in <a href="#check-versions">How to check versions</a>: it must read back at least leader 1.2.0 / follower 1.1.0, and the images bundled now read back 1.3.1. Then go back to <a href="../calibration/#41">Gripper calibration</a> and set the zero and travel limit.</p>
+<p>For step 3, use the script in <a href="#check-versions">How to check versions</a> to verify firmware 1.3.1. The upgrade preserves motor parameters, CAN ID, motor model, and gripper settings. Upgraded devices retain existing 640×480 calibration. Calibrate 1920×1080 before using that resolution. <a href="../calibration/#41">Verify opening and travel calibration</a> and complete it if missing.</p>
 <ul>
 <li>The image name is resolved against the path you gave, the SDK root and the SDK's <code>firmware/</code>, in that order, so the script can be run from any directory; it is checked before connecting.</li>
 <li><code>--target-version</code> is normally unnecessary: it only tags the verification log and partition metadata; the script looks the version up in <code>manifest.json</code> by CRC32, so you need it only for an image <code>manifest.json</code> does not know.</li>
@@ -2313,7 +2374,7 @@
 <p class="admonition-title">You must unplug and replug once after flashing</p>
 <p>This is a step of the upgrade, not a troubleshooting move.</p>
 <ul>
-<li>The reboot after OTA is a soft reset: the USB-serial bridge never loses power and the device stays degraded: correct version, stream running, error counters at 0, yet quietly dropping status frames. Over 60-second runs, OTA alone loses 35 to 39 frames, after unplug and replug 0. Data before the power cycle is untrustworthy.</li>
+<li>The soft reset after OTA does not power-cycle the USB serial bridge. The device can appear healthy and still drop status frames until the power cycle below.</li>
 <li>Unplug and replug only after the gripper has finished rebooting. Leader: unplug and replug USB. Follower: unplug the 24V power cable, wait about 2 seconds and plug it back in, leaving USB connected (controller and motor both run on 24V).</li>
 </ul>
 </div>

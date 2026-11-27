@@ -1617,6 +1617,10 @@
       
         
       
+        
+      
+        
+      
     
     
     
@@ -1680,6 +1684,62 @@
   
   
     <li class="md-nav__item">
+      <a href="../../follower/setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    准备与自检
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../follower/control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    运动控制
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../follower/api/" class="md-nav__link">
         
   
@@ -1687,7 +1747,7 @@
   <span class="md-ellipsis">
     
   
-    运动控制与 API
+    API 与示例
   
 
     
@@ -2784,7 +2844,7 @@
 </div>
 <p>连不上见<a href="../troubleshooting/#head-camera">故障排查</a>。</p>
 <h2 id="57">可选：腕相机鱼眼矫正<a class="headerlink" href="#57" title="锚点链接">¶</a></h2>
-<p>腕相机是 190° 鱼眼，默认落盘原始帧。<code>--robot.wrist_undistort=true</code> 用本夹爪 flash 里的内参在写入前矫正成直线投影，<code>--robot.wrist_undistort_balance</code> 调视野。只支持 640×480（固件鱼眼记录只有 8 个浮点数、不含图像尺寸），配别的 <code>--robot.wrist_camera_width/_height</code> 会在解析命令行时退出。</p>
+<p>腕相机是 190° 鱼眼，默认记录原始帧。<code>--robot.wrist_undistort=true</code> 在写入前使用本夹爪内参矫正，<code>--robot.wrist_undistort_balance</code> 调整视野。旧版仅支持 640×480。SDK 0.5.0 与夹爪固件 1.3.1 支持 640×480 和 1920×1080 的独立标定，首次使用 1080p 前须完成对应分辨率的标定。</p>
 <div class="admonition warning">
 <p class="admonition-title">开与不开，录出来的是两种数据，而且看不出来</p>
 <p>矫正与原始的 <code>wrist_cam</code> 形状、dtype 相同，混用无提示，所以录制时记入 <a href="#robot-id"><code>meta/hardware.json</code></a> 的每个 unit（没矫正记 <code>{"applied": false}</code>）：</p>
@@ -2801,7 +2861,7 @@
 </ul>
 <p>代码里优先用 <code>Calibration::resolve_fisheye_for(宽, 高)</code>（返回 <code>(calibration, is_reference, reason)</code>）而不是 <code>read_fisheye()</code>。SDK 0.5.0 + 固件 1.3.1 起，640×480 与 1920×1080 的内参各存一份、按相机分辨率选用；夹爪只有另一种分辨率的标定时报错，不回退到参考内参，见 <a href="../../sdk/#camera">SDK · 腕部相机与鱼眼矫正</a>。</p>
 <ul>
-<li><strong>参考值只够看画面</strong>：主点逐台漂移（实测一台差 37.7 像素）。要在矫正图上按像素测量（视觉伺服、手眼标定、尺寸估计），先存本机标定：<code>python third_party/taccap-gripper/python/examples/fisheye_cal.py set-fisheye right --width 640 --height 480</code>（按相机实际分辨率填写；接两只时用 <code>left</code> / <code>right</code> 或完整 SN 指定，只接一只可省略）。</li>
+<li><strong>参考值只用于预览</strong>：不能替代设备实际标定。要在矫正图上做测量或视觉标定，请使用设备在当前分辨率下的实际内参。按 <a href="../../sdk/#camera">SDK 鱼眼标定说明</a>写入并核对对应分辨率的标定。</li>
 <li><strong>矫正后画面偏心、略倾斜不代表标定错</strong>：去畸变绕主点而非画幅中心，传感器未必在光心上（实测一台 <code>cx = 359.1</code>，爪尖中点 x = 360.1，差约 1 像素）。别改 <code>cx</code>，改回 320 更偏且引入倾斜。</li>
 </ul>
 

@@ -1483,6 +1483,10 @@
       
         
       
+        
+      
+        
+      
     
     
     
@@ -1546,6 +1550,62 @@
   
   
     <li class="md-nav__item">
+      <a href="../../follower/setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    准备与自检
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../follower/control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    运动控制
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../follower/api/" class="md-nav__link">
         
   
@@ -1553,7 +1613,7 @@
   <span class="md-ellipsis">
     
   
-    运动控制与 API
+    API 与示例
   
 
     
@@ -1990,8 +2050,8 @@
 </details>
 <details class="failure">
 <summary>开录被拒：「…夹爪固件版本 … 过旧，本版本采集端要求 1.2.7 及以上」</summary>
-<p><strong>原因</strong>：0.4.7 起要求主夹爪固件 ≥ 1.2.7，提示里写明是哪一侧、当前版本号。</p>
-<p><strong>解决</strong>：按<a href="../versions/#gripper-firmware">夹爪固件</a>刷写 1.2.7 及以上的主夹爪固件，背包断电重启后再开录。以后升级按<a href="../versions/#order">升级顺序</a>先刷固件。</p>
+<p><strong>原因</strong>：Collector 0.5.0 要求主夹爪固件至少 1.2.7、从夹爪至少 1.2.17。1080p 腕部项目要求 1.3.1 和对应鱼眼标定。</p>
+<p><strong>解决</strong>：按<a href="../versions/#gripper-firmware">夹爪固件</a>升级。主夹爪重新拔插 USB，从夹爪重新拔插 24V 电源（无需拔插 USB）。在设备信息中复查版本后再开录。</p>
 </details>
 <details class="failure">
 <summary>开录被拒：「任务「…」已达到累计采集目标（N/M）」</summary>
@@ -2029,8 +2089,8 @@
 <p><strong>解决</strong>：确认头显已连接、XTac UMI XR 在前台运行并显示「连接成功」，版本符合<a href="../versions/#baseline">版本基线</a>，再重试。</p>
 </details>
 <details class="failure">
-<summary>开录被拒：「录制盘已用 N%，达到 80% 上限」</summary>
-<p><strong>原因</strong>：预留 20% 给转码中间文件与导出，避免磁盘写满。</p>
+<summary>开录被拒：「录制盘已用 N%，达到 70% 上限」</summary>
+<p><strong>原因</strong>：Collector 0.5.0 在录制盘占用达到 70% 时禁止开始新录制，为后续导出预留空间。</p>
 <p><strong>解决</strong>：</p>
 <ul>
 <li><strong>归档</strong>：已采集数据导出（下载或上传）后，执行<a href="../projects-export/#archive">归档</a>。</li>
@@ -2110,12 +2170,12 @@
 </details>
 <h2 id="export">回放、导出与数据<a class="headerlink" href="#export" title="锚点链接">¶</a></h2>
 <details class="failure">
-<summary>点击「回放」被拒绝，提示被相机预览占用</summary>
+<summary>Collector 0.4.7 点击「回放」被拒绝，提示被相机预览占用</summary>
 <p><strong>原因</strong>：回放与实时预览共用背包的硬件编码器。其他标签页或设备开着实时监控时回放被拒绝，相机断开后最多 15 秒内仍视为占用。</p>
 <p><strong>解决</strong>：关闭其他标签页与设备上的监控页，等待几秒后再点击回放。</p>
 </details>
 <details class="failure">
-<summary>归档后的录制无法回放，也无法导出另一种格式</summary>
+<summary>归档后的录制无法回放或再次导出</summary>
 <p><strong>原因</strong>：预期行为。<a href="../projects-export/#archive">归档</a>会删除回放与导出所需的原始文件，只保留记录；条目的「回放」按钮置灰，并显示「已归档，本地源已删除」。</p>
 <p><strong>解决</strong>：归档前先导出所需的全部格式。未上传过的条目归档后没有副本，确认框会提示。</p>
 </details>
@@ -2165,7 +2225,7 @@
 <details class="failure">
 <summary>刷写夹爪固件后夹爪工作不稳定，数据中出现静默丢帧</summary>
 <p><strong>原因</strong>：刷写完成后仅进行软复位，夹爪的 USB 转串口芯片未断电，停留在降级状态。</p>
-<p><strong>解决</strong>：将背包断电后重新上电（或重新插拔该夹爪的 Type-C 线），然后在设备信息核对固件版本，见<a href="../versions/#gripper-firmware">夹爪固件</a>。</p>
+<p><strong>解决</strong>：待夹爪重启后，主夹爪重新拔插 USB，从夹爪重新拔插 24V 电源（无需拔插 USB），然后核对固件版本，见<a href="../versions/#gripper-firmware">夹爪固件</a>。</p>
 </details>
 <hr>
 <p>仍未解决时，到 系统 → <a href="../system/#device-info">设备信息</a> 点「导出诊断」，把加密 ZIP 交给技术支持；控制台打不开或下载失败时先提供报错截图。顶栏右上角的田字读数可打开「系统日志」查看错误。反馈渠道与材料清单见<a href="../../common/reference/#support">支持与反馈</a>。</p>

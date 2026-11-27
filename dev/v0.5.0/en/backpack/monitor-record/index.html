@@ -1544,6 +1544,10 @@
       
         
       
+        
+      
+        
+      
     
     
     
@@ -1607,6 +1611,62 @@
   
   
     <li class="md-nav__item">
+      <a href="../../follower/setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Setup and self-check
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../follower/control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Motion control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../follower/api/" class="md-nav__link">
         
   
@@ -1614,7 +1674,7 @@
   <span class="md-ellipsis">
     
   
-    Motion control and API
+    API and examples
   
 
     
@@ -1923,7 +1983,7 @@
 
 <h1 id="live-monitoring-and-recording">Live monitoring and recording<a class="headerlink" href="#live-monitoring-and-recording" title="锚点链接">¶</a></h1>
 <p>This page covers the console's "Live monitoring" page. Button gestures, LED patterns and voice prompts are in <a href="../gripper/">Gripper buttons, LEDs and voice</a>.</p>
-<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/backpack/monitor-live-en.webp" data-desc-position="bottom"><img alt="The Live monitoring page" src="../../../assets/backpack/monitor-live-en.webp"></a></p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/backpack/monitor-live-en.webp" data-desc-position="bottom"><img alt="Earlier Live monitoring screen. Collector 0.5.0 distinguishes the left and right grippers" src="../../../assets/backpack/monitor-live-en.webp"></a></p>
 <ul>
 <li><strong>Top bar</strong>: device status (bandwidth, CPU, memory, disk, cameras, live time, recording time, system).</li>
 <li><strong>Middle</strong>: the side columns each hold one gripper's fisheye view plus its left-finger / right-finger visuotactile feeds; the center column holds the headset's stereo pair, the "Arm / headset pose" 3D view (with a trail of about 1.5 seconds behind each end effector) and, below it, the left and right gripper opening-angle cards.</li>
@@ -1957,8 +2017,8 @@
 </tr>
 <tr>
 <td>Free disk space</td>
-<td>The top bar's "Disk" usage is below 80% (recording disk, measured on the device); hovering shows the mount point, used, total and available space</td>
-<td>At 80% recording is refused; <a href="../projects-export/#archive">export and archive</a> the data you have, or delete recordings you do not need</td>
+<td>The top bar's "Disk" usage is below 70% (recording disk, measured on the device); hovering shows the mount point, used, total and available space</td>
+<td>At 70% recording is refused; <a href="../projects-export/#archive">export and archive</a> the data you have, or delete recordings you do not need</td>
 </tr>
 <tr>
 <td>Recording state</td>
@@ -1968,20 +2028,21 @@
 </tbody>
 </table>
 <ul>
-<li>The preview is encoded once by the backpack's hardware encoder and sent to every device with the console open; headset and visuotactile previews are half resolution, so looking coarser than the recording is normal. Recording bypasses the preview path: the MCAP holds the cameras' raw MJPEG frames at full resolution.</li>
+<li>Preview and recording use separate paths. XHE always uses H.264 during recording. V1 projects can enable streaming encoding in advanced settings.</li>
 <li>On a weak tablet network, only the dropped feed shows "Network unstable; waiting to recover" and reconnects automatically; the others are unaffected and there is no need to refresh.</li>
 </ul>
 <h2 id="project-task">Picking a project and task<a class="headerlink" href="#project-task" title="锚点链接">¶</a></h2>
 <p>Recordings sit under a "project → task" hierarchy. The two drop-downs at the bottom of the Live monitoring page pick the project and task; their last entries, "New project…" and "New task…", create one on the spot. You can also create them on the <a href="../projects-export/">Project page</a> and set a task as the current target there.</p>
 <p>A new project fixes its <strong>capture config</strong> at creation. <strong>Once created it is frozen</strong>; for different settings, create a new project (an empty project can be deleted and recreated). The System page shows it <a href="../system/#capture-mode">read-only</a>. A project name cannot duplicate that of an unarchived project, and task names within a project must be unique too.</p>
 <ul>
-<li><strong>Capture mode</strong>: one of "Dual gripper", "Dual gripper + stereo headset", "Dual gripper + headset right eye".</li>
-<li><strong>PICO resolution per eye</strong>: 640 × 480 or 1024 × 768, only for modes that record headset video.</li>
+<li><strong>Recording format and streaming encoding</strong>: New projects default to XHE. XHE encodes video as H.264 during recording, writes it to <code>.xhe.mcap</code>, and exports only the original XHE MCAP. Only V1 projects can export LeRobot or Training MCAP. The streaming encoding setting applies only to V1. It is off by default and can be enabled in advanced settings. Existing projects retain their settings.</li>
+<li><strong>Capture mode</strong>: Choose Dual gripper, Dual gripper + stereo headset, or Dual gripper + headset right eye. New projects default to dual grippers with stereo headset fisheye.</li>
+<li><strong>PICO resolution</strong>: When you create a project in the console, the capture mode sets the resolution automatically. Stereo uses 1280×960 per eye, and right-eye-only capture uses 1920×1440, both at 30 fps. Existing projects keep their resolution. These features require a <a href="../../common/pico4/#pico-app">compatible newer headset app</a>.</li>
 <li><strong>PICO image source</strong>: fisheye or undistorted images.</li>
-<li><strong>Headset mount</strong>: On head / Around neck, only for modes that record headset video; On head by default. Around the neck the headset tracks the chest, and the <a href="#initial-pose">starting-pose check</a> uses the neck range. A dataset can only have one mount.</li>
-<li><strong>Export quality</strong>: High quality / Standard / Compact, for all video exports in the project; High quality produces larger files, Compact smaller ones.</li>
+<li><strong>Headset mount</strong>: In both Dual gripper + stereo headset and Dual gripper + headset right eye modes, choose On head or Around neck. The default is On head. Around neck records the pose at chest level, and the <a href="#initial-pose">starting-pose check</a> uses the neck range. Use one mount per dataset.</li>
+<li><strong>Export quality and video encoding</strong>: New projects default to High. Standard and Compact are also available. H.265 and MJPEG apply only to V1 exports. XHE exports the original MCAP with H.264 video and ignores the video codec setting.</li>
 <li><strong>Tactile rectified image export orientation</strong>: 700 × 400 landscape by default, or a further 90° counterclockwise for 400 × 700.</li>
-<li><strong>Wrist fisheye</strong>: whether to rectify its distortion on export, see <a href="../system/#undistort">Wrist fisheye rectification</a>.</li>
+<li><strong>Wrist fisheye</strong>: V1 projects can choose whether to rectify distortion on export. See <a href="../system/#undistort">Wrist fisheye rectification</a>.</li>
 <li><strong>Upload backend and default export format</strong>: you can bind one configured at <a href="../system/#upload">System → Upload configurations</a> as the project's default; without a binding you pick one at upload time.</li>
 </ul>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/backpack/new-project-en.webp" data-desc-position="bottom"><img alt="Creating a project" src="../../../assets/backpack/new-project-en.webp" width="360"></a></p>
@@ -2022,9 +2083,9 @@
 </ul>
 <p>Camera parameters and rectification:</p>
 <ul>
-<li><strong>Wrist cameras and tactile sensors</strong>: fixed at 640×480 @ 30fps and 640×480 @ 120fps respectively, not adjustable.</li>
-<li><strong>All rectification happens at export</strong>: tactile is rectified geometrically in the chosen orientation; wrist fisheye rectification, if on, uses the calibration parameters frozen into the recording when it started.</li>
-<li><strong>LeRobot export</strong>: fixed at 30fps.</li>
+<li><strong>Wrist cameras and tactile sensors</strong>: Choose 640×480 or 1920×1080 wrist capture when creating a project. 1080p requires gripper firmware 1.3.1 and matching fisheye calibration. XHE records tactile video at 60 fps.</li>
+<li><strong>V1 export rectification</strong>: Tactile images are geometrically rectified in the chosen orientation. If wrist fisheye rectification is enabled, export uses the calibration parameters saved at the start of recording.</li>
+<li><strong>V1 LeRobot export</strong>: Fixed at 30 fps. When streaming encoding is enabled for V1, video is encoded at its native frame rate and written to disk during recording, at the same quality as High exports. Export can reuse the encoded video to reduce transcoding.</li>
 </ul>
 <h2 id="record">Recording<a class="headerlink" href="#record" title="锚点链接">¶</a></h2>
 <ul>
@@ -2035,10 +2096,10 @@
 <h3 id="record-gates">Recording gates<a class="headerlink" href="#record-gates" title="锚点链接">¶</a></h3>
 <p>Whether started from a gripper button or the console, the device checks these in order and stops at the first failure:</p>
 <ol>
-<li>Disk usage below 80%;</li>
+<li>Disk usage below 70%;</li>
 <li>A project and task are selected, and the task's cumulative count has not reached its target;</li>
-<li>The gripper MCUs are online;</li>
-<li>Pico ready: the headset is connected with pose and clock sync working; in modes that record headset video, the selected eye's video must be working too;</li>
+<li>Gripper MCU online. Collector 0.5.0 requires leader firmware 1.2.7 or later and follower firmware 1.2.17 or later. A 1080p wrist project requires 1.3.1 and matching fisheye calibration;</li>
+<li>Pico ready: the headset is connected with pose and clock sync working. In modes that record headset video, the selected eye's video must be working. The device blocks recording if the headset capture rate is below <strong>28 fps</strong>;</li>
 <li>Tracker ready: the trackers are connected and "tracking normally within the field of view"; recording is refused if a tracker has been still for more than 5 seconds or has left the field of view (brief stillness mid-recording does not interrupt and is not counted against quality; the position stays accurate while still);</li>
 <li>The headset's video parameters match the project: after you select a project or the headset reconnects, the device re-reads mono / stereo, resolution and image source automatically, then checks again just before recording. <strong>If no confirmation arrives, the check times out, or the headset disconnected or its parameters changed meanwhile, recording is refused</strong>, and the message says which;</li>
 <li>The headset's video clock is sane: if one eye's video time runs more than 1 second ahead of the time it was received, you get "headset … eye video time sync abnormal" and recording is refused. The problem is the headset app's camera clock versus its sync clock, not the backpack.</li>
@@ -2123,12 +2184,14 @@
 </ul>
 <h3 id="record-stop">After stopping<a class="headerlink" href="#record-stop" title="锚点链接">¶</a></h3>
 <p>Long-press the left gripper or click "Stop recording": the episode is saved into the current task, and the LED flashes white once and returns to standby. Numbering is in the <a href="../projects-export/#projects">Project page</a>.</p>
-<p>On stopping, an automatic quality check marks the episode "data suspect" if any of these hits (the gripper pulses yellow and the "Quality" column on the Project page carries a mark; the episode is saved either way):</p>
+<p><strong>XHE finalization check (Collector 0.5.0)</strong>: When you stop recording, the system checks each camera separately. The recording passes this check if no camera skipped more than <strong>2%</strong> of the frames it captured. If any camera exceeds the limit, the system identifies that camera and reports the counts of captured, written, and skipped frames.</p>
+<p>After an XHE recording is finalized, you can <a href="../projects-export/#playback">play it back</a> from the Project page.</p>
+<p>Earlier console versions marked an episode as "data suspect" when any of these conditions applied:</p>
 <ul>
 <li>The recording is shorter than 1s (almost always a misfire);</li>
 <li>Any camera channel recorded not one frame, or the whole episode received no video frames at all;</li>
 <li>Tracking was lost for more than 20% of the episode's duration (suspected to have left the field of view);</li>
-<li>The tactile rectification recipe is missing (this episode's LeRobot export is certain to fail);</li>
+<li>A missing tactile rectification recipe prevents LeRobot export (V1 projects only);</li>
 <li>Any camera ran at low FPS for more than 5% of the episode's duration in total.</li>
 </ul>
 <p>For a questionable episode, <a href="#record-delete">delete it</a> on the spot and record it again.</p>
@@ -2146,12 +2209,12 @@
 <tr>
 <td>Ready</td>
 <td>Just recorded; the raw file is on the device and has never been uploaded</td>
-<td>Playback, export (either format), upload, archive, delete</td>
+<td>Play back, export or upload in a format the project supports, archive, delete</td>
 </tr>
 <tr>
 <td>Uploaded</td>
 <td>Uploaded in at least one format, with the raw file still on the device</td>
-<td>The same; plus exporting in the other format</td>
+<td>The same actions. V1 projects can also export in the other format</td>
 </tr>
 <tr>
 <td>Archived</td>

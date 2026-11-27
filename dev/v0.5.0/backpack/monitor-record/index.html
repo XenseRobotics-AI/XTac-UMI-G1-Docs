@@ -1544,6 +1544,10 @@
       
         
       
+        
+      
+        
+      
     
     
     
@@ -1607,6 +1611,62 @@
   
   
     <li class="md-nav__item">
+      <a href="../../follower/setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    准备与自检
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../follower/control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    运动控制
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../follower/api/" class="md-nav__link">
         
   
@@ -1614,7 +1674,7 @@
   <span class="md-ellipsis">
     
   
-    运动控制与 API
+    API 与示例
   
 
     
@@ -1923,7 +1983,7 @@
 
 <h1 id="实时监控与录制">实时监控与录制<a class="headerlink" href="#实时监控与录制" title="锚点链接">¶</a></h1>
 <p>本页讲控制台的「实时监控」页。按键手势、灯语与语音见<a href="../gripper/">夹爪按键、指示灯与语音</a>。</p>
-<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/backpack/monitor-live.webp" data-desc-position="bottom"><img alt="实时监控页" src="../../assets/backpack/monitor-live.webp"></a></p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/backpack/monitor-live.webp" data-desc-position="bottom"><img alt="旧版实时监控页；Collector 0.5.0 按左右夹爪区分显示" src="../../assets/backpack/monitor-live.webp"></a></p>
 <ul>
 <li><strong>顶栏</strong>：设备状态（视频带宽、CPU、内存、硬盘、相机路数、监控时长、录制时长、系统）。</li>
 <li><strong>中间</strong>：两侧各为一只夹爪的鱼眼与左 / 右指视触觉；中列是头显双目、「双臂 / 头部位姿」3D 视图（末端带约 1.5 秒的轨迹拖尾）及下方的左右爪开合角度卡。</li>
@@ -1957,8 +2017,8 @@
 </tr>
 <tr>
 <td>磁盘余量</td>
-<td>顶栏「硬盘」占用低于 80%（录制盘实测），悬停看挂载点、已用、总量与可用空间</td>
-<td>达到 80% 拒绝开录；把已采数据<a href="../projects-export/#archive">导出后归档</a>或删掉不要的录制</td>
+<td>顶栏「硬盘」占用低于 70%（录制盘实测），悬停看挂载点、已用、总量与可用空间</td>
+<td>达到 70% 拒绝开录；把已采数据<a href="../projects-export/#archive">导出后归档</a>或删掉不要的录制</td>
 </tr>
 <tr>
 <td>录制状态</td>
@@ -1968,20 +2028,21 @@
 </tbody>
 </table>
 <ul>
-<li>预览由背包硬件编码器编码一次、推给所有打开控制台的设备；头显与视触觉预览减半分辨率，比录制粗属正常。录制不走预览链路，MCAP 里是相机原始 MJPEG 帧，全分辨率。</li>
+<li>预览与录制使用独立链路。XHE 在录制时固定使用 H.264 编码，V1 可在高级设置中开启流式编码。</li>
 <li>平板弱网时只有断的那路显示「网络抖动，等待恢复」并自动重连，其它路不受影响，无需刷新页面。</li>
 </ul>
 <h2 id="project-task">选项目与任务<a class="headerlink" href="#project-task" title="锚点链接">¶</a></h2>
 <p>录制条目归在「项目 → 任务」两级下。监控页底部两个下拉选项目和任务，末项「新建项目...」「新建任务...」可就地新建；也可在<a href="../projects-export/">项目页</a>新建并把任务「设为当前目标」。</p>
 <p>新建项目时一并定下<strong>采集配置</strong>，<strong>建完冻结</strong>，换参数要新建项目（空项目可删掉重建）；系统页<a href="../system/#capture-mode">只读展示</a>。项目名称不能与未归档的项目重名，同一项目下的任务也不能重名。</p>
 <ul>
-<li><strong>采集模式</strong>：「双爪」「双爪 + 头显双目」「双爪 + 头显右单目」三选一。</li>
-<li><strong>PICO 每眼分辨率</strong>：640 × 480 或 1024 × 768，仅录头显画面的模式要选。</li>
+<li><strong>录制格式与流式编码</strong>：新建项目默认 XHE。XHE 在录制时将视频编码为 H.264 并写入 <code>.xhe.mcap</code>，导出仅支持原始 XHE MCAP。只有 V1 项目支持导出 LeRobot 或 Training MCAP。流式编码开关仅对 V1 生效，默认关闭，可在高级设置中开启。已有项目沿用原配置。</li>
+<li><strong>采集模式</strong>：「双爪」「双爪 + 头显双目」「双爪 + 头显右单目」三选一，新建项目默认双爪 + 头显双目鱼眼。</li>
+<li><strong>PICO 分辨率</strong>：控制台新建项目时按采集模式自动设置分辨率。双目每眼 1280×960，右眼单目 1920×1440，均为 30 fps。已有项目保留原分辨率。相关功能需要<a href="../../common/pico4/#pico-app">配套新版头显应用</a>。</li>
 <li><strong>PICO 图像源</strong>：鱼眼图像 / 去畸变图像。</li>
-<li><strong>头显佩戴方式</strong>：戴头 / 挂脖，仅录头显画面的模式要选，默认戴头。挂脖时头显记录的是胸前位姿，<a href="#initial-pose">开录初始位姿检查</a>按挂脖的范围判断；一个数据集只能用一种佩戴方式。</li>
-<li><strong>导出质量</strong>：高质量 / 标准 / 紧凑，作用于项目内所有视频导出；高质量文件较大，紧凑较小。</li>
+<li><strong>头显佩戴方式</strong>：「双爪 + 头显双目」和「双爪 + 头显右单目」均可选择戴头或挂脖，默认戴头。挂脖时头显记录胸前位姿，<a href="#initial-pose">开录初始位姿检查</a>按挂脖的范围判断。一个数据集只能用一种佩戴方式。</li>
+<li><strong>导出质量与视频编码</strong>：新建项目默认 High（高质量），也可选择标准或紧凑。H.265 和 MJPEG 仅对 V1 项目的导出生效。XHE 导出 H.264 编码的原始 MCAP，忽略视频编码设置。</li>
 <li><strong>触觉矫正图导出方向</strong>：默认 700 × 400 横图，可再逆时针 90° 得 400 × 700。</li>
-<li><strong>腕部鱼眼</strong>：导出时是否矫正畸变，见<a href="../system/#undistort">腕部鱼眼矫正</a>。</li>
+<li><strong>腕部鱼眼</strong>：V1 项目可设置导出时是否矫正畸变，见<a href="../system/#undistort">腕部鱼眼矫正</a>。</li>
 <li><strong>上传后端与默认导出格式</strong>：可绑定<a href="../system/#upload">系统 → 上传配置</a>里配好的一个作为项目默认，不绑定就上传时再选。</li>
 </ul>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/backpack/new-project.webp" data-desc-position="bottom"><img alt="新建项目" src="../../assets/backpack/new-project.webp" width="360"></a></p>
@@ -2022,9 +2083,9 @@
 </ul>
 <p>相机参数与矫正：</p>
 <ul>
-<li><strong>腕部相机与触觉</strong>：分别固定 640×480 @ 30fps 与 640×480 @ 120fps，不可调。</li>
-<li><strong>矫正都在导出时做</strong>：触觉按所选方向做几何矫正；腕部鱼眼若开了矫正，用开录时冻结进这条录制的标定参数。</li>
-<li><strong>LeRobot 导出</strong>：固定 30fps。</li>
+<li><strong>腕部相机与触觉</strong>：新建项目可选 640×480 或 1920×1080 腕部图像。1080p 需要夹爪固件 1.3.1 和对应鱼眼标定。XHE 录制的触觉图像为 60 fps。</li>
+<li><strong>V1 导出图像矫正</strong>：触觉按所选方向做几何矫正。腕部鱼眼开启矫正时，使用录制开始时保存的标定参数。</li>
+<li><strong>V1 LeRobot 导出</strong>：固定 30 fps。V1 开启流式编码后，视频按原生帧率编码并实时写盘，画质与 High 导出一致。导出时可复用编码结果以减少转码。</li>
 </ul>
 <h2 id="record">录制<a class="headerlink" href="#record" title="锚点链接">¶</a></h2>
 <ul>
@@ -2035,10 +2096,10 @@
 <h3 id="record-gates">开录门槛<a class="headerlink" href="#record-gates" title="锚点链接">¶</a></h3>
 <p>按键或按钮开录都按此顺序检查，一项不过即停：</p>
 <ol>
-<li>磁盘占用低于 80%；</li>
+<li>磁盘占用低于 70%；</li>
 <li>已选项目与任务，且任务累计采集条数未达目标；</li>
-<li>夹爪 MCU 在线；</li>
-<li>Pico 就绪：头显已连接，位姿与时钟同步正常；录头显画面的模式还要所选眼的视频正常；</li>
+<li>夹爪 MCU 在线。Collector 0.5.0 要求主夹爪固件至少 1.2.7、从夹爪至少 1.2.17，1080p 腕部项目要求 1.3.1 和对应鱼眼标定；</li>
+<li>Pico 就绪：头显已连接，位姿与时钟同步正常。录制头显画面的模式还要求所选眼的视频正常，头显采集帧率低于 <strong>28 fps</strong> 时拒绝开录；</li>
 <li>Tracker 就绪：追踪器已连接、处于「视线内正常追踪」，静止 5 秒以上或移出视野拒绝开录（录制中短暂静止不中断、不计入质检，静止时位置仍准确）；</li>
 <li>头显画面参数与项目对得上：选中项目或头显重连后，设备自动重读单目 / 双目、分辨率与图像源，开录前再核对。<strong>没收到确认、核对超时，或期间头显断过线、参数变过，都拒绝开录</strong>，提示写明是哪一种；</li>
 <li>头显画面时钟正常：某只眼的视频时间比接收时间超前超过 1 秒，提示「头显…眼视频时间同步异常」并拒绝开录。问题在头显应用的相机时钟与同步时钟，不在背包。</li>
@@ -2123,12 +2184,14 @@
 </ul>
 <h3 id="record-stop">停止后<a class="headerlink" href="#record-stop" title="锚点链接">¶</a></h3>
 <p>左爪长按或点「结束录制」，条目存进当前任务，灯白闪一下回待机；编号规则见<a href="../projects-export/#projects">项目页</a>。</p>
-<p>停录时自动质检，任一项命中即标「数据可疑」（夹爪黄脉冲，项目页「质量」列有标记，条目照样保存）：</p>
+<p><strong>XHE 封存检查（Collector 0.5.0）</strong>：停止录制时，系统逐路检查相机。每路跳过的帧数均不超过该路采集帧数的 <strong>2%</strong> 时，录制通过此项封存检查。任一路超限时，系统提示对应相机的采集帧数、写入帧数和跳帧数。</p>
+<p>XHE 录制封存后，可在项目页直接<a href="../projects-export/#playback">回放</a>。</p>
+<p>以下为旧版的「数据可疑」标记条件：</p>
 <ul>
 <li>录制时长低于 1s（基本是误触）；</li>
 <li>任一相机通道一帧都没录到，或整条没收到任何视频帧；</li>
 <li>追踪器追踪失效时长超过本条时长的 20%（疑似出视野）；</li>
-<li>触觉矫正配方缺失（这条的 LeRobot 导出必失败）；</li>
+<li>触觉矫正配方缺失，导致 LeRobot 导出失败（仅 V1 项目）；</li>
 <li>任一相机帧率偏低的累计时长超过本条时长的 5%。</li>
 </ul>
 <p>可疑条目最好当场<a href="#record-delete">删除上一条</a>重录。</p>
@@ -2146,12 +2209,12 @@
 <tr>
 <td>已就绪</td>
 <td>刚录完，原始文件在设备上，没上传过</td>
-<td>回放、导出、上传、归档、删除</td>
+<td>回放、按项目支持的格式导出或上传、归档、删除</td>
 </tr>
 <tr>
 <td>已上传</td>
 <td>至少用一种格式上传过，原始文件仍在设备上</td>
-<td>同上；还能再导出另一种格式</td>
+<td>同上。V1 项目还可导出另一种格式</td>
 </tr>
 <tr>
 <td>已归档</td>

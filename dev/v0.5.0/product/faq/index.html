@@ -1472,6 +1472,10 @@
       
         
       
+        
+      
+        
+      
     
     
     
@@ -1535,6 +1539,62 @@
   
   
     <li class="md-nav__item">
+      <a href="../../follower/setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    准备与自检
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../follower/control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    运动控制
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../follower/api/" class="md-nav__link">
         
   
@@ -1542,7 +1602,7 @@
   <span class="md-ellipsis">
     
   
-    运动控制与 API
+    API 与示例
   
 
     
@@ -1976,12 +2036,12 @@
 <td>0.2N / 0.1mm</td>
 </tr>
 <tr>
-<td>位姿刷新</td>
-<td>PC 版约 90Hz；背包版按头显上报逐条记录</td>
+<td>头显位姿与 IMU 上报</td>
+<td>XTac UMI XR 0.4.4 约 60 Hz</td>
 </tr>
 <tr>
-<td>触觉 / 腕部鱼眼 / IMU 与编码器</td>
-<td>0–120Hz / 30fps / 100Hz</td>
+<td>触觉与夹爪 IMU</td>
+<td>XHE 触觉图像 60 fps；夹爪固件 1.3.1 的 IMU 上报上限为 1125 Hz</td>
 </tr>
 </tbody>
 </table>
@@ -2016,7 +2076,7 @@
 <h2 id="export">导出与上传<a class="headerlink" href="#export" title="锚点链接">¶</a></h2>
 <details class="question">
 <summary>背包版能导出什么格式？</summary>
-<p>按任务导出，两种平级、可以都导：<strong>LeRobotDataset v3.0</strong>（<code>meta/</code> + <code>data/</code> + <code>videos/</code>，30fps）或 <strong>训练 MCAP</strong>（<code>.train.mcap</code>，按 30Hz 对齐）。导出前自动预检。见<a href="../../backpack/projects-export/#formats">导出格式</a>。</p>
+<p>XHE 项目可按任务下载 ZIP 或上传原始 <code>.xhe.mcap</code>。V1 项目可导出 <strong>LeRobotDataset v3.0</strong>（<code>meta/</code> + <code>data/</code> + <code>videos/</code>，30 fps）和 <strong>Training MCAP</strong>（<code>.train.mcap</code>，按 30 Hz 对齐）。新建项目默认 XHE。下游需要 Training MCAP 或 LeRobot 时，创建项目请选择 V1。见<a href="../../backpack/projects-export/#formats">导出格式</a>。</p>
 </details>
 <details class="question">
 <summary>能传到哪些地方？</summary>
@@ -2028,7 +2088,7 @@
 </details>
 <details class="question">
 <summary>升级后为什么提示重新导出？</summary>
-<p>导出规则变了，旧导出自动标为过期：0.4.6 改了位姿原点与左手约定，0.4.7 改成各路相机各取最近帧、位姿与开合度按帧时刻插值。原始录制不受影响，对仍有原始文件的录制重新导出即可；新旧导出不要合进同一数据集。见<a href="../../backpack/troubleshooting/#export">导出版本说明</a>。</p>
+<p>Collector 0.5.0 升级后，首次导出会重建旧导出缓存。历史版本中，0.4.6 改了位姿原点与左手约定，0.4.7 改成各路相机分别取最近帧并按帧时刻插值位姿及开合度。对仍保留原始文件的录制，可按<a href="../../backpack/troubleshooting/#export">导出版本说明</a>重新导出。</p>
 </details>
 <details class="question">
 <summary>背包版和 PC 版的数据能合并训练吗？</summary>
@@ -2049,12 +2109,12 @@
 </details>
 <details class="question">
 <summary>原始录制和导出的 MCAP 有什么区别？</summary>
-<p>原始记录是各路按设备原生频率存的（触觉 120fps、腕部 30fps、开合与 IMU 100Hz），图像未矫正；导出的 <code>.train.mcap</code> 统一对齐到 30Hz，图像按项目设置矫正。原始文件只能在工程模式下按单条下载，供排查和分析，不能直接当训练数据。见<a href="../../backpack/projects-export/#mcap">MCAP</a>。</p>
+<p>XHE 直接写入 <code>.xhe.mcap</code>，保留原生采集频率与传感器读数，可用 Foxglove 打开。V1 导出的 <code>.train.mcap</code> 按 30 Hz 对齐，图像按项目设置矫正。旧版 V1 的工程模式还支持下载单条原始录制用于分析。见<a href="../../backpack/projects-export/#mcap">MCAP</a>。</p>
 </details>
 <h2 id="replay">回放<a class="headerlink" href="#replay" title="锚点链接">¶</a></h2>
 <details class="question">
 <summary>录完不下载，能直接在控制台看吗？</summary>
-<p>能。背包版项目页条目行点「回放」，画面、位姿与开合度同步播放，进度条可拖动。回放和实时预览共用硬件编码器，<strong>不能同时进行</strong>（有其他标签页或设备开着监控页时会被拒绝）；已归档的条目不能回放。见<a href="../../backpack/projects-export/#playback">回放</a>。</p>
+<p>能。Collector 0.5.0 的 XHE 录制封存后，在背包控制台「项目」页点击对应条目的「回放」。已归档的条目无法在控制台回放。Collector 0.4.7 的播放操作和预览占用限制见<a href="../../backpack/projects-export/#playback">回放</a>。</p>
 </details>
 <details class="question">
 <summary>PC 版录的时候怎么看？录完怎么回看？</summary>

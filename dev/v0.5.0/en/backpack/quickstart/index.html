@@ -1494,6 +1494,10 @@
       
         
       
+        
+      
+        
+      
     
     
     
@@ -1557,6 +1561,62 @@
   
   
     <li class="md-nav__item">
+      <a href="../../follower/setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Setup and self-check
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../follower/control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Motion control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../follower/api/" class="md-nav__link">
         
   
@@ -1564,7 +1624,7 @@
   <span class="md-ellipsis">
     
   
-    Motion control and API
+    API and examples
   
 
     
@@ -1913,7 +1973,7 @@
 <ol>
 <li><strong>Pick or create</strong>: at the bottom of the console's Live monitoring page, pick a project and a task; if there are none yet, choose "New project…" or "New task…".</li>
 <li><strong>Fill in the settings</strong>:<ul>
-<li><strong>Capture mode</strong>: chosen when creating the project, for example "Dual gripper + stereo headset"; see <a href="../monitor-record/#project-task">capture mode</a>.</li>
+<li><strong>Capture mode</strong>: New projects default to dual grippers with stereo headset fisheye and XHE recording. Choose V1 to retain Training MCAP or LeRobot. See <a href="../monitor-record/#project-task">project and task settings</a>.</li>
 <li><strong>Task instruction</strong>: give the new task a clear natural-language instruction.</li>
 </ul>
 </li>
@@ -1964,7 +2024,7 @@
 <li>Upload to a backend configured beforehand (ModelScope, S3, FTP, NFS).</li>
 </ul>
 </li>
-<li><strong>Format</strong>: choose LeRobotDataset v3 or MCAP to suit your training pipeline.</li>
+<li><strong>Format</strong>: For XHE projects, download or upload the original <code>.xhe.mcap</code> files by task. For V1 projects, choose LeRobotDataset v3 or Training MCAP.</li>
 </ol>
 <p>Details are in <a href="../projects-export/">Projects, export and upload</a>.</p>
 

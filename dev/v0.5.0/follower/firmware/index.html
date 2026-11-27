@@ -1369,6 +1369,10 @@
       
         
       
+        
+      
+        
+      
     
     
     
@@ -1433,6 +1437,62 @@
   
   
     <li class="md-nav__item">
+      <a href="../setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    准备与自检
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    运动控制
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../api/" class="md-nav__link">
         
   
@@ -1440,7 +1500,7 @@
   <span class="md-ellipsis">
     
   
-    运动控制与 API
+    API 与示例
   
 
     
@@ -1858,7 +1918,7 @@
 <h1 id="固件与电机升级">固件与电机升级<a class="headerlink" href="#固件与电机升级" title="锚点链接">¶</a></h1>
 <p>从夹爪有两份固件：<strong>夹爪固件</strong>（随 SDK 附带）和<strong>电机固件</strong>（由技术支持提供，只在技术支持要求时升级）。两份都要升级时，先刷夹爪固件，再刷电机固件。</p>
 <h2 id="check-version">查看版本<a class="headerlink" href="#check-version" title="锚点链接">¶</a></h2>
-<p><a href="../#self-check">自检</a>输出的 <code>[fw]</code> 一行是夹爪固件版本；电机固件见<a href="#motor-version">电机固件版本</a>。</p>
+<p><a href="../setup/#self-check">自检</a>输出的 <code>[fw]</code> 一行是夹爪固件版本；电机固件见<a href="#motor-version">电机固件版本</a>。</p>
 <table>
 <thead>
 <tr>
@@ -1869,7 +1929,7 @@
 <tbody>
 <tr>
 <td>1.3.1</td>
-<td>随 SDK 0.5.0 附带，推荐；腕部相机鱼眼内参按 640×480 与 1920×1080 各存一份，电机状态按请求的频率刷新</td>
+<td>随 SDK 0.5.0 附带，使用命令集 V2.11。640×480 与 1920×1080 分别存储鱼眼标定。<br>新版支持 IMU 校准及磁力计数据采集，并优化初始化和回零。</td>
 </tr>
 <tr>
 <td>1.2.17</td>
@@ -1913,7 +1973,7 @@
 </span></code></pre></div>
 <ul>
 <li>接着多只从夹爪、只刷其中一只时，在角色后加左右：<code>python python/examples/ota_update.py slave left</code>（SDK 0.5.0 起）。</li>
-<li>刷写约 1 秒，之后夹爪自动重启。</li>
+<li>刷写约 1 秒，之后夹爪自动重启。升级至 1.3.1 会保留电机参数、CAN ID、电机型号、夹爪配置和原有 640×480 标定。旧设备的 1920×1080 标定槽为空，使用前请完成对应标定。</li>
 <li>脚本发现固件与夹爪角色不符时会拒绝刷写，<strong>不要加 <code>--force</code> 强制</strong>。</li>
 <li>刷写中断不会损坏夹爪，原固件继续运行，重新刷一次即可。</li>
 </ul>
@@ -1956,7 +2016,7 @@
 </li>
 </ol>
 <h2 id="motor-version">电机固件版本<a class="headerlink" href="#motor-version" title="锚点链接">¶</a></h2>
-<p>电机固件要求 <strong>1.0.5.0.4 或以上</strong>，更低的版本速度反馈不正常，运动会发抖，请联系<a href="../../common/reference/#support">技术支持</a>获取升级文件。</p>
+<p>SDK 0.5.0 随包提供 EL05 电机固件 <strong>1.0.5.0.4</strong>。EL05 要求 1.0.5.0.4 或以上，低版本可能导致速度反馈异常或运动抖动。按<a href="../../common/reference/#support">技术支持</a>指引获取所需文件并升级。</p>
 <p>查看版本（不要在控制运行时执行，读取可能让电机停下；需要夹爪固件 1.2.14 及以上）：</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"import xense.taccap as t</span>
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="s2">g = t.FollowerGripper(t.find_follower().mcu_device)</span>
@@ -2000,7 +2060,7 @@
       <nav class="md-footer__inner md-grid" aria-label="页脚">
         
           
-          <a href="../api/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 运动控制与 API">
+          <a href="../api/" class="md-footer__link md-footer__link--prev" aria-label="上一页: API 与示例">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
@@ -2010,7 +2070,7 @@
                 上一页
               </span>
               <div class="md-ellipsis">
-                运动控制与 API
+                API 与示例
               </div>
             </div>
           </a>

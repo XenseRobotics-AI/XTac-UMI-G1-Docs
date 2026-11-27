@@ -1572,6 +1572,10 @@
       
         
       
+        
+      
+        
+      
     
     
     
@@ -1635,6 +1639,62 @@
   
   
     <li class="md-nav__item">
+      <a href="../../follower/setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Setup and self-check
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../follower/control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Motion control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../follower/api/" class="md-nav__link">
         
   
@@ -1642,7 +1702,7 @@
   <span class="md-ellipsis">
     
   
-    Motion control and API
+    API and examples
   
 
     
@@ -2069,10 +2129,10 @@
 </tbody>
 </table>
 <p>What the other items mean (PICO resolution and image source, headset mount, export quality, wrist fisheye rectification, tactile rectified-image export orientation) is in <a href="../monitor-record/#project-task">Picking a project and task</a>. For projects created before 0.4.6, the headset mount shows "On head (not specified, legacy project)".</p>
-<p>When a project is selected, the headset syncs to its settings automatically.</p>
+<p>After you select a project, the headset automatically syncs to its settings. The new headset modes and status checks in Collector 0.5.0 require a compatible newer <a href="../../common/pico4/#pico-app">headset app</a>.</p>
 <h3 id="undistort">Wrist fisheye rectification<a class="headerlink" href="#undistort" title="锚点链接">¶</a></h3>
 <p>With it on, the wrist view in the exported dataset is rectified to a straight-line perspective. Recordings always keep the raw fisheye image; rectification happens only at export.</p>
-<p>Each gripper shows its rectification status. "Not calibrated · rectified with default intrinsics" means the lens model's generic parameters are used: capture and export work normally, slightly less precisely than per-unit calibration.</p>
+<p>1080p projects require gripper firmware 1.3.1 and device-specific 1920×1080 fisheye calibration. The default-intrinsics message below describes legacy settings. Complete the 1080p calibration before use. Each gripper shows its rectification status. "Not calibrated · rectified with default intrinsics" means the lens model's generic parameters are used: capture and export work normally, slightly less precisely than per-unit calibration.</p>
 <h3 id="keybinding">Recording shortcut<a class="headerlink" href="#keybinding" title="锚点链接">¶</a></h3>
 <p>With a keyboard on the tablet, you can bind a key to start / stop recording: click "Bind shortcut" and press the key; "Clear" removes it.</p>
 <ul>
@@ -2152,6 +2212,7 @@
 <li>Click "Validate" or "Test read/write" to confirm the account and directory work.</li>
 <li>Select it under "Upload backend" when creating a project; for an existing project, bind it on the project's row.</li>
 </ol>
+<p>Collector 0.5.0 supports automatic upload settings at both device and project levels. When connected over Ethernet, the device can upload while idle. Failed uploads retry automatically, and S3 transfers can resume.</p>
 <p>Credentials are not shown again after saving; leaving a field blank when editing keeps the stored value. Uploading is covered in <a href="../projects-export/#export">Export</a>.</p>
 <div class="admonition warning">
 <p class="admonition-title">Binding the wrong account cannot be undone</p>
@@ -2195,7 +2256,7 @@
 <ol>
 <li>Open the console from the tablet (USB) or the <a href="../network/#softap">backpack hotspot</a> and go to System → Network / Setup.</li>
 <li>"Scan again", click the target network, enter the password and connect.</li>
-<li>The backpack remembers the network and reconnects after a reboot.</li>
+<li>The backpack saves the network and reconnects after a restart. Collector 0.5.0 also attempts to restore a dropped Wi-Fi connection automatically and improves hotspot channel management.</li>
 </ol>
 <p>Only 5GHz networks are listed (2.4GHz would disrupt the backpack hotspot). If the site has only 2.4GHz, use wired or the hotspot.</p>
 <h3 id="wifi-wired">Wired IP<a class="headerlink" href="#wifi-wired" title="锚点链接">¶</a></h3>

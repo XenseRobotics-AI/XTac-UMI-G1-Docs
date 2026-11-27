@@ -1600,6 +1600,10 @@
       
         
       
+        
+      
+        
+      
     
     
     
@@ -1663,6 +1667,62 @@
   
   
     <li class="md-nav__item">
+      <a href="../follower/setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    准备与自检
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../follower/control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    运动控制
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../follower/api/" class="md-nav__link">
         
   
@@ -1670,7 +1730,7 @@
   <span class="md-ellipsis">
     
   
-    运动控制与 API
+    API 与示例
   
 
     
@@ -2029,12 +2089,12 @@
 </span></code></pre></div>
 <p>应输出 <code>taccap-gripper OK; version 0.5.0</code>。版本不对时拉子模块并重跑 <code>./setup_env.sh --install</code>，见<a href="../pc/versions/#repo-update">仓库与子模块更新</a>。</p>
 <h3 id="standalone">单独安装（背包版或不用数采仓库）<a class="headerlink" href="#standalone" title="锚点链接">¶</a></h3>
-<p>背包版客户，或不使用数采仓库的电脑，按<a href="../follower/#install">从夹爪 · 安装 SDK 与主机配置</a>从零安装：Miniforge → <code>v4l-utils</code> → 下载 SDK → 创建 mamba 环境 → 编译安装 → 主机配置。主夹爪与从夹爪用的是同一套步骤。</p>
+<p>背包版客户，或不使用数采仓库的电脑，按<a href="../follower/setup/#install">从夹爪 · 安装 SDK 与主机配置</a>从零安装：Miniforge → <code>v4l-utils</code> → 下载 SDK → 创建 mamba 环境 → 编译安装 → 主机配置。主夹爪与从夹爪用的是同一套步骤。</p>
 <h3 id="self-check">硬件自检<a class="headerlink" href="#self-check" title="锚点链接">¶</a></h3>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"from xense.taccap import scan_grippers</span>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="s2">for g in scan_grippers(): print(g.side, g.role, g.firmware_sn)"</span>
 </span></code></pre></div>
-<p>每只夹爪一行，主夹爪为 <code>Role.Leader</code>（序列号以 <code>m</code> 结尾），从夹爪为 <code>Role.Follower</code>（以 <code>s</code> 结尾）。从夹爪接着看<a href="../follower/#self-check">准备与自检</a>；串口权限等问题见<a href="../pc/host-setup/#first-use">主机配置</a>。</p>
+<p>每只夹爪一行，主夹爪为 <code>Role.Leader</code>（序列号以 <code>m</code> 结尾），从夹爪为 <code>Role.Follower</code>（以 <code>s</code> 结尾）。从夹爪接着看<a href="../follower/setup/#self-check">准备与自检</a>；串口权限等问题见<a href="../pc/host-setup/#first-use">主机配置</a>。</p>
 <h3 id="cpp">集成到 C++ / ROS 2 工程<a class="headerlink" href="#cpp" title="锚点链接">¶</a></h3>
 <p>把 SDK 源码作为 CMake 子目录引入，链接 <code>taccap_core</code>：</p>
 <div class="language-cmake highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nb">set</span><span class="p">(</span><span class="s">TACCAP_BUILD_PYTHON</span><span class="w">   </span><span class="s">OFF</span><span class="w"> </span><span class="s">CACHE</span><span class="w"> </span><span class="s">BOOL</span><span class="w"> </span><span class="s2">""</span><span class="w"> </span><span class="s">FORCE</span><span class="p">)</span>
@@ -2079,11 +2139,11 @@
 </span></code></pre></div>
 <p>画面默认是 RGB。只想看画面可以直接用示例 <code>wrist_camera.py</code>。<code>close()</code> 会释放相机，之后可以马上用别的分辨率重新打开（0.5.0 起）。</p>
 <p><span id="fisheye-fallback"></span>
-鱼眼内参存在每只夹爪里。没有标定过的夹爪，SDK 自动改用一组内置的参考内参并打印告警，矫正不会失败。读取内参时用：</p>
+鱼眼内参存在每只夹爪里。缺少对应分辨率的标定时，SDK 会根据设备标定状态报错或明确提示使用参考值。参考内参仅用于查看，不能替代设备实际标定。读取内参时用：</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">cal</span><span class="p">,</span> <span class="n">is_reference</span><span class="p">,</span> <span class="n">reason</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">calibration</span><span class="o">.</span><span class="n">resolve_fisheye_for</span><span class="p">(</span><span class="mi">1920</span><span class="p">,</span> <span class="mi">1080</span><span class="p">)</span>   <span class="c1"># 按相机分辨率</span>
 </span></code></pre></div>
 <ul>
-<li><strong>按分辨率存放</strong>：640×480 与 1920×1080 是不同的成像区域，内参不能互相换算。固件 1.3.1 为两种分辨率各存一份，<code>undistort_wrist=True</code> 按相机分辨率选用；更早的固件只存一份。</li>
+<li><strong>按分辨率存放</strong>：固件 1.3.1 为 640×480 与 1920×1080 分别读写独立标定，互不覆盖。<code>undistort_wrist=True</code> 根据实际相机分辨率选用参数。旧设备升级后保留原有 640×480 标定，1920×1080 槽为空，首次使用 1080p 前须完成该分辨率的标定。</li>
 <li><strong>只有另一种分辨率的标定</strong>：打开时报错，提示给这个分辨率标定，或改用已标定的分辨率，不会悄悄改用参考内参。</li>
 <li><strong>参考内参</strong>：<code>is_reference</code> 为真表示这台夹爪在该分辨率下没有标定、用的是参考内参，只适合看画面。需要在矫正图上按像素测量时，写入它自己的标定：<code>python python/examples/fisheye_cal.py set-fisheye right --from-npz cam.npz --width 1920 --height 1080</code>（从夹爪加 <code>--follower</code>；<code>--width</code> / <code>--height</code> 必填）。<code>fisheye_cal.py show</code> 可查看两种分辨率各自的内参。矫正后画面偏心是正常的，不要去改内参里的 <code>cx</code>。详见<a href="../pc/recording/#fisheye-fallback">鱼眼标定读不到时会怎样</a>。</li>
 </ul>
@@ -2172,7 +2232,7 @@
 </span></code></pre></div>
 <ul>
 <li>图像上的绿色箭头是标记点位移：从每个标记点的初始位置指向当前位置，与 <code>xensesdk</code> 自带的 <code>drawMarkerMove</code> 画法一致，<strong>1:1 不放大</strong>，箭头长度就是实际位移的像素数。没有接触时只剩一个个绿点。</li>
-<li>从夹爪要一边开合一边看，用键盘控制台的 <code>--rerun</code>，见<a href="../follower/api/#full-chain">从夹爪 → 全链路检查</a>。</li>
+<li>从夹爪要一边开合一边看，用键盘控制台的 <code>--rerun</code>，见<a href="../follower/control/#full-chain">从夹爪 → 全链路检查</a>。</li>
 <li>相机与视触觉同时开时，所有相机都要用 MJPEG，见 <a href="../pc/host-setup/#usb-budget">USB 带宽预算</a>；腕部相机正被其他程序占用时加 <code>--no-wrist</code>。</li>
 </ul>
 <div class="admonition warning">
@@ -2220,14 +2280,15 @@
 <ul>
 <li>从夹爪固件 1.2.17 在收发重叠时重发的那份完全相同的数据帧被丢弃，不再让控制器多走一步、按键多报一次。丢弃次数可从 <code>g.transport.stats.duplicate_data_dropped</code> 读到；分时交换模式不受影响。</li>
 </ul>
-<p><strong>0.4.6 → 0.5.0</strong>（原有接口不变）</p>
+<p><strong>0.4.6 → 0.5.0</strong>（2026-11-23，原有接口不变）</p>
 <ul>
 <li>附带固件升到主夹爪 / 从夹爪 <strong>1.3.1</strong>，请<a href="../follower/firmware/#mcu-ota">升级固件</a>。SDK 按固件能力自动适配，在 1.2.7 / 1.2.17 上照常运行。</li>
 <li>腕部相机可以按 1920×1080 打开：<code>LeaderGripper</code> / <code>FollowerGripper</code> 新增 <code>wrist_width</code>、<code>wrist_height</code>、<code>wrist_fps</code>，默认仍为 640×480、30fps。</li>
 <li>鱼眼内参按分辨率存放和选用，见<a href="#camera">腕部相机与鱼眼矫正</a>。夹爪只有另一种分辨率的标定时，打开会报错；<code>fisheye_cal.py set-fisheye</code> 必须带 <code>--width</code> / <code>--height</code>。</li>
 <li><code>ForcePositionController.set_target(开度, grip=True)</code>：把目标标记为预期接触的位置，夹爪停在目标附近时按夹持力夹紧；不传时行为不变。</li>
-<li>力位控制闭合到 0 时，最终状态在目标到 0 之后约 0.45–0.6s 给出（因夹爪而异），更早判断请用位置容差。</li>
-<li>IMU 最高可到 1125Hz，需固件 1.3.1，并用分时交换 <code>start_exchange()</code>。</li>
+<li>运动控制支持配置起步和制动加速度，改善端点运动平顺性。<code>grip=True</code> 可用于薄物体夹持。</li>
+<li>主夹爪固件 1.2.7 起，IMU 和编码器的设备时间戳采用 1 MHz 时基，约 71 分钟回绕。字段格式不变，语义有变化，需要使用配套 SDK 及软件。</li>
+<li>固件 1.3.1 将 IMU 最高上报频率从 100 Hz 提升至 1125 Hz，SDK 可通过分时交换 <code>start_exchange()</code> 使用高频 IMU。1125 Hz 是固件上报上限，应用录制与交付数据的采样率取决于所用采集流程。RS00 电机状态数据上报经过优化，支持下发目标时同时获取电机状态与 IMU。从夹爪新增加速度计和陀螺仪校准、磁力计数据采集，并优化初始化及回零。</li>
 <li><code>close()</code> 会释放腕部相机，同一相机关闭后可以立即重新打开。</li>
 <li>刷固件可以写 <code>ota_update.py slave left</code>，按角色加左右选择夹爪。</li>
 </ul>

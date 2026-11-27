@@ -1478,6 +1478,10 @@
       
         
       
+        
+      
+        
+      
     
     
     
@@ -1541,6 +1545,62 @@
   
   
     <li class="md-nav__item">
+      <a href="../../follower/setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    准备与自检
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../follower/control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    运动控制
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../follower/api/" class="md-nav__link">
         
   
@@ -1548,7 +1608,7 @@
   <span class="md-ellipsis">
     
   
-    运动控制与 API
+    API 与示例
   
 
     
@@ -1892,11 +1952,11 @@
 </tr>
 <tr>
 <td>腕部鱼眼相机</td>
-<td>视场角 190°，640 × 480 @ 30fps</td>
+<td>视场角 190°，支持 640×480 和 1920×1080，均为 30 fps</td>
 </tr>
 <tr>
 <td>IMU</td>
-<td>9 轴，100Hz</td>
+<td>9 轴。固件 1.3.1 最高上报频率 1125 Hz，见 <a href="../../sdk/#migrate">SDK</a></td>
 </tr>
 <tr>
 <td>开合编码器</td>
@@ -2021,7 +2081,11 @@
 </tr>
 <tr>
 <td>位姿刷新率</td>
-<td>PC 版约 90Hz；背包版按头显上报逐条记录</td>
+<td>XTac UMI XR 0.4.4 的头显位姿与 IMU 上报约 60 Hz，见<a href="../../common/pico4/#pico-app">头显应用</a></td>
+</tr>
+<tr>
+<td>Collector 0.5.0 头显图像规格</td>
+<td>双目（每眼）：1280×960 或 1600×1200，均为 30 fps<br>右眼单目：1920×1440 @ 30 fps</td>
 </tr>
 <tr>
 <td>空间定位精度</td>
@@ -2057,7 +2121,7 @@
 </tr>
 <tr>
 <td>满盘规则</td>
-<td>数据盘用到 80% 视为已满，不再开录</td>
+<td>Collector 0.5.0 的录制盘占用达到 70% 时禁止新录制</td>
 </tr>
 <tr>
 <td>导出数据量</td>

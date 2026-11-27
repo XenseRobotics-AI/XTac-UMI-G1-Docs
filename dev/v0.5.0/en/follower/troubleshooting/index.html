@@ -1369,6 +1369,10 @@
       
         
       
+        
+      
+        
+      
     
     
     
@@ -1433,6 +1437,62 @@
   
   
     <li class="md-nav__item">
+      <a href="../setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Setup and self-check
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Motion control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../api/" class="md-nav__link">
         
   
@@ -1440,7 +1500,7 @@
   <span class="md-ellipsis">
     
   
-    Motion control and API
+    API and examples
   
 
     
@@ -1839,13 +1899,13 @@
 
 
 <h1 id="follower-gripper-troubleshooting">Follower gripper troubleshooting<a class="headerlink" href="#follower-gripper-troubleshooting" title="锚点链接">¶</a></h1>
-<p>Run the <a href="../#self-check">self-check</a> first; most problems can be identified from its output. On this page, <strong>power-cycle</strong> means unplugging the 24V power cable, waiting about 2 seconds and plugging it back in; the USB cable can remain connected.</p>
+<p>Run the <a href="../setup/#self-check">self-check</a> first; most problems can be identified from its output. On this page, <strong>power-cycle</strong> means unplugging the 24V power cable, waiting about 2 seconds and plugging it back in; the USB cable can remain connected.</p>
 <h2 id="connect">Device cannot be found or opened<a class="headerlink" href="#connect" title="锚点链接">¶</a></h2>
 <details class="failure">
 <summary>A scan does not find the follower gripper</summary>
 <ul>
 <li>Both the USB cable and the 24V supply are connected; <code>lsusb</code> should list <code>1a86:55d2</code>. If it does not, try another cable or USB port.</li>
-<li><a href="../#host">Host setup</a> is done (<code>brltty</code> removed, user in the <code>dialout</code> group and logged in again, the udev rule that keeps ModemManager off installed).</li>
+<li><a href="../setup/#host">Host setup</a> is done (<code>brltty</code> removed, user in the <code>dialout</code> group and logged in again, the udev rule that keeps ModemManager off installed).</li>
 <li>Close the collection program and any other program using the gripper, then scan again.</li>
 <li>If it still shows <code>Role.Unknown</code> or an empty serial number, contact <a href="../../common/reference/#support">technical support</a>.</li>
 </ul>
@@ -1870,7 +1930,7 @@
 <p><strong>Cause</strong>: the wrong environment is active, the SDK was not rebuilt, or (Developer Kit collection environment) the submodule was not updated.</p>
 <p><strong>Fix</strong>:</p>
 <ul>
-<li>Standalone SDK: open a new terminal, run <code>mamba activate taccap</code> and redo the <a href="../#build">build and install</a> in the <code>TacCap-Gripper</code> directory.</li>
+<li>Standalone SDK: open a new terminal, run <code>mamba activate taccap</code> and redo the <a href="../setup/#build">build and install</a> in the <code>TacCap-Gripper</code> directory.</li>
 <li>Developer Kit collection environment: from the data-collection repository root, update the submodules and rerun the install script; see <a href="../../pc/install/#22">Clone the repo and its submodules</a>:</li>
 </ul>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>git<span class="w"> </span>submodule<span class="w"> </span>update<span class="w"> </span>--init<span class="w"> </span>--recursive
@@ -1916,12 +1976,12 @@
 <details class="failure">
 <summary>While gripping a hard object, the gripper suddenly releases and USB disconnects</summary>
 <p><strong>Cause</strong>: the firmware is outdated, so the motion safety envelope is not in effect, and excessive torque pulled the 24V supply voltage down.</p>
-<p><strong>Fix</strong>: power-cycle, <a href="../firmware/#mcu-ota">upgrade the firmware</a>, then confirm <code>ENFORCED</code> in the <a href="../#motion-check">motion check</a>. Also confirm that the 24V power adapter meets the specification.</p>
+<p><strong>Fix</strong>: power-cycle, <a href="../firmware/#mcu-ota">upgrade the firmware</a>, then confirm <code>ENFORCED</code> in the <a href="../setup/#motion-check">motion check</a>. Also confirm that the 24V power adapter meets the specification.</p>
 </details>
 <details class="failure">
 <summary>The grip force drops after gripping for a long time</summary>
 <p><strong>Cause</strong>: as the motor heats up, the firmware automatically reduces output. This is a protection mechanism, not a fault.</p>
-<p><strong>Fix</strong>: reduce the grip force or shorten the gripping time; figures are in <a href="../api/#force-position">Motion control</a>.</p>
+<p><strong>Fix</strong>: reduce the grip force or shorten the gripping time; figures are in <a href="../control/#force-position">Motion control</a>.</p>
 </details>
 <details class="failure">
 <summary>Starting another script causes the gripper under control to release</summary>

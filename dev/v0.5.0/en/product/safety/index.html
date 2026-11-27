@@ -1494,6 +1494,10 @@
       
         
       
+        
+      
+        
+      
     
     
     
@@ -1557,6 +1561,62 @@
   
   
     <li class="md-nav__item">
+      <a href="../../follower/setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Setup and self-check
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../follower/control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Motion control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../follower/api/" class="md-nav__link">
         
   
@@ -1564,7 +1624,7 @@
   <span class="md-ellipsis">
     
   
-    Motion control and API
+    API and examples
   
 
     
@@ -1954,7 +2014,7 @@
 <ul>
 <li>Leader and follower images are not interchangeable: flash the wrong role and the gripper will not start. Do not cut power or unplug while flashing.</li>
 <li>Without a power-cycle after flashing, the gripper sits in a degraded state that reports the right version while silently dropping frames.</li>
-<li>Developer Kit: flash with the SDK script, see <a href="../../pc/versions/#ota">Firmware OTA upgrade</a>. Backpack Kit: flash from System → Gripper configuration, wait for the gripper to restart, then power the backpack off and on, see <a href="../../backpack/versions/#gripper-firmware">Gripper firmware</a>.</li>
+<li>Wait for the gripper to restart. Reconnect USB for the leader. Reconnect 24V power for the follower, leaving USB connected. See <a href="../../pc/versions/#ota">Developer Kit firmware OTA</a> and <a href="../../backpack/versions/#gripper-firmware">Backpack Kit firmware upgrades</a>.</li>
 </ul>
 </div>
 <h2 id="backpack-power">The backpack and its power<a class="headerlink" href="#backpack-power" title="锚点链接">¶</a></h2>
@@ -1964,7 +2024,7 @@
 <li>An underpowered headset shuts down and collection stops with it; do not add devices to the power bank mid-run.</li>
 <li>On individual units the <code>DC</code>, <code>PICO</code> or <code>USB</code> port may make poor contact, a hardware fault; do not force the connector; note the serial number on the body and send it in for repair.</li>
 <li>Do not block the fan outlet. After long use, overheating can drop the Wi-Fi, which a restart recovers; check the fan is turning, and report it if it keeps happening.</li>
-<li>Applying a system update restarts the service; confirm no collection is in progress first.</li>
+<li>Before applying the Collector OTA, stop recording and upload or export all recordings off the device. See <a href="../../backpack/versions/#bundle">upgrade compatibility and backup requirements</a>.</li>
 <li>The device back end is for technical support only; do not log in or change the configuration yourself, and contact technical support when diagnosis is needed, see <a href="../../backpack/network/#ssh">Advanced diagnosis: handled by technical support</a>.</li>
 <li>Power draw and power-bank runtime: <a href="../specs/">Technical specifications</a>.</li>
 </ul>

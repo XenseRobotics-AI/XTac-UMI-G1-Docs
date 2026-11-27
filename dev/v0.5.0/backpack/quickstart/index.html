@@ -1494,6 +1494,10 @@
       
         
       
+        
+      
+        
+      
     
     
     
@@ -1557,6 +1561,62 @@
   
   
     <li class="md-nav__item">
+      <a href="../../follower/setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    准备与自检
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../follower/control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    运动控制
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../follower/api/" class="md-nav__link">
         
   
@@ -1564,7 +1624,7 @@
   <span class="md-ellipsis">
     
   
-    运动控制与 API
+    API 与示例
   
 
     
@@ -1913,7 +1973,7 @@
 <ol>
 <li><strong>选择或新建</strong>：在控制台「实时监控」页底部选择项目和任务；还没有的话，选「新建项目…」或「新建任务…」。</li>
 <li><strong>填写参数</strong>：<ul>
-<li><strong>采集模式</strong>：新建项目时选定，例如「双爪 + 头显双目」，见<a href="../monitor-record/#project-task">采集模式</a>。</li>
+<li><strong>采集模式</strong>：新建项目默认双夹爪与头显双目鱼眼，录制格式默认 XHE。继续使用 Training MCAP 或 LeRobot 的项目请选择 V1，见<a href="../monitor-record/#project-task">项目与任务设置</a>。</li>
 <li><strong>任务指令</strong>：新建任务时填写清晰的自然语言指令。</li>
 </ul>
 </li>
@@ -1964,7 +2024,7 @@
 <li>上传到事先配置好的后端（ModelScope、S3、FTP、NFS）。</li>
 </ul>
 </li>
-<li><strong>选择格式</strong>：按下游训练管线选择 LeRobotDataset v3 或 MCAP。</li>
+<li><strong>选择格式</strong>：XHE 项目按任务下载或上传原始 <code>.xhe.mcap</code>。V1 项目选择 LeRobotDataset v3 或 Training MCAP。</li>
 </ol>
 <p>详见<a href="../projects-export/">项目、导出与上传</a>。</p>
 

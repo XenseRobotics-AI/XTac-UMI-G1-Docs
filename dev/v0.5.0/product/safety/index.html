@@ -1494,6 +1494,10 @@
       
         
       
+        
+      
+        
+      
     
     
     
@@ -1557,6 +1561,62 @@
   
   
     <li class="md-nav__item">
+      <a href="../../follower/setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    准备与自检
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../follower/control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    运动控制
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../follower/api/" class="md-nav__link">
         
   
@@ -1564,7 +1624,7 @@
   <span class="md-ellipsis">
     
   
-    运动控制与 API
+    API 与示例
   
 
     
@@ -1954,7 +2014,7 @@
 <ul>
 <li>主 / 从夹爪镜像不通用，刷错角色无法启动；刷写期间不要断电或拔线。</li>
 <li>刷完不断电重插，夹爪会停在版本号正确却悄悄丢帧的降级状态。</li>
-<li>PC 版用 SDK 脚本刷，见<a href="../../pc/versions/#ota">固件 OTA</a>；背包版在 系统 → 夹爪配置 里刷，等夹爪重启后给背包断电再上电，见<a href="../../backpack/versions/#gripper-firmware">夹爪固件</a>。</li>
+<li>等夹爪重启完成后，主夹爪重新拔插 USB。从夹爪重新拔插 24V 电源，USB 无需拔插。见 <a href="../../pc/versions/#ota">PC 版固件 OTA</a>与<a href="../../backpack/versions/#gripper-firmware">背包版固件升级</a>。</li>
 </ul>
 </div>
 <h2 id="backpack-power">数采背包与供电<a class="headerlink" href="#backpack-power" title="锚点链接">¶</a></h2>
@@ -1964,7 +2024,7 @@
 <li>头显供电不足会掉电关机、中断采集，中途勿往充电宝上加设备。</li>
 <li>个别设备 <code>DC</code>、<code>PICO</code> 或 <code>USB</code> 口可能接触不良，属硬件问题，勿用力掰扯，记下机身 SN 报修。</li>
 <li>勿挡风扇出风口；长时间使用后过热会断 WiFi，重启即恢复，检查风扇是否转动，持续出现请报修。</li>
-<li>应用系统更新会重启服务，先确认无进行中的采集。</li>
+<li>应用 Collector OTA 前，请停止采集，并将所有录制上传或导出到设备外。见<a href="../../backpack/versions/#bundle">升级兼容性与备份要求</a>。</li>
 <li>设备后台仅供技术支持使用，勿自行登录或改配置，需诊断时联系技术支持，见<a href="../../backpack/network/#ssh">高级排查</a>。</li>
 <li>功耗与充电宝续航见<a href="../specs/">技术参数</a>。</li>
 </ul>

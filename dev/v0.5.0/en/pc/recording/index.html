@@ -1617,6 +1617,10 @@
       
         
       
+        
+      
+        
+      
     
     
     
@@ -1680,6 +1684,62 @@
   
   
     <li class="md-nav__item">
+      <a href="../../follower/setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Setup and self-check
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../follower/control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Motion control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../follower/api/" class="md-nav__link">
         
   
@@ -1687,7 +1747,7 @@
   <span class="md-ellipsis">
     
   
-    Motion control and API
+    API and examples
   
 
     
@@ -2788,7 +2848,7 @@
 </div>
 <p>If it will not connect, see <a href="../troubleshooting/#head-camera">Troubleshooting · Head camera</a>.</p>
 <h2 id="57">Optional: wrist camera fisheye undistortion<a class="headerlink" href="#57" title="锚点链接">¶</a></h2>
-<p>The wrist camera is a 190° fisheye, recorded raw by default. <code>--robot.wrist_undistort=true</code> rectifies it to a rectilinear projection before writing, using the intrinsics in this gripper's flash; <code>--robot.wrist_undistort_balance</code> sets the field of view. Only 640×480 is supported (the firmware fisheye record holds only 8 floats, no image size), so a different <code>--robot.wrist_camera_width/_height</code> exits at command-line parse time.</p>
+<p>The wrist camera is a 190° fisheye and records raw frames by default. <code>--robot.wrist_undistort=true</code> rectifies frames using the gripper's intrinsics, and <code>--robot.wrist_undistort_balance</code> adjusts the field of view. Earlier versions support 640×480 only. SDK 0.5.0 and gripper firmware 1.3.1 support separate calibration for 640×480 and 1920×1080. Calibrate 1080p before its first use.</p>
 <div class="admonition warning">
 <p class="admonition-title">On and off produce two kinds of data, and you cannot tell them apart</p>
 <p>Rectified and raw <code>wrist_cam</code> have identical shape and dtype and mix silently, so recording writes which was used into every unit of <a href="#robot-id"><code>meta/hardware.json</code></a> (<code>{"applied": false}</code> if not undistorted):</p>
@@ -2805,7 +2865,7 @@
 </ul>
 <p>In code, prefer <code>Calibration::resolve_fisheye_for(width, height)</code> (returns <code>(calibration, is_reference, reason)</code>) over <code>read_fisheye()</code>. From SDK 0.5.0 with firmware 1.3.1, intrinsics are stored separately for 640×480 and 1920×1080 and picked by the camera resolution; a gripper calibrated only at the other resolution raises instead of falling back to the reference, see <a href="../../sdk/#camera">SDK · Wrist camera and fisheye undistortion</a>.</p>
 <ul>
-<li><strong>The reference values are only good enough for viewing</strong>: the principal point drifts per unit (37.7px off on one unit). To measure in pixels on the rectified image (visual servoing, hand-eye calibration, size estimation), store this unit's own calibration first: <code>python third_party/taccap-gripper/python/examples/fisheye_cal.py set-fisheye right --width 640 --height 480</code> (use the camera's actual resolution; with two connected, pick <code>left</code> / <code>right</code> or a full SN; omit with one).</li>
+<li><strong>Reference values are for viewing only</strong>. Use device-specific intrinsics at the current resolution for measurement or visual calibration. See the <a href="../../sdk/#camera">SDK fisheye calibration instructions</a> to write and verify calibration for that resolution.</li>
 <li><strong>An off-center or slightly tilted rectified frame does not mean bad calibration</strong>: undistortion centers on the principal point, not the frame center, and the sensor need not sit on the optical center (one unit: <code>cx = 359.1</code>, fingertip midpoint x = 360.1, about 1px apart). Do not change <code>cx</code>; forcing 320 makes it worse and adds tilt.</li>
 </ul>
 

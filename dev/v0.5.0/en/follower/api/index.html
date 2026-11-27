@@ -12,7 +12,7 @@
         <link rel="canonical" href="https://xenserobotics-ai.github.io/XTac-UMI-G1-Docs/dev/v0.5.0/en/follower/api/">
       
       
-        <link rel="prev" href="../">
+        <link rel="prev" href="../control/">
       
       
         <link rel="next" href="../firmware/">
@@ -30,7 +30,7 @@
     
     
       
-        <title>Motion control and API - XTac UMI Docs</title>
+        <title>API and examples - XTac UMI Docs</title>
       
     
     
@@ -93,7 +93,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#motion-control-and-api" class="md-skip">
+        <a href="#api-and-examples" class="md-skip">
           Skip to content
         </a>
       
@@ -133,7 +133,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Motion control and API
+              API and examples
             
           </span>
         </div>
@@ -1369,6 +1369,10 @@
       
         
       
+        
+      
+        
+      
     
     
     
@@ -1430,6 +1434,62 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Setup and self-check
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Motion control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -1449,7 +1509,7 @@
   <span class="md-ellipsis">
     
   
-    Motion control and API
+    API and examples
   
 
     
@@ -1467,7 +1527,7 @@
   <span class="md-ellipsis">
     
   
-    Motion control and API
+    API and examples
   
 
     
@@ -1493,57 +1553,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
       
         <li class="md-nav__item">
-  <a href="#first-motion" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Keyboard control
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Keyboard control">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#full-chain" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Full-chain check
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#controllers" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        The two controllers
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#basic" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Control from a program
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Control from a program">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
   <a href="#open" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1553,31 +1562,15 @@
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#impedance" class="md-nav__link">
+      
+        <li class="md-nav__item">
+  <a href="#controllers" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Impedance control
+        Controllers
       
     </span>
   </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#force-position" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Force-position control
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -1586,17 +1579,6 @@
     <span class="md-ellipsis">
       
         Reading state
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#fault" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Faults and recovery
       
     </span>
   </a>
@@ -1938,87 +1920,20 @@
 
 
 
-<h1 id="motion-control-and-api">Motion control and API<a class="headerlink" href="#motion-control-and-api" title="锚点链接">¶</a></h1>
-<p>Before you start, complete <a href="../#install">install and self-check</a>, <strong>especially the <a href="../#motion-check">motion check</a></strong>. Examples are in Python; the C++ interfaces share the names, and <code>help(t.FollowerGripper)</code> has the full reference.</p>
-<div class="admonition danger">
-<p class="admonition-title">This drives a real motor</p>
-<p>Before running, clear the fingers' range of motion, keep your hands away from the gripper, and make sure you can cut the 24V at any moment. For a follower gripper on a robot, test first with the robot stationary.</p>
-</div>
-<h2 id="first-motion">Keyboard control<a class="headerlink" href="#first-motion" title="锚点链接">¶</a></h2>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>python<span class="w"> </span>python/examples/gripper_console.py<span class="w"> </span>left
+<h1 id="api-and-examples">API and examples<a class="headerlink" href="#api-and-examples" title="锚点链接">¶</a></h1>
+<p><span id="first-motion"></span><span id="full-chain"></span><span id="basic"></span><span id="impedance"></span><span id="force-position"></span><span id="fault"></span></p>
+<p>For installation, see <a href="../setup/#install">Setup and self-check</a>. For keyboard and programmatic control, see <a href="../control/">Motion control</a>. The examples use Python. C++ interfaces share the names, and <code>help(t.FollowerGripper)</code> provides the full reference.</p>
+<h2 id="open">Opening the follower gripper<a class="headerlink" href="#open" title="锚点链接">¶</a></h2>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">xense.taccap</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">t</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">g</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">FollowerGripper</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">find_follower</span><span class="p">()</span><span class="o">.</span><span class="n">mcu_device</span><span class="p">)</span>        <span class="c1"># one connected</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="n">ep</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">e</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">t</span><span class="o">.</span><span class="n">scan_grippers</span><span class="p">()</span>                     <span class="c1"># several: pick by side and role</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>          <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">side</span> <span class="o">==</span> <span class="n">t</span><span class="o">.</span><span class="n">Side</span><span class="o">.</span><span class="n">Left</span> <span class="ow">and</span> <span class="n">e</span><span class="o">.</span><span class="n">role</span> <span class="o">==</span> <span class="n">t</span><span class="o">.</span><span class="n">Role</span><span class="o">.</span><span class="n">Follower</span><span class="p">)</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="n">g</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">FollowerGripper</span><span class="p">(</span><span class="n">ep</span><span class="o">.</span><span class="n">mcu_device</span><span class="p">)</span>
 </span></code></pre></div>
-<table>
-<thead>
-<tr>
-<th>Key</th>
-<th>Action</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>j</code> / <code>k</code></td>
-<td>Open / close one step</td>
-</tr>
-<tr>
-<td><code>o</code> / <code>c</code></td>
-<td>Fully open / fully close</td>
-</tr>
-<tr>
-<td><code>h</code></td>
-<td>Hold at the current position</td>
-</tr>
-<tr>
-<td><code>d</code> / <code>e</code></td>
-<td>Release the motor / resume control</td>
-</tr>
-<tr>
-<td><code>f</code></td>
-<td>Clear fault</td>
-</tr>
-<tr>
-<td><code>q</code> or <code>Esc</code></td>
-<td>Quit</td>
-</tr>
-</tbody>
-</table>
-<p>The default is impedance control. To grasp with a set force, add <code>--mode force-position --grasp-torque 0.6</code> (grip force in N·m, no more than 1.1).</p>
-<h3 id="full-chain">Full-chain check<a class="headerlink" href="#full-chain" title="锚点链接">¶</a></h3>
-<p>From SDK 0.4.4, add <code>--rerun</code> to the console to see all of this follower gripper's data live in <a href="https://rerun.io">Rerun</a> while the keys open and close it:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>python<span class="w"> </span>python/examples/gripper_console.py<span class="w"> </span>left<span class="w"> </span>--mode<span class="w"> </span>force-position<span class="w"> </span>--rerun
-</span></code></pre></div>
-<table>
-<thead>
-<tr>
-<th>Plot / view</th>
-<th>What to look for</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Opening and target opening</td>
-<td>With no load the opening follows the target; when grasping an object it stops short of the target</td>
-</tr>
-<tr>
-<td>Measured and commanded torque</td>
-<td>Rise to the set grip force when grasping</td>
-</tr>
-<tr>
-<td>Controller state</td>
-<td>Text log: <code>HOLDING_FORCE</code> while grasping, <code>FAULT</code> on a fault</td>
-</tr>
-<tr>
-<td>Wrist camera</td>
-<td>Steady at 30Hz</td>
-</tr>
-<tr>
-<td>Visuotactile image, marker flow, resultant force</td>
-<td>Respond when grasping an object and fall back after release</td>
-</tr>
-</tbody>
-</table>
-<p>Before putting the gripper into service or starting collection, grasp an object and check each of these. The cameras and the viewer open before the motor is enabled; <strong>do not touch the gel at startup</strong>.
-The other options (<code>--no-wrist</code>, <code>--save</code> and so on) are the same as <code>rerun_viewer.py</code>; see <a href="../../sdk/#full-chain">SDK examples → Full-chain check</a>.</p>
-<h2 id="controllers">The two controllers<a class="headerlink" href="#controllers" title="锚点链接">¶</a></h2>
+<p>Follower serials end in <code>s</code>; see <a href="../#sn">Serial number</a>. Scanning interrupts other programs (see <a href="../setup/#discover">Find the device</a>); scan only once, at start-up.</p>
+<h2 id="controllers">Controllers<a class="headerlink" href="#controllers" title="锚点链接">¶</a></h2>
 <table>
 <thead>
 <tr>
@@ -2028,16 +1943,6 @@ The other options (<code>--no-wrist</code>, <code>--save</code> and so on) are t
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>Suited to</td>
-<td>Following an opening: teleoperation, following the leader gripper, running a policy</td>
-<td>Grasping an object with a set force</td>
-</tr>
-<tr>
-<td>When blocked by an object</td>
-<td>Presses with 1.1N·m</td>
-<td>Presses with the set grip force and reports that it is holding</td>
-</tr>
 <tr>
 <td>Controller</td>
 <td><code>ImpedanceController</code></td>
@@ -2067,59 +1972,7 @@ The other options (<code>--no-wrist</code>, <code>--save</code> and so on) are t
 <li>Always generate the config with <code>for_spec(g.motor.get_spec())</code>, and change only the grip force as needed.</li>
 <li>Run only one controller per gripper at a time.</li>
 </ul>
-<h2 id="basic">Control from a program<a class="headerlink" href="#basic" title="锚点链接">¶</a></h2>
-<h3 id="open">Opening the follower gripper<a class="headerlink" href="#open" title="锚点链接">¶</a></h3>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">xense.taccap</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">t</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">g</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">FollowerGripper</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">find_follower</span><span class="p">()</span><span class="o">.</span><span class="n">mcu_device</span><span class="p">)</span>        <span class="c1"># one connected</span>
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="n">ep</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">e</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">t</span><span class="o">.</span><span class="n">scan_grippers</span><span class="p">()</span>                     <span class="c1"># several: pick by side and role</span>
-</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>          <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">side</span> <span class="o">==</span> <span class="n">t</span><span class="o">.</span><span class="n">Side</span><span class="o">.</span><span class="n">Left</span> <span class="ow">and</span> <span class="n">e</span><span class="o">.</span><span class="n">role</span> <span class="o">==</span> <span class="n">t</span><span class="o">.</span><span class="n">Role</span><span class="o">.</span><span class="n">Follower</span><span class="p">)</span>
-</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="n">g</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">FollowerGripper</span><span class="p">(</span><span class="n">ep</span><span class="o">.</span><span class="n">mcu_device</span><span class="p">)</span>
-</span></code></pre></div>
-<p>Follower serials end in <code>s</code>; see <a href="../#sn">Serial number</a>. Scanning interrupts other programs (see <a href="../#discover">Find the device</a>); scan only once, at start-up.</p>
-<h3 id="impedance">Impedance control<a class="headerlink" href="#impedance" title="锚点链接">¶</a></h3>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">xense.taccap</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">t</span>
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="n">g</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">FollowerGripper</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">find_follower</span><span class="p">()</span><span class="o">.</span><span class="n">mcu_device</span><span class="p">)</span>
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="n">cfg</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">ImpedanceConfig</span><span class="o">.</span><span class="n">for_spec</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">motor</span><span class="o">.</span><span class="n">get_spec</span><span class="p">())</span>
-</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>
-</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="n">g</span><span class="o">.</span><span class="n">motor</span><span class="o">.</span><span class="n">clear_fault</span><span class="p">()</span>
-</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="k">with</span> <span class="n">t</span><span class="o">.</span><span class="n">ImpedanceController</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">cfg</span><span class="p">)</span> <span class="k">as</span> <span class="n">c</span><span class="p">:</span>   <span class="c1"># stops and releases the motor automatically on leaving the with block</span>
-</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>    <span class="n">g</span><span class="o">.</span><span class="n">motor</span><span class="o">.</span><span class="n">enable</span><span class="p">()</span>
-</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>    <span class="n">c</span><span class="o">.</span><span class="n">set_target</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>                       <span class="c1"># close</span>
-</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">"opening"</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">snapshot</span><span class="p">()</span><span class="o">.</span><span class="n">observation</span><span class="o">.</span><span class="n">position</span><span class="p">)</span>
-</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>    <span class="n">c</span><span class="o">.</span><span class="n">set_target</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>                       <span class="c1"># open</span>
-</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</span></code></pre></div>
-<p>For teleoperation or running a policy, just call <code>c.set_target(opening)</code> once per cycle in your control loop; there is no need to wait.</p>
-<h3 id="force-position">Force-position control<a class="headerlink" href="#force-position" title="锚点链接">¶</a></h3>
-<p>A different config and controller; everything else is the same:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">cfg</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">ForcePositionConfig</span><span class="o">.</span><span class="n">for_spec</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">motor</span><span class="o">.</span><span class="n">get_spec</span><span class="p">())</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="n">cfg</span><span class="o">.</span><span class="n">grasp_torque_nm</span> <span class="o">=</span> <span class="mf">0.6</span>                   <span class="c1"># grip force, no more than 1.1 N·m</span>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="n">g</span><span class="o">.</span><span class="n">motor</span><span class="o">.</span><span class="n">clear_fault</span><span class="p">()</span>
-</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="k">with</span> <span class="n">t</span><span class="o">.</span><span class="n">ForcePositionController</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">cfg</span><span class="p">)</span> <span class="k">as</span> <span class="n">c</span><span class="p">:</span>
-</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>    <span class="n">g</span><span class="o">.</span><span class="n">motor</span><span class="o">.</span><span class="n">enable</span><span class="p">()</span>
-</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>    <span class="n">c</span><span class="o">.</span><span class="n">set_target</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>                       <span class="c1"># close to grasp</span>
-</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">"holding"</span> <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">snapshot</span><span class="p">()</span><span class="o">.</span><span class="n">holding</span> <span class="k">else</span> <span class="s2">"nothing gripped"</span><span class="p">)</span>
-</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>    <span class="n">c</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>                             <span class="c1"># release</span>
-</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</span></code></pre></div>
-<p>Force-position control follows a streamed target about one send interval behind (about 20ms at 50Hz), in exchange for smooth motion.</p>
-<div class="admonition danger">
-<p class="admonition-title">The gripper releases when control stops or the link drops</p>
-<p>When the controller stops (leaving the <code>with</code> block, program exit), when you press <code>d</code> / <code>q</code> in the console, or when USB disconnects, the gripper releases, and <strong>whatever it is holding will drop</strong>.
-When the robot is holding an object, put the object somewhere safe before stopping control.</p>
-</div>
-<div class="admonition warning">
-<p class="admonition-title">Holding for a long time reduces the grip force</p>
-<p>As the motor heats up, the firmware automatically reduces output. In testing, holding at 1.1N·m for 10 minutes brought the motor to about 70°C; at 0.6N·m it settled at about 49°C.
-If you need to hold continuously for tens of minutes, lower the grip force to around 0.6N·m.</p>
-</div>
+<p>See <a href="../control/#basic">Control from a program</a> for worked examples.</p>
 <h2 id="state">Reading state<a class="headerlink" href="#state" title="锚点链接">¶</a></h2>
 <table>
 <thead>
@@ -2153,10 +2006,6 @@ If you need to hold continuously for tens of minutes, lower the grip force to ar
 </tbody>
 </table>
 <p>While controlling, read only through <code>snapshot()</code>; reading the motor separately competes for the link.</p>
-<h2 id="fault">Faults and recovery<a class="headerlink" href="#fault" title="锚点链接">¶</a></h2>
-<p>When the controller detects an anomaly it stops and releases its torque; <code>c.snapshot().state</code> becomes <code>FAULT</code>, and the reason is in <code>c.snapshot().fault_reason</code>.
-Once the cause is removed, call <code>g.motor.clear_fault()</code> and then <code>c.reset()</code> to continue; if it cannot recover, power-cycle the gripper.
-For common causes, see <a href="../troubleshooting/#fault">Troubleshooting</a>.</p>
 <h2 id="motor-primitives">Low-level motor interfaces<a class="headerlink" href="#motor-primitives" title="锚点链接">¶</a></h2>
 <p><code>g.motor.submit_*</code> and other low-level interfaces bypass the controller's protection. <strong>Use a controller</strong>.</p>
 <p>These rewrite gripper or motor configuration; <strong>only under technical support's guidance</strong>:
@@ -2165,7 +2014,11 @@ For common causes, see <a href="../troubleshooting/#fault">Troubleshooting</a>.<
 <h2 id="camera">Wrist camera<a class="headerlink" href="#camera" title="锚点链接">¶</a></h2>
 <p>Off by default; enable it the same way as on the leader gripper, see <a href="../../sdk/#camera">Wrist camera and fisheye undistortion</a>.</p>
 <h2 id="examples">Example scripts<a class="headerlink" href="#examples" title="锚点链接">¶</a></h2>
-<p>Scripts are in <code>python/examples/</code>; run them from the SDK source directory (the collection repository's <code>third_party/taccap-gripper</code>, or a standalone <code>TacCap-Gripper</code>). Pick the gripper with <code>left</code>, <code>right</code> or the full serial, optional with only one connected; options via <code>--help</code>. A script scans at start-up, so do not run one while control or collection is running.</p>
+<p>Scripts are in <code>python/examples/</code>; run them from the SDK source directory (the collection repository's <code>third_party/taccap-gripper</code>, or a standalone <code>TacCap-Gripper</code>). Pick the gripper with <code>left</code>, <code>right</code> or the full serial, optional with only one connected; options via <code>--help</code>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Before running the examples</p>
+<p>Complete <a href="../setup/">Setup and self-check</a> before the first run and review the safety requirements in <a href="../control/">Motion control</a>. Scripts scan for devices at start-up. Stop any active control or data collection program first.</p>
+</div>
 <table>
 <thead>
 <tr>
@@ -2177,12 +2030,12 @@ For common causes, see <a href="../troubleshooting/#fault">Troubleshooting</a>.<
 <tbody>
 <tr>
 <td><code>follower_status.py</code></td>
-<td><a href="../#self-check">Self-check</a></td>
+<td><a href="../setup/#self-check">Self-check</a></td>
 <td>Read-only</td>
 </tr>
 <tr>
 <td><code>gripper_console.py</code></td>
-<td>Keyboard control; <code>--rerun</code> for the <a href="#full-chain">full-chain check</a> (SDK 0.4.4 and later)</td>
+<td>Keyboard control; <code>--rerun</code> for the <a href="../control/#full-chain">full-chain check</a> (SDK 0.4.4 and later)</td>
 <td><strong>Moves motor</strong></td>
 </tr>
 <tr>
@@ -2217,9 +2070,9 @@ For common causes, see <a href="../troubleshooting/#fault">Troubleshooting</a>.<
 </tr>
 </tbody>
 </table>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>python<span class="w"> </span>python/examples/impedance_control.py<span class="w"> </span>left
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>python<span class="w"> </span>python/examples/force_position_control.py<span class="w"> </span>left<span class="w"> </span>--grasp-torque<span class="w"> </span><span class="m">0</span>.6
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>python<span class="w"> </span>python/examples/control_and_read.py<span class="w"> </span>left
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>python<span class="w"> </span>python/examples/impedance_control.py<span class="w"> </span>left
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>python<span class="w"> </span>python/examples/force_position_control.py<span class="w"> </span>left<span class="w"> </span>--grasp-torque<span class="w"> </span><span class="m">0</span>.6
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>python<span class="w"> </span>python/examples/control_and_read.py<span class="w"> </span>left
 </span></code></pre></div>
 
 
@@ -2258,7 +2111,7 @@ For common causes, see <a href="../troubleshooting/#fault">Troubleshooting</a>.<
       <nav class="md-footer__inner md-grid" aria-label="Footer">
         
           
-          <a href="../" class="md-footer__link md-footer__link--prev" aria-label="Previous: Overview, install and self-check">
+          <a href="../control/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Motion control">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
@@ -2268,7 +2121,7 @@ For common causes, see <a href="../troubleshooting/#fault">Troubleshooting</a>.<
                 Previous
               </span>
               <div class="md-ellipsis">
-                Overview, install and self-check
+                Motion control
               </div>
             </div>
           </a>
