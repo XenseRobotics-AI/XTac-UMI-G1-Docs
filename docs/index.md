@@ -161,7 +161,7 @@ hide:
 - **75,000+ 条人类示范**：共 1,400+ 小时、1.5 亿+ 帧
 - **双手视触觉**：每帧四路触觉、两路腕部画面与夹爪位姿；部分任务另含头显画面与头部位姿
 
-下载前在 Hugging Face 提交一次访问申请，自动通过；另有 10 个免申请的[样例](https://huggingface.co/collections/TacVerse/tacverse-samples-6a97cf6d157fe67e799a1bc7)可先预览。
+下载前在 Hugging Face 提交一次访问申请，自动通过；另有 13 个免申请的[样例](https://huggingface.co/collections/TacVerse/tacverse-samples-6a97cf6d157fe67e799a1bc7)可先预览。
 
 [Hugging Face](https://huggingface.co/datasets/TacVerse/TacVerse){ .md-button .md-button--primary }
 [ModelScope](https://modelscope.cn/datasets/XenseRobotics/TacVerse-Opendata){ .md-button }

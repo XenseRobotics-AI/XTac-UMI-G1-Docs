@@ -162,7 +162,7 @@ Visuotactile manipulation data collected with XTac UMI G1 grippers, released as 
 - **75,000+ demonstrations**: 1,400+ hours, 150M+ frames
 - **Two-handed touch**: four tactile streams, two wrist views and gripper poses per frame; a subset adds the headset stereo views and head pose
 
-Downloads need one access request on the Hugging Face dataset page, approved automatically; ten ungated [samples](https://huggingface.co/collections/TacVerse/tacverse-samples-6a97cf6d157fe67e799a1bc7) are available for a first look.
+Downloads need one access request on the Hugging Face dataset page, approved automatically; 13 ungated [samples](https://huggingface.co/collections/TacVerse/tacverse-samples-6a97cf6d157fe67e799a1bc7) are available for a first look.
 
 [Hugging Face](https://huggingface.co/datasets/TacVerse/TacVerse){ .md-button .md-button--primary }
 [ModelScope](https://modelscope.cn/datasets/XenseRobotics/TacVerse-Opendata){ .md-button }
