@@ -43,7 +43,7 @@ Otherwise, screen-off or sleep between episodes (also triggered by taking the he
 
 XTac UMI XR **0.4.6** is the latest release. Obtain the 0.4.6 APK from [technical support](reference.md#support) and use the headset's file manager to install or upgrade it. Update the headset app separately.
 
-The new Collector 0.5.0 headset video modes run at **30 fps**. See [project settings](../backpack/monitor-record.md#project-task). The new headset features require a compatible newer app. The minimum compatible version is pending confirmation.
+The new Collector 0.5.0 headset video modes run at **30 fps**. See [project settings](../backpack/monitor-record.md#project-task). Install the latest XTac UMI XR 0.4.6 to use these features.
 
 To install or upgrade:
 

@@ -43,7 +43,7 @@ Pico4 Ultra 企业版配套的独立运动追踪器装在夹爪顶部提供 6-Do
 
 XTac UMI XR 的最新版本为 **0.4.6**。请通过[技术支持](reference.md#support)获取 0.4.6 APK，在头显文件管理中安装或升级。头显应用单独更新。
 
-Collector 0.5.0 新增的头显图像规格为 **30 fps**，见[项目设置](../backpack/monitor-record.md#project-task)。新增头显功能需要配套新版应用，具体最低兼容版本待确认。
+Collector 0.5.0 新增的头显图像规格为 **30 fps**，见[项目设置](../backpack/monitor-record.md#project-task)。使用这些新功能请安装最新版 XTac UMI XR 0.4.6。
 
 安装或升级步骤：
 

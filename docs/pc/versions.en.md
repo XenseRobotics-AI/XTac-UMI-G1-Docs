@@ -224,7 +224,7 @@ python third_party/taccap-gripper/python/examples/ota_update.py --all
 # 3. After unplug and replug, read back the flashed version with the script in "How to check versions"
 ```
 
-For step 3, use the script in [How to check versions](#check-versions) to verify firmware 1.3.1. The upgrade preserves motor parameters, CAN ID, motor model, and gripper settings. Upgraded devices retain existing 640×480 calibration. Calibrate 1920×1080 before using that resolution. [Verify opening and travel calibration](calibration.md#41) and complete it if missing.
+For step 3, use the script in [How to check versions](#check-versions) to verify firmware 1.3.1. The upgrade preserves motor parameters, motor model, and gripper settings. Upgraded devices retain existing 640×480 calibration. Calibrate 1920×1080 before using that resolution. [Verify opening and travel calibration](calibration.md#41) and complete it if missing.
 
 - The image name is resolved against the path you gave, the SDK root and the SDK's `firmware/`, in that order, so the script can be run from any directory; it is checked before connecting.
 - `--target-version` is normally unnecessary: it only tags the verification log and partition metadata; the script looks the version up in `manifest.json` by CRC32, so you need it only for an image `manifest.json` does not know.

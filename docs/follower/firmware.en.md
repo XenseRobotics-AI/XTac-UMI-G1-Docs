@@ -36,7 +36,7 @@ python python/examples/follower_status.py left
 ```
 
 - With several follower grippers connected, to flash just one of them, add the side after the role: `python python/examples/ota_update.py slave left` (SDK 0.5.0 and later).
-- Flashing takes about one second, then the gripper restarts automatically. Upgrading to 1.3.1 preserves motor parameters, CAN ID, motor model, gripper settings, and existing 640×480 calibration. Upgraded devices have an empty 1920×1080 calibration slot. Calibrate that resolution before use.
+- Flashing takes about one second, then the gripper restarts automatically. Upgrading to 1.3.1 preserves motor parameters, motor model, gripper settings, and existing 640×480 calibration. Upgraded devices have an empty 1920×1080 calibration slot. Calibrate that resolution before use.
 - If the script finds that the firmware does not match the gripper's role it refuses to flash. **Do not force it with `--force`.**
 - An interrupted flash does not damage the gripper; the original firmware keeps running, and you can simply flash again.
 
