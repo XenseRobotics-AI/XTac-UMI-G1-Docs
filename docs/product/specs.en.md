@@ -28,7 +28,7 @@ The fingertip sensor is Xense's GS-PS visuotactile sensor; see the [product page
 | Sensing area | 623mm² |
 | Elastomer thickness | 2–5mm |
 | Image resolution | 640 × 480 |
-| Sampling rate | 0–120Hz |
+| Sampling rate | 60 Hz |
 | Range | 0–25N |
 | Force accuracy | 0.2N |
 | Deformation accuracy | 0.1mm |
