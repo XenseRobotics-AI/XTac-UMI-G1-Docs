@@ -2001,12 +2001,12 @@
 </div>
 <p>不关的话，采集间隙灭屏/休眠（摘下头显放置也会触发）会挂起或杀掉 XTac UMI XR，而重启它会重设世界系（见<a href="#pico-frame">坐标系对齐</a>）。</p>
 <h2 id="pico-app">安装 XTac UMI XR<a class="headerlink" href="#pico-app" title="锚点链接">¶</a></h2>
-<p>XTac UMI XR <strong>0.4.4</strong> 于 2026-11-26 发布。通过<a href="../reference/#support">技术支持</a>获取 <code>XTac-UMI-XR-0.4.4.apk</code>（124.3 MB），在头显文件管理中安装。头显应用单独更新。</p>
-<p>0.4.4 优化了头显位姿和 IMU 数据采集，以及追踪器与头显的数据时间同步。IMU 和位姿数据上报频率约为 <strong>60 Hz</strong>；Collector 0.5.0 新增的头显图像规格为 <strong>30 fps</strong>，见<a href="../../backpack/monitor-record/#project-task">项目设置</a>。新增头显功能需要配套新版应用，具体最低兼容版本待确认。</p>
-<p>安装步骤：</p>
+<p>XTac UMI XR 的最新版本为 <strong>0.4.6</strong>。请通过<a href="../reference/#support">技术支持</a>获取 0.4.6 APK，在头显文件管理中安装或升级。头显应用单独更新。</p>
+<p>Collector 0.5.0 新增的头显图像规格为 <strong>30 fps</strong>，见<a href="../../backpack/monitor-record/#project-task">项目设置</a>。新增头显功能需要配套新版应用，具体最低兼容版本待确认。</p>
+<p>安装或升级步骤：</p>
 <ol>
 <li>
-<p>USB 线连头显与电脑，把 APK 拷到头显的 <code>Download/</code> 目录。</p>
+<p>用 USB 线连接头显与电脑，将技术支持提供的 0.4.6 APK 复制到头显的 <code>Download/</code> 目录。下图使用早期版本的文件名示例。</p>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/pico4/install-step1-copy.webp" data-desc-position="bottom"><img alt="把 apk 拷进 Pico 的 Download 目录" src="../../assets/pico4/install-step1-copy.webp" width="480"></a></p>
 </li>
 <li>
@@ -2018,6 +2018,11 @@
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/pico4/install-step3-confirm.webp" data-desc-position="bottom"><img alt="确认安装" src="../../assets/pico4/install-step3-confirm.webp" width="480"></a></p>
 </li>
 </ol>
+<p><strong>头显应用版本记录</strong></p>
+<ul>
+<li><strong>0.4.6</strong>：优化头显 Pose 数据上报的稳定性。</li>
+<li><strong>0.4.4（2026-11-26）</strong>：优化了头显位姿和 IMU 数据采集，以及追踪器与头显的数据时间同步。该版本的 IMU 和位姿数据上报频率约为 60 Hz。</li>
+</ul>
 <h2 id="pico-network">网络连接<a class="headerlink" href="#pico-network" title="锚点链接">¶</a></h2>
 <p>追踪数据送往采集单元的 XenseVR 位姿服务。背包版<strong>只能有线</strong>；PC 版默认有线，Type-C 直连独占，延迟稳定。</p>
 <div class="admonition warning">

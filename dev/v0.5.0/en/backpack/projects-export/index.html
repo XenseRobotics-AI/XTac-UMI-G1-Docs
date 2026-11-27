@@ -2135,7 +2135,7 @@
 </table>
 <p><strong>Publishing to ModelScope</strong> is simply uploading with the ModelScope backend; there is no separate Publish button. A public release cannot be withdrawn.</p>
 <h2 id="formats">Export formats<a class="headerlink" href="#formats" title="锚点链接">¶</a></h2>
-<p>V1 projects can export LeRobot or Training MCAP separately. XHE projects write <code>.xhe.mcap</code> directly and do not generate <code>.train.mcap</code> by default. XHE preserves native camera and sensor rates and all sensor readings (60 fps for tactile video). It stores USB camera capture timestamps, device and version information, and camera intrinsics for undistortion. Open it directly in Foxglove.</p>
+<p>V1 projects can export LeRobot or Training MCAP separately. XHE projects write <code>.xhe.mcap</code> directly and do not generate <code>.train.mcap</code> by default. XHE preserves native camera and sensor rates and all sensor readings (60 fps for tactile video). IMU readings come from the grippers. It stores USB camera capture timestamps, device and version information, and camera intrinsics for undistortion. Open it directly in Foxglove.</p>
 <h3 id="lerobot">LeRobot dataset<a class="headerlink" href="#lerobot" title="锚点链接">¶</a></h3>
 <p>A standard LeRobotDataset v3 at 30fps, with <code>meta/</code>, <code>data/</code> and <code>videos/</code>. The directory layout and how to load it are in the <a href="https://huggingface.co/docs/lerobot/lerobot-dataset-v3">LeRobotDataset v3.0 documentation</a>.</p>
 <table>

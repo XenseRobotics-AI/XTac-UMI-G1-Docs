@@ -2001,12 +2001,12 @@
 </div>
 <p>Otherwise, screen-off or sleep between episodes (also triggered by taking the headset off and setting it down) suspends or kills XTac UMI XR, and restarting it resets the world frame (see <a href="#pico-frame">Frame alignment</a>).</p>
 <h2 id="pico-app">Installing XTac UMI XR<a class="headerlink" href="#pico-app" title="锚点链接">¶</a></h2>
-<p>XTac UMI XR <strong>0.4.4</strong> was released on 2026-11-26. Obtain <code>XTac-UMI-XR-0.4.4.apk</code> (124.3 MB) from <a href="../reference/#support">technical support</a> and install it in the headset's file manager. Update the headset app separately.</p>
-<p>Version 0.4.4 improves headset pose and IMU capture and time synchronization between trackers and the headset. IMU and pose data are reported at approximately <strong>60 Hz</strong>. The new Collector 0.5.0 headset video modes run at <strong>30 fps</strong>. See <a href="../../backpack/monitor-record/#project-task">project settings</a>. The new headset features require a compatible newer app. The minimum compatible version is pending confirmation.</p>
-<p>To install:</p>
+<p>XTac UMI XR <strong>0.4.6</strong> is the latest release. Obtain the 0.4.6 APK from <a href="../reference/#support">technical support</a> and use the headset's file manager to install or upgrade it. Update the headset app separately.</p>
+<p>The new Collector 0.5.0 headset video modes run at <strong>30 fps</strong>. See <a href="../../backpack/monitor-record/#project-task">project settings</a>. The new headset features require a compatible newer app. The minimum compatible version is pending confirmation.</p>
+<p>To install or upgrade:</p>
 <ol>
 <li>
-<p>Connect the headset to the collection PC over USB and copy the APK into the headset's <code>Download/</code> directory.</p>
+<p>Connect the headset to the computer over USB and copy the 0.4.6 APK from technical support into the headset's <code>Download/</code> directory. The screenshot shows an earlier APK filename as an example.</p>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/pico4/install-step1-copy.webp" data-desc-position="bottom"><img alt="Copy the apk into the Pico's Download folder" src="../../../assets/pico4/install-step1-copy.webp" width="480"></a></p>
 </li>
 <li>
@@ -2018,6 +2018,11 @@
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/pico4/install-step3-confirm-en.webp" data-desc-position="bottom"><img alt="Confirming the install" src="../../../assets/pico4/install-step3-confirm-en.webp" width="480"></a></p>
 </li>
 </ol>
+<p><strong>Headset app release history</strong></p>
+<ul>
+<li><strong>0.4.6</strong>. Improved the stability of headset pose data streaming.</li>
+<li><strong>0.4.4 (2026-11-26)</strong>. Improved headset pose and IMU capture and time synchronization between trackers and the headset. This release reported IMU and pose data at approximately 60 Hz.</li>
+</ul>
 <h2 id="pico-network">Network connection<a class="headerlink" href="#pico-network" title="锚点链接">¶</a></h2>
 <p>Tracking data goes to the XenseVR pose service on the collection unit. The Backpack Kit is <strong>wired only</strong>; the Developer Kit is wired by default. A direct Type-C connection gives the headset a dedicated link with stable latency.</p>
 <div class="admonition warning">
